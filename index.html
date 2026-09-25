@@ -1,0 +1,92 @@
+<!doctype html>
+<html lang="sv">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Scen</title>
+<meta name="description" content="Presentationer med layouter, animationer och klicksteg för lektioner.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Sora:wght@400;600;700&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&family=Instrument+Serif:ital@0;1&family=Source+Sans+3:wght@400;600&family=Archivo:wght@400;600;800&family=Lexend:wght@400;500;600&family=Playfair+Display:wght@600;700&family=Manrope:wght@400;600&family=Fraunces:opsz,wght@9..144,500;9..144,650&family=Nunito+Sans:wght@400;600&family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,800&family=DM+Sans:wght@400;500;700&display=swap">
+<link rel="stylesheet" href="src/app.css">
+<link rel="stylesheet" id="scen-engine-css" href="src/engine.css">
+</head>
+<body>
+<section id="lib" class="view">
+  <header class="topbar">
+    <span class="brand">Scen</span>
+    <span id="storeChip" class="chip">Ansluter…</span>
+    <span class="grow"></span>
+    <button type="button" id="btnTpl" class="btn ghost">Mallar</button>
+    <button type="button" id="btnImport" class="btn">Importera PowerPoint</button>
+    <button type="button" id="btnClaude" class="btn" hidden>Skapa med Claude</button>
+    <button type="button" id="btnNew" class="btn primary">Ny presentation</button>
+  </header>
+  <main class="lib-main">
+    <div class="lib-head">
+      <div><h1>Mina presentationer</h1><p class="muted" id="libSub"></p></div>
+    </div>
+    <div id="grid" class="grid"></div>
+    <section class="how" aria-labelledby="howH">
+      <h2 id="howH">Så sparas dina presentationer</h2>
+      <div><h3>I appen</h3><p>Allt sparas automatiskt medan du arbetar och ligger här nästa gång du öppnar Scen. Bara du ser dina presentationer.</p></div>
+      <div><h3>På datorn</h3><p><b>Spara på datorn</b> ger en .html-fil som spelas upp i vilken webbläsare som helst, även utan internet, med talarvy på tangenten P. Importera filen igen för att redigera vidare.</p></div>
+      <div><h3>Från PowerPoint</h3><p>Importera en .pptx så får den Scens layouter, animationer och klicksteg. Bilder, tabeller och anteckningar följer med. Uppbyggnadsbilder med samma rubrik blir en bild med steg.</p></div>
+    </section>
+  </main>
+</section>
+
+<section id="ed" class="view" hidden>
+  <header class="topbar">
+    <button type="button" id="back" class="btn ghost">‹ Bibliotek</button>
+    <input id="deckTitle" class="title-input" type="text" aria-label="Presentationens namn" autocomplete="off">
+    <span id="saveState" class="save-state" role="status">Sparat</span>
+    <span class="grow"></span>
+    <button type="button" id="btnTheme" class="btn">Tema</button>
+    <button type="button" id="btnManus" class="btn" aria-pressed="false" title="Redigera hela presentationen som text">Manus</button>
+    <button type="button" id="btnExport" class="btn">Spara på datorn</button>
+    <button type="button" id="btnPlay" class="btn primary">Spela härifrån</button>
+  </header>
+  <div class="ed-body">
+    <section id="manusPane" class="manus-pane" hidden aria-label="Manus">
+      <div class="manus-head"><strong>Manus</strong><span class="hint">Hela presentationen som text. Bilder skiljs åt med ---. Ändringar syns direkt.</span></div>
+      <textarea id="manusText" spellcheck="false" aria-label="Manus för presentationen"></textarea>
+      <p id="manusErr" class="hint" role="status"></p>
+    </section>
+    <aside class="rail" aria-label="Bilder">
+      <ol id="rail"></ol>
+      <div class="rail-adds"><button type="button" id="addSlide" class="btn rail-add">+ Ny bild</button><button type="button" id="btnClaudeEd" class="btn rail-add" hidden>+ Med Claude</button></div>
+    </aside>
+    <main class="canvas">
+      <div class="stage-wrap"><div id="preview" class="preview"></div></div>
+      <div class="pv-bar">
+        <button type="button" id="pvPlay" class="btn small">▶ Förhandsvisa bilden</button>
+        <button type="button" id="btnPlayStart" class="btn small">Spela från början</button>
+      </div>
+    </main>
+    <aside id="insp" class="insp" aria-label="Inställningar för bilden"></aside>
+  </div>
+</section>
+
+<section id="tplv" class="view" hidden>
+  <header class="topbar">
+    <button type="button" id="tplBack" class="btn ghost">‹ Bibliotek</button>
+    <span class="brand">Scen</span>
+  </header>
+  <main class="lib-main" id="tplMain"></main>
+</section>
+
+<div id="present" hidden></div>
+<div id="modal" class="modal" hidden></div>
+<div id="dropzone" class="dropzone" hidden></div>
+<div id="toast" class="toast" role="status"></div>
+<input type="file" id="file" accept=".pptx,.html,.htm,.json,.md,.txt" hidden>
+<input type="file" id="imgfile" accept="image/*" hidden>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
+<script id="scen-engine" src="src/engine.js"></script>
+<script src="src/pptx.js"></script>
+<script src="src/manus.js"></script>
+<script src="src/app.js"></script>
+</body>
+</html>

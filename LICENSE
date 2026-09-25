@@ -1,6 +1,6 @@
 MIT License
 
-Copyright (c) 2026 davidhedengren
+Copyright (c) 2026 David Hedengren
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
@@ -19,3 +19,10 @@ AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
 LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
+
+---
+
+Mallarna Omslag, Karta, Triad, Motsats och Bildkant är gjorda efter mallarna
+EditorialHero, DimensionMap, TriadStatement, SpotlightContrast och ImageBleed i
+Slidecraft (https://github.com/Pluggentipsar/slidecraft), som också har
+MIT-licens. Copyright (c) 2026 Joel Rangsjö och Slidecrafts bidragsgivare.

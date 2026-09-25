@@ -1,0 +1,17 @@
+{
+  "name": "scen",
+  "version": "3.0.0",
+  "private": true,
+  "description": "Presentationer som text och mallar, med animationer och klicksteg. Byggt för lektioner.",
+  "license": "MIT",
+  "type": "module",
+  "scripts": {
+    "start": "npx --yes serve -l 5173 .",
+    "bygg": "node scripts/scen.mjs bygg",
+    "exportera": "node scripts/scen.mjs exportera-alla",
+    "index": "node scripts/scen.mjs index",
+    "mallar": "node scripts/scen.mjs mallar",
+    "kolla": "node scripts/scen.mjs kolla"
+  },
+  "engines": { "node": ">=18" }
+}

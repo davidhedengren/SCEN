@@ -1,0 +1,10 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 640" font-family="Georgia,serif" font-style="italic" font-size="34">
+<defs><marker id="h" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M0 0L10 5L0 10z" fill="#C47300"/></marker>
+<marker id="g" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M0 0L10 5L0 10z" fill="#7C879C"/></marker></defs>
+<line x1="40" y1="560" x2="960" y2="560" stroke="#7C879C" stroke-width="3" stroke-dasharray="10 12"/>
+<path d="M80 560Q470-140 860 560" fill="none" stroke="#2F5BF5" stroke-width="7" stroke-linecap="round"/>
+<g stroke="#7C879C" stroke-width="4" marker-end="url(#g)"><line x1="80" y1="560" x2="196" y2="560"/><line x1="80" y1="560" x2="80" y2="351"/><line x1="470" y1="210" x2="586" y2="210"/><line x1="704" y1="336" x2="820" y2="336"/><line x1="704" y1="336" x2="704" y2="459"/></g>
+<g stroke="#C47300" stroke-width="6" marker-end="url(#h)"><line x1="80" y1="560" x2="194" y2="353"/><line x1="704" y1="336" x2="818" y2="457"/></g>
+<circle cx="80" cy="560" r="9" fill="#2F5BF5"/><circle cx="470" cy="210" r="9" fill="#2F5BF5"/><circle cx="704" cy="336" r="9" fill="#2F5BF5"/>
+<g fill="#7C879C"><text x="206" y="552">v<tspan font-size="22" dy="8">x</tspan></text><text x="30" y="360">v<tspan font-size="22" dy="8">y</tspan></text><text x="596" y="200">v<tspan font-size="22" dy="8">x</tspan></text><text x="830" y="330">v<tspan font-size="22" dy="8">x</tspan></text></g>
+<text x="190" y="330" fill="#C47300">v</text><text x="826" y="490" fill="#C47300">v</text></svg>

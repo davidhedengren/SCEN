@@ -177,24 +177,39 @@ function storeChip() {
   c.textContent = t; c.className = 'chip ' + Store.mode;
   c.title = { cloud: 'Bara du ser dina presentationer. De finns kvar när du öppnar Scen igen, på alla dina enheter.', local: 'Presentationerna finns bara i den här webbläsaren på den här datorn.', memory: 'Den här vyn kan inte spara. Ladda ner presentationen innan du stänger.' }[Store.mode];
 }
-let repoDecks = null;
+let repoDecks = null, missingRepo = [];
 async function loadRepoDecks() {
   if (repoDecks) return repoDecks;
   repoDecks = [];
+  const baked = Array.isArray(window.SCEN_REPO) ? window.SCEN_REPO : null;
   try {
-    const r = await fetch('presentationer/index.json', { cache: 'no-cache' });
-    if (!r.ok) return repoDecks;
-    const list = await r.json();
+    let list = baked ? baked.map(x => x.fil) : null;
+    if (!list) {
+      const r = await fetch('presentationer/index.json', { cache: 'no-cache' });
+      if (!r.ok) return repoDecks;
+      list = await r.json();
+    }
     for (const item of list) {
       const file = typeof item === 'string' ? item : item.fil;
       try {
-        const txt = await (await fetch('presentationer/' + file, { cache: 'no-cache' })).text();
+        let txt;
+        if (baked) txt = baked.find(x => x.fil === file).text;
+        else {
+          const res = await fetch('presentationer/' + file, { cache: 'no-cache' });
+          txt = res.ok ? await res.text() : '';
+          if (!res.ok || /^\s*<!doctype html/i.test(txt) || !/\[[^\]\n]+\]/.test(txt)) { missingRepo.push(file); continue; }
+        }
         const p = Manus.parse(txt);
         const d = normalize(Manus.applyMeta({ id: 'repo-' + file.replace(/\W+/g, '-'), title: file, slides: p.slides, repo: true, file, templates: {} }, p.meta));
         repoDecks.push(d);
       } catch (e) { /* hoppa över trasig fil */ }
     }
   } catch (e) { /* inte ett repo, t.ex. i claude.ai */ }
+  if (missingRepo.length) setTimeout(() => modal(`<h2>${plural(missingRepo.length, 'manus', 'manus')} gick inte att läsa</h2>
+    <p>Scen hittar ${missingRepo.map(f => '<code>' + esc(f) + '</code>').join(', ')} i <code>presentationer/index.json</code>, men får inte tillbaka själva filen.</p>
+    <p><b>På GitHub Pages beror det nästan alltid på att filen <code>.nojekyll</code> saknas.</b> Utan den gör GitHub om manusen till webbsidor. Lägg till den i repots översta mapp: <b>Add file → Create new file</b>, döp den till <code>.nojekyll</code>, lämna den tom och klicka <b>Commit changes</b>. Vänta en minut och ladda om sidan.</p>
+    <p class="muted">Kontrollera också att filnamnet i index.json är exakt detsamma som filens namn, med små och stora bokstäver.</p>
+    <div class="acts"><button class="btn primary" data-close>Okej</button></div>`), 300);
   return repoDecks;
 }
 async function showLibrary() {
@@ -775,7 +790,8 @@ function useTemplate(id) {
 async function loadTemplates() {
   let mine = [], repo = [];
   try { mine = await Store.listTemplates(); } catch (e) { mine = []; }
-  try {
+  if (Array.isArray(window.SCEN_MALLAR)) window.SCEN_MALLAR.forEach(t => { if (t && t.id && t.html) repo.push(Object.assign({ repo: true }, t)); });
+  else try {
     const r = await fetch('mallar/index.json', { cache: 'no-cache' });
     if (r.ok) for (const f of await r.json()) {
       try { const t = await (await fetch('mallar/' + f, { cache: 'no-cache' })).json(); if (t && t.id && t.html) { t.repo = true; repo.push(t); } } catch (e) { /* hoppa över */ }

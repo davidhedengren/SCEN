@@ -1,7 +1,7 @@
 #!/usr/bin/env node
 /* Scen – kommandon för repot. Inga beroenden, bara Node 18+.
  *
- *   node scripts/scen.mjs bygg                         → dist/scen.html (hela appen i en fil)
+ *   node scripts/scen.mjs bygg                         → scen.html (dubbelklicka) och dist/scen.html (för claude.ai)
  *   node scripts/scen.mjs exportera presentationer/x.md → dist/x.html (fristående presentation)
  *   node scripts/scen.mjs exportera-alla               → alla presentationer till dist/
  *   node scripts/scen.mjs index                        → uppdaterar presentationer/index.json och mallar/index.json
@@ -43,10 +43,10 @@ function loadRepoTemplates() {
   }
   return out;
 }
-function standalone(deck) {
+function standalone(deck, student = false) {
   const images = {}, missing = [];
-  for (const s of deck.slides) {
-    const k = String(s.image || '').replace(/^img:/, '');
+  for (const source of deck.slides.flatMap(s=>[s.image,...(s.layers||[]).filter(l=>l.type==='bild').map(l=>l.src)])) {
+    const k = String(source || '').replace(/^img:/, '');
     if (!k || images[k] || /^(data:|https?:)/.test(k)) continue;
     const f = path.join(ROOT, k);
     if (fs.existsSync(f)) images[k] = `data:${MIME[k.split('.').pop().toLowerCase()] || 'application/octet-stream'};base64,` + fs.readFileSync(f).toString('base64');
@@ -54,7 +54,7 @@ function standalone(deck) {
   }
   const tpls = loadRepoTemplates();
   deck.slides.filter(s => s.layout === 'egen').forEach(s => { if (tpls[s.tpl]) deck.templates[s.tpl] = tpls[s.tpl]; else missing.push('mall ' + s.tpl); });
-  const data = { v: 3, title: deck.title, theme: deck.theme, slides: deck.slides, templates: deck.templates, images, exportedAt: new Date().toISOString() };
+  const data = Scen.exportData(deck, images, student);
   const json = JSON.stringify(data).replace(/</g, '\\u003c');
   const fonts = Scen.fontUrl();
   const html = '<!doctype html>\n<html lang="sv"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><meta name="generator" content="Scen">' +
@@ -77,6 +77,30 @@ const cmds = {
     }
     wr('dist/scen.html', s);
     console.log('dist/scen.html', Math.round(s.length / 1024) + ' kB. Den här filen kan publiceras som artefakt i claude.ai.');
+    // Samma app med repots presentationer och mallar inbakade. Fungerar med dubbelklick, utan server.
+    const md = fs.readdirSync(path.join(ROOT, 'presentationer')).filter(f => f.endsWith('.md')).sort();
+    const repo = md.map(fil => ({ fil, text: rd('presentationer/' + fil) }));
+    const tpls = Object.values(loadRepoTemplates());
+    const images = {};
+    for (const entry of repo) for (const slide of Manus.parse(entry.text).slides) {
+      for (const source of [slide.image,...(slide.layers||[]).filter(l=>l.type==='bild').map(l=>l.src)]) {
+        const key=String(source||'').replace(/^img:/,'');
+        if (!key || /^(data:|https?:)/.test(key) || images[key]) continue;
+        const file=path.resolve(ROOT,key);
+        if (file.startsWith(ROOT+path.sep) && fs.existsSync(file) && fs.statSync(file).isFile()) images[key]=`data:${MIME[key.split('.').pop().toLowerCase()] || 'application/octet-stream'};base64,${fs.readFileSync(file).toString('base64')}`;
+      }
+    }
+    const bake = `<script>window.SCEN_IMAGES = ${JSON.stringify(images).replace(/</g, '\\u003c')};\nwindow.SCEN_REPO = ${JSON.stringify(repo).replace(/</g, '\\u003c')};\nwindow.SCEN_MALLAR = ${JSON.stringify(tpls).replace(/</g, '\\u003c')};</script>\n`;
+    const local = s.replace('<script id="scen-engine">', () => bake + '<script id="scen-engine">');
+    wr('scen.html', local);
+    console.log('scen.html', Math.round(local.length / 1024) + ` kB med ${repo.length} presentationer inbakade. Dubbelklicka för att öppna.`);
+  },
+  'exportera-elev'(file) {
+    if (!file) throw new Error('Ange ett manus.');
+    const { html, missing } = standalone(readDeck(file), true);
+    const out = 'dist/' + slug(file) + '-elev.html';
+    wr(out, html); console.log(out);
+    if (missing.length) console.warn('Saknas: ' + missing.join(', '));
   },
   exportera(file) {
     if (!file) return console.error('Ange ett manus, t.ex. presentationer/kastrorelse.md');
@@ -119,7 +143,7 @@ const cmds = {
       d.slides.forEach((s, i) => {
         const k = String(s.image || '').replace(/^img:/, '');
         if (k && !/^(data:|https?:)/.test(k) && !fs.existsSync(path.join(ROOT, k))) probs.push(`bild ${i + 1}: saknar ${k}`);
-        if (!s.title && !['quote', 'image', 'egen'].includes(s.layout)) probs.push(`bild ${i + 1}: ingen rubrik`);
+        if (!s.title && !['quote', 'image', 'egen', 'strålkastare', 'tom'].includes(s.layout)) probs.push(`bild ${i + 1}: ingen rubrik`);
       });
       console.log(`${probs.length ? '✗' : '✓'} ${f}: ${d.slides.length} bilder, tema ${d.theme.id}`);
       probs.forEach(p => console.log('    ' + p));

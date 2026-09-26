@@ -6,7 +6,7 @@ const rid = () => Math.random().toString(36).slice(2, 10);
 const esc = Scen.esc;
 const now = () => Date.now();
 const clone = o => JSON.parse(JSON.stringify(o));
-const IMG = Object.assign({}, window.SCEN_IMAGES || {});
+const IMG = {};
 let decks = [], deck = null, cur = 0, pv = null, presenter = null, dl = null, SAMPLER = null, myTpls = [];
 
 /* =================== lagring =================== */
@@ -159,7 +159,7 @@ function closeModal() { const m = $('#modal'); m.hidden = true; m.innerHTML = ''
 document.addEventListener('keydown', e => { if (e.key === 'Escape' && !$('#modal').hidden && !presenter) closeModal(); });
 function usedImages(d) {
   const set = new Set();
-  d.slides.forEach(s => [s.image,...(s.layers||[]).filter(l=>l.type==='bild').map(l=>l.src)].filter(Boolean).forEach(src => set.add(String(src).replace(/^img:/,''))));
+  d.slides.forEach(s => { if (s.image && /^img:/.test(s.image)) set.add(s.image.slice(4)); });
   return [...set];
 }
 function normalize(d) {
@@ -325,14 +325,15 @@ async function engineSources() {
   if (!js.trim()) js = await (await fetch('src/engine.js')).text();
   return { css, js };
 }
-async function standaloneHtml(d, student = false) {
+async function standaloneHtml(d) {
   const images = {};
   usedImages(d).forEach(id => { if (IMG[id]) images[id] = IMG[id]; });
-  for (const k of usedImages(d)) {
+  for (const s of d.slides) {
+    const k = String(s.image || '').replace(/^img:/, '');
     if (k && !images[k] && isPath(k)) { try { images[k] = await toDataUrl(k); } catch (e) { /* bilden saknas */ } }
   }
   const { css, js } = await engineSources();
-  const data = Scen.exportData(d, images, student);
+  const data = { v: 3, title: d.title, theme: d.theme, slides: d.slides, templates: d.templates || {}, images, exportedAt: new Date().toISOString() };
   const fonts = Scen.fontUrl();
   const json = JSON.stringify(data).replace(/</g, '\\u003c');
   return '<!doctype html>\n<html lang="sv"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><meta name="generator" content="Scen 2">' +
@@ -351,11 +352,9 @@ async function saveFile(filename, blob) {
 function exportDeck(d) {
   const box = modal(`<h2>Spara på datorn</h2>
     <div class="exp-grid">
-      <button type="button" class="exp" id="expStudent"><strong>Elevversion (.html)</strong><span>Fristående uppspelning med alla animationer. Inga redigeringsverktyg, talaranteckningar eller talarvy. Dela filen med eleverna.</span></button>
-      <button type="button" class="exp" id="expHtml"><strong>Lärarversion (.html)</strong><span>En fil som spelas upp i alla webbläsare, även utan internet. Talarvy på P. Kan importeras igen.</span></button>
+      <button type="button" class="exp" id="expHtml"><strong>Presentation (.html)</strong><span>En fil som spelas upp i alla webbläsare, även utan internet. Talarvy på P. Kan importeras igen.</span></button>
       <button type="button" class="exp" id="expMd"><strong>Manus (.md)</strong><span>Presentationen som text. Lägg den i mappen presentationer i ditt repo, eller ge den till Claude att bygga vidare på.</span></button>
     </div><div class="acts"><button class="btn" data-close>Avbryt</button></div>`);
-  $('#expStudent').onclick = () => { closeModal(); exportAs(d, 'student'); };
   $('#expHtml').onclick = () => { closeModal(); exportAs(d, 'html'); };
   $('#expMd').onclick = () => { closeModal(); exportAs(d, 'md'); };
 }
@@ -363,8 +362,8 @@ async function exportAs(d, kind) {
   if (!deck || d.id !== deck.id) Object.assign(IMG, await safeImages(d.id));
   try {
     if (kind === 'md') await saveFile(fileName(d.title, '.md'), new Blob([Manus.stringify(d)], { type: 'text/markdown' }));
-    else await saveFile(fileName(d.title + (kind === 'student' ? ' – elevversion' : '')), new Blob([await standaloneHtml(d, kind === 'student')], { type: 'text/html' }));
-    toast(kind === 'student' ? 'Elevversionen är sparad. Dela HTML-filen med eleverna.' : kind === 'md' ? 'Manuset är sparat.' : 'Sparad. Öppna filen i valfri webbläsare, eller importera den här för att redigera vidare.');
+    else await saveFile(fileName(d.title), new Blob([await standaloneHtml(d)], { type: 'text/html' }));
+    toast(kind === 'md' ? 'Manuset är sparat.' : 'Sparad. Öppna filen i valfri webbläsare, eller importera den här för att redigera vidare.');
   } catch (e) {
     const c = e && e.code;
     if (c === 'declined') return;
@@ -430,12 +429,7 @@ async function handleFile(file) {
 }
 
 /* =================== redigerare =================== */
-const FIELDS = {etapper:[["caption", "Etikett", "text"], ["title", "Rubrik", "text"], ["items", "Högst 4 rader: rubrik | text", "list"]],vagval:[["caption", "Etikett", "text"], ["title", "Rubrik", "text"], ["items", "Högst 4 rader: kriterium | vänster | höger", "list"], ["lt", "Vänster alternativ", "text"], ["rt", "Höger alternativ", "text"]],lager:[["caption", "Etikett", "text"], ["title", "Rubrik", "text"], ["items", "Högst 3 rader: rubrik | text", "list"]],resonemang:[["caption", "Etikett", "text"], ["title", "Rubrik", "text"], ["items", "Högst 3 rader: rubrik | text", "list"], ["text", "Slutsats", "area"]],helhet:[["caption", "Etikett", "text"], ["title", "Rubrik", "text"], ["items", "Högst 4 rader: rubrik | text", "list"]],
-lameller: [["title", "Rubrik", "text"], ["caption", "Etikett", "text"], ["text", "Kort text", "area"], ["image", "Bild", "image"]],
-register: [["title", "Rubrik", "text"], ["items", "Högst 5 rader: rubrik | text", "list"]],
-samband: [["title", "Rubrik", "text"], ["items", "Högst 4 rader: rubrik | text", "list"], ["text", "Slutsats", "area"]],
-marginal: [["title", "Rubrik", "text"], ["items", "Högst 3 rader: rubrik | text", "list"], ["image", "Bild", "image"]],
-sats: [["title", "Rubrik", "text"], ["items", "Högst 3 rader: rubrik | text", "list"], ["text", "Slutsats", "area"]],
+const FIELDS = {
   title: [['title', 'Rubrik', 'text'], ['text', 'Underrubrik', 'area'], ['caption', 'Rad längst ner, t.ex. kurs och datum', 'text'], ['image', 'Bild i högerkanten', 'image']],
   section: [['caption', 'Etikett ovanför, t.ex. Del 2', 'text'], ['title', 'Rubrik', 'text'], ['text', 'Ingress', 'area'], ['image', 'Bild i högerkanten', 'image']],
   statement: [['caption', 'Etikett ovanför', 'text'], ['title', 'Påstående', 'area'], ['text', 'Tillägg', 'area'], ['image', 'Bild i högerkanten', 'image']],
@@ -459,24 +453,9 @@ sats: [["title", "Rubrik", "text"], ["items", "Högst 3 rader: rubrik | text", "
   triad: [['caption', 'Etikett', 'text'], ['title', 'Rubrik', 'text'], ['items', 'Premisser, en per rad: nyckelord | mening', 'list'], ['text', 'Slutsats, landar sist', 'area'], ['image', 'Bildband överst', 'image']],
   motsats: [['caption', 'Etikett', 'text'], ['title', 'Rubrik', 'text'], ['items', 'Tre rader: vänster | text, höger | text, exempel | text', 'list'], ['image', 'Bild', 'image'], ['banner', 'Visa bilden som band överst', 'check'], ['flip', 'Bilden till höger', 'check']],
   bildkant: [['caption', 'Etikett', 'text'], ['title', 'Rubrik', 'text'], ['text', 'Ingress', 'area'], ['bullets', 'Punkter', 'list'], ['image', 'Bild i hörnet', 'image'], ['flip', 'Bilden nere till vänster', 'check']],
-  tom: [],
-  'båge': [['caption', 'Etikett längs bågen', 'text'], ['title', 'Rubrik', 'area'], ['text', 'Kort text', 'area'], ['number', 'Stort konturtal, t.ex. 03', 'text']],
-  omlopp: [['caption', 'Etikett', 'text'], ['title', 'Begreppet i mitten', 'text'], ['text', 'Ingress', 'area'], ['items', 'Delar runt banan, en per rad: namn | text', 'list']],
-  gradskiva: [['caption', 'Etikett', 'text'], ['title', 'Rubrik', 'text'], ['items', 'Lägen längs skalan, en per rad: namn | förklaring', 'list']],
-  bro: [['caption', 'Etikett', 'text'], ['title', 'Rubrik', 'text'], ['text', 'Ingress', 'area'], ['lt', 'Start', 'text'], ['rt', 'Mål', 'text'], ['items', 'Hållplatser, en per rad: namn | text', 'list']],
-  ringar: [['caption', 'Etikett', 'text'], ['title', 'Rubrik', 'text'], ['items', 'Två eller tre ringar: namn | text', 'list'], ['text', 'Det gemensamma i mitten', 'area']],
-  lins: [['caption', 'Etikett', 'text'], ['title', 'Rubrik', 'text'], ['text', 'Ingress', 'area'], ['image', 'Bild', 'image'], ['items', 'Detaljer, en per rad: x y (procent) | rubrik | text', 'list'], ['number', 'Linsens radie i pixlar (t.ex. 230)', 'text']],
-  'mätare': [['caption', 'Etikett', 'text'], ['title', 'Rubrik', 'text'], ['number', 'Tal, t.ex. 73 % eller 4 av 8', 'text'], ['max', 'Maxvärde om talet inte är en andel', 'text'], ['text', 'Förklaring', 'area']],
-  'ridå': [['caption', 'Etikett', 'text'], ['title', 'Rubrik', 'area'], ['text', 'Kort text', 'area'], ['image', 'Bild i helformat', 'image']],
-  'strålkastare': [['caption', 'Etikett', 'text'], ['items', 'Meningen i delar, en fras per rad', 'list'], ['text', 'Efterord, visas sist', 'area']],
-  fokus: [['caption', 'Etikett', 'text'], ['title', 'Rubrik', 'text'], ['text', 'Ingress', 'area'], ['items', 'Rader, en per rad: namn | förklaring', 'list']],
-  ordbild: [['caption', 'Etikett', 'text'], ['title', 'Ordet', 'text'], ['text', 'Kort text', 'area'], ['image', 'Bild som fyller ordet', 'image']],
-  'bildfält': [['caption', 'Etikett', 'text'], ['title', 'Rubrik', 'text'], ['text', 'Ingress', 'area'], ['bullets', 'Punkter', 'list'], ['image', 'Bild', 'image'], ['flip', 'Bilden till vänster', 'check']],
-  delning: [['caption', 'Etikett', 'text'], ['title', 'Rubrik', 'text'], ['items', 'Två eller tre rader: vänster | text, höger | text, exempel | text', 'list']],
-  ljustal: [['caption', 'Etikett', 'text'], ['title', 'Rubrik', 'text'], ['number', 'Tal, t.ex. 73 % eller 4 av 8', 'text'], ['max', 'Maxvärde om talet inte är en andel', 'text'], ['text', 'Förklaring', 'area']],
   egen: [['tpl', 'Mall', 'tplselect'], ['caption', 'Etikett', 'text'], ['title', 'Rubrik', 'text'], ['text', 'Text', 'area'], ['items', 'Lista, en per rad: rubrik | text', 'list'], ['answer', 'Svar', 'area'], ['image', 'Bild', 'image']]
 };
-const STEPPED = ["etapper","vagval","lager","resonemang","helhet",'register','samband','marginal','sats','bullets', 'split', 'cards', 'compare', 'timeline', 'chat', 'duo', 'egen', 'karta', 'triad', 'motsats', 'bildkant', 'omlopp', 'gradskiva', 'bro', 'ringar', 'lins', 'strålkastare', 'fokus', 'bildfält', 'delning'];
+const STEPPED = ['bullets', 'split', 'cards', 'compare', 'timeline', 'chat', 'duo', 'egen', 'karta', 'triad', 'motsats', 'bildkant'];
 const DEFAULTS = {
   title: { title: 'Rubrik', text: 'Underrubrik', bg: 'nodes' },
   section: { caption: 'Del 1', title: 'Nytt avsnitt', bg: 'field' },
@@ -493,9 +472,8 @@ const DEFAULTS = {
   quote: { text: 'Citat', caption: 'Källa' },
   egen: { title: 'Rubrik', items: ['Första | Förklaring', 'Andra | Förklaring', 'Tredje | Förklaring'], steps: true }
 };
-["etapper","vagval","lager","resonemang","helhet",'lameller','register','samband','marginal','sats','poll', 'reflect', 'define', 'chat', 'duo', 'omslag', 'karta', 'triad', 'motsats', 'bildkant', 'båge', 'omlopp', 'gradskiva', 'bro', 'ringar', 'lins', 'mätare', 'ridå', 'strålkastare', 'fokus', 'ordbild', 'bildfält', 'delning', 'ljustal'].forEach(l => { const c = Manus.CATALOG.find(x => x.l === l); if (c) { const p = Manus.parseBlock(c.ex); delete p.layout; DEFAULTS[l] = p; } });
-const WF = {etapper:"<path class=\"l\" d=\"M15 30H55V45H100V60H145\"/>",vagval:"<path class=\"l\" d=\"M14 30H146M14 50H146M14 70H146M60 15V75M103 15V75\"/>",lager:"<path class=\"l\" d=\"M15 20H140M30 45H140M45 70H140\"/>",resonemang:"<path class=\"l\" d=\"M15 20H75M15 45H75M15 70H75M92 20V70\"/><rect class=\"a\" x=\"105\" y=\"30\" width=\"40\" height=\"30\"/>",helhet:"<rect class=\"a\" x=\"14\" y=\"20\" width=\"60\" height=\"54\"/><path class=\"l\" d=\"M88 20H145M88 45H145M88 70H145\"/>",
-lameller:"<path class=\"l\" d=\"M25 10V80M50 10V80M75 10V80M100 10V80M125 10V80\"/><rect class=\"a\" x=\"12\" y=\"50\" width=\"100\" height=\"18\"/>",register:"<rect class=\"o\" x=\"12\" y=\"15\" width=\"30\" height=\"60\"/><rect class=\"a\" x=\"45\" y=\"15\" width=\"72\" height=\"60\"/><rect class=\"o\" x=\"120\" y=\"15\" width=\"28\" height=\"60\"/>",samband:"<path class=\"l\" d=\"M20 20H55L100 45H145M20 70H55L100 45\"/><circle class=\"a\" cx=\"130\" cy=\"45\" r=\"15\"/>",marginal:"<rect class=\"o\" x=\"12\" y=\"12\" width=\"80\" height=\"65\"/><path class=\"l\" d=\"M100 20H148M100 45H148M100 70H148\"/>",sats:"<text class=\"a\" x=\"20\" y=\"50\" style=\"font:30px serif\">x + y</text><path class=\"l\" d=\"M20 65H140\"/>",
+['poll', 'reflect', 'define', 'chat', 'duo', 'omslag', 'karta', 'triad', 'motsats', 'bildkant'].forEach(l => { const c = Manus.CATALOG.find(x => x.l === l); if (c) { const p = Manus.parseBlock(c.ex); delete p.layout; DEFAULTS[l] = p; } });
+const WF = {
   title: '<rect class="a" x="14" y="46" width="96" height="16" rx="3"/><rect class="m" x="14" y="68" width="62" height="5" rx="2"/>',
   section: '<rect class="a" x="14" y="30" width="28" height="4" rx="2"/><rect class="m" x="14" y="40" width="108" height="16" rx="3" style="opacity:.8"/>',
   statement: '<rect class="m" x="14" y="28" width="124" height="11" rx="3" style="opacity:.8"/><rect class="m" x="14" y="45" width="88" height="11" rx="3" style="opacity:.8"/>',
@@ -518,21 +496,6 @@ lameller:"<path class=\"l\" d=\"M25 10V80M50 10V80M75 10V80M100 10V80M125 10V80\
   triad: '<line class="l" x1="18" y1="16" x2="18" y2="50"/><rect class="m" x="26" y="16" width="90" height="5" rx="2"/><rect class="m" x="26" y="28" width="80" height="5" rx="2"/><rect class="m" x="26" y="40" width="86" height="5" rx="2"/><rect class="a" x="14" y="60" width="118" height="12" rx="2"/>',
   motsats: '<rect class="m" x="14" y="12" width="70" height="8" rx="2" style="opacity:.8"/><rect class="o" x="14" y="28" width="52" height="36" rx="4" style="opacity:.5"/><text x="72" y="54" style="font:italic 26px Georgia,serif;fill:var(--line-2)">/</text><rect class="o" x="86" y="26" width="60" height="40" rx="4" style="stroke:var(--accent)"/><rect class="m" x="14" y="72" width="100" height="4" rx="2"/>',
   bildkant: '<rect class="a" x="86" y="-4" width="80" height="54" rx="4" transform="rotate(4 120 20)" style="opacity:.8"/><rect class="m" x="14" y="56" width="66" height="9" rx="2" style="opacity:.8"/><rect class="m" x="14" y="70" width="50" height="4" rx="2"/>',
-  'båge': '<path d="M 20 -20 A 120 120 0 0 1 140 100" fill="none" style="stroke:var(--line-2)" stroke-width="1.5"/><path d="M 44 -20 A 128 128 0 0 1 150 80" fill="none" style="stroke:var(--accent)" stroke-width="3"/><circle class="a" cx="118" cy="30" r="5"/><rect class="m" x="14" y="56" width="62" height="12" rx="2" style="opacity:.85"/><rect class="m" x="14" y="72" width="44" height="4" rx="2"/>',
-  omlopp: '<ellipse cx="80" cy="48" rx="62" ry="28" fill="none" style="stroke:var(--muted)" stroke-width="1.5"/><circle cx="80" cy="48" r="15" fill="none" style="stroke:var(--line-2)" stroke-width="2"/><circle class="a" cx="80" cy="20" r="4.5"/><circle class="a" cx="134" cy="62" r="4.5"/><circle class="a" cx="26" cy="62" r="4.5"/>',
-  gradskiva: '<path d="M 30 78 A 50 50 0 0 1 130 78" fill="none" style="stroke:var(--line-2)" stroke-width="5" stroke-linecap="round"/><path d="M 30 78 A 50 50 0 0 1 96 31" fill="none" style="stroke:var(--accent)" stroke-width="5" stroke-linecap="round"/><path d="M80 78 L 104 40" style="stroke:var(--ink,#222)" stroke-width="3" stroke-linecap="round"/><circle cx="80" cy="78" r="5" style="fill:var(--ink,#222)"/>',
-  bro: '<path d="M 22 76 A 70 70 0 0 1 138 76" fill="none" style="stroke:var(--muted)" stroke-width="2"/><circle cx="22" cy="76" r="6" style="fill:var(--ink,#222)"/><circle cx="138" cy="76" r="6" fill="none" style="stroke:var(--ink,#222)" stroke-width="2"/><circle class="a" cx="58" cy="34" r="4"/><circle class="a" cx="102" cy="34" r="4"/><circle class="a" cx="80" cy="26" r="6"/>',
-  ringar: '<circle cx="62" cy="50" r="30" style="fill:var(--accent);fill-opacity:.15;stroke:var(--accent)" stroke-width="2"/><circle cx="98" cy="50" r="30" style="fill:var(--line-2);fill-opacity:.3;stroke:var(--muted)" stroke-width="2"/>',
-  lins: '<rect x="10" y="10" width="140" height="70" rx="4" style="fill:var(--muted);opacity:.35"/><circle cx="96" cy="46" r="22" style="fill:var(--accent);opacity:.55"/><circle cx="96" cy="46" r="26" fill="none" style="stroke:var(--ink,#222)" stroke-width="2"/><rect class="m" x="18" y="18" width="50" height="7" rx="2" style="opacity:.9"/>',
-  'mätare': '<path d="M 96 72 A 30 30 0 1 1 136 72" fill="none" style="stroke:var(--line-2)" stroke-width="6" stroke-linecap="round"/><path d="M 96 72 A 30 30 0 0 1 124 22" fill="none" style="stroke:var(--accent)" stroke-width="6" stroke-linecap="round"/><rect class="m" x="14" y="30" width="56" height="9" rx="2" style="opacity:.85"/><rect class="m" x="14" y="46" width="44" height="4" rx="2"/>',
-  'ridå': '<rect x="0" y="0" width="160" height="90" style="fill:var(--muted);opacity:.3"/><rect x="0" y="0" width="34" height="90" style="fill:var(--bg,#111)"/><rect x="31" y="0" width="3" height="90" style="fill:var(--accent)"/><rect x="126" y="0" width="34" height="90" style="fill:var(--bg,#111)"/><rect x="126" y="0" width="3" height="90" style="fill:var(--accent)"/><rect class="m" x="40" y="56" width="70" height="12" rx="2"/>',
-  'strålkastare': '<ellipse cx="46" cy="10" rx="44" ry="30" style="fill:var(--accent);opacity:.25"/><rect class="m" x="14" y="28" width="46" height="11" rx="2"/><rect x="64" y="28" width="60" height="11" rx="2" style="fill:var(--muted);opacity:.3"/><rect x="14" y="45" width="90" height="11" rx="2" style="fill:var(--muted);opacity:.3"/><rect x="14" y="36" width="46" height="4" style="fill:var(--accent)"/>',
-  fokus: '<rect class="m" x="14" y="30" width="36" height="7" rx="2"/><rect x="66" y="16" width="70" height="10" rx="2" style="fill:var(--muted);opacity:.3"/><rect class="a" x="66" y="32" width="78" height="12" rx="2"/><rect class="m" x="66" y="48" width="60" height="4" rx="2"/><rect x="66" y="60" width="64" height="10" rx="2" style="fill:var(--muted);opacity:.3"/>',
-  ordbild: '<ellipse cx="80" cy="46" rx="70" ry="36" style="fill:var(--accent);opacity:.18"/><text x="80" y="60" text-anchor="middle" style="font:800 40px system-ui;fill:var(--accent)">Ord</text>',
-  'bildfält': '<rect x="56" y="0" width="104" height="90" style="fill:var(--muted);opacity:.35"/><rect x="56" y="0" width="30" height="90" style="fill:var(--bg,#111);opacity:.6"/><rect class="m" x="14" y="30" width="54" height="10" rx="2"/><rect class="a" x="14" y="50" width="6" height="3"/><rect class="m" x="24" y="49" width="36" height="4" rx="2"/><rect class="a" x="14" y="59" width="6" height="3"/><rect class="m" x="24" y="58" width="30" height="4" rx="2"/>',
-  delning: '<rect class="m" x="14" y="10" width="60" height="8" rx="2"/><rect x="0" y="32" width="80" height="58" style="fill:var(--muted);opacity:.22"/><rect class="a" x="80" y="32" width="80" height="58"/><rect class="m" x="12" y="66" width="40" height="9" rx="2"/><rect x="92" y="66" width="40" height="9" rx="2" style="fill:#0B0C10"/>',
-  ljustal: '<ellipse cx="50" cy="44" rx="50" ry="36" style="fill:var(--accent);opacity:.2"/><text x="14" y="62" style="font:800 42px system-ui;fill:var(--accent)">4/8</text><rect x="14" y="70" width="80" height="6" rx="3" style="fill:var(--muted);opacity:.3"/><rect class="a" x="14" y="70" width="40" height="6" rx="3"/><rect class="m" x="110" y="34" width="36" height="8" rx="2"/>',
-  tom: '<rect class="o" x="20" y="16" width="60" height="18" rx="2" stroke-dasharray="3 3"/><circle cx="118" cy="40" r="18" fill="none" style="stroke:var(--accent)" stroke-width="2.5"/><path d="M40 70h44" style="stroke:var(--accent)" stroke-width="3"/><path d="M78 64l8 6-8 6" fill="none" style="stroke:var(--accent)" stroke-width="3"/>',
   egen: '<rect class="o" x="14" y="12" width="132" height="66" rx="6" stroke-dasharray="4 4"/><path class="a" d="M70 36h20M80 26v20" style="stroke:var(--accent);stroke-width:3"/><rect class="m" x="50" y="56" width="60" height="5" rx="2"/>',
   quote: '<text x="14" y="38" style="font:700 34px Georgia,serif;fill:var(--accent)">”</text><rect class="m" x="14" y="44" width="120" height="9" rx="2" style="opacity:.8"/><rect class="m" x="14" y="58" width="84" height="9" rx="2" style="opacity:.8"/><rect class="m" x="14" y="74" width="40" height="4" rx="2"/>'
 };
@@ -547,10 +510,6 @@ function showEditor() {
   cur = Math.max(0, Math.min(cur, deck.slides.length - 1));
   if (pv) pv.destroy();
   pv = Scen.player($('#preview'), deck, { mode: 'preview', images: IMG, start: cur });
-  const ov = document.createElement('div'); ov.className = 'sel-ov';
-  ov.innerHTML = '<div class="sel-box" hidden>' + ['nw', 'n', 'ne', 'e', 'se', 's', 'sw', 'w'].map(h => `<i data-h="${h}"></i>`).join('') + '</div>';
-  $('#preview').appendChild(ov);
-  selL = null; snapReset(); updateUndoBtn();
   renderRail(); renderInsp(); setSave('saved');
 }
 function renderTheme() {
@@ -559,9 +518,7 @@ function renderTheme() {
 }
 function select(i) {
   if (!deck) return;
-  if (editing) finishEdit();
   cur = Math.max(0, Math.min(i, deck.slides.length - 1));
-  selL = null; drawSel();
   pv && pv.go(cur, { anim: false, atEnd: true });
   $$('#rail .rail-item').forEach((li, j) => li.classList.toggle('on', j === cur));
   const on = $('#rail .rail-item.on'); on && on.scrollIntoView({ block: 'nearest', inline: 'nearest' });
@@ -571,8 +528,7 @@ let pvT = 0, railT = 0, saveT = 0, saving = false, again = false;
 function changed(o) {
   o = o || {};
   deck.updatedAt = now();
-  trackUndo();
-  clearTimeout(pvT); pvT = setTimeout(() => { pv && pv.setDeck(deck, IMG, cur); drawSel(); }, o.now ? 0 : 90);
+  clearTimeout(pvT); pvT = setTimeout(() => { pv && pv.setDeck(deck, IMG, cur); }, o.now ? 0 : 90);
   clearTimeout(railT); railT = setTimeout(() => o.all ? renderRail() : refreshThumb(cur), o.now ? 0 : 250);
   scheduleSave();
 }
@@ -694,9 +650,8 @@ function renderInsp() {
     <button type="button" class="btn small" data-act="dup">Duplicera</button>
     <button type="button" class="btn small danger" data-act="del" ${deck.slides.length < 2 ? 'disabled' : ''}>Ta bort</button></div></div>
     ${SAMPLER ? `<form class="ask" id="askForm"><label for="askIn" class="lab">Be Claude ändra bilden</label><div class="ask-row"><input type="text" id="askIn" placeholder="t.ex. gör om till en omröstning" autocomplete="off"><button type="submit" class="btn small primary">Skicka</button></div><p class="ask-state hint" id="askState" role="status"></p></form>` : ''}
-    ${selL && findL(selL) ? layerPanel(findL(selL)) : ''}
     <div class="fld"><label for="f-layout">Mall</label><div class="row2" style="grid-template-columns:1fr auto"><select id="f-layout" data-f="layout" data-t="layout">${opt(Scen.LAYOUTS, L)}</select><button type="button" class="btn small" data-act="layouts">Visa alla</button></div></div>
-    <div class="grp"><h3>Innehåll</h3>` + (L === 'tom' ? '<p class="hint">Fri yta har bara fria lager. Lägg till text, bilder och former med knapparna under bilden.</p>' : '');
+    <div class="grp"><h3>Innehåll</h3>`;
   (FIELDS[L] || []).forEach(([f, label, t]) => {
     const id = 'f-' + f;
     if (t === 'text') h += `<div class="fld"><label for="${id}">${esc(label)}</label><input type="text" id="${id}" data-f="${f}" data-t="text" value="${esc(valOf(s[f]))}"></div>`;
@@ -714,15 +669,15 @@ function renderInsp() {
       h += `<div class="fld"><label for="${id}">${esc(label)}</label><select id="${id}" data-t="tpl">${Object.keys(all).length ? opt(all, s.tpl) : '<option value="">Inga egna mallar än</option>'}</select><span class="hint">Egna mallar skapar du under Mallar i biblioteket.</span></div>`;
     }
   });
-  h += '</div>' + layerList(s) + `<div class="grp"><h3>Rörelse</h3>
-    <div class="row2"><div class="fld"><label for="f-accent">Accentfärg för bilden</label><select id="f-accent" data-f="accent" data-t="text">${opt(Object.assign({'':'Följ presentationens tema'},Object.fromEntries(Object.entries(Scen.ACCENTS).map(([k,v])=>[k,v[2]]))),s.accent||'')}</select></div><div class="fld"><label for="f-transition">Övergång hit</label><select id="f-transition" data-f="transition" data-t="text">${opt(Scen.TRANSITIONS, s.transition || 'auto')}</select></div>
+  h += `</div><div class="grp"><h3>Rörelse</h3>
+    <div class="row2"><div class="fld"><label for="f-transition">Övergång hit</label><select id="f-transition" data-f="transition" data-t="text">${opt(Scen.TRANSITIONS, s.transition || 'auto')}</select></div>
     <div class="fld"><label for="f-bg">Bakgrund</label><select id="f-bg" data-f="bg" data-t="text">${opt(Scen.BACKGROUNDS, s.bg || 'none')}</select></div></div>
     <div class="row2"><div class="fld"><label for="f-ta">Rubrikens rörelse</label><select id="f-ta" data-f="ta" data-t="text">${opt(Scen.TITLE_ANIMS, s.ta || 'auto')}</select></div>
     <div class="fld"><label for="f-ba">Innehållets rörelse</label><select id="f-ba" data-f="ba" data-t="text">${opt(Scen.BODY_ANIMS, s.ba || 'auto')}</select></div></div>`;
-  if (STEPPED.includes(L)) h += `<label class="chk"><input type="checkbox" id="f-steps" data-f="steps" data-t="check"${s.steps !== false ? ' checked' : ''}> Visa rubriker och innehåll stegvis, på klick</label>
-    <div class="fld"><label for="f-focus">Fokus på aktuellt steg</label><select id="f-focus" data-f="focus" data-t="text"${s.steps === false ? ' disabled' : ''}>${opt(Scen.FOCUS_STYLES,s.focus || (s.dim || (['bro','etapper','vagval','lager','resonemang','helhet'].includes(L) && s.dim !== false) ? 'soft' : 'none'))}</select><span class="hint">Mjuk tonar ned tidigare steg. Spotlight ger starkare kontrast. Accentlinje och Inramning markerar det aktuella steget.</span></div>`;
+  if (STEPPED.includes(L)) h += `<label class="chk"><input type="checkbox" id="f-steps" data-f="steps" data-t="check"${s.steps !== false ? ' checked' : ''}> Visa punkterna en i taget, på klick</label>
+    <label class="chk"><input type="checkbox" id="f-dim" data-f="dim" data-t="check"${s.dim ? ' checked' : ''}${s.steps === false ? ' disabled' : ''}> Tona ner tidigare punkter</label>`;
   h += `<span class="hint">Automatisk övergång blir morph när två bilder i rad har samma rubrik eller bild.</span></div>
-    <div class="grp"><h3>Anteckningar</h3><div class="fld"><label for="f-notes" class="muted" style="font-weight:400">Finns i lärarversionen (tangent N). Tas bort ur elevversionen.</label><textarea id="f-notes" data-f="notes" data-t="text" rows="4">${esc(valOf(s.notes))}</textarea></div></div>
+    <div class="grp"><h3>Anteckningar</h3><div class="fld"><label for="f-notes" class="muted" style="font-weight:400">Syns bara för dig när du visar (tangent N)</label><textarea id="f-notes" data-f="notes" data-t="text" rows="4">${esc(valOf(s.notes))}</textarea></div></div>
     <p class="fmt-tip">Skriv <code>**ord**</code> för att markera, <code>x^2</code> eller <code>x^{2}</code> för upphöjt och <code>v_{0}</code> för nedsänkt.</p>`;
   box.innerHTML = h;
 }
@@ -746,7 +701,7 @@ function onInspInput(e) {
   const s = deck.slides[cur];
   if (t === 'text') s[el.dataset.f] = el.value;
   else if (t === 'list') s[el.dataset.f] = el.value.split('\n');
-  else if (t === 'check') { s[el.dataset.f] = el.checked; if (el.dataset.f === 'steps') { const d = $('#f-focus'); if (d) d.disabled = !el.checked; } }
+  else if (t === 'check') { s[el.dataset.f] = el.checked; if (el.dataset.f === 'steps') { const d = $('#f-dim'); if (d) d.disabled = !el.checked; } }
   else if (t === 'layout') {
     s.layout = el.value;
     const def = DEFAULTS[el.value] || {};
@@ -757,21 +712,12 @@ function onInspInput(e) {
   else if (t === 'cell') { const r = +el.dataset.r, c = +el.dataset.c; const row = s.table.rows[r]; while (row.length <= c) row.push(''); row[c] = el.value; }
   else if (t === 'thead') { s.table.header = el.checked; changed(); renderInsp(); return; }
   else if (t === 'reveal') s.table.reveal = el.value;
-  else if (t === 'ly') {
-    const l = findL(selL); if (!l) return;
-    const k = el.dataset.k;
-    if (el.type === 'checkbox') l[k] = el.checked;
-    else if (el.type === 'number') { const v = parseFloat(el.value); if (isNaN(v)) return; l[k] = v; }
-    else { if (el.value === '') delete l[k]; else l[k] = el.value; }
-    changed(); return;
-  }
   else if (t === 'tpl') { s.tpl = el.value; useTemplate(el.value); changed({ now: true }); return; }
   changed();
 }
 function onInspClick(e) {
   const b = e.target.closest('[data-act]'); if (!b || !deck) return;
   const s = deck.slides[cur]; const a = b.dataset.act;
-  if (/^(ly|tofree)/.test(a) && layerAct(a, b.dataset.id)) return;
   if (a === 'up' && cur > 0) move(cur, cur - 1);
   else if (a === 'down' && cur < deck.slides.length - 1) move(cur, cur + 2);
   else if (a === 'dup') { const c = clone(s); c.id = rid(); deck.slides.splice(cur + 1, 0, c); cur++; changed({ all: true, now: true }); setTimeout(() => select(cur), 10); }
@@ -801,9 +747,8 @@ function onInspPaste(e) {
   s.table.rows.forEach(r => { while (r.length < n) r.push(''); });
   changed(); renderInsp();
 }
-async function setImage(file, target) {
+async function setImage(file) {
   if (!file || !deck) return;
-  target = target || imgTarget || 'slide'; imgTarget = 'slide';
   const s = deck.slides[cur];
   toast('Förbereder bilden…');
   const ext = (file.name || '').split('.').pop() || (file.type || '').split('/').pop();
@@ -812,17 +757,6 @@ async function setImage(file, target) {
   if (!url) { toast('Bilden kunde inte läsas. Prova JPG eller PNG.'); return; }
   const id = rid(); IMG[id] = url;
   try { await Store.saveImage(deck.id, id, url); } catch (e) { toast('Bilden visas men kunde inte sparas: ' + errMsg(e)); }
-  if (target === 'layer' || target === 'lyreplace') {
-    const dims = await new Promise(res => { const im = new Image(); im.onload = () => res([im.naturalWidth, im.naturalHeight]); im.onerror = () => res([4, 3]); im.src = url; });
-    if (target === 'lyreplace' && selL && findL(selL)) findL(selL).src = 'img:' + id;
-    else {
-      const w = 720, h = Math.round(Math.min(900, w * dims[1] / Math.max(1, dims[0])));
-      const l = { id: rid(), type: 'bild', x: Math.round(960 - w / 2), y: Math.round(540 - h / 2), w, h, src: 'img:' + id };
-      (s.layers = s.layers || []).push(l); selL = l.id;
-    }
-    changed({ now: true }); renderInsp(); toast('Bilden är tillagd. Dra den dit du vill ha den.');
-    return;
-  }
   if (['timeline', 'question'].includes(s.layout)) s.layout = (s.bullets && Scen.lines(s.bullets).length) || s.text ? 'split' : 'image';
   s.image = 'img:' + id;
   changed({ now: true }); renderInsp();
@@ -913,15 +847,15 @@ function templateEditor(t, onSaved) {
 async function showTemplates() {
   view('tpl');
   const main = $('#tplMain');
-  const cats = ['Signatur', 'Ljus', 'Banor', 'Redaktionellt', 'Struktur', 'Listor och steg', 'Data', 'Bild', 'Interaktivt'];
+  const cats = ['Redaktionellt', 'Struktur', 'Listor och steg', 'Data', 'Bild', 'Interaktivt'];
   const theme = { id: 'scen', accent: 'blue', look: 'auto' };
   main.innerHTML = `<div class="lib-head"><div><h1>Mallar</h1><p class="muted">Mallarna är byggstenarna i Scen. Samma katalog läser Claude när den planerar en presentation åt dig. Skriv manus med mallens namn inom hakparentes.</p></div></div>
     <section class="tpl-sec"><div class="sec-head"><h2>Mina mallar</h2><div class="acts">${SAMPLER ? '<button type="button" class="btn" id="tplAi">Ny mall med Claude</button>' : ''}<button type="button" class="btn" id="tplNew">Ny mall för hand</button></div></div><div class="tgrid" id="myTplGrid"></div></section>
     ${cats.map(c => `<section class="tpl-sec"><h2>${esc(c)}</h2><div class="tgrid" data-cat="${esc(c)}"></div></section>`).join('')}`;
   Manus.CATALOG.forEach(c => {
     const g = main.querySelector(`[data-cat="${c.cat}"]`); if (!g) return;
-    const sl = Manus.parseBlock(c.ex); if (['split', 'image', 'bildkant', 'omslag', 'lins', 'ridå', 'ordbild', 'bildfält'].includes(sl.layout)) sl.image = 'img:ex-parabel';
-    const th0 = c.cat === 'Redaktionellt' ? { id: 'atlas', accent: 'auto' } : c.cat === 'Banor' ? { id: 'bana', accent: 'auto' } : c.cat === 'Ljus' ? { id: 'djup', accent: 'auto' } : theme;
+    const sl = Manus.parseBlock(c.ex); if (['split', 'image', 'bildkant', 'omslag'].includes(sl.layout)) sl.image = 'img:ex-parabel';
+    const th0 = c.cat === 'Redaktionellt' ? { id: 'atlas', accent: 'auto' } : theme;
     const el = document.createElement('article'); el.className = 'tcard';
     const th = document.createElement('div'); th.className = 'tthumb'; th.appendChild(Scen.thumb(sl, { theme: th0, slides: [] }, IMG, 0));
     el.appendChild(th);
@@ -1019,7 +953,6 @@ function applyManus() {
   try { parsed = Manus.parse(text); } catch (e) { $('#manusErr').textContent = 'Kunde inte läsa manuset: ' + errMsg(e); return; }
   if (!parsed.slides.length) { $('#manusErr').textContent = 'Manuset innehåller inga bilder än.'; return; }
   $('#manusErr').textContent = '';
-  trackUndo();
   const old = deck.slides;
   deck.slides = parsed.slides.map((s, i) => {
     const o = old[i] || {};
@@ -1210,243 +1143,12 @@ Svara med endast JSON: {"name": "kort namn på svenska", "desc": "en mening om n
   };
 }
 
-/* =================== fria lager och direktredigering =================== */
-let selL = null, drag = null, editing = null, imgTarget = 'slide';
-let undoStack = [], redoStack = [], lastSnap = null, lastPush = 0;
-const LY_NAMES = { text: 'Text', bild: 'Bild', form: 'Rektangel', cirkel: 'Cirkel', pil: 'Pil', markering: 'Markering' };
-const LY_COLORS = { text: 'Textfärg', dampad: 'Dämpad', accent: 'Accent', accent2: 'Accent 2', yta: 'Yta', vit: 'Vit', svart: 'Svart' };
-const LY_FILLS = { '': 'Ingen', yta: 'Yta', accent: 'Accent', markering: 'Markering' };
-function findL(id) { const s = deck && deck.slides[cur]; return s && (s.layers || []).find(l => l.id === id); }
-function layerEl(id) { return $(`#preview .slide.active [data-lid="${CSS.escape(id)}"]`); }
-function stageInfo() {
-  const st = $('#preview .slide.active') || $('#preview .sc-stage'); const r = $('#preview .sc-stage').getBoundingClientRect(); const pr = $('#preview').getBoundingClientRect();
-  return { s: r.width / 1920, ox: r.left - pr.left, oy: r.top - pr.top };
-}
-function drawSel() {
-  const box = $('.sel-box'); if (!box) return;
-  const l = selL && findL(selL);
-  if (!l || manusOn) { box.hidden = true; return; }
-  const { s, ox, oy } = stageInfo();
-  box.hidden = false;
-  Object.assign(box.style, { left: ox + l.x * s + 'px', top: oy + l.y * s + 'px', width: l.w * s + 'px', height: l.h * s + 'px', transform: +l.rot ? `rotate(${+l.rot}deg)` : '' });
-  box.classList.toggle('editing', !!editing);
-}
-const snap = v => Math.round(v / 4) * 4;
-function trackUndo() {
-  if (!deck) return;
-  const nowS = JSON.stringify({ slides: deck.slides, theme: deck.theme, templates: deck.templates, title: deck.title });
-  if (lastSnap && nowS !== lastSnap) {
-    if (Date.now() - lastPush > 700) { undoStack.push(lastSnap); if (undoStack.length > 100) undoStack.shift(); lastPush = Date.now(); }
-    redoStack = [];
-  }
-  lastSnap = nowS; updateUndoBtn();
-}
-function snapReset() { undoStack = []; redoStack = []; lastSnap = deck ? JSON.stringify({ slides: deck.slides, theme: deck.theme, templates: deck.templates, title: deck.title }) : null; }
-function updateUndoBtn() { const b = $('#btnUndo'); if (b) b.disabled = !undoStack.length; }
-function restoreSnap(json) {
-  const d = JSON.parse(json);
-  Object.assign(deck, d); lastSnap = json; lastPush = 0;
-  cur = Math.min(cur, deck.slides.length - 1); selL = null; if (editing) editing = null;
-  $('#deckTitle').value = deck.title || ''; renderTheme();
-  pv && pv.setDeck(deck, IMG, cur); renderRail(); renderInsp(); drawSel();
-  if (manusOn) $('#manusText').value = Manus.stringify(deck);
-  deck.updatedAt = now(); scheduleSave(); updateUndoBtn();
-}
-function undo() { if (!undoStack.length) { toast('Inget att ångra.'); return; } redoStack.push(lastSnap); restoreSnap(undoStack.pop()); toast('Ångrat.'); }
-function redo() { if (!redoStack.length) return; undoStack.push(lastSnap); restoreSnap(redoStack.pop()); }
-
-function addLayer(type) {
-  if (!deck) return;
-  if (type === 'bild') { imgTarget = 'layer'; const f = $('#imgfile'); f.value = ''; f.click(); return; }
-  const s = deck.slides[cur];
-  const D = {
-    text: { x: 560, y: 450, w: 800, h: 110, size: 56, text: 'Ny text', color: 'text' },
-    form: { x: 760, y: 340, w: 400, h: 400, color: 'accent', stroke: 6 },
-    cirkel: { x: 760, y: 340, w: 400, h: 400, color: 'accent', stroke: 6 },
-    pil: { x: 760, y: 480, w: 400, h: 120, color: 'accent', stroke: 8 },
-    markering: { x: 560, y: 470, w: 800, h: 110, fill: 'markering' }
-  }[type];
-  const l = Object.assign({ id: rid(), type }, D);
-  (s.layers = s.layers || []).push(l); selL = l.id;
-  changed({ now: true }); renderInsp();
-  if (type === 'text') setTimeout(() => { const el = layerEl(l.id); if (el) startEdit(el, true); }, 60);
-}
-function startEdit(el, selectAll) {
-  const l = findL(el.dataset.lid); if (!l || l.type !== 'text') return;
-  const t = el.querySelector('.lyr-t'); if (!t) return;
-  t.textContent = l.text || ''; t.style.whiteSpace = 'pre-wrap'; t.contentEditable = 'true'; t.spellcheck = true; t.focus();
-  const r = document.createRange(); r.selectNodeContents(t); if (!selectAll) r.collapse(false);
-  const sel = window.getSelection(); sel.removeAllRanges(); sel.addRange(r);
-  editing = { l, t }; drawSel();
-  t.addEventListener('blur', finishEdit, { once: true });
-  t.addEventListener('keydown', e => { if (e.key === 'Escape') { e.preventDefault(); t.blur(); } e.stopPropagation(); });
-}
-function finishEdit() {
-  if (!editing) return;
-  const { l, t } = editing; editing = null;
-  l.text = t.innerText.replace(/\n+$/, ''); t.contentEditable = 'false';
-  changed({ now: true }); renderInsp();
-}
-function layerPanel(l) {
-  const n = (k, lab, min, max) => `<div class="fld"><label for="ly-${k}">${lab}</label><input type="number" id="ly-${k}" data-t="ly" data-k="${k}" value="${Math.round(+l[k] || 0)}"${min != null ? ` min="${min}"` : ''}${max != null ? ` max="${max}"` : ''}></div>`;
-  const sel = (k, lab, map) => `<div class="fld"><label for="ly-${k}">${lab}</label><select id="ly-${k}" data-t="ly" data-k="${k}">${opt(map, l[k] || '')}</select></div>`;
-  let h = `<div class="grp lyr-panel"><div class="sec-row"><h3>Valt lager: ${esc(LY_NAMES[l.type] || 'Lager')}</h3><button type="button" class="link" data-act="lyclose">Klar</button></div>`;
-  if (l.type === 'text') h += `<div class="fld"><label for="ly-text">Text</label><textarea id="ly-text" data-t="ly" data-k="text" rows="3">${esc(l.text || '')}</textarea><span class="hint">Eller dubbelklicka på texten i bilden och skriv där.</span></div>
-    <div class="row2">${n('size', 'Storlek', 12, 400)}${sel('color', 'Färg', LY_COLORS)}</div>
-    <div class="row2">${sel('font', 'Typsnitt', { '': 'Brödtext', rubrik: 'Rubrik' })}${sel('align', 'Justering', { '': 'Vänster', center: 'Centrerad', höger: 'Höger' })}</div>
-    <div class="row2">${sel('fill', 'Bakgrund', LY_FILLS)}<label class="chk" style="align-self:end"><input type="checkbox" data-t="ly" data-k="bold"${l.bold ? ' checked' : ''}> Fetstil</label></div>`;
-  else if (l.type === 'bild') h += `<div class="acts left"><button type="button" class="btn small" data-act="lyimg">Byt bild</button></div>${sel('fit', 'Passning', { '': 'Fyll rutan', hela: 'Visa hela bilden' })}`;
-  else if (l.type === 'markering') h += sel('fill', 'Färg', { '': 'Markering', markering: 'Markering', accent: 'Accent', yta: 'Yta' });
-  else h += `<div class="row2">${sel('color', 'Färg', LY_COLORS)}${n('stroke', 'Linjebredd', 1, 60)}</div>` + (l.type === 'pil' ? '' : sel('fill', 'Fyllning', LY_FILLS));
-  h += `<div class="row4">${n('x', 'X')}${n('y', 'Y')}${n('w', 'Bredd', 10)}${n('h', 'Höjd', 10)}</div>
-    <div class="row2">${n('rot', 'Vinkel', -180, 180)}${sel('anim', 'Rörelse', Object.fromEntries(Object.entries(Scen.BODY_ANIMS).filter(([k]) => k !== 'auto').map(([k, v]) => [k === 'fade' ? '' : k, v])))}</div>
-    <label class="chk"><input type="checkbox" data-t="ly" data-k="step"${l.step ? ' checked' : ''}> Visas först på klick</label>
-    <div class="acts left"><button type="button" class="btn small" data-act="lyup">Längre fram</button><button type="button" class="btn small" data-act="lydown">Längre bak</button><button type="button" class="btn small" data-act="lydup">Duplicera</button><button type="button" class="btn small danger" data-act="lydel">Ta bort</button></div></div>`;
-  return h;
-}
-function layerList(s) {
-  const ls = s.layers || [];
-  return `<div class="grp"><h3>Fria lager</h3>
-    ${ls.length ? `<ul class="lyr-list">${ls.slice().reverse().map(l => `<li><button type="button" class="lyr-item${l.id === selL ? ' on' : ''}" data-act="lysel" data-id="${esc(l.id)}"><b>${esc(LY_NAMES[l.type] || 'Lager')}</b><span>${esc(l.type === 'text' ? String(l.text || '').slice(0, 40) : l.type === 'bild' ? 'bild' : '')}</span>${l.step ? '<em>klick</em>' : ''}</button></li>`).join('')}</ul>` : '<p class="hint">Inga fria lager på den här bilden. Lägg till text, bild, former och pilar med knapparna under bilden.</p>'}
-    ${s.layout !== 'tom' && !['table'].includes(s.layout) ? '<button type="button" class="btn small" data-act="tofree">Gör om bilden till fri yta</button><span class="hint">Bildens text och bild blir lager som du kan flytta fritt. Du kan ångra.</span>' : ''}</div>`;
-}
-function toFree() {
-  const s = deck.slides[cur]; const L = [];
-  const add = o => L.push(Object.assign({ id: rid() }, o));
-  const hasImg = !!s.image;
-  const W = hasImg ? 980 : 1632;
-  let y = 112;
-  const hOf = (txt, size, lh, k) => String(txt).split('\n').reduce((n, row) => n + Math.max(1, Math.ceil((row.length * size * (k || 0.52)) / W)), 0) * size * lh + 12;
-  if (s.caption) { add({ type: 'text', x: 144, y, w: W, h: 50, size: 28, color: 'accent', text: s.caption }); y += 70; }
-  if (s.title) { const t = Scen.plain(s.title); const size = t.length > 60 ? 60 : 76; const h = Math.round(hOf(t, size, 1.1, 0.64)); add({ type: 'text', x: 144, y, w: W, h, size, font: 'rubrik', text: t }); y += h + 32; }
-  const lines = [];
-  if (s.text) lines.push(s.text);
-  Scen.lines(s.bullets).forEach(t => lines.push('• ' + t.replace(/^- /, '').replace(/^\*\s*/, '')));
-  Scen.lines(s.items).forEach(t => { const p = t.split('|'); lines.push('• ' + (p.length > 1 ? p[0].trim() + ': ' + p.slice(1).join('|').trim() : t)); });
-  if (s.lt || Scen.lines(s.lb).length) { lines.push(s.lt || ''); Scen.lines(s.lb).forEach(t => lines.push('• ' + t)); }
-  if (s.rt || Scen.lines(s.rb).length) { lines.push(s.rt || ''); Scen.lines(s.rb).forEach(t => lines.push('• ' + t)); }
-  if (s.number) lines.unshift(s.number);
-  if (s.answer) lines.push('Svar: ' + s.answer);
-  if (s.example) lines.push('Exempel: ' + s.example);
-  if (lines.length) { const txt = lines.filter(Boolean).join('\n'); let size = 40; while (size > 24 && y + hOf(txt, size, 1.3) > 1000) size -= 2; add({ type: 'text', x: 144, y, w: W, h: Math.round(Math.min(1000 - y, hOf(txt, size, 1.3))), size, color: 'text', text: txt }); }
-  if (hasImg) add({ type: 'bild', x: 1180, y: 112, w: 600, h: 856, src: s.image });
-  const nw = { id: s.id, layout: 'tom', layers: L.concat(s.layers || []), notes: s.notes, transition: s.transition, bg: s.bg };
-  deck.slides[cur] = nw; selL = null;
-  changed({ all: true, now: true }); renderInsp();
-  toast('Bilden är nu en fri yta. Ångra med Ctrl+Z om du ångrar dig.');
-}
-const FIELD_OF = [
-  ['h1,h2,.om-title,.term,.map h2,.bk-text h2', 'title'],
-  ['.kicker,.part,.by,.cap p,.label,.poll-hint', 'caption'],
-  ['.lead,.om-body,.def,.unit,.landing,blockquote,.answer', 'text'],
-  ['.big', 'number'], ['.ex', 'example']
-];
-function focusFieldFor(target) {
-  const s = deck.slides[cur];
-  let f = null, idx = -1;
-  const li = target.closest('li');
-  if (li && li.closest('.slide')) {
-    const list = li.parentElement; idx = [...list.children].indexOf(li);
-    if (target.closest('.cols')) { const col = target.closest('.cols > div'); f = col && col === col.parentElement.firstElementChild ? 'lb' : 'rb'; }
-    else f = ['cards', 'timeline', 'chat', 'duo', 'karta', 'triad', 'motsats', 'egen'].includes(s.layout) ? 'items' : 'bullets';
-  }
-  if (!f) for (const [q, k] of FIELD_OF) if (target.closest(q)) { f = k; break; }
-  if (!f && target.closest('.side,.note')) { f = 'items'; const all = [...target.closest('.slide').querySelectorAll('.duel .side,.note')]; idx = all.indexOf(target.closest('.side,.note')); }
-  if (!f) return false;
-  const el = $('#f-' + f); if (!el) return false;
-  el.scrollIntoView({ block: 'center', behavior: 'smooth' }); el.focus({ preventScroll: true });
-  if (idx >= 0 && el.tagName === 'TEXTAREA') {
-    const rows = el.value.split('\n'); let pos = 0, k = 0;
-    for (let i = 0; i < rows.length; i++) { if (!rows[i].trim()) { pos += rows[i].length + 1; continue; } if (k === idx) { el.setSelectionRange(pos, pos + rows[i].length); break; } k++; pos += rows[i].length + 1; }
-  }
-  el.classList.remove('flash'); void el.offsetWidth; el.classList.add('flash');
-  return true;
-}
-function wireLayers() {
-  const pvEl = $('#preview');
-  pvEl.addEventListener('pointerdown', e => {
-    if (manusOn || !deck || e.button > 0) return;
-    if (editing) { if (e.target.closest('[contenteditable="true"]')) return; finishEdit(); }
-    const h = e.target.closest('.sel-box i');
-    const lyr = h ? null : e.target.closest('.lyr');
-    if (!h && !lyr) {
-      if (selL) { selL = null; drawSel(); renderInsp(); }
-      return;
-    }
-    const id = h ? selL : lyr.dataset.lid; const l = findL(id); if (!l) return;
-    if (selL !== id) { selL = id; renderInsp(); }
-    drawSel();
-    drag = { mode: h ? h.dataset.h : 'move', sx: e.clientX, sy: e.clientY, o: { x: +l.x || 0, y: +l.y || 0, w: +l.w || 100, h: +l.h || 100 }, l, moved: false };
-    try { pvEl.setPointerCapture(e.pointerId); } catch (err) {}
-    e.preventDefault();
-  });
-  pvEl.addEventListener('pointermove', e => {
-    if (!drag) return;
-    const { s } = stageInfo(); const dx = (e.clientX - drag.sx) / s, dy = (e.clientY - drag.sy) / s;
-    if (!drag.moved && Math.abs(dx) + Math.abs(dy) < 3) return;
-    drag.moved = true;
-    const o = drag.o, l = drag.l, m = drag.mode;
-    if (m === 'move') {
-      let nx = snap(o.x + dx), ny = snap(o.y + dy);
-      if (Math.abs(nx + o.w / 2 - 960) < 14) nx = Math.round(960 - o.w / 2);
-      if (Math.abs(ny + o.h / 2 - 540) < 14) ny = Math.round(540 - o.h / 2);
-      l.x = nx; l.y = ny;
-    } else {
-      let x = o.x, y = o.y, w = o.w, hh = o.h;
-      if (m.includes('e')) w = o.w + dx;
-      if (m.includes('s')) hh = o.h + dy;
-      if (m.includes('w')) { w = o.w - dx; x = o.x + dx; }
-      if (m.includes('n')) { hh = o.h - dy; y = o.y + dy; }
-      if ((e.shiftKey || l.type === 'bild' || l.type === 'cirkel') && m.length === 2) { const r = o.h / o.w; hh = w * r; if (m.includes('n')) y = o.y + o.h - hh; }
-      l.x = snap(x); l.y = snap(y); l.w = Math.max(16, snap(w)); l.h = Math.max(16, snap(hh));
-    }
-    const el = layerEl(l.id); if (el) Object.assign(el.style, { left: l.x + 'px', top: l.y + 'px', width: l.w + 'px', height: l.h + 'px' });
-    drawSel();
-  });
-  const end = () => { if (drag && drag.moved) { changed({ now: true }); ['x', 'y', 'w', 'h'].forEach(k => { const i = $('#ly-' + k); if (i) i.value = Math.round(drag.l[k]); }); } drag = null; };
-  pvEl.addEventListener('pointerup', end); pvEl.addEventListener('pointercancel', end);
-  pvEl.addEventListener('click', e => { if (manusOn || editing || e.target.closest('.lyr,.sel-box')) return; focusFieldFor(e.target); });
-  pvEl.addEventListener('dblclick', e => { const lyr = e.target.closest('.lyr-text'); if (lyr) startEdit(lyr); });
-  new ResizeObserver(() => drawSel()).observe(pvEl);
-  document.addEventListener('keydown', e => {
-    if (!deck || $('#ed').hidden || presenter || !$('#modal').hidden) return;
-    const inField = e.target.closest && e.target.closest('input,textarea,select,[contenteditable="true"]');
-    const mod = e.ctrlKey || e.metaKey;
-    if (mod && !inField && (e.key === 'z' || e.key === 'Z')) { e.preventDefault(); e.shiftKey ? redo() : undo(); return; }
-    if (mod && !inField && (e.key === 'y' || e.key === 'Y')) { e.preventDefault(); redo(); return; }
-    if (inField || !selL) return;
-    const l = findL(selL); if (!l) return;
-    const step = e.shiftKey ? 20 : 4;
-    const mv = { ArrowLeft: [-step, 0], ArrowRight: [step, 0], ArrowUp: [0, -step], ArrowDown: [0, step] }[e.key];
-    if (mv) { e.preventDefault(); l.x += mv[0]; l.y += mv[1]; const el = layerEl(l.id); if (el) Object.assign(el.style, { left: l.x + 'px', top: l.y + 'px' }); drawSel(); clearTimeout(wireLayers._t); wireLayers._t = setTimeout(() => changed(), 300); return; }
-    if (e.key === 'Delete' || e.key === 'Backspace') { e.preventDefault(); layerAct('lydel'); return; }
-    if (e.key === 'Escape') { selL = null; drawSel(); renderInsp(); return; }
-    if (e.key === 'Enter' && l.type === 'text') { e.preventDefault(); const el = layerEl(l.id); if (el) startEdit(el); }
-  });
-  $$('[data-add]').forEach(b => b.onclick = () => addLayer(b.dataset.add));
-  $('#btnUndo').onclick = undo;
-}
-function layerAct(a, id) {
-  const s = deck.slides[cur]; const ls = s.layers || [];
-  if (a === 'lysel') { selL = id; drawSel(); renderInsp(); return true; }
-  if (a === 'tofree') { toFree(); return true; }
-  const i = ls.findIndex(l => l.id === selL); if (i < 0 && a !== 'lyclose') return false;
-  if (a === 'lyclose') { selL = null; drawSel(); renderInsp(); return true; }
-  if (a === 'lydel') { ls.splice(i, 1); selL = null; }
-  else if (a === 'lyup' && i < ls.length - 1) ls.splice(i + 1, 0, ls.splice(i, 1)[0]);
-  else if (a === 'lydown' && i > 0) ls.splice(i - 1, 0, ls.splice(i, 1)[0]);
-  else if (a === 'lydup') { const c = clone(ls[i]); c.id = rid(); c.x += 40; c.y += 40; ls.push(c); selL = c.id; }
-  else if (a === 'lyimg') { imgTarget = 'lyreplace'; const f = $('#imgfile'); f.value = ''; f.click(); return true; }
-  changed({ now: true }); renderInsp(); return true;
-}
-
 /* =================== koppla ihop =================== */
 function wire() {
   $('#btnNew').onclick = newDeck;
   $('#btnImport').onclick = pickFile;
   $('#file').onchange = e => handleFile(e.target.files[0]);
   $('#imgfile').onchange = e => setImage(e.target.files[0]);
-  wireLayers();
   $('#back').onclick = async () => { if (manusOn) toggleManus(false); const d = deck; await flush(); cleanupImages(d); showLibrary(); };
   $('#btnTheme').onclick = themePicker;
   $('#btnManus').onclick = () => toggleManus();

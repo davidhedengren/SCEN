@@ -29,7 +29,7 @@ tona: ja
 | Nyckel | Värden |
 |---|---|
 | `titel` | Presentationens namn |
-| `tema` | `scen`, `atlas`, `natt`, `tidskrift`, `kritvit`, `klassrum`, `solnedgang`, `skog`, `retro` |
+| `tema` | `scen`, `djup`, `bana`, `nattbana`, `atlas`, `natt`, `tidskrift`, `kritvit`, `klassrum`, `solnedgang`, `skog`, `retro` |
 | `färg` | Bara för temat `scen`: `blue`, `green`, `orange`, `teal`, `purple`, `red`, `graphite` |
 | `läge` | Bara för temat `scen`: `ljust`, `mörkt` |
 
@@ -47,6 +47,8 @@ Första raden är mallen inom hakparentes, t.ex. `[kort]`. Alla mallar finns i [
 | `tal` | Talet i `[tal]`, bakgrundstalet i `[omslag]` |
 | `tid` | Minuter i `[reflektion]` |
 | `aktiv` | Vilken del som lyser i `[karta]` |
+| `max` | Maxvärdet i `[mätare]` när talet inte är en andel |
+| `mitten` | Det gemensamma i `[ringar]` |
 | `bild` | Sökväg till en bild, t.ex. `bilder/kurs/foto.jpg` |
 | `alt` | Bildbeskrivning för skärmläsare |
 | `band` | `ja` visar bilden som band överst (`[kort]`, `[motsats]`) |
@@ -56,8 +58,8 @@ Första raden är mallen inom hakparentes, t.ex. `[kort]`. Alla mallar finns i [
 | `rubrikrad` | Tabeller: `nej` om första raden inte är rubriker |
 | `steg` | `nej` visar allt direkt i stället för ett klick i taget |
 | `tona` | `ja` tonar ner tidigare punkter |
-| `övergång` | `automatisk`, `tona`, `glid`, `skjut`, `stig`, `zooma`, `svep`, `morph`, `ingen` |
-| `bakgrund` | `ingen`, `vektorfält`, `nätverk`, `vågor` |
+| `övergång` | `automatisk`, `båge`, `tona`, `glid`, `skjut`, `stig`, `zooma`, `svep`, `morph`, `ingen` |
+| `bakgrund` | `ingen`, `banor`, `vektorfält`, `nätverk`, `vågor` |
 | `rubrikrörelse`, `rörelse` | `mask`, `ord för ord`, `skärpa`, `stig`, `tona`, `skrivmaskin`, `svep`, `ingen` |
 
 ### Listor med två delar
@@ -100,6 +102,35 @@ rubrik: Kan en språkmodell ljuga?
 ## Text
 
 `**ord**` markeras med temats färg. `x^2` och `x^{2}` blir upphöjt, `v_{0}` nedsänkt.
+
+## Fria lager
+
+Text, bilder, rutor, cirklar, pilar och markeringar kan ligga var som helst ovanpå vilken bild som helst. I redigeraren lägger du till dem med knapparna under bilden, drar dem på plats och dubbelklickar för att skriva. I manus ser de ut så här:
+
+```
+[fri]
+@text 144 140 1200 160 storlek=96 typsnitt=rubrik | Fri yta
+@text 144 330 900 200 storlek=40 färg=dampad | Två rader\nmed radbrytning
+@bild 1100 200 640 480 | bilder/kurs/foto.jpg
+@cirkel 1260 180 420 420 färg=accent linje=8
+@pil 900 640 380 120 vinkel=-20 steg
+@markering 140 600 700 90
+```
+
+Efter `@typ` kommer x, y, bredd och höjd i pixlar på en yta som är 1920 × 1080. `[fri]` är en tom bild med bara lager.
+
+| Nyckel | Värden |
+|---|---|
+| `storlek` | Textstorlek i pixlar |
+| `färg` | `text`, `dampad`, `accent`, `accent2`, `yta`, `vit`, `svart` |
+| `typsnitt` | `rubrik` ger temats rubriktypsnitt |
+| `bakgrund` | `yta`, `accent` eller `markering` bakom texten eller i formen |
+| `justering` | `center` eller `höger` |
+| `vinkel` | Grader, t.ex. `-20` |
+| `linje` | Linjebredd för ruta, cirkel och pil |
+| `passning` | Bilder: `hela` visar hela bilden i stället för att fylla rutan |
+| `rörelse` | Animation, t.ex. `stig`, `zooma`, `ingen` |
+| `fet`, `steg` | Fetstil, och att lagret visas först på klick |
 
 ## Automatisk morph
 

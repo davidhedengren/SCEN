@@ -11,7 +11,9 @@
     "exportera": "node scripts/scen.mjs exportera-alla",
     "index": "node scripts/scen.mjs index",
     "mallar": "node scripts/scen.mjs mallar",
-    "kolla": "node scripts/scen.mjs kolla"
+    "kolla": "node scripts/scen.mjs kolla",
+    "test:browser": "node scripts/check-browser.cjs",
+    "test": "npm run kolla && node scripts/check-editorial.cjs && node scripts/check-focus.cjs && node scripts/check-signaturer.cjs && node scripts/check-student-export.cjs && npm run test:browser"
   },
   "engines": { "node": ">=18" }
 }

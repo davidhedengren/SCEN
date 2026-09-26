@@ -7,7 +7,7 @@
 <meta name="description" content="Presentationer med layouter, animationer och klicksteg för lektioner.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Sora:wght@400;600;700&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&family=Instrument+Serif:ital@0;1&family=Source+Sans+3:wght@400;600&family=Archivo:wght@400;600;800&family=Lexend:wght@400;500;600&family=Playfair+Display:wght@600;700&family=Manrope:wght@400;600&family=Fraunces:opsz,wght@9..144,500;9..144,650&family=Nunito+Sans:wght@400;600&family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,800&family=DM+Sans:wght@400;500;700&display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Familjen+Grotesk:wght@400;500;600;700&family=Hanken+Grotesk:wght@400;500;600&family=Syne:wght@600;700;800&family=Figtree:wght@400;500;600&family=JetBrains+Mono:wght@400;500&family=Sora:wght@400;600;700&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&family=Instrument+Serif:ital@0;1&family=Source+Sans+3:wght@400;600&family=Archivo:wght@400;600;800&family=Lexend:wght@400;500;600&family=Playfair+Display:wght@600;700&family=Manrope:wght@400;600&family=Fraunces:opsz,wght@9..144,500;9..144,650&family=Nunito+Sans:wght@400;600&family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,800&family=DM+Sans:wght@400;500;700&display=swap">
 <link rel="stylesheet" href="src/app.css">
 <link rel="stylesheet" id="scen-engine-css" href="src/engine.css">
 </head>
@@ -41,6 +41,7 @@
     <button type="button" id="back" class="btn ghost">‹ Bibliotek</button>
     <input id="deckTitle" class="title-input" type="text" aria-label="Presentationens namn" autocomplete="off">
     <span id="saveState" class="save-state" role="status">Sparat</span>
+    <button type="button" id="btnUndo" class="btn ghost small" title="Ångra (Ctrl+Z)" disabled>↶ Ångra</button>
     <span class="grow"></span>
     <button type="button" id="btnTheme" class="btn">Tema</button>
     <button type="button" id="btnManus" class="btn" aria-pressed="false" title="Redigera hela presentationen som text">Manus</button>
@@ -60,8 +61,19 @@
     <main class="canvas">
       <div class="stage-wrap"><div id="preview" class="preview"></div></div>
       <div class="pv-bar">
-        <button type="button" id="pvPlay" class="btn small">▶ Förhandsvisa bilden</button>
-        <button type="button" id="btnPlayStart" class="btn small">Spela från början</button>
+        <div class="add-bar" role="group" aria-label="Lägg till på bilden"><span class="lab">Lägg till</span>
+          <button type="button" class="btn small" data-add="text">T Text</button>
+          <button type="button" class="btn small" data-add="bild">Bild</button>
+          <button type="button" class="btn small" data-add="form">▭ Ruta</button>
+          <button type="button" class="btn small" data-add="cirkel">◯ Cirkel</button>
+          <button type="button" class="btn small" data-add="pil">→ Pil</button>
+          <button type="button" class="btn small" data-add="markering">Markering</button>
+        </div>
+        <div class="pv-acts">
+          <button type="button" id="pvPlay" class="btn small">▶ Förhandsvisa bilden</button>
+          <button type="button" id="btnPlayStart" class="btn small">Spela från början</button>
+        </div>
+        <p class="pv-hint">Klicka på en text i bilden för att ändra den. Fria lager drar du för att flytta, drar i hörnen för att ändra storlek och dubbelklickar för att skriva i.</p>
       </div>
     </main>
     <aside id="insp" class="insp" aria-label="Inställningar för bilden"></aside>

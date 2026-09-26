@@ -49,6 +49,13 @@ Första raden är mallen inom hakparentes, t.ex. `[kort]`. Alla mallar finns i [
 | `aktiv` | Vilken del som lyser i `[karta]` |
 | `max` | Maxvärdet i `[mätare]` när talet inte är en andel |
 | `mitten` | Det gemensamma i `[ringar]` |
+| `start`, `slut` | Utgångs- och slutläge i `[skiften]` |
+| `fråga` | Det stabila analysobjektet i centrum av `[prisma]` |
+| `gemensamt`, `spänning` | Gemensam grund och kvarvarande skillnad i `[prisma]` och `[sammanflöde]` |
+| `orsak`, `konsekvens` | Start och utfall i den kausala banan `[verkningar]` |
+| `villkor`, `alternativ` | Begränsning och konkurrerande förklaring i `[verkningar]` |
+| `källa`, `helhet`, `reservation` | Proveniens, samlad tolkning och avgränsning i `[belägg]` |
+| `syntes` | Den nya slutsats som växer fram i `[sammanflöde]` |
 | `bild` | Sökväg till en bild, t.ex. `bilder/kurs/foto.jpg` |
 | `alt` | Bildbeskrivning för skärmläsare |
 | `band` | `ja` visar bilden som band överst (`[kort]`, `[motsats]`) |
@@ -73,6 +80,29 @@ rubrik: Statisk eller dynamisk?
 - Dynamisk | Förändras hela tiden.
 - Exempel | Schack är statiskt, trafiken är dynamisk.
 ```
+
+### Analysmallar med strukturerade listor
+
+De fem analysmallarna använder lodstreck för att skilja semantiska delar. Delarna har olika roller och bör inte slås ihop:
+
+```text
+[skiften]
+- tid | händelse | förändring
+
+[prisma]
+- perspektiv | vad det betonar | grund
+
+[verkningar]
+- mekanism | vad mekanismen förändrar
+
+[belägg]
+- exakt utdrag ur texten | iakttagelse | tolkning
+
+[sammanflöde]
+- bidrag | vad bidraget tillför
+```
+
+I `[skiften]` är den tredje delen central: varje brytpunkt ska uttrycka vad som blir annorlunda efter händelsen. I `[sammanflöde]` används dessutom alltid `gemensamt`, `spänning` och `syntes` för att skilja mallen från en vanlig premiss–slutsats-layout.
 
 ### Tabeller
 

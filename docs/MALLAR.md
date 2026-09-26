@@ -11,6 +11,11 @@ Varje bild i ett manus börjar med mallens namn inom hakparentes. Samma katalog 
 | `[lager]` | Redaktionellt | Går från övergripande sammanhang till en konkret kärna. Tre indragna nivåer blir synliga i ordning. |
 | `[resonemang]` | Redaktionellt | Ett resonemang byggs i vänsterkolumnen och landar i en tydlig slutsats till höger. |
 | `[helhet]` | Redaktionellt | Fyra delar i en asymmetrisk helhetsbild. Den första får mer plats, därefter tre kompletterande perspektiv. |
+| `[skiften]` | Analys | En kronologi där varje brytpunkt kopplas till en uttrycklig förändring. Tidigare skiften ligger kvar som nedtonad kontext medan fokus flyttas framåt. |
+| `[prisma]` | Analys | Tre till fem perspektiv betraktar samma fråga från olika riktningar. Det gemensamma analysobjektet ligger stabilt i centrum. |
+| `[verkningar]` | Analys | En explicit kausal bana från orsak genom mekanismer till konsekvens. Villkor och alternativa förklaringar kan kvalificera sambandet. |
+| `[belägg]` | Analys | Ett källutdrag ligger kvar som scenens ankare medan exakta textställen kopplas till iakttagelser och avgränsade tolkningar. |
+| `[sammanflöde]` | Analys | Tre till fem bidrag förenas till en ny syntes. Gemensam grund, kvarvarande spänning och slutlig syntes är separata delar av resonemanget. |
 | `[lameller]` | Struktur | En bildöppning där sju lameller lämnar scenen i olika riktningar. |
 | `[register]` | Signatur | Ett horisontellt register där aktuell panel vidgas vid varje klick. |
 | `[samband]` | Signatur | Premisser binds till en gemensam slutsats med ritade förbindelser. |
@@ -219,6 +224,97 @@ rubrik: Kaströrelse
 text: Två rörelser på en gång.
 - Konstant fart framåt
 - Fritt fall nedåt
+```
+
+## Analys
+
+### `[skiften]` Skiften
+
+En kronologi där varje brytpunkt kopplas till en uttrycklig förändring. Tidigare skiften ligger kvar som nedtonad kontext medan fokus flyttas framåt.
+
+**Undvik när:** Vanliga händelselistor utan tydliga förändringar; använd tidslinje i stället. Högst sex brytpunkter.
+
+```
+[skiften]
+etikett: Utveckling
+rubrik: När spelreglerna förändras
+start: Ett stabilt utgångsläge
+slut: Ett nytt sätt att arbeta
+- Fas 1 | Ett behov blir synligt | Frågan får högre prioritet
+- Fas 2 | Ett beslut fattas | Resurser och ansvar flyttas
+- Fas 3 | Ett nytt arbetssätt införs | Resultaten kan följas på ett annat sätt
+slutsats: Varje skifte ändrar villkoren för det som följer.
+```
+
+### `[prisma]` Prisma
+
+Tre till fem perspektiv betraktar samma fråga från olika riktningar. Det gemensamma analysobjektet ligger stabilt i centrum.
+
+**Undvik när:** Binära jämförelser; använd vägval eller motsats. Undvik också perspektiv som saknar parallell struktur eller tydlig grund.
+
+```
+[prisma]
+etikett: Perspektiv
+rubrik: Samma fråga, olika blickar
+fråga: Hur bör förändringen bedömas?
+- Användare | Begriplighet | Utgår från vardaglig användning
+- Verksamhet | Genomförbarhet | Utgår från tid och resurser
+- Teknik | Hållbarhet | Utgår från drift och vidareutveckling
+gemensamt: Alla försöker lösa samma grundproblem.
+spänning: De värderar kortsiktig enkelhet och långsiktig robusthet olika.
+```
+
+### `[verkningar]` Verkningar
+
+En explicit kausal bana från orsak genom mekanismer till konsekvens. Villkor och alternativa förklaringar kan kvalificera sambandet.
+
+**Undvik när:** Tidsföljd eller korrelation utan belagd mekanism. Högst tre mekanismer på samma bild.
+
+```
+[verkningar]
+etikett: Orsak och konsekvens
+rubrik: Hur en förändring fortplantas
+orsak: En central förutsättning ändras
+- Första mekanismen | Systemets balans rubbas
+- Andra mekanismen | Aktörerna anpassar sitt beteende
+konsekvens: Ett nytt stabilt läge uppstår
+villkor: Sambandet gäller när övriga faktorer är ungefär oförändrade.
+alternativ: En parallell faktor kan också bidra.
+```
+
+### `[belägg]` Belägg
+
+Ett källutdrag ligger kvar som scenens ankare medan exakta textställen kopplas till iakttagelser och avgränsade tolkningar.
+
+**Undvik när:** Långa dokument, obelagda citat eller analyser där utdraget inte återfinns ordagrant i källtexten. Högst tre utdrag.
+
+```
+[belägg]
+rubrik: Från formulering till tolkning
+källa: Exempelkälla
+text: Vi behöver ändra riktning nu, innan möjligheten går förlorad.
+- ändra riktning | Ett handlingskrav uttrycks | Nuläget framställs som otillräckligt
+- innan möjligheten går förlorad | Tidspress byggs upp | Brådska används för att stärka argumentet
+helhet: Formuleringen kombinerar krav och tidspress.
+reservation: Texten visar retoriken, inte om hotet är verkligt.
+```
+
+### `[sammanflöde]` Sammanflöde
+
+Tre till fem bidrag förenas till en ny syntes. Gemensam grund, kvarvarande spänning och slutlig syntes är separata delar av resonemanget.
+
+**Undvik när:** En vanlig premisslista med given slutsats; använd triad eller samband. Syntesen måste omformulera bidragen och får inte dölja verklig oenighet.
+
+```
+[sammanflöde]
+etikett: Syntes
+rubrik: Ett beslut med flera krav
+- Användare | Behöver enkelhet och tydlighet
+- Verksamhet | Behöver hållbar ekonomi
+- Teknik | Behöver robust drift
+gemensamt: Lösningen måste fungera över tid.
+spänning: Snabb leverans står mot långsiktig kvalitet.
+syntes: Välj den minsta lösning som kan växa utan att byggas om.
 ```
 
 ## Struktur

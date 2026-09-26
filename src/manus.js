@@ -5,20 +5,20 @@ const Manus = (() => {
     titel: 'title', avsnitt: 'section', 'påstående': 'statement', punkter: 'bullets', 'text-bild': 'split', helbild: 'image',
     kort: 'cards', 'jämförelse': 'compare', tabell: 'table', tal: 'number', 'två-tal': 'duo', tidslinje: 'timeline',
     'fråga': 'question', 'omröstning': 'poll', reflektion: 'reflect', definition: 'define', samtal: 'chat', citat: 'quote',
-    omslag: 'omslag', karta: 'karta', triad: 'triad', motsats: 'motsats', bildkant: 'bildkant', fri: 'tom', 'båge': 'båge', omlopp: 'omlopp', gradskiva: 'gradskiva', bro: 'bro', ringar: 'ringar', lins: 'lins', 'mätare': 'mätare', 'ridå': 'ridå', 'strålkastare': 'strålkastare', fokus: 'fokus', ordbild: 'ordbild', 'bildfält': 'bildfält', delning: 'delning', ljustal: 'ljustal', egen: 'egen'
+    omslag: 'omslag', karta: 'karta', triad: 'triad', motsats: 'motsats', bildkant: 'bildkant', skiften: 'skiften', prisma: 'prisma', verkningar: 'verkningar', 'belägg': 'belagg', 'sammanflöde': 'sammanflode', fri: 'tom', 'båge': 'båge', omlopp: 'omlopp', gradskiva: 'gradskiva', bro: 'bro', ringar: 'ringar', lins: 'lins', 'mätare': 'mätare', 'ridå': 'ridå', 'strålkastare': 'strålkastare', fokus: 'fokus', ordbild: 'ordbild', 'bildfält': 'bildfält', delning: 'delning', ljustal: 'ljustal', egen: 'egen'
   };
   const TAG_OF = Object.fromEntries(Object.entries(TAGS).map(([k, v]) => [v, k]));
   const KEYS = { accent: 'accent',
     rubrik: 'title', 'fråga': 'title', term: 'title', text: 'text', ingress: 'text', underrubrik: 'text', citat: 'text', definition: 'text',
     etikett: 'caption', 'källa': 'caption', bildtext: 'caption', svar: 'answer', exempel: 'example', tal: 'number', tid: 'minutes',
-    bild: 'image', alt: 'alt', 'vänster': 'lt', 'höger': 'rt', band: 'banner', 'bild-vänster': 'flip', steg: 'steps', tona: 'dim', fokus: 'focus',
+    bild: 'image', alt: 'alt', 'vänster': 'lt', 'höger': 'rt', start: 'start', slut: 'end', orsak: 'cause', konsekvens: 'effect', villkor: 'condition', alternativ: 'alternative', helhet: 'whole', reservation: 'reservation', gemensamt: 'common', 'spänning': 'tension', syntes: 'synthesis', band: 'banner', 'bild-vänster': 'flip', steg: 'steps', tona: 'dim', fokus: 'focus',
     'övergång': 'transition', bakgrund: 'bg', rubrikrörelse: 'ta', 'rörelse': 'ba', visa: 'reveal', rubrikrad: 'header', mall: 'tpl', aktiv: 'active', siffra: 'number', slutsats: 'text', max: 'max', mitten: 'text'
   };
-  const OUT_KEY = { max: 'max', active: 'aktiv', title: 'rubrik', text: 'text', caption: 'etikett', answer: 'svar', example: 'exempel', number: 'tal', minutes: 'tid', image: 'bild', alt: 'alt', lt: 'vänster', rt: 'höger', transition: 'övergång', bg: 'bakgrund', ta: 'rubrikrörelse', ba: 'rörelse', tpl: 'mall' };
+  const OUT_KEY = { max: 'max', active: 'aktiv', title: 'rubrik', text: 'text', caption: 'etikett', answer: 'svar', example: 'exempel', number: 'tal', minutes: 'tid', image: 'bild', alt: 'alt', lt: 'vänster', rt: 'höger', start: 'start', end: 'slut', question: 'fråga', cause: 'orsak', effect: 'konsekvens', condition: 'villkor', alternative: 'alternativ', source: 'källa', whole: 'helhet', reservation: 'reservation', common: 'gemensamt', tension: 'spänning', synthesis: 'syntes', transition: 'övergång', bg: 'bakgrund', ta: 'rubrikrörelse', ba: 'rörelse', tpl: 'mall' };
   const REVEAL = { allt: 'none', rader: 'rows', facit: 'answers', 'facit-rader': 'rest' };
   const REVEAL_OUT = { none: 'allt', rows: 'rader', answers: 'facit', rest: 'facit-rader' };
-  const LIST_FIELD = {etapper:'items',vagval:'items',lager:'items',resonemang:'items',helhet:'items',register:'items',samband:'items',marginal:'items',sats:'items', bullets: 'bullets', split: 'bullets', question: 'bullets', poll: 'bullets', reflect: 'bullets', cards: 'items', timeline: 'items', chat: 'items', duo: 'items', egen: 'items', compare: 'lb', karta: 'items', triad: 'items', motsats: 'items', bildkant: 'bullets', omlopp: 'items', gradskiva: 'items', bro: 'items', ringar: 'items', lins: 'items', 'strålkastare': 'items', fokus: 'items', 'bildfält': 'bullets', delning: 'items' };
-  const STEPPED = ["etapper","vagval","lager","resonemang","helhet",'register','samband','marginal','sats','bullets', 'split', 'cards', 'compare', 'timeline', 'chat', 'duo', 'egen', 'karta', 'triad', 'motsats', 'bildkant', 'omlopp', 'gradskiva', 'bro', 'ringar', 'lins', 'strålkastare', 'fokus', 'bildfält', 'delning'];
+  const LIST_FIELD = {etapper:'items',vagval:'items',lager:'items',resonemang:'items',helhet:'items',skiften:'items',prisma:'items',verkningar:'items',belagg:'items',sammanflode:'items',register:'items',samband:'items',marginal:'items',sats:'items', bullets: 'bullets', split: 'bullets', question: 'bullets', poll: 'bullets', reflect: 'bullets', cards: 'items', timeline: 'items', chat: 'items', duo: 'items', egen: 'items', compare: 'lb', karta: 'items', triad: 'items', motsats: 'items', bildkant: 'bullets', omlopp: 'items', gradskiva: 'items', bro: 'items', ringar: 'items', lins: 'items', 'strålkastare': 'items', fokus: 'items', 'bildfält': 'bullets', delning: 'items' };
+  const STEPPED = ["etapper","vagval","lager","resonemang","helhet","skiften","prisma","verkningar","belagg","sammanflode",'register','samband','marginal','sats','bullets', 'split', 'cards', 'compare', 'timeline', 'chat', 'duo', 'egen', 'karta', 'triad', 'motsats', 'bildkant', 'omlopp', 'gradskiva', 'bro', 'ringar', 'lins', 'strålkastare', 'fokus', 'bildfält', 'delning'];
   const yes = v => /^(ja|j|yes|true|1|på)$/i.test(String(v).trim());
   function enumVal(map, v) {
     const x = String(v).trim().toLowerCase();
@@ -77,7 +77,10 @@ const Manus = (() => {
         last = null; continue;
       }
       const kv = line.match(/^([a-zåäöA-ZÅÄÖ-]+)\s*:\s*(.*)$/);
-      const key = kv && KEYS[kv[1].toLowerCase()];
+      const label = kv && kv[1].toLowerCase();
+      let key = kv && KEYS[label];
+      if (s.layout === 'prisma' && label === 'fråga') key = 'question';
+      if (s.layout === 'belagg' && label === 'källa') key = 'source';
       if (key) {
         const v = kv[2];
         last = null;
@@ -158,7 +161,15 @@ const Manus = (() => {
     const put = (field, v) => { if (v == null || val(v) === '') return; out.push(`${OUT_KEY[field]}: ${multi(v)}`); };
     put('caption', s.caption);
     if (L !== 'quote') put('title', s.title);
+    if (L === 'skiften') { put('start', s.start); put('end', s.end); }
+    if (L === 'prisma') put('question', s.question);
+    if (L === 'verkningar') { put('cause', s.cause); put('effect', s.effect); }
+    if (L === 'belagg') put('source', s.source);
     put('text', s.text);
+    if (L === 'prisma' || L === 'sammanflode') { put('common', s.common); put('tension', s.tension); }
+    if (L === 'verkningar') { put('condition', s.condition); put('alternative', s.alternative); }
+    if (L === 'belagg') { put('whole', s.whole); put('reservation', s.reservation); }
+    if (L === 'sammanflode') put('synthesis', s.synthesis);
     if (['number', 'omslag', 'båge', 'lins', 'mätare', 'ljustal'].includes(L)) put('number', s.number);
     if (L === 'mätare' || L === 'ljustal') put('max', s.max);
     if (L === 'bro' || L === 'vagval') { put('lt', s.lt); put('rt', s.rt); }
@@ -183,7 +194,7 @@ const Manus = (() => {
     if (s.accent && Scen.ACCENTS[s.accent]) out.push('accent: '+Scen.ACCENTS[s.accent][2].toLowerCase());
     if (s.focus && Scen.FOCUS_STYLES[s.focus]) out.push(`fokus: ${lab(Scen.FOCUS_STYLES,s.focus)}`);
     if (s.dim) out.push('tona: ja');
-    else if (s.dim === false && ['bro','etapper','vagval','lager','resonemang','helhet'].includes(L)) out.push('tona: nej');
+    else if (s.dim === false && ['bro','etapper','vagval','lager','resonemang','helhet','skiften','prisma','verkningar','belagg','sammanflode'].includes(L)) out.push('tona: nej');
     const list = (arr) => Scen.lines(arr).forEach(t => out.push(/^- /.test(t) ? '  - ' + t.slice(2) : '- ' + t));
     if (L === 'compare') {
       out.push(`vänster: ${val(s.lt)}`); list(s.lb);
@@ -229,6 +240,11 @@ const Manus = (() => {
 {"l": "lager", "cat": "Redaktionellt", "syfte": "Går från övergripande sammanhang till en konkret kärna. Tre indragna nivåer blir synliga i ordning.", "undvik": "Högst tre nivåer. Använd bara när det finns en faktisk hierarki eller fördjupning.", "ex": "[lager]\nrubrik: Från helhet till detalj\nfokus: mjuk\n- Sammanhang | Varför spelar frågan roll?\n- Princip | Vad är det som styr?\n- Tillämpning | Hur använder vi principen?"},
 {"l": "resonemang", "cat": "Redaktionellt", "syfte": "Ett resonemang byggs i vänsterkolumnen och landar i en tydlig slutsats till höger.", "undvik": "Högst tre led. Slutsatsen ska stödjas av innehållet.", "ex": "[resonemang]\nrubrik: Gör tankegången synlig\nfokus: mjuk\n- Iakttagelse | Vad kan vi faktiskt se?\n- Tolkning | Hur kan det förklaras?\n- Prövning | Håller förklaringen?\ntext: En slutsats som går att följa."},
 {"l": "helhet", "cat": "Redaktionellt", "syfte": "Fyra delar i en asymmetrisk helhetsbild. Den första får mer plats, därefter tre kompletterande perspektiv.", "undvik": "Fyra delar rekommenderas. Första delen får större visuell vikt; ytorna representerar inga mängder.", "ex": "[helhet]\nrubrik: Det som håller ihop arbetet\nfokus: mjuk\n- Riktning | Vad vill vi uppnå?\n- Människor | Vilka behöver vara med?\n- Arbetssätt | Hur tar vi oss framåt?\n- Uppföljning | Hur vet vi att det fungerar?"},
+{"l": "skiften", "cat": "Analys", "syfte": "En kronologi där varje brytpunkt kopplas till en uttrycklig förändring. Tidigare skiften ligger kvar som nedtonad kontext medan fokus flyttas framåt.", "undvik": "Vanliga händelselistor utan tydliga förändringar; använd tidslinje i stället. Högst sex brytpunkter.", "ex": "[skiften]\netikett: Utveckling\nrubrik: När spelreglerna förändras\nstart: Ett stabilt utgångsläge\nslut: Ett nytt sätt att arbeta\n- Fas 1 | Ett behov blir synligt | Frågan får högre prioritet\n- Fas 2 | Ett beslut fattas | Resurser och ansvar flyttas\n- Fas 3 | Ett nytt arbetssätt införs | Resultaten kan följas på ett annat sätt\nslutsats: Varje skifte ändrar villkoren för det som följer."},
+{"l": "prisma", "cat": "Analys", "syfte": "Tre till fem perspektiv betraktar samma fråga från olika riktningar. Det gemensamma analysobjektet ligger stabilt i centrum.", "undvik": "Binära jämförelser; använd vägval eller motsats. Undvik också perspektiv som saknar parallell struktur eller tydlig grund.", "ex": "[prisma]\netikett: Perspektiv\nrubrik: Samma fråga, olika blickar\nfråga: Hur bör förändringen bedömas?\n- Användare | Begriplighet | Utgår från vardaglig användning\n- Verksamhet | Genomförbarhet | Utgår från tid och resurser\n- Teknik | Hållbarhet | Utgår från drift och vidareutveckling\ngemensamt: Alla försöker lösa samma grundproblem.\nspänning: De värderar kortsiktig enkelhet och långsiktig robusthet olika."},
+{"l": "verkningar", "cat": "Analys", "syfte": "En explicit kausal bana från orsak genom mekanismer till konsekvens. Villkor och alternativa förklaringar kan kvalificera sambandet.", "undvik": "Tidsföljd eller korrelation utan belagd mekanism. Högst tre mekanismer på samma bild.", "ex": "[verkningar]\netikett: Orsak och konsekvens\nrubrik: Hur en förändring fortplantas\norsak: En central förutsättning ändras\n- Första mekanismen | Systemets balans rubbas\n- Andra mekanismen | Aktörerna anpassar sitt beteende\nkonsekvens: Ett nytt stabilt läge uppstår\nvillkor: Sambandet gäller när övriga faktorer är ungefär oförändrade.\nalternativ: En parallell faktor kan också bidra."},
+{"l": "belagg", "cat": "Analys", "syfte": "Ett källutdrag ligger kvar som scenens ankare medan exakta textställen kopplas till iakttagelser och avgränsade tolkningar.", "undvik": "Långa dokument, obelagda citat eller analyser där utdraget inte återfinns ordagrant i källtexten. Högst tre utdrag.", "ex": "[belägg]\nrubrik: Från formulering till tolkning\nkälla: Exempelkälla\ntext: Vi behöver ändra riktning nu, innan möjligheten går förlorad.\n- ändra riktning | Ett handlingskrav uttrycks | Nuläget framställs som otillräckligt\n- innan möjligheten går förlorad | Tidspress byggs upp | Brådska används för att stärka argumentet\nhelhet: Formuleringen kombinerar krav och tidspress.\nreservation: Texten visar retoriken, inte om hotet är verkligt."},
+{"l": "sammanflode", "cat": "Analys", "syfte": "Tre till fem bidrag förenas till en ny syntes. Gemensam grund, kvarvarande spänning och slutlig syntes är separata delar av resonemanget.", "undvik": "En vanlig premisslista med given slutsats; använd triad eller samband. Syntesen måste omformulera bidragen och får inte dölja verklig oenighet.", "ex": "[sammanflöde]\netikett: Syntes\nrubrik: Ett beslut med flera krav\n- Användare | Behöver enkelhet och tydlighet\n- Verksamhet | Behöver hållbar ekonomi\n- Teknik | Behöver robust drift\ngemensamt: Lösningen måste fungera över tid.\nspänning: Snabb leverans står mot långsiktig kvalitet.\nsyntes: Välj den minsta lösning som kan växa utan att byggas om."},
 {"l": "lameller", "cat": "Struktur", "syfte": "En bildöppning där sju lameller lämnar scenen i olika riktningar.", "undvik": "Långa rubriker; håll dig till ungefär sex ord.", "ex": "[lameller]\netikett: Scen / Signatur 01\nrubrik: Ge idén\n  hela scenen.\ntext: En öppning med riktning, rytm och luft.\nbild: bilder/ai-agenter/ai01.jpg"},
 {"l": "register", "cat": "Signatur", "syfte": "Ett horisontellt register där aktuell panel vidgas vid varje klick.", "undvik": "Fler än fem paneler eller långa panelrubriker.", "ex": "[register]\nrubrik: Tre perspektiv. En fråga.\n- Upptäck | Vad ser vi? Börja med det som går att observera.\n- Tolka | Vilka förklaringar passar våra observationer?\n- Pröva | Vad skulle kunna visa att vår tolkning är fel?"},
 {"l": "samband", "cat": "Signatur", "syfte": "Premisser binds till en gemensam slutsats med ritade förbindelser.", "undvik": "Fler än fyra premisser; ett samband är inte automatiskt ett bevis.", "ex": "[samband]\nrubrik: Vad behöver en agent?\netikett: Tillsammans\n- Observation | Information om omgivningen.\n- Mål | Något att försöka uppnå.\n- Handling | Ett sätt att påverka omgivningen.\ntext: En återkopplande process."},
@@ -332,7 +348,7 @@ Kort, tidslinje, samtal och två-tal: "- rubrik | text".
 Tabellrader: "| a | b | c |". Första raden är rubrikrad.
 Talaranteckningar: rader som börjar med "> ".
 Fria lager (valfritt, på vilken bild som helst): "@typ x y bredd höjd nyckel=värde … | text". Typer: text, bild, form, cirkel, pil, markering. Koordinater i pixlar på en yta som är 1920×1080. Nycklar: storlek, färg (text, dampad, accent, accent2, yta), typsnitt=rubrik, bakgrund (yta, accent, markering), vinkel, justering (center, höger), fet, steg (visas på klick). Använd lager sparsamt.
-Nycklar: rubrik, text, etikett, svar, exempel, tal, tid (minuter), aktiv (kartans markerade del), slutsats (triad), bild, band (ja/nej), bild-vänster (ja/nej), vänster, höger, visa (allt | rader | facit | facit-rader), övergång (automatisk | djup | båge | tona | glid | skjut | stig | zooma | svep | morph | ingen), bakgrund (ingen | ljus | banor | vektorfält | nätverk | vågor), steg (ja/nej), tona (ja/nej).
+Nycklar: rubrik, text, etikett, svar, exempel, tal, tid (minuter), aktiv (kartans markerade del), slutsats, start, slut, fråga, orsak, konsekvens, villkor, alternativ, källa, helhet, reservation, gemensamt, spänning, syntes, bild, band (ja/nej), bild-vänster (ja/nej), vänster, höger, visa (allt | rader | facit | facit-rader), övergång (automatisk | djup | båge | tona | glid | skjut | stig | zooma | svep | morph | ingen), bakgrund (ingen | ljus | banor | vektorfält | nätverk | vågor), steg (ja/nej), tona (ja/nej).
 Text: **ord** markeras. x^2 eller x^{2} blir upphöjt, v_{0} nedsänkt.`;
 
   function catalogText(custom) {

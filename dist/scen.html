@@ -1022,6 +1022,102 @@ textarea.code{width:100%;border:1px solid var(--line-2);border-radius:8px;backgr
 .scen [data-layout="helhet"] article:first-child h3{font-size:100px;line-height:1.02}
 .scen [data-layout="helhet"] article:not(:first-child) .ed-num{margin-bottom:12px}
 .scen [data-layout="helhet"] article:not(:first-child) p{margin-top:10px}
+
+/* Analysmallar: rumslig logik och beständigt klickfokus. */
+.scen .slide.fn-layout{grid-template-rows:auto minmax(0,1fr) auto;gap:28px;align-content:stretch;overflow:hidden}
+.scen .fn-head{display:grid;grid-template-columns:minmax(0,1fr) auto;align-items:end;gap:36px}
+.scen .fn-head .kicker{grid-column:1/-1}
+.scen .fn-head h2{font-size:64px;line-height:1.02;max-width:24ch}
+.scen .fn-layout.fn-long{gap:20px}.scen .fn-layout.fn-long .fn-head h2{font-size:50px;line-height:1.02;max-width:36ch}
+.scen .fn-layout small,.scen .fn-layout b{font-family:var(--font-mono,var(--mono))}
+.scen .fn-layout small{font-size:18px;letter-spacing:.1em;text-transform:uppercase;color:var(--muted)}
+.scen .fn-layout [data-step]{transition:opacity .55s ease,color .55s ease,transform .65s cubic-bezier(.16,1,.3,1)}
+
+/* Skiften: varje brytpunkt måste bära en förändring. */
+.scen [data-layout="skiften"] .sk-stage{position:relative;min-height:0;height:100%;margin:0 30px}
+.scen [data-layout="skiften"] .sk-axis{position:absolute;left:13%;right:13%;top:50%;height:3px;background:var(--line);transform:translateY(-50%)}
+.scen [data-layout="skiften"] .sk-fill{position:absolute;left:0;top:0;width:0;height:100%;background:var(--accent);transition:width .8s cubic-bezier(.22,1,.36,1)}
+.scen [data-layout="skiften"] .sk-point{position:absolute;top:50%;width:210px;display:grid;gap:5px}
+.scen [data-layout="skiften"] .sk-point[data-pos="upper"]{padding-bottom:34px;align-content:end;transform:translate(-50%,-100%)}
+.scen [data-layout="skiften"] .sk-point[data-pos="lower"]{padding-top:34px;align-content:start;transform:translate(-50%,0)}
+.scen [data-layout="skiften"] .sk-dot{position:absolute;left:50%;width:18px;height:18px;border:4px solid var(--bg);border-radius:50%;background:var(--muted);transform:translate(-50%,-50%);transition:.55s cubic-bezier(.16,1,.3,1)}
+.scen [data-layout="skiften"] .sk-point[data-pos="upper"] .sk-dot{top:100%}.scen [data-layout="skiften"] .sk-point[data-pos="lower"] .sk-dot{top:0}
+.scen [data-layout="skiften"] .sk-when{font:17px var(--font-mono,var(--mono));letter-spacing:.06em;color:var(--accent)}
+.scen [data-layout="skiften"] .sk-point h3{font-size:27px;line-height:1.06}
+.scen [data-layout="skiften"] .sk-change{font-size:20px;line-height:1.28;color:var(--muted);border-left:3px solid var(--accent);padding-left:12px}
+.scen [data-layout="skiften"] .sk-end{position:absolute;top:50%;max-width:12ch;font:17px/1.3 var(--font-mono,var(--mono));color:var(--muted);transform:translateY(-150%)}
+.scen [data-layout="skiften"] .sk-start{left:0}.scen [data-layout="skiften"] .sk-finish{right:0;text-align:right}
+.scen [data-layout="skiften"] .timeline-summary{font-size:34px;line-height:1.25;max-width:52ch;border-top:1px solid var(--line);padding-top:20px}
+
+/* Prisma: ett stabilt centrum, flera riktningar. */
+.scen [data-layout="prisma"] .pr-stage{position:relative;min-height:570px;margin:0 90px}
+.scen [data-layout="prisma"] .pr-rays{position:absolute;inset:0;width:100%;height:100%;overflow:visible}
+.scen [data-layout="prisma"] .pr-ray{vector-effect:non-scaling-stroke;stroke:var(--line);stroke-width:1.5;opacity:.35;transition:stroke .5s,stroke-width .5s,opacity .5s}
+.scen [data-layout="prisma"] .pr-core{position:absolute;left:50%;top:50%;width:470px;min-height:190px;padding:34px 46px;transform:translate(-50%,-50%);display:grid;align-content:center;gap:14px;text-align:center;border:2px solid var(--accent);border-radius:50%;background:var(--bg);transition:box-shadow .55s}
+.scen [data-layout="prisma"] .pr-core p{font-size:34px;line-height:1.2;font-weight:650}
+.scen [data-layout="prisma"] .pr-node{position:absolute;width:330px;transform:translate(-50%,-50%);display:grid;gap:8px}
+.scen [data-layout="prisma"] .pr-node h3{font-size:29px;color:var(--accent)}
+.scen [data-layout="prisma"] .pr-node p:not(.pr-name){font-size:21px;line-height:1.35;color:var(--muted)}
+.scen [data-layout="prisma"] .pr-name{font:18px var(--font-mono,var(--mono));letter-spacing:.08em;text-transform:uppercase}
+.scen [data-layout="prisma"] .pr-count-5 .pr-node.k0{width:440px}
+.scen [data-layout="prisma"] .pr-count-5 .pr-node.k0 h3{font-size:26px}
+.scen [data-layout="prisma"] .pr-count-5 .pr-node.k0 p:not(.pr-name){font-size:18px;line-height:1.25}
+.scen [data-layout="prisma"] .pr-outcomes{display:grid;grid-template-columns:1fr 1fr;gap:60px;border-top:1px solid var(--line);padding-top:20px}
+.scen [data-layout="prisma"] .pr-outcomes p{font-size:25px;line-height:1.35}
+.scen [data-layout="prisma"] .pr-outcomes b{display:block;font-size:16px;letter-spacing:.1em;text-transform:uppercase;color:var(--accent);margin-bottom:6px}
+
+/* Verkningar: mekanismerna är den kausala länken. */
+.scen [data-layout="verkningar"] .vk-stage{position:relative;min-height:500px;margin:0 20px}
+.scen [data-layout="verkningar"] .vk-line{position:absolute;left:8%;right:8%;top:42%;height:4px;background:var(--line);transform:translateY(-50%)}
+.scen [data-layout="verkningar"] .vk-line::after{content:"";position:absolute;right:-4px;top:50%;width:20px;height:20px;border-top:4px solid var(--line);border-right:4px solid var(--line);transform:translateY(-50%) rotate(45deg)}
+.scen [data-layout="verkningar"] .vk-flow{display:block;width:0;height:100%;background:var(--accent);transition:width .85s cubic-bezier(.22,1,.36,1)}
+.scen [data-layout="verkningar"] .vk-cause,.scen [data-layout="verkningar"] .vk-effect{position:absolute;top:42%;width:280px;transform:translateY(-50%);display:grid;gap:12px;background:var(--bg);padding:24px 0}
+.scen [data-layout="verkningar"] .vk-cause{left:0}.scen [data-layout="verkningar"] .vk-effect{right:0;text-align:right}
+.scen [data-layout="verkningar"] .vk-cause h3,.scen [data-layout="verkningar"] .vk-effect h3{font-size:34px;line-height:1.15}
+.scen [data-layout="verkningar"] .vk-effect h3{color:var(--accent)}
+.scen [data-layout="verkningar"] .vk-mech{position:absolute;top:42%;width:260px;transform:translate(-50%,0);padding-top:48px;text-align:center;display:grid;gap:8px}
+.scen [data-layout="verkningar"] .vk-node{position:absolute;left:50%;top:0;width:20px;height:20px;border:4px solid var(--bg);border-radius:50%;background:var(--muted);transform:translate(-50%,-50%);transition:.55s cubic-bezier(.16,1,.3,1)}
+.scen [data-layout="verkningar"] .vk-mech h3{font-size:27px}.scen [data-layout="verkningar"] .vk-mech p{font-size:21px;line-height:1.35;color:var(--muted)}
+.scen [data-layout="verkningar"] .vk-guards{display:grid;grid-template-columns:1.2fr 1fr;gap:64px;border-top:1px solid var(--line);padding-top:20px}
+.scen [data-layout="verkningar"] .vk-guards p{font-size:23px;line-height:1.35}.scen [data-layout="verkningar"] .vk-guards b{display:block;font-size:16px;letter-spacing:.1em;text-transform:uppercase;color:var(--accent);margin-bottom:6px}
+.scen [data-layout="verkningar"] .vk-alternative{color:var(--muted)}
+
+/* Belägg: källtexten är ankare, analysen är spårbar. */
+.scen [data-layout="belagg"] .fn-head{grid-template-columns:minmax(0,1fr) minmax(300px,.55fr)}
+.scen [data-layout="belagg"] .bl-source{font:20px var(--font-mono,var(--mono));line-height:1.35;color:var(--muted);text-align:right}
+.scen [data-layout="belagg"] .bl-stage{display:grid;grid-template-columns:minmax(0,1.25fr) minmax(480px,.75fr);gap:90px;min-height:500px;align-items:center}
+.scen [data-layout="belagg"] .bl-text{font:500 50px/1.28 var(--font-display,var(--font));letter-spacing:-.02em;max-width:24ch;margin:0;padding-left:42px;border-left:4px solid var(--line)}
+.scen [data-layout="belagg"] .bl-mark{background:linear-gradient(var(--hl),var(--hl)) no-repeat 0 90%/0 42%;transition:background-size .65s cubic-bezier(.16,1,.3,1),color .45s}
+.scen.static [data-layout="belagg"] .bl-mark,.scen [data-layout="belagg"]:not([data-focus]) .bl-mark{background-size:100% 42%}
+.scen [data-layout="belagg"] .bl-notes{display:grid;gap:18px;align-self:stretch;align-content:center}
+.scen [data-layout="belagg"] .bl-analysis{position:relative;display:grid;grid-template-columns:1fr 26px 1fr;gap:14px;align-items:center;border-top:1px solid var(--line);padding-top:16px}
+.scen [data-layout="belagg"] .bl-analysis p{font-size:20px;line-height:1.35}.scen [data-layout="belagg"] .bl-analysis b{display:block;font-size:14px;letter-spacing:.08em;text-transform:uppercase;color:var(--accent);margin-bottom:5px}
+.scen [data-layout="belagg"] .bl-int{color:var(--muted)}
+.scen [data-layout="belagg"] .bl-link{height:1px;background:var(--accent);opacity:.25;transform:scaleX(.35);transition:.55s;transform-origin:left}
+.scen [data-layout="belagg"] .bl-outcomes{display:grid;grid-template-columns:1.25fr .75fr;gap:90px;border-top:1px solid var(--line);padding-top:20px}
+.scen [data-layout="belagg"] .bl-outcomes p{font-size:24px;line-height:1.35}.scen [data-layout="belagg"] .bl-outcomes b{display:block;font-size:15px;letter-spacing:.1em;text-transform:uppercase;color:var(--accent);margin-bottom:6px}
+.scen [data-layout="belagg"] .bl-reservation{color:var(--muted)}
+
+/* Sammanflöde: gemensamt, spänning och syntes är separata led. */
+.scen .slide.fn-layout[data-layout="sammanflode"]{grid-template-rows:auto minmax(300px,1fr) auto auto}
+.scen [data-layout="sammanflode"] .sf-stage{position:relative;min-height:0;height:100%;margin:0 20px}
+.scen [data-layout="sammanflode"] .sf-streams{position:absolute;inset:0;width:100%;height:100%;overflow:visible}
+.scen [data-layout="sammanflode"] .sf-stream{fill:none;stroke:var(--line);stroke-width:2;vector-effect:non-scaling-stroke;opacity:.45;transition:.6s}
+.scen [data-layout="sammanflode"] .sf-out{fill:none;stroke:var(--accent);stroke-width:4;vector-effect:non-scaling-stroke;opacity:.8}
+.scen [data-layout="sammanflode"] .sf-input{position:absolute;width:320px;display:grid;gap:6px}
+.scen [data-layout="sammanflode"] .sf-input.left{transform:translate(0,-50%)}.scen [data-layout="sammanflode"] .sf-input.right{transform:translate(-100%,-50%);text-align:right}
+.scen [data-layout="sammanflode"] .sf-input h3{font-size:25px}.scen [data-layout="sammanflode"] .sf-input p{font-size:18px;line-height:1.24;color:var(--muted)}
+.scen [data-layout="sammanflode"] .sf-common{position:absolute;left:50%;top:48%;transform:translate(-50%,-50%);width:390px;text-align:center;font-size:22px;line-height:1.35;background:var(--bg);padding:14px}
+.scen [data-layout="sammanflode"] .sf-tension{justify-self:center;width:52%;text-align:center;font-size:22px;line-height:1.35;border-top:2px dashed var(--accent);padding-top:13px}
+.scen [data-layout="sammanflode"] .sf-common b,.scen [data-layout="sammanflode"] .sf-tension b,.scen [data-layout="sammanflode"] .sf-synthesis b{display:block;font-size:14px;letter-spacing:.1em;text-transform:uppercase;color:var(--accent);margin-bottom:5px}
+.scen [data-layout="sammanflode"] .sf-tension{color:var(--muted)}
+.scen [data-layout="sammanflode"] .sf-synthesis{justify-self:end;width:62%;font-size:36px;line-height:1.22;border-top:3px solid var(--accent);padding-top:18px}
+
+.scen [data-body-motion="none"].fn-layout [data-step],.scen [data-body-motion="none"].fn-layout .sk-fill,.scen [data-body-motion="none"].fn-layout .sk-dot,.scen [data-body-motion="none"].fn-layout .pr-ray,.scen [data-body-motion="none"].fn-layout .pr-core,.scen [data-body-motion="none"].fn-layout .vk-flow,.scen [data-body-motion="none"].fn-layout .vk-node,.scen [data-body-motion="none"].fn-layout .bl-mark,.scen [data-body-motion="none"].fn-layout .bl-link,.scen [data-body-motion="none"].fn-layout .sf-stream{transition:none!important}
+
+@media(prefers-reduced-motion:reduce){
+  .scen .fn-layout [data-step],.scen [data-layout="skiften"] .sk-fill,.scen [data-layout="skiften"] .sk-dot,.scen [data-layout="prisma"] .pr-ray,.scen [data-layout="prisma"] .pr-core,.scen [data-layout="verkningar"] .vk-flow,.scen [data-layout="verkningar"] .vk-node,.scen [data-layout="belagg"] .bl-mark,.scen [data-layout="belagg"] .bl-link,.scen [data-layout="sammanflode"] .sf-stream{transition:none!important}
+}
 </style>
 </head>
 <body>
@@ -1122,6 +1218,7 @@ const ACCENTS = {
   teal: ['#0B7A83', '#46D6DE', 'Turkos'], purple: ['#6B3FDF', '#B59BFF', 'Lila'], red: ['#C1263D', '#FF7A8C', 'Röd'], graphite: ['#27344F', '#C8D2E6', 'Grafit']
 };
 const LAYOUTS = {etapper:"Etapper",vagval:"Vägval",lager:"Lager",resonemang:"Resonemang",helhet:"Helhet",
+  skiften: 'Skiften', prisma: 'Prisma', verkningar: 'Verkningar', belagg: 'Belägg', sammanflode: 'Sammanflöde',
   lameller: 'Lameller', register: 'Register', samband: 'Samband', marginal: 'Marginal', sats: 'Sats',
   title: 'Titel', section: 'Avsnitt', statement: 'Påstående', bullets: 'Punktlista', split: 'Text och bild',
   image: 'Helbild', cards: 'Kort', compare: 'Jämförelse', table: 'Tabell', number: 'Stort tal', timeline: 'Tidslinje',
@@ -1179,7 +1276,7 @@ function renderSlide(sl, i, deck, img) {
   const L = LAYOUTS[sl.layout] ? sl.layout : 'bullets';
   const ta = sl.ta || 'auto', ba = sl.ba || 'auto';
   const steps = sl.steps !== false;
-  const focus = FOCUS_STYLES[sl.focus] ? sl.focus : (sl.dim || (['bro','etapper','vagval','lager','resonemang','helhet'].includes(L) && sl.dim !== false) ? 'soft' : 'none');
+  const focus = FOCUS_STYLES[sl.focus] ? sl.focus : (sl.dim || (['bro','etapper','vagval','lager','resonemang','helhet','skiften','prisma','verkningar','belagg','sammanflode'].includes(L) && sl.dim !== false) ? 'soft' : 'none');
   const dim = steps && focus !== 'none';
   let k = 0;
   const st = (anm) => ` data-step="${++k}" data-step-anim="${anm}"`;
@@ -1190,6 +1287,7 @@ function renderSlide(sl, i, deck, img) {
   const H2 = (cls, def) => title ? `<h2${cls ? ` class="${cls}"` : ''}${tid(title)}${A(tA(def))}>${fmt(title)}</h2>` : '';
   let attrs = '';
   const bodyA = anim(ba, 'rise');
+  const stepA = (def) => anim(ba, def);
   const list = (items, cls, animName, delay) => {
     const its = lines(items);
     if (!its.length) return '';
@@ -1682,6 +1780,102 @@ function renderSlide(sl, i, deck, img) {
       break;
     }
 
+    case 'skiften': {
+      const its = lines(sl.items).slice(0, 6).map(t => {
+        const p = t.split('|');
+        return { when: (p[0] || '').trim(), event: (p[1] || '').trim(), change: p.slice(2).join('|').trim() };
+      });
+      const n = Math.max(1, its.length), uid = 'u' + hash((sl.id || '') + i + L);
+      let css = '';
+      const points = its.map((o, j) => {
+        const x = n === 1 ? 50 : 16 + j * 68 / (n - 1);
+        const progress = n === 1 ? 100 : j * 100 / (n - 1);
+        css += `.${uid}:has(.sk-point.k${j}.in) .sk-fill{width:${progress.toFixed(2)}%}.${uid}:has(.sk-point.k${j}.step-current) .sk-dot.k${j}{transform:translate(-50%,-50%) scale(1.45);background:var(--accent);box-shadow:0 0 0 10px var(--hl)}`;
+        return `<article class="sk-point k${j}" data-pos="${j % 2 ? 'lower' : 'upper'}" style="left:${x}%"${steps ? st(stepA('fade')) : A(stepA('fade'), 350 + j * 140)}><i class="sk-dot k${j}" aria-hidden="true"></i><p class="sk-when">${fmt(o.when || String(j + 1))}</p><h3>${fmt(o.event || 'Brytpunkt')}</h3><p class="sk-change">${fmt(o.change || 'Beskriv vad som förändras efter brytpunkten.')}</p></article>`;
+      }).join('');
+      if (!steps) css += `.${uid} .sk-fill{width:100%}`;
+      body = `<style>${css}</style><header class="fn-head">${sl.caption ? `<p class="kicker"${A(stepA('fade'))}>${fmt(sl.caption)}</p>` : ''}${H2('', 'mask')}</header>` +
+        `<div class="sk-stage ${uid}"><div class="sk-axis" aria-hidden="true"><i class="sk-fill"></i></div><p class="sk-end sk-start">${fmt(sl.start || 'Start')}</p><p class="sk-end sk-finish">${fmt(sl.end || 'Slut')}</p>${points}</div>` +
+        (sl.conclusion || sl.text ? `<p class="timeline-summary"${steps ? st(stepA('mask')) : A(stepA('mask'), 1300)}>${fmt(sl.conclusion || sl.text)}</p>` : '');
+      cls = 'fn-layout ' + uid;
+      break;
+    }
+
+    case 'prisma': {
+      const its = lines(sl.items).slice(0, 5).map(t => { const p = t.split('|'); return { name: (p[0] || '').trim(), emphasis: (p[1] || '').trim(), basis: p.slice(2).join('|').trim() }; });
+      const pos = [[50,10],[87,28],[79,69],[21,69],[13,28]];
+      const uid = 'u' + hash((sl.id || '') + i + L);
+      let css = '';
+      const rays = its.map((o, j) => {
+        const [x, y] = pos[j];
+        css += `.${uid}:has(.pr-node.k${j}.step-current) .pr-ray.k${j}{opacity:1;stroke:var(--accent);stroke-width:4}.${uid}:has(.pr-node.k${j}.step-current) .pr-core{box-shadow:0 0 0 14px var(--hl)}`;
+        return `<line class="pr-ray k${j}" x1="50" y1="50" x2="${x}" y2="${y}"/>`;
+      }).join('');
+      const nodes = its.map((o, j) => { const [x, y] = pos[j]; return `<article class="pr-node k${j}" style="left:${x}%;top:${y}%"${steps ? st(stepA('fade')) : A(stepA('fade'), 350 + j * 160)}><p class="pr-name">${fmt(o.name || `Perspektiv ${j + 1}`)}</p><h3>${fmt(o.emphasis)}</h3>${o.basis ? `<p>${fmt(o.basis)}</p>` : ''}</article>`; }).join('');
+      body = `<style>${css}</style><header class="fn-head">${sl.caption ? `<p class="kicker"${A(stepA('fade'))}>${fmt(sl.caption)}</p>` : ''}${H2('', 'mask')}</header>` +
+        `<div class="pr-stage pr-count-${its.length} ${uid}"><svg class="pr-rays" viewBox="0 0 100 100" preserveAspectRatio="none" aria-hidden="true">${rays}</svg><div class="pr-core"><small>Gemensam fråga</small><p>${fmt(sl.question || 'Vad betraktar perspektiven?')}</p></div>${nodes}</div>` +
+        `<div class="pr-outcomes">${sl.common ? `<p class="pr-common"${steps ? st(stepA('fade')) : A(stepA('fade'), 1250)}><b>Gemensamt</b>${fmt(sl.common)}</p>` : ''}${sl.tension ? `<p class="pr-tension"${steps ? st(stepA('fade')) : A(stepA('fade'), 1450)}><b>Spänning</b>${fmt(sl.tension)}</p>` : ''}</div>`;
+      cls = 'fn-layout ' + uid;
+      break;
+    }
+
+    case 'verkningar': {
+      const its = lines(sl.items).slice(0, 3).map(t => { const p = t.split('|'); return { mechanism: (p[0] || '').trim(), change: p.slice(1).join('|').trim() }; });
+      const n = Math.max(1, its.length), uid = 'u' + hash((sl.id || '') + i + L);
+      let css = '';
+      const mechanisms = its.map((o, j) => {
+        const x = 29 + j * 42 / Math.max(1, n - 1), progress = (j + 1) / (n + 1) * 100;
+        css += `.${uid}:has(.vk-mech.k${j}.in) .vk-flow{width:${progress.toFixed(2)}%}.${uid}:has(.vk-mech.k${j}.step-current) .vk-node.k${j}{background:var(--accent);transform:translate(-50%,-50%) scale(1.35);box-shadow:0 0 0 9px var(--hl)}`;
+        return `<article class="vk-mech k${j}" style="left:${x}%"${steps ? st(stepA('fade')) : A(stepA('fade'), 450 + j * 180)}><i class="vk-node k${j}" aria-hidden="true"></i><h3>${fmt(o.mechanism || `Mekanism ${j + 1}`)}</h3><p>${fmt(o.change)}</p></article>`;
+      }).join('');
+      css += `.${uid}:has(.vk-effect.in) .vk-flow{width:100%}`;
+      if (!steps) css += `.${uid} .vk-flow{width:100%}`;
+      body = `<style>${css}</style><header class="fn-head">${sl.caption ? `<p class="kicker"${A(stepA('fade'))}>${fmt(sl.caption)}</p>` : ''}${H2('', 'mask')}</header>` +
+        `<div class="vk-stage ${uid}"><div class="vk-line" aria-hidden="true"><i class="vk-flow"></i></div><article class="vk-cause"><small>Orsak</small><h3>${fmt(sl.cause || 'Utgångspunkt')}</h3></article>${mechanisms}<article class="vk-effect"${steps ? st(stepA('mask')) : A(stepA('mask'), 1200)}><small>Konsekvens</small><h3>${fmt(sl.effect || 'Resultat')}</h3></article></div>` +
+        `<div class="vk-guards">${sl.condition ? `<p class="vk-condition"${steps ? st(stepA('fade')) : A(stepA('fade'), 1450)}><b>Villkor</b>${fmt(sl.condition)}</p>` : ''}${sl.alternative ? `<p class="vk-alternative"${steps ? st(stepA('fade')) : A(stepA('fade'), 1650)}><b>Alternativ förklaring</b>${fmt(sl.alternative)}</p>` : ''}</div>`;
+      cls = 'fn-layout ' + uid;
+      break;
+    }
+
+    case 'belagg': {
+      const its = lines(sl.items).slice(0, 3).map(t => { const p = t.split('|'); return { excerpt: (p[0] || '').trim(), observation: (p[1] || '').trim(), interpretation: p.slice(2).join('|').trim() }; });
+      const source = String(sl.text || '');
+      const ranges = [];
+      its.forEach((o, j) => {
+        if (!o.excerpt) return;
+        let at = source.indexOf(o.excerpt);
+        while (at >= 0 && ranges.some(r => at < r.end && at + o.excerpt.length > r.start)) at = source.indexOf(o.excerpt, at + 1);
+        if (at >= 0) ranges.push({ start: at, end: at + o.excerpt.length, j });
+      });
+      ranges.sort((a, b) => a.start - b.start);
+      let cursor = 0, marked = '';
+      ranges.forEach(r => { marked += fmt(source.slice(cursor, r.start)) + `<mark class="bl-mark k${r.j}">${fmt(source.slice(r.start, r.end))}</mark>`; cursor = r.end; });
+      marked += fmt(source.slice(cursor));
+      const uid = 'u' + hash((sl.id || '') + i + L);
+      let css = '';
+      its.forEach((o, j) => { css += `.${uid}:has(.bl-ob.k${j}.in) .bl-mark.k${j},.${uid}:has(.bl-int.k${j}.in) .bl-mark.k${j}{background-size:100% 42%;color:var(--ink)}.${uid}:has(.bl-int.k${j}.step-current) .bl-link.k${j}{opacity:1;transform:scaleX(1)}`; });
+      const analyses = its.map((o, j) => `<section class="bl-analysis k${j}"><p class="bl-ob k${j}"${steps ? st(stepA('fade')) : A(stepA('fade'), 550 + j * 260)}><b>Iakttagelse</b>${fmt(o.observation)}</p><i class="bl-link k${j}" aria-hidden="true"></i><p class="bl-int k${j}"${steps ? st(stepA('fade')) : A(stepA('fade'), 720 + j * 260)}><b>Tolkning</b>${fmt(o.interpretation)}</p></section>`).join('');
+      body = `<style>${css}</style><header class="fn-head">${sl.title ? H2('', 'mask') : ''}${sl.source ? `<p class="bl-source"${A(stepA('fade'), 200)}>${fmt(sl.source)}</p>` : ''}</header>` +
+        `<div class="bl-stage ${uid}"><blockquote class="bl-text">${marked || 'Lägg till ett källutdrag.'}</blockquote><aside class="bl-notes">${analyses}</aside></div>` +
+        `<div class="bl-outcomes">${sl.whole ? `<p class="bl-whole"${steps ? st(stepA('mask')) : A(stepA('mask'), 1450)}><b>Helhet</b>${fmt(sl.whole)}</p>` : ''}${sl.reservation ? `<p class="bl-reservation"${steps ? st(stepA('fade')) : A(stepA('fade'), 1650)}><b>Reservation</b>${fmt(sl.reservation)}</p>` : ''}</div>`;
+      cls = 'fn-layout ' + uid;
+      break;
+    }
+
+    case 'sammanflode': {
+      const its = lines(sl.items).slice(0, 5).map(t => { const p = t.split('|'); return { contribution: (p[0] || '').trim(), adds: p.slice(1).join('|').trim() }; });
+      const starts = [[5,14],[5,50],[5,86],[95,24],[95,70]], uid = 'u' + hash((sl.id || '') + i + L);
+      let css = '';
+      const streams = its.map((o, j) => { const [x, y] = starts[j]; const side = x < 50 ? 'left' : 'right'; css += `.${uid}:has(.sf-input.k${j}.step-current) .sf-stream.k${j}{opacity:1;stroke:var(--accent);stroke-width:5}`; return `<path class="sf-stream k${j}" d="M${x} ${y} C${side === 'left' ? 28 : 72} ${y},${side === 'left' ? 36 : 64} 48,50 52"/>`; }).join('');
+      const inputs = its.map((o, j) => { const [x, y] = starts[j]; return `<article class="sf-input k${j} ${x < 50 ? 'left' : 'right'}" style="left:${x}%;top:${y}%"${steps ? st(stepA('fade')) : A(stepA('fade'), 350 + j * 170)}><h3>${fmt(o.contribution || `Bidrag ${j + 1}`)}</h3><p>${fmt(o.adds)}</p></article>`; }).join('');
+      body = `<style>${css}</style><header class="fn-head">${sl.caption ? `<p class="kicker"${A(stepA('fade'))}>${fmt(sl.caption)}</p>` : ''}${H2('', 'mask')}</header>` +
+        `<div class="sf-stage ${uid}"><svg class="sf-streams" viewBox="0 0 100 100" preserveAspectRatio="none" aria-hidden="true">${streams}<path class="sf-out" d="M50 52 C50 70,60 80,72 96"/></svg>${inputs}<p class="sf-common"${steps ? st(stepA('fade')) : A(stepA('fade'), 1250)}><b>Gemensamt</b>${fmt(sl.common || 'Formulera den gemensamma grunden.')}</p></div>` +
+        `<p class="sf-tension"${steps ? st(stepA('fade')) : A(stepA('fade'), 1450)}><b>Spänning</b>${fmt(sl.tension || 'Formulera det som fortfarande drar åt olika håll.')}</p>` +
+        `<p class="sf-synthesis"${steps ? st(stepA('mask')) : A(stepA('mask'), 1700)}><b>Syntes</b>${fmt(sl.synthesis || 'Formulera den nya slutsats som bidragen tillsammans möjliggör.')}</p>`;
+      cls = 'fn-layout ' + uid;
+      break;
+    }
+
     case 'egen': {
       const T = (deck && deck.templates || {})[sl.tpl];
       const tplId = String(sl.tpl || '').replace(/[^a-z0-9_-]/gi, '');
@@ -1744,7 +1938,8 @@ function renderSlide(sl, i, deck, img) {
   const bg = sl.bg || (deck && deck.bg) || 'none';
   const palette=ACCENTS[sl.accent];
   const paint=palette ? ` style="--slide-accent-light:${palette[0]};--slide-accent-dark:${palette[1]}" data-slide-accent="true"` : '';
-  return `<section class="slide ${cls}" data-layout="${L}" data-transition="${tr}" data-bg="${bg}" data-i="${i}"${dim ? ` data-focus="${focus}"` : ''}${paint}${attrs}>${body}</section>`;
+  if (cls.includes('fn-layout') && plain(title).length > 64) cls += ' fn-long';
+  return `<section class="slide ${cls}" data-layout="${L}" data-transition="${tr}" data-bg="${bg}" data-i="${i}"${dim ? ` data-focus="${focus}"` : ''}${ba === 'none' ? ' data-body-motion="none"' : ''}${paint}${attrs}>${body}</section>`;
 }
 
 /* ---------- egna mallar: rensa HTML och CSS ---------- */
@@ -1854,6 +2049,7 @@ function typeOut(el, delay) {
   return { cancel: done, finish: done };
 }
 function playNamed(el, name, delay, dur) {
+  if (name === 'none') return { cancel() {}, finish() {} };
   if (name === 'slats' || name === 'trace' || name === 'focusline') {
     const animations=[];
     if(name === 'slats') el.querySelectorAll('i').forEach((p,j)=>animations.push(p.animate([{transform:'translateY(0)'},{transform:`translateY(${j%2 ? '-' : ''}102%)`}],{duration:1400,delay:(delay||0)+j*65,easing:EASE,fill:'backwards'})));
@@ -2043,6 +2239,10 @@ function thumb(slide, deck, images, i) {
   const im = images || {};
   wrap.innerHTML = `<div class="sc-stage">${renderSlide(slide, i || 0, deck, r => resolve(r, im))}</div>`;
   const sec = wrap.querySelector('.slide'); sec.classList.add('active');
+  sec.querySelectorAll('[data-step]').forEach(el => {
+    el.classList.add('in');
+    el.classList.remove('step-current', 'step-past');
+  });
   fitThumb(wrap);
   return wrap;
 }
@@ -2801,20 +3001,20 @@ const Manus = (() => {
     titel: 'title', avsnitt: 'section', 'påstående': 'statement', punkter: 'bullets', 'text-bild': 'split', helbild: 'image',
     kort: 'cards', 'jämförelse': 'compare', tabell: 'table', tal: 'number', 'två-tal': 'duo', tidslinje: 'timeline',
     'fråga': 'question', 'omröstning': 'poll', reflektion: 'reflect', definition: 'define', samtal: 'chat', citat: 'quote',
-    omslag: 'omslag', karta: 'karta', triad: 'triad', motsats: 'motsats', bildkant: 'bildkant', fri: 'tom', 'båge': 'båge', omlopp: 'omlopp', gradskiva: 'gradskiva', bro: 'bro', ringar: 'ringar', lins: 'lins', 'mätare': 'mätare', 'ridå': 'ridå', 'strålkastare': 'strålkastare', fokus: 'fokus', ordbild: 'ordbild', 'bildfält': 'bildfält', delning: 'delning', ljustal: 'ljustal', egen: 'egen'
+    omslag: 'omslag', karta: 'karta', triad: 'triad', motsats: 'motsats', bildkant: 'bildkant', skiften: 'skiften', prisma: 'prisma', verkningar: 'verkningar', 'belägg': 'belagg', 'sammanflöde': 'sammanflode', fri: 'tom', 'båge': 'båge', omlopp: 'omlopp', gradskiva: 'gradskiva', bro: 'bro', ringar: 'ringar', lins: 'lins', 'mätare': 'mätare', 'ridå': 'ridå', 'strålkastare': 'strålkastare', fokus: 'fokus', ordbild: 'ordbild', 'bildfält': 'bildfält', delning: 'delning', ljustal: 'ljustal', egen: 'egen'
   };
   const TAG_OF = Object.fromEntries(Object.entries(TAGS).map(([k, v]) => [v, k]));
   const KEYS = { accent: 'accent',
     rubrik: 'title', 'fråga': 'title', term: 'title', text: 'text', ingress: 'text', underrubrik: 'text', citat: 'text', definition: 'text',
     etikett: 'caption', 'källa': 'caption', bildtext: 'caption', svar: 'answer', exempel: 'example', tal: 'number', tid: 'minutes',
-    bild: 'image', alt: 'alt', 'vänster': 'lt', 'höger': 'rt', band: 'banner', 'bild-vänster': 'flip', steg: 'steps', tona: 'dim', fokus: 'focus',
+    bild: 'image', alt: 'alt', 'vänster': 'lt', 'höger': 'rt', start: 'start', slut: 'end', orsak: 'cause', konsekvens: 'effect', villkor: 'condition', alternativ: 'alternative', helhet: 'whole', reservation: 'reservation', gemensamt: 'common', 'spänning': 'tension', syntes: 'synthesis', band: 'banner', 'bild-vänster': 'flip', steg: 'steps', tona: 'dim', fokus: 'focus',
     'övergång': 'transition', bakgrund: 'bg', rubrikrörelse: 'ta', 'rörelse': 'ba', visa: 'reveal', rubrikrad: 'header', mall: 'tpl', aktiv: 'active', siffra: 'number', slutsats: 'text', max: 'max', mitten: 'text'
   };
-  const OUT_KEY = { max: 'max', active: 'aktiv', title: 'rubrik', text: 'text', caption: 'etikett', answer: 'svar', example: 'exempel', number: 'tal', minutes: 'tid', image: 'bild', alt: 'alt', lt: 'vänster', rt: 'höger', transition: 'övergång', bg: 'bakgrund', ta: 'rubrikrörelse', ba: 'rörelse', tpl: 'mall' };
+  const OUT_KEY = { max: 'max', active: 'aktiv', title: 'rubrik', text: 'text', caption: 'etikett', answer: 'svar', example: 'exempel', number: 'tal', minutes: 'tid', image: 'bild', alt: 'alt', lt: 'vänster', rt: 'höger', start: 'start', end: 'slut', question: 'fråga', cause: 'orsak', effect: 'konsekvens', condition: 'villkor', alternative: 'alternativ', source: 'källa', whole: 'helhet', reservation: 'reservation', common: 'gemensamt', tension: 'spänning', synthesis: 'syntes', transition: 'övergång', bg: 'bakgrund', ta: 'rubrikrörelse', ba: 'rörelse', tpl: 'mall' };
   const REVEAL = { allt: 'none', rader: 'rows', facit: 'answers', 'facit-rader': 'rest' };
   const REVEAL_OUT = { none: 'allt', rows: 'rader', answers: 'facit', rest: 'facit-rader' };
-  const LIST_FIELD = {etapper:'items',vagval:'items',lager:'items',resonemang:'items',helhet:'items',register:'items',samband:'items',marginal:'items',sats:'items', bullets: 'bullets', split: 'bullets', question: 'bullets', poll: 'bullets', reflect: 'bullets', cards: 'items', timeline: 'items', chat: 'items', duo: 'items', egen: 'items', compare: 'lb', karta: 'items', triad: 'items', motsats: 'items', bildkant: 'bullets', omlopp: 'items', gradskiva: 'items', bro: 'items', ringar: 'items', lins: 'items', 'strålkastare': 'items', fokus: 'items', 'bildfält': 'bullets', delning: 'items' };
-  const STEPPED = ["etapper","vagval","lager","resonemang","helhet",'register','samband','marginal','sats','bullets', 'split', 'cards', 'compare', 'timeline', 'chat', 'duo', 'egen', 'karta', 'triad', 'motsats', 'bildkant', 'omlopp', 'gradskiva', 'bro', 'ringar', 'lins', 'strålkastare', 'fokus', 'bildfält', 'delning'];
+  const LIST_FIELD = {etapper:'items',vagval:'items',lager:'items',resonemang:'items',helhet:'items',skiften:'items',prisma:'items',verkningar:'items',belagg:'items',sammanflode:'items',register:'items',samband:'items',marginal:'items',sats:'items', bullets: 'bullets', split: 'bullets', question: 'bullets', poll: 'bullets', reflect: 'bullets', cards: 'items', timeline: 'items', chat: 'items', duo: 'items', egen: 'items', compare: 'lb', karta: 'items', triad: 'items', motsats: 'items', bildkant: 'bullets', omlopp: 'items', gradskiva: 'items', bro: 'items', ringar: 'items', lins: 'items', 'strålkastare': 'items', fokus: 'items', 'bildfält': 'bullets', delning: 'items' };
+  const STEPPED = ["etapper","vagval","lager","resonemang","helhet","skiften","prisma","verkningar","belagg","sammanflode",'register','samband','marginal','sats','bullets', 'split', 'cards', 'compare', 'timeline', 'chat', 'duo', 'egen', 'karta', 'triad', 'motsats', 'bildkant', 'omlopp', 'gradskiva', 'bro', 'ringar', 'lins', 'strålkastare', 'fokus', 'bildfält', 'delning'];
   const yes = v => /^(ja|j|yes|true|1|på)$/i.test(String(v).trim());
   function enumVal(map, v) {
     const x = String(v).trim().toLowerCase();
@@ -2873,7 +3073,10 @@ const Manus = (() => {
         last = null; continue;
       }
       const kv = line.match(/^([a-zåäöA-ZÅÄÖ-]+)\s*:\s*(.*)$/);
-      const key = kv && KEYS[kv[1].toLowerCase()];
+      const label = kv && kv[1].toLowerCase();
+      let key = kv && KEYS[label];
+      if (s.layout === 'prisma' && label === 'fråga') key = 'question';
+      if (s.layout === 'belagg' && label === 'källa') key = 'source';
       if (key) {
         const v = kv[2];
         last = null;
@@ -2954,7 +3157,15 @@ const Manus = (() => {
     const put = (field, v) => { if (v == null || val(v) === '') return; out.push(`${OUT_KEY[field]}: ${multi(v)}`); };
     put('caption', s.caption);
     if (L !== 'quote') put('title', s.title);
+    if (L === 'skiften') { put('start', s.start); put('end', s.end); }
+    if (L === 'prisma') put('question', s.question);
+    if (L === 'verkningar') { put('cause', s.cause); put('effect', s.effect); }
+    if (L === 'belagg') put('source', s.source);
     put('text', s.text);
+    if (L === 'prisma' || L === 'sammanflode') { put('common', s.common); put('tension', s.tension); }
+    if (L === 'verkningar') { put('condition', s.condition); put('alternative', s.alternative); }
+    if (L === 'belagg') { put('whole', s.whole); put('reservation', s.reservation); }
+    if (L === 'sammanflode') put('synthesis', s.synthesis);
     if (['number', 'omslag', 'båge', 'lins', 'mätare', 'ljustal'].includes(L)) put('number', s.number);
     if (L === 'mätare' || L === 'ljustal') put('max', s.max);
     if (L === 'bro' || L === 'vagval') { put('lt', s.lt); put('rt', s.rt); }
@@ -2979,7 +3190,7 @@ const Manus = (() => {
     if (s.accent && Scen.ACCENTS[s.accent]) out.push('accent: '+Scen.ACCENTS[s.accent][2].toLowerCase());
     if (s.focus && Scen.FOCUS_STYLES[s.focus]) out.push(`fokus: ${lab(Scen.FOCUS_STYLES,s.focus)}`);
     if (s.dim) out.push('tona: ja');
-    else if (s.dim === false && ['bro','etapper','vagval','lager','resonemang','helhet'].includes(L)) out.push('tona: nej');
+    else if (s.dim === false && ['bro','etapper','vagval','lager','resonemang','helhet','skiften','prisma','verkningar','belagg','sammanflode'].includes(L)) out.push('tona: nej');
     const list = (arr) => Scen.lines(arr).forEach(t => out.push(/^- /.test(t) ? '  - ' + t.slice(2) : '- ' + t));
     if (L === 'compare') {
       out.push(`vänster: ${val(s.lt)}`); list(s.lb);
@@ -3025,6 +3236,11 @@ const Manus = (() => {
 {"l": "lager", "cat": "Redaktionellt", "syfte": "Går från övergripande sammanhang till en konkret kärna. Tre indragna nivåer blir synliga i ordning.", "undvik": "Högst tre nivåer. Använd bara när det finns en faktisk hierarki eller fördjupning.", "ex": "[lager]\nrubrik: Från helhet till detalj\nfokus: mjuk\n- Sammanhang | Varför spelar frågan roll?\n- Princip | Vad är det som styr?\n- Tillämpning | Hur använder vi principen?"},
 {"l": "resonemang", "cat": "Redaktionellt", "syfte": "Ett resonemang byggs i vänsterkolumnen och landar i en tydlig slutsats till höger.", "undvik": "Högst tre led. Slutsatsen ska stödjas av innehållet.", "ex": "[resonemang]\nrubrik: Gör tankegången synlig\nfokus: mjuk\n- Iakttagelse | Vad kan vi faktiskt se?\n- Tolkning | Hur kan det förklaras?\n- Prövning | Håller förklaringen?\ntext: En slutsats som går att följa."},
 {"l": "helhet", "cat": "Redaktionellt", "syfte": "Fyra delar i en asymmetrisk helhetsbild. Den första får mer plats, därefter tre kompletterande perspektiv.", "undvik": "Fyra delar rekommenderas. Första delen får större visuell vikt; ytorna representerar inga mängder.", "ex": "[helhet]\nrubrik: Det som håller ihop arbetet\nfokus: mjuk\n- Riktning | Vad vill vi uppnå?\n- Människor | Vilka behöver vara med?\n- Arbetssätt | Hur tar vi oss framåt?\n- Uppföljning | Hur vet vi att det fungerar?"},
+{"l": "skiften", "cat": "Analys", "syfte": "En kronologi där varje brytpunkt kopplas till en uttrycklig förändring. Tidigare skiften ligger kvar som nedtonad kontext medan fokus flyttas framåt.", "undvik": "Vanliga händelselistor utan tydliga förändringar; använd tidslinje i stället. Högst sex brytpunkter.", "ex": "[skiften]\netikett: Utveckling\nrubrik: När spelreglerna förändras\nstart: Ett stabilt utgångsläge\nslut: Ett nytt sätt att arbeta\n- Fas 1 | Ett behov blir synligt | Frågan får högre prioritet\n- Fas 2 | Ett beslut fattas | Resurser och ansvar flyttas\n- Fas 3 | Ett nytt arbetssätt införs | Resultaten kan följas på ett annat sätt\nslutsats: Varje skifte ändrar villkoren för det som följer."},
+{"l": "prisma", "cat": "Analys", "syfte": "Tre till fem perspektiv betraktar samma fråga från olika riktningar. Det gemensamma analysobjektet ligger stabilt i centrum.", "undvik": "Binära jämförelser; använd vägval eller motsats. Undvik också perspektiv som saknar parallell struktur eller tydlig grund.", "ex": "[prisma]\netikett: Perspektiv\nrubrik: Samma fråga, olika blickar\nfråga: Hur bör förändringen bedömas?\n- Användare | Begriplighet | Utgår från vardaglig användning\n- Verksamhet | Genomförbarhet | Utgår från tid och resurser\n- Teknik | Hållbarhet | Utgår från drift och vidareutveckling\ngemensamt: Alla försöker lösa samma grundproblem.\nspänning: De värderar kortsiktig enkelhet och långsiktig robusthet olika."},
+{"l": "verkningar", "cat": "Analys", "syfte": "En explicit kausal bana från orsak genom mekanismer till konsekvens. Villkor och alternativa förklaringar kan kvalificera sambandet.", "undvik": "Tidsföljd eller korrelation utan belagd mekanism. Högst tre mekanismer på samma bild.", "ex": "[verkningar]\netikett: Orsak och konsekvens\nrubrik: Hur en förändring fortplantas\norsak: En central förutsättning ändras\n- Första mekanismen | Systemets balans rubbas\n- Andra mekanismen | Aktörerna anpassar sitt beteende\nkonsekvens: Ett nytt stabilt läge uppstår\nvillkor: Sambandet gäller när övriga faktorer är ungefär oförändrade.\nalternativ: En parallell faktor kan också bidra."},
+{"l": "belagg", "cat": "Analys", "syfte": "Ett källutdrag ligger kvar som scenens ankare medan exakta textställen kopplas till iakttagelser och avgränsade tolkningar.", "undvik": "Långa dokument, obelagda citat eller analyser där utdraget inte återfinns ordagrant i källtexten. Högst tre utdrag.", "ex": "[belägg]\nrubrik: Från formulering till tolkning\nkälla: Exempelkälla\ntext: Vi behöver ändra riktning nu, innan möjligheten går förlorad.\n- ändra riktning | Ett handlingskrav uttrycks | Nuläget framställs som otillräckligt\n- innan möjligheten går förlorad | Tidspress byggs upp | Brådska används för att stärka argumentet\nhelhet: Formuleringen kombinerar krav och tidspress.\nreservation: Texten visar retoriken, inte om hotet är verkligt."},
+{"l": "sammanflode", "cat": "Analys", "syfte": "Tre till fem bidrag förenas till en ny syntes. Gemensam grund, kvarvarande spänning och slutlig syntes är separata delar av resonemanget.", "undvik": "En vanlig premisslista med given slutsats; använd triad eller samband. Syntesen måste omformulera bidragen och får inte dölja verklig oenighet.", "ex": "[sammanflöde]\netikett: Syntes\nrubrik: Ett beslut med flera krav\n- Användare | Behöver enkelhet och tydlighet\n- Verksamhet | Behöver hållbar ekonomi\n- Teknik | Behöver robust drift\ngemensamt: Lösningen måste fungera över tid.\nspänning: Snabb leverans står mot långsiktig kvalitet.\nsyntes: Välj den minsta lösning som kan växa utan att byggas om."},
 {"l": "lameller", "cat": "Struktur", "syfte": "En bildöppning där sju lameller lämnar scenen i olika riktningar.", "undvik": "Långa rubriker; håll dig till ungefär sex ord.", "ex": "[lameller]\netikett: Scen / Signatur 01\nrubrik: Ge idén\n  hela scenen.\ntext: En öppning med riktning, rytm och luft.\nbild: bilder/ai-agenter/ai01.jpg"},
 {"l": "register", "cat": "Signatur", "syfte": "Ett horisontellt register där aktuell panel vidgas vid varje klick.", "undvik": "Fler än fem paneler eller långa panelrubriker.", "ex": "[register]\nrubrik: Tre perspektiv. En fråga.\n- Upptäck | Vad ser vi? Börja med det som går att observera.\n- Tolka | Vilka förklaringar passar våra observationer?\n- Pröva | Vad skulle kunna visa att vår tolkning är fel?"},
 {"l": "samband", "cat": "Signatur", "syfte": "Premisser binds till en gemensam slutsats med ritade förbindelser.", "undvik": "Fler än fyra premisser; ett samband är inte automatiskt ett bevis.", "ex": "[samband]\nrubrik: Vad behöver en agent?\netikett: Tillsammans\n- Observation | Information om omgivningen.\n- Mål | Något att försöka uppnå.\n- Handling | Ett sätt att påverka omgivningen.\ntext: En återkopplande process."},
@@ -3128,7 +3344,7 @@ Kort, tidslinje, samtal och två-tal: "- rubrik | text".
 Tabellrader: "| a | b | c |". Första raden är rubrikrad.
 Talaranteckningar: rader som börjar med "> ".
 Fria lager (valfritt, på vilken bild som helst): "@typ x y bredd höjd nyckel=värde … | text". Typer: text, bild, form, cirkel, pil, markering. Koordinater i pixlar på en yta som är 1920×1080. Nycklar: storlek, färg (text, dampad, accent, accent2, yta), typsnitt=rubrik, bakgrund (yta, accent, markering), vinkel, justering (center, höger), fet, steg (visas på klick). Använd lager sparsamt.
-Nycklar: rubrik, text, etikett, svar, exempel, tal, tid (minuter), aktiv (kartans markerade del), slutsats (triad), bild, band (ja/nej), bild-vänster (ja/nej), vänster, höger, visa (allt | rader | facit | facit-rader), övergång (automatisk | djup | båge | tona | glid | skjut | stig | zooma | svep | morph | ingen), bakgrund (ingen | ljus | banor | vektorfält | nätverk | vågor), steg (ja/nej), tona (ja/nej).
+Nycklar: rubrik, text, etikett, svar, exempel, tal, tid (minuter), aktiv (kartans markerade del), slutsats, start, slut, fråga, orsak, konsekvens, villkor, alternativ, källa, helhet, reservation, gemensamt, spänning, syntes, bild, band (ja/nej), bild-vänster (ja/nej), vänster, höger, visa (allt | rader | facit | facit-rader), övergång (automatisk | djup | båge | tona | glid | skjut | stig | zooma | svep | morph | ingen), bakgrund (ingen | ljus | banor | vektorfält | nätverk | vågor), steg (ja/nej), tona (ja/nej).
 Text: **ord** markeras. x^2 eller x^{2} blir upphöjt, v_{0} nedsänkt.`;
 
   function catalogText(custom) {
@@ -3572,6 +3788,11 @@ async function handleFile(file) {
 
 /* =================== redigerare =================== */
 const FIELDS = {etapper:[["caption", "Etikett", "text"], ["title", "Rubrik", "text"], ["items", "Högst 4 rader: rubrik | text", "list"]],vagval:[["caption", "Etikett", "text"], ["title", "Rubrik", "text"], ["items", "Högst 4 rader: kriterium | vänster | höger", "list"], ["lt", "Vänster alternativ", "text"], ["rt", "Höger alternativ", "text"]],lager:[["caption", "Etikett", "text"], ["title", "Rubrik", "text"], ["items", "Högst 3 rader: rubrik | text", "list"]],resonemang:[["caption", "Etikett", "text"], ["title", "Rubrik", "text"], ["items", "Högst 3 rader: rubrik | text", "list"], ["text", "Slutsats", "area"]],helhet:[["caption", "Etikett", "text"], ["title", "Rubrik", "text"], ["items", "Högst 4 rader: rubrik | text", "list"]],
+skiften: [["caption", "Etikett", "text"], ["title", "Rubrik", "text"], ["start", "Utgångsläge", "text"], ["end", "Slutläge", "text"], ["items", "3–6 brytpunkter: tid | händelse | förändring (förändring krävs)", "list"], ["text", "Övergripande slutsats", "area"]],
+prisma: [["caption", "Etikett", "text"], ["title", "Rubrik", "text"], ["question", "Gemensam fråga", "area"], ["items", "3–5 perspektiv: perspektiv | betonar | grund", "list"], ["common", "Gemensamt", "area"], ["tension", "Spänning eller oenighet", "area"]],
+verkningar: [["caption", "Etikett", "text"], ["title", "Rubrik", "text"], ["cause", "Orsak", "area"], ["items", "1–3 mekanismer: mekanism | förändring", "list"], ["effect", "Konsekvens", "area"], ["condition", "Villkor", "area"], ["alternative", "Alternativ förklaring", "area"]],
+belagg: [["title", "Rubrik", "text"], ["source", "Källa", "text"], ["text", "Originaltext eller citat", "area"], ["items", "1–3 analyser: exakt utdrag | iakttagelse | tolkning", "list"], ["whole", "Helhetstolkning", "area"], ["reservation", "Reservation", "area"]],
+sammanflode: [["caption", "Etikett", "text"], ["title", "Rubrik", "text"], ["items", "3–5 bidrag: bidrag | vad det tillför", "list"], ["common", "Gemensam grund", "area"], ["tension", "Kvarvarande spänning", "area"], ["synthesis", "Syntes", "area"]],
 lameller: [["title", "Rubrik", "text"], ["caption", "Etikett", "text"], ["text", "Kort text", "area"], ["image", "Bild", "image"]],
 register: [["title", "Rubrik", "text"], ["items", "Högst 5 rader: rubrik | text", "list"]],
 samband: [["title", "Rubrik", "text"], ["items", "Högst 4 rader: rubrik | text", "list"], ["text", "Slutsats", "area"]],
@@ -3617,7 +3838,7 @@ sats: [["title", "Rubrik", "text"], ["items", "Högst 3 rader: rubrik | text", "
   ljustal: [['caption', 'Etikett', 'text'], ['title', 'Rubrik', 'text'], ['number', 'Tal, t.ex. 73 % eller 4 av 8', 'text'], ['max', 'Maxvärde om talet inte är en andel', 'text'], ['text', 'Förklaring', 'area']],
   egen: [['tpl', 'Mall', 'tplselect'], ['caption', 'Etikett', 'text'], ['title', 'Rubrik', 'text'], ['text', 'Text', 'area'], ['items', 'Lista, en per rad: rubrik | text', 'list'], ['answer', 'Svar', 'area'], ['image', 'Bild', 'image']]
 };
-const STEPPED = ["etapper","vagval","lager","resonemang","helhet",'register','samband','marginal','sats','bullets', 'split', 'cards', 'compare', 'timeline', 'chat', 'duo', 'egen', 'karta', 'triad', 'motsats', 'bildkant', 'omlopp', 'gradskiva', 'bro', 'ringar', 'lins', 'strålkastare', 'fokus', 'bildfält', 'delning'];
+const STEPPED = ["etapper","vagval","lager","resonemang","helhet","skiften","prisma","verkningar","belagg","sammanflode",'register','samband','marginal','sats','bullets', 'split', 'cards', 'compare', 'timeline', 'chat', 'duo', 'egen', 'karta', 'triad', 'motsats', 'bildkant', 'omlopp', 'gradskiva', 'bro', 'ringar', 'lins', 'strålkastare', 'fokus', 'bildfält', 'delning'];
 const DEFAULTS = {
   title: { title: 'Rubrik', text: 'Underrubrik', bg: 'nodes' },
   section: { caption: 'Del 1', title: 'Nytt avsnitt', bg: 'field' },
@@ -3634,8 +3855,9 @@ const DEFAULTS = {
   quote: { text: 'Citat', caption: 'Källa' },
   egen: { title: 'Rubrik', items: ['Första | Förklaring', 'Andra | Förklaring', 'Tredje | Förklaring'], steps: true }
 };
-["etapper","vagval","lager","resonemang","helhet",'lameller','register','samband','marginal','sats','poll', 'reflect', 'define', 'chat', 'duo', 'omslag', 'karta', 'triad', 'motsats', 'bildkant', 'båge', 'omlopp', 'gradskiva', 'bro', 'ringar', 'lins', 'mätare', 'ridå', 'strålkastare', 'fokus', 'ordbild', 'bildfält', 'delning', 'ljustal'].forEach(l => { const c = Manus.CATALOG.find(x => x.l === l); if (c) { const p = Manus.parseBlock(c.ex); delete p.layout; DEFAULTS[l] = p; } });
+['etapper','vagval','lager','resonemang','helhet','skiften','prisma','verkningar','belagg','sammanflode','lameller','register','samband','marginal','sats','poll', 'reflect', 'define', 'chat', 'duo', 'omslag', 'karta', 'triad', 'motsats', 'bildkant', 'båge', 'omlopp', 'gradskiva', 'bro', 'ringar', 'lins', 'mätare', 'ridå', 'strålkastare', 'fokus', 'ordbild', 'bildfält', 'delning', 'ljustal'].forEach(l => { const c = Manus.CATALOG.find(x => x.l === l); if (c) { const p = Manus.parseBlock(c.ex); delete p.layout; DEFAULTS[l] = p; } });
 const WF = {etapper:"<path class=\"l\" d=\"M15 30H55V45H100V60H145\"/>",vagval:"<path class=\"l\" d=\"M14 30H146M14 50H146M14 70H146M60 15V75M103 15V75\"/>",lager:"<path class=\"l\" d=\"M15 20H140M30 45H140M45 70H140\"/>",resonemang:"<path class=\"l\" d=\"M15 20H75M15 45H75M15 70H75M92 20V70\"/><rect class=\"a\" x=\"105\" y=\"30\" width=\"40\" height=\"30\"/>",helhet:"<rect class=\"a\" x=\"14\" y=\"20\" width=\"60\" height=\"54\"/><path class=\"l\" d=\"M88 20H145M88 45H145M88 70H145\"/>",
+skiften:'<line class="l" x1="14" y1="48" x2="146" y2="48"/><circle class="a" cx="28" cy="48" r="4"/><circle class="a" cx="80" cy="48" r="5"/><circle class="a" cx="132" cy="48" r="4"/><path class="m" d="M28 38V22M80 58V75M132 38V22"/>',prisma:'<circle class="o" cx="80" cy="46" r="15"/><path class="l" d="M80 31L80 8M94 42L140 24M91 58L124 79M69 58L36 79M66 42L20 24"/><circle class="a" cx="80" cy="46" r="6"/>',verkningar:'<path class="l" d="M15 48H145"/><circle class="a" cx="18" cy="48" r="6"/><circle class="o" cx="60" cy="48" r="5"/><circle class="o" cx="100" cy="48" r="5"/><path class="a" d="M136 42l9 6-9 6"/>',belagg:'<rect class="m" x="14" y="18" width="76" height="7" rx="2"/><rect class="m" x="14" y="32" width="94" height="7" rx="2"/><rect class="a" x="48" y="31" width="34" height="9" rx="2"/><path class="l" d="M82 36H118V62"/><rect class="m" x="112" y="62" width="34" height="5" rx="2"/>',sammanflode:'<path class="l" d="M14 18C42 18 52 45 78 45M14 45H78M14 72C42 72 52 45 78 45M146 24C118 24 108 45 78 45"/><path class="a" d="M78 45C90 55 105 64 138 72"/><circle class="a" cx="78" cy="45" r="5"/>',
 lameller:"<path class=\"l\" d=\"M25 10V80M50 10V80M75 10V80M100 10V80M125 10V80\"/><rect class=\"a\" x=\"12\" y=\"50\" width=\"100\" height=\"18\"/>",register:"<rect class=\"o\" x=\"12\" y=\"15\" width=\"30\" height=\"60\"/><rect class=\"a\" x=\"45\" y=\"15\" width=\"72\" height=\"60\"/><rect class=\"o\" x=\"120\" y=\"15\" width=\"28\" height=\"60\"/>",samband:"<path class=\"l\" d=\"M20 20H55L100 45H145M20 70H55L100 45\"/><circle class=\"a\" cx=\"130\" cy=\"45\" r=\"15\"/>",marginal:"<rect class=\"o\" x=\"12\" y=\"12\" width=\"80\" height=\"65\"/><path class=\"l\" d=\"M100 20H148M100 45H148M100 70H148\"/>",sats:"<text class=\"a\" x=\"20\" y=\"50\" style=\"font:30px serif\">x + y</text><path class=\"l\" d=\"M20 65H140\"/>",
   title: '<rect class="a" x="14" y="46" width="96" height="16" rx="3"/><rect class="m" x="14" y="68" width="62" height="5" rx="2"/>',
   section: '<rect class="a" x="14" y="30" width="28" height="4" rx="2"/><rect class="m" x="14" y="40" width="108" height="16" rx="3" style="opacity:.8"/>',
@@ -3861,7 +4083,7 @@ function renderInsp() {
     <div class="row2"><div class="fld"><label for="f-ta">Rubrikens rörelse</label><select id="f-ta" data-f="ta" data-t="text">${opt(Scen.TITLE_ANIMS, s.ta || 'auto')}</select></div>
     <div class="fld"><label for="f-ba">Innehållets rörelse</label><select id="f-ba" data-f="ba" data-t="text">${opt(Scen.BODY_ANIMS, s.ba || 'auto')}</select></div></div>`;
   if (STEPPED.includes(L)) h += `<label class="chk"><input type="checkbox" id="f-steps" data-f="steps" data-t="check"${s.steps !== false ? ' checked' : ''}> Visa rubriker och innehåll stegvis, på klick</label>
-    <div class="fld"><label for="f-focus">Fokus på aktuellt steg</label><select id="f-focus" data-f="focus" data-t="text"${s.steps === false ? ' disabled' : ''}>${opt(Scen.FOCUS_STYLES,s.focus || (s.dim || (['bro','etapper','vagval','lager','resonemang','helhet'].includes(L) && s.dim !== false) ? 'soft' : 'none'))}</select><span class="hint">Mjuk tonar ned tidigare steg. Spotlight ger starkare kontrast. Accentlinje och Inramning markerar det aktuella steget.</span></div>`;
+    <div class="fld"><label for="f-focus">Fokus på aktuellt steg</label><select id="f-focus" data-f="focus" data-t="text"${s.steps === false ? ' disabled' : ''}>${opt(Scen.FOCUS_STYLES,s.focus || (s.dim || (['bro','etapper','vagval','lager','resonemang','helhet','skiften','prisma','verkningar','belagg','sammanflode'].includes(L) && s.dim !== false) ? 'soft' : 'none'))}</select><span class="hint">Mjuk tonar ned tidigare steg. Spotlight ger starkare kontrast. Accentlinje och Inramning markerar det aktuella steget.</span></div>`;
   h += `<span class="hint">Automatisk övergång blir morph när två bilder i rad har samma rubrik eller bild.</span></div>
     <div class="grp"><h3>Anteckningar</h3><div class="fld"><label for="f-notes" class="muted" style="font-weight:400">Finns i lärarversionen (tangent N). Tas bort ur elevversionen.</label><textarea id="f-notes" data-f="notes" data-t="text" rows="4">${esc(valOf(s.notes))}</textarea></div></div>
     <p class="fmt-tip">Skriv <code>**ord**</code> för att markera, <code>x^2</code> eller <code>x^{2}</code> för upphöjt och <code>v_{0}</code> för nedsänkt.</p>`;

@@ -13,7 +13,9 @@
     "mallar": "node scripts/scen.mjs mallar",
     "kolla": "node scripts/scen.mjs kolla",
     "test:browser": "node scripts/check-browser.cjs",
-    "test": "npm run kolla && node scripts/check-editorial.cjs && node scripts/check-focus.cjs && node scripts/check-signaturer.cjs && node scripts/check-student-export.cjs && npm run test:browser"
+    "test:mallar": "node scripts/check-new-templates.cjs",
+    "test:mallar:browser": "node scripts/check-new-templates-browser.cjs",
+    "test": "npm run kolla && node scripts/check-editorial.cjs && npm run test:mallar && node scripts/check-focus.cjs && node scripts/check-signaturer.cjs && node scripts/check-student-export.cjs && npm run test:browser && npm run test:mallar:browser"
   },
   "engines": { "node": ">=18" }
 }

@@ -30,6 +30,10 @@ Varje bild i ett manus börjar med mallens namn inom hakparentes. Samma katalog 
 | `[text-bild]` | Bild | Text och punkter bredvid en bild. Byt sida med bild-vänster. |
 | `[helbild]` | Bild | En bild som tar hela ytan, med kort rubrik och bildtext. |
 | `[bildregi]` | Bild | Regisserar en bild som cinematic hero, detaljresa, spotlight/annotation eller kontrollerad mask reveal. Samma bild och komposition bär hela klicksekvensen. |
+| `[terminal]` | Textregi | Regisserar en trovärdig terminalberättelse där kommando, output, fel, resultat och annotation har separata semantiska roller. Kommandon kan skrivas fram när skrivandet bär betydelse. |
+| `[kodförklaring]` | Textregi | Etablerar ett stabilt kodblock och flyttar sedan fokus mellan relevanta rader eller uttryck med annotation och resultat. |
+| `[typografi]` | Textregi | Låter en stor mening bära hela scenen och förändras genom fokus, ersättning eller precisering med mycket whitespace. |
+| `[texttempo]` | Textregi | Bygger ett resonemang genom kontrollerad typografisk pacing: påstående, kontrast, avslöjande och slutsats får egna kommunikativa klick. |
 | `[jämförelse]` | Data | Två sidor mot varandra: för och emot, före och efter. |
 | `[tabell]` | Data | Tabell, gärna som övning där facit klickas fram rad för rad. |
 | `[tal]` | Data | Ett tal som räknas upp, med förklaring. |
@@ -565,6 +569,70 @@ startutsnitt: 50 50 1
 slututsnitt: 58 46 1.08
 säker-yta: 5 12 38 72
 - robot | Rörelsen | 67 | 34 | 16 | 34 | Figuren bär scenens handling.
+```
+
+## Textregi
+
+### `[terminal]` Terminal
+
+Regisserar en trovärdig terminalberättelse där kommando, output, fel, resultat och annotation har separata semantiska roller. Kommandon kan skrivas fram när skrivandet bär betydelse.
+
+**Undvik när:** Hackerestetik, dekorativ skrivmaskinseffekt eller fler än sex terminalhändelser på samma scen.
+
+```
+[terminal]
+etikett: RELEASE / 02
+rubrik: Från kommando till bevis
+- kommando | npm run bygg | Någon skriver faktiskt kommandot.
+- output | dist/scen.html 426 kB | Artefakten har skapats.
+- success | ✓ Bygg klar | Resultatet får fokus.
+- kommando | git status --short | Nästa fråga är om arbetsytan är ren.
+- output | (ingen output) | Tystnaden är själva resultatet.
+```
+
+### `[kodförklaring]` Kodförklaring
+
+Etablerar ett stabilt kodblock och flyttar sedan fokus mellan relevanta rader eller uttryck med annotation och resultat.
+
+**Undvik när:** Mer än cirka tolv kodrader, flera fokusområden på samma rad eller kod som kräver horisontell scrollning.
+
+```
+[kodförklaring]
+etikett: REDUCER
+rubrik: En rad förändrar tillståndet
+text: function add(total, value) {
+  return total + value;
+}
+- 2 | total + value | Uttrycket skapar nästa ackumulerade värde. | 12 + 5 = 17
+- 1 | add | Funktionen namnger operationen. | Ett nytt totalvärde returneras.
+```
+
+### `[typografi]` Typografiskt statement
+
+Låter en stor mening bära hela scenen och förändras genom fokus, ersättning eller precisering med mycket whitespace.
+
+**Undvik när:** Vanliga rubriker, långa stycken eller transformationer där formuleringens betydelse inte förändras.
+
+```
+[typografi]
+etikett: STATEMENT
+- statement | Verktyget är inte poängen. | Etablering
+- focus | **Omdömet** är poängen. | Fokus
+- precisering | Verktyget förstärker **omdömet**. | Precisering
+```
+
+### `[texttempo]` Typografiskt tempo
+
+Bygger ett resonemang genom kontrollerad typografisk pacing: påstående, kontrast, avslöjande och slutsats får egna kommunikativa klick.
+
+**Undvik när:** Att dela upp text enbart för att skapa fler klick. Varje steg måste ändra betydelse, tempo eller slutsats.
+
+```
+[texttempo]
+etikett: PACING
+- statement | AI kan lösa uppgiften. | Påstående
+- contrast | AI kan lösa uppgiften. **Men inte på det sätt vi tänkte.** | Kontrast
+- conclusion | Förmågan förändras. **Ansvaret består.** | Slutsats
 ```
 
 ## Data

@@ -14,7 +14,7 @@ const LAYOUTS = {etapper:"Etapper",vagval:"Vägval",lager:"Lager",resonemang:"Re
   skiften: 'Skiften', prisma: 'Prisma', verkningar: 'Verkningar', belagg: 'Belägg', sammanflode: 'Sammanflöde',
   lameller: 'Lameller', register: 'Register', samband: 'Samband', marginal: 'Marginal', sats: 'Sats',
   title: 'Titel', section: 'Avsnitt', statement: 'Påstående', bullets: 'Punktlista', split: 'Text och bild',
-  image: 'Helbild', bildregi: 'Bildregi', cards: 'Kort', compare: 'Jämförelse', table: 'Tabell', number: 'Stort tal', timeline: 'Tidslinje',
+  image: 'Helbild', bildregi: 'Bildregi', terminal: 'Terminal', kodforklaring: 'Kodförklaring', typografisk: 'Typografiskt statement', texttempo: 'Typografiskt tempo', cards: 'Kort', compare: 'Jämförelse', table: 'Tabell', number: 'Stort tal', timeline: 'Tidslinje',
   question: 'Fråga och svar', poll: 'Omröstning', reflect: 'Reflektion', define: 'Definition', chat: 'AI-samtal', duo: 'Två tal',
   quote: 'Citat', omslag: 'Omslag', karta: 'Karta', triad: 'Triad', motsats: 'Motsats', bildkant: 'Bildkant', 'båge': 'Båge', omlopp: 'Omlopp', gradskiva: 'Gradskiva', bro: 'Bro', ringar: 'Ringar', lins: 'Lins', 'mätare': 'Mätare', 'ridå': 'Ridå', 'strålkastare': 'Strålkastare', fokus: 'Fokus', ordbild: 'Ordbild', 'bildfält': 'Bildfält', delning: 'Delning', ljustal: 'Ljustal', tom: 'Fri yta', egen: 'Egen mall'
 };
@@ -86,6 +86,32 @@ function imageBrief(sl, defaults) {
   const d = normalizeImageDirection(sl), b = sl.imageBrief || {}, base = defaults || {};
   return { imageId: b.id || base.imageId || '', filename: b.filename || (String(sl.image || '').startsWith('img:') ? String(sl.image).slice(4) : '') || base.filename || '', scene: b.scene || base.scene || '', purpose: b.purpose || base.purpose || '', subject: b.subject || base.subject || '', composition: b.composition || base.composition || '', subjectPlacement: b.placement || base.subjectPlacement || '', negativeSafeArea: d.safe.slice(), aspectRatio: b.aspectRatio || base.aspectRatio || '16:9', focusPoint: d.focus.slice(), plannedCrop: d.crop, plannedMotion: { start: d.start.slice(), end: d.end.slice(), direction: d.direction, speed: d.speed }, detailAreas: d.details.map(x => ({ ...x })), avoid: b.avoid || base.avoid || '', prompt: b.prompt || base.prompt || '' };
 }
+function normalizeTextDirection(sl) {
+  sl = sl || {};
+  const mode = sl.layout === 'kodforklaring' ? 'code' : sl.layout === 'typografisk' ? 'statement' : sl.layout === 'texttempo' ? 'pacing' : 'terminal';
+  const roleMap = {
+    prompt: 'prompt', kommando: 'command', command: 'command', output: 'output', utdata: 'output',
+    fel: 'error', error: 'error', klar: 'success', success: 'success', fokus: 'focus', focus: 'focus', aktiv: 'focus', active: 'focus',
+    annotation: 'annotation', annotering: 'annotation',
+    statement: 'statement', 'påstående': 'statement', pastående: 'statement', 'fråga': 'question', fraga: 'question', question: 'question',
+    svar: 'answer', answer: 'answer', kontrast: 'contrast', contrast: 'contrast', precision: 'precision', precisering: 'precision',
+    replacement: 'replacement', replace: 'replacement', 'ersättning': 'replacement', ersattning: 'replacement',
+    reveal: 'reveal', 'avslöjande': 'reveal', avslojande: 'reveal', buildup: 'buildup', 'uppbyggnad': 'buildup',
+    conclusion: 'conclusion', slutsats: 'conclusion', paus: 'pause', pause: 'pause'
+  };
+  const items = lines(sl.items).map((line, index) => {
+    const p = line.split('|').map(x => x.trim());
+    if (mode === 'code') {
+      const n = parseInt(p[0], 10);
+      return { id: `code-${index + 1}`, line: Number.isFinite(n) && n > 0 ? n : index + 1, token: p[1] || '', annotation: p[2] || '', result: p.slice(3).join(' | ') };
+    }
+    const rawRole = String(p[0] || (mode === 'terminal' ? 'output' : 'statement')).toLowerCase();
+    const role = roleMap[rawRole] || (mode === 'terminal' ? 'output' : 'statement');
+    const animation = mode === 'terminal' && role === 'command' ? 'type' : mode === 'terminal' && role !== 'prompt' ? 'fade' : 'none';
+    return { id: `${mode}-${index + 1}`, role, content: p[1] || '', annotation: p.slice(2).join(' | '), animation };
+  });
+  return { mode, items };
+}
 
 /* ---------- rendering ---------- */
 function anim(v, def) { return (!v || v === 'auto') ? def : v; }
@@ -100,30 +126,53 @@ function dramaturgyPhase(focusSteps, restoreStep, step, final) {
   if (Number.isFinite(restoreStep) && step >= restoreStep) return { state: 'restored', focus: -1 };
   return { state: 'overview', focus: -1 };
 }
+function dramaturgyTarget(focusSteps, focusTargets, restoreStep, restoredTarget, step, final) {
+  const phase = dramaturgyPhase(focusSteps, restoreStep, step, final);
+  let target = -1;
+  if (phase.state === 'focus') {
+    const explicit = (focusTargets || [])[phase.focus];
+    target = Number.isFinite(explicit) ? explicit : phase.focus;
+  } else if (phase.state === 'restored' && Number.isFinite(restoredTarget)) target = restoredTarget;
+  return { state: phase.state, focus: phase.focus, target };
+}
 function applyDramaturgy(sec, step, final) {
   if (!sec || !sec.dataset || !sec.dataset.dramaturgy) return null;
   const items = [...sec.querySelectorAll('[data-dramaturgy-item]')];
-  const focusSteps = items.map(el => +el.dataset.dramaturgyFocus).filter(Number.isFinite);
+  const cues = [...sec.querySelectorAll('[data-dramaturgy-cue]')];
+  const targets = [...sec.querySelectorAll('[data-dramaturgy-target]')];
+  const focusNodes = cues.length ? cues : items;
+  const focusSteps = focusNodes.map(el => +el.dataset.dramaturgyFocus).filter(Number.isFinite);
+  const focusTargets = focusNodes.map((el, index) => {
+    const n = +el.dataset.dramaturgyTarget;
+    return Number.isFinite(n) ? n : index;
+  });
   const restore = sec.querySelector('[data-dramaturgy-restore]');
   const restoreStep = restore ? +restore.dataset.step : NaN;
+  const restoredTarget = +sec.dataset.dramaturgyRestoredTarget;
   const staticState = final || sec.dataset.dramaturgyStatic === 'true' || !!sec.closest('.static');
-  const phase = dramaturgyPhase(focusSteps, restoreStep, step, staticState);
+  const phase = dramaturgyTarget(focusSteps, focusTargets, restoreStep, restoredTarget, step, staticState);
   sec.dataset.dramaturgyState = phase.state;
-  if (phase.state === 'focus') sec.dataset.dramaturgyFocus = String(phase.focus);
+  if (phase.state === 'focus') sec.dataset.dramaturgyFocus = String(phase.target);
   else delete sec.dataset.dramaturgyFocus;
-  items.forEach((el, index) => {
-    el.classList.toggle('dramaturgy-current', phase.state === 'focus' && index === phase.focus);
-    el.classList.toggle('dramaturgy-past', phase.state === 'focus' && index < phase.focus);
-    el.classList.toggle('dramaturgy-future', phase.state === 'focus' && index > phase.focus);
+  const actors = targets.length ? targets : items;
+  actors.forEach((el, index) => {
+    const explicit = +el.dataset.dramaturgyIndex;
+    const actorIndex = Number.isFinite(explicit) ? explicit : index;
+    el.classList.toggle('dramaturgy-current', phase.target >= 0 && actorIndex === phase.target);
+    el.classList.toggle('dramaturgy-past', phase.target >= 0 && actorIndex < phase.target);
+    el.classList.toggle('dramaturgy-future', phase.target >= 0 && actorIndex > phase.target);
   });
   let progress = 0;
   if (phase.state === 'restored') progress = 1;
-  else if (phase.state === 'focus' && items[phase.focus]) {
-    const explicit = parseFloat(items[phase.focus].dataset.dramaturgyProgress);
-    progress = Number.isFinite(explicit) ? explicit : (items.length > 1 ? phase.focus / (items.length - 1) : 1);
+  else if (phase.state === 'focus' && focusNodes[phase.focus]) {
+    const explicit = parseFloat(focusNodes[phase.focus].dataset.dramaturgyProgress);
+    progress = Number.isFinite(explicit) ? explicit : (focusNodes.length > 1 ? phase.focus / (focusNodes.length - 1) : 1);
   }
   sec.style.setProperty('--dramaturgy-progress', String(Math.max(0, Math.min(1, progress))));
-  const current = phase.state === 'focus' ? items[phase.focus] : null;
+  const current = phase.state === 'focus' ? actors.find((el, index) => {
+    const explicit = +el.dataset.dramaturgyIndex;
+    return (Number.isFinite(explicit) ? explicit : index) === phase.target;
+  }) : null;
   if (current && current.dataset.imageX) {
     sec.style.setProperty('--image-active-x', `${current.dataset.imageX}%`);
     sec.style.setProperty('--image-active-y', `${current.dataset.imageY}%`);
@@ -227,6 +276,49 @@ function renderSlide(sl, i, deck, img) {
       } else if (d.mode === 'reveal') semantic = detailNodes;
       body = `<div class="ir-stage" data-image-stage data-image-mode="${d.mode}" data-image-crop="${d.crop}" data-image-direction="${d.direction}" style="${vars}"><div class="ir-camera">${image}</div><div class="ir-shade" aria-hidden="true"></div><div class="ir-spotlight" aria-hidden="true"></div><div class="ir-safe" data-safe-area aria-hidden="true"></div>${semantic}${copy}${restore}</div>`;
       attrs += ` data-dramaturgy="image-direction" data-dramaturgy-state="${steps && d.mode !== 'hero' ? 'overview' : 'restored'}"${steps && d.mode !== 'hero' ? '' : ' data-dramaturgy-static="true"'} data-image-mode="${d.mode}"`;
+      break;
+    }
+    case 'terminal': {
+      const d = normalizeTextDirection(sl), total = Math.max(1, d.items.length);
+      const rows = d.items.map((o, index) => {
+        const n = steps ? ++k : 0;
+        const stepAttr = steps ? ` data-step="${n}" data-step-anim="${ba === 'none' || o.role === 'command' ? 'none' : o.animation}"` : '';
+        const commandStep = steps && o.role === 'command' ? ` data-step="${n}" data-step-anim="${ba === 'none' ? 'none' : 'type'}"` : '';
+        const prefix = o.role === 'command' ? '<span class="term-prompt" aria-hidden="true">›</span>' : o.role === 'prompt' ? '<span class="term-prompt" aria-hidden="true">$</span>' : '<span class="term-gutter" aria-hidden="true"></span>';
+        return `<div class="term-row" data-semantic-role="${o.role}" data-dramaturgy-item data-dramaturgy-focus="${n}" data-dramaturgy-progress="${((index + 1) / total).toFixed(3)}"${stepAttr}>${prefix}<code${commandStep}>${fmt(o.content)}</code>${o.annotation ? `<aside>${fmt(o.annotation)}</aside>` : ''}</div>`;
+      }).join('');
+      body = `<header class="term-heading">${sl.caption ? `<p>${fmt(sl.caption)}</p>` : ''}${title ? `<h2${tid(title)}>${fmt(title)}</h2>` : ''}</header><div class="term-window"><div class="term-chrome" aria-hidden="true"><i></i><i></i><i></i><span>scen / narrative</span></div><div class="term-log">${rows}</div></div>`;
+      attrs += ` data-dramaturgy="semantic-text" data-dramaturgy-state="${steps ? 'overview' : 'restored'}" data-dramaturgy-reveal="progressive" data-text-mode="terminal"${steps ? '' : ' data-dramaturgy-static="true"'}`;
+      break;
+    }
+    case 'kodforklaring': {
+      const d = normalizeTextDirection(sl), codeLines = String(sl.text || '').split(String.fromCharCode(13)).join('').split('\n');
+      const focusByLine = new Map(); d.items.forEach((o, index) => { if (!focusByLine.has(o.line)) focusByLine.set(o.line, { ...o, index }); });
+      const codeHtml = (raw, item) => {
+        if (!item || !item.token) return esc(raw);
+        const at = raw.indexOf(item.token);
+        if (at < 0) return esc(raw);
+        return esc(raw.slice(0, at)) + `<mark data-code-token>${esc(item.token)}</mark>` + esc(raw.slice(at + item.token.length));
+      };
+      const renderedLines = codeLines.map((raw, index) => {
+        const item = focusByLine.get(index + 1), target = item ? ` data-dramaturgy-target data-dramaturgy-index="${item.index}"` : '';
+        return `<div class="code-line" data-code-line="${index + 1}"${target}><span>${String(index + 1).padStart(2, '0')}</span><code>${codeHtml(raw, item)}</code></div>`;
+      }).join('');
+      const annotations = d.items.map((o, index) => `<aside class="code-note" data-dramaturgy-target data-dramaturgy-index="${index}"><b>${fmt(o.annotation || `Rad ${o.line}`)}</b>${o.result ? `<p>${fmt(o.result)}</p>` : ''}</aside>`).join('');
+      const cues = d.items.map((o, index) => { const n = steps ? ++k : 0; return steps ? `<span data-dramaturgy-cue data-dramaturgy-focus="${n}" data-dramaturgy-target="${index}" data-step="${n}" data-step-anim="none" aria-hidden="true"></span>` : ''; }).join('');
+      const restore = steps ? `<span data-dramaturgy-restore data-step="${++k}" data-step-anim="none" aria-hidden="true"></span>` : '';
+      body = `<header class="code-heading">${sl.caption ? `<p>${fmt(sl.caption)}</p>` : ''}${title ? `<h2${tid(title)}>${fmt(title)}</h2>` : ''}</header><div class="code-stage"><div class="code-editor"><div class="code-tab"><i></i><span>exempel.js</span></div><div class="code-lines">${renderedLines}</div></div><div class="code-notes">${annotations}</div>${cues}${restore}</div>`;
+      attrs += ` data-dramaturgy="semantic-text" data-dramaturgy-state="${steps ? 'overview' : 'restored'}" data-text-mode="code"${steps ? '' : ' data-dramaturgy-static="true"'}`;
+      break;
+    }
+    case 'typografisk':
+    case 'texttempo': {
+      const d = normalizeTextDirection(sl);
+      const sequence = d.items.length ? d.items : [{ id: `${d.mode}-1`, role: 'statement', content: title || sl.text || 'En mening.', annotation: '' }];
+      const frames = sequence.map((o, index) => { const length = plain(o.content).length, size = length > 78 ? ' type-long' : length > 52 ? ' type-medium' : length < 10 ? ' type-short' : ''; return `<div class="type-frame${size}" data-semantic-role="${o.role}" data-dramaturgy-target data-dramaturgy-index="${index}"><p>${fmt(o.content)}</p>${o.annotation ? `<small>${fmt(o.annotation)}</small>` : ''}</div>`; }).join('');
+      const cues = sequence.slice(1).map((o, offset) => { const n = steps ? ++k : 0, target = offset + 1; return steps ? `<span data-dramaturgy-cue data-dramaturgy-focus="${n}" data-dramaturgy-target="${target}" data-step="${n}" data-step-anim="none" aria-hidden="true"></span>` : ''; }).join('');
+      body = `${sl.caption ? `<p class="type-kicker">${fmt(sl.caption)}</p>` : ''}<div class="type-sequence" data-text-sequence>${frames}${cues}</div>`;
+      attrs += ` data-dramaturgy="semantic-text" data-dramaturgy-state="${steps ? 'overview' : 'restored'}" data-dramaturgy-overview-target="0" data-dramaturgy-restored-target="${sequence.length - 1}" data-text-mode="${d.mode}"${steps ? '' : ' data-dramaturgy-static="true"'}`;
       break;
     }
     case 'compare': {
@@ -1532,5 +1624,5 @@ function standalone(deck) {
   return player(root, deck, { mode: 'present', images: imgs, speaker: deck.audience !== 'student', student: deck.audience === 'student', start, onChange(i) { try { history.replaceState(null, '', '#' + (i + 1)); } catch (e) {} } });
 }
 
-G.Scen = { exportData, player, thumb, renderSlide, standalone, applyTheme, applyDramaturgy, dramaturgyPhase, normalizeImageDirection, imageBrief, fmt, plain, esc, hash, lines, resolve, cleanHtml, cleanCss, fontUrl, THEMES, ACCENTS, LAYOUTS, TRANSITIONS, BACKGROUNDS, TITLE_ANIMS, BODY_ANIMS, FOCUS_STYLES, version: '3.0' };
+G.Scen = { exportData, player, thumb, renderSlide, standalone, applyTheme, applyDramaturgy, dramaturgyPhase, dramaturgyTarget, normalizeImageDirection, imageBrief, normalizeTextDirection, fmt, plain, esc, hash, lines, resolve, cleanHtml, cleanCss, fontUrl, THEMES, ACCENTS, LAYOUTS, TRANSITIONS, BACKGROUNDS, TITLE_ANIMS, BODY_ANIMS, FOCUS_STYLES, version: '3.0' };
 })(window);

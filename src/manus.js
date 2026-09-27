@@ -2,7 +2,7 @@
    Manus.parse(text) -> {meta, slides}   Manus.stringify(deck) -> text   Manus.CATALOG */
 const Manus = (() => {
   const TAGS = {"etapper":"etapper","v\u00e4gval":"vagval","lager":"lager","resonemang":"resonemang","helhet":"helhet",lameller: "lameller",register: "register",samband: "samband",marginal: "marginal",sats: "sats",
-    titel: 'title', avsnitt: 'section', 'påstående': 'statement', punkter: 'bullets', 'text-bild': 'split', helbild: 'image', bildregi: 'bildregi',
+    titel: 'title', avsnitt: 'section', 'påstående': 'statement', punkter: 'bullets', 'text-bild': 'split', helbild: 'image', bildregi: 'bildregi', terminal: 'terminal', 'kodförklaring': 'kodforklaring', typografi: 'typografisk', texttempo: 'texttempo',
     kort: 'cards', 'jämförelse': 'compare', tabell: 'table', tal: 'number', 'två-tal': 'duo', tidslinje: 'timeline',
     'fråga': 'question', 'omröstning': 'poll', reflektion: 'reflect', definition: 'define', samtal: 'chat', citat: 'quote',
     omslag: 'omslag', karta: 'karta', triad: 'triad', motsats: 'motsats', bildkant: 'bildkant', skiften: 'skiften', prisma: 'prisma', verkningar: 'verkningar', 'belägg': 'belagg', 'sammanflöde': 'sammanflode', fri: 'tom', 'båge': 'båge', omlopp: 'omlopp', gradskiva: 'gradskiva', bro: 'bro', ringar: 'ringar', lins: 'lins', 'mätare': 'mätare', 'ridå': 'ridå', 'strålkastare': 'strålkastare', fokus: 'fokus', ordbild: 'ordbild', 'bildfält': 'bildfält', delning: 'delning', ljustal: 'ljustal', egen: 'egen'
@@ -21,8 +21,8 @@ const Manus = (() => {
   const IMAGE_BRIEF_OUT = { id:'bild-id', filename:'filnamn', scene:'scen', purpose:'syfte', subject:'motiv', composition:'komposition', placement:'motivplacering', aspectRatio:'format', avoid:'undvik', prompt:'prompt' };
   const REVEAL = { allt: 'none', rader: 'rows', facit: 'answers', 'facit-rader': 'rest' };
   const REVEAL_OUT = { none: 'allt', rows: 'rader', answers: 'facit', rest: 'facit-rader' };
-  const LIST_FIELD = {etapper:'items',vagval:'items',lager:'items',resonemang:'items',helhet:'items',skiften:'items',prisma:'items',verkningar:'items',belagg:'items',sammanflode:'items',register:'items',samband:'items',marginal:'items',sats:'items', bullets: 'bullets', split: 'bullets', question: 'bullets', poll: 'bullets', reflect: 'bullets', cards: 'items', timeline: 'items', bildregi:'items', chat: 'items', duo: 'items', egen: 'items', compare: 'lb', karta: 'items', triad: 'items', motsats: 'items', bildkant: 'bullets', omlopp: 'items', gradskiva: 'items', bro: 'items', ringar: 'items', lins: 'items', 'strålkastare': 'items', fokus: 'items', 'bildfält': 'bullets', delning: 'items' };
-  const STEPPED = ["etapper","vagval","lager","resonemang","helhet","skiften","prisma","verkningar","belagg","sammanflode",'register','samband','marginal','sats','bullets', 'split', 'cards', 'compare', 'timeline', 'bildregi', 'chat', 'duo', 'egen', 'karta', 'triad', 'motsats', 'bildkant', 'omlopp', 'gradskiva', 'bro', 'ringar', 'lins', 'strålkastare', 'fokus', 'bildfält', 'delning'];
+  const LIST_FIELD = {etapper:'items',vagval:'items',lager:'items',resonemang:'items',helhet:'items',skiften:'items',prisma:'items',verkningar:'items',belagg:'items',sammanflode:'items',register:'items',samband:'items',marginal:'items',sats:'items', bullets: 'bullets', split: 'bullets', question: 'bullets', poll: 'bullets', reflect: 'bullets', cards: 'items', timeline: 'items', bildregi:'items', terminal:'items', kodforklaring:'items', typografisk:'items', texttempo:'items', chat: 'items', duo: 'items', egen: 'items', compare: 'lb', karta: 'items', triad: 'items', motsats: 'items', bildkant: 'bullets', omlopp: 'items', gradskiva: 'items', bro: 'items', ringar: 'items', lins: 'items', 'strålkastare': 'items', fokus: 'items', 'bildfält': 'bullets', delning: 'items' };
+  const STEPPED = ["etapper","vagval","lager","resonemang","helhet","skiften","prisma","verkningar","belagg","sammanflode",'register','samband','marginal','sats','bullets', 'split', 'cards', 'compare', 'timeline', 'bildregi', 'terminal', 'kodforklaring', 'typografisk', 'texttempo', 'chat', 'duo', 'egen', 'karta', 'triad', 'motsats', 'bildkant', 'omlopp', 'gradskiva', 'bro', 'ringar', 'lins', 'strålkastare', 'fokus', 'bildfält', 'delning'];
   const yes = v => /^(ja|j|yes|true|1|på)$/i.test(String(v).trim());
   function enumVal(map, v) {
     const x = String(v).trim().toLowerCase();
@@ -78,7 +78,7 @@ const Manus = (() => {
       if (li) {
         const sub = li[1].length >= 2;
         const arr = s[listField] = Array.isArray(s[listField]) ? s[listField] : [];
-        arr.push((sub ? '- ' : '') + li[2]);
+        arr.push((sub ? '- ' : '') + li[2].replace(/\\\\n/g, String.fromCharCode(10)));
         last = null; lastImageBrief = null; continue;
       }
       const kv = line.match(/^([a-zåäöA-ZÅÄÖ-]+)\s*:\s*(.*)$/);
@@ -121,7 +121,7 @@ const Manus = (() => {
         s[key] = v; last = key; continue;
       }
       if (lastImageBrief && s.imageBrief && typeof s.imageBrief[lastImageBrief] === 'string') { s.imageBrief[lastImageBrief] += '\n' + line; continue; }
-      if (last && typeof s[last] === 'string') { s[last] += '\n' + line; continue; }
+      if (last && typeof s[last] === 'string') { s[last] += '\n' + (s.layout === 'kodforklaring' && last === 'text' ? raw : line); continue; }
       if (!s.title && s.layout !== 'quote') { s.title = line; last = 'title'; continue; }
       if (!s.text) { s.text = line; last = 'text'; continue; }
       s.text += '\n' + line;
@@ -222,7 +222,7 @@ const Manus = (() => {
     if (s.focus && Scen.FOCUS_STYLES[s.focus]) out.push(`fokus: ${lab(Scen.FOCUS_STYLES,s.focus)}`);
     if (s.dim) out.push('tona: ja');
     else if (s.dim === false && ['bro','etapper','vagval','lager','resonemang','helhet','skiften','prisma','verkningar','belagg','sammanflode'].includes(L)) out.push('tona: nej');
-    const list = (arr) => Scen.lines(arr).forEach(t => out.push(/^- /.test(t) ? '  - ' + t.slice(2) : '- ' + t));
+    const list = (arr) => Scen.lines(arr).forEach(t => { t = String(t).split(String.fromCharCode(10)).join('\\\\n'); out.push(/^- /.test(t) ? '  - ' + t.slice(2) : '- ' + t); });
     if (L === 'compare') {
       out.push(`vänster: ${val(s.lt)}`); list(s.lb);
       out.push(`höger: ${val(s.rt)}`); list(s.rb);
@@ -295,6 +295,14 @@ const Manus = (() => {
       ex: '[helbild]\nrubrik: Solvarv i Mojaveöknen\netikett: Foto: exempel' },
     { l: 'bildregi', cat: 'Bild', syfte: 'Regisserar en bild som cinematic hero, detaljresa, spotlight/annotation eller kontrollerad mask reveal. Samma bild och komposition bär hela klicksekvensen.', undvik: 'Dekorativa zoomar utan kommunikativ funktion. Använd inte bild när typografi, diagram eller whitespace är tydligare.',
       ex: '[bildregi]\nrubrik: Från helhet till avgörande detalj\nbild: bilder/ai-agenter/ai10.jpg\nbildläge: detalj\nstartutsnitt: 50 50 1\nslututsnitt: 58 46 1.08\nsäker-yta: 5 12 38 72\n- robot | Rörelsen | 67 | 34 | 16 | 34 | Figuren bär scenens handling.' },
+    { l: 'terminal', cat: 'Textregi', syfte: 'Regisserar en trovärdig terminalberättelse där kommando, output, fel, resultat och annotation har separata semantiska roller. Kommandon kan skrivas fram när skrivandet bär betydelse.', undvik: 'Hackerestetik, dekorativ skrivmaskinseffekt eller fler än sex terminalhändelser på samma scen.',
+      ex: '[terminal]\netikett: RELEASE / 02\nrubrik: Från kommando till bevis\n- kommando | npm run bygg | Någon skriver faktiskt kommandot.\n- output | dist/scen.html 426 kB | Artefakten har skapats.\n- success | ✓ Bygg klar | Resultatet får fokus.\n- kommando | git status --short | Nästa fråga är om arbetsytan är ren.\n- output | (ingen output) | Tystnaden är själva resultatet.' },
+    { l: 'kodforklaring', cat: 'Textregi', syfte: 'Etablerar ett stabilt kodblock och flyttar sedan fokus mellan relevanta rader eller uttryck med annotation och resultat.', undvik: 'Mer än cirka tolv kodrader, flera fokusområden på samma rad eller kod som kräver horisontell scrollning.',
+      ex: '[kodförklaring]\netikett: REDUCER\nrubrik: En rad förändrar tillståndet\ntext: function add(total, value) {\n  return total + value;\n}\n- 2 | total + value | Uttrycket skapar nästa ackumulerade värde. | 12 + 5 = 17\n- 1 | add | Funktionen namnger operationen. | Ett nytt totalvärde returneras.' },
+    { l: 'typografisk', cat: 'Textregi', syfte: 'Låter en stor mening bära hela scenen och förändras genom fokus, ersättning eller precisering med mycket whitespace.', undvik: 'Vanliga rubriker, långa stycken eller transformationer där formuleringens betydelse inte förändras.',
+      ex: '[typografi]\netikett: STATEMENT\n- statement | Verktyget är inte poängen. | Etablering\n- focus | **Omdömet** är poängen. | Fokus\n- precisering | Verktyget förstärker **omdömet**. | Precisering' },
+    { l: 'texttempo', cat: 'Textregi', syfte: 'Bygger ett resonemang genom kontrollerad typografisk pacing: påstående, kontrast, avslöjande och slutsats får egna kommunikativa klick.', undvik: 'Att dela upp text enbart för att skapa fler klick. Varje steg måste ändra betydelse, tempo eller slutsats.',
+      ex: '[texttempo]\netikett: PACING\n- statement | AI kan lösa uppgiften. | Påstående\n- contrast | AI kan lösa uppgiften. **Men inte på det sätt vi tänkte.** | Kontrast\n- conclusion | Förmågan förändras. **Ansvaret består.** | Slutsats' },
     { l: 'compare', cat: 'Data', syfte: 'Två sidor mot varandra: för och emot, före och efter.', undvik: 'Mer än två alternativ. Använd kort.',
       ex: '[jämförelse]\nrubrik: Sökmotor eller språkmodell?\nvänster: Sökmotor\n- Hittar befintliga sidor\n- Visar källan\nhöger: Språkmodell\n- Skriver ny text\n- Kan hitta på' },
     { l: 'table', cat: 'Data', syfte: 'Tabell, gärna som övning där facit klickas fram rad för rad.', undvik: 'Tabeller med fler än åtta rader.',

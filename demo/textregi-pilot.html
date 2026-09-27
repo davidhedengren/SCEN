@@ -1,0 +1,81 @@
+<!doctype html>
+<html lang="sv">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>SCEN – Terminal och typografisk dramaturgi</title>
+  <link rel="stylesheet" href="../src/engine.css">
+  <style>
+    :root{color-scheme:dark;font-family:Inter,"Segoe UI",system-ui,sans-serif;background:#080b12;color:#f5f7fb}
+    *{box-sizing:border-box}html,body{width:100%;height:100%;margin:0;overflow:hidden}
+    body{display:grid;grid-template-rows:minmax(0,1fr) auto;background:#080b12}
+    #preview{position:relative;min-height:0}
+    .demo-bar{display:flex;align-items:center;gap:10px;min-height:66px;padding:10px 18px;border-top:1px solid #293040;background:#111620;color:#f5f7fb}
+    .demo-bar button,.demo-bar select{font:600 14px/1.1 inherit;color:inherit;background:#1b2230;border:1px solid #384257;border-radius:9px;padding:10px 14px}
+    .demo-bar button{cursor:pointer}.demo-bar button:hover{border-color:#7383a4}
+    .demo-bar button:focus-visible,.demo-bar select:focus-visible{outline:2px solid #8da8ff;outline-offset:2px}
+    .demo-bar label{display:flex;align-items:center;gap:8px;color:#bdc6d8;font-size:14px}.demo-bar input{accent-color:#8da8ff}
+    .demo-state{margin-left:auto;display:flex;align-items:baseline;gap:8px;white-space:nowrap}.demo-state b{font-size:14px}.demo-state span{color:#9eabc1;font:13px ui-monospace,"Cascadia Mono",monospace}
+    .demo-help{color:#8793a8;font-size:13px;white-space:nowrap}
+    @media(max-width:1180px){.demo-help{display:none}.demo-state{margin-left:0}.demo-bar{flex-wrap:wrap}}
+  </style>
+</head>
+<body>
+  <main id="preview" aria-label="Interaktiv förhandsvisning av SCEN:s textdramaturgi"></main>
+  <nav class="demo-bar" aria-label="Demokontroller">
+    <button id="prev" type="button">← Föregående</button>
+    <button id="next" type="button">Nästa →</button>
+    <button id="restart" type="button">Starta om scen</button>
+    <label>Scen
+      <select id="scene">
+        <option value="0">A · Terminal narrative</option>
+        <option value="1">B · Code explanation</option>
+        <option value="2">C · Typographic statement</option>
+        <option value="3">D · Typographic pacing</option>
+      </select>
+    </label>
+    <label>Tema
+      <select id="theme"><option value="nattbana">Nattbana</option><option value="klassrum">Klassrum</option><option value="atlas">Atlas</option><option value="scen">Scen</option></select>
+    </label>
+    <label><input id="motion" type="checkbox" checked> Rörelse</label>
+    <span class="demo-help">Använd även ← → eller klicka i scenen.</span>
+    <span class="demo-state"><b id="stateName">Etablering</b><span id="stateCode">terminal · 0/5</span></span>
+  </nav>
+  <script src="../src/engine.js"></script>
+  <script>
+    const baseSlides=[
+      {id:'terminal',layout:'terminal',caption:'TERMINAL NARRATIVE / RELEASE 02',title:'Från kommando till bevis',steps:true,items:[
+        'kommando | npm run bygg | Kommandot skrivs fram eftersom någon faktiskt skriver det.',
+        'output | dist/scen.html 426 kB | Artefakten finns nu. Outputen ändrar berättelsens läge.',
+        'success | ✓ 8 presentationer inbakade | Resultatet får fokus — inte bara terminalaktiviteten.',
+        'kommando | git status --short | Nästa kommando ställer en ny, tydlig fråga.',
+        'output | (ingen output) | Tystnaden är själva resultatet: arbetsytan är ren.'
+      ]},
+      {id:'code',layout:'kodforklaring',caption:'CODE EXPLANATION / REDUCER',title:'En rad förändrar tillståndet',steps:true,text:'const total = values.reduce((sum, value) => {\n  const next = sum + value;\n  return next;\n}, 0);\n\nconsole.log(total);',items:[
+        '1 | reduce | Reduce håller ihop hela förloppet. | En lista blir ett enda värde.',
+        '2 | sum + value | Här sker den faktiska förändringen. | 12 + 5 blir 17.',
+        '3 | return next | Det nya tillståndet skickas vidare. | Nästa varv börjar med 17.'
+      ]},
+      {id:'statement',layout:'typografisk',caption:'TYPOGRAPHIC STATEMENT',steps:true,items:[
+        'statement | Vi bygger inte fler bilder. | Utgångspunkt',
+        'focus | **Vi regisserar uppmärksamhet.** | Fokus',
+        'precision | En presentation är inte en fil.\n**Den är en följd av beslut.** | Precisering'
+      ]},
+      {id:'pacing',layout:'texttempo',caption:'TYPOGRAPHIC PACING',steps:true,items:[
+        'statement | AI kan lösa uppgiften. | Påstående',
+        'contrast | AI kan lösa uppgiften.\n**Men inte på det sätt vi tänkte.** | Kontrast',
+        'precision | Därför förändras lärarens roll. | Precisering',
+        'conclusion | **Från svarsgivare**\ntill regissör av tänkande. | Slutsats'
+      ]}
+    ];
+    const root=document.getElementById('preview'),scene=document.getElementById('scene'),theme=document.getElementById('theme'),motion=document.getElementById('motion');
+    const paramText=location.search.slice(1)||location.hash.slice(1);const params=new URLSearchParams(paramText);if(params.has('scene'))scene.value=String(Math.max(0,Math.min(3,+params.get('scene'))));if(params.has('theme'))theme.value=params.get('theme');if(params.get('motion')==='none')motion.checked=false;const initialStep=Math.max(0,+params.get('step')||0);let player;
+    function deck(){return{title:'SCEN Textregi',theme:{id:theme.value},templates:{},slides:baseSlides.map(s=>({...s,ba:motion.checked?'auto':'none'}))}}
+    function updateState(){if(!player)return;const active=player.index(),slide=player.el.querySelector('.slide.active'),state=slide?.dataset.dramaturgyState||'restored',focus=Number(slide?.dataset.dramaturgyFocus),mode=slide?.dataset.textMode||'';scene.value=String(active);const labels={overview:'Etablering',focus:`Fokus ${Number.isFinite(focus)?focus+1:''}`,restored:'Designat slutläge'};document.getElementById('stateName').textContent=labels[state]||state;document.getElementById('stateCode').textContent=`${mode} · ${state}${state==='focus'?'-'+(focus+1):''} · ${player.step()}/${player.steps()}`}
+    function after(action){action();requestAnimationFrame(()=>requestAnimationFrame(updateState))}
+    function rebuild(index=+scene.value){if(!player)player=Scen.player(root,deck(),{mode:'present',hint:false,onChange:updateState});else player.setDeck(deck(),null,index);player.go(index,{anim:false});player.replay();updateState()}
+    document.getElementById('prev').addEventListener('click',()=>after(()=>player.prev()));document.getElementById('next').addEventListener('click',()=>after(()=>player.next()));document.getElementById('restart').addEventListener('click',()=>after(()=>player.replay()));scene.addEventListener('change',()=>rebuild(+scene.value));theme.addEventListener('change',()=>rebuild(player?player.index():+scene.value));motion.addEventListener('change',()=>rebuild(player?player.index():+scene.value));addEventListener('keydown',()=>requestAnimationFrame(()=>requestAnimationFrame(updateState)));root.addEventListener('click',()=>requestAnimationFrame(()=>requestAnimationFrame(updateState)));
+    rebuild(+scene.value);if(initialStep)setTimeout(async()=>{for(let i=0;i<Math.min(initialStep,player.steps());i++){player.next();await new Promise(r=>setTimeout(r,160))}updateState()},500);
+  </script>
+</body>
+</html>

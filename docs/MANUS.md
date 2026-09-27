@@ -78,6 +78,25 @@ Första raden är mallen inom hakparentes, t.ex. `[kort]`. Alla mallar finns i [
 
 Bildregi kan dessutom bära en framtida Image Brief med `bild-id`, `filnamn`, `scen`, `syfte`, `motiv`, `komposition`, `motivplacering`, `format`, `undvik` och `prompt`. Detaljområden skrivs som `- id | etikett | x | y | bredd | höjd | annotation`. Se [BILDREGI.md](BILDREGI.md).
 
+Terminal och typografisk dramaturgi använder fyra förstaklassmallar:
+
+```text
+[terminal]
+- roll | innehåll | annotation
+
+[kodförklaring]
+text: kodblocket, med bevarade indrag på fortsättningsrader
+- radnummer | token | annotation | resultat
+
+[typografi]
+- semantisk roll | formulering | stegetikett
+
+[texttempo]
+- semantisk roll | formulering | stegetikett
+```
+
+Terminalroller är bland annat `kommando`, `output`, `fel` och `success`. Typografiska roller är bland annat `statement`, `fokus`, `kontrast`, `precisering` och `slutsats`. Roller beskriver betydelse; rendereraren avgör den visuella representationen. Se [TEXTREGI.md](TEXTREGI.md).
+
 ### Listor med två delar
 
 Kort, tidslinje, karta, triad, motsats, samtal och två tal använder `- rubrik | text`:

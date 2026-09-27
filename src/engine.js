@@ -14,7 +14,7 @@ const LAYOUTS = {etapper:"Etapper",vagval:"Vägval",lager:"Lager",resonemang:"Re
   skiften: 'Skiften', prisma: 'Prisma', verkningar: 'Verkningar', belagg: 'Belägg', sammanflode: 'Sammanflöde',
   lameller: 'Lameller', register: 'Register', samband: 'Samband', marginal: 'Marginal', sats: 'Sats',
   title: 'Titel', section: 'Avsnitt', statement: 'Påstående', bullets: 'Punktlista', split: 'Text och bild',
-  image: 'Helbild', cards: 'Kort', compare: 'Jämförelse', table: 'Tabell', number: 'Stort tal', timeline: 'Tidslinje',
+  image: 'Helbild', bildregi: 'Bildregi', cards: 'Kort', compare: 'Jämförelse', table: 'Tabell', number: 'Stort tal', timeline: 'Tidslinje',
   question: 'Fråga och svar', poll: 'Omröstning', reflect: 'Reflektion', define: 'Definition', chat: 'AI-samtal', duo: 'Två tal',
   quote: 'Citat', omslag: 'Omslag', karta: 'Karta', triad: 'Triad', motsats: 'Motsats', bildkant: 'Bildkant', 'båge': 'Båge', omlopp: 'Omlopp', gradskiva: 'Gradskiva', bro: 'Bro', ringar: 'Ringar', lins: 'Lins', 'mätare': 'Mätare', 'ridå': 'Ridå', 'strålkastare': 'Strålkastare', fokus: 'Fokus', ordbild: 'Ordbild', 'bildfält': 'Bildfält', delning: 'Delning', ljustal: 'Ljustal', tom: 'Fri yta', egen: 'Egen mall'
 };
@@ -57,6 +57,36 @@ function fmt(s) {
 function plain(s) { return String(s == null ? '' : s).replace(/\*\*/g, '').replace(/[\^_]\{([^}]*)\}/g, '$1').trim(); }
 function hash(s) { let h = 7; for (const c of String(s)) h = (h * 31 + c.codePointAt(0)) | 0; return (h >>> 0).toString(36); }
 function lines(a) { return (Array.isArray(a) ? a : String(a || '').split('\n')).map(x => String(x)).filter(x => x.trim() !== ''); }
+function numericTuple(value, fallback, length) {
+  const src = Array.isArray(value) ? value : String(value || '').trim().split(/[\s,]+/);
+  const out = src.map(Number).filter(Number.isFinite).slice(0, length);
+  return out.length === length ? out : fallback.slice();
+}
+function normalizeImageDirection(sl) {
+  sl = sl || {};
+  const raw = sl.imageDirection || {};
+  const modeMap = { cinematic: 'hero', hero: 'hero', detalj: 'detail', detail: 'detail', spotlight: 'spotlight', annotation: 'spotlight', reveal: 'reveal', mask: 'reveal' };
+  const dirMap = { höger: 'right', hoger: 'right', right: 'right', vänster: 'left', vanster: 'left', left: 'left', upp: 'up', up: 'up', ned: 'down', down: 'down', stilla: 'none', none: 'none' };
+  const speedMap = { långsam: 'slow', langsamt: 'slow', slow: 'slow', normal: 'medium', medium: 'medium', snabb: 'fast', fast: 'fast' };
+  const mode = modeMap[String(raw.mode || 'hero').toLowerCase()] || 'hero';
+  const focus = numericTuple(raw.focus, [50, 50], 2);
+  const start = numericTuple(raw.start, [50, 50, 1], 3);
+  const end = numericTuple(raw.end, [focus[0], focus[1], mode === 'hero' ? 1.08 : 1], 3);
+  const safe = numericTuple(raw.safe, [6, 10, 40, 78], 4);
+  const shade = numericTuple(raw.shade, safe.concat(.52), 5);
+  const details = lines(raw.details || sl.items).map((line, index) => {
+    const p = line.split('|').map(x => x.trim());
+    const x = Number(p[2]), y = Number(p[3]), w = Number(p[4]), h = Number(p[5]);
+    return { id: p[0] || `detail-${index + 1}`, label: p[1] || `Detalj ${index + 1}`, x: Number.isFinite(x) ? x : 50, y: Number.isFinite(y) ? y : 50, w: Number.isFinite(w) ? w : 16, h: Number.isFinite(h) ? h : 20, note: p.slice(6).join(' | ') };
+  });
+  return { mode, crop: raw.crop === 'contain' ? 'contain' : 'cover', focus, start, end, safe, shade, direction: dirMap[String(raw.direction || 'none').toLowerCase()] || 'none', speed: speedMap[String(raw.speed || 'slow').toLowerCase()] || 'slow', details };
+}
+function imageBrief(sl, defaults) {
+  if (!sl || (!sl.image && !sl.imageDirection && !sl.imageBrief)) return null;
+  const d = normalizeImageDirection(sl), b = sl.imageBrief || {}, base = defaults || {};
+  return { imageId: b.id || base.imageId || '', filename: b.filename || (String(sl.image || '').startsWith('img:') ? String(sl.image).slice(4) : '') || base.filename || '', scene: b.scene || base.scene || '', purpose: b.purpose || base.purpose || '', subject: b.subject || base.subject || '', composition: b.composition || base.composition || '', subjectPlacement: b.placement || base.subjectPlacement || '', negativeSafeArea: d.safe.slice(), aspectRatio: b.aspectRatio || base.aspectRatio || '16:9', focusPoint: d.focus.slice(), plannedCrop: d.crop, plannedMotion: { start: d.start.slice(), end: d.end.slice(), direction: d.direction, speed: d.speed }, detailAreas: d.details.map(x => ({ ...x })), avoid: b.avoid || base.avoid || '', prompt: b.prompt || base.prompt || '' };
+}
+
 /* ---------- rendering ---------- */
 function anim(v, def) { return (!v || v === 'auto') ? def : v; }
 function A(name, delay, extra) {
@@ -93,6 +123,12 @@ function applyDramaturgy(sec, step, final) {
     progress = Number.isFinite(explicit) ? explicit : (items.length > 1 ? phase.focus / (items.length - 1) : 1);
   }
   sec.style.setProperty('--dramaturgy-progress', String(Math.max(0, Math.min(1, progress))));
+  const current = phase.state === 'focus' ? items[phase.focus] : null;
+  if (current && current.dataset.imageX) {
+    sec.style.setProperty('--image-active-x', `${current.dataset.imageX}%`);
+    sec.style.setProperty('--image-active-y', `${current.dataset.imageY}%`);
+    sec.style.setProperty('--image-active-scale', current.dataset.imageScale || '1.35');
+  }
   return phase;
 }
 function renderSlide(sl, i, deck, img) {
@@ -174,7 +210,25 @@ function renderSlide(sl, i, deck, img) {
       body = figure(sl.image, anim(ba, 'zoom'), 0) +
         ((title || sl.caption) ? `<div class="cap"${A(anim(ta, 'rise'), 400)}>${title ? `<h2${tid(title)}>${fmt(title)}</h2>` : '<span></span>'}${sl.caption ? `<p>${fmt(sl.caption)}</p>` : ''}</div>` : '');
       break;
-
+    case 'bildregi': {
+      const d = normalizeImageDirection(sl), src = sl.image ? img(sl.image) : '';
+      const duration = d.speed === 'fast' ? '8s' : d.speed === 'medium' ? '14s' : '22s';
+      const vars = [`--image-start-x:${d.start[0]}%`,`--image-start-y:${d.start[1]}%`,`--image-start-scale:${Math.max(1,d.start[2])}`,`--image-end-x:${d.end[0]}%`,`--image-end-y:${d.end[1]}%`,`--image-end-scale:${Math.max(1,d.end[2])}`,`--image-safe-x:${d.safe[0]}%`,`--image-safe-y:${d.safe[1]}%`,`--image-safe-w:${d.safe[2]}%`,`--image-safe-h:${d.safe[3]}%`,`--image-shade-x:${d.shade[0]}%`,`--image-shade-y:${d.shade[1]}%`,`--image-shade-w:${d.shade[2]}%`,`--image-shade-h:${d.shade[3]}%`,`--image-shade-opacity:${Math.max(0,Math.min(1,d.shade[4]))}`,`--image-duration:${duration}`].join(';');
+      const image = src ? `<img src="${esc(src)}" alt="${esc(sl.alt || plain(title) || 'Bild')}" data-id="i-${hash(sl.image)}">` : `<div class="ph">Ingen bild vald</div>`;
+      const copy = (title || sl.text || sl.caption) ? `<div class="ir-copy">${sl.caption ? `<p class="ir-kicker">${fmt(sl.caption)}</p>` : ''}${title ? `<h2${tid(title)}>${fmt(title)}</h2>` : ''}${sl.text ? `<p>${fmt(sl.text)}</p>` : ''}</div>` : '';
+      const detailNodes = d.details.map((o, index) => {
+        const scale = Math.max(1.16, Math.min(2.1, 72 / Math.max(o.w, o.h, 12)));
+        return `<div class="ir-detail${o.x > 58 ? ' ir-detail-left' : ''}${o.y > 64 ? ' ir-detail-up' : ''}${o.y < 42 ? ' ir-detail-down' : ''}" data-dramaturgy-item data-dramaturgy-focus="${index + 1}" data-image-x="${o.x}" data-image-y="${o.y}" data-image-scale="${scale.toFixed(3)}" style="--detail-x:${o.x}%;--detail-y:${o.y}%;--detail-w:${o.w}%;--detail-h:${o.h}%"${steps ? st('none') : ''}><i aria-hidden="true"></i><div><b>${fmt(o.label)}</b>${o.note ? `<p>${fmt(o.note)}</p>` : ''}</div></div>`;
+      }).join('');
+      let semantic = '', restore = '';
+      if (d.mode === 'detail' || d.mode === 'spotlight') {
+        semantic = detailNodes;
+        restore = steps ? `<span data-dramaturgy-restore${st('none')} aria-hidden="true"></span>` : '';
+      } else if (d.mode === 'reveal') semantic = detailNodes;
+      body = `<div class="ir-stage" data-image-stage data-image-mode="${d.mode}" data-image-crop="${d.crop}" data-image-direction="${d.direction}" style="${vars}"><div class="ir-camera">${image}</div><div class="ir-shade" aria-hidden="true"></div><div class="ir-spotlight" aria-hidden="true"></div><div class="ir-safe" data-safe-area aria-hidden="true"></div>${semantic}${copy}${restore}</div>`;
+      attrs += ` data-dramaturgy="image-direction" data-dramaturgy-state="${steps && d.mode !== 'hero' ? 'overview' : 'restored'}"${steps && d.mode !== 'hero' ? '' : ' data-dramaturgy-static="true"'} data-image-mode="${d.mode}"`;
+      break;
+    }
     case 'compare': {
       const col = (h, items, dir) => `<div>${h ? `<h3${A(steps ? 'fade' : anim(ba, dir), 200)}>${fmt(h)}</h3>` : ''}${list(items, 'cl', anim(ba, dir), 300)}</div>`;
       body = H2('', 'words') + (sl.text ? `<p class="lead"${A(anim(ba, 'fade'), 300)}>${fmt(sl.text)}</p>` : '') + `<div class="cols">${col(sl.lt, sl.lb, 'left')}${col(sl.rt, sl.rb, 'right')}</div>`;
@@ -1478,5 +1532,5 @@ function standalone(deck) {
   return player(root, deck, { mode: 'present', images: imgs, speaker: deck.audience !== 'student', student: deck.audience === 'student', start, onChange(i) { try { history.replaceState(null, '', '#' + (i + 1)); } catch (e) {} } });
 }
 
-G.Scen = { exportData, player, thumb, renderSlide, standalone, applyTheme, applyDramaturgy, dramaturgyPhase, fmt, plain, esc, hash, lines, resolve, cleanHtml, cleanCss, fontUrl, THEMES, ACCENTS, LAYOUTS, TRANSITIONS, BACKGROUNDS, TITLE_ANIMS, BODY_ANIMS, FOCUS_STYLES, version: '3.0' };
+G.Scen = { exportData, player, thumb, renderSlide, standalone, applyTheme, applyDramaturgy, dramaturgyPhase, normalizeImageDirection, imageBrief, fmt, plain, esc, hash, lines, resolve, cleanHtml, cleanCss, fontUrl, THEMES, ACCENTS, LAYOUTS, TRANSITIONS, BACKGROUNDS, TITLE_ANIMS, BODY_ANIMS, FOCUS_STYLES, version: '3.0' };
 })(window);

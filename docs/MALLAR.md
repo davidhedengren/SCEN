@@ -29,6 +29,7 @@ Varje bild i ett manus börjar med mallens namn inom hakparentes. Samma katalog 
 | `[tidslinje]` | Listor och steg | Händelser i tidsordning, eller numrerade steg i en aktivitet. |
 | `[text-bild]` | Bild | Text och punkter bredvid en bild. Byt sida med bild-vänster. |
 | `[helbild]` | Bild | En bild som tar hela ytan, med kort rubrik och bildtext. |
+| `[bildregi]` | Bild | Regisserar en bild som cinematic hero, detaljresa, spotlight/annotation eller kontrollerad mask reveal. Samma bild och komposition bär hela klicksekvensen. |
 | `[jämförelse]` | Data | Två sidor mot varandra: för och emot, före och efter. |
 | `[tabell]` | Data | Tabell, gärna som övning där facit klickas fram rad för rad. |
 | `[tal]` | Data | Ett tal som räknas upp, med förklaring. |
@@ -547,6 +548,23 @@ En bild som tar hela ytan, med kort rubrik och bildtext.
 [helbild]
 rubrik: Solvarv i Mojaveöknen
 etikett: Foto: exempel
+```
+
+### `[bildregi]` Bildregi
+
+Regisserar en bild som cinematic hero, detaljresa, spotlight/annotation eller kontrollerad mask reveal. Samma bild och komposition bär hela klicksekvensen.
+
+**Undvik när:** Dekorativa zoomar utan kommunikativ funktion. Använd inte bild när typografi, diagram eller whitespace är tydligare.
+
+```
+[bildregi]
+rubrik: Från helhet till avgörande detalj
+bild: bilder/ai-agenter/ai10.jpg
+bildläge: detalj
+startutsnitt: 50 50 1
+slututsnitt: 58 46 1.08
+säker-yta: 5 12 38 72
+- robot | Rörelsen | 67 | 34 | 16 | 34 | Figuren bär scenens handling.
 ```
 
 ## Data

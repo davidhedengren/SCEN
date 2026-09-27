@@ -392,6 +392,63 @@ textarea.code{width:100%;border:1px solid var(--line-2);border-radius:8px;backgr
 .scen [data-layout="image"] .cap h2{font-size:52px}
 .scen [data-layout="image"] .cap p{font-size:28px;color:var(--muted)}
 
+/* ---------- Bildregi: bild som dramaturgisk scen ---------- */
+.scen [data-layout="bildregi"]{display:block;padding:0;overflow:hidden;background:#05070b;color:#fff}
+.scen .ir-stage{position:absolute;inset:0;overflow:hidden;isolation:isolate;background:#05070b}
+.scen .ir-camera{position:absolute;inset:-1px;overflow:hidden;transform:scale(1);transform-origin:var(--image-active-x,50%) var(--image-active-y,50%);transition:transform var(--dramaturgy-focus-duration) var(--dramaturgy-ease)}
+.scen .ir-camera img{width:100%;height:100%;display:block;max-width:none;max-height:none;object-fit:cover;object-position:var(--image-start-x) var(--image-start-y);transform:scale(var(--image-start-scale));transform-origin:center;transition:object-position var(--dramaturgy-focus-duration) var(--dramaturgy-ease),transform var(--dramaturgy-focus-duration) var(--dramaturgy-ease);will-change:transform,object-position}
+.scen .ir-stage[data-image-crop="contain"] .ir-camera img{object-fit:contain;background:#05070b}
+.scen [data-layout="bildregi"][data-image-mode="hero"] .ir-camera{animation:ir-camera-drift var(--image-duration) var(--dramaturgy-soft-ease) both alternate infinite}
+.scen [data-layout="bildregi"][data-image-mode="hero"] .ir-camera img{animation:ir-image-pan var(--image-duration) var(--dramaturgy-soft-ease) both alternate infinite}
+.scen.static [data-layout="bildregi"][data-image-mode="hero"] .ir-camera{animation:none!important;transform:scale(var(--image-end-scale))}
+.scen.static [data-layout="bildregi"][data-image-mode="hero"] .ir-camera img{animation:none!important;object-position:var(--image-end-x) var(--image-end-y)}
+@keyframes ir-camera-drift{from{transform:scale(var(--image-start-scale))}to{transform:scale(var(--image-end-scale))}}
+@keyframes ir-image-pan{from{object-position:var(--image-start-x) var(--image-start-y)}to{object-position:var(--image-end-x) var(--image-end-y)}}
+.scen [data-layout="bildregi"][data-image-mode="detail"][data-dramaturgy-state="focus"] .ir-camera{transform:scale(var(--image-active-scale,1.4))}
+.scen [data-layout="bildregi"][data-image-mode="detail"][data-dramaturgy-state="overview"] .ir-camera,
+.scen [data-layout="bildregi"][data-image-mode="detail"][data-dramaturgy-state="restored"] .ir-camera{transform:scale(1)}
+.scen .ir-shade{position:absolute;z-index:2;left:var(--image-shade-x);top:var(--image-shade-y);width:var(--image-shade-w);height:var(--image-shade-h);border-radius:34px;background:radial-gradient(ellipse at 30% 50%,rgba(0,0,0,var(--image-shade-opacity)),rgba(0,0,0,calc(var(--image-shade-opacity) * .88)) 54%,transparent 100%);filter:blur(18px);transform:scale(1.12);pointer-events:none}
+.scen .ir-safe{position:absolute;z-index:3;left:var(--image-safe-x);top:var(--image-safe-y);width:var(--image-safe-w);height:var(--image-safe-h);pointer-events:none}
+.scen .ir-copy{position:absolute;z-index:5;box-sizing:border-box;left:var(--image-safe-x);top:var(--image-safe-y);width:var(--image-safe-w);height:var(--image-safe-h);display:grid;align-content:center;gap:24px;padding:clamp(18px,2.2vw,42px);color:#fff;text-shadow:0 3px 24px rgba(0,0,0,.7)}
+.scen .ir-copy h2{font-family:var(--font-display,var(--font));font-size:clamp(56px,5.15vw,98px);line-height:.98;letter-spacing:var(--h-track,-.045em);font-weight:var(--h-weight,700);text-wrap:balance}
+.scen .ir-copy>p:not(.ir-kicker){font-size:clamp(25px,1.7vw,34px);line-height:1.32;color:rgba(255,255,255,.88);max-width:34ch;text-wrap:pretty}
+.scen .ir-kicker{font-family:var(--mono);font-size:18px;line-height:1.2;letter-spacing:.16em;text-transform:uppercase;color:rgba(255,255,255,.76)}
+.scen .ir-spotlight{position:absolute;z-index:3;inset:0;background:rgba(2,5,10,.73);opacity:0;pointer-events:none;transition:opacity var(--dramaturgy-dim-duration) var(--dramaturgy-soft-ease);-webkit-mask:radial-gradient(ellipse 13% 18% at var(--image-active-x,50%) var(--image-active-y,50%),transparent 0 62%,rgba(0,0,0,.38) 76%,#000 100%);mask:radial-gradient(ellipse 13% 18% at var(--image-active-x,50%) var(--image-active-y,50%),transparent 0 62%,rgba(0,0,0,.38) 76%,#000 100%)}
+.scen [data-layout="bildregi"][data-image-mode="spotlight"][data-dramaturgy-state="focus"] .ir-spotlight{opacity:1}
+.scen .ir-detail{position:absolute;z-index:6;left:var(--detail-x);top:var(--detail-y);width:var(--detail-w);height:var(--detail-h);transform:translate(-50%,-50%);pointer-events:none;transition:opacity var(--dramaturgy-dim-duration) var(--dramaturgy-soft-ease),transform var(--dramaturgy-focus-duration) var(--dramaturgy-ease)}
+.scen .ir-detail>i{position:absolute;inset:0;border:3px solid rgba(255,255,255,.94);border-radius:24px;box-shadow:0 0 0 7px rgba(0,0,0,.28),0 18px 60px rgba(0,0,0,.4)}
+.scen .ir-detail>div{position:absolute;left:calc(100% + 24px);top:50%;width:390px;transform:translateY(-50%);padding:24px 28px;border:1px solid rgba(255,255,255,.24);border-radius:20px;background:rgba(7,11,18,.86);box-shadow:0 24px 70px rgba(0,0,0,.45);backdrop-filter:blur(14px)}
+.scen .ir-detail>div::before{content:"";position:absolute;right:100%;top:50%;width:24px;height:2px;background:rgba(255,255,255,.82)}
+.scen .ir-detail.ir-detail-left>div{left:auto;right:calc(100% + 24px)}
+.scen .ir-detail.ir-detail-left>div::before{right:auto;left:100%}
+.scen .ir-detail.ir-detail-up>div{top:auto;bottom:0;transform:none}
+.scen .ir-detail.ir-detail-up>div::before{top:auto;bottom:28%}
+.scen .ir-detail.ir-detail-down>div{top:calc(100% + 20px);bottom:auto;transform:none}
+.scen .ir-detail.ir-detail-down>div::before{top:auto;bottom:100%;right:24%;left:auto;width:2px;height:20px}
+.scen .ir-detail b{display:block;font-size:27px;line-height:1.12;color:#fff}
+.scen .ir-detail p{margin-top:8px;font-size:20px;line-height:1.34;color:rgba(255,255,255,.76)}
+.scen [data-layout="bildregi"][data-image-mode="detail"] .ir-detail,
+.scen [data-layout="bildregi"][data-image-mode="spotlight"] .ir-detail{opacity:0!important}
+.scen [data-layout="bildregi"][data-image-mode="detail"] .ir-detail.dramaturgy-current,
+.scen [data-layout="bildregi"][data-image-mode="spotlight"] .ir-detail.dramaturgy-current{opacity:1!important}
+.scen [data-layout="bildregi"][data-image-mode="detail"] .ir-detail{left:auto;right:5%;top:auto;bottom:7%;width:430px;height:auto;transform:none}
+.scen [data-layout="bildregi"][data-image-mode="detail"] .ir-detail>i{display:none}
+.scen [data-layout="bildregi"][data-image-mode="detail"] .ir-detail>div{position:relative;inset:auto;width:auto;transform:none;padding:28px 32px}
+.scen [data-layout="bildregi"][data-image-mode="detail"] .ir-detail>div::before{display:none}
+.scen [data-layout="bildregi"][data-image-mode="reveal"] .ir-detail{z-index:4;transform:none;background-color:#0d1118;background-image:linear-gradient(135deg,rgba(255,255,255,.035),transparent 52%),linear-gradient(90deg,transparent 0 92%,rgba(255,255,255,.045));border-right:1px solid rgba(255,255,255,.12);opacity:1!important}
+.scen [data-layout="bildregi"][data-image-mode="reveal"] .ir-detail::after{content:"0" attr(data-dramaturgy-focus);position:absolute;right:9%;top:7%;font:500 72px/1 var(--font-display,var(--font));letter-spacing:-.05em;color:rgba(255,255,255,.09)}
+.scen [data-layout="bildregi"][data-image-mode="reveal"] .ir-detail[data-step]:not(.in){opacity:1!important}
+.scen [data-layout="bildregi"][data-image-mode="reveal"] .ir-detail.in{opacity:0!important;transform:translateY(-2%) scaleY(.985)}
+.scen [data-layout="bildregi"][data-image-mode="reveal"] .ir-detail>i{display:none}
+.scen [data-layout="bildregi"][data-image-mode="reveal"] .ir-detail>div{display:block;position:absolute;left:10%;right:auto;top:auto;bottom:7%;width:80%;padding:0;border:0;border-radius:0;background:none;box-shadow:none;backdrop-filter:none;transform:none}
+.scen [data-layout="bildregi"][data-image-mode="reveal"] .ir-detail>div::before{display:none}
+.scen [data-layout="bildregi"][data-image-mode="reveal"] .ir-detail b{font-family:var(--mono);font-size:16px;line-height:1.2;letter-spacing:.13em;text-transform:uppercase;color:#fff}
+.scen [data-layout="bildregi"][data-image-mode="reveal"] .ir-detail p{display:none}
+.scen [data-layout="bildregi"][data-image-mode="reveal"] .ir-copy{z-index:7}
+.scen [data-layout="bildregi"][data-body-motion="none"] .ir-camera,
+.scen [data-layout="bildregi"][data-body-motion="none"] .ir-camera img,
+.scen [data-layout="bildregi"][data-body-motion="none"] .ir-spotlight,
+.scen [data-layout="bildregi"][data-body-motion="none"] .ir-detail{animation:none!important;transition:none!important}
 
 .scen [data-layout="compare"]{grid-template-rows:auto 1fr}
 .scen .cols{display:grid;grid-template-columns:1fr 1fr;align-content:center}
@@ -806,7 +863,7 @@ textarea.code{width:100%;border:1px solid var(--line-2);border-radius:8px;backgr
 .scen.idle .sc-viewport{cursor:none}
 .sc-bar button{font:500 14px/1 var(--font);padding:9px 13px;border-radius:9px;border:1px solid var(--line);background:color-mix(in srgb,var(--surface) 88%,transparent);color:var(--ink);cursor:pointer}
 .sc-bar button:focus-visible,.sc-help button:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
-@media (prefers-reduced-motion:reduce){.sc-progress,.sc-black,.sc-toast,.scen .gs-needle,.scen .gs-prog,.scen .br-comet,.scen .ln-lens,.scen .ln-ring{transition:none}.scen .om-ring{animation:none}.scen .slide[data-dramaturgy] [data-dramaturgy-item],.scen .slide[data-dramaturgy] [data-dramaturgy-item] *,.scen .slide[data-dramaturgy] .tl-progress{transition:none!important;animation:none!important}}
+@media (prefers-reduced-motion:reduce){.sc-progress,.sc-black,.sc-toast,.scen .gs-needle,.scen .gs-prog,.scen .br-comet,.scen .ln-lens,.scen .ln-ring{transition:none}.scen .om-ring{animation:none}.scen .slide[data-dramaturgy] [data-dramaturgy-item],.scen .slide[data-dramaturgy] [data-dramaturgy-item] *,.scen .slide[data-dramaturgy] .tl-progress,.scen .slide[data-layout="bildregi"] .ir-camera,.scen .slide[data-layout="bildregi"] .ir-camera img,.scen .slide[data-layout="bildregi"] .ir-spotlight,.scen .slide[data-layout="bildregi"] .ir-detail{transition:none!important;animation:none!important}}
 /* ---------- Ljusfamiljen: mörkt, stora ytor, ljus i stället för linjer ---------- */
 .scen[data-glow="1"] .sc-viewport,.scen.sc-thumb[data-glow="1"]{background:radial-gradient(1100px 760px at 12% 8%,color-mix(in srgb,var(--accent) 13%,transparent),transparent 70%),radial-gradient(1200px 900px at 92% 96%,color-mix(in srgb,var(--accent-2) 10%,transparent),transparent 70%),var(--bg)}
 .scen[data-glow="1"] .slide h1,.scen[data-glow="1"] .slide h2{font-family:var(--font-display,var(--font));font-weight:var(--h-weight,700);letter-spacing:var(--h-track,-.04em)}
@@ -1261,7 +1318,7 @@ const LAYOUTS = {etapper:"Etapper",vagval:"Vägval",lager:"Lager",resonemang:"Re
   skiften: 'Skiften', prisma: 'Prisma', verkningar: 'Verkningar', belagg: 'Belägg', sammanflode: 'Sammanflöde',
   lameller: 'Lameller', register: 'Register', samband: 'Samband', marginal: 'Marginal', sats: 'Sats',
   title: 'Titel', section: 'Avsnitt', statement: 'Påstående', bullets: 'Punktlista', split: 'Text och bild',
-  image: 'Helbild', cards: 'Kort', compare: 'Jämförelse', table: 'Tabell', number: 'Stort tal', timeline: 'Tidslinje',
+  image: 'Helbild', bildregi: 'Bildregi', cards: 'Kort', compare: 'Jämförelse', table: 'Tabell', number: 'Stort tal', timeline: 'Tidslinje',
   question: 'Fråga och svar', poll: 'Omröstning', reflect: 'Reflektion', define: 'Definition', chat: 'AI-samtal', duo: 'Två tal',
   quote: 'Citat', omslag: 'Omslag', karta: 'Karta', triad: 'Triad', motsats: 'Motsats', bildkant: 'Bildkant', 'båge': 'Båge', omlopp: 'Omlopp', gradskiva: 'Gradskiva', bro: 'Bro', ringar: 'Ringar', lins: 'Lins', 'mätare': 'Mätare', 'ridå': 'Ridå', 'strålkastare': 'Strålkastare', fokus: 'Fokus', ordbild: 'Ordbild', 'bildfält': 'Bildfält', delning: 'Delning', ljustal: 'Ljustal', tom: 'Fri yta', egen: 'Egen mall'
 };
@@ -1304,6 +1361,36 @@ function fmt(s) {
 function plain(s) { return String(s == null ? '' : s).replace(/\*\*/g, '').replace(/[\^_]\{([^}]*)\}/g, '$1').trim(); }
 function hash(s) { let h = 7; for (const c of String(s)) h = (h * 31 + c.codePointAt(0)) | 0; return (h >>> 0).toString(36); }
 function lines(a) { return (Array.isArray(a) ? a : String(a || '').split('\n')).map(x => String(x)).filter(x => x.trim() !== ''); }
+function numericTuple(value, fallback, length) {
+  const src = Array.isArray(value) ? value : String(value || '').trim().split(/[\s,]+/);
+  const out = src.map(Number).filter(Number.isFinite).slice(0, length);
+  return out.length === length ? out : fallback.slice();
+}
+function normalizeImageDirection(sl) {
+  sl = sl || {};
+  const raw = sl.imageDirection || {};
+  const modeMap = { cinematic: 'hero', hero: 'hero', detalj: 'detail', detail: 'detail', spotlight: 'spotlight', annotation: 'spotlight', reveal: 'reveal', mask: 'reveal' };
+  const dirMap = { höger: 'right', hoger: 'right', right: 'right', vänster: 'left', vanster: 'left', left: 'left', upp: 'up', up: 'up', ned: 'down', down: 'down', stilla: 'none', none: 'none' };
+  const speedMap = { långsam: 'slow', langsamt: 'slow', slow: 'slow', normal: 'medium', medium: 'medium', snabb: 'fast', fast: 'fast' };
+  const mode = modeMap[String(raw.mode || 'hero').toLowerCase()] || 'hero';
+  const focus = numericTuple(raw.focus, [50, 50], 2);
+  const start = numericTuple(raw.start, [50, 50, 1], 3);
+  const end = numericTuple(raw.end, [focus[0], focus[1], mode === 'hero' ? 1.08 : 1], 3);
+  const safe = numericTuple(raw.safe, [6, 10, 40, 78], 4);
+  const shade = numericTuple(raw.shade, safe.concat(.52), 5);
+  const details = lines(raw.details || sl.items).map((line, index) => {
+    const p = line.split('|').map(x => x.trim());
+    const x = Number(p[2]), y = Number(p[3]), w = Number(p[4]), h = Number(p[5]);
+    return { id: p[0] || `detail-${index + 1}`, label: p[1] || `Detalj ${index + 1}`, x: Number.isFinite(x) ? x : 50, y: Number.isFinite(y) ? y : 50, w: Number.isFinite(w) ? w : 16, h: Number.isFinite(h) ? h : 20, note: p.slice(6).join(' | ') };
+  });
+  return { mode, crop: raw.crop === 'contain' ? 'contain' : 'cover', focus, start, end, safe, shade, direction: dirMap[String(raw.direction || 'none').toLowerCase()] || 'none', speed: speedMap[String(raw.speed || 'slow').toLowerCase()] || 'slow', details };
+}
+function imageBrief(sl, defaults) {
+  if (!sl || (!sl.image && !sl.imageDirection && !sl.imageBrief)) return null;
+  const d = normalizeImageDirection(sl), b = sl.imageBrief || {}, base = defaults || {};
+  return { imageId: b.id || base.imageId || '', filename: b.filename || (String(sl.image || '').startsWith('img:') ? String(sl.image).slice(4) : '') || base.filename || '', scene: b.scene || base.scene || '', purpose: b.purpose || base.purpose || '', subject: b.subject || base.subject || '', composition: b.composition || base.composition || '', subjectPlacement: b.placement || base.subjectPlacement || '', negativeSafeArea: d.safe.slice(), aspectRatio: b.aspectRatio || base.aspectRatio || '16:9', focusPoint: d.focus.slice(), plannedCrop: d.crop, plannedMotion: { start: d.start.slice(), end: d.end.slice(), direction: d.direction, speed: d.speed }, detailAreas: d.details.map(x => ({ ...x })), avoid: b.avoid || base.avoid || '', prompt: b.prompt || base.prompt || '' };
+}
+
 /* ---------- rendering ---------- */
 function anim(v, def) { return (!v || v === 'auto') ? def : v; }
 function A(name, delay, extra) {
@@ -1340,6 +1427,12 @@ function applyDramaturgy(sec, step, final) {
     progress = Number.isFinite(explicit) ? explicit : (items.length > 1 ? phase.focus / (items.length - 1) : 1);
   }
   sec.style.setProperty('--dramaturgy-progress', String(Math.max(0, Math.min(1, progress))));
+  const current = phase.state === 'focus' ? items[phase.focus] : null;
+  if (current && current.dataset.imageX) {
+    sec.style.setProperty('--image-active-x', `${current.dataset.imageX}%`);
+    sec.style.setProperty('--image-active-y', `${current.dataset.imageY}%`);
+    sec.style.setProperty('--image-active-scale', current.dataset.imageScale || '1.35');
+  }
   return phase;
 }
 function renderSlide(sl, i, deck, img) {
@@ -1421,7 +1514,25 @@ function renderSlide(sl, i, deck, img) {
       body = figure(sl.image, anim(ba, 'zoom'), 0) +
         ((title || sl.caption) ? `<div class="cap"${A(anim(ta, 'rise'), 400)}>${title ? `<h2${tid(title)}>${fmt(title)}</h2>` : '<span></span>'}${sl.caption ? `<p>${fmt(sl.caption)}</p>` : ''}</div>` : '');
       break;
-
+    case 'bildregi': {
+      const d = normalizeImageDirection(sl), src = sl.image ? img(sl.image) : '';
+      const duration = d.speed === 'fast' ? '8s' : d.speed === 'medium' ? '14s' : '22s';
+      const vars = [`--image-start-x:${d.start[0]}%`,`--image-start-y:${d.start[1]}%`,`--image-start-scale:${Math.max(1,d.start[2])}`,`--image-end-x:${d.end[0]}%`,`--image-end-y:${d.end[1]}%`,`--image-end-scale:${Math.max(1,d.end[2])}`,`--image-safe-x:${d.safe[0]}%`,`--image-safe-y:${d.safe[1]}%`,`--image-safe-w:${d.safe[2]}%`,`--image-safe-h:${d.safe[3]}%`,`--image-shade-x:${d.shade[0]}%`,`--image-shade-y:${d.shade[1]}%`,`--image-shade-w:${d.shade[2]}%`,`--image-shade-h:${d.shade[3]}%`,`--image-shade-opacity:${Math.max(0,Math.min(1,d.shade[4]))}`,`--image-duration:${duration}`].join(';');
+      const image = src ? `<img src="${esc(src)}" alt="${esc(sl.alt || plain(title) || 'Bild')}" data-id="i-${hash(sl.image)}">` : `<div class="ph">Ingen bild vald</div>`;
+      const copy = (title || sl.text || sl.caption) ? `<div class="ir-copy">${sl.caption ? `<p class="ir-kicker">${fmt(sl.caption)}</p>` : ''}${title ? `<h2${tid(title)}>${fmt(title)}</h2>` : ''}${sl.text ? `<p>${fmt(sl.text)}</p>` : ''}</div>` : '';
+      const detailNodes = d.details.map((o, index) => {
+        const scale = Math.max(1.16, Math.min(2.1, 72 / Math.max(o.w, o.h, 12)));
+        return `<div class="ir-detail${o.x > 58 ? ' ir-detail-left' : ''}${o.y > 64 ? ' ir-detail-up' : ''}${o.y < 42 ? ' ir-detail-down' : ''}" data-dramaturgy-item data-dramaturgy-focus="${index + 1}" data-image-x="${o.x}" data-image-y="${o.y}" data-image-scale="${scale.toFixed(3)}" style="--detail-x:${o.x}%;--detail-y:${o.y}%;--detail-w:${o.w}%;--detail-h:${o.h}%"${steps ? st('none') : ''}><i aria-hidden="true"></i><div><b>${fmt(o.label)}</b>${o.note ? `<p>${fmt(o.note)}</p>` : ''}</div></div>`;
+      }).join('');
+      let semantic = '', restore = '';
+      if (d.mode === 'detail' || d.mode === 'spotlight') {
+        semantic = detailNodes;
+        restore = steps ? `<span data-dramaturgy-restore${st('none')} aria-hidden="true"></span>` : '';
+      } else if (d.mode === 'reveal') semantic = detailNodes;
+      body = `<div class="ir-stage" data-image-stage data-image-mode="${d.mode}" data-image-crop="${d.crop}" data-image-direction="${d.direction}" style="${vars}"><div class="ir-camera">${image}</div><div class="ir-shade" aria-hidden="true"></div><div class="ir-spotlight" aria-hidden="true"></div><div class="ir-safe" data-safe-area aria-hidden="true"></div>${semantic}${copy}${restore}</div>`;
+      attrs += ` data-dramaturgy="image-direction" data-dramaturgy-state="${steps && d.mode !== 'hero' ? 'overview' : 'restored'}"${steps && d.mode !== 'hero' ? '' : ' data-dramaturgy-static="true"'} data-image-mode="${d.mode}"`;
+      break;
+    }
     case 'compare': {
       const col = (h, items, dir) => `<div>${h ? `<h3${A(steps ? 'fade' : anim(ba, dir), 200)}>${fmt(h)}</h3>` : ''}${list(items, 'cl', anim(ba, dir), 300)}</div>`;
       body = H2('', 'words') + (sl.text ? `<p class="lead"${A(anim(ba, 'fade'), 300)}>${fmt(sl.text)}</p>` : '') + `<div class="cols">${col(sl.lt, sl.lb, 'left')}${col(sl.rt, sl.rb, 'right')}</div>`;
@@ -2725,7 +2836,7 @@ function standalone(deck) {
   return player(root, deck, { mode: 'present', images: imgs, speaker: deck.audience !== 'student', student: deck.audience === 'student', start, onChange(i) { try { history.replaceState(null, '', '#' + (i + 1)); } catch (e) {} } });
 }
 
-G.Scen = { exportData, player, thumb, renderSlide, standalone, applyTheme, applyDramaturgy, dramaturgyPhase, fmt, plain, esc, hash, lines, resolve, cleanHtml, cleanCss, fontUrl, THEMES, ACCENTS, LAYOUTS, TRANSITIONS, BACKGROUNDS, TITLE_ANIMS, BODY_ANIMS, FOCUS_STYLES, version: '3.0' };
+G.Scen = { exportData, player, thumb, renderSlide, standalone, applyTheme, applyDramaturgy, dramaturgyPhase, normalizeImageDirection, imageBrief, fmt, plain, esc, hash, lines, resolve, cleanHtml, cleanCss, fontUrl, THEMES, ACCENTS, LAYOUTS, TRANSITIONS, BACKGROUNDS, TITLE_ANIMS, BODY_ANIMS, FOCUS_STYLES, version: '3.0' };
 })(window);
 </script>
 <script>/* ===== PPTX-import: läser en PowerPoint-fil i webbläsaren och gör om den till en Scen-presentation ===== */
@@ -3083,7 +3194,7 @@ const PptxImport = (() => {
    Manus.parse(text) -> {meta, slides}   Manus.stringify(deck) -> text   Manus.CATALOG */
 const Manus = (() => {
   const TAGS = {"etapper":"etapper","v\u00e4gval":"vagval","lager":"lager","resonemang":"resonemang","helhet":"helhet",lameller: "lameller",register: "register",samband: "samband",marginal: "marginal",sats: "sats",
-    titel: 'title', avsnitt: 'section', 'påstående': 'statement', punkter: 'bullets', 'text-bild': 'split', helbild: 'image',
+    titel: 'title', avsnitt: 'section', 'påstående': 'statement', punkter: 'bullets', 'text-bild': 'split', helbild: 'image', bildregi: 'bildregi',
     kort: 'cards', 'jämförelse': 'compare', tabell: 'table', tal: 'number', 'två-tal': 'duo', tidslinje: 'timeline',
     'fråga': 'question', 'omröstning': 'poll', reflektion: 'reflect', definition: 'define', samtal: 'chat', citat: 'quote',
     omslag: 'omslag', karta: 'karta', triad: 'triad', motsats: 'motsats', bildkant: 'bildkant', skiften: 'skiften', prisma: 'prisma', verkningar: 'verkningar', 'belägg': 'belagg', 'sammanflöde': 'sammanflode', fri: 'tom', 'båge': 'båge', omlopp: 'omlopp', gradskiva: 'gradskiva', bro: 'bro', ringar: 'ringar', lins: 'lins', 'mätare': 'mätare', 'ridå': 'ridå', 'strålkastare': 'strålkastare', fokus: 'fokus', ordbild: 'ordbild', 'bildfält': 'bildfält', delning: 'delning', ljustal: 'ljustal', egen: 'egen'
@@ -3096,10 +3207,14 @@ const Manus = (() => {
     'övergång': 'transition', bakgrund: 'bg', rubrikrörelse: 'ta', 'rörelse': 'ba', visa: 'reveal', rubrikrad: 'header', mall: 'tpl', aktiv: 'active', siffra: 'number', slutsats: 'text', max: 'max', mitten: 'text'
   };
   const OUT_KEY = { max: 'max', active: 'aktiv', title: 'rubrik', text: 'text', caption: 'etikett', answer: 'svar', example: 'exempel', number: 'tal', minutes: 'tid', image: 'bild', alt: 'alt', lt: 'vänster', rt: 'höger', start: 'start', end: 'slut', question: 'fråga', cause: 'orsak', effect: 'konsekvens', condition: 'villkor', alternative: 'alternativ', source: 'källa', whole: 'helhet', reservation: 'reservation', common: 'gemensamt', tension: 'spänning', synthesis: 'syntes', transition: 'övergång', bg: 'bakgrund', ta: 'rubrikrörelse', ba: 'rörelse', tpl: 'mall' };
+  const IMAGE_DIRECTION_KEYS = { 'bildläge':'mode', fokuspunkt:'focus', 'beskärning':'crop', startutsnitt:'start', slututsnitt:'end', 'säker-yta':'safe', 'mörkning':'shade', riktning:'direction', hastighet:'speed' };
+  const IMAGE_BRIEF_KEYS = { 'bild-id':'id', filnamn:'filename', scen:'scene', syfte:'purpose', motiv:'subject', komposition:'composition', motivplacering:'placement', format:'aspectRatio', undvik:'avoid', prompt:'prompt' };
+  const IMAGE_DIRECTION_OUT = { mode:'bildläge', focus:'fokuspunkt', crop:'beskärning', start:'startutsnitt', end:'slututsnitt', safe:'säker-yta', shade:'mörkning', direction:'riktning', speed:'hastighet' };
+  const IMAGE_BRIEF_OUT = { id:'bild-id', filename:'filnamn', scene:'scen', purpose:'syfte', subject:'motiv', composition:'komposition', placement:'motivplacering', aspectRatio:'format', avoid:'undvik', prompt:'prompt' };
   const REVEAL = { allt: 'none', rader: 'rows', facit: 'answers', 'facit-rader': 'rest' };
   const REVEAL_OUT = { none: 'allt', rows: 'rader', answers: 'facit', rest: 'facit-rader' };
-  const LIST_FIELD = {etapper:'items',vagval:'items',lager:'items',resonemang:'items',helhet:'items',skiften:'items',prisma:'items',verkningar:'items',belagg:'items',sammanflode:'items',register:'items',samband:'items',marginal:'items',sats:'items', bullets: 'bullets', split: 'bullets', question: 'bullets', poll: 'bullets', reflect: 'bullets', cards: 'items', timeline: 'items', chat: 'items', duo: 'items', egen: 'items', compare: 'lb', karta: 'items', triad: 'items', motsats: 'items', bildkant: 'bullets', omlopp: 'items', gradskiva: 'items', bro: 'items', ringar: 'items', lins: 'items', 'strålkastare': 'items', fokus: 'items', 'bildfält': 'bullets', delning: 'items' };
-  const STEPPED = ["etapper","vagval","lager","resonemang","helhet","skiften","prisma","verkningar","belagg","sammanflode",'register','samband','marginal','sats','bullets', 'split', 'cards', 'compare', 'timeline', 'chat', 'duo', 'egen', 'karta', 'triad', 'motsats', 'bildkant', 'omlopp', 'gradskiva', 'bro', 'ringar', 'lins', 'strålkastare', 'fokus', 'bildfält', 'delning'];
+  const LIST_FIELD = {etapper:'items',vagval:'items',lager:'items',resonemang:'items',helhet:'items',skiften:'items',prisma:'items',verkningar:'items',belagg:'items',sammanflode:'items',register:'items',samband:'items',marginal:'items',sats:'items', bullets: 'bullets', split: 'bullets', question: 'bullets', poll: 'bullets', reflect: 'bullets', cards: 'items', timeline: 'items', bildregi:'items', chat: 'items', duo: 'items', egen: 'items', compare: 'lb', karta: 'items', triad: 'items', motsats: 'items', bildkant: 'bullets', omlopp: 'items', gradskiva: 'items', bro: 'items', ringar: 'items', lins: 'items', 'strålkastare': 'items', fokus: 'items', 'bildfält': 'bullets', delning: 'items' };
+  const STEPPED = ["etapper","vagval","lager","resonemang","helhet","skiften","prisma","verkningar","belagg","sammanflode",'register','samband','marginal','sats','bullets', 'split', 'cards', 'compare', 'timeline', 'bildregi', 'chat', 'duo', 'egen', 'karta', 'triad', 'motsats', 'bildkant', 'omlopp', 'gradskiva', 'bro', 'ringar', 'lins', 'strålkastare', 'fokus', 'bildfält', 'delning'];
   const yes = v => /^(ja|j|yes|true|1|på)$/i.test(String(v).trim());
   function enumVal(map, v) {
     const x = String(v).trim().toLowerCase();
@@ -3137,34 +3252,50 @@ const Manus = (() => {
     }
     let listField = LIST_FIELD[s.layout] || 'bullets';
     let last = null;
+    let lastImageBrief = null;
     const notes = [];
     const rows = [];
     for (; i < ls.length; i++) {
       const raw = ls[i];
       const line = raw.trim();
-      if (!line) { if (last && typeof s[last] === 'string') last = null; continue; }
-      if (line.startsWith('>')) { notes.push(line.replace(/^>\s?/, '')); last = null; continue; }
-      if (line.startsWith('@')) { const ly = parseLayer(line); if (ly) (s.layers = s.layers || []).push(ly); last = null; continue; }
+      if (!line) { if (last && typeof s[last] === 'string') last = null; lastImageBrief = null; continue; }
+      if (line.startsWith('>')) { notes.push(line.replace(/^>\s?/, '')); last = null; lastImageBrief = null; continue; }
+      if (line.startsWith('@')) { const ly = parseLayer(line); if (ly) (s.layers = s.layers || []).push(ly); last = null; lastImageBrief = null; continue; }
       if (line.startsWith('|')) {
         if (/^\|[\s:|-]+\|?$/.test(line)) continue;
         const cells = line.replace(/^\|/, '').replace(/\|\s*$/, '').split('|').map(c => c.trim().replace(/\\n/g, '\n'));
-        rows.push(cells); last = null; continue;
+        rows.push(cells); last = null; lastImageBrief = null; continue;
       }
       const li = raw.match(/^(\s*)[-*•]\s+(.*)$/);
       if (li) {
         const sub = li[1].length >= 2;
         const arr = s[listField] = Array.isArray(s[listField]) ? s[listField] : [];
         arr.push((sub ? '- ' : '') + li[2]);
-        last = null; continue;
+        last = null; lastImageBrief = null; continue;
       }
       const kv = line.match(/^([a-zåäöA-ZÅÄÖ-]+)\s*:\s*(.*)$/);
       const label = kv && kv[1].toLowerCase();
       let key = kv && KEYS[label];
+      if (kv && IMAGE_DIRECTION_KEYS[label]) {
+        const field = IMAGE_DIRECTION_KEYS[label], v = kv[2].trim();
+        const target = s.imageDirection = s.imageDirection || {};
+        if (['focus','start','end','safe','shade'].includes(field)) target[field] = v.split(/[\s,]+/).map(Number).filter(Number.isFinite);
+        else if (field === 'mode') target.mode = ({ hero:'hero',cinematic:'hero',detalj:'detail',detail:'detail',spotlight:'spotlight',annotation:'spotlight',reveal:'reveal',mask:'reveal' })[v.toLowerCase()] || 'hero';
+        else if (field === 'direction') target.direction = ({ höger:'right',hoger:'right',right:'right',vänster:'left',vanster:'left',left:'left',upp:'up',up:'up',ned:'down',down:'down',stilla:'none',none:'none' })[v.toLowerCase()] || 'none';
+        else if (field === 'speed') target.speed = ({ långsam:'slow',langsamt:'slow',slow:'slow',normal:'medium',medium:'medium',snabb:'fast',fast:'fast' })[v.toLowerCase()] || 'slow';
+        else target[field] = v === 'contain' ? 'contain' : 'cover';
+        last = null; lastImageBrief = null; continue;
+      }
+      if (kv && IMAGE_BRIEF_KEYS[label]) {
+        const field = IMAGE_BRIEF_KEYS[label];
+        (s.imageBrief = s.imageBrief || {})[field] = kv[2].trim();
+        last = null; lastImageBrief = field; continue;
+      }
       if (s.layout === 'prisma' && label === 'fråga') key = 'question';
       if (s.layout === 'belagg' && label === 'källa') key = 'source';
       if (key) {
         const v = kv[2];
-        last = null;
+        last = null; lastImageBrief = null;
         if (key === 'lt') { s.lt = v; if (s.layout === 'compare') listField = 'lb'; continue; }
         if (key === 'rt') { s.rt = v; if (s.layout === 'compare') listField = 'rb'; continue; }
         if (['banner', 'flip', 'dim'].includes(key)) { s[key] = yes(v); continue; }
@@ -3181,6 +3312,7 @@ const Manus = (() => {
         if (key === 'tpl') { s.tpl = v.trim(); continue; }
         s[key] = v; last = key; continue;
       }
+      if (lastImageBrief && s.imageBrief && typeof s.imageBrief[lastImageBrief] === 'string') { s.imageBrief[lastImageBrief] += '\n' + line; continue; }
       if (last && typeof s[last] === 'string') { s[last] += '\n' + line; continue; }
       if (!s.title && s.layout !== 'quote') { s.title = line; last = 'title'; continue; }
       if (!s.text) { s.text = line; last = 'text'; continue; }
@@ -3260,6 +3392,12 @@ const Manus = (() => {
     if (L === 'question' || L === 'poll' || L === 'egen') put('answer', s.answer);
     if (s.image) out.push(`bild: ${String(s.image).startsWith('img:') ? s.image.slice(4) : '(inbäddad bild)'}`);
     if (s.image && s.alt) put('alt', s.alt);
+    if (L === 'bildregi' && s.imageDirection) Object.entries(IMAGE_DIRECTION_OUT).forEach(([field,label]) => {
+      const v=s.imageDirection[field]; if(v==null||v==='') return; out.push(`${label}: ${Array.isArray(v)?v.join(' '):v}`);
+    });
+    if (L === 'bildregi' && s.imageBrief) Object.entries(IMAGE_BRIEF_OUT).forEach(([field,label]) => {
+      const v=s.imageBrief[field]; if(v==null||val(v)==='') return; out.push(`${label}: ${multi(v)}`);
+    });
     if ((L === 'cards' || L === 'motsats') && s.banner) out.push('band: ja');
     if (['split', 'cards', 'motsats', 'bildkant', 'bildfält'].includes(L) && s.flip) out.push('bild-vänster: ja');
     if (L === 'table' && s.table) {
@@ -3347,6 +3485,8 @@ const Manus = (() => {
       ex: '[text-bild]\nrubrik: Kaströrelse\n- I x-led är farten konstant\n- I y-led verkar g nedåt\n- Banan blir en **parabel**' },
     { l: 'image', cat: 'Bild', syfte: 'En bild som tar hela ytan, med kort rubrik och bildtext.', undvik: 'Bilder med liten upplösning.',
       ex: '[helbild]\nrubrik: Solvarv i Mojaveöknen\netikett: Foto: exempel' },
+    { l: 'bildregi', cat: 'Bild', syfte: 'Regisserar en bild som cinematic hero, detaljresa, spotlight/annotation eller kontrollerad mask reveal. Samma bild och komposition bär hela klicksekvensen.', undvik: 'Dekorativa zoomar utan kommunikativ funktion. Använd inte bild när typografi, diagram eller whitespace är tydligare.',
+      ex: '[bildregi]\nrubrik: Från helhet till avgörande detalj\nbild: bilder/ai-agenter/ai10.jpg\nbildläge: detalj\nstartutsnitt: 50 50 1\nslututsnitt: 58 46 1.08\nsäker-yta: 5 12 38 72\n- robot | Rörelsen | 67 | 34 | 16 | 34 | Figuren bär scenens handling.' },
     { l: 'compare', cat: 'Data', syfte: 'Två sidor mot varandra: för och emot, före och efter.', undvik: 'Mer än två alternativ. Använd kort.',
       ex: '[jämförelse]\nrubrik: Sökmotor eller språkmodell?\nvänster: Sökmotor\n- Hittar befintliga sidor\n- Visar källan\nhöger: Språkmodell\n- Skriver ny text\n- Kan hitta på' },
     { l: 'table', cat: 'Data', syfte: 'Tabell, gärna som övning där facit klickas fram rad för rad.', undvik: 'Tabeller med fler än åtta rader.',

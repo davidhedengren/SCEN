@@ -58,6 +58,13 @@ Första raden är mallen inom hakparentes, t.ex. `[kort]`. Alla mallar finns i [
 | `syntes` | Den nya slutsats som växer fram i `[sammanflöde]` |
 | `bild` | Sökväg till en bild, t.ex. `bilder/kurs/foto.jpg` |
 | `alt` | Bildbeskrivning för skärmläsare |
+| `bildläge` | `[bildregi]`: `hero`, `detail`, `spotlight` eller `reveal` |
+| `fokuspunkt` | `[bildregi]`: bildens semantiska fokuspunkt som `x y` i procent |
+| `beskärning` | `[bildregi]`: `cover` eller medvetet letterboxad `contain` |
+| `startutsnitt`, `slututsnitt` | `[bildregi]`: `x y skala` för planerad kamerarörelse |
+| `säker-yta` | `[bildregi]`: `x y bredd höjd` för typografi |
+| `mörkning` | `[bildregi]`: `x y bredd höjd opacitet` för lokal textkontrast |
+| `riktning`, `hastighet` | `[bildregi]`: planerad rörelseriktning och `slow`, `medium` eller `fast` |
 | `band` | `ja` visar bilden som band överst (`[kort]`, `[motsats]`) |
 | `bild-vänster` | `ja` byter sida på bilden |
 | `vänster`, `höger` | Kolumnrubriker i `[jämförelse]`. Listan efter hamnar i den kolumnen. |
@@ -68,6 +75,8 @@ Första raden är mallen inom hakparentes, t.ex. `[kort]`. Alla mallar finns i [
 | `övergång` | `automatisk`, `båge`, `tona`, `glid`, `skjut`, `stig`, `zooma`, `svep`, `morph`, `ingen` |
 | `bakgrund` | `ingen`, `banor`, `vektorfält`, `nätverk`, `vågor` |
 | `rubrikrörelse`, `rörelse` | `mask`, `ord för ord`, `skärpa`, `stig`, `tona`, `skrivmaskin`, `svep`, `ingen` |
+
+Bildregi kan dessutom bära en framtida Image Brief med `bild-id`, `filnamn`, `scen`, `syfte`, `motiv`, `komposition`, `motivplacering`, `format`, `undvik` och `prompt`. Detaljområden skrivs som `- id | etikett | x | y | bredd | höjd | annotation`. Se [BILDREGI.md](BILDREGI.md).
 
 ### Listor med två delar
 

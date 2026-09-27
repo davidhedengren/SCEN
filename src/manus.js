@@ -2,7 +2,7 @@
    Manus.parse(text) -> {meta, slides}   Manus.stringify(deck) -> text   Manus.CATALOG */
 const Manus = (() => {
   const TAGS = {"etapper":"etapper","v\u00e4gval":"vagval","lager":"lager","resonemang":"resonemang","helhet":"helhet",lameller: "lameller",register: "register",samband: "samband",marginal: "marginal",sats: "sats",
-    titel: 'title', avsnitt: 'section', 'påstående': 'statement', punkter: 'bullets', 'text-bild': 'split', helbild: 'image',
+    titel: 'title', avsnitt: 'section', 'påstående': 'statement', punkter: 'bullets', 'text-bild': 'split', helbild: 'image', bildregi: 'bildregi',
     kort: 'cards', 'jämförelse': 'compare', tabell: 'table', tal: 'number', 'två-tal': 'duo', tidslinje: 'timeline',
     'fråga': 'question', 'omröstning': 'poll', reflektion: 'reflect', definition: 'define', samtal: 'chat', citat: 'quote',
     omslag: 'omslag', karta: 'karta', triad: 'triad', motsats: 'motsats', bildkant: 'bildkant', skiften: 'skiften', prisma: 'prisma', verkningar: 'verkningar', 'belägg': 'belagg', 'sammanflöde': 'sammanflode', fri: 'tom', 'båge': 'båge', omlopp: 'omlopp', gradskiva: 'gradskiva', bro: 'bro', ringar: 'ringar', lins: 'lins', 'mätare': 'mätare', 'ridå': 'ridå', 'strålkastare': 'strålkastare', fokus: 'fokus', ordbild: 'ordbild', 'bildfält': 'bildfält', delning: 'delning', ljustal: 'ljustal', egen: 'egen'
@@ -15,10 +15,14 @@ const Manus = (() => {
     'övergång': 'transition', bakgrund: 'bg', rubrikrörelse: 'ta', 'rörelse': 'ba', visa: 'reveal', rubrikrad: 'header', mall: 'tpl', aktiv: 'active', siffra: 'number', slutsats: 'text', max: 'max', mitten: 'text'
   };
   const OUT_KEY = { max: 'max', active: 'aktiv', title: 'rubrik', text: 'text', caption: 'etikett', answer: 'svar', example: 'exempel', number: 'tal', minutes: 'tid', image: 'bild', alt: 'alt', lt: 'vänster', rt: 'höger', start: 'start', end: 'slut', question: 'fråga', cause: 'orsak', effect: 'konsekvens', condition: 'villkor', alternative: 'alternativ', source: 'källa', whole: 'helhet', reservation: 'reservation', common: 'gemensamt', tension: 'spänning', synthesis: 'syntes', transition: 'övergång', bg: 'bakgrund', ta: 'rubrikrörelse', ba: 'rörelse', tpl: 'mall' };
+  const IMAGE_DIRECTION_KEYS = { 'bildläge':'mode', fokuspunkt:'focus', 'beskärning':'crop', startutsnitt:'start', slututsnitt:'end', 'säker-yta':'safe', 'mörkning':'shade', riktning:'direction', hastighet:'speed' };
+  const IMAGE_BRIEF_KEYS = { 'bild-id':'id', filnamn:'filename', scen:'scene', syfte:'purpose', motiv:'subject', komposition:'composition', motivplacering:'placement', format:'aspectRatio', undvik:'avoid', prompt:'prompt' };
+  const IMAGE_DIRECTION_OUT = { mode:'bildläge', focus:'fokuspunkt', crop:'beskärning', start:'startutsnitt', end:'slututsnitt', safe:'säker-yta', shade:'mörkning', direction:'riktning', speed:'hastighet' };
+  const IMAGE_BRIEF_OUT = { id:'bild-id', filename:'filnamn', scene:'scen', purpose:'syfte', subject:'motiv', composition:'komposition', placement:'motivplacering', aspectRatio:'format', avoid:'undvik', prompt:'prompt' };
   const REVEAL = { allt: 'none', rader: 'rows', facit: 'answers', 'facit-rader': 'rest' };
   const REVEAL_OUT = { none: 'allt', rows: 'rader', answers: 'facit', rest: 'facit-rader' };
-  const LIST_FIELD = {etapper:'items',vagval:'items',lager:'items',resonemang:'items',helhet:'items',skiften:'items',prisma:'items',verkningar:'items',belagg:'items',sammanflode:'items',register:'items',samband:'items',marginal:'items',sats:'items', bullets: 'bullets', split: 'bullets', question: 'bullets', poll: 'bullets', reflect: 'bullets', cards: 'items', timeline: 'items', chat: 'items', duo: 'items', egen: 'items', compare: 'lb', karta: 'items', triad: 'items', motsats: 'items', bildkant: 'bullets', omlopp: 'items', gradskiva: 'items', bro: 'items', ringar: 'items', lins: 'items', 'strålkastare': 'items', fokus: 'items', 'bildfält': 'bullets', delning: 'items' };
-  const STEPPED = ["etapper","vagval","lager","resonemang","helhet","skiften","prisma","verkningar","belagg","sammanflode",'register','samband','marginal','sats','bullets', 'split', 'cards', 'compare', 'timeline', 'chat', 'duo', 'egen', 'karta', 'triad', 'motsats', 'bildkant', 'omlopp', 'gradskiva', 'bro', 'ringar', 'lins', 'strålkastare', 'fokus', 'bildfält', 'delning'];
+  const LIST_FIELD = {etapper:'items',vagval:'items',lager:'items',resonemang:'items',helhet:'items',skiften:'items',prisma:'items',verkningar:'items',belagg:'items',sammanflode:'items',register:'items',samband:'items',marginal:'items',sats:'items', bullets: 'bullets', split: 'bullets', question: 'bullets', poll: 'bullets', reflect: 'bullets', cards: 'items', timeline: 'items', bildregi:'items', chat: 'items', duo: 'items', egen: 'items', compare: 'lb', karta: 'items', triad: 'items', motsats: 'items', bildkant: 'bullets', omlopp: 'items', gradskiva: 'items', bro: 'items', ringar: 'items', lins: 'items', 'strålkastare': 'items', fokus: 'items', 'bildfält': 'bullets', delning: 'items' };
+  const STEPPED = ["etapper","vagval","lager","resonemang","helhet","skiften","prisma","verkningar","belagg","sammanflode",'register','samband','marginal','sats','bullets', 'split', 'cards', 'compare', 'timeline', 'bildregi', 'chat', 'duo', 'egen', 'karta', 'triad', 'motsats', 'bildkant', 'omlopp', 'gradskiva', 'bro', 'ringar', 'lins', 'strålkastare', 'fokus', 'bildfält', 'delning'];
   const yes = v => /^(ja|j|yes|true|1|på)$/i.test(String(v).trim());
   function enumVal(map, v) {
     const x = String(v).trim().toLowerCase();
@@ -56,34 +60,50 @@ const Manus = (() => {
     }
     let listField = LIST_FIELD[s.layout] || 'bullets';
     let last = null;
+    let lastImageBrief = null;
     const notes = [];
     const rows = [];
     for (; i < ls.length; i++) {
       const raw = ls[i];
       const line = raw.trim();
-      if (!line) { if (last && typeof s[last] === 'string') last = null; continue; }
-      if (line.startsWith('>')) { notes.push(line.replace(/^>\s?/, '')); last = null; continue; }
-      if (line.startsWith('@')) { const ly = parseLayer(line); if (ly) (s.layers = s.layers || []).push(ly); last = null; continue; }
+      if (!line) { if (last && typeof s[last] === 'string') last = null; lastImageBrief = null; continue; }
+      if (line.startsWith('>')) { notes.push(line.replace(/^>\s?/, '')); last = null; lastImageBrief = null; continue; }
+      if (line.startsWith('@')) { const ly = parseLayer(line); if (ly) (s.layers = s.layers || []).push(ly); last = null; lastImageBrief = null; continue; }
       if (line.startsWith('|')) {
         if (/^\|[\s:|-]+\|?$/.test(line)) continue;
         const cells = line.replace(/^\|/, '').replace(/\|\s*$/, '').split('|').map(c => c.trim().replace(/\\n/g, '\n'));
-        rows.push(cells); last = null; continue;
+        rows.push(cells); last = null; lastImageBrief = null; continue;
       }
       const li = raw.match(/^(\s*)[-*•]\s+(.*)$/);
       if (li) {
         const sub = li[1].length >= 2;
         const arr = s[listField] = Array.isArray(s[listField]) ? s[listField] : [];
         arr.push((sub ? '- ' : '') + li[2]);
-        last = null; continue;
+        last = null; lastImageBrief = null; continue;
       }
       const kv = line.match(/^([a-zåäöA-ZÅÄÖ-]+)\s*:\s*(.*)$/);
       const label = kv && kv[1].toLowerCase();
       let key = kv && KEYS[label];
+      if (kv && IMAGE_DIRECTION_KEYS[label]) {
+        const field = IMAGE_DIRECTION_KEYS[label], v = kv[2].trim();
+        const target = s.imageDirection = s.imageDirection || {};
+        if (['focus','start','end','safe','shade'].includes(field)) target[field] = v.split(/[\s,]+/).map(Number).filter(Number.isFinite);
+        else if (field === 'mode') target.mode = ({ hero:'hero',cinematic:'hero',detalj:'detail',detail:'detail',spotlight:'spotlight',annotation:'spotlight',reveal:'reveal',mask:'reveal' })[v.toLowerCase()] || 'hero';
+        else if (field === 'direction') target.direction = ({ höger:'right',hoger:'right',right:'right',vänster:'left',vanster:'left',left:'left',upp:'up',up:'up',ned:'down',down:'down',stilla:'none',none:'none' })[v.toLowerCase()] || 'none';
+        else if (field === 'speed') target.speed = ({ långsam:'slow',langsamt:'slow',slow:'slow',normal:'medium',medium:'medium',snabb:'fast',fast:'fast' })[v.toLowerCase()] || 'slow';
+        else target[field] = v === 'contain' ? 'contain' : 'cover';
+        last = null; lastImageBrief = null; continue;
+      }
+      if (kv && IMAGE_BRIEF_KEYS[label]) {
+        const field = IMAGE_BRIEF_KEYS[label];
+        (s.imageBrief = s.imageBrief || {})[field] = kv[2].trim();
+        last = null; lastImageBrief = field; continue;
+      }
       if (s.layout === 'prisma' && label === 'fråga') key = 'question';
       if (s.layout === 'belagg' && label === 'källa') key = 'source';
       if (key) {
         const v = kv[2];
-        last = null;
+        last = null; lastImageBrief = null;
         if (key === 'lt') { s.lt = v; if (s.layout === 'compare') listField = 'lb'; continue; }
         if (key === 'rt') { s.rt = v; if (s.layout === 'compare') listField = 'rb'; continue; }
         if (['banner', 'flip', 'dim'].includes(key)) { s[key] = yes(v); continue; }
@@ -100,6 +120,7 @@ const Manus = (() => {
         if (key === 'tpl') { s.tpl = v.trim(); continue; }
         s[key] = v; last = key; continue;
       }
+      if (lastImageBrief && s.imageBrief && typeof s.imageBrief[lastImageBrief] === 'string') { s.imageBrief[lastImageBrief] += '\n' + line; continue; }
       if (last && typeof s[last] === 'string') { s[last] += '\n' + line; continue; }
       if (!s.title && s.layout !== 'quote') { s.title = line; last = 'title'; continue; }
       if (!s.text) { s.text = line; last = 'text'; continue; }
@@ -179,6 +200,12 @@ const Manus = (() => {
     if (L === 'question' || L === 'poll' || L === 'egen') put('answer', s.answer);
     if (s.image) out.push(`bild: ${String(s.image).startsWith('img:') ? s.image.slice(4) : '(inbäddad bild)'}`);
     if (s.image && s.alt) put('alt', s.alt);
+    if (L === 'bildregi' && s.imageDirection) Object.entries(IMAGE_DIRECTION_OUT).forEach(([field,label]) => {
+      const v=s.imageDirection[field]; if(v==null||v==='') return; out.push(`${label}: ${Array.isArray(v)?v.join(' '):v}`);
+    });
+    if (L === 'bildregi' && s.imageBrief) Object.entries(IMAGE_BRIEF_OUT).forEach(([field,label]) => {
+      const v=s.imageBrief[field]; if(v==null||val(v)==='') return; out.push(`${label}: ${multi(v)}`);
+    });
     if ((L === 'cards' || L === 'motsats') && s.banner) out.push('band: ja');
     if (['split', 'cards', 'motsats', 'bildkant', 'bildfält'].includes(L) && s.flip) out.push('bild-vänster: ja');
     if (L === 'table' && s.table) {
@@ -266,6 +293,8 @@ const Manus = (() => {
       ex: '[text-bild]\nrubrik: Kaströrelse\n- I x-led är farten konstant\n- I y-led verkar g nedåt\n- Banan blir en **parabel**' },
     { l: 'image', cat: 'Bild', syfte: 'En bild som tar hela ytan, med kort rubrik och bildtext.', undvik: 'Bilder med liten upplösning.',
       ex: '[helbild]\nrubrik: Solvarv i Mojaveöknen\netikett: Foto: exempel' },
+    { l: 'bildregi', cat: 'Bild', syfte: 'Regisserar en bild som cinematic hero, detaljresa, spotlight/annotation eller kontrollerad mask reveal. Samma bild och komposition bär hela klicksekvensen.', undvik: 'Dekorativa zoomar utan kommunikativ funktion. Använd inte bild när typografi, diagram eller whitespace är tydligare.',
+      ex: '[bildregi]\nrubrik: Från helhet till avgörande detalj\nbild: bilder/ai-agenter/ai10.jpg\nbildläge: detalj\nstartutsnitt: 50 50 1\nslututsnitt: 58 46 1.08\nsäker-yta: 5 12 38 72\n- robot | Rörelsen | 67 | 34 | 16 | 34 | Figuren bär scenens handling.' },
     { l: 'compare', cat: 'Data', syfte: 'Två sidor mot varandra: för och emot, före och efter.', undvik: 'Mer än två alternativ. Använd kort.',
       ex: '[jämförelse]\nrubrik: Sökmotor eller språkmodell?\nvänster: Sökmotor\n- Hittar befintliga sidor\n- Visar källan\nhöger: Språkmodell\n- Skriver ny text\n- Kan hitta på' },
     { l: 'table', cat: 'Data', syfte: 'Tabell, gärna som övning där facit klickas fram rad för rad.', undvik: 'Tabeller med fler än åtta rader.',

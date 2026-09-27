@@ -301,6 +301,10 @@ textarea.code{width:100%;border:1px solid var(--line-2);border-radius:8px;backgr
   --accent:var(--acc-l,#2F5BF5); --accent-2:#C47300; --hl:rgba(232,144,12,.32);
   --font:"SF Pro Display","Segoe UI Variable Display","Segoe UI",system-ui,-apple-system,Roboto,"Helvetica Neue",Arial,sans-serif;
   --mono:ui-monospace,"SF Mono","Cascadia Mono",Menlo,Consolas,monospace;
+  --dramaturgy-focus-opacity:1; --dramaturgy-overview-opacity:.72;
+  --dramaturgy-past-opacity:.42; --dramaturgy-future-opacity:.32;
+  --dramaturgy-focus-duration:620ms; --dramaturgy-dim-duration:440ms; --dramaturgy-restore-duration:560ms;
+  --dramaturgy-ease:cubic-bezier(.22,1,.36,1); --dramaturgy-soft-ease:cubic-bezier(.4,0,.2,1);
   position:relative; width:100%; height:100%; color:var(--ink); font-family:var(--font);
   -webkit-font-smoothing:antialiased; color-scheme:light;
 }
@@ -338,6 +342,17 @@ textarea.code{width:100%;border:1px solid var(--line-2);border-radius:8px;backgr
 .sc-progress{position:absolute;left:0;right:0;bottom:0;height:5px;background:var(--accent);transform-origin:0 50%;transform:scaleX(0);transition:transform .6s cubic-bezier(.16,1,.3,1)}
 .scen.preview .sc-counter,.scen.preview .sc-progress,.scen.static .sc-counter,.scen.static .sc-progress{display:none}
 .scen:not(.static) .slide [data-step]:not(.in){opacity:0;pointer-events:none}
+.scen .slide[data-dramaturgy] [data-dramaturgy-restore]{position:absolute;width:1px;height:1px;overflow:hidden;clip-path:inset(50%);pointer-events:none}
+.scen:not(.static) .slide[data-dramaturgy] [data-dramaturgy-item][data-step]{pointer-events:auto;transition:opacity var(--dramaturgy-dim-duration) var(--dramaturgy-soft-ease),color var(--dramaturgy-focus-duration) var(--dramaturgy-ease),filter var(--dramaturgy-focus-duration) var(--dramaturgy-ease)}
+.scen:not(.static) .slide[data-dramaturgy][data-dramaturgy-state="overview"] [data-dramaturgy-item][data-step]:not(.in){opacity:var(--dramaturgy-overview-opacity)}
+.scen .slide[data-dramaturgy][data-dramaturgy-state="overview"] [data-dramaturgy-item]{opacity:var(--dramaturgy-overview-opacity)}
+.scen .slide[data-dramaturgy][data-dramaturgy-state="focus"] [data-dramaturgy-item].dramaturgy-current{opacity:var(--dramaturgy-focus-opacity)}
+.scen .slide[data-dramaturgy][data-dramaturgy-state="focus"] [data-dramaturgy-item].dramaturgy-past{opacity:var(--dramaturgy-past-opacity)}
+.scen .slide[data-dramaturgy][data-dramaturgy-state="focus"] [data-dramaturgy-item].dramaturgy-future{opacity:var(--dramaturgy-future-opacity)}
+.scen .slide[data-dramaturgy][data-dramaturgy-state="restored"] [data-dramaturgy-item]{opacity:1;transition-duration:var(--dramaturgy-restore-duration)}
+.scen .slide[data-dramaturgy][data-body-motion="none"] [data-dramaturgy-item],
+.scen .slide[data-dramaturgy][data-body-motion="none"] [data-dramaturgy-item] *,
+.scen .slide[data-dramaturgy][data-body-motion="none"] .tl-progress{transition:none!important}
 .scen [data-dim]>*{transition:opacity .45s ease}
 .scen .slide .dimmed{opacity:.32}
 
@@ -377,6 +392,7 @@ textarea.code{width:100%;border:1px solid var(--line-2);border-radius:8px;backgr
 .scen [data-layout="image"] .cap h2{font-size:52px}
 .scen [data-layout="image"] .cap p{font-size:28px;color:var(--muted)}
 
+
 .scen [data-layout="compare"]{grid-template-rows:auto 1fr}
 .scen .cols{display:grid;grid-template-columns:1fr 1fr;align-content:center}
 .scen .cols>div{display:grid;gap:28px;align-content:start;padding:0 88px}
@@ -399,14 +415,35 @@ textarea.code{width:100%;border:1px solid var(--line-2);border-radius:8px;backgr
 .scen .big{font-size:260px;line-height:.9;font-weight:700;letter-spacing:-.045em;font-variant-numeric:tabular-nums;white-space:nowrap}
 .scen .unit{font-size:48px;line-height:1.3;color:var(--muted);max-width:30ch}
 
-.scen [data-layout="timeline"]{grid-template-rows:auto 1fr}
-.scen .track{position:relative;align-self:center}
-.scen .rail{position:absolute;left:0;right:0;top:12px;height:3px;background:var(--line)}
-.scen .track ol{display:grid;grid-template-columns:repeat(var(--n,4),minmax(0,1fr));gap:36px}
-.scen .track li{position:relative;padding-top:72px;display:grid;gap:14px;align-content:start}
-.scen .track li::before{content:"";position:absolute;left:0;top:2px;width:24px;height:24px;border-radius:50%;background:var(--bg);border:4px solid var(--accent)}
-.scen .track b{font-size:60px;line-height:1;font-weight:700;letter-spacing:-.03em;font-variant-numeric:tabular-nums}
-.scen .track span{font-size:30px;line-height:1.35;color:var(--muted)}
+.scen [data-layout="timeline"]{grid-template-rows:auto auto 1fr;gap:38px;padding-top:90px;padding-bottom:82px}
+.scen [data-layout="timeline"]>.tl-lead{font-size:30px;line-height:1.34;max-width:56ch;margin-top:-18px}
+.scen .tl-stage{position:relative;align-self:stretch;display:grid;align-content:center;min-height:0;padding-top:34px}
+.scen .tl-rail{position:relative;z-index:0;grid-area:1/1;align-self:start;margin-inline:calc(50% / var(--n));top:34px;height:4px;border-radius:999px;background:color-mix(in srgb,var(--line) 82%,transparent);overflow:visible}
+.scen .tl-progress{position:absolute;inset:0;border-radius:inherit;background:var(--accent);transform:scaleX(var(--dramaturgy-progress,0));transform-origin:0 50%;transition:transform var(--dramaturgy-focus-duration) var(--dramaturgy-ease),opacity var(--dramaturgy-restore-duration) var(--dramaturgy-soft-ease);box-shadow:0 0 18px color-mix(in srgb,var(--accent) 20%,transparent)}
+.scen .tl-stage>ol{position:relative;z-index:1;grid-area:1/1;display:grid;grid-template-columns:repeat(var(--n),minmax(0,1fr));gap:clamp(16px,calc(112px / var(--n)),34px);align-items:start}
+.scen .tl-item{min-width:0;display:grid;grid-template-rows:80px auto;align-content:start;text-align:center}
+.scen .tl-marker{position:relative;align-self:start;justify-self:center;width:28px;height:28px;margin-top:22px;border:4px solid color-mix(in srgb,var(--muted) 68%,var(--bg));border-radius:50%;background:var(--bg);box-shadow:0 0 0 7px var(--bg);transition:background var(--dramaturgy-focus-duration) var(--dramaturgy-ease),border-color var(--dramaturgy-focus-duration) var(--dramaturgy-ease),box-shadow var(--dramaturgy-focus-duration) var(--dramaturgy-ease),transform var(--dramaturgy-focus-duration) var(--dramaturgy-ease)}
+.scen .tl-marker>span{position:absolute;width:1px;height:1px;overflow:hidden;clip-path:inset(50%)}
+.scen .tl-marker::after{content:"";position:absolute;inset:-12px;border:2px solid transparent;border-radius:50%;transition:border-color var(--dramaturgy-focus-duration) var(--dramaturgy-ease),transform var(--dramaturgy-focus-duration) var(--dramaturgy-ease),opacity var(--dramaturgy-dim-duration) var(--dramaturgy-soft-ease);opacity:0;transform:scale(.76)}
+.scen .tl-copy{min-width:0;display:grid;gap:12px;align-content:start;padding:14px 8px 0}
+.scen .tl-when{font-family:var(--font-display,var(--font));font-size:48px;line-height:1;font-weight:var(--h-weight,700);letter-spacing:var(--h-track,-.035em);font-variant-numeric:tabular-nums;color:var(--ink);transition:color var(--dramaturgy-focus-duration) var(--dramaturgy-ease)}
+.scen .tl-copy h3{font-size:29px;line-height:1.18;font-weight:650;letter-spacing:-.015em;text-wrap:balance;overflow-wrap:anywhere}
+.scen .tl-copy p{font-size:22px;line-height:1.36;color:var(--muted);text-wrap:pretty;overflow-wrap:anywhere}
+.scen .tl-count-2 .tl-copy,.scen .tl-count-3 .tl-copy{padding-inline:36px}
+.scen .tl-count-2 .tl-when,.scen .tl-count-3 .tl-when{font-size:58px}
+.scen .tl-count-2 .tl-copy h3,.scen .tl-count-3 .tl-copy h3{font-size:34px}
+.scen .tl-count-2 .tl-copy p,.scen .tl-count-3 .tl-copy p{font-size:25px}
+.scen .tl-dense .tl-copy{gap:9px;padding-inline:4px}
+.scen .tl-dense .tl-when{font-size:39px}
+.scen .tl-dense .tl-copy h3{font-size:25px}
+.scen .tl-dense .tl-copy p{font-size:19px;line-height:1.32}
+.scen [data-layout="timeline"][data-dramaturgy-state="focus"] .tl-item.dramaturgy-current .tl-marker{background:var(--accent);border-color:var(--accent);box-shadow:0 0 0 8px var(--bg),0 0 0 12px color-mix(in srgb,var(--accent) 24%,transparent),0 8px 28px color-mix(in srgb,var(--accent) 28%,transparent);transform:scale(1.08)}
+.scen [data-layout="timeline"][data-dramaturgy-state="focus"] .tl-item.dramaturgy-current .tl-marker::after{border-color:color-mix(in srgb,var(--accent) 55%,transparent);opacity:1;transform:scale(1)}
+.scen [data-layout="timeline"][data-dramaturgy-state="focus"] .tl-item.dramaturgy-current .tl-when{color:var(--accent)}
+.scen [data-layout="timeline"][data-dramaturgy-state="focus"] .tl-item.dramaturgy-past .tl-marker{border-color:color-mix(in srgb,var(--accent) 56%,var(--line));background:color-mix(in srgb,var(--accent) 22%,var(--bg))}
+.scen [data-layout="timeline"][data-dramaturgy-state="focus"] .tl-item.dramaturgy-future .tl-marker{border-color:var(--line)}
+.scen [data-layout="timeline"][data-dramaturgy-state="restored"] .tl-marker{background:var(--accent);border-color:var(--accent);box-shadow:0 0 0 7px var(--bg)}
+.scen [data-layout="timeline"][data-dramaturgy-state="restored"] .tl-progress{box-shadow:none}
 
 .scen [data-layout="question"]{align-content:center;gap:52px}
 .scen [data-layout="question"] h2{font-size:84px;max-width:22ch}
@@ -769,7 +806,7 @@ textarea.code{width:100%;border:1px solid var(--line-2);border-radius:8px;backgr
 .scen.idle .sc-viewport{cursor:none}
 .sc-bar button{font:500 14px/1 var(--font);padding:9px 13px;border-radius:9px;border:1px solid var(--line);background:color-mix(in srgb,var(--surface) 88%,transparent);color:var(--ink);cursor:pointer}
 .sc-bar button:focus-visible,.sc-help button:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
-@media (prefers-reduced-motion:reduce){.sc-progress,.sc-black,.sc-toast,.scen .gs-needle,.scen .gs-prog,.scen .br-comet,.scen .ln-lens,.scen .ln-ring{transition:none}.scen .om-ring{animation:none}}
+@media (prefers-reduced-motion:reduce){.sc-progress,.sc-black,.sc-toast,.scen .gs-needle,.scen .gs-prog,.scen .br-comet,.scen .ln-lens,.scen .ln-ring{transition:none}.scen .om-ring{animation:none}.scen .slide[data-dramaturgy] [data-dramaturgy-item],.scen .slide[data-dramaturgy] [data-dramaturgy-item] *,.scen .slide[data-dramaturgy] .tl-progress{transition:none!important;animation:none!important}}
 /* ---------- Ljusfamiljen: mörkt, stora ytor, ljus i stället för linjer ---------- */
 .scen[data-glow="1"] .sc-viewport,.scen.sc-thumb[data-glow="1"]{background:radial-gradient(1100px 760px at 12% 8%,color-mix(in srgb,var(--accent) 13%,transparent),transparent 70%),radial-gradient(1200px 900px at 92% 96%,color-mix(in srgb,var(--accent-2) 10%,transparent),transparent 70%),var(--bg)}
 .scen[data-glow="1"] .slide h1,.scen[data-glow="1"] .slide h2{font-family:var(--font-display,var(--font));font-weight:var(--h-weight,700);letter-spacing:var(--h-track,-.04em)}
@@ -1264,12 +1301,43 @@ function fmt(s) {
 function plain(s) { return String(s == null ? '' : s).replace(/\*\*/g, '').replace(/[\^_]\{([^}]*)\}/g, '$1').trim(); }
 function hash(s) { let h = 7; for (const c of String(s)) h = (h * 31 + c.codePointAt(0)) | 0; return (h >>> 0).toString(36); }
 function lines(a) { return (Array.isArray(a) ? a : String(a || '').split('\n')).map(x => String(x)).filter(x => x.trim() !== ''); }
-
 /* ---------- rendering ---------- */
 function anim(v, def) { return (!v || v === 'auto') ? def : v; }
 function A(name, delay, extra) {
   if (!name || name === 'none') return '';
   return ` data-anim="${name}"` + (delay ? ` data-delay="${delay}"` : '') + (extra || '');
+}
+function dramaturgyPhase(focusSteps, restoreStep, step, final) {
+  if (final) return { state: 'restored', focus: -1 };
+  const focus = (focusSteps || []).indexOf(step);
+  if (focus >= 0) return { state: 'focus', focus };
+  if (Number.isFinite(restoreStep) && step >= restoreStep) return { state: 'restored', focus: -1 };
+  return { state: 'overview', focus: -1 };
+}
+function applyDramaturgy(sec, step, final) {
+  if (!sec || !sec.dataset || !sec.dataset.dramaturgy) return null;
+  const items = [...sec.querySelectorAll('[data-dramaturgy-item]')];
+  const focusSteps = items.map(el => +el.dataset.dramaturgyFocus).filter(Number.isFinite);
+  const restore = sec.querySelector('[data-dramaturgy-restore]');
+  const restoreStep = restore ? +restore.dataset.step : NaN;
+  const staticState = final || sec.dataset.dramaturgyStatic === 'true' || !!sec.closest('.static');
+  const phase = dramaturgyPhase(focusSteps, restoreStep, step, staticState);
+  sec.dataset.dramaturgyState = phase.state;
+  if (phase.state === 'focus') sec.dataset.dramaturgyFocus = String(phase.focus);
+  else delete sec.dataset.dramaturgyFocus;
+  items.forEach((el, index) => {
+    el.classList.toggle('dramaturgy-current', phase.state === 'focus' && index === phase.focus);
+    el.classList.toggle('dramaturgy-past', phase.state === 'focus' && index < phase.focus);
+    el.classList.toggle('dramaturgy-future', phase.state === 'focus' && index > phase.focus);
+  });
+  let progress = 0;
+  if (phase.state === 'restored') progress = 1;
+  else if (phase.state === 'focus' && items[phase.focus]) {
+    const explicit = parseFloat(items[phase.focus].dataset.dramaturgyProgress);
+    progress = Number.isFinite(explicit) ? explicit : (items.length > 1 ? phase.focus / (items.length - 1) : 1);
+  }
+  sec.style.setProperty('--dramaturgy-progress', String(Math.max(0, Math.min(1, progress))));
+  return phase;
 }
 function renderSlide(sl, i, deck, img) {
   img = img || (() => '');
@@ -1350,6 +1418,7 @@ function renderSlide(sl, i, deck, img) {
       body = figure(sl.image, anim(ba, 'zoom'), 0) +
         ((title || sl.caption) ? `<div class="cap"${A(anim(ta, 'rise'), 400)}>${title ? `<h2${tid(title)}>${fmt(title)}</h2>` : '<span></span>'}${sl.caption ? `<p>${fmt(sl.caption)}</p>` : ''}</div>` : '');
       break;
+
     case 'compare': {
       const col = (h, items, dir) => `<div>${h ? `<h3${A(steps ? 'fade' : anim(ba, dir), 200)}>${fmt(h)}</h3>` : ''}${list(items, 'cl', anim(ba, dir), 300)}</div>`;
       body = H2('', 'words') + (sl.text ? `<p class="lead"${A(anim(ba, 'fade'), 300)}>${fmt(sl.text)}</p>` : '') + `<div class="cols">${col(sl.lt, sl.lb, 'left')}${col(sl.rt, sl.rb, 'right')}</div>`;
@@ -1387,10 +1456,21 @@ function renderSlide(sl, i, deck, img) {
         (sl.text ? `<p class="unit"${A('rise', 700)}>${fmt(sl.text)}</p>` : '');
       break;
     case 'timeline': {
-      const its = lines(sl.items).map(t => { const p = t.split('|'); return { when: (p[0] || '').trim(), what: p.slice(1).join('|').trim() }; });
-      const n = Math.max(1, Math.min(its.length, 6));
-      const li = its.map(o => `<li${steps ? st(bodyA === 'none' ? 'fade' : bodyA) : ''}><b>${fmt(o.when)}</b><span>${fmt(o.what)}</span></li>`).join('');
-      body = H2('', 'words') + `<div class="track" style="--n:${n}"${A('fade', 200)}><div class="rail"></div><ol${!steps ? A(bodyA, 400, ' data-stagger="160"') : ''}>${li}</ol></div>`;
+      const its = lines(sl.items).slice(0, 6).map(t => {
+        const p = t.split('|');
+        return { when: (p[0] || '').trim(), title: (p[1] || '').trim(), detail: p.slice(2).join('|').trim() };
+      });
+      const n = Math.max(1, its.length);
+      const dense = n >= 5 || Math.max(0, ...its.map(o => plain(o.title + ' ' + o.detail).length)) > 80;
+      const li = its.map((o, j) => {
+        const progress = n > 1 ? j / (n - 1) : 1;
+        const step = steps ? st('none') : '';
+        return `<li class="tl-item" data-dramaturgy-item data-dramaturgy-focus="${j + 1}" data-dramaturgy-progress="${progress.toFixed(4)}"${step}><i class="tl-marker" aria-hidden="true"><span>${String(j + 1).padStart(2, '0')}</span></i><div class="tl-copy"><b class="tl-when">${fmt(o.when || String(j + 1))}</b><h3>${fmt(o.title || 'Händelse')}</h3>${o.detail ? `<p>${fmt(o.detail)}</p>` : ''}</div></li>`;
+      }).join('');
+      const restore = steps ? `<span class="dramaturgy-restore" data-dramaturgy-restore${st('none')} aria-hidden="true"></span>` : '';
+      body = H2('', 'words') + (sl.text ? `<p class="lead tl-lead"${A(anim(ba, 'fade'), 250)}>${fmt(sl.text)}</p>` : '') +
+        `<div class="tl-stage tl-count-${n}${dense ? ' tl-dense' : ''}" style="--n:${n}"${A(anim(ba, 'fade'), 200)}><div class="tl-rail" aria-hidden="true"><i class="tl-progress"></i></div><ol>${li}</ol>${restore}</div>`;
+      attrs += ` data-dramaturgy="focus-restore" data-dramaturgy-state="${steps ? 'overview' : 'restored'}"${steps ? '' : ' data-dramaturgy-static="true"'}`;
       break;
     }
     case 'question': {
@@ -2243,6 +2323,7 @@ function thumb(slide, deck, images, i) {
     el.classList.add('in');
     el.classList.remove('step-current', 'step-past');
   });
+  applyDramaturgy(sec, Number.POSITIVE_INFINITY, true);
   fitThumb(wrap);
   return wrap;
 }
@@ -2323,6 +2404,7 @@ function player(root, deck, opt) {
       const shown = [...box.children].filter(c => c.classList.contains('in'));
       shown.forEach((c, j) => c.classList.toggle('dimmed', !sec.dataset.focus && j < shown.length - 1));
     });
+    applyDramaturgy(sec, n, false);
     if (animate && n > 0 && groups[n - 1] && !reduced()) {
       groups[n - 1].forEach(el => running.push(playNamed(el, el.dataset.stepAnim || 'fade', 0)));
     }
@@ -2640,7 +2722,7 @@ function standalone(deck) {
   return player(root, deck, { mode: 'present', images: imgs, speaker: deck.audience !== 'student', student: deck.audience === 'student', start, onChange(i) { try { history.replaceState(null, '', '#' + (i + 1)); } catch (e) {} } });
 }
 
-G.Scen = { exportData, player, thumb, renderSlide, standalone, applyTheme, fmt, plain, esc, hash, lines, resolve, cleanHtml, cleanCss, fontUrl, THEMES, ACCENTS, LAYOUTS, TRANSITIONS, BACKGROUNDS, TITLE_ANIMS, BODY_ANIMS, FOCUS_STYLES, version: '3.0' };
+G.Scen = { exportData, player, thumb, renderSlide, standalone, applyTheme, applyDramaturgy, dramaturgyPhase, fmt, plain, esc, hash, lines, resolve, cleanHtml, cleanCss, fontUrl, THEMES, ACCENTS, LAYOUTS, TRANSITIONS, BACKGROUNDS, TITLE_ANIMS, BODY_ANIMS, FOCUS_STYLES, version: '3.0' };
 })(window);
 </script>
 <script>/* ===== PPTX-import: läser en PowerPoint-fil i webbläsaren och gör om den till en Scen-presentation ===== */

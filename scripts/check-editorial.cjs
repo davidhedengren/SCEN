@@ -13,7 +13,7 @@ for(const id of ids){const sample=Manus.parseBlock(Manus.CATALOG.find(x=>x.l===i
  const escaped=Scen.renderSlide({...sample,title:'<script>bad',items:['<img onerror=x> | & test']},0,{theme:{id:'scen'}},x=>x);assert(escaped.includes('&lt;script&gt;'));assert(!escaped.includes('<img onerror'));
 }
 // Exercise the actual common step updater, with simple DOM stand-ins.
-const source=read('src/engine.js'),start=source.indexOf('  function setSteps('),end=source.indexOf('  function stopTimers',start);const update=vm.runInNewContext('('+source.slice(start,end).trim()+')',{reduced:()=>true,running:[],playNamed:()=>({}),startTimer:()=>{}});
+const source=read('src/engine.js'),start=source.indexOf('  function setSteps('),end=source.indexOf('  function stopTimers',start);const update=vm.runInNewContext('('+source.slice(start,end).trim()+')',{reduced:()=>true,running:[],playNamed:()=>({}),startTimer:()=>{},applyDramaturgy:()=>{}});
 const groups=Array.from({length:4},()=>[{classList:{s:new Set(),toggle(k,on){on?this.s.add(k):this.s.delete(k);}}}]);const section={_groups:groups,dataset:{focus:'soft'},querySelectorAll:()=>[]};
 for(const n of [0,1,2,3,4,3,1,0]){update(section,n,false);groups.forEach(([e],i)=>{assert.equal(e.classList.s.has('in'),i<n);assert.equal(e.classList.s.has('step-current'),i===n-1);assert.equal(e.classList.s.has('step-past'),i<n-1);});}
 console.log('OK: 350 template/theme/color/focus combinations, manuscript persistence, steps off, escaping and forward/back focus.');

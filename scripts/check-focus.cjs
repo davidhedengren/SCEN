@@ -10,7 +10,7 @@ for(const layout of ['bro','cards','bullets','timeline','sats','register','samba
  const parsed=Manus.parse(Manus.stringify({title:'Test',theme:{id:'bana'},slides:[slide]}));assert.equal(parsed.slides[0].focus,focus);
 }
 const body=engine.slice(engine.indexOf('  function setSteps('),engine.indexOf('  function stopTimers('));
-const setSteps=new Function('reduced','running','startTimer',body+';return setSteps;')(()=>true,[],()=>{});
+const setSteps=new Function('reduced','running','startTimer','applyDramaturgy',body+';return setSteps;')(()=>true,[],()=>{},()=>{});
 const make=()=>{const flags=new Set();return {dataset:{},classList:{toggle(k,v){v?flags.add(k):flags.delete(k)},contains:k=>flags.has(k)}}};
 const sec={_groups:[[make(),make()],[make()],[make()]],querySelectorAll:()=>[],dataset:{focus:'soft'}};
 for(const n of [0,1,2,3,2,1,0]){setSteps(sec,n,false);sec._groups.forEach((g,i)=>g.forEach(el=>{assert.equal(el.classList.contains('in'),i<n);assert.equal(el.classList.contains('step-current'),i===n-1);assert.equal(el.classList.contains('step-past'),i<n-1)}));}

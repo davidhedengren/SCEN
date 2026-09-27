@@ -57,12 +57,43 @@ function fmt(s) {
 function plain(s) { return String(s == null ? '' : s).replace(/\*\*/g, '').replace(/[\^_]\{([^}]*)\}/g, '$1').trim(); }
 function hash(s) { let h = 7; for (const c of String(s)) h = (h * 31 + c.codePointAt(0)) | 0; return (h >>> 0).toString(36); }
 function lines(a) { return (Array.isArray(a) ? a : String(a || '').split('\n')).map(x => String(x)).filter(x => x.trim() !== ''); }
-
 /* ---------- rendering ---------- */
 function anim(v, def) { return (!v || v === 'auto') ? def : v; }
 function A(name, delay, extra) {
   if (!name || name === 'none') return '';
   return ` data-anim="${name}"` + (delay ? ` data-delay="${delay}"` : '') + (extra || '');
+}
+function dramaturgyPhase(focusSteps, restoreStep, step, final) {
+  if (final) return { state: 'restored', focus: -1 };
+  const focus = (focusSteps || []).indexOf(step);
+  if (focus >= 0) return { state: 'focus', focus };
+  if (Number.isFinite(restoreStep) && step >= restoreStep) return { state: 'restored', focus: -1 };
+  return { state: 'overview', focus: -1 };
+}
+function applyDramaturgy(sec, step, final) {
+  if (!sec || !sec.dataset || !sec.dataset.dramaturgy) return null;
+  const items = [...sec.querySelectorAll('[data-dramaturgy-item]')];
+  const focusSteps = items.map(el => +el.dataset.dramaturgyFocus).filter(Number.isFinite);
+  const restore = sec.querySelector('[data-dramaturgy-restore]');
+  const restoreStep = restore ? +restore.dataset.step : NaN;
+  const staticState = final || sec.dataset.dramaturgyStatic === 'true' || !!sec.closest('.static');
+  const phase = dramaturgyPhase(focusSteps, restoreStep, step, staticState);
+  sec.dataset.dramaturgyState = phase.state;
+  if (phase.state === 'focus') sec.dataset.dramaturgyFocus = String(phase.focus);
+  else delete sec.dataset.dramaturgyFocus;
+  items.forEach((el, index) => {
+    el.classList.toggle('dramaturgy-current', phase.state === 'focus' && index === phase.focus);
+    el.classList.toggle('dramaturgy-past', phase.state === 'focus' && index < phase.focus);
+    el.classList.toggle('dramaturgy-future', phase.state === 'focus' && index > phase.focus);
+  });
+  let progress = 0;
+  if (phase.state === 'restored') progress = 1;
+  else if (phase.state === 'focus' && items[phase.focus]) {
+    const explicit = parseFloat(items[phase.focus].dataset.dramaturgyProgress);
+    progress = Number.isFinite(explicit) ? explicit : (items.length > 1 ? phase.focus / (items.length - 1) : 1);
+  }
+  sec.style.setProperty('--dramaturgy-progress', String(Math.max(0, Math.min(1, progress))));
+  return phase;
 }
 function renderSlide(sl, i, deck, img) {
   img = img || (() => '');
@@ -143,6 +174,7 @@ function renderSlide(sl, i, deck, img) {
       body = figure(sl.image, anim(ba, 'zoom'), 0) +
         ((title || sl.caption) ? `<div class="cap"${A(anim(ta, 'rise'), 400)}>${title ? `<h2${tid(title)}>${fmt(title)}</h2>` : '<span></span>'}${sl.caption ? `<p>${fmt(sl.caption)}</p>` : ''}</div>` : '');
       break;
+
     case 'compare': {
       const col = (h, items, dir) => `<div>${h ? `<h3${A(steps ? 'fade' : anim(ba, dir), 200)}>${fmt(h)}</h3>` : ''}${list(items, 'cl', anim(ba, dir), 300)}</div>`;
       body = H2('', 'words') + (sl.text ? `<p class="lead"${A(anim(ba, 'fade'), 300)}>${fmt(sl.text)}</p>` : '') + `<div class="cols">${col(sl.lt, sl.lb, 'left')}${col(sl.rt, sl.rb, 'right')}</div>`;
@@ -180,10 +212,21 @@ function renderSlide(sl, i, deck, img) {
         (sl.text ? `<p class="unit"${A('rise', 700)}>${fmt(sl.text)}</p>` : '');
       break;
     case 'timeline': {
-      const its = lines(sl.items).map(t => { const p = t.split('|'); return { when: (p[0] || '').trim(), what: p.slice(1).join('|').trim() }; });
-      const n = Math.max(1, Math.min(its.length, 6));
-      const li = its.map(o => `<li${steps ? st(bodyA === 'none' ? 'fade' : bodyA) : ''}><b>${fmt(o.when)}</b><span>${fmt(o.what)}</span></li>`).join('');
-      body = H2('', 'words') + `<div class="track" style="--n:${n}"${A('fade', 200)}><div class="rail"></div><ol${!steps ? A(bodyA, 400, ' data-stagger="160"') : ''}>${li}</ol></div>`;
+      const its = lines(sl.items).slice(0, 6).map(t => {
+        const p = t.split('|');
+        return { when: (p[0] || '').trim(), title: (p[1] || '').trim(), detail: p.slice(2).join('|').trim() };
+      });
+      const n = Math.max(1, its.length);
+      const dense = n >= 5 || Math.max(0, ...its.map(o => plain(o.title + ' ' + o.detail).length)) > 80;
+      const li = its.map((o, j) => {
+        const progress = n > 1 ? j / (n - 1) : 1;
+        const step = steps ? st('none') : '';
+        return `<li class="tl-item" data-dramaturgy-item data-dramaturgy-focus="${j + 1}" data-dramaturgy-progress="${progress.toFixed(4)}"${step}><i class="tl-marker" aria-hidden="true"><span>${String(j + 1).padStart(2, '0')}</span></i><div class="tl-copy"><b class="tl-when">${fmt(o.when || String(j + 1))}</b><h3>${fmt(o.title || 'Händelse')}</h3>${o.detail ? `<p>${fmt(o.detail)}</p>` : ''}</div></li>`;
+      }).join('');
+      const restore = steps ? `<span class="dramaturgy-restore" data-dramaturgy-restore${st('none')} aria-hidden="true"></span>` : '';
+      body = H2('', 'words') + (sl.text ? `<p class="lead tl-lead"${A(anim(ba, 'fade'), 250)}>${fmt(sl.text)}</p>` : '') +
+        `<div class="tl-stage tl-count-${n}${dense ? ' tl-dense' : ''}" style="--n:${n}"${A(anim(ba, 'fade'), 200)}><div class="tl-rail" aria-hidden="true"><i class="tl-progress"></i></div><ol>${li}</ol>${restore}</div>`;
+      attrs += ` data-dramaturgy="focus-restore" data-dramaturgy-state="${steps ? 'overview' : 'restored'}"${steps ? '' : ' data-dramaturgy-static="true"'}`;
       break;
     }
     case 'question': {
@@ -1036,6 +1079,7 @@ function thumb(slide, deck, images, i) {
     el.classList.add('in');
     el.classList.remove('step-current', 'step-past');
   });
+  applyDramaturgy(sec, Number.POSITIVE_INFINITY, true);
   fitThumb(wrap);
   return wrap;
 }
@@ -1116,6 +1160,7 @@ function player(root, deck, opt) {
       const shown = [...box.children].filter(c => c.classList.contains('in'));
       shown.forEach((c, j) => c.classList.toggle('dimmed', !sec.dataset.focus && j < shown.length - 1));
     });
+    applyDramaturgy(sec, n, false);
     if (animate && n > 0 && groups[n - 1] && !reduced()) {
       groups[n - 1].forEach(el => running.push(playNamed(el, el.dataset.stepAnim || 'fade', 0)));
     }
@@ -1433,5 +1478,5 @@ function standalone(deck) {
   return player(root, deck, { mode: 'present', images: imgs, speaker: deck.audience !== 'student', student: deck.audience === 'student', start, onChange(i) { try { history.replaceState(null, '', '#' + (i + 1)); } catch (e) {} } });
 }
 
-G.Scen = { exportData, player, thumb, renderSlide, standalone, applyTheme, fmt, plain, esc, hash, lines, resolve, cleanHtml, cleanCss, fontUrl, THEMES, ACCENTS, LAYOUTS, TRANSITIONS, BACKGROUNDS, TITLE_ANIMS, BODY_ANIMS, FOCUS_STYLES, version: '3.0' };
+G.Scen = { exportData, player, thumb, renderSlide, standalone, applyTheme, applyDramaturgy, dramaturgyPhase, fmt, plain, esc, hash, lines, resolve, cleanHtml, cleanCss, fontUrl, THEMES, ACCENTS, LAYOUTS, TRANSITIONS, BACKGROUNDS, TITLE_ANIMS, BODY_ANIMS, FOCUS_STYLES, version: '3.0' };
 })(window);

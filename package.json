@@ -15,7 +15,9 @@
     "test:browser": "node scripts/check-browser.cjs",
     "test:mallar": "node scripts/check-new-templates.cjs",
     "test:mallar:browser": "node scripts/check-new-templates-browser.cjs",
-    "test": "npm run kolla && node scripts/check-editorial.cjs && npm run test:mallar && node scripts/check-focus.cjs && node scripts/check-signaturer.cjs && node scripts/check-student-export.cjs && npm run test:browser && npm run test:mallar:browser"
+    "test:tidslinje": "node scripts/check-timeline-dramaturgy.cjs",
+    "test:tidslinje:browser": "node scripts/check-timeline-browser.cjs",
+    "test": "npm run kolla && node scripts/check-editorial.cjs && npm run test:mallar && npm run test:tidslinje && node scripts/check-focus.cjs && node scripts/check-signaturer.cjs && node scripts/check-student-export.cjs && npm run test:browser && npm run test:mallar:browser && npm run test:tidslinje:browser"
   },
   "engines": { "node": ">=18" }
 }

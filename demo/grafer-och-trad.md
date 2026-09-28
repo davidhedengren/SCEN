@@ -38,12 +38,12 @@ text: En graf är en datastruktur där noder är sammankopplade med kanter.
 - nod: Jönköping | 70 30
 - nod: Nässjö | 96 50
 - nod: Malmö | 34 96
-- kant: Göteborg - Falköping | 70
-- kant: Falköping - Jönköping | 50
-- kant: Jönköping - Nässjö | 25
-- kant: Göteborg - Malmö | 190
-- kant: Jönköping - Malmö | 150
-- kant: Nässjö - Malmö | 160
+- kant: Göteborg - Falköping | 128
+- kant: Falköping - Jönköping | 72
+- kant: Jönköping - Nässjö | 47
+- kant: Göteborg - Malmö | 276
+- kant: Jönköping - Malmö | 296
+- kant: Nässjö - Malmö | 314
 - fokus: noder | Noder | Punkterna i grafen. De representerar tillstånd eller objekt, här orter.
 - fokus: kanter | Kanter | Representerar relationer mellan noderna. De kan vara riktade eller oriktade.
 - fokus: Jönköping | En nod och dess kanter | Jönköping har kanter till tre andra orter.
@@ -61,17 +61,17 @@ text: I en viktad graf har varje kant ett värde, till exempel avstånd, kostnad
 - nod: Jönköping | 70 30
 - nod: Nässjö | 96 50
 - nod: Malmö | 34 96
-- kant: Göteborg - Falköping | 70
-- kant: Falköping - Jönköping | 50
-- kant: Jönköping - Nässjö | 25
-- kant: Göteborg - Malmö | 190
-- kant: Jönköping - Malmö | 150
-- kant: Nässjö - Malmö | 160
-- fokus: vikter | Vikter | Varje kant har ett värde. Här är det påhittade restider i minuter.
+- kant: Göteborg - Falköping | 128
+- kant: Falköping - Jönköping | 72
+- kant: Jönköping - Nässjö | 47
+- kant: Göteborg - Malmö | 276
+- kant: Jönköping - Malmö | 296
+- kant: Nässjö - Malmö | 314
+- fokus: vikter | Vikter | Varje kant har ett värde. Här är det vägavstånd i kilometer.
 - fokus: Göteborg > Malmö > Nässjö | En möjlig väg | Via Malmö kommer vi fram, men vägen är lång.
 - fokus: Göteborg > Falköping > Jönköping > Nässjö | Kortaste vägen | Samma start och mål. Lägst summa av vikterna.
 slutsats: Ruttoptimering är att hitta vägen med lägst summa. Sökalgoritmer gör det i stora grafer.
-> Vikterna är exempelvärden, inte verkliga restider. Fråga gärna klassen innan klick 3: vilken väg är kortast?
+> Vikterna är vägavstånd med bil i kilometer, enligt ruttplanerare.se (september 2026). Fråga gärna klassen innan klick 3: vilken väg är kortast?
 
 ---
 

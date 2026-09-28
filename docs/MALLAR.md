@@ -55,6 +55,8 @@ Varje bild i ett manus börjar med mallens namn inom hakparentes. Samma katalog 
 | `[bro]` | Banor | En process som en båge över ett golv. Bågen bär stegen, golvet är sammanhanget de börjar och slutar i. Hela modellen syns från början. Varje klick flyttar fokus ett steg, tidigare steg ligger kvar nedtonade och sista klicket visar helheten igen. Med retur blir bron en loop: resultatet leder längs golvet tillbaka till början, som i återkopplingar, kretslopp och cykler. |
 | `[graf]` | System | Noder och kanter i en fast karta. Hela grafen syns från början. Varje klick lyfter fram noder, kanter, vikter, en enskild nod eller en väg som ritas i färdriktningen. Resten ligger kvar nedtonat, och sista klicket visar helheten med en slutsats. |
 | `[träd]` | System | Ett träd eller beslutsträd ur en indragen lista. Hela trädet syns från början. Varje klick lyfter fram roten, en nivå, grenarna, löven eller en väg från roten till ett löv, som ritas nedåt gren för gren. |
+| `[flöde]` | System | Något flödar genom ett system: indata, bearbetning, utdata. En eller två banor genom samma steg. Hela flödet syns nedtonat från början. Varje klick tänder samma steg i alla banor och en markör följer flödet, så att två processer jämförs steg för steg. Ett steg som heter ? blir en stängd låda. Sista klicket visar hela kedjan och slutsatsen. |
+| `[urval]` | System | En helhet av punkter i två till fyra grupper och ett urval ur den. Först syns helheten, sedan lyfts urvalet fram medan resten ligger kvar nedtonat, sedan den grupp som är mest underrepresenterad. Staplar visar andelarna i helheten och i urvalet. Sista klicket visar helheten igen med slutsatsen. |
 | `[ringar]` | Banor | Två eller tre begrepp som delvis överlappar, som ett Venndiagram. Det gemensamma skrivs i mitten och visas sist. |
 | `[lins]` | Banor | En bild där en rund lins lyser upp en detalj i taget. Resten är nedtonad. Varje rad: x y i procent | rubrik | text. |
 | `[mätare]` | Banor | Ett tal som andel av något, som en mätare som fylls medan talet räknas upp. Skriv 73 %, 4 av 8 eller ett tal med max. |
@@ -917,6 +919,44 @@ text: Varje fråga delar upp fallen. Varje löv är ett beslut.
 - fokus: löv | Löv | Löven är de slutliga besluten.
 - fokus: väg Nej > Nej | Ett fall | Uppehåll och 12 grader ger lektion ute.
 slutsats: Samma frågor i samma ordning ger samma beslut varje gång.
+```
+
+### `[flöde]` Flöde
+
+Något flödar genom ett system: indata, bearbetning, utdata. En eller två banor genom samma steg. Hela flödet syns nedtonat från början. Varje klick tänder samma steg i alla banor och en markör följer flödet, så att två processer jämförs steg för steg. Ett steg som heter ? blir en stängd låda. Sista klicket visar hela kedjan och slutsatsen.
+
+**Undvik när:** Fler än två banor eller fem steg per bana. Steg utan inbördes ordning (använd fokus eller kort), eller orsak och verkan med villkor (använd verkningar).
+
+```
+[flöde]
+etikett: Två sätt att lösa ett problem
+rubrik: Regler eller exempel?
+- bana: Traditionell programmering
+- Regler | Människan skriver dem
+- Datorn | Följer reglerna
+- Svar | Bara för det reglerna täcker
+- bana: Maskininlärning
+- Data och svar | Många exempel
+- AI:n | Hittar mönstret själv
+- Modell | Kan förutsäga nya fall
+slutsats: Samma mål, omvänd ordning: maskininlärning börjar med exemplen.
+```
+
+### `[urval]` Urval
+
+En helhet av punkter i två till fyra grupper och ett urval ur den. Först syns helheten, sedan lyfts urvalet fram medan resten ligger kvar nedtonat, sedan den grupp som är mest underrepresenterad. Staplar visar andelarna i helheten och i urvalet. Sista klicket visar helheten igen med slutsatsen.
+
+**Undvik när:** Andelar som ser ut som verklig statistik utan källa. Skriv källan i reservation, annars står det Illustration. Fler än fyra grupper.
+
+```
+[urval]
+etikett: Representativ data
+rubrik: Speglar datan verkligheten?
+vänster: Verkligheten
+höger: Träningsdatan
+- Grupp A | 50 | 85
+- Grupp B | 50 | 15
+slutsats: En modell blir bäst på det den har sett mest av.
 ```
 
 ## Ljus

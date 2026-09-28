@@ -16,7 +16,7 @@ const LAYOUTS = {etapper:"Etapper",vagval:"Vägval",lager:"Lager",resonemang:"Re
   title: 'Titel', section: 'Avsnitt', statement: 'Påstående', bullets: 'Punktlista', split: 'Text och bild',
   image: 'Helbild', bildregi: 'Bildregi', terminal: 'Terminal', kodforklaring: 'Kodförklaring', typografisk: 'Typografiskt statement', texttempo: 'Typografiskt tempo', cards: 'Kort', compare: 'Jämförelse', table: 'Tabell', number: 'Stort tal', timeline: 'Tidslinje',
   question: 'Fråga och svar', poll: 'Omröstning', reflect: 'Reflektion', define: 'Definition', chat: 'AI-samtal', duo: 'Två tal',
-  quote: 'Citat', omslag: 'Omslag', karta: 'Karta', triad: 'Triad', motsats: 'Motsats', bildkant: 'Bildkant', 'båge': 'Båge', omlopp: 'Omlopp', gradskiva: 'Gradskiva', bro: 'Bro', graf: 'Graf', trad: 'Träd', ringar: 'Ringar', lins: 'Lins', 'mätare': 'Mätare', 'ridå': 'Ridå', 'strålkastare': 'Strålkastare', fokus: 'Fokus', ordbild: 'Ordbild', 'bildfält': 'Bildfält', delning: 'Delning', ljustal: 'Ljustal', tom: 'Fri yta', egen: 'Egen mall'
+  quote: 'Citat', omslag: 'Omslag', karta: 'Karta', triad: 'Triad', motsats: 'Motsats', bildkant: 'Bildkant', 'båge': 'Båge', omlopp: 'Omlopp', gradskiva: 'Gradskiva', bro: 'Bro', graf: 'Graf', trad: 'Träd', flode: 'Flöde', urval: 'Urval', ringar: 'Ringar', lins: 'Lins', 'mätare': 'Mätare', 'ridå': 'Ridå', 'strålkastare': 'Strålkastare', fokus: 'Fokus', ordbild: 'Ordbild', 'bildfält': 'Bildfält', delning: 'Delning', ljustal: 'Ljustal', tom: 'Fri yta', egen: 'Egen mall'
 };
 const THEMES = {
   signal: { name: 'Signal', desc: 'Djup midnattsblå, elektrisk cyan och violett. Fylliga färgfält och tydlig typografi.', look: 'dark', v: { bg: '#080E25', surface: '#152444', ink: '#F0F6FF', muted: '#A5B6D4', line: '#2B4065', accent: '#5FE7ED', 'accent-2': '#9C87FF', hl: 'rgba(95,231,237,.22)' }, fd: '"Familjen Grotesk",system-ui,sans-serif', fb: '"Hanken Grotesk",system-ui,sans-serif', hw: 700, ht: '-.035em', r: '24px', ta: 'words', fonts: ['Familjen+Grotesk:wght@400;500;600;700', 'Hanken+Grotesk:wght@400;500;600'] },
@@ -130,6 +130,35 @@ function gtFocusLines(items) {
 }
 const gtKey = s => plain(s).toLowerCase().replace(/\s+/g, ' ').trim();
 function gtIn(set) { return ` data-dramaturgy-in="${set ? [...set].join(' ') : ''}"`; }
+/* ---------- flöde och urval ---------- */
+/* Flöde: "bana: namn" startar en bana (högst två), övriga rader är steg "namn | text" (högst fem per bana).
+   Ett steg som heter "?" visas som en stängd låda. */
+function parseFlode(items) {
+  const lanes = [];
+  let cur = null;
+  lines(items).forEach(raw => {
+    const t = String(raw).replace(/^(- )+/, '').trim();
+    const m = t.match(/^bana\s*:\s*(.*)$/i);
+    if (m) { cur = lanes.length < 2 ? { name: m[1].trim(), steps: [] } : null; if (cur) lanes.push(cur); return; }
+    if (!cur) { if (lanes.length) return; cur = { name: '', steps: [] }; lanes.push(cur); }
+    if (cur.steps.length >= 5) return;
+    const p = t.split('|').map(x => x.trim());
+    cur.steps.push({ name: p[0] || '', text: p.slice(1).join(' | ') });
+  });
+  return lanes.filter(l => l.steps.length);
+}
+/* Urval: rader "grupp | andel i helheten | andel i urvalet" (högst fyra grupper). */
+function parseUrval(items) {
+  const num = v => { const x = parseFloat(String(v || '').replace(',', '.').replace('%', '')); return Number.isFinite(x) && x >= 0 ? x : 0; };
+  return lines(items).map(raw => { const p = String(raw).replace(/^(- )+/, '').split('|').map(x => x.trim()); return { name: p[0] || '', pop: num(p[1]), sam: num(p[2]) }; })
+    .filter(g => g.name).slice(0, 4);
+}
+function allocate(weights, total) {
+  const sum = weights.reduce((a, b) => a + b, 0) || 1, raw = weights.map(v => v / sum * total), base = raw.map(Math.floor);
+  let rest = total - base.reduce((a, b) => a + b, 0);
+  raw.map((v, i) => [v - base[i], i]).sort((a, b) => b[0] - a[0]).forEach(([, i]) => { if (rest > 0) { base[i]++; rest--; } });
+  return base;
+}
 function gtAdd(map, id, j) { (map[id] = map[id] || new Set()).add(j); }
 function gtPanel(intro, focus, end, extra, x, y, w) {
   const notes = focus.map((f, j) => `<div class="gt-note" data-dramaturgy-in="${j}">` +
@@ -999,6 +1028,81 @@ function renderSlide(sl, i, deck, img) {
     }
 
 
+    case 'flode': {
+      /* Banor med steg i fast geometri. Varje klick tänder samma steg i alla banor och en markör
+         följer flödet. Sista klicket visar hela kedjan och slutsatsen. */
+      const lanes = parseFlode(sl.items);
+      const n = Math.max(1, ...lanes.map(l => l.steps.length)), two = lanes.length > 1;
+      const X0 = 144, W = 1632, col = W / n, xs = [...Array(n)].map((_, j) => X0 + col * (j + .5));
+      const railY = two ? [420, 670] : [580];
+      const tSize = n >= 5 ? 34 : n === 4 ? 40 : 46, dSize = n >= 5 ? 22 : 26;
+      const T = j => ` data-dramaturgy-target data-dramaturgy-index="${j}"`;
+      let svg = '', html = '';
+      lanes.forEach((ln, li) => {
+        const y = railY[li];
+        svg += `<line class="fl-rail" x1="${X0}" y1="${y}" x2="${X0 + W}" y2="${y}"/><line class="fl-prog" x1="${X0}" y1="${y}" x2="${X0 + W}" y2="${y}" pathLength="1"/>`;
+        for (let j = 0; j < ln.steps.length - 1; j++) svg += `<path class="fl-chev" d="M-7 -9 L4 0 L-7 9" transform="translate(${((xs[j] + xs[j + 1]) / 2).toFixed(1)} ${y})"/>`;
+        ln.steps.forEach((s, j) => {
+          const box = s.name === '?', x = xs[j];
+          svg += box
+            ? `<g class="fl-box"${T(j)} transform="translate(${x.toFixed(1)} ${y})"><rect x="-84" y="-58" width="168" height="116" rx="20"/><text y="24" text-anchor="middle">?</text></g>`
+            : `<g class="fl-node"${T(j)} transform="translate(${x.toFixed(1)} ${y})"><circle class="halo" r="32"/><circle class="mk" r="13"/></g>`;
+          html += `<div class="fl-st"${T(j)} style="left:${Math.round(x - col / 2 + 16)}px;top:${y + (box ? 78 : 40)}px;width:${Math.round(col - 32)}px;--ft:${tSize}px;--fd:${dSize}px">` +
+            (box ? '' : `<b>${fmt(s.name)}</b>`) + (s.text ? `<p>${fmt(s.text)}</p>` : '') + `</div>`;
+        });
+        if (ln.name) html += `<p class="fl-lane" style="left:${X0}px;top:${y - 72}px">${fmt(ln.name)}</p>`;
+        html += `<i class="fl-tok" style="top:${y}px" aria-hidden="true"></i>`;
+      });
+      let cues = '';
+      if (steps) {
+        xs.forEach((x, j) => { const s = st('none'); cues += `<span data-dramaturgy-cue data-dramaturgy-focus="${k}" data-dramaturgy-target="${j}" data-dramaturgy-progress="${((x - X0) / W).toFixed(4)}"${s} aria-hidden="true"></span>`; });
+        cues += `<span data-dramaturgy-restore${st('none')} aria-hidden="true"></span>`;
+      }
+      body = (sl.caption ? `<p class="kicker"${A('fade')}>${fmt(sl.caption)}</p>` : '') + H2('', 'mask') +
+        (sl.text ? `<p class="lead fl-lead"${A(anim(ba, 'fade'), 250)}>${fmt(sl.text)}</p>` : '') +
+        `<div class="fl-stage"${A(anim(ba, 'fade'), 150)}><svg class="fl-svg" viewBox="0 0 1920 1080" aria-hidden="true">${svg}</svg>${html}</div>` +
+        (sl.conclusion ? `<p class="fl-end" style="top:${two ? 870 : 820}px">${fmt(sl.conclusion)}</p>` : '') + cues;
+      if (plain(title).length > 44) cls = 'fl-long';
+      attrs += ` data-dramaturgy="focus-restore" data-dramaturgy-state="${steps ? 'overview' : 'restored'}"${steps ? '' : ' data-dramaturgy-static="true"'}`;
+      break;
+    }
+    case 'urval': {
+      /* En helhet av punkter i grupper och ett urval ur den. Geometrin är fast: punkterna flyttar sig aldrig.
+         Klick 1 lyfter fram urvalet, klick 2 den mest underrepresenterade gruppen, klick 3 helheten. */
+      const gs = parseUrval(sl.items);
+      const cols = 16, rows = 10, N = cols * rows, S = 40, gap = 52, FX = 144, FY = 330;
+      const popN = allocate(gs.map(g => g.pop), N), samN = allocate(gs.map(g => g.sam), S).map((v, j) => Math.min(v, popN[j]));
+      let seed = (parseInt(hash(gs.map(g => g.name + '|' + g.pop + '|' + g.sam).join(';')), 36) % 2147483646) + 1;
+      const rnd = () => (seed = seed * 16807 % 2147483647) / 2147483647;
+      const shuffle = a => { for (let q = a.length - 1; q > 0; q--) { const r = Math.floor(rnd() * (q + 1)); [a[q], a[r]] = [a[r], a[q]]; } return a; };
+      const cells = shuffle(popN.flatMap((c, j) => Array(c).fill(j)));
+      const taken = gs.map(() => 0), sel = new Set();
+      shuffle(cells.map((_, q) => q)).forEach(q => { const g = cells[q]; if (taken[g] < samN[g]) { taken[g]++; sel.add(q); } });
+      const sum = a => a.reduce((x, y) => x + y, 0) || 1, sp0 = sum(gs.map(g => g.pop)), ss0 = sum(gs.map(g => g.sam));
+      const pp = gs.map(g => Math.round(g.pop / sp0 * 100)), sp = gs.map(g => Math.round(g.sam / ss0 * 100));
+      let skew = -1, worst = 0;
+      gs.forEach((g, j) => { if (pp[j] - sp[j] > worst) { worst = pp[j] - sp[j]; skew = j; } });
+      const LA = sl.lt || 'Helheten', LB = sl.rt || 'Urvalet';
+      const dots = cells.map((g, q) => `<circle class="ur-dot g${g}${sel.has(q) ? ' sel' : ''}${g === skew ? ' skew' : ''}" cx="${FX + gap / 2 + (q % cols) * gap}" cy="${FY + gap / 2 + Math.floor(q / cols) * gap}" r="16"/>`).join('');
+      const rowsHtml = gs.map((g, j) => `<div class="ur-row g${j}${j === skew ? ' skew' : ''}"${j === skew ? ' data-dramaturgy-target data-dramaturgy-index="1"' : ''}>` +
+        `<p class="ur-name"><i aria-hidden="true"></i>${fmt(g.name)}</p>` +
+        `<div class="ur-bar a"><span style="--w:${pp[j]}%"></span><em>${fmt(LA)} ${pp[j]} %</em></div>` +
+        `<div class="ur-bar b"><span style="--w:${sp[j]}%"></span><em>${fmt(LB)} ${sp[j]} %</em></div></div>`).join('');
+      const note = skew >= 0 ? `<p class="ur-note">${fmt(gs[skew].name)}: ${pp[skew]} % av ${fmt(LA.toLowerCase())}, men ${sp[skew]} % av ${fmt(LB.toLowerCase())}.</p>` : '';
+      let cues = '';
+      if (steps) {
+        const cue = j => { const s = st('none'); return `<span data-dramaturgy-cue data-dramaturgy-focus="${k}" data-dramaturgy-target="${j}"${s} aria-hidden="true"></span>`; };
+        cues = cue(0) + (skew >= 0 ? cue(1) : '') + `<span data-dramaturgy-restore${st('none')} aria-hidden="true"></span>`;
+      }
+      body = (sl.caption ? `<p class="kicker"${A('fade')}>${fmt(sl.caption)}</p>` : '') + H2('', 'mask') +
+        `<div class="ur-stage"${A(anim(ba, 'fade'), 150)}><svg class="ur-svg" viewBox="0 0 1920 1080" aria-hidden="true"><g class="ur-field" data-dramaturgy-target data-dramaturgy-index="0">${dots}</g></svg>` +
+        `<p class="ur-lab" style="left:${FX}px;top:${FY - 48}px">${fmt(LA)}</p>` +
+        `<div class="ur-pan" style="left:1060px;top:${FY}px;width:716px">${rowsHtml}<div class="ur-foot">${note}` +
+        (sl.conclusion ? `<p class="ur-end">${fmt(sl.conclusion)}</p>` : '') + `</div><p class="ur-res">${fmt(sl.reservation || 'Illustration, inte verkliga siffror.')}</p></div></div>` + cues;
+      if (plain(title).length > 44) cls = 'fl-long';
+      attrs += ` data-dramaturgy="focus-restore" data-dramaturgy-state="${steps ? 'overview' : 'restored'}"${steps ? '' : ' data-dramaturgy-static="true"'}`;
+      break;
+    }
     case 'etapper': case 'vagval': case 'lager': case 'resonemang': case 'helhet': {
       cls = 'ed-layout';
       const max = L === 'lager' || L === 'resonemang' ? 3 : 4;
@@ -1036,7 +1140,7 @@ function renderSlide(sl, i, deck, img) {
 
     case 'prisma': {
       const its = lines(sl.items).slice(0, 5).map(t => { const p = t.split('|'); return { name: (p[0] || '').trim(), emphasis: (p[1] || '').trim(), basis: p.slice(2).join('|').trim() }; });
-      const pos = [[50,10],[87,28],[79,69],[21,69],[13,28]];
+      const pos = its.length === 3 ? [[50,10],[83,74],[17,74]] : [[50,10],[87,28],[79,69],[21,69],[13,28]];
       const uid = 'u' + hash((sl.id || '') + i + L);
       let css = '';
       /* Strålen går från kärnans kant till etikettens kant, inte genom texten.

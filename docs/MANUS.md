@@ -133,6 +133,24 @@ De fem analysmallarna använder lodstreck för att skilja semantiska delar. Dela
 
 I `[skiften]` är den tredje delen central: varje brytpunkt ska uttrycka vad som blir annorlunda efter händelsen. I `[sammanflöde]` används dessutom alltid `gemensamt`, `spänning` och `syntes` för att skilja mallen från en vanlig premiss–slutsats-layout.
 
+### Flöde och urval
+
+```text
+[flöde]
+- bana: namn        (valfri, högst två banor)
+- steg | text       (högst fem steg per bana; ett steg som heter ? blir en stängd låda)
+slutsats: visas när hela kedjan lyser
+
+[urval]
+vänster: namn på helheten
+höger: namn på urvalet
+- grupp | andel i helheten | andel i urvalet   (högst fyra grupper)
+slutsats: visas när helheten återvänder
+reservation: källa, annars står det "Illustration, inte verkliga siffror."
+```
+
+I `[flöde]` tänder varje klick samma steg i alla banor, så två processer jämförs steg för steg. I `[urval]` räknas andelarna om till procent, och meningen om den mest underrepresenterade gruppen skrivs automatiskt utifrån siffrorna.
+
 ### Tabeller
 
 ```

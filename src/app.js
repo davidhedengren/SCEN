@@ -247,6 +247,7 @@ function card(d, sample) {
   const B = (label, fn, cls) => { const b = document.createElement('button'); b.type = 'button'; b.className = 'btn small ' + (cls || ''); b.textContent = label; b.onclick = fn; acts.appendChild(b); return b; };
   if (sample) {
     B('Spela', () => play(d, 0));
+    if (d.repo) B('Spara på datorn', () => exportDeck(d));
     B('Gör en egen kopia', () => duplicate(d, true));
   } else {
     B('Spela', async () => { const imgs = await safeImages(d.id); Object.assign(IMG, imgs); play(d, 0); });

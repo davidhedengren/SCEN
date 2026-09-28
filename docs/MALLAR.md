@@ -53,6 +53,11 @@ Varje bild i ett manus börjar med mallens namn inom hakparentes. Samma katalog 
 | `[omlopp]` | Banor | Ett begrepp i mitten och tre till sex delar som kretsar runt det. Varje del åker in längs banan på klick. |
 | `[gradskiva]` | Banor | En skala från ett ytterläge till ett annat. Nålen svänger till varje läge på klick och bågen fylls, medan förklaringen byts i mitten. |
 | `[bro]` | Banor | En process som en båge över ett golv. Bågen bär stegen, golvet är sammanhanget de börjar och slutar i. Hela modellen syns från början. Varje klick flyttar fokus ett steg, tidigare steg ligger kvar nedtonade och sista klicket visar helheten igen. Med retur blir bron en loop: resultatet leder längs golvet tillbaka till början, som i återkopplingar, kretslopp och cykler. |
+| `[rad]` | Fokusvandring | Två till fem rutor i en rad. Alla syns från början. En fokusram glider från ruta till ruta medan de andra tonas ned, och sista klicket tänder alla. Med flöde: ja visar pilar att rutorna följer på varandra. |
+| `[rutor]` | Fokusvandring | Två till sex rutor i ett rutnät, till exempel fyra delar i två rader. Hela rutnätet syns från början. Fokusramen vandrar i läsordning och sista klicket tänder alla rutor. |
+| `[remsor]` | Fokusvandring | Tre till fem breda band staplade på varandra, med nummer, rubrik och förklaring på samma rad. Fokus vandrar uppifrån och ned och sista klicket tänder alla. Bra för begrepp med lite längre förklaringar. |
+| `[mosaik]` | Fokusvandring | En stor ruta med helheten eller huvudsaken och två till fyra mindre rutor bredvid. Fokus börjar i den stora rutan och vandrar sedan genom de mindre. Sista klicket tänder alla. |
+| `[kärna]` | Fokusvandring | Ett begrepp i mitten och två till fyra rutor runt det. Kärnan ligger tänd hela tiden medan fokus vandrar medsols mellan rutorna, och ekern till den aktuella rutan tänds. Sista klicket tänder alla och visar en slutsats i kärnan. |
 | `[graf]` | System | Noder och kanter i en fast karta. Hela grafen syns från början. Varje klick lyfter fram noder, kanter, vikter, en enskild nod eller en väg som ritas i färdriktningen. Resten ligger kvar nedtonat, och sista klicket visar helheten med en slutsats. |
 | `[träd]` | System | Ett träd eller beslutsträd ur en indragen lista. Hela trädet syns från början. Varje klick lyfter fram roten, en nivå, grenarna, löven eller en väg från roten till ett löv, som ritas nedåt gren för gren. |
 | `[flöde]` | System | Något flödar genom ett system: indata, bearbetning, utdata. En eller två banor genom samma steg. Hela flödet syns nedtonat från början. Varje klick tänder samma steg i alla banor och en markör följer flödet, så att två processer jämförs steg för steg. Ett steg som heter ? blir en stängd låda. Sista klicket visar hela kedjan och slutsatsen. |
@@ -864,6 +869,95 @@ etikett: Övningen
 rubrik: Partiellt observerbara uppgifter
 tal: 4 av 8
 text: Poker, trafik, robotdammsugare och diagnos.
+```
+
+## Fokusvandring
+
+### `[rad]` Rad
+
+Två till fem rutor i en rad. Alla syns från början. En fokusram glider från ruta till ruta medan de andra tonas ned, och sista klicket tänder alla. Med flöde: ja visar pilar att rutorna följer på varandra.
+
+**Undvik när:** Mer än fem delar eller långa texter i rutorna. Använd rutor när delarna inte har en ordning.
+
+```
+[rad]
+etikett: Vetenskaplig metod
+rubrik: Från fråga till slutsats
+text: Fyra steg som bygger på varandra.
+flöde: ja
+- Fråga | Vad vill vi ta reda på?
+- Hypotes | Vad tror vi, och varför?
+- Undersökning | Hur prövar vi det?
+- Slutsats | Vad visar resultatet?
+slutsats: Slutsatsen leder ofta till en ny fråga.
+```
+
+### `[rutor]` Rutor
+
+Två till sex rutor i ett rutnät, till exempel fyra delar i två rader. Hela rutnätet syns från början. Fokusramen vandrar i läsordning och sista klicket tänder alla rutor.
+
+**Undvik när:** Delar som bygger på varandra i en tydlig ordning (använd rad). Mer än sex rutor.
+
+```
+[rutor]
+etikett: Källkritik
+rubrik: Fyra frågor till varje källa
+text: Samma fyra frågor fungerar på en artikel, en bild och ett AI-svar.
+- Äkthet | Är källan det den utger sig för att vara?
+- Tid | När skapades den, och spelar det roll?
+- Beroende | Bygger den på andra källor?
+- Tendens | Vill någon påverka oss?
+slutsats: Ingen fråga räcker ensam. Tillsammans ger de en bedömning.
+```
+
+### `[remsor]` Remsor
+
+Tre till fem breda band staplade på varandra, med nummer, rubrik och förklaring på samma rad. Fokus vandrar uppifrån och ned och sista klicket tänder alla. Bra för begrepp med lite längre förklaringar.
+
+**Undvik när:** Mer än fem band eller förklaringar längre än två rader.
+
+```
+[remsor]
+etikett: Demokrati
+rubrik: Tre sätt att fördela makt
+- Lagstiftande | Riksdagen stiftar lagar och beslutar om skatter och statens budget.
+- Verkställande | Regeringen styr landet och genomför riksdagens beslut.
+- Dömande | Domstolarna dömer utifrån lagarna, oberoende av regeringen.
+slutsats: Maktdelningen gör att ingen del ensam kan bestämma allt.
+```
+
+### `[mosaik]` Mosaik
+
+En stor ruta med helheten eller huvudsaken och två till fyra mindre rutor bredvid. Fokus börjar i den stora rutan och vandrar sedan genom de mindre. Sista klicket tänder alla.
+
+**Undvik när:** Delar som är lika viktiga (använd rutor). Mer än fem rutor.
+
+```
+[mosaik]
+etikett: Ekosystem
+rubrik: Vad ett ekosystem består av
+- Ekosystemet | Alla organismer i ett område och den miljö de lever i, sedda som en helhet.
+- Producenter | Växter som bygger upp energi med hjälp av solljus.
+- Konsumenter | Djur som äter växter eller andra djur.
+- Nedbrytare | Svampar och bakterier som bryter ned döda rester.
+slutsats: Energin flödar genom systemet, medan ämnena går runt i ett kretslopp.
+```
+
+### `[kärna]` Kärna
+
+Ett begrepp i mitten och två till fyra rutor runt det. Kärnan ligger tänd hela tiden medan fokus vandrar medsols mellan rutorna, och ekern till den aktuella rutan tänds. Sista klicket tänder alla och visar en slutsats i kärnan.
+
+**Undvik när:** Delar som inte hänger ihop med ett gemensamt begrepp. Mer än fyra rutor.
+
+```
+[kärna]
+etikett: Hållbar utveckling
+rubrik: Tre dimensioner av samma mål
+text: Hållbar utveckling
+- Ekologisk | Naturens resurser ska räcka även för kommande generationer.
+- Social | Alla människor ska ha goda livsvillkor och inflytande.
+- Ekonomisk | Ekonomin ska kunna växa utan att skada människor eller miljö.
+slutsats: Dimensionerna påverkar varandra.
 ```
 
 ## System

@@ -20,18 +20,44 @@ hastighet: slow
 ---
 
 [bro]
-etikett: Definition
-rubrik: Vad är en AI-agent?
-text: Ett system som uppfattar sin omgivning, fattar beslut och vidtar åtgärder.
+etikett: Begrepp 1
+rubrik: Vad är en agent?
+text: En aktör som uppfattar sin omgivning och agerar i den.
 vänster: Omgivningen
 höger: Omgivningen förändras
 retur: Agenten reagerar på förändringar
-- Uppfattar | med sensorer eller genom att analysera data
+- Uppfattar | med sinnen, sensorer eller data
 - Beslutar | utifrån sitt mål
-- Agerar | med aktuatorer
+- Agerar | med kroppen eller aktuatorer
 > Klick 1–3 följer bågen: uppfatta, besluta, agera. Klick 4 följer handlingen längs golvet tillbaka till omgivningen. Klick 5 visar hela slingan.
 > Agenten interagerar med sin miljö, samlar in information och reagerar på förändringar.
-> Fråga klassen efter exempel på sensorer och aktuatorer.
+> Observera: här står inget om AI. En agent kan vara en människa, ett djur eller en maskin.
+
+---
+
+[bildregi]
+etikett: Exempel
+rubrik: Agent eller AI-agent?
+text: Agent betyder inte AI. Fotgängaren är en agent. En självkörande bil är en AI-agent.
+bild: bilder/ai-agenter-miljoer/korsning.jpg
+alt: Stadskorsning i skymning med fotgängare på ett övergångsställe och bilar.
+bildläge: spotlight
+fokuspunkt: 62 64
+säker-yta: 4 14 34 60
+mörkning: 0 0 42 100 0.55
+- manniska | Människan: agent | 75 | 70 | 16 | 12 | Ser trafiken, bestämmer sig och går över gatan.
+- bil | Självkörande bil: AI-agent | 59 | 59 | 12 | 12 | Använder AI för att välja och planera sina handlingar.
+> Tänk dig att bilen är självkörande. Båda uppfattar, beslutar och agerar i samma korsning, men bara bilen använder AI.
+> Det här kommer tillbaka senare: i trafiken finns många agenter samtidigt.
+
+---
+
+[typografi]
+etikett: Begrepp 2
+- statement | En **agent** uppfattar, beslutar och agerar. | Agent
+- precisering | En **AI-agent** är en artificiell agent som använder AI för att välja eller planera sina handlingar. | AI-agent
+> AI:n sitter i beslutsfattandet. Uppfatta och agera gör alla agenter.
+> Ursprunglig formulering: ett system som kan uppfatta sin omgivning (med t.ex. sensorer eller genom att analysera data), fatta beslut och vidta åtgärder (med aktuatorer).
 
 ---
 
@@ -45,11 +71,14 @@ rubrik: Vad gör en agent till en agent?
 
 ---
 
-[texttempo]
-etikett: Rationell agent
-- statement | En rationell agent strävar alltid efter **de bästa besluten**. | Påstående
-- kontrast | En rationell agent strävar alltid efter de bästa besluten.\\n**Men miljön påverkar hur den kan fatta dem.** | Vändpunkt
-> Vändpunkten i lektionen. Hittills har vi pratat om agenten. Nu flyttar vi blicken till världen den verkar i.
+[tidslinje]
+rubrik: Från agent till miljö
+- Agent | Grunden | Uppfattar, beslutar och agerar.
+- AI-agent | Plus AI | AI används i beslutsfattandet.
+- Rationell agent | Plus mål | Väljer den bästa handlingen utifrån mål och information.
+- Miljön | Villkoret | Avgör hur bra beslut agenten kan fatta.
+> Varje begrepp bygger på det föregående. En rationell agent strävar alltid efter att fatta de bästa besluten för att uppnå sina mål.
+> Det sista steget är vändpunkten i lektionen: hur bra beslut agenten kan fatta beror på vilken miljö den befinner sig i. Nu flyttar vi blicken från agenten till världen den verkar i.
 
 ---
 
@@ -116,17 +145,20 @@ höger: Multiagent
 - **Nackdelar:** svår koordinering, risk för konflikter, svårare beslut
 > En lugn, statisk bild. Låt klassen läsa.
 > Lägg märke till att "effektivt" finns på båda sidor, av olika skäl. Varför?
+> Kom ihåg: agent betyder inte AI. I trafiken är den självkörande bilen en AI-agent, men fotgängaren och bilföraren är också agenter.
 
 ---
 
 [omröstning]
 rubrik: Schack mot dator: singel- eller multiagentmiljö?
-svar: Ur spelarens perspektiv är det singelagent. Men datorn är också en agent, så multiagent går att försvara.
+svar: Två agenter fattar beslut i samma miljö. Motståndarens drag påverkar direkt vilka handlingar och resultat som är möjliga för den andra agenten.
 - Singelagent
-- Multiagent
-- * Det beror på perspektivet
+- * Multiagent
+- Det beror på perspektivet
 > Räkna händer med tangenterna 1–3.
-> I övningstabellen räknar vi schack som singelagent, eftersom vi utgår från en persons perspektiv mot en AI.
+> Människan är en agent och schackprogrammet är en AI-agent. Båda väljer drag, och dragen påverkar varandras möjligheter och resultat: en konkurrerande (adversarial) multiagentmiljö.
+> Att vi studerar en agents beslut gör inte miljön till en singelagentmiljö. Det avgörande är om det finns andra agenter vars handlingar påverkar utfallet.
+> Specialfall: om motståndaren bara spelar upp en helt förutbestämd sekvens av drag och inte själv fattar beslut, kan den modelleras som en del av miljön. Vanligt schack mot människa eller schackdator är multiagent.
 
 ---
 
@@ -186,7 +218,7 @@ mörkning: 0 0 46 56 0.55
 etikett: Helheten
 rubrik: Schack mot dator: sex svar
 - Fullständigt observerbar | Alla pjäser och positioner syns för båda spelarna.
-- Singelagent | Ur en spelares perspektiv mot en AI.
+- Multiagent | Två agenter vars drag påverkar varandra: en konkurrerande miljö.
 - Deterministisk | Alla drag och deras konsekvenser är förutsägbara.
 - Sekventiell | Varje drag påverkar brädets framtida tillstånd.
 - Statisk | Brädet förändras inte utanför agenternas kontroll.
@@ -195,29 +227,12 @@ rubrik: Schack mot dator: sex svar
 
 ---
 
-[bildregi]
-etikett: Sammanfattning
-rubrik: Rätt modell av miljön är avgörande för effektiva AI-system.
-text: AI-agenter verkar i miljöer med olika egenskaper. Att förstå dem är avgörande för system som ska navigera i komplexa och dynamiska omvärldar.
-bild: bilder/ai-agenter-miljoer/korsning.jpg
-alt: Stadskorsning i skymning.
-bildläge: hero
-fokuspunkt: 62 64
-startutsnitt: 50 50 1.06
-slututsnitt: 50 50 1
-säker-yta: 3 8 40 78
-mörkning: 0 0 42 100 0.55
-hastighet: slow
-> Tillbaka till korsningen. Nu kan vi beskriva den: partiellt observerbar, multiagent, stokastisk, sekventiell, dynamisk och kontinuerlig.
-
----
-
 [tabell]
 rubrik: Övning i par: fyll i och diskutera tabellen
 visa: facit-rader
 fokus: mjuk
 | Uppgift | Fullt/partiellt\nobserverbart | Singel/\nmultiagent | Deterministisk/\nstokastisk | Episodisk/\nsekventiell | Statiskt/\ndynamiskt | Diskret/\nkontinuerligt |
-| Schack mot dator | Fullt | Singel | Deterministisk | Sekventiell | Statisk | Diskret |
+| Schack mot dator | Fullt | Multi | Deterministisk | Sekventiell | Statisk | Diskret |
 | Korsord | Fullt | Singel | Deterministisk | Sekventiell | Statisk | Diskret |
 | Poker | Partiellt | Multi | Stokastisk | Sekventiell | Statisk | Diskret |
 | Bildklassificering | Fullt | Singel | Deterministisk | Episodisk | Statisk | Diskret |
@@ -229,7 +244,7 @@ fokus: mjuk
 >
 > Schack mot dator
 > Observerbarhet: Fullt observerbart eftersom alla bitar på schackbrädet och deras positioner är synliga för både spelaren och datorn.
-> Antal agenter: Single-agent om det är spelaren mot datorn, men eftersom datorn också räknas som en agent kan det tolkas som multi-agent. I detta fall fokuserar vi på en persons perspektiv mot en AI.
+> Antal agenter: Multi-agent eftersom både spelaren och datorn är agenter som fattar beslut, och deras drag påverkar varandras möjligheter och resultat (en konkurrerande miljö).
 > Deterministisk: Alla drag och deras konsekvenser är förutsägbara och leder till ett bestämt utfall.
 > Sekventiell: Varje drag påverkar brädets framtida tillstånd, så alla beslut måste tas med hänsyn till kommande drag.
 > Statisk: Brädets tillstånd förändras inte utanför agenternas kontroll.
@@ -293,9 +308,30 @@ fokus: mjuk
 
 ---
 
+[bildregi]
+etikett: Sammanfattning
+rubrik: Rätt modell av miljön är avgörande för effektiva AI-system.
+text: AI-agenter verkar i miljöer med olika egenskaper. Att förstå dem är avgörande för system som ska navigera i komplexa och dynamiska omvärldar.
+bild: bilder/ai-agenter-miljoer/korsning.jpg
+alt: Stadskorsning i skymning med bilar, cyklist, fotgängare och trafikljus.
+bildläge: spotlight
+fokuspunkt: 62 64
+säker-yta: 3 8 40 78
+mörkning: 0 0 42 100 0.55
+- obs | Partiellt observerbar | 70 | 40 | 12 | 16 | Träd, hus och andra fordon skymmer. Bilen ser bara en del av vägen.
+- multi | Multiagent | 75 | 70 | 16 | 12 | Fotgängare, cyklister och förare är också agenter.
+- stok | Stokastisk | 58 | 59 | 10 | 10 | Vad föraren framför gör härnäst går inte att veta säkert.
+- sekv | Sekventiell | 52 | 74 | 12 | 10 | Att svänga eller bromsa nu påverkar nästa situation.
+- dyn | Dynamisk | 48 | 58 | 6 | 10 | Trafikljusen slår om och alla rör sig, oavsett vad bilen gör.
+- kont | Kontinuerlig | 58 | 86 | 14 | 10 | Hastighet och styrning har inga tydliga steg.
+> Genomgång efter övningen. Samma korsning som i början: tänk dig att en av bilarna är självkörande. Nu kan vi läsa miljön med alla sex frågorna, i samma ordning som tabellen.
+> Det här är facit för raden "Självkörande bil i trafik", därför kommer scenen efter övningen.
+
+---
+
 [tidslinje]
 rubrik: Aktivitet: observerbarhet i luffarschack
 - Omgång 1 | Spela | Spela några partier luffarschack med en kompis.
-- Omgång 2 | Dölj rutor | Spela den modifierade versionen där vissa slumpmässigt valda rutor är dolda.
+- Omgång 2 | Dölj rutor | Spela versionen där några slumpvis valda rutor är dolda.
 - Efteråt | Diskutera | Diskutera frågorna som ligger i Teams.
 > Nu upplever ni dimension 1 själva: hur förändras spelet när ni inte ser allt?

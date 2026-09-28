@@ -33,21 +33,21 @@ bild: bilder/grafer-och-trad/natverk-karta.jpg
 etikett: Datastruktur
 rubrik: En graf består av noder och kanter
 text: En graf är en datastruktur där noder är sammankopplade med kanter.
+slutsats: Samma struktur kan beskriva vägar, vänskaper, länkar eller tillstånd i ett spel.
 - nod: Göteborg | 4 52
 - nod: Falköping | 38 12
 - nod: Jönköping | 70 30
 - nod: Nässjö | 96 50
 - nod: Malmö | 34 96
-- kant: Göteborg - Falköping | 70
-- kant: Falköping - Jönköping | 50
-- kant: Jönköping - Nässjö | 25
-- kant: Göteborg - Malmö | 190
-- kant: Jönköping - Malmö | 150
-- kant: Nässjö - Malmö | 160
+- kant: Göteborg - Falköping
+- kant: Falköping - Jönköping
+- kant: Jönköping - Nässjö
+- kant: Göteborg - Malmö
+- kant: Jönköping - Malmö
+- kant: Nässjö - Malmö
 - fokus: noder | Noder | Punkterna i grafen. De representerar tillstånd eller objekt, här orter.
 - fokus: kanter | Kanter | Representerar relationer mellan noderna. De kan vara riktade eller oriktade.
 - fokus: Jönköping | En nod och dess kanter | Jönköping har kanter till tre andra orter.
-slutsats: Samma struktur kan beskriva vägar, vänskaper, länkar eller tillstånd i ett spel.
 > Riktad kant: relationen gäller bara åt ett håll, som en enkelriktad gata eller att följa någon på sociala medier.
 
 ---
@@ -56,6 +56,7 @@ slutsats: Samma struktur kan beskriva vägar, vänskaper, länkar eller tillstå
 etikett: Viktad graf
 rubrik: Vikter gör vägar jämförbara
 text: I en viktad graf har varje kant ett värde, till exempel avstånd, kostnad eller tid.
+slutsats: Ruttoptimering är att hitta vägen med lägst summa. Sökalgoritmer gör det i stora grafer.
 - nod: Göteborg | 4 52
 - nod: Falköping | 38 12
 - nod: Jönköping | 70 30
@@ -70,20 +71,19 @@ text: I en viktad graf har varje kant ett värde, till exempel avstånd, kostnad
 - fokus: vikter | Vikter | Varje kant har ett värde. Här är det påhittade restider i minuter.
 - fokus: Göteborg > Malmö > Nässjö | En möjlig väg | Via Malmö kommer vi fram, men vägen är lång.
 - fokus: Göteborg > Falköping > Jönköping > Nässjö | Kortaste vägen | Samma start och mål. Lägst summa av vikterna.
-slutsats: Ruttoptimering är att hitta vägen med lägst summa. Sökalgoritmer gör det i stora grafer.
 > Vikterna är exempelvärden, inte verkliga restider. Fråga gärna klassen innan klick 3: vilken väg är kortast?
 
 ---
 
 [prisma]
 etikett: Grafer i AI
-rubrik: En struktur, många användningsområden
+rubrik: En struktur, många användningar
 fråga: Vad hänger ihop med vad?
+gemensamt: Alla beskriver relationer som noder och kanter.
 - Sociala nätverk | Relationer mellan användare | Används för att rekommendera kontakter
 - Rekommendationer | Användare och produkter | Hittar produkter eller tjänster någon troligen gillar
 - Ruttoptimering | Platser och vägar | Hittar den kortaste vägen mellan två punkter
 - Bildigenkänning | Objekt i en bild | Identifierar objekt och relationerna mellan dem
-gemensamt: Alla beskriver relationer som noder och kanter.
 
 ---
 
@@ -99,6 +99,7 @@ bild: bilder/grafer-och-trad/trad-ljus.jpg
 etikett: Datastruktur
 rubrik: Ett träd är en graf med hierarki
 text: Varje nod har högst en förälder, och det finns inga cykler.
+slutsats: Ett binärt träd: varje nod har högst två barn. Här har varje förälder två.
 - 1
   - 2
     - 4
@@ -110,17 +111,18 @@ text: Varje nod har högst en förälder, och det finns inga cykler.
 - fokus: barn 1 | Barnnoder | En nod som är direkt efterföljare till en annan nod. 2 och 3 är barn till 1.
 - fokus: föräldrar | Föräldranoder | En nod som har barnnoder.
 - fokus: löv | Lövnoder | En nod som inte har några barn.
-slutsats: Ett binärt träd: varje förälder har två barn.
 
 ---
 
 [omröstning]
-rubrik: Hur många lövnoder har ett binärt träd med tre nivåer?
+rubrik: Ett binärt träd har tre helt fyllda nivåer. Hur många lövnoder har det?
+svar: Fyra. I exemplet är det noderna 4, 5, 6 och 7.
 - 2
 - 3
 - * 4
 - 7
-svar: Fyra. I exemplet är det noderna 4, 5, 6 och 7.
+> "Helt fyllda nivåer" behövs: ett binärt träd med tre nivåer kan annars ha allt från ett till fyra löv.
+> Alternativet 7 är antalet noder totalt, en vanlig förväxling.
 
 ---
 
@@ -137,6 +139,7 @@ rubrik: Tre sorters träd
 etikett: Beslutsträd
 rubrik: Vad kostar bostaden?
 text: Ett beslutsträd representerar en serie beslut och deras möjliga resultat.
+slutsats: Trädet ställer frågorna i tur och ordning tills det når ett löv.
 - Kvadratmeter?
   - ≤ 100: Antal rum?
     - ≤ 4: < 1 Mkr
@@ -148,7 +151,6 @@ text: Ett beslutsträd representerar en serie beslut och deras möjliga resultat
 - fokus: grenar | Grenar är svar | Varje gren är ett möjligt svar på en fråga.
 - fokus: löv | Löv är resultat | Varje löv är ett slutligt resultat.
 - fokus: väg ≤ 100 > > 4 | Ett fall | 80 kvadratmeter och fem rum. Trädet svarar 1–2 Mkr.
-slutsats: Trädet ställer frågorna i tur och ordning tills det når ett löv.
 
 ---
 
@@ -168,6 +170,7 @@ rubrik: Beslutsträd med apor
 etikett: Exempel
 rubrik: Bits apan?
 text: Ett beslutsträd som en grupp kan ha byggt av träningsdatan.
+slutsats: Testa trädet på testdatan. Ett bra träd gissar rätt på apor det aldrig har sett.
 - Visar tänderna?
   - Ja: Bits
   - Nej: Öppen mun?
@@ -179,16 +182,15 @@ text: Ett beslutsträd som en grupp kan ha byggt av träningsdatan.
 - fokus: väg Ja | Tänderna syns | Svaret kommer direkt: bits.
 - fokus: väg Nej > Ja > Ja | Fler frågor | Tänderna syns inte, men munnen och ögonen är öppna: bits.
 - fokus: väg Nej > Nej | Stängd mun | Två frågor räcker: bits inte.
-slutsats: Testa trädet på testdatan. Ett bra träd gissar rätt på apor det aldrig har sett.
 
 ---
 
 [sats]
 rubrik: Tre strukturer, ett syfte
+text: Verktyg för att representera data, fatta beslut och göra förutsägelser.
 - Grafer | Nätverk av noder: rutter, flöden och relationer.
 - Träd | Hierarkier: effektiv sökning och sortering.
 - Beslutsträd | Alternativ och utfall i en grenad struktur.
-text: Verktyg för att representera data, fatta beslut och göra förutsägelser.
 
 ---
 

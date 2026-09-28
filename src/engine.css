@@ -529,13 +529,39 @@
 @keyframes sc-spin{to{transform:rotate(360deg)}}
 .scen .om-node{position:absolute;width:0;height:0}
 .scen .om-node>i{position:absolute;left:-15px;top:-15px;width:30px;height:30px;border-radius:50%;background:var(--accent);box-shadow:0 0 0 8px var(--bg),0 0 0 10px var(--accent)}
-.scen .om-lab{position:absolute;width:320px;display:grid;gap:6px}
+.scen .om-lab{position:absolute;width:290px;display:grid;gap:6px}
 .scen .om-lab b{font-family:var(--font-display,var(--font));font-weight:var(--h-weight,650);font-style:var(--h-style,normal);font-size:38px;line-height:1.05;letter-spacing:var(--h-track,-.02em)}
-.scen .om-lab span{font-size:24px;line-height:1.35;color:var(--muted)}
+.scen .om-lab span{font-size:25px;line-height:1.32;color:var(--muted)}
 .scen .s-r .om-lab{left:40px;top:0;transform:translateY(-50%)}
 .scen .s-l .om-lab{right:40px;top:0;transform:translateY(-50%);text-align:right}
 .scen .s-t .om-lab{left:0;bottom:36px;transform:translateX(-50%);text-align:center}
 .scen .s-b .om-lab{left:0;top:36px;transform:translateX(-50%);text-align:center}
+/* Omlopp: fokus vandrar runt banan, ekern visar vägen från kärnan */
+.scen .bana-omlopp{--om-dim:.28}
+.scen .bana-omlopp :is(.om-node>i,.om-lab b,.om-lab span){transition:opacity var(--dramaturgy-dim-duration,.5s) var(--dramaturgy-soft-ease,ease),color .5s ease,transform .6s var(--dramaturgy-ease,ease)}
+.scen .om-spoke{stroke:var(--accent);stroke-width:3;stroke-linecap:round;stroke-dasharray:1.05 1.05;stroke-dashoffset:1.05;transition:stroke-dashoffset .8s var(--dramaturgy-ease,ease),opacity .5s ease}
+.scen .om-node>i::after{content:"";position:absolute;inset:-22px;border-radius:50%;background:color-mix(in srgb,var(--accent) 20%,transparent);opacity:0;transform:scale(.4);transition:opacity .45s ease,transform .8s var(--dramaturgy-ease,ease)}
+.scen .bana-omlopp[data-dramaturgy-state="overview"] :is(.om-node>i,.om-lab b){opacity:var(--om-dim)}
+.scen .bana-omlopp:is([data-dramaturgy-state="overview"],[data-dramaturgy-state="focus"]) .om-lab span{opacity:0}
+.scen .bana-omlopp[data-dramaturgy-state="focus"] .om-node:not(.dramaturgy-current) :is(i,.om-lab b){opacity:var(--om-dim)}
+.scen .bana-omlopp[data-dramaturgy-state="focus"] .om-node.dramaturgy-past :is(i,.om-lab b){opacity:.6}
+.scen .bana-omlopp[data-dramaturgy-state="focus"] .om-node.dramaturgy-current>i{transform:scale(1.25)}
+.scen .bana-omlopp[data-dramaturgy-state="focus"] .om-node.dramaturgy-current>i::after{opacity:1;transform:none}
+.scen .bana-omlopp[data-dramaturgy-state="focus"] .om-node.dramaturgy-current .om-lab b{color:var(--accent)}
+.scen .bana-omlopp[data-dramaturgy-state="focus"] .om-node.dramaturgy-current .om-lab span{opacity:1;color:var(--ink);transition-delay:.15s}
+.scen .bana-omlopp[data-dramaturgy-state="focus"] .om-spoke.dramaturgy-current{stroke-dashoffset:0}
+.scen .bana-omlopp[data-dramaturgy-state="restored"] .om-spoke{stroke-dashoffset:0;opacity:.3}
+.scen .bana-omlopp[data-dramaturgy-state="restored"] .om-ring{border-style:solid;border-color:color-mix(in srgb,var(--accent) 55%,transparent)}
+.scen .om-core.has-pic{width:420px;height:420px;margin:-210px 0 0 -210px;align-items:end}
+.scen .om-pics{position:absolute;inset:0;border-radius:50%;overflow:hidden}
+.scen .om-pics::after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,transparent 42%,color-mix(in srgb,var(--bg) 88%,transparent) 82%)}
+.scen .om-pic{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;opacity:0;transition:opacity .7s ease}
+.scen .om-pic.om-base{opacity:1}
+.scen .bana-omlopp[data-dramaturgy-state="focus"] .om-pic.dramaturgy-current{opacity:1}
+.scen .bana-omlopp[data-dramaturgy-state="focus"] .om-core:has(.om-pic.dramaturgy-current) .om-base{opacity:0}
+.scen .om-core.has-pic h2{position:relative;z-index:1;font-size:44px;max-width:9ch;margin:0 0 64px}
+@media (prefers-reduced-motion:reduce){.scen .bana-omlopp *{transition-duration:.01s!important;transition-delay:0s!important}}
+.scen .bana-omlopp[data-body-motion="none"] *{transition:none!important}
 
 /* Gradskiva */
 .scen .bana-gs{align-content:start}
@@ -700,6 +726,9 @@
 .scen .lj-ob.o-xl .ob-word{font-size:150px;max-width:12ch}
 .scen .ob-word.filled{background-size:cover;background-position:50% 50%;-webkit-background-clip:text;background-clip:text;color:transparent;-webkit-text-fill-color:transparent}
 .scen:not(.static) .slide.active .ob-word.filled{animation:lj-pan 16s ease-in-out infinite alternate}
+.scen .ob-word.filled.focused{background-size:240% auto;background-position:var(--ob-x,50%) var(--ob-y,50%)}
+.scen:not(.static) .slide.active .ob-word.filled.focused{animation:lj-pan-f 16s ease-in-out infinite alternate}
+@keyframes lj-pan-f{from{background-position:calc(var(--ob-x,50%) - 6%) var(--ob-y,50%)}to{background-position:calc(var(--ob-x,50%) + 6%) var(--ob-y,50%)}}
 
 /* Bildfält */
 .scen .lj-bf{padding:0;display:block;overflow:hidden}
@@ -1279,6 +1308,112 @@
 .scen .slide[data-layout="karna"][data-dramaturgy-state="restored"] .fv-core .fv-coreend{opacity:1;max-height:200px;transition-delay:.2s}
 
 @media (prefers-reduced-motion:reduce){.scen .slide :is(.fv-beam,.fv-glow,.fv-sweep,.fv-trackfill){transition:opacity .2s}.scen .slide .fv-beamline{transition:none}}
+/* ---------- Inzoomning: kameran går in en nivå i taget, stigen står kvar ---------- */
+.scen .slide[data-layout="inzoomning"]{align-content:start;gap:16px;isolation:isolate}
+.scen .slide[data-layout="inzoomning"]>h2{position:relative;z-index:3;font-size:58px;line-height:1.06;max-width:1320px}
+.scen .slide[data-layout="inzoomning"].fl-long>h2{font-size:46px}
+.scen .slide[data-layout="inzoomning"]>.kicker{position:relative;z-index:3}
+.scen .slide[data-layout="inzoomning"] .iz-stage{position:absolute;inset:0;pointer-events:none}
+.scen .slide[data-layout="inzoomning"] .iz-svg{position:absolute;left:0;top:0;width:1920px;height:1080px;overflow:hidden;-webkit-mask:linear-gradient(90deg,#000 0 1040px,transparent 1110px);mask:linear-gradient(90deg,#000 0 1040px,transparent 1110px)}
+.scen .slide[data-layout="inzoomning"] .iz-world{transform-origin:0 0;transition:transform 1.3s cubic-bezier(.65,0,.25,1)}
+.scen .slide[data-layout="inzoomning"] .iz-lvl circle{fill:color-mix(in srgb,var(--accent) 7%,transparent);stroke:color-mix(in srgb,var(--muted) 60%,var(--line));stroke-width:2.5;vector-effect:non-scaling-stroke;transition:stroke .5s ease,fill .5s ease,opacity .5s ease}
+.scen .slide[data-layout="inzoomning"] .iz-lvl text{font-family:var(--font-display,var(--font));font-weight:var(--h-weight,650);font-style:var(--h-style,normal);fill:var(--ink);transition:opacity .5s ease,fill .5s ease}
+.scen .slide[data-layout="inzoomning"] .iz-side{position:absolute;left:1130px;top:330px;width:646px;display:grid;gap:34px}
+.scen .slide[data-layout="inzoomning"] .iz-path{list-style:none;margin:0;padding:0;display:grid;gap:14px}
+.scen .slide[data-layout="inzoomning"] .iz-step{display:flex;align-items:center;gap:16px;padding-left:calc(var(--d) * 30px);transition:opacity .5s ease}
+.scen .slide[data-layout="inzoomning"] .iz-step i{width:16px;height:16px;flex:none;border-radius:50%;border:3px solid var(--muted);transition:background .5s ease,border-color .5s ease}
+.scen .slide[data-layout="inzoomning"] .iz-step b{font-family:var(--font-display,var(--font));font-weight:var(--h-weight,650);font-style:var(--h-style,normal);letter-spacing:var(--h-track,-.01em);font-size:36px;line-height:1.1;color:var(--ink);transition:color .5s ease}
+.scen .slide[data-layout="inzoomning"] .iz-notes{display:grid;min-height:160px}
+.scen .slide[data-layout="inzoomning"] :is(.iz-note,.iz-end){grid-area:1/1;margin:0;padding-top:18px;border-top:3px solid var(--accent);font-size:30px;line-height:1.35;color:var(--ink);opacity:0;transform:translateY(12px);transition:opacity .45s ease,transform .6s var(--dramaturgy-ease,ease);text-wrap:pretty}
+
+.scen .slide[data-layout="inzoomning"][data-dramaturgy-state="overview"] :is(.iz-step,.iz-lvl text){opacity:.4}
+.scen .slide[data-layout="inzoomning"][data-dramaturgy-state="focus"] .iz-step.dramaturgy-future{opacity:.3}
+.scen .slide[data-layout="inzoomning"][data-dramaturgy-state="focus"] .iz-step.dramaturgy-past b{color:var(--muted)}
+.scen .slide[data-layout="inzoomning"][data-dramaturgy-state="focus"] .iz-step.dramaturgy-past i{background:var(--muted)}
+.scen .slide[data-layout="inzoomning"][data-dramaturgy-state="focus"] .iz-step.dramaturgy-current b{color:var(--accent)}
+.scen .slide[data-layout="inzoomning"][data-dramaturgy-state="focus"] .iz-step.dramaturgy-current i{background:var(--accent);border-color:var(--accent);box-shadow:0 0 0 7px color-mix(in srgb,var(--accent) 22%,transparent)}
+.scen .slide[data-layout="inzoomning"][data-dramaturgy-state="focus"] .iz-lvl.dramaturgy-past text{opacity:0}
+.scen .slide[data-layout="inzoomning"][data-dramaturgy-state="focus"] .iz-lvl.dramaturgy-past circle{fill:transparent}
+.scen .slide[data-layout="inzoomning"][data-dramaturgy-state="focus"] .iz-lvl.dramaturgy-future text{opacity:.5}
+.scen .slide[data-layout="inzoomning"][data-dramaturgy-state="focus"] .iz-lvl.dramaturgy-current circle{stroke:var(--accent);fill:color-mix(in srgb,var(--accent) 12%,transparent)}
+.scen .slide[data-layout="inzoomning"][data-dramaturgy-state="focus"] .iz-lvl.dramaturgy-current text{fill:var(--accent)}
+.scen .slide[data-layout="inzoomning"][data-dramaturgy-state="focus"] .iz-note.dramaturgy-current{opacity:1;transform:none;transition-delay:.35s}
+.scen .slide[data-layout="inzoomning"][data-dramaturgy-state="restored"] .iz-lvl circle{stroke:color-mix(in srgb,var(--accent) 70%,var(--line))}
+.scen .slide[data-layout="inzoomning"][data-dramaturgy-state="restored"] .iz-step i{background:var(--accent);border-color:var(--accent)}
+.scen .slide[data-layout="inzoomning"][data-dramaturgy-state="restored"] .iz-end{opacity:1;transform:none;transition-delay:.4s}
+@media (prefers-reduced-motion:reduce){.scen .slide[data-layout="inzoomning"] *{transition-duration:.01s!important;transition-delay:0s!important}}
+.scen .slide[data-layout="inzoomning"][data-body-motion="none"] *{transition:none!important}
+
+/* ---------- Fyrfält: två axlar, fokus flyttar mellan placerade saker ---------- */
+.scen .slide[data-layout="fyrfalt"]{align-content:start;gap:16px;isolation:isolate}
+.scen .slide[data-layout="fyrfalt"]>h2{position:relative;z-index:3;font-size:58px;line-height:1.06;max-width:1320px}
+.scen .slide[data-layout="fyrfalt"].fl-long>h2{font-size:46px}
+.scen .slide[data-layout="fyrfalt"]>.kicker{position:relative;z-index:3}
+.scen .slide[data-layout="fyrfalt"] .fy-stage{position:absolute;inset:0;pointer-events:none}
+.scen .slide[data-layout="fyrfalt"] .fy-svg{position:absolute;left:0;top:0;width:1920px;height:1080px;overflow:visible}
+.scen .slide[data-layout="fyrfalt"] .fy-q{fill:color-mix(in srgb,var(--accent) 9%,transparent);opacity:0;transition:opacity .6s ease}
+.scen .slide[data-layout="fyrfalt"] .fy-axis{stroke:color-mix(in srgb,var(--muted) 65%,var(--line));stroke-width:3}
+.scen .slide[data-layout="fyrfalt"] .fy-tip{fill:none;stroke:color-mix(in srgb,var(--muted) 65%,var(--line));stroke-width:3;stroke-linecap:round;stroke-linejoin:round}
+.scen .slide[data-layout="fyrfalt"] .fy-pole{position:absolute;width:300px;margin:0;font-family:var(--font-mono,var(--mono));font-size:19px;letter-spacing:.12em;text-transform:uppercase;color:var(--muted)}
+.scen .slide[data-layout="fyrfalt"] .fy-pole.r{text-align:right}
+.scen .slide[data-layout="fyrfalt"] .fy-pt{transition:opacity .5s ease}
+.scen .slide[data-layout="fyrfalt"] .fy-dot{fill:var(--ink);stroke:var(--bg);stroke-width:4;transform-box:fill-box;transform-origin:center;transition:fill .5s ease,transform .6s var(--dramaturgy-ease,ease)}
+.scen .slide[data-layout="fyrfalt"] .fy-halo{fill:color-mix(in srgb,var(--accent) 20%,transparent);opacity:0;transform-box:fill-box;transform-origin:center;transform:scale(.4);transition:opacity .45s ease,transform .8s var(--dramaturgy-ease,ease)}
+.scen .slide[data-layout="fyrfalt"] .fy-guide{stroke:var(--accent);stroke-width:2;stroke-dasharray:4 8;opacity:0;transition:opacity .5s ease}
+.scen .slide[data-layout="fyrfalt"] .fy-lab{position:absolute;margin:0;white-space:nowrap;font-family:var(--font-display,var(--font));font-weight:var(--h-weight,650);font-style:var(--h-style,normal);letter-spacing:var(--h-track,-.01em);font-size:30px;line-height:1.3;color:var(--ink);transition:opacity .5s ease,color .5s ease}
+.scen .slide[data-layout="fyrfalt"] .fy-side{position:absolute;left:1130px;top:360px;width:646px;display:grid}
+.scen .slide[data-layout="fyrfalt"] :is(.fy-note,.fy-end){grid-area:1/1;display:grid;align-content:start;gap:12px;margin:0;opacity:0;transform:translateY(12px);transition:opacity .45s ease,transform .6s var(--dramaturgy-ease,ease)}
+.scen .slide[data-layout="fyrfalt"] .fy-note small{font-family:var(--font-mono,var(--mono));font-size:19px;letter-spacing:.12em;text-transform:uppercase;color:var(--accent)}
+.scen .slide[data-layout="fyrfalt"] .fy-note b{font-family:var(--font-display,var(--font));font-weight:var(--h-weight,650);font-style:var(--h-style,normal);letter-spacing:var(--h-track,-.02em);font-size:48px;line-height:1.05;color:var(--ink)}
+.scen .slide[data-layout="fyrfalt"] .fy-note p{margin:0;padding-top:16px;border-top:3px solid var(--accent);font-size:30px;line-height:1.35;color:var(--ink);text-wrap:pretty}
+.scen .slide[data-layout="fyrfalt"] .fy-end{padding-top:18px;border-top:3px solid var(--accent);font-size:32px;line-height:1.35;color:var(--ink);text-wrap:pretty}
+
+.scen .slide[data-layout="fyrfalt"][data-dramaturgy-state="overview"] :is(.fy-pt,.fy-lab){opacity:.4}
+.scen .slide[data-layout="fyrfalt"][data-dramaturgy-state="focus"] :is(.fy-pt,.fy-lab).dramaturgy-future{opacity:.22}
+.scen .slide[data-layout="fyrfalt"][data-dramaturgy-state="focus"] :is(.fy-pt,.fy-lab).dramaturgy-past{opacity:.5}
+.scen .slide[data-layout="fyrfalt"][data-dramaturgy-state="focus"] .fy-pt.dramaturgy-current .fy-dot{fill:var(--accent);transform:scale(1.3)}
+.scen .slide[data-layout="fyrfalt"][data-dramaturgy-state="focus"] .fy-pt.dramaturgy-current .fy-halo{opacity:1;transform:none}
+.scen .slide[data-layout="fyrfalt"][data-dramaturgy-state="focus"] .fy-pt.dramaturgy-current .fy-guide{opacity:.9}
+.scen .slide[data-layout="fyrfalt"][data-dramaturgy-state="focus"] .fy-lab.dramaturgy-current{color:var(--accent)}
+.scen .slide[data-layout="fyrfalt"][data-dramaturgy-state="focus"] .fy-note.dramaturgy-current{opacity:1;transform:none;transition-delay:.2s}
+.scen .slide[data-layout="fyrfalt"][data-dramaturgy-state="restored"] .fy-dot{fill:var(--accent)}
+.scen .slide[data-layout="fyrfalt"][data-dramaturgy-state="restored"] .fy-end{opacity:1;transform:none;transition-delay:.2s}
+@media (prefers-reduced-motion:reduce){.scen .slide[data-layout="fyrfalt"] *{transition-duration:.01s!important;transition-delay:0s!important}}
+.scen .slide[data-layout="fyrfalt"][data-body-motion="none"] *{transition:none!important}
+
+/* ---------- Vågskål: argument som vikter, balken tippar ---------- */
+.scen .slide[data-layout="vagskal"]{align-content:start;gap:16px;isolation:isolate}
+.scen .slide[data-layout="vagskal"]>h2{position:relative;z-index:3;font-size:58px;line-height:1.06;max-width:1320px}
+.scen .slide[data-layout="vagskal"].fl-long>h2{font-size:46px}
+.scen .slide[data-layout="vagskal"]>.kicker{position:relative;z-index:3}
+.scen .slide[data-layout="vagskal"] .vg-stage{position:absolute;inset:0;pointer-events:none}
+.scen .slide[data-layout="vagskal"] .vg-svg{position:absolute;left:0;top:0;width:1920px;height:1080px;overflow:visible}
+.scen .slide[data-layout="vagskal"] .vg-beam{transform:rotate(var(--vg-a,0deg));transition:transform 1.1s cubic-bezier(.34,1.35,.5,1)}
+.scen .slide[data-layout="vagskal"] .vg-pan{transform:rotate(calc(var(--vg-a,0deg) * -1));transition:transform 1.1s cubic-bezier(.34,1.35,.5,1)}
+.scen .slide[data-layout="vagskal"] .vg-bar{stroke:var(--ink);stroke-width:6;stroke-linecap:round}
+.scen .slide[data-layout="vagskal"] .vg-stand{fill:none;stroke:color-mix(in srgb,var(--ink) 70%,var(--bg));stroke-width:6;stroke-linecap:round}
+.scen .slide[data-layout="vagskal"] .vg-pivot{fill:var(--accent);stroke:var(--bg);stroke-width:4}
+.scen .slide[data-layout="vagskal"] .vg-str{fill:none;stroke:color-mix(in srgb,var(--muted) 70%,var(--line));stroke-width:2}
+.scen .slide[data-layout="vagskal"] .vg-bowl{fill:var(--surface,var(--bg));stroke:color-mix(in srgb,var(--ink) 75%,var(--bg));stroke-width:4;stroke-linejoin:round}
+.scen .slide[data-layout="vagskal"] .vg-w{fill:color-mix(in srgb,var(--ink) 70%,var(--bg));opacity:0;transform:translateY(-70px);transition:opacity .35s ease,transform .7s cubic-bezier(.5,0,.3,1.4),fill .5s ease}
+.scen .slide[data-layout="vagskal"] .vg-col{position:absolute;top:610px;width:700px;display:grid;gap:18px;align-content:start}
+.scen .slide[data-layout="vagskal"] .vg-col.l{left:144px}
+.scen .slide[data-layout="vagskal"] .vg-col.r{left:1076px}
+.scen .slide[data-layout="vagskal"] .vg-side{margin:0;font-family:var(--font-mono,var(--mono));font-size:20px;letter-spacing:.14em;text-transform:uppercase;color:var(--accent)}
+.scen .slide[data-layout="vagskal"] .vg-arg{margin:0;display:grid;grid-template-columns:auto 1fr;gap:16px;align-items:baseline;font-size:28px;line-height:1.32;color:var(--ink);padding-left:16px;border-left:3px solid transparent;transition:opacity .5s ease,border-color .5s ease}
+.scen .slide[data-layout="vagskal"] .vg-arg i{font-style:normal;font-size:16px;letter-spacing:.12em;color:var(--accent)}
+.scen .slide[data-layout="vagskal"] .vg-end{position:absolute;left:144px;top:945px;width:1632px;margin:0;padding-top:16px;border-top:3px solid var(--accent);font-size:32px;line-height:1.3;color:var(--ink);opacity:0;transform:translateY(12px);transition:opacity .45s ease,transform .6s var(--dramaturgy-ease,ease);text-wrap:balance}
+
+.scen .slide[data-layout="vagskal"][data-dramaturgy-state="overview"] .vg-arg{opacity:.35}
+.scen .slide[data-layout="vagskal"][data-dramaturgy-state="focus"] .vg-arg.dramaturgy-future{opacity:.25}
+.scen .slide[data-layout="vagskal"][data-dramaturgy-state="focus"] .vg-arg.dramaturgy-past{opacity:.55}
+.scen .slide[data-layout="vagskal"][data-dramaturgy-state="focus"] .vg-arg.dramaturgy-current{border-color:var(--accent)}
+.scen .slide[data-layout="vagskal"]:is([data-dramaturgy-state="focus"],[data-dramaturgy-state="restored"]) .vg-w:is(.dramaturgy-past,.dramaturgy-current),.scen .slide[data-layout="vagskal"][data-dramaturgy-state="restored"] .vg-w{opacity:1;transform:none}
+.scen .slide[data-layout="vagskal"][data-dramaturgy-state="focus"] .vg-w.dramaturgy-current{fill:var(--accent)}
+.scen .slide[data-layout="vagskal"][data-dramaturgy-state="restored"] .vg-end{opacity:1;transform:none;transition-delay:.6s}
+@media (prefers-reduced-motion:reduce){.scen .slide[data-layout="vagskal"] *{transition-duration:.01s!important;transition-delay:0s!important}}
+.scen .slide[data-layout="vagskal"][data-body-motion="none"] *{transition:none!important}
+
 /* ---------- Förgrening: ett släktträd som växer i tidsordning ---------- */
 .scen .slide[data-layout="forgrening"]{align-content:start;gap:16px;isolation:isolate;--fg-dim:.22}
 .scen .slide[data-layout="forgrening"]>h2{position:relative;z-index:3;font-size:58px;line-height:1.06;max-width:1320px}

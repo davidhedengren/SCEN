@@ -119,6 +119,16 @@ bakgrund: fokusljus
 
 ---
 
+[ordbild]
+etikett: 1600- och 1700-talet
+rubrik: Upplysningen
+text: En ny tid, och en personlig tro.
+bild: bilder/kristendomen/soluppgang.jpg
+fokuspunkt: 72 24
+> Soluppgången symboliserar upplysningen: ljus över en ny tid.
+
+---
+
 [ringar]
 etikett: Upplysningen
 rubrik: Pietismen och metodismen
@@ -159,6 +169,20 @@ bakgrund: fokusljus
 
 ---
 
+[inzoomning]
+etikett: Sverige
+rubrik: Var hör Svenska kyrkan hemma?
+slutsats: Svenska kyrkan är en liten del av en världsreligion, med rötter i reformationen.
+bakgrund: fokusljus
+- Kristendomen | Världens största religion, med över två miljarder anhängare.
+- Protestantiska kyrkor | Växte fram ur reformationen på 1500-talet.
+- Lutherska kyrkor | Bygger på Martin Luthers lära. Vanliga i Norden och Tyskland.
+- Svenska kyrkan | Blev luthersk 1593. Sveriges största trossamfund.
+> Varje klick zoomar in en nivå. Stigen till höger visar hela tiden var vi är.
+> Knyter ihop Luther, reformationen och Sverige-tidslinjen.
+
+---
+
 [resonemang]
 etikett: USA
 rubrik: USA har aldrig haft någon statskyrka
@@ -172,6 +196,15 @@ fokus: mjuk
 > Tillägget till konstitutionen om religionsfrihet kom 1791. Staten får varken ha en officiell kyrka eller hindra människor från att utöva sin tro.
 > I USA kom kyrkorna att tävla om medlemmar, nästan som på en marknad. Baptister och metodister växte snabbt under 1800-talet.
 > Pingströrelsen startade i Los Angeles 1906 och spreds sedan över hela världen, även till Sverige.
+
+---
+
+[ridå]
+etikett: Kristendomen idag
+rubrik: En mångfald idag
+text: Många kyrkor, en gemensam rot.
+bild: bilder/kristendomen/ljus.jpg
+> Ljusen i olika former och färger symboliserar mångfalden: olika kyrkor, samma ursprung.
 
 ---
 
@@ -209,17 +242,16 @@ bakgrund: fokusljus
 
 ---
 
-[prisma]
-etikett: Nytolkningar
-rubrik: Tre sätt att tolka om
-fråga: Hur får en gammal text ny betydelse?
-gemensamt: Texten är densamma. Läsningen förändras.
-bakgrund: fokusljus
-- Aldrig menat | ”Det var aldrig så det var menat” | Texten har lästs på fel sätt
-- Då, inte nu | ”Det gällde då, men inte nu” | Regeln hörde till sin tid
-- Principen | ”Det är principen som är viktig” | Principen tolkas om för nya tider
-> Nytolkningar kan innebära både ”Det var aldrig så det var menat” och ”Det gällde då, men inte nu”.
-> ”Det är principen bakom regeln/handlandet som är viktig och den måste omtolkas för att kunna äga relevans/kunna appliceras på olika tider/samhällskontexter.”
+[bildfält]
+etikett: Att måla nya perspektiv
+rubrik: Nytolkningar
+text: Kan innebära både:
+bild: bilder/kristendomen/pensel.jpg
+- ”Det var aldrig så det var menat”
+- ”Det gällde då, men inte nu”
+- ”Det är principen bakom regeln/handlandet som är viktig och den måste omtolkas för att kunna äga relevans/kunna appliceras på olika tider/samhällskontexter.”
+> Penseln symboliserar nytolkningen: samma underlag, ett nytt lager färg.
+> Första: texten har lästs på fel sätt. Andra: regeln hörde till sin tid. Tredje: principen bakom regeln gäller, men den behöver tolkas om för nya tider.
 
 ---
 

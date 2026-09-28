@@ -16,7 +16,7 @@ const LAYOUTS = {etapper:"Etapper",vagval:"Vägval",lager:"Lager",resonemang:"Re
   title: 'Titel', section: 'Avsnitt', statement: 'Påstående', bullets: 'Punktlista', split: 'Text och bild',
   image: 'Helbild', bildregi: 'Bildregi', terminal: 'Terminal', kodforklaring: 'Kodförklaring', typografisk: 'Typografiskt statement', texttempo: 'Typografiskt tempo', cards: 'Kort', compare: 'Jämförelse', table: 'Tabell', number: 'Stort tal', timeline: 'Tidslinje',
   question: 'Fråga och svar', poll: 'Omröstning', reflect: 'Reflektion', define: 'Definition', chat: 'AI-samtal', duo: 'Två tal',
-  quote: 'Citat', omslag: 'Omslag', karta: 'Karta', triad: 'Triad', motsats: 'Motsats', bildkant: 'Bildkant', 'båge': 'Båge', omlopp: 'Omlopp', gradskiva: 'Gradskiva', bro: 'Bro', rad: 'Rad', rutor: 'Rutor', remsor: 'Remsor', mosaik: 'Mosaik', karna: 'Kärna', graf: 'Graf', trad: 'Träd', flode: 'Flöde', urval: 'Urval', forgrening: 'Förgrening', ringar: 'Ringar', lins: 'Lins', 'mätare': 'Mätare', 'ridå': 'Ridå', 'strålkastare': 'Strålkastare', fokus: 'Fokus', ordbild: 'Ordbild', 'bildfält': 'Bildfält', delning: 'Delning', ljustal: 'Ljustal', tom: 'Fri yta', egen: 'Egen mall'
+  quote: 'Citat', omslag: 'Omslag', karta: 'Karta', triad: 'Triad', motsats: 'Motsats', bildkant: 'Bildkant', 'båge': 'Båge', omlopp: 'Omlopp', gradskiva: 'Gradskiva', bro: 'Bro', rad: 'Rad', rutor: 'Rutor', remsor: 'Remsor', mosaik: 'Mosaik', karna: 'Kärna', graf: 'Graf', trad: 'Träd', flode: 'Flöde', urval: 'Urval', forgrening: 'Förgrening', inzoomning: 'Inzoomning', fyrfalt: 'Fyrfält', vagskal: 'Vågskål', ringar: 'Ringar', lins: 'Lins', 'mätare': 'Mätare', 'ridå': 'Ridå', 'strålkastare': 'Strålkastare', fokus: 'Fokus', ordbild: 'Ordbild', 'bildfält': 'Bildfält', delning: 'Delning', ljustal: 'Ljustal', tom: 'Fri yta', egen: 'Egen mall'
 };
 const THEMES = {
   signal: { name: 'Signal', desc: 'Djup midnattsblå, elektrisk cyan och violett. Fylliga färgfält och tydlig typografi.', look: 'dark', v: { bg: '#080E25', surface: '#152444', ink: '#F0F6FF', muted: '#A5B6D4', line: '#2B4065', accent: '#5FE7ED', 'accent-2': '#9C87FF', hl: 'rgba(95,231,237,.22)' }, fd: '"Familjen Grotesk",system-ui,sans-serif', fb: '"Hanken Grotesk",system-ui,sans-serif', hw: 700, ht: '-.035em', r: '24px', ta: 'words', fonts: ['Familjen+Grotesk:wght@400;500;600;700', 'Hanken+Grotesk:wght@400;500;600'] },
@@ -637,22 +637,39 @@ function renderSlide(sl, i, deck, img) {
     case 'omlopp': {
       const uid = 'u' + hash((sl.id || '') + i + L);
       cls = 'bana-omlopp ' + uid;
-      const its = lines(sl.items).slice(0, 6).map(t => { const p = t.split('|'); return { h: p[0].trim(), t: p.slice(1).join('|').trim() }; });
-      const n = Math.max(1, its.length), cx = 960, cy = 600, rx = 560, ry = 270;
+      /* Hela banan syns nedtonad från start. Varje klick drar en eker från kärnan till nästa del,
+         tänder den och visar dess förklaring; tidigare delar ligger kvar dämpade. Har delen en bild
+         (tredje fältet) visas den i kärnan. Sista klicket tänder alla delar runt kärnan. */
+      const its = lines(sl.items).slice(0, 6).map(t => { const p = t.split('|').map(x => x.trim()); const pic = p.length > 2 && IMG_REF.test(p[p.length - 1]) ? p.pop() : ''; return { h: p[0] || '', t: p.slice(1).join(' | '), pic }; });
+      const n = Math.max(1, its.length), cx = 960, cy = 600, rx = 480, ry = 270;
       const P = t => [cx + rx * Math.cos(t), cy + ry * Math.sin(t)];
       const ell = `M ${cx + rx} ${cy} A ${rx} ${ry} 0 1 1 ${cx - rx} ${cy} A ${rx} ${ry} 0 1 1 ${cx + rx} ${cy}`;
+      const T = j => ` data-dramaturgy-target data-dramaturgy-index="${j}"`;
+      const pics = its.some(o => o.pic) || !!sl.image, R = pics ? 210 : 180;
+      let spokes = '';
       const nodes = its.map((o, j) => {
         const t = -Math.PI / 2 + j * 2 * Math.PI / n;
         const [x, y] = P(t);
         const c = Math.cos(t), sn = Math.sin(t);
         const side = c > .35 ? 'r' : c < -.35 ? 'l' : sn < 0 ? 't' : 'b';
+        const d = Math.hypot(x - cx, y - cy) || 1, ux = (x - cx) / d, uy = (y - cy) / d;
+        spokes += `<line class="om-spoke"${T(j)} x1="${(cx + ux * (R + 34)).toFixed(1)}" y1="${(cy + uy * (R + 34)).toFixed(1)}" x2="${(x - ux * 30).toFixed(1)}" y2="${(y - uy * 30).toFixed(1)}" pathLength="1"/>`;
         const frames = []; for (let q = 0; q <= 18; q++) { const tt = t - 1.4 * (1 - q / 18); const [px, py] = P(tt); frames.push([Math.round(px - x), Math.round(py - y)]); }
-        return `<div class="om-node s-${side}" style="left:${Math.round(x)}px;top:${Math.round(y)}px"${steps ? st('orbit') : A('orbit', 500 + j * 180)} data-path="${frames.map(f => f.join(',')).join(' ')}"><i></i><div class="om-lab">${o.h ? `<b>${fmt(o.h)}</b>` : ''}${o.t ? `<span>${fmt(o.t)}</span>` : ''}</div></div>`;
+        return `<div class="om-node s-${side}"${T(j)} style="left:${Math.round(x)}px;top:${Math.round(y)}px"${A('orbit', 500 + j * 180)} data-path="${frames.map(f => f.join(',')).join(' ')}"><i></i><div class="om-lab">${o.h ? `<b>${fmt(o.h)}</b>` : ''}${o.t ? `<span>${fmt(o.t)}</span>` : ''}</div></div>`;
       }).join('');
+      const alt = o => esc(plain(o.h) || plain(title) || 'Bild');
+      const core = pics ? `<div class="om-pics" aria-hidden="true">${sl.image ? `<img class="om-pic om-base" src="${esc(img(sl.image))}" alt="">` : ''}` +
+        its.map((o, j) => o.pic ? `<img class="om-pic"${T(j)} src="${esc(img(o.pic))}" alt="${alt(o)}">` : '').join('') + `</div>` : '';
+      let cues = '';
+      if (steps) {
+        its.forEach((o, j) => { const s = st('none'); cues += `<span data-dramaturgy-cue data-dramaturgy-focus="${k}" data-dramaturgy-target="${j}"${s} aria-hidden="true"></span>`; });
+        cues += `<span data-dramaturgy-restore${st('none')} aria-hidden="true"></span>`;
+      }
       body = (sl.caption ? `<p class="kicker om-k"${A('fade')}>${fmt(sl.caption)}</p>` : '') +
         (sl.text ? `<p class="om-lead"${A('fade', 400)}>${fmt(sl.text)}</p>` : '') +
-        `<svg class="om-svg" viewBox="0 0 1920 1080" aria-hidden="true"><ellipse class="o2" cx="${cx}" cy="${cy}" rx="${rx + 150}" ry="${ry + 110}"/><path class="o1" d="${ell}" pathLength="1"${A('draw', 150, ' data-duration="1800"')}/></svg>` +
-        `<div class="om-core"${A('zoom', 200)}><span class="om-ring" aria-hidden="true"></span><h2${title ? tid(title) : ''}>${fmt(title || 'Begrepp')}</h2></div>` + nodes;
+        `<svg class="om-svg" viewBox="0 0 1920 1080" aria-hidden="true"><ellipse class="o2" cx="${cx}" cy="${cy}" rx="${rx + 150}" ry="${ry + 110}"/><path class="o1" d="${ell}" pathLength="1"${A('draw', 150, ' data-duration="1800"')}/>${spokes}</svg>` +
+        `<div class="om-core${pics ? ' has-pic' : ''}"${A('zoom', 200)}><span class="om-ring" aria-hidden="true"></span>${core}<h2${title ? tid(title) : ''}>${fmt(title || 'Begrepp')}</h2></div>` + nodes + cues;
+      attrs += ` data-dramaturgy="focus-restore" data-dramaturgy-state="${steps ? 'overview' : 'restored'}"${steps ? '' : ' data-dramaturgy-static="true"'}`;
       break;
     }
     case 'gradskiva': {
@@ -1064,9 +1081,12 @@ function renderSlide(sl, i, deck, img) {
       const w = plain(title || 'Ord'), n = w.length;
       cls = 'lj-ob ' + (n <= 6 ? 'o-s' : n <= 10 ? 'o-m' : n <= 16 ? 'o-l' : 'o-xl');
       const bgi = src ? ` style="background-image:url('${esc(src).replace(/'/g, '%27')}')"` : '';
+      /* fokuspunkt: x y väljer vilken del av bilden som fyller ordet (bilden förstoras då så att valet märks). */
+      const fp = sl.imageDirection && Array.isArray(sl.imageDirection.focus) ? sl.imageDirection.focus : null;
+      const wordBg = src && fp ? ` style="background-image:url('${esc(src).replace(/'/g, '%27')}');--ob-x:${+fp[0]}%;--ob-y:${+fp[1]}%"` : bgi;
       body = (src ? `<div class="ob-amb"${bgi} aria-hidden="true"${A('fade', 0, ' data-duration="2000"')}></div>` : '') +
         (sl.caption ? `<p class="lj-kick"${A('fade', 200)}>${fmt(sl.caption)}</p>` : '') +
-        `<h2 class="ob-word${src ? ' filled' : ''}"${bgi}${title ? tid(title) : ''}${A(tA('blur') === 'words' ? 'blur' : tA('blur'), 300, ' data-duration="1600"')}>${fmt(title || 'Ord')}</h2>` +
+        `<h2 class="ob-word${src ? ' filled' : ''}${src && fp ? ' focused' : ''}"${wordBg}${title ? tid(title) : ''}${A(tA('blur') === 'words' ? 'blur' : tA('blur'), 300, ' data-duration="1600"')}>${fmt(title || 'Ord')}</h2>` +
         (sl.text ? `<p class="lead"${A(anim(ba, 'rise'), 1100)}>${fmt(sl.text)}</p>` : '');
       break;
     }
@@ -1264,6 +1284,116 @@ function renderSlide(sl, i, deck, img) {
         `<div class="fg-stage"${A(anim(ba, 'fade'), 150)}><svg class="fg-svg" viewBox="0 0 1920 1080" aria-hidden="true">${svg}</svg>${html}` +
         `<div class="fg-foot" style="top:${LB + 130}px">${notes}${sl.conclusion ? `<p class="fg-end">${fmt(sl.conclusion)}</p>` : ''}</div></div>` + cues;
       if (plain(title).length > 44) cls = 'fl-long';
+      attrs += ` data-dramaturgy="focus-restore" data-dramaturgy-state="${steps ? 'overview' : 'restored'}"${steps ? '' : ' data-dramaturgy-static="true"'}`;
+      break;
+    }
+    case 'inzoomning': {
+      /* Nivåer inuti varandra. Kameran zoomar in en nivå per klick; den yttre nivån glider ut ur bild
+         men står kvar i stigen till höger, så man ser hela tiden var man är. Sista klicket zoomar ut. */
+      const its = lines(sl.items).slice(0, 5).map(t => { const p = t.replace(/^(- )+/, '').split('|'); return { h: (p[0] || '').trim(), t: p.slice(1).join('|').trim() }; });
+      const n = Math.max(1, its.length), F = [600, 640], R0 = 320, q = .46, dir = [Math.cos(.7), Math.sin(.7)];
+      const C = [F.slice()], Rr = [R0];
+      for (let j = 1; j < n; j++) { const r = Rr[j - 1] * q, off = Rr[j - 1] - r - Rr[j - 1] * .08; Rr.push(r); C.push([C[j - 1][0] + dir[0] * off, C[j - 1][1] + dir[1] * off]); }
+      const uid = 'u' + hash((sl.id || '') + i + L);
+      const T = j => ` data-dramaturgy-target data-dramaturgy-index="${j}"`;
+      const view = j => { const s = R0 / Rr[j]; return `transform:translate(${(F[0] - s * C[j][0]).toFixed(1)}px,${(F[1] - s * C[j][1]).toFixed(1)}px) scale(${s.toFixed(4)})`; };
+      let css = '';
+      its.forEach((o, j) => { css += `.${uid}[data-dramaturgy-focus="${j}"] .iz-world{${view(j)}}`; });
+      const circles = its.map((o, j) => { const [x, y] = C[j], r = Rr[j], fs = 34 * r / R0;
+        return `<g class="iz-lvl d${Math.min(j, 4)}"${T(j)}><circle cx="${x.toFixed(1)}" cy="${y.toFixed(1)}" r="${r.toFixed(1)}"/>` +
+          `<text x="${(x - .12 * r).toFixed(1)}" y="${(y - .58 * r).toFixed(1)}" text-anchor="middle" style="font-size:${fs.toFixed(2)}px">${esc(plain(o.h))}</text></g>`; }).join('');
+      const path = its.map((o, j) => `<li class="iz-step"${T(j)} style="--d:${j}"><i aria-hidden="true"></i><b>${fmt(o.h)}</b></li>`).join('');
+      const notes = its.map((o, j) => o.t ? `<p class="iz-note"${T(j)}>${fmt(o.t)}</p>` : '').join('');
+      let cues = '';
+      if (steps) {
+        its.forEach((o, j) => { const s = st('none'); cues += `<span data-dramaturgy-cue data-dramaturgy-focus="${k}" data-dramaturgy-target="${j}"${s} aria-hidden="true"></span>`; });
+        cues += `<span data-dramaturgy-restore${st('none')} aria-hidden="true"></span>`;
+      }
+      body = `<style>${css}</style>` + (sl.caption ? `<p class="kicker"${A('fade')}>${fmt(sl.caption)}</p>` : '') + H2('', 'mask') +
+        `<div class="iz-stage"${A(anim(ba, 'fade'), 150)}><svg class="iz-svg" viewBox="0 0 1920 1080" aria-hidden="true"><g class="iz-world">${circles}</g></svg>` +
+        `<div class="iz-side"><ol class="iz-path">${path}</ol><div class="iz-notes">${notes}${sl.conclusion ? `<p class="iz-end">${fmt(sl.conclusion)}</p>` : ''}</div></div></div>` + cues;
+      cls = uid + (plain(title).length > 44 ? ' fl-long' : '');
+      attrs += ` data-dramaturgy="focus-restore" data-dramaturgy-state="${steps ? 'overview' : 'restored'}"${steps ? '' : ' data-dramaturgy-static="true"'}`;
+      break;
+    }
+    case 'fyrfalt': {
+      /* Två axlar med var sina poler och saker placerade i fältet. Varje klick lyfter en sak:
+         stödlinjer visar var den ligger på båda axlarna och dess fyrdel tonas fram. */
+      const ax = { x: ['', ''], y: ['', ''] }, its = [];
+      lines(sl.items).forEach(raw => {
+        const t = String(raw).replace(/^(- )+/, '').trim(), m = t.match(/^([xy])\s*:\s*(.*)$/i);
+        if (m) { const p = m[2].split('|').map(s => s.trim()); ax[m[1].toLowerCase()] = [p[0] || '', p[1] || '']; return; }
+        const p = t.split('|').map(s => s.trim()), c = (p[1] || '').match(/(-?\d+(?:[.,]\d+)?)\s+(-?\d+(?:[.,]\d+)?)/);
+        if (p[0] && its.length < 8) its.push({ h: p[0], x: c ? Math.max(0, Math.min(100, parseFloat(c[1].replace(',', '.')))) : 50, y: c ? Math.max(0, Math.min(100, parseFloat(c[2].replace(',', '.')))) : 50, t: p.slice(2).join(' | ') });
+      });
+      const X0 = 144, X1 = 1024, Y0 = 310, Y1 = 950, cx = (X0 + X1) / 2, cy = (Y0 + Y1) / 2;
+      const px = v => X0 + v / 100 * (X1 - X0), py = v => Y1 - v / 100 * (Y1 - Y0);
+      const uid = 'u' + hash((sl.id || '') + i + L);
+      const T = j => ` data-dramaturgy-target data-dramaturgy-index="${j}"`;
+      const pole = o => [o.x < 50 ? ax.x[0] : o.x > 50 ? ax.x[1] : '', o.y > 50 ? ax.y[1] : o.y < 50 ? ax.y[0] : ''].filter(Boolean).map(plain).join(' · ');
+      let css = '', svg = `<rect class="fy-q q0" x="${X0}" y="${Y0}" width="${cx - X0}" height="${cy - Y0}"/><rect class="fy-q q1" x="${cx}" y="${Y0}" width="${X1 - cx}" height="${cy - Y0}"/><rect class="fy-q q2" x="${X0}" y="${cy}" width="${cx - X0}" height="${Y1 - cy}"/><rect class="fy-q q3" x="${cx}" y="${cy}" width="${X1 - cx}" height="${Y1 - cy}"/>` +
+        `<line class="fy-axis" x1="${X0}" y1="${cy}" x2="${X1}" y2="${cy}"/><line class="fy-axis" x1="${cx}" y1="${Y0}" x2="${cx}" y2="${Y1}"/>` +
+        `<path class="fy-tip" d="M${X0 + 14} ${cy - 9} L${X0} ${cy} L${X0 + 14} ${cy + 9} M${X1 - 14} ${cy - 9} L${X1} ${cy} L${X1 - 14} ${cy + 9} M${cx - 9} ${Y0 + 14} L${cx} ${Y0} L${cx + 9} ${Y0 + 14} M${cx - 9} ${Y1 - 14} L${cx} ${Y1} L${cx + 9} ${Y1 - 14}"/>`;
+      let html = (ax.x[0] ? `<p class="fy-pole" style="left:${X0}px;top:${cy + 18}px">${fmt(ax.x[0])}</p>` : '') + (ax.x[1] ? `<p class="fy-pole r" style="left:${X1 - 300}px;top:${cy + 18}px">${fmt(ax.x[1])}</p>` : '') +
+        (ax.y[1] ? `<p class="fy-pole" style="left:${cx + 18}px;top:${Y0 - 6}px">${fmt(ax.y[1])}</p>` : '') + (ax.y[0] ? `<p class="fy-pole b" style="left:${cx + 18}px;top:${Y1 - 22}px">${fmt(ax.y[0])}</p>` : '');
+      let notes = '';
+      its.forEach((o, j) => {
+        const x = px(o.x), y = py(o.y), q = (o.y >= 50 ? 0 : 2) + (o.x >= 50 ? 1 : 0), left = o.x > 72;
+        css += `.${uid}[data-dramaturgy-focus="${j}"] .fy-q.q${q}{opacity:1}`;
+        svg += `<g class="fy-pt"${T(j)}><line class="fy-guide" x1="${x.toFixed(1)}" y1="${y.toFixed(1)}" x2="${x.toFixed(1)}" y2="${cy}"/><line class="fy-guide" x1="${x.toFixed(1)}" y1="${y.toFixed(1)}" x2="${cx}" y2="${y.toFixed(1)}"/><circle class="fy-halo" cx="${x.toFixed(1)}" cy="${y.toFixed(1)}" r="30"/><circle class="fy-dot" cx="${x.toFixed(1)}" cy="${y.toFixed(1)}" r="12"/></g>`;
+        html += `<p class="fy-lab${left ? ' l' : ''}"${T(j)} style="${left ? `right:${Math.round(1920 - x + 24)}px` : `left:${Math.round(x + 24)}px`};top:${Math.round(y - 20)}px">${fmt(o.h)}</p>`;
+        const where = pole(o);
+        notes += `<div class="fy-note"${T(j)}>${where ? `<small>${esc(where)}</small>` : ''}<b>${fmt(o.h)}</b>${o.t ? `<p>${fmt(o.t)}</p>` : ''}</div>`;
+      });
+      let cues = '';
+      if (steps) {
+        its.forEach((o, j) => { const s = st('none'); cues += `<span data-dramaturgy-cue data-dramaturgy-focus="${k}" data-dramaturgy-target="${j}"${s} aria-hidden="true"></span>`; });
+        cues += `<span data-dramaturgy-restore${st('none')} aria-hidden="true"></span>`;
+      }
+      body = `<style>${css}</style>` + (sl.caption ? `<p class="kicker"${A('fade')}>${fmt(sl.caption)}</p>` : '') + H2('', 'mask') +
+        `<div class="fy-stage"${A(anim(ba, 'fade'), 150)}><svg class="fy-svg" viewBox="0 0 1920 1080" aria-hidden="true">${svg}</svg>${html}` +
+        `<div class="fy-side">${notes}${sl.conclusion ? `<p class="fy-end">${fmt(sl.conclusion)}</p>` : ''}</div></div>` + cues;
+      cls = uid + (plain(title).length > 44 ? ' fl-long' : '');
+      attrs += ` data-dramaturgy="focus-restore" data-dramaturgy-state="${steps ? 'overview' : 'restored'}"${steps ? '' : ' data-dramaturgy-static="true"'}`;
+      break;
+    }
+    case 'vagskal': {
+      /* Argument för och emot läggs i var sin skål. Varje klick lägger nästa argument som en vikt,
+         och balken tippar efter hur tungt det väger totalt. Sista klicket visar balansen och slutsatsen. */
+      const LA = sl.lt || 'För', LB = sl.rt || 'Emot', key = s => plain(s).toLowerCase();
+      const its = lines(sl.items).map(raw => {
+        const p = String(raw).replace(/^(- )+/, '').split('|').map(s => s.trim());
+        const f = key(p[0] || ''), side = f === key(LB) || f === 'h' || f === 'höger' ? 1 : f === key(LA) || f === 'v' || f === 'vänster' ? 0 : -1;
+        const w = Math.max(1, Math.min(3, parseInt(p[2], 10) || 1));
+        return side < 0 ? null : { side, t: p[1] || '', w };
+      }).filter(Boolean);
+      const bySide = [its.filter(o => !o.side).slice(0, 3), its.filter(o => o.side).slice(0, 3)];
+      const seq = its.filter(o => bySide[o.side].includes(o));
+      seq.forEach((o, j) => { o.j = j; });
+      const P = [960, 370], Lb = 400, hang = 105, uid = 'u' + hash((sl.id || '') + i + L);
+      const tilt = n => { const s = seq.slice(0, n).reduce((a, o) => a + (o.side ? o.w : -o.w), 0); return Math.max(-10, Math.min(10, s * 3.5)); };
+      let css = `.${uid}{--vg-a:0deg}.${uid}[data-dramaturgy-state="restored"]{--vg-a:${tilt(seq.length)}deg}`;
+      seq.forEach((o, j) => { css += `.${uid}[data-dramaturgy-focus="${j}"]{--vg-a:${tilt(j + 1)}deg}`; });
+      const T = j => ` data-dramaturgy-target data-dramaturgy-index="${j}"`;
+      const pan = s => {
+        const x = P[0] + (s ? Lb : -Lb), y = P[1] + hang;
+        const blocks = bySide[s].map((o, q) => { const h = 22 + o.w * 16, bx = x - 96 + q * 66; return `<rect class="vg-w"${T(o.j)} x="${bx}" y="${y - h - 2}" width="58" height="${h}" rx="6"/>`; }).join('');
+        return `<g class="vg-pan ${s ? 'r' : 'l'}" style="transform-origin:${x}px ${P[1]}px"><path class="vg-str" d="M${x} ${P[1]} L${x - 120} ${y} M${x} ${P[1]} L${x + 120} ${y}"/>${blocks}<path class="vg-bowl" d="M${x - 130} ${y} Q${x} ${y + 44} ${x + 130} ${y} Z"/></g>`;
+      };
+      const svg = `<path class="vg-stand" d="M${P[0]} ${P[1]} L${P[0]} ${P[1] + 170} M${P[0] - 90} ${P[1] + 170} L${P[0] + 90} ${P[1] + 170}"/>` +
+        `<g class="vg-beam" style="transform-origin:${P[0]}px ${P[1]}px"><line class="vg-bar" x1="${P[0] - Lb}" y1="${P[1]}" x2="${P[0] + Lb}" y2="${P[1]}"/>${pan(0)}${pan(1)}</g>` +
+        `<circle class="vg-pivot" cx="${P[0]}" cy="${P[1]}" r="11"/>`;
+      const col = s => `<div class="vg-col ${s ? 'r' : 'l'}"><p class="vg-side">${fmt(s ? LB : LA)}</p>` +
+        bySide[s].map(o => `<p class="vg-arg"${T(o.j)}><i aria-label="vikt ${o.w}">${'●'.repeat(o.w)}${'○'.repeat(3 - o.w)}</i>${fmt(o.t)}</p>`).join('') + `</div>`;
+      let cues = '';
+      if (steps) {
+        seq.forEach(o => { const s = st('none'); cues += `<span data-dramaturgy-cue data-dramaturgy-focus="${k}" data-dramaturgy-target="${o.j}"${s} aria-hidden="true"></span>`; });
+        cues += `<span data-dramaturgy-restore${st('none')} aria-hidden="true"></span>`;
+      }
+      body = `<style>${css}</style>` + (sl.caption ? `<p class="kicker"${A('fade')}>${fmt(sl.caption)}</p>` : '') + H2('', 'mask') +
+        `<div class="vg-stage"${A(anim(ba, 'fade'), 150)}><svg class="vg-svg" viewBox="0 0 1920 1080" aria-hidden="true">${svg}</svg>${col(0)}${col(1)}` +
+        (sl.conclusion ? `<p class="vg-end">${fmt(sl.conclusion)}</p>` : '') + `</div>` + cues;
+      cls = uid + (plain(title).length > 44 ? ' fl-long' : '');
       attrs += ` data-dramaturgy="focus-restore" data-dramaturgy-state="${steps ? 'overview' : 'restored'}"${steps ? '' : ' data-dramaturgy-static="true"'}`;
       break;
     }
@@ -1815,6 +1945,13 @@ function thumb(slide, deck, images, i) {
   fitThumb(wrap);
   return wrap;
 }
+/* Alla bilder en bild använder: bild:, fria lager och bildfält i punkter (t.ex. "namn | text | bilder/x.jpg"). */
+const IMG_REF = /^(img:)?[^|\s][^|]*\.(jpe?g|png|webp|gif|svg|avif)$/i;
+function imagesOf(sl) {
+  const out = [sl.image, ...(sl.layers || []).filter(l => l.type === 'bild').map(l => l.src)];
+  lines(sl.items).forEach(t => String(t).split('|').slice(1).forEach(p => { p = p.trim(); if (IMG_REF.test(p)) out.push(p); }));
+  return out.filter(Boolean).map(s => String(s).replace(/^img:/, ''));
+}
 function resolve(ref, images) {
   if (!ref) return '';
   if (/^(data:|blob:|https?:)/.test(ref)) return ref;
@@ -2238,5 +2375,5 @@ function standalone(deck) {
   return player(root, deck, { mode: 'present', images: imgs, speaker: deck.audience !== 'student', student: deck.audience === 'student', start, onChange(i) { try { history.replaceState(null, '', '#' + (i + 1)); } catch (e) {} } });
 }
 
-G.Scen = { exportData, player, thumb, renderSlide, standalone, applyTheme, applyDramaturgy, dramaturgyPhase, dramaturgyTarget, normalizeImageDirection, imageBrief, normalizeTextDirection, fmt, plain, esc, hash, lines, resolve, cleanHtml, cleanCss, fontUrl, THEMES, ACCENTS, LAYOUTS, TRANSITIONS, BACKGROUNDS, TITLE_ANIMS, BODY_ANIMS, FOCUS_STYLES, version: '3.0' };
+G.Scen = { exportData, player, thumb, renderSlide, standalone, applyTheme, applyDramaturgy, dramaturgyPhase, dramaturgyTarget, normalizeImageDirection, imageBrief, normalizeTextDirection, fmt, plain, esc, hash, lines, resolve, imagesOf, cleanHtml, cleanCss, fontUrl, THEMES, ACCENTS, LAYOUTS, TRANSITIONS, BACKGROUNDS, TITLE_ANIMS, BODY_ANIMS, FOCUS_STYLES, version: '3.0' };
 })(window);

@@ -25,6 +25,12 @@ Läs `docs/MANUS.md` och `docs/MALLAR.md`. Använd skillen `planera`. Kör `npm 
 - Hitta aldrig på statistik, citat, årtal eller källor. Saknas underlag: skriv förslag i talaranteckningar i stället.
 - Bilder ligger i `bilder/<presentation>/`. Saknas bild: skriv `> Bildförslag: …` i anteckningen.
 
+## Göra om en PowerPoint
+
+- Ta inte bort delar av originalet på egen hand: bilder, ikoner, kartor, porträtt, symboler eller textrader. Lista dem i regin och fråga vad de fyller för syfte. Bestäm sedan tillsammans med läraren.
+- Symbolbilder behålls. Kan en bild inte användas, till exempel av licensskäl, säg det och föreslå en prompt för en ny bild med samma motiv.
+- Rätta inga sakfel utan lov. Föreslå rättelser och vänta på svar.
+
 ## Designprinciper
 
 Behandla varje bild som en scen där publikens uppmärksamhet styrs över tid. Den centrala designfrågan är alltid: **”Vad ska publiken titta på just nu?”**
@@ -33,6 +39,7 @@ Behandla varje bild som en scen där publikens uppmärksamhet styrs över tid. D
 - Tidigare innehåll får gärna finnas kvar som kontext, men ska tonas ned när fokus flyttas.
 - Progressive disclosure och highlight/fade är centrala principer: visa, framhäv och tona ned innehåll i den ordning som bäst stödjer förståelsen.
 - Animation ska ha en kommunikativ funktion. Undvik dekorativa animationer som inte hjälper publiken att följa resonemanget.
+- Symboliska bilder är välkomna. En stämningsbild som bär innehållets idé, som en soluppgång för upplysningen eller en pensel för nytolkning, ger igenkänning och rytm. Det som ska undvikas är dekorativ rörelse, inte bilder.
 - Undvik generiska layouter av typen ”rubrik + kort + bullets”. Utgå i stället från bildens kommunikativa uppgift.
 - Kvalitet går före kvantitet. Lägg hellre till en genomarbetad mall än flera svaga eller överlappande varianter.
 - Scenen ska vara begriplig även utan animation. Rörelsen ska förstärka strukturen, inte bära hela betydelsen.

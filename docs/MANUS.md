@@ -160,6 +160,38 @@ I `[flöde]` tänder varje klick samma steg i alla banor, så två processer jä
 slutsats: visas när hela trädet syns
 ```
 
+### Inzoomning, fyrfält och vågskål
+
+```text
+[inzoomning]
+- namn | text                    (en nivå per rad, yttersta först, högst fem)
+slutsats: visas när kameran zoomar ut
+
+[fyrfält]
+- x: vänster pol | höger pol
+- y: nedre pol | övre pol
+- namn | x y | text              (x och y från 0 till 100, högst åtta saker)
+slutsats: visas när hela fältet syns
+
+[vågskål]
+vänster: För
+höger: Emot
+- För | argument | 2             (sidan är samma ord som i vänster eller höger, vikt 1–3)
+slutsats: visas när balansen syns
+```
+
+I `[fyrfält]` skrivs vilken fyrdel saken ligger i ut automatiskt, till exempel "Sannolik · Stor skada". I `[vågskål]` tippar balken efter summan av vikterna, högst tre argument per sida.
+
+### Omlopp med bilder
+
+En del i `[omlopp]` kan få en bild som tredje fält: `- Avlaten | Syndernas förlåtelse går inte att köpa | bilder/x.jpg`. Med `bild:` får kärnan en grundbild. När en del har fokus visas dess bild i kärnan.
+
+### Ordbild med fokuspunkt
+
+I `[ordbild]` väljer `fokuspunkt: x y` (procent) vilken del av bilden som fyller ordet, till exempel `fokuspunkt: 72 24` för en sol uppe till höger. Utan fokuspunkt används bildens mitt.
+
+### Tid i förgrening
+
 Tiden kan vara ett år (`1054`) eller ett sekel (`1500-talet`). `ur` är namnet på grenen den växer ur. Tidsaxeln är schematisk: varje förgreningstid får en egen kolumn, så täta perioder inte trängs ihop. Om två eller fler grenar växer ur samma gren vid samma tid slutar föräldern där, som vid en delning. Klicken följer grenarna i tidsordning.
 
 ### Tabeller

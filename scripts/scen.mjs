@@ -45,7 +45,7 @@ function loadRepoTemplates() {
 }
 function standalone(deck, student = false) {
   const images = {}, missing = [];
-  for (const source of deck.slides.flatMap(s=>[s.image,...(s.layers||[]).filter(l=>l.type==='bild').map(l=>l.src)])) {
+  for (const source of deck.slides.flatMap(s => Scen.imagesOf(s))) {
     const k = String(source || '').replace(/^img:/, '');
     if (!k || images[k] || /^(data:|https?:)/.test(k)) continue;
     const f = path.join(ROOT, k);
@@ -83,7 +83,7 @@ const cmds = {
     const tpls = Object.values(loadRepoTemplates());
     const images = {};
     for (const entry of repo) for (const slide of Manus.parse(entry.text).slides) {
-      for (const source of [slide.image,...(slide.layers||[]).filter(l=>l.type==='bild').map(l=>l.src)]) {
+      for (const source of Scen.imagesOf(slide)) {
         const key=String(source||'').replace(/^img:/,'');
         if (!key || /^(data:|https?:)/.test(key) || images[key]) continue;
         const file=path.resolve(ROOT,key);

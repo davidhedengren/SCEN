@@ -50,7 +50,7 @@ Varje bild i ett manus börjar med mallens namn inom hakparentes. Samma katalog 
 | `[motsats]` | Redaktionellt | Två begrepp mot varandra. Första klicket visar det ena, andra klicket låter det andra ta scenen, tredje visar ett exempel som binder ihop. |
 | `[bildkant]` | Redaktionellt | En bild som spiller ut över kanten i ett hörn, med rubrik och punkter i motsatt hörn. Ger fart åt en bild som annars bara hade stått i en ruta. |
 | `[båge]` | Banor | Öppning eller kapitelstart. Stora bågar ritas upp över bilden, etiketten glider längs en av dem och en planet rullar in på sin bana. Ett stort konturtal kan ligga i hörnet. |
-| `[omlopp]` | Banor | Ett begrepp i mitten och tre till sex delar som kretsar runt det. Varje del åker in längs banan på klick. |
+| `[omlopp]` | Banor | Ett begrepp i mitten och tre till sex delar som kretsar runt det. Hela banan syns nedtonad från start. Varje klick drar en eker från kärnan till nästa del, tänder den och visar dess förklaring medan de andra ligger kvar dämpade. En del kan ha en egen bild som tredje fält, och med bild: får kärnan en grundbild; då visas delens bild i kärnan när den har fokus. Sista klicket tänder alla delar. |
 | `[gradskiva]` | Banor | En skala från ett ytterläge till ett annat. Nålen svänger till varje läge på klick och bågen fylls, medan förklaringen byts i mitten. |
 | `[bro]` | Banor | En process som en båge över ett golv. Bågen bär stegen, golvet är sammanhanget de börjar och slutar i. Hela modellen syns från början. Varje klick flyttar fokus ett steg, tidigare steg ligger kvar nedtonade och sista klicket visar helheten igen. Med retur blir bron en loop: resultatet leder längs golvet tillbaka till början, som i återkopplingar, kretslopp och cykler. |
 | `[rad]` | Fokusvandring | Två till fem kolumner på en scen med stora siffror. Alla syns från början. En ljuskägla glider i sidled till kolumnen du pratar om medan de andra tonas ned, och sista klicket tänder alla. Med flöde: ja fylls en linje under kolumnerna i takt med stegen. |
@@ -62,7 +62,10 @@ Varje bild i ett manus börjar med mallens namn inom hakparentes. Samma katalog 
 | `[träd]` | System | Ett träd eller beslutsträd ur en indragen lista. Hela trädet syns från början. Varje klick lyfter fram roten, en nivå, grenarna, löven eller en väg från roten till ett löv, som ritas nedåt gren för gren. |
 | `[flöde]` | System | Något flödar genom ett system: indata, bearbetning, utdata. En eller två banor genom samma steg. Hela flödet syns nedtonat från början. Varje klick tänder samma steg i alla banor och en markör följer flödet, så att två processer jämförs steg för steg. Ett steg som heter ? blir en stängd låda. Sista klicket visar hela kedjan och slutsatsen. |
 | `[urval]` | System | En helhet av punkter i två till fyra grupper och ett urval ur den. Först syns helheten, sedan lyfts urvalet fram medan resten ligger kvar nedtonat, sedan den grupp som är mest underrepresenterad. Staplar visar andelarna i helheten och i urvalet. Sista klicket visar helheten igen med slutsatsen. |
-| `[förgrening]` | System | Ett släktträd över tid: en stam och grenar som skjuter ut ur varandra, till exempel kyrkor, språk, arter eller programspråk. Rader skrivs namn \| tid \| ur \| text. Tidsaxeln är schematisk, varje förgreningstid får en kolumn. Hela trädet syns nedtonat från början. Varje klick ritar nästa gren i tidsordning och visar dess text längst ner, medan tidigare grenar står kvar. En gren som delas i två vid samma tid slutar där. Sista klicket visar hela trädet med slutsatsen. |
+| `[inzoomning]` | System | Nivåer inuti varandra, som cirklar. Varje klick zoomar in en nivå: kameran går in i nästa cirkel, den yttre nivån glider ut ur bild men står kvar i stigen till höger, och nivåns förklaring visas. Sista klicket zoomar ut och visar hela vägen med slutsatsen. |
+| `[fyrfält]` | System | Två axlar med var sina motpoler och två till åtta saker placerade i fältet. Raderna x: och y: anger axlarnas poler, och varje sak får ett läge med x och y från 0 till 100. Varje klick lyfter en sak: stödlinjer visar var den ligger på båda axlarna, dess fyrdel tonas fram och förklaringen visas till höger. Sista klicket visar hela mönstret. |
+| `[vågskål]` | System | Argument för och emot i en fråga, som vikter i var sin skål. Varje argument har en sida (samma ord som i vänster eller höger) och en vikt från 1 till 3. Varje klick lägger nästa argument i sin skål och balken tippar efter den sammanlagda vikten. Sista klicket visar balansen och slutsatsen. |
+| `[förgrening]` | System | Ett släktträd över tid: en stam och grenar som skjuter ut ur varandra, till exempel kyrkor, språk, arter eller programspråk. Varje gren har ett namn, en tid, grenen den växer ur och en kort text. Tidsaxeln är schematisk, varje förgreningstid får en kolumn. Hela trädet syns nedtonat från början. Varje klick ritar nästa gren i tidsordning och visar dess text längst ner, medan tidigare grenar står kvar. En gren som delas i två vid samma tid slutar där. Sista klicket visar hela trädet med slutsatsen. |
 | `[ringar]` | Banor | Två eller tre begrepp som delvis överlappar, som ett Venndiagram. Det gemensamma skrivs i mitten och visas sist. |
 | `[lins]` | Banor | En bild där en rund lins lyser upp en detalj i taget. Resten är nedtonad. Varje rad: x y i procent | rubrik | text. |
 | `[mätare]` | Banor | Ett tal som andel av något, som en mätare som fylls medan talet räknas upp. Skriv 73 %, 4 av 8 eller ett tal med max. |
@@ -786,7 +789,7 @@ tal: 03
 
 ### `[omlopp]` Omlopp
 
-Ett begrepp i mitten och tre till sex delar som kretsar runt det. Varje del åker in längs banan på klick.
+Ett begrepp i mitten och tre till sex delar som kretsar runt det. Hela banan syns nedtonad från start. Varje klick drar en eker från kärnan till nästa del, tänder den och visar dess förklaring medan de andra ligger kvar dämpade. En del kan ha en egen bild som tredje fält, och med bild: får kärnan en grundbild; då visas delens bild i kärnan när den har fokus. Sista klicket tänder alla delar.
 
 **Undvik när:** Delar som har en ordning. Använd bro eller tidslinje.
 
@@ -1054,9 +1057,64 @@ höger: Träningsdatan
 slutsats: En modell blir bäst på det den har sett mest av.
 ```
 
+### `[inzoomning]` Inzoomning
+
+Nivåer inuti varandra, som cirklar. Varje klick zoomar in en nivå: kameran går in i nästa cirkel, den yttre nivån glider ut ur bild men står kvar i stigen till höger, och nivåns förklaring visas. Sista klicket zoomar ut och visar hela vägen med slutsatsen.
+
+**Undvik när:** Fler än fem nivåer. Saker som ligger bredvid varandra i stället för inuti varandra (använd kort eller omlopp).
+
+```
+[inzoomning]
+etikett: Hierarki
+rubrik: Var finns språkmodellerna?
+slutsats: En språkmodell är ett litet, specialiserat hörn av AI.
+- Artificiell intelligens | Datorer som löser uppgifter som kräver intelligens.
+- Maskininlärning | AI som lär sig av data i stället för regler.
+- Djupinlärning | Maskininlärning med neurala nätverk i många lager.
+- Språkmodeller | Djupinlärning tränad på enorma mängder text.
+```
+
+### `[fyrfält]` Fyrfält
+
+Två axlar med var sina motpoler och två till åtta saker placerade i fältet. Raderna x: och y: anger axlarnas poler, och varje sak får ett läge med x och y från 0 till 100. Varje klick lyfter en sak: stödlinjer visar var den ligger på båda axlarna, dess fyrdel tonas fram och förklaringen visas till höger. Sista klicket visar hela mönstret.
+
+**Undvik när:** Placeringar som ser exakta ut utan underlag; säg att det är en uppskattning. Fler än åtta saker eller långa namn.
+
+```
+[fyrfält]
+etikett: Prioritera
+rubrik: Vad ska göras först?
+slutsats: Det viktiga som inte är bråttom är lättast att glömma.
+- x: Inte bråttom | Bråttom
+- y: Oviktigt | Viktigt
+- Provet på fredag | 85 90 | Viktigt och bråttom: gör nu.
+- Träna inför loppet | 25 80 | Viktigt men inte bråttom: planera in.
+- Svara på chatten | 80 25 | Bråttom men oviktigt: gör snabbt.
+- Scrolla | 15 10 | Varken eller: skippa.
+```
+
+### `[vågskål]` Vågskål
+
+Argument för och emot i en fråga, som vikter i var sin skål. Varje argument har en sida (samma ord som i vänster eller höger) och en vikt från 1 till 3. Varje klick lägger nästa argument i sin skål och balken tippar efter den sammanlagda vikten. Sista klicket visar balansen och slutsatsen.
+
+**Undvik när:** Fler än tre argument per sida. Vikter som ser ut som fakta: säg att det är en bedömning, gärna klassens egen.
+
+```
+[vågskål]
+etikett: Debatt
+rubrik: Ska mobiler vara förbjudna i skolan?
+slutsats: Vikterna är en bedömning. Skulle du väga argumenten annorlunda?
+vänster: För
+höger: Emot
+- För | Bättre koncentration på lektionerna | 3
+- Emot | Mobilen är ett verktyg i undervisningen | 2
+- För | Mindre nätmobbning under skoldagen | 2
+- Emot | Eleverna behöver lära sig att hantera den | 2
+```
+
 ### `[förgrening]` Förgrening
 
-Ett släktträd över tid: en stam och grenar som skjuter ut ur varandra, till exempel kyrkor, språk, arter eller programspråk. Rader skrivs namn | tid | ur | text. Tidsaxeln är schematisk, varje förgreningstid får en kolumn. Hela trädet syns nedtonat från början. Varje klick ritar nästa gren i tidsordning och visar dess text längst ner, medan tidigare grenar står kvar. En gren som delas i två vid samma tid slutar där. Sista klicket visar hela trädet med slutsatsen.
+Ett släktträd över tid: en stam och grenar som skjuter ut ur varandra, till exempel kyrkor, språk, arter eller programspråk. Varje gren har ett namn, en tid, grenen den växer ur och en kort text. Tidsaxeln är schematisk, varje förgreningstid får en kolumn. Hela trädet syns nedtonat från början. Varje klick ritar nästa gren i tidsordning och visar dess text längst ner, medan tidigare grenar står kvar. En gren som delas i två vid samma tid slutar där. Sista klicket visar hela trädet med slutsatsen.
 
 **Undvik när:** Fler än åtta grenar. Långa namn. När exakta avstånd i tid är poängen (använd tidslinje).
 
@@ -1064,13 +1122,13 @@ Ett släktträd över tid: en stam och grenar som skjuter ut ur varandra, till e
 [förgrening]
 etikett: Språkträd
 rubrik: Hur de nordiska språken skildes åt
+slutsats: Språk som delar förfader liknar varandra än idag.
 - Urnordiska | | | Ett gemensamt språk i hela Norden.
 - Östnordiska | 800-talet | Urnordiska | Språket i Sverige och Danmark.
 - Västnordiska | 800-talet | Urnordiska | Språket i Norge och på Island.
 - Svenska | 1200-talet | Östnordiska | Skiljer sig från danskan.
 - Danska | 1200-talet | Östnordiska | Egen skrift och eget uttal.
 - Isländska | 1400-talet | Västnordiska | Har förändrats minst.
-slutsats: Språk som delar förfader liknar varandra än idag.
 ```
 
 ## Ljus

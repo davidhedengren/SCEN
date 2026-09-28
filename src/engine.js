@@ -16,7 +16,7 @@ const LAYOUTS = {etapper:"Etapper",vagval:"Vägval",lager:"Lager",resonemang:"Re
   title: 'Titel', section: 'Avsnitt', statement: 'Påstående', bullets: 'Punktlista', split: 'Text och bild',
   image: 'Helbild', bildregi: 'Bildregi', terminal: 'Terminal', kodforklaring: 'Kodförklaring', typografisk: 'Typografiskt statement', texttempo: 'Typografiskt tempo', cards: 'Kort', compare: 'Jämförelse', table: 'Tabell', number: 'Stort tal', timeline: 'Tidslinje',
   question: 'Fråga och svar', poll: 'Omröstning', reflect: 'Reflektion', define: 'Definition', chat: 'AI-samtal', duo: 'Två tal',
-  quote: 'Citat', omslag: 'Omslag', karta: 'Karta', triad: 'Triad', motsats: 'Motsats', bildkant: 'Bildkant', 'båge': 'Båge', omlopp: 'Omlopp', gradskiva: 'Gradskiva', bro: 'Bro', rad: 'Rad', rutor: 'Rutor', remsor: 'Remsor', mosaik: 'Mosaik', karna: 'Kärna', graf: 'Graf', trad: 'Träd', flode: 'Flöde', urval: 'Urval', ringar: 'Ringar', lins: 'Lins', 'mätare': 'Mätare', 'ridå': 'Ridå', 'strålkastare': 'Strålkastare', fokus: 'Fokus', ordbild: 'Ordbild', 'bildfält': 'Bildfält', delning: 'Delning', ljustal: 'Ljustal', tom: 'Fri yta', egen: 'Egen mall'
+  quote: 'Citat', omslag: 'Omslag', karta: 'Karta', triad: 'Triad', motsats: 'Motsats', bildkant: 'Bildkant', 'båge': 'Båge', omlopp: 'Omlopp', gradskiva: 'Gradskiva', bro: 'Bro', rad: 'Rad', rutor: 'Rutor', remsor: 'Remsor', mosaik: 'Mosaik', karna: 'Kärna', graf: 'Graf', trad: 'Träd', flode: 'Flöde', urval: 'Urval', forgrening: 'Förgrening', ringar: 'Ringar', lins: 'Lins', 'mätare': 'Mätare', 'ridå': 'Ridå', 'strålkastare': 'Strålkastare', fokus: 'Fokus', ordbild: 'Ordbild', 'bildfält': 'Bildfält', delning: 'Delning', ljustal: 'Ljustal', tom: 'Fri yta', egen: 'Egen mall'
 };
 const THEMES = {
   signal: { name: 'Signal', desc: 'Djup midnattsblå, elektrisk cyan och violett. Fylliga färgfält och tydlig typografi.', look: 'dark', v: { bg: '#080E25', surface: '#152444', ink: '#F0F6FF', muted: '#A5B6D4', line: '#2B4065', accent: '#5FE7ED', 'accent-2': '#9C87FF', hl: 'rgba(95,231,237,.22)' }, fd: '"Familjen Grotesk",system-ui,sans-serif', fb: '"Hanken Grotesk",system-ui,sans-serif', hw: 700, ht: '-.035em', r: '24px', ta: 'words', fonts: ['Familjen+Grotesk:wght@400;500;600;700', 'Hanken+Grotesk:wght@400;500;600'] },
@@ -152,6 +152,23 @@ function parseUrval(items) {
   const num = v => { const x = parseFloat(String(v || '').replace(',', '.').replace('%', '')); return Number.isFinite(x) && x >= 0 ? x : 0; };
   return lines(items).map(raw => { const p = String(raw).replace(/^(- )+/, '').split('|').map(x => x.trim()); return { name: p[0] || '', pop: num(p[1]), sam: num(p[2]) }; })
     .filter(g => g.name).slice(0, 4);
+}
+/* Förgrening: rader "namn | tid | ur | text". Tiden kan vara ett år (1054) eller ett sekel (1500-talet).
+   En rad utan "ur" är stammen. En gren som delas i två eller fler vid samma tid slutar där. */
+function parseForgrening(items) {
+  const nodes = lines(items).map(raw => {
+    const p = String(raw).replace(/^(- )+/, '').split('|').map(x => x.trim());
+    const m = (p[1] || '').match(/-?\d+/), n = m ? +m[0] : NaN, span = /-?talet/i.test(p[1] || '') ? (n % 100 === 0 ? 50 : n % 10 === 0 ? 5 : 0) : 0;
+    return { name: p[0] || '', tl: p[1] || '', t: n + span, parent: p[2] || '', text: p.slice(3).join(' | ') };
+  }).filter(n => n.name).slice(0, 8);
+  const key = s => plain(s).toLowerCase();
+  const by = Object.fromEntries(nodes.map(n => [key(n.name), n]));
+  nodes.forEach(n => { n.p = n.parent ? by[key(n.parent)] || null : null; n.kids = []; });
+  nodes.forEach(n => { if (n.p) n.p.kids.push(n); });
+  const known = nodes.map(n => n.t).filter(Number.isFinite);
+  const t0 = known.length ? Math.min(...known) : 0;
+  nodes.forEach(n => { if (!Number.isFinite(n.t)) n.t = n.p && Number.isFinite(n.p.t) ? n.p.t : t0; });
+  return nodes;
 }
 function allocate(weights, total) {
   const sum = weights.reduce((a, b) => a + b, 0) || 1, raw = weights.map(v => v / sum * total), base = raw.map(Math.floor);
@@ -949,8 +966,8 @@ function renderSlide(sl, i, deck, img) {
     case 'ringar': {
       const its = lines(sl.items).slice(0, 3).map(t => { const p = t.split('|'); return { h: p[0].trim(), t: p.slice(1).join('|').trim() }; });
       const n = Math.max(2, its.length);
-      const C = n === 2 ? [[770, 610], [1150, 610]] : [[820, 530], [1100, 530], [960, 770]];
-      const r = n === 2 ? 330 : 280;
+      const C = n === 2 ? [[785, 655], [1135, 655]] : [[820, 530], [1100, 530], [960, 770]];
+      const r = n === 2 ? 305 : 280;
       const gx = C.reduce((a, p) => a + p[0], 0) / n, gy = C.reduce((a, p) => a + p[1], 0) / n;
       const rings = its.map((o, j) => {
         const [x, y] = C[j]; const vx = x - gx, vy = y - gy, L2 = Math.hypot(vx, vy) || 1;
@@ -1187,6 +1204,69 @@ function renderSlide(sl, i, deck, img) {
       attrs += ` data-dramaturgy="focus-restore" data-dramaturgy-state="${steps ? 'overview' : 'restored'}"${steps ? '' : ' data-dramaturgy-static="true"'}`;
       break;
     }
+    case 'forgrening': {
+      /* Ett släktträd över tid. Stammen går till idag, grenar skjuter ut ur sin förälder vid sin tid.
+         Tidsaxeln är schematisk: varje förgreningstid får en egen kolumn. Klicken följer grenarna i
+         tidsordning; tidigare grenar står kvar, kommande syns svagt. Sista klicket visar hela trädet. */
+      const nodes = parseForgrening(sl.items);
+      const root = nodes.find(n => !n.p) || nodes[0];
+      const X0 = 144, XN = 1700, LT = 350, LB = 770;
+      const times = [...new Set(nodes.filter(n => n !== root && n.p).map(n => n.t))].sort((a, b) => a - b);
+      const step = (XN - X0) / (times.length + .5);
+      const xt = t => X0 + step * (times.indexOf(t) + .5);
+      /* Banor: djupet först, senaste barnet närmast föräldern så att ingen gren korsar en befintlig bana. */
+      const order = [];
+      const visit = n => {
+        order.push(n);
+        const groups = [...new Set(n.kids.map(c => c.t))].sort((a, b) => b - a);
+        groups.forEach(t => n.kids.filter(c => c.t === t).forEach(visit));
+      };
+      if (root) visit(root);
+      nodes.forEach(n => { if (!order.includes(n)) order.push(n); });
+      const gapY = order.length > 1 ? Math.min(90, (LB - LT) / (order.length - 1)) : 0;
+      order.forEach((n, j) => { n.y = LT + gapY * j; });
+      nodes.forEach(n => {
+        const split = [...new Set(n.kids.map(c => c.t))].sort((a, b) => a - b).find(t => n.kids.filter(c => c.t === t).length > 1);
+        n.xe = split != null ? xt(split) : XN;
+        n.x0 = n.p ? xt(n.t) : X0;
+      });
+      const seq = [...nodes].sort((a, b) => (a === root ? -Infinity : a.t) - (b === root ? -Infinity : b.t));
+      seq.forEach((n, j) => { n.j = j; });
+      const T = j => ` data-dramaturgy-target data-dramaturgy-index="${j}"`;
+      let svg = '', html = '', notes = '';
+      svg += `<line class="fg-now" x1="${XN}" y1="${LT - 40}" x2="${XN}" y2="${LB + 40}"/><line class="fg-axis" x1="${X0}" y1="${LB + 50}" x2="${XN}" y2="${LB + 50}"/>`;
+      times.forEach(t => {
+        const at = nodes.filter(n => n !== root && n.t === t), x = xt(t);
+        svg += `<line class="fg-tick" data-dramaturgy-in="${at.map(n => n.j).join(' ')}" x1="${x.toFixed(1)}" y1="${LB + 42}" x2="${x.toFixed(1)}" y2="${LB + 58}"/>`;
+        html += `<p class="fg-time" data-dramaturgy-in="${at.map(n => n.j).join(' ')}" style="left:${Math.round(x - 110)}px;top:${LB + 70}px">${fmt(at[0].tl)}</p>`;
+      });
+      html += `<p class="fg-time fg-today" style="left:${XN - 110}px;top:${LB + 70}px">idag</p>`;
+      seq.forEach(n => {
+        const y = n.y, x0 = n.x0;
+        let d, lx = x0 + 4;
+        if (n.p) {
+          const yp = n.p.y, dx = Math.max(60, Math.min(130, Math.abs(y - yp) * .45));
+          d = `M${x0.toFixed(1)} ${yp.toFixed(1)} C${(x0 + dx / 2).toFixed(1)} ${yp.toFixed(1)} ${(x0 + dx / 2).toFixed(1)} ${y.toFixed(1)} ${(x0 + dx).toFixed(1)} ${y.toFixed(1)} L${n.xe.toFixed(1)} ${y.toFixed(1)}`;
+          lx = x0 + dx + 14;
+        } else d = `M${X0} ${y.toFixed(1)} L${n.xe.toFixed(1)} ${y.toFixed(1)}`;
+        svg += `<g class="fg-br${n.xe < XN ? ' ends' : ''}"${T(n.j)}><path class="fg-base" d="${d}"/><path class="fg-draw" d="${d}" pathLength="1"/>` +
+          `<circle class="fg-dot" cx="${x0.toFixed(1)}" cy="${(n.p ? n.p.y : y).toFixed(1)}" r="8"/>` +
+          (n.xe < XN ? `<circle class="fg-cap" cx="${n.xe.toFixed(1)}" cy="${y.toFixed(1)}" r="6"/>` : '') + `</g>`;
+        html += `<p class="fg-lab"${T(n.j)} style="left:${Math.round(lx)}px;top:${Math.round(y - 46)}px">${fmt(n.name)}</p>`;
+        if (n.text) notes += `<p class="fg-note"${T(n.j)}>${n.tl ? `<span>${fmt(n.tl)}</span>` : ''}${fmt(n.text)}</p>`;
+      });
+      let cues = '';
+      if (steps) {
+        seq.forEach(n => { const s = st('none'); cues += `<span data-dramaturgy-cue data-dramaturgy-focus="${k}" data-dramaturgy-target="${n.j}"${s} aria-hidden="true"></span>`; });
+        cues += `<span data-dramaturgy-restore${st('none')} aria-hidden="true"></span>`;
+      }
+      body = (sl.caption ? `<p class="kicker"${A('fade')}>${fmt(sl.caption)}</p>` : '') + H2('', 'mask') +
+        `<div class="fg-stage"${A(anim(ba, 'fade'), 150)}><svg class="fg-svg" viewBox="0 0 1920 1080" aria-hidden="true">${svg}</svg>${html}` +
+        `<div class="fg-foot" style="top:${LB + 130}px">${notes}${sl.conclusion ? `<p class="fg-end">${fmt(sl.conclusion)}</p>` : ''}</div></div>` + cues;
+      if (plain(title).length > 44) cls = 'fl-long';
+      attrs += ` data-dramaturgy="focus-restore" data-dramaturgy-state="${steps ? 'overview' : 'restored'}"${steps ? '' : ' data-dramaturgy-static="true"'}`;
+      break;
+    }
     case 'etapper': case 'vagval': case 'lager': case 'resonemang': case 'helhet': {
       cls = 'ed-layout';
       const max = L === 'lager' || L === 'resonemang' ? 3 : 4;
@@ -1209,7 +1289,7 @@ function renderSlide(sl, i, deck, img) {
       const n = Math.max(1, its.length), uid = 'u' + hash((sl.id || '') + i + L);
       let css = '';
       const points = its.map((o, j) => {
-        const x = n === 1 ? 50 : 16 + j * 68 / (n - 1);
+        const x = n === 1 ? 50 : 18 + j * 64 / (n - 1);
         const progress = n === 1 ? 100 : j * 100 / (n - 1);
         css += `.${uid}:has(.sk-point.k${j}.in) .sk-fill{width:${progress.toFixed(2)}%}.${uid}:has(.sk-point.k${j}.step-current) .sk-dot.k${j}{transform:translate(-50%,-50%) scale(1.45);background:var(--accent);box-shadow:0 0 0 10px var(--hl)}`;
         return `<article class="sk-point k${j}" data-pos="${j % 2 ? 'lower' : 'upper'}" style="left:${x}%"${steps ? st(stepA('fade')) : A(stepA('fade'), 350 + j * 140)}><i class="sk-dot k${j}" aria-hidden="true"></i><p class="sk-when">${fmt(o.when || String(j + 1))}</p><h3>${fmt(o.event || 'Brytpunkt')}</h3><p class="sk-change">${fmt(o.change || 'Beskriv vad som förändras efter brytpunkten.')}</p></article>`;
@@ -1289,7 +1369,7 @@ function renderSlide(sl, i, deck, img) {
       let css = '';
       its.forEach((o, j) => { css += `.${uid}:has(.bl-ob.k${j}.in) .bl-mark.k${j},.${uid}:has(.bl-int.k${j}.in) .bl-mark.k${j}{background-size:100% 42%;color:var(--ink)}.${uid}:has(.bl-int.k${j}.step-current) .bl-link.k${j}{opacity:1;transform:scaleX(1)}`; });
       const analyses = its.map((o, j) => `<section class="bl-analysis k${j}"><p class="bl-ob k${j}"${steps ? st(stepA('fade')) : A(stepA('fade'), 550 + j * 260)}><b>Iakttagelse</b>${fmt(o.observation)}</p><i class="bl-link k${j}" aria-hidden="true"></i><p class="bl-int k${j}"${steps ? st(stepA('fade')) : A(stepA('fade'), 720 + j * 260)}><b>Tolkning</b>${fmt(o.interpretation)}</p></section>`).join('');
-      body = `<style>${css}</style><header class="fn-head">${sl.title ? H2('', 'mask') : ''}${sl.source ? `<p class="bl-source"${A(stepA('fade'), 200)}>${fmt(sl.source)}</p>` : ''}</header>` +
+      body = `<style>${css}</style><header class="fn-head">${sl.caption ? `<p class="kicker"${A(stepA('fade'))}>${fmt(sl.caption)}</p>` : ''}${sl.title ? H2('', 'mask') : ''}${sl.source ? `<p class="bl-source"${A(stepA('fade'), 200)}>${fmt(sl.source)}</p>` : ''}</header>` +
         `<div class="bl-stage ${uid}"><blockquote class="bl-text">${marked || 'Lägg till ett källutdrag.'}</blockquote><aside class="bl-notes">${analyses}</aside></div>` +
         `<div class="bl-outcomes">${sl.whole ? `<p class="bl-whole"${steps ? st(stepA('mask')) : A(stepA('mask'), 1450)}><b>Helhet</b>${fmt(sl.whole)}</p>` : ''}${sl.reservation ? `<p class="bl-reservation"${steps ? st(stepA('fade')) : A(stepA('fade'), 1650)}><b>Reservation</b>${fmt(sl.reservation)}</p>` : ''}</div>`;
       cls = 'fn-layout ' + uid;

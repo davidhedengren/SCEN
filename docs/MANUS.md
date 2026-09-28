@@ -151,6 +151,17 @@ reservation: källa, annars står det "Illustration, inte verkliga siffror."
 
 I `[flöde]` tänder varje klick samma steg i alla banor, så två processer jämförs steg för steg. I `[urval]` räknas andelarna om till procent, och meningen om den mest underrepresenterade gruppen skrivs automatiskt utifrån siffrorna.
 
+### Förgrening
+
+```text
+[förgrening]
+- namn | | | text                  (stammen: inget "ur")
+- namn | tid | ur | text           (högst åtta grenar)
+slutsats: visas när hela trädet syns
+```
+
+Tiden kan vara ett år (`1054`) eller ett sekel (`1500-talet`). `ur` är namnet på grenen den växer ur. Tidsaxeln är schematisk: varje förgreningstid får en egen kolumn, så täta perioder inte trängs ihop. Om två eller fler grenar växer ur samma gren vid samma tid slutar föräldern där, som vid en delning. Klicken följer grenarna i tidsordning.
+
 ### Tabeller
 
 ```

@@ -62,6 +62,7 @@ Varje bild i ett manus börjar med mallens namn inom hakparentes. Samma katalog 
 | `[träd]` | System | Ett träd eller beslutsträd ur en indragen lista. Hela trädet syns från början. Varje klick lyfter fram roten, en nivå, grenarna, löven eller en väg från roten till ett löv, som ritas nedåt gren för gren. |
 | `[flöde]` | System | Något flödar genom ett system: indata, bearbetning, utdata. En eller två banor genom samma steg. Hela flödet syns nedtonat från början. Varje klick tänder samma steg i alla banor och en markör följer flödet, så att två processer jämförs steg för steg. Ett steg som heter ? blir en stängd låda. Sista klicket visar hela kedjan och slutsatsen. |
 | `[urval]` | System | En helhet av punkter i två till fyra grupper och ett urval ur den. Först syns helheten, sedan lyfts urvalet fram medan resten ligger kvar nedtonat, sedan den grupp som är mest underrepresenterad. Staplar visar andelarna i helheten och i urvalet. Sista klicket visar helheten igen med slutsatsen. |
+| `[förgrening]` | System | Ett släktträd över tid: en stam och grenar som skjuter ut ur varandra, till exempel kyrkor, språk, arter eller programspråk. Rader skrivs namn \| tid \| ur \| text. Tidsaxeln är schematisk, varje förgreningstid får en kolumn. Hela trädet syns nedtonat från början. Varje klick ritar nästa gren i tidsordning och visar dess text längst ner, medan tidigare grenar står kvar. En gren som delas i två vid samma tid slutar där. Sista klicket visar hela trädet med slutsatsen. |
 | `[ringar]` | Banor | Två eller tre begrepp som delvis överlappar, som ett Venndiagram. Det gemensamma skrivs i mitten och visas sist. |
 | `[lins]` | Banor | En bild där en rund lins lyser upp en detalj i taget. Resten är nedtonad. Varje rad: x y i procent | rubrik | text. |
 | `[mätare]` | Banor | Ett tal som andel av något, som en mätare som fylls medan talet räknas upp. Skriv 73 %, 4 av 8 eller ett tal med max. |
@@ -1051,6 +1052,25 @@ höger: Träningsdatan
 - Grupp A | 50 | 85
 - Grupp B | 50 | 15
 slutsats: En modell blir bäst på det den har sett mest av.
+```
+
+### `[förgrening]` Förgrening
+
+Ett släktträd över tid: en stam och grenar som skjuter ut ur varandra, till exempel kyrkor, språk, arter eller programspråk. Rader skrivs namn | tid | ur | text. Tidsaxeln är schematisk, varje förgreningstid får en kolumn. Hela trädet syns nedtonat från början. Varje klick ritar nästa gren i tidsordning och visar dess text längst ner, medan tidigare grenar står kvar. En gren som delas i två vid samma tid slutar där. Sista klicket visar hela trädet med slutsatsen.
+
+**Undvik när:** Fler än åtta grenar. Långa namn. När exakta avstånd i tid är poängen (använd tidslinje).
+
+```
+[förgrening]
+etikett: Språkträd
+rubrik: Hur de nordiska språken skildes åt
+- Urnordiska | | | Ett gemensamt språk i hela Norden.
+- Östnordiska | 800-talet | Urnordiska | Språket i Sverige och Danmark.
+- Västnordiska | 800-talet | Urnordiska | Språket i Norge och på Island.
+- Svenska | 1200-talet | Östnordiska | Skiljer sig från danskan.
+- Danska | 1200-talet | Östnordiska | Egen skrift och eget uttal.
+- Isländska | 1400-talet | Västnordiska | Har förändrats minst.
+slutsats: Språk som delar förfader liknar varandra än idag.
 ```
 
 ## Ljus

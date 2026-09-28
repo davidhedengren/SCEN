@@ -466,7 +466,6 @@ function renderSlide(sl, i, deck, img) {
       body = `<h2${tid(title)}${A(tA('words'))}>${fmt(title || 'Vad tror du?')}</h2>` +
         (sl.text ? `<p class="lead"${A('fade', 300)}>${fmt(sl.text)}</p>` : '') +
         `<ol class="poll"${A(anim(ba, 'rise'), 450, ' data-stagger="110"')}>${li}</ol>` +
-        `<p class="poll-hint">Tryck 1–${Math.max(1, Math.min(9, its.length))} för att räkna röster, 0 nollställer.</p>` +
         (right >= 0 ? `<p class="poll-reveal"${st('fade')}>Rätt svar: <b>${String.fromCharCode(65 + right)}</b>${sl.answer ? ' · ' + fmt(sl.answer) : ''}</p>` : '');
       break;
     }

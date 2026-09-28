@@ -122,6 +122,7 @@ svar: Fyra. I exemplet är det noderna 4, 5, 6 och 7.
 - 3
 - * 4
 - 7
+> Räkna händer med tangenterna 1–4, 0 nollställer. Klicka vidare för att visa svaret.
 > "Helt fyllda nivåer" behövs: ett binärt träd med tre nivåer kan annars ha allt från ett till fyra löv.
 > Alternativet 7 är antalet noder totalt, en vanlig förväxling.
 

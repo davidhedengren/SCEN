@@ -163,8 +163,9 @@ function usedImages(d) {
   return [...set];
 }
 function normalize(d) {
-  d.theme = Object.assign({ id: 'scen', accent: 'blue', look: 'auto' }, d.theme || {});
+  d.theme = Object.assign({ id: 'scen', look: 'auto' }, d.theme || {});
   if (!Scen.THEMES[d.theme.id]) d.theme.id = 'scen';
+  if (!d.theme.accent) d.theme.accent = d.theme.id === 'scen' ? 'blue' : 'auto';
   d.slides = (d.slides || []).map(s => Object.assign({ id: rid() }, s));
   if (!d.slides.length) d.slides.push({ id: rid(), layout: 'title', title: d.title || 'Namnlös presentation', bg: 'nodes' });
   return d;
@@ -1362,7 +1363,7 @@ function toFree() {
 }
 const FIELD_OF = [
   ['h1,h2,.om-title,.term,.map h2,.bk-text h2', 'title'],
-  ['.kicker,.part,.by,.cap p,.label,.poll-hint', 'caption'],
+  ['.kicker,.part,.by,.cap p,.label', 'caption'],
   ['.lead,.om-body,.def,.unit,.landing,blockquote,.answer', 'text'],
   ['.big', 'number'], ['.ex', 'example']
 ];

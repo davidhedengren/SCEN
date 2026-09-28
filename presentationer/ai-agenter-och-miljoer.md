@@ -27,6 +27,7 @@ text: En aktör som uppfattar sin omgivning och agerar i den.
 vänster: Omgivningen
 höger: Omgivningen förändras
 retur: Agenten reagerar på förändringar
+bakgrund: fokusljus
 - Uppfattar | med sinnen, sensorer eller data
 - Beslutar | utifrån sitt mål
 - Agerar | med kroppen eller aktuatorer
@@ -55,6 +56,7 @@ mörkning: 0 0 42 100 0.55
 
 [typografi]
 etikett: Begrepp 2
+bakgrund: fokusljus
 - statement | En **agent** uppfattar, beslutar och agerar. | Agent
 - precisering | En **AI-agent** är en artificiell agent som använder AI för att välja eller planera sina handlingar. | AI-agent
 > AI:n sitter i beslutsfattandet. Uppfatta och agera gör alla agenter.
@@ -65,6 +67,7 @@ etikett: Begrepp 2
 [fokus]
 etikett: Tre egenskaper
 rubrik: Vad gör en agent till en agent?
+bakgrund: fokusljus
 - Autonomi | Kan fatta egna beslut utan direkt mänsklig styrning.
 - Perception | Samlar in data om sin omgivning genom sensorer eller annan inmatning.
 - Målorientering | Använder sin autonomi och perception för att fatta beslut och ta de bästa möjliga åtgärderna för att nå sitt mål.
@@ -74,9 +77,10 @@ rubrik: Vad gör en agent till en agent?
 
 [tidslinje]
 rubrik: Från agent till miljö
+bakgrund: fokusljus
 - Agent | Grunden | Uppfattar, beslutar och agerar.
 - AI-agent | Plus AI | AI används i beslutsfattandet.
-- Rationell agent | Plus mål | Väljer den bästa handlingen utifrån mål och information.
+- Rationell agent | Plus bästa valet | Väljer den bästa handlingen utifrån mål och information.
 - Miljön | Villkoret | Avgör hur bra beslut agenten kan fatta.
 > Varje begrepp bygger på det föregående. En rationell agent strävar alltid efter att fatta de bästa besluten för att uppnå sina mål.
 > Det sista steget är vändpunkten i lektionen: hur bra beslut agenten kan fatta beror på vilken miljö den befinner sig i. Nu flyttar vi blicken från agenten till världen den verkar i.
@@ -87,6 +91,7 @@ rubrik: Från agent till miljö
 etikett: Miljön
 rubrik: Sex frågor om agentens värld
 text: Miljöer kan klassificeras i dimensioner som påverkar hur agenten interagerar med sin omgivning och fattar beslut.
+bakgrund: fokusljus
 - Fullständigt / partiellt observerbar | Ser agenten allt som händer i miljön?
 - Singel / multiagent | Är agenten ensam, eller finns det andra agenter?
 - Deterministisk / stokastisk | Leder samma handling alltid till samma utfall?
@@ -135,6 +140,7 @@ mörkning: 0 0 42 46 0.7
 
 [jämförelse]
 rubrik: Ensam eller bland andra?
+bakgrund: fokusljus
 steg: nej
 vänster: Singelagent
 - Endast en agent, ingen koordinering med andra
@@ -153,10 +159,11 @@ höger: Multiagent
 [omröstning]
 rubrik: Schack mot dator: singel- eller multiagentmiljö?
 svar: Två agenter fattar beslut i samma miljö. Motståndarens drag påverkar direkt vilka handlingar och resultat som är möjliga för den andra agenten.
+bakgrund: fokusljus
 - Singelagent
 - * Multiagent
 - Det beror på perspektivet
-> Räkna händer med tangenterna 1–3.
+> Räkna händer med tangenterna 1–3, 0 nollställer. Klicka vidare för att visa svaret.
 > Människan är en agent och schackprogrammet är en AI-agent. Båda väljer drag, och dragen påverkar varandras möjligheter och resultat: en konkurrerande (adversarial) multiagentmiljö.
 > Att vi studerar en agents beslut gör inte miljön till en singelagentmiljö. Det avgörande är om det finns andra agenter vars handlingar påverkar utfallet.
 > Specialfall: om motståndaren bara spelar upp en helt förutbestämd sekvens av drag och inte själv fattar beslut, kan den modelleras som en del av miljön. Vanligt schack mot människa eller schackdator är multiagent.
@@ -165,6 +172,7 @@ svar: Två agenter fattar beslut i samma miljö. Motståndarens drag påverkar d
 
 [typografi]
 etikett: 3 / 6 · Deterministisk / stokastisk
+bakgrund: fokusljus
 - statement | Samma handling. **Samma** utfall. | Deterministisk
 - ersättning | Samma handling. **Osäkert** utfall. | Stokastisk
 - precisering | Schack är deterministiskt.\\nPoker är **stokastiskt**. | Exempel
@@ -176,6 +184,7 @@ etikett: 3 / 6 · Deterministisk / stokastisk
 [fokus]
 etikett: 4 / 6 · Episodisk / sekventiell
 rubrik: Påverkar ett beslut nästa?
+bakgrund: fokusljus
 - Episodisk | Varje handling är fristående och påverkar inte framtida handlingar.
 - Sekventiell | Varje handling påverkar framtida tillstånd och beslut.
 - Exempel | Bildklassificering är episodisk. Planering för en självkörande bil är sekventiell.
@@ -218,6 +227,7 @@ mörkning: 0 0 46 56 0.55
 [fokus]
 etikett: Helheten
 rubrik: Schack mot dator: sex svar
+bakgrund: fokusljus
 - Fullständigt observerbar | Alla pjäser och positioner syns för båda spelarna.
 - Multiagent | Två agenter vars drag påverkar varandra: en konkurrerande miljö.
 - Deterministisk | Alla drag och deras konsekvenser är förutsägbara.
@@ -231,6 +241,7 @@ rubrik: Schack mot dator: sex svar
 [tabell]
 rubrik: Övning i par: fyll i och diskutera tabellen
 visa: facit-rader
+bakgrund: fokusljus
 fokus: mjuk
 | Uppgift | Fullt/partiellt\nobserverbart | Singel/\nmultiagent | Deterministisk/\nstokastisk | Episodisk/\nsekventiell | Statiskt/\ndynamiskt | Diskret/\nkontinuerligt |
 | Schack mot dator | Fullt | Multi | Deterministisk | Sekventiell | Statisk | Diskret |
@@ -332,6 +343,7 @@ mörkning: 0 0 42 100 0.55
 
 [tidslinje]
 rubrik: Aktivitet: observerbarhet i luffarschack
+bakgrund: fokusljus
 - Omgång 1 | Spela | Spela några partier luffarschack med en kompis.
 - Omgång 2 | Dölj rutor | Spela versionen där några slumpvis valda rutor är dolda.
 - Efteråt | Diskutera | Diskutera frågorna som ligger i Teams.

@@ -244,6 +244,8 @@
 .scen .slide th{font-size:30px;font-weight:600;color:var(--muted);border-bottom:2px solid var(--ink)}
 .scen .slide table.dense{font-size:28px}
 .scen .slide table.dense td,.scen .slide table.dense th{padding:10px 36px 10px 0}
+.scen .tbl-wrap:has(table.dense){justify-self:stretch}
+.scen .slide table.dense{width:100%}
 .scen .slide td.ans{color:var(--accent);font-weight:600}
 
 .scen [data-layout="number"]{align-content:center;gap:32px}
@@ -334,9 +336,9 @@
 
 .scen [data-layout="cards"] .lead,.scen [data-layout="compare"] .lead,.scen .hasbanner .lead{max-width:62ch;font-size:36px}
 .scen .text .lead{font-size:34px}
-.scen .slide table.xdense{font-size:24px}
-.scen .slide table.xdense td,.scen .slide table.xdense th{padding:9px 26px 9px 0}
-.scen .slide table.xdense th{font-size:22px}
+.scen .slide table.xdense{font-size:27px}
+.scen .slide table.xdense td,.scen .slide table.xdense th{padding:10px 26px 10px 0}
+.scen .slide table.xdense th{font-size:23px}
 .scen .slide td:first-child{font-weight:600}
 
 /* ---------- tema: typsnitt och ornament ---------- */
@@ -358,8 +360,6 @@
 .scen .poll .pbar{position:absolute;left:0;top:0;bottom:0;width:calc(var(--p,0) * 100%);background:var(--hl);transition:width .7s cubic-bezier(.16,1,.3,1)}
 .scen .poll li>b,.scen .poll li>.t,.scen .poll li>.n{position:relative;z-index:1}
 .scen .poll .n{justify-self:end;font-variant-numeric:tabular-nums;color:var(--muted);font-weight:600}
-.scen .poll-hint{font-size:24px;color:var(--muted);margin:0}
-.scen.static .poll-hint{display:none}
 .scen .poll-reveal{font-size:38px;margin:0}
 .scen .poll-reveal b{color:var(--accent)}
 .scen .slide:has(.poll-reveal.in) .poll li.correct,.scen.static .poll li.correct{border-color:var(--accent);box-shadow:0 0 0 4px var(--hl)}

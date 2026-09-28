@@ -16,7 +16,7 @@ const LAYOUTS = {etapper:"Etapper",vagval:"Vägval",lager:"Lager",resonemang:"Re
   title: 'Titel', section: 'Avsnitt', statement: 'Påstående', bullets: 'Punktlista', split: 'Text och bild',
   image: 'Helbild', bildregi: 'Bildregi', terminal: 'Terminal', kodforklaring: 'Kodförklaring', typografisk: 'Typografiskt statement', texttempo: 'Typografiskt tempo', cards: 'Kort', compare: 'Jämförelse', table: 'Tabell', number: 'Stort tal', timeline: 'Tidslinje',
   question: 'Fråga och svar', poll: 'Omröstning', reflect: 'Reflektion', define: 'Definition', chat: 'AI-samtal', duo: 'Två tal',
-  quote: 'Citat', omslag: 'Omslag', karta: 'Karta', triad: 'Triad', motsats: 'Motsats', bildkant: 'Bildkant', 'båge': 'Båge', omlopp: 'Omlopp', gradskiva: 'Gradskiva', bro: 'Bro', ringar: 'Ringar', lins: 'Lins', 'mätare': 'Mätare', 'ridå': 'Ridå', 'strålkastare': 'Strålkastare', fokus: 'Fokus', ordbild: 'Ordbild', 'bildfält': 'Bildfält', delning: 'Delning', ljustal: 'Ljustal', tom: 'Fri yta', egen: 'Egen mall'
+  quote: 'Citat', omslag: 'Omslag', karta: 'Karta', triad: 'Triad', motsats: 'Motsats', bildkant: 'Bildkant', 'båge': 'Båge', omlopp: 'Omlopp', gradskiva: 'Gradskiva', bro: 'Bro', graf: 'Graf', trad: 'Träd', ringar: 'Ringar', lins: 'Lins', 'mätare': 'Mätare', 'ridå': 'Ridå', 'strålkastare': 'Strålkastare', fokus: 'Fokus', ordbild: 'Ordbild', 'bildfält': 'Bildfält', delning: 'Delning', ljustal: 'Ljustal', tom: 'Fri yta', egen: 'Egen mall'
 };
 const THEMES = {
   signal: { name: 'Signal', desc: 'Djup midnattsblå, elektrisk cyan och violett. Fylliga färgfält och tydlig typografi.', look: 'dark', v: { bg: '#080E25', surface: '#152444', ink: '#F0F6FF', muted: '#A5B6D4', line: '#2B4065', accent: '#5FE7ED', 'accent-2': '#9C87FF', hl: 'rgba(95,231,237,.22)' }, fd: '"Familjen Grotesk",system-ui,sans-serif', fb: '"Hanken Grotesk",system-ui,sans-serif', hw: 700, ht: '-.035em', r: '24px', ta: 'words', fonts: ['Familjen+Grotesk:wght@400;500;600;700', 'Hanken+Grotesk:wght@400;500;600'] },
@@ -113,6 +113,76 @@ function normalizeTextDirection(sl) {
   return { mode, items };
 }
 
+/* ---------- graf och träd ----------
+   Två strukturmallar med samma dramaturgi: hela strukturen syns från början,
+   varje fokusrad lyfter fram noder, kanter eller en väg, resten ligger kvar nedtonat.
+   Rader i listan: "fokus: mål | rubrik | text". Geometrin ändras aldrig mellan klick. */
+const GT_MAX_FOCUS = 12;
+function gtFocusLines(items) {
+  const out = [];
+  lines(items).forEach(raw => {
+    const m = String(raw).replace(/^(- )+/, '').match(/^fokus\s*:\s*(.*)$/i);
+    if (!m || out.length >= GT_MAX_FOCUS) return;
+    const p = m[1].split('|').map(x => x.trim());
+    out.push({ target: p[0] || '', head: p[1] || '', text: p.slice(2).join(' | ') });
+  });
+  return out;
+}
+const gtKey = s => plain(s).toLowerCase().replace(/\s+/g, ' ').trim();
+function gtIn(set) { return ` data-dramaturgy-in="${set ? [...set].join(' ') : ''}"`; }
+function gtAdd(map, id, j) { (map[id] = map[id] || new Set()).add(j); }
+function gtPanel(intro, focus, end, extra, x, y, w) {
+  const notes = focus.map((f, j) => `<div class="gt-note" data-dramaturgy-in="${j}">` +
+    (f.head ? `<p class="gt-head">${fmt(f.head)}</p>` : '') + (f.text ? `<p class="gt-text">${fmt(f.text)}</p>` : '') + (extra[j] || '') + `</div>`).join('');
+  return `<div class="gt-pan" style="left:${x}px;top:${y}px;width:${w}px">` +
+    (intro ? `<div class="gt-note gt-intro"><p class="gt-text">${fmt(intro)}</p></div>` : '') + notes +
+    (end ? `<div class="gt-note gt-end"><p class="gt-text">${fmt(end)}</p></div>` : '') + `</div>`;
+}
+function parseGraf(items) {
+  const nodes = [], edges = [], byKey = {};
+  const node = (name, x, y) => {
+    const k = gtKey(name); if (!k) return null;
+    if (!byKey[k]) { byKey[k] = { i: nodes.length, name: name.trim(), x: NaN, y: NaN }; nodes.push(byKey[k]); }
+    const n = byKey[k]; if (Number.isFinite(x) && Number.isFinite(y)) { n.x = x; n.y = y; }
+    return n;
+  };
+  lines(items).forEach(raw => {
+    const line = String(raw).replace(/^(- )+/, '');
+    let m = line.match(/^nod\s*:\s*(.*)$/i);
+    if (m) { const p = m[1].split('|').map(x => x.trim()); const c = (p[1] || '').split(/[\s,]+/).map(Number); node(p[0], c[0], c[1]); return; }
+    m = line.match(/^kant\s*:\s*(.*)$/i);
+    if (m) {
+      const p = m[1].split('|').map(x => x.trim());
+      const e = p[0].match(/^(.+?)\s+(->|>|→|-|–|—)\s+(.+)$/); if (!e) return;
+      const a = node(e[1]), b = node(e[3]); if (!a || !b || a === b) return;
+      edges.push({ i: edges.length, a, b, dir: /^(->|>|→)$/.test(e[2]), w: p[1] || '' });
+    }
+  });
+  const loose = nodes.filter(n => !Number.isFinite(n.x));
+  loose.forEach((n, j) => { const a = -Math.PI / 2 + j * 2 * Math.PI / loose.length; n.x = 50 + 40 * Math.cos(a); n.y = 50 + 40 * Math.sin(a); });
+  nodes.forEach(n => { n.x = Math.max(0, Math.min(100, n.x)); n.y = Math.max(0, Math.min(100, n.y)); });
+  return { nodes, edges, byKey };
+}
+function parseTrad(items) {
+  const roots = [], stack = [], all = [];
+  lines(items).forEach(raw => {
+    const s = String(raw), depth = (s.match(/^(- )+/) || [''])[0].length / 2, txt = s.slice(depth * 2).trim();
+    if (/^fokus\s*:/i.test(txt) || !txt) return;
+    let edge = '', label = txt;
+    const m = depth > 0 && txt.match(/^([^:|]{1,28}?)\s*:\s+(.+)$/);
+    if (m) { edge = m[1].trim(); label = m[2].trim(); }
+    const n = { i: all.length, label, edge, kids: [], parent: null, depth: 0 };
+    while (stack.length > depth) stack.pop();
+    const par = stack[stack.length - 1];
+    if (par) { n.parent = par; n.depth = par.depth + 1; par.kids.push(n); } else roots.push(n);
+    stack.push(n); all.push(n);
+  });
+  let slot = 0;
+  const place = n => { if (!n.kids.length) { n.slot = slot++; return; } n.kids.forEach(place); n.slot = (n.kids[0].slot + n.kids[n.kids.length - 1].slot) / 2; };
+  roots.forEach(place);
+  return { roots, all, leaves: slot, levels: all.reduce((m, n) => Math.max(m, n.depth + 1), 0) };
+}
+
 /* ---------- rendering ---------- */
 function anim(v, def) { return (!v || v === 'auto') ? def : v; }
 function A(name, delay, extra) {
@@ -154,6 +224,10 @@ function applyDramaturgy(sec, step, final) {
   sec.dataset.dramaturgyState = phase.state;
   if (phase.state === 'focus') sec.dataset.dramaturgyFocus = String(phase.target);
   else delete sec.dataset.dramaturgyFocus;
+  sec.querySelectorAll('[data-dramaturgy-in]').forEach(el => {
+    const on = phase.state === 'focus' && el.dataset.dramaturgyIn.split(' ').includes(String(phase.target));
+    el.classList.toggle('dramaturgy-current', on);
+  });
   const actors = targets.length ? targets : items;
   actors.forEach((el, index) => {
     const explicit = +el.dataset.dramaturgyIndex;
@@ -552,6 +626,145 @@ function renderSlide(sl, i, deck, img) {
         `<svg class="gs-svg" viewBox="0 0 1920 1080" aria-hidden="true"><path class="gs-ticks" d="${ticks}"${A('fade', 300, ' data-duration="1400"')}/><path class="gs-base" d="${arcD}" pathLength="1"${A('draw', 150, ' data-duration="1600"')}/><path class="gs-prog" d="${arcD}" pathLength="100"/></svg>` +
         `<div class="gs-needle" style="left:${cx}px;top:${cy}px;width:${r - 40}px"${A('fade', 600)}></div><div class="gs-hub" style="left:${cx}px;top:${cy}px"></div>` + labs +
         `<div class="gs-ds" style="left:${cx}px;top:${cy - 250}px">${its.map((o, j) => `<p class="gs-d k${j}">${fmt(o.t)}</p>`).join('')}</div>`;
+      break;
+    }
+    case 'graf': {
+      /* Noder och kanter i fast geometri. Fokus: noder, kanter, vikter, en nod, en kant (A - B)
+         eller en väg (A > B > C) som ritas i färdriktningen. */
+      const G2 = parseGraf(sl.items), focus = gtFocusLines(sl.items);
+      const hasPan = !!(focus.some(f => f.head || f.text) || plain(sl.text || '') || plain(sl.conclusion || ''));
+      const AX = hasPan ? 760 : 200, AY = 300, AW = hasPan ? 1000 : 1520, AH = 640;
+      const px = n => [AX + n.x / 100 * AW, AY + n.y / 100 * AH];
+      const cx = G2.nodes.reduce((s, n) => s + n.x, 0) / (G2.nodes.length || 1), cy = G2.nodes.reduce((s, n) => s + n.y, 0) / (G2.nodes.length || 1);
+      const inN = {}, inE = {}, inW = {}, extra = {};
+      const find = name => G2.byKey[gtKey(name)];
+      const edgeOf = (a, b) => G2.edges.find(e => (e.a === a && e.b === b) || (!e.dir && e.a === b && e.b === a) || (e.dir && e.a === b && e.b === a));
+      const routes = [];
+      focus.forEach((f, j) => {
+        const t = gtKey(f.target);
+        if (t === 'noder' || t === 'alla noder') G2.nodes.forEach(n => gtAdd(inN, n.i, j));
+        else if (t === 'kanter' || t === 'alla kanter') G2.edges.forEach(e => gtAdd(inE, e.i, j));
+        else if (t === 'vikter') G2.edges.forEach(e => { gtAdd(inE, e.i, j); gtAdd(inW, e.i, j); });
+        else if (/\s(>|->|→)\s/.test(f.target)) {
+          const ns = f.target.split(/\s+(?:->|>|→)\s+/).map(find).filter(Boolean);
+          if (ns.length < 2) return;
+          ns.forEach(n => gtAdd(inN, n.i, j));
+          let sum = 0, numeric = true;
+          for (let q = 1; q < ns.length; q++) {
+            const e = edgeOf(ns[q - 1], ns[q]);
+            if (e) { gtAdd(inW, e.i, j); const v = parseFloat(String(e.w).replace(',', '.')); if (Number.isFinite(v)) sum += v; else numeric = false; } else numeric = false;
+          }
+          if (numeric && ns.length > 2) extra[j] = `<p class="gt-sum"><span>Summa längs vägen</span><b>${+sum.toFixed(2)}</b></p>`;
+          routes.push({ j, ns });
+        } else if (/\s(-|–|—)\s/.test(f.target)) {
+          const p = f.target.split(/\s+[-–—]\s+/).map(find);
+          const e = p[0] && p[1] && edgeOf(p[0], p[1]);
+          if (e) { gtAdd(inE, e.i, j); gtAdd(inW, e.i, j); gtAdd(inN, e.a.i, j); gtAdd(inN, e.b.i, j); }
+        } else {
+          const n = find(f.target);
+          if (n) { gtAdd(inN, n.i, j); G2.edges.forEach(e => { if (e.a === n || e.b === n) gtAdd(inE, e.i, j); }); }
+        }
+      });
+      const R = 15, trim = (a, b, d) => { const L = Math.hypot(b[0] - a[0], b[1] - a[1]) || 1; return [a[0] + (b[0] - a[0]) * d / L, a[1] + (b[1] - a[1]) * d / L]; };
+      let edges = '', weights = '', chev = '';
+      G2.edges.forEach(e => {
+        const A0 = px(e.a), B0 = px(e.b), a = trim(A0, B0, R + 6), b = trim(B0, A0, R + 6);
+        edges += `<line class="gr-edge"${gtIn(inE[e.i])} x1="${a[0].toFixed(1)}" y1="${a[1].toFixed(1)}" x2="${b[0].toFixed(1)}" y2="${b[1].toFixed(1)}"/>`;
+        const ang = Math.atan2(B0[1] - A0[1], B0[0] - A0[0]) * 180 / Math.PI;
+        if (e.dir) { const m = [A0[0] + (B0[0] - A0[0]) * .56, A0[1] + (B0[1] - A0[1]) * .56]; chev += `<path class="gr-chev"${gtIn(inE[e.i])} d="M-9 -11 L5 0 L-9 11" transform="translate(${m[0].toFixed(1)} ${m[1].toFixed(1)}) rotate(${ang.toFixed(1)})"/>`; }
+        if (e.w) { const m = [(A0[0] + B0[0]) / 2, (A0[1] + B0[1]) / 2]; weights += `<span class="gr-w"${gtIn(inW[e.i] || inE[e.i])} style="left:${Math.round(m[0])}px;top:${Math.round(m[1])}px">${fmt(e.w)}</span>`; }
+      });
+      const route = routes.map(r => {
+        const pts = r.ns.map(px), d = pts.map((p, q) => {
+          const pp = q === 0 ? trim(p, pts[1], R + 6) : q === pts.length - 1 ? trim(p, pts[q - 1], R + 6) : p;
+          return (q ? 'L' : 'M') + pp[0].toFixed(1) + ' ' + pp[1].toFixed(1);
+        }).join(' ');
+        let len = 0; for (let q = 1; q < pts.length; q++) len += Math.hypot(pts[q][0] - pts[q - 1][0], pts[q][1] - pts[q - 1][1]);
+        return `<path class="gt-route" data-dramaturgy-in="${r.j}" d="${d}" pathLength="1" style="--dur:${Math.round(Math.max(900, Math.min(2600, 500 + len * 1.4)))}ms"/>`;
+      }).join('');
+      const svgNodes = G2.nodes.map(n => { const [x, y] = px(n); return `<g class="gr-node"${gtIn(inN[n.i])} transform="translate(${x.toFixed(1)} ${y.toFixed(1)})"><circle class="halo" r="34"/><circle class="mk" r="${R}"/></g>`; }).join('');
+      const size = G2.nodes.length <= 6 ? 34 : G2.nodes.length <= 9 ? 28 : 23;
+      const labs = G2.nodes.map(n => {
+        const [x, y] = px(n), dx = n.x - cx, dy = n.y - cy;
+        const side = Math.abs(dx) * .8 > Math.abs(dy) ? (dx < 0 ? 'l' : 'r') : (dy < 0 ? 't' : 'b');
+        return `<span class="gr-lab side-${side}"${gtIn(inN[n.i])} style="left:${Math.round(x)}px;top:${Math.round(y)}px;--gs:${size}px">${fmt(n.name)}</span>`;
+      }).join('');
+      let cues = '';
+      if (steps) {
+        focus.forEach((f, j) => { const s = st('none'); cues += `<span data-dramaturgy-cue data-dramaturgy-focus="${k}" data-dramaturgy-target="${j}"${s} aria-hidden="true"></span>`; });
+        cues += `<span data-dramaturgy-restore${st('none')} aria-hidden="true"></span>`;
+      }
+      body = (sl.caption ? `<p class="kicker"${A('fade')}>${fmt(sl.caption)}</p>` : '') + H2('', 'mask') +
+        `<div class="gt-stage"${A(anim(ba, 'fade'), 150)}><svg class="gt-svg" viewBox="0 0 1920 1080" aria-hidden="true">${edges}${chev}${route}${svgNodes}</svg>${weights}${labs}</div>` +
+        (hasPan ? gtPanel(sl.text, focus, sl.conclusion, extra, 144, 330, 520) : '') + cues;
+      if (plain(title).length > 44) cls = 'gt-long';
+      attrs += ` data-dramaturgy="focus-restore" data-dramaturgy-state="${steps ? 'overview' : 'restored'}"${steps ? '' : ' data-dramaturgy-static="true"'}`;
+      break;
+    }
+    case 'trad': {
+      /* Ett träd ur indragen lista. "svar: nod" ger grenen en etikett.
+         Fokus: rot, löv, föräldrar, grenar, nivå N, barn X, en nod, eller väg a > b (svar eller nod i tur och ordning). */
+      const T2 = parseTrad(sl.items), focus = gtFocusLines(sl.items);
+      const hasPan = !!(focus.some(f => f.head || f.text) || plain(sl.text || '') || plain(sl.conclusion || ''));
+      const AX = hasPan ? 740 : 180, AW = hasPan ? 1060 : 1560, AY = 300, AH = 620;
+      const N = Math.max(1, T2.leaves), Lv = Math.max(1, T2.levels);
+      const slotW = AW / N;
+      const round = T2.all.length && T2.all.every(n => plain(n.label).length <= 3);
+      const fs = round ? 40 : N <= 3 ? 36 : N <= 5 ? 30 : N <= 7 ? 25 : 21;
+      const P = n => [AX + (n.slot + .5) * slotW, Lv === 1 ? AY + AH / 2 : AY + n.depth * AH / (Lv - 1)];
+      const hb = round ? 44 : fs * .72 + 12;
+      const inN = {}, inE = {}, extra = {}, routes = [];
+      const leaves = T2.all.filter(n => !n.kids.length);
+      const byLabel = t => T2.all.filter(n => gtKey(n.label) === t);
+      const pathTo = n => { const p = []; while (n) { p.unshift(n); n = n.parent; } return p; };
+      focus.forEach((f, j) => {
+        const t = gtKey(f.target);
+        let m;
+        if (t === 'rot') T2.roots.forEach(n => gtAdd(inN, n.i, j));
+        else if (t === 'löv' || t === 'lövnoder') leaves.forEach(n => gtAdd(inN, n.i, j));
+        else if (/^(föräldrar|föräldranoder|frågor|inre noder)$/.test(t)) T2.all.filter(n => n.kids.length).forEach(n => gtAdd(inN, n.i, j));
+        else if (/^(grenar|kanter|svar)$/.test(t)) T2.all.filter(n => n.parent).forEach(n => gtAdd(inE, n.i, j));
+        else if ((m = t.match(/^nivå\s+(\d+)$/))) T2.all.filter(n => n.depth === +m[1] - 1).forEach(n => gtAdd(inN, n.i, j));
+        else if ((m = t.match(/^barn\s+(.+)$/))) byLabel(m[1]).forEach(p => p.kids.forEach(c => { gtAdd(inN, c.i, j); gtAdd(inE, c.i, j); }));
+        else if ((m = f.target.match(/^\s*väg\s+(.+)$/i))) {
+          let cur = T2.roots[0]; if (!cur) return;
+          const way = [cur];
+          m[1].split(/\s+(?:->|>|→)\s+/).map(gtKey).forEach(tok => {
+            if (!cur) return;
+            const nx = cur.kids.find(c => gtKey(c.edge) === tok) || cur.kids.find(c => gtKey(c.label) === tok);
+            if (nx) { way.push(nx); cur = nx; } else cur = null;
+          });
+          way.forEach(n => gtAdd(inN, n.i, j));
+          way.slice(1).forEach(n => gtAdd(inE, n.i, j));
+          if (way.length > 1) routes.push({ j, way });
+        } else byLabel(t).forEach(n => { gtAdd(inN, n.i, j); if (n.parent) gtAdd(inE, n.i, j); });
+      });
+      const seg = n => { const [x1, y1] = P(n.parent), [x2, y2] = P(n), a = y1 + hb, b = y2 - hb, mid = (a + b) / 2; return { d: `M${x1.toFixed(1)} ${a.toFixed(1)} C${x1.toFixed(1)} ${mid.toFixed(1)} ${x2.toFixed(1)} ${mid.toFixed(1)} ${x2.toFixed(1)} ${b.toFixed(1)}`, m: [(x1 + x2) / 2, mid], len: Math.hypot(x2 - x1, b - a) }; };
+      let edges = '', elabs = '';
+      T2.all.filter(n => n.parent).forEach(n => {
+        const s = seg(n), onRoute = routes.some(r => r.way.includes(n));
+        edges += `<path class="tr-edge"${gtIn(inE[n.i])} d="${s.d}"/>`;
+        if (n.edge) elabs += `<span class="tr-elab${onRoute ? '' : ''}"${gtIn(inE[n.i])} style="left:${Math.round(s.m[0])}px;top:${Math.round(s.m[1])}px">${fmt(n.edge)}</span>`;
+      });
+      const route = routes.map(r => {
+        let d = '', len = 0;
+        r.way.slice(1).forEach((n, q) => { const s = seg(n); d += (q ? ' ' : '') + s.d; len += s.len; });
+        return `<path class="gt-route" data-dramaturgy-in="${r.j}" d="${d}" pathLength="1" style="--dur:${Math.round(Math.max(900, Math.min(2800, 500 + len * 1.5)))}ms"/>`;
+      }).join('');
+      const nodes = T2.all.map(n => {
+        const [x, y] = P(n), kind = n.kids.length ? (n.parent ? 'tr-inner' : 'tr-root') : 'tr-leaf';
+        return `<span class="tr-node ${kind}${round ? ' tr-round' : ''}"${gtIn(inN[n.i])} style="left:${Math.round(x)}px;top:${Math.round(y)}px;--ts:${fs}px;max-width:${Math.round(Math.max(120, slotW - 18))}px">${fmt(n.label)}</span>`;
+      }).join('');
+      let cues = '';
+      if (steps) {
+        focus.forEach((f, j) => { const s = st('none'); cues += `<span data-dramaturgy-cue data-dramaturgy-focus="${k}" data-dramaturgy-target="${j}"${s} aria-hidden="true"></span>`; });
+        cues += `<span data-dramaturgy-restore${st('none')} aria-hidden="true"></span>`;
+      }
+      body = (sl.caption ? `<p class="kicker"${A('fade')}>${fmt(sl.caption)}</p>` : '') + H2('', 'mask') +
+        `<div class="gt-stage"${A(anim(ba, 'fade'), 150)}><svg class="gt-svg" viewBox="0 0 1920 1080" aria-hidden="true">${edges}${route}</svg>${elabs}${nodes}</div>` +
+        (hasPan ? gtPanel(sl.text, focus, sl.conclusion, extra, 144, 330, 500) : '') + cues;
+      if (plain(title).length > 44) cls = 'gt-long';
+      attrs += ` data-dramaturgy="focus-restore" data-dramaturgy-state="${steps ? 'overview' : 'restored'}"${steps ? '' : ' data-dramaturgy-static="true"'}`;
       break;
     }
     case 'bro': {

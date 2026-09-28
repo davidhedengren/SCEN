@@ -225,7 +225,7 @@ rubrik: Övning i par: fyll i och diskutera tabellen
 visa: facit-rader
 | Uppgift | Fullt/partiellt\nobserverbart | Singel/\nmultiagent | Deterministisk/\nstokastisk | Episodisk/\nsekventiell | Statiskt/\ndynamiskt | Diskret/\nkontinuerligt |
 | Schack mot dator | Fullt | Singel | Deterministisk | Sekventiell | Statisk | Diskret |
-| Korsord | Fullt | Singel | Deterministisk | Episodisk | Statisk | Diskret |
+| Korsord | Fullt | Singel | Deterministisk | Sekventiell | Statisk | Diskret |
 | Poker | Partiellt | Multi | Stokastisk | Sekventiell | Statisk | Diskret |
 | Bildklassificering | Fullt | Singel | Deterministisk | Episodisk | Statisk | Diskret |
 | Självkörande bil i trafik | Partiellt | Multi | Stokastisk | Sekventiell | Dynamisk | Kontinuerlig |
@@ -246,6 +246,7 @@ visa: facit-rader
 > Observerbarhet: Fullt observerbart eftersom alla rutor och ledtrådar är synliga och tillgängliga för spelaren från början.
 > Antal agenter: Single-agent eftersom en person vanligtvis löser korsordet ensam. (Flera personer kan hjälpa till, men det betraktas som en enskild agentuppgift).
 > Deterministisk: Lösningarna är deterministiska eftersom varje korrekt ord har en fast plats i rutnätet och påverkar andra ord förutsägbart.
+> Sekventiell: Varje ord påverkar framtida möjligheter genom att fylla i bokstäver som är gemensamma med andra ord.
 > Statisk: Korsordet förändras inte av sig självt, utan enbart när spelaren fyller i det.
 > Diskret: Varje ruta är en enskild enhet och varje inmatning är en diskret bokstav.
 >

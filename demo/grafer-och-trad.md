@@ -152,6 +152,25 @@ slutsats: Trädet ställer frågorna i tur och ordning tills det når ett löv.
 
 ---
 
+[sats]
+rubrik: Tre strukturer, ett syfte
+- Grafer | Nätverk av noder: rutter, flöden och relationer.
+- Träd | Hierarkier: effektiv sökning och sortering.
+- Beslutsträd | Alternativ och utfall i en grenad struktur.
+text: Verktyg för att representera data, fatta beslut och göra förutsägelser.
+
+---
+
+[kort]
+etikett: Uppgifter
+rubrik: Nu är det er tur
+- 1 Egen graf | Minst fem noder, till exempel ett vägnät. Vad kan grafen användas till?
+- 2 Valfritt träd | Minst tre nivåer, till exempel ett släktträd eller en katalogstruktur.
+- 3 Beslutsträd | Ett vardagligt val med minst fyra noder. Förklara logiken.
+- 4 Träd i AI | Hur kan ett träd användas i ett AI-system? Varför är träd viktiga?
+
+---
+
 [etapper]
 etikett: Lektionsaktivitet
 rubrik: Beslutsträd med apor
@@ -180,22 +199,3 @@ text: Ett beslutsträd som en grupp kan ha byggt av träningsdatan.
 - fokus: väg Nej > Ja > Ja | Fler frågor | Tänderna syns inte, men munnen och ögonen är öppna: bits.
 - fokus: väg Nej > Nej | Stängd mun | Två frågor räcker: bits inte.
 slutsats: Testa trädet på testdatan. Ett bra träd gissar rätt på apor det aldrig har sett.
-
----
-
-[sats]
-rubrik: Tre strukturer, ett syfte
-- Grafer | Nätverk av noder: rutter, flöden och relationer.
-- Träd | Hierarkier: effektiv sökning och sortering.
-- Beslutsträd | Alternativ och utfall i en grenad struktur.
-text: Verktyg för att representera data, fatta beslut och göra förutsägelser.
-
----
-
-[kort]
-etikett: Uppgifter
-rubrik: Nu är det er tur
-- 1 Egen graf | Minst fem noder, till exempel ett vägnät. Vad kan grafen användas till?
-- 2 Valfritt träd | Minst tre nivåer, till exempel ett släktträd eller en katalogstruktur.
-- 3 Beslutsträd | Ett vardagligt val med minst fyra noder. Förklara logiken.
-- 4 Träd i AI | Hur kan ett träd användas i ett AI-system? Varför är träd viktiga?

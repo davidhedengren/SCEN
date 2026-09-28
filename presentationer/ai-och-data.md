@@ -39,16 +39,16 @@ steg: nej
 
 ---
 
-[fokus]
+[omlopp]
 etikett: Del 1 · Vad är data?
-rubrik: Data finns i många former
-text: Data är information i form av samlade fakta som kan dokumenteras och lagras digitalt.
+rubrik: Data
 bakgrund: fokusljus
 - Siffror | Temperaturer, betyg, priser
 - Text | Chattar, artiklar, recensioner
 - Bilder | Foton, röntgenbilder, skanningar
 - Ljud | Tal, musik, röstmeddelanden
 - Video | Filmklipp, trafikkameror
+> Data är information i form av samlade fakta som kan dokumenteras och lagras digitalt.
 > Data är grunden för dagens AI, särskilt maskininlärning, där system lär sig av exempel i stället för färdiga regler.
 > Fråga klassen: vilka av exemplen från uppstarten passar in i vilken kategori?
 
@@ -72,64 +72,62 @@ bakgrund: fokusljus
 
 ---
 
-[texttempo]
+[delning]
 etikett: Exempel · Handskrivna siffror
+rubrik: Hur lär man en dator läsa handstil?
 bakgrund: fokusljus
-- statement | Alla skriver en **7:a** på sitt eget sätt. | Problemet
-- kontrast | Exakta regler för varje siffra är **nästan omöjliga** att skriva. | Regler räcker inte
-- precisering | I stället: **tusentals märkta bilder**.\\n”Den här bilden visar en 7:a.” | Exempel
-- slutsats | Ju mer data, desto bättre lär sig systemet.\\n**Utan data ingen AI.** | Slutsats
+- Med regler | Alla skriver olika. Exakta regler för varje siffra är nästan omöjliga att skriva.
+- Med exempel | Tusentals märkta bilder: ”den här bilden visar en 7:a”. AI:n hittar mönstret.
+- Kort sagt | Ju mer data, desto bättre lär sig systemet. Utan data ingen AI.
 > Vi kan inte skriva regler för alla handstilar. I stället visar vi AI:n tusentals märkta bilder. Samma princip gäller stora språkmodeller som ChatGPT: de tränas på enorma mängder text.
 > Fråga: Vad skulle hända om några bilder var felmärkta? Det leder in på datakvalitet.
 
 ---
 
-[flöde]
+[typografi]
 etikett: Del 2 · Datakvalitet
-rubrik: Skräp in, skräp ut
-text: Matar man in dålig data i ett AI-system blir resultatet också dåligt.
-slutsats: En AI kan aldrig bli bättre än datan den tränas på.
 bakgrund: fokusljus
-- Data | Felaktig, irrelevant eller skev
-- AI-modellen | Lär sig mönstren i datan
-- Resultat | Felaktigt eller orättvist
+- statement | **Felaktig, irrelevant eller skev** data in … | Dålig data
+- precisering | … ger **felaktiga eller orättvisa** resultat ut. | Dåligt resultat
+- slutsats | Skräp in, **skräp ut**. | Slutsats
+> Matar man in dålig data i ett AI-system blir resultatet också dåligt: AI-modellen lär sig mönstren i datan, även de felaktiga.
+> En AI kan aldrig bli bättre än datan den tränas på.
 > Ett känt uttryck inom dataanalys och AI. Datakvalitet handlar om att datan måste vara korrekt, relevant och representativ. Det tittar vi på härnäst.
 
 ---
 
-[fokus]
-etikett: Del 2 · Datakvalitet
+[samband]
+etikett: Tillsammans ger de
 rubrik: Tre krav på bra data
+text: Bra data
 bakgrund: fokusljus
-- Korrekt | Uppgifterna måste stämma. Om katter är märkta som hundar lär sig modellen fel.
-- Relevant | Datan måste hänga ihop med problemet. Bostadspriser: storlek, läge och antal rum – inte vädret eller bilmärken.
-- Representativ | Datan måste spegla verkligheten där modellen används. Tränad på data från ett enda land? Då kan den fungera sämre i andra.
+- Korrekt | Uppgifterna stämmer. Katter märkta som hundar lär modellen fel.
+- Relevant | Hänger ihop med problemet. Bostadspriser: storlek, läge, rum – inte vädret.
+- Representativ | Speglar verkligheten där modellen används, inte bara ett land.
+> Korrekt: uppgifterna måste stämma. Relevant: datan måste hänga ihop med det modellen ska lösa. Representativ: datan måste täcka de fall och variationer som finns där modellen används.
 > Be eleverna hitta på ett eget exempel för varje krav.
 
 ---
 
-[texttempo]
-etikett: Del 2 · Mer data – bättre AI?
+[två-tal]
+rubrik: Mer data – bättre AI?
+text: Men kvantitet är inte allt. En bra modell är också rättvis, pålitlig och användbar.
 bakgrund: fokusljus
-- statement | **10 meningar:** du lär dig lite av ett nytt språk. | Lite data
-- kontrast | **100+ böcker:** du upptäcker komplexa och subtila mönster. | Mycket data
-- precisering | Samma gäller AI: mer data gör systemet bättre på att **generalisera**. | AI
-- slutsats | Men kvantitet är inte allt.\\nEn bra modell är **rättvis, pålitlig och användbar**. | Kvalitet
+- 10 | meningar: du lär dig lite av ett nytt språk
+- 100+ | böcker: du upptäcker komplexa och subtila mönster
+> Samma gäller AI: mer data gör systemet bättre på att generalisera och hantera nya situationer.
 > Mer data gör systemet bättre på att generalisera och hantera nya situationer. Men mycket data hjälper inte om datan är felaktig eller skev.
 > Rättvis: behandlar olika grupper likvärdigt. Pålitlig: ger konsekventa och stabila resultat. Användbar: fungerar i verkligheten och inte bara i tester.
 > En rättvis modell missgynnar inte personer på grund av kön, ålder eller ursprung. Två särskilt viktiga frågor är bias och transparens.
 
 ---
 
-[flöde]
+[definition]
 etikett: Del 3 · Bias
-rubrik: Var kan bias uppstå?
-text: Bias betyder att en AI-modell behandlar vissa grupper eller situationer på ett systematiskt orättvist sätt.
-slutsats: Det kan handla om kön, etnicitet, språkbruk, geografi eller andra faktorer.
+rubrik: Bias
+text: När en AI-modell behandlar vissa grupper eller situationer på ett systematiskt orättvist sätt.
+exempel: Kön, etnicitet, språkbruk eller geografi. Oftast uppstår det i träningsdatan, men också i hur modellen konstrueras eller hur resultaten tolkas.
 bakgrund: fokusljus
-- Träningsdatan | Vanligast
-- Modellen | I hur den konstrueras
-- Tolkningen | I hur resultaten tolkas
 > Fråga gärna först: Har ni hört ordet bias förut? Vad tror ni det betyder?
 > Bias uppstår oftast i datan, men kan också smyga sig in i hur modellen byggs eller hur resultaten tolkas.
 
@@ -148,16 +146,16 @@ bakgrund: fokusljus
 
 ---
 
-[flöde]
+[etapper]
 etikett: Exempel · Rekrytering
 rubrik: Mellanchefer och padel
-text: Ett AI-system tränas på tidigare rekryteringar för att granska ansökningar till en chefstjänst.
-slutsats: Ingen styrde resultatet medvetet. AI:n lärde sig efterlikna gamla mönster som inte säger något om vad som gör någon till en bra chef.
 bakgrund: fokusljus
-- Träningsdata | Många tidigare chefer nämnde padel
-- Mönstret | ”Padel = bra chefskandidat”
-- Nya ansökningar | Den som nämner padel hamnar högt
-- Resultat | Meriterade som inte spelar padel sorteras bort
+fokus: mjuk
+- Träningsdata | AI:n tränas på tidigare chefsrekryteringar. Många av cheferna nämnde padel i sina cv:n.
+- Mönstret | AI:n drar slutsatsen: ”padel = bra chefskandidat”.
+- Nya ansökningar | Sökande som nämner padel hamnar högt, oavsett kompetens.
+- Resultat | Meriterade kandidater som inte spelar padel sorteras bort.
+> Ingen styrde resultatet medvetet. AI:n lärde sig efterlikna gamla mönster som inte säger något om vad som gör någon till en bra chef.
 > Gå igenom kedjan steg för steg. Poängen är att bias kan uppstå helt utan onda avsikter: snedvriden träningsdata räcker.
 > Fråga: Hur hade man kunnat upptäcka det här problemet?
 
@@ -207,16 +205,16 @@ bakgrund: fokusljus
 
 ---
 
-[fokus]
+[strålkastare]
 etikett: Del 4 · Transparens
-rubrik: En transparent AI kan svara på
-text: Att vi kan förstå hur en AI-modell fungerar, hur den har tränats och varför den fattar sina beslut.
+text: Extra viktigt när AI påverkar människors liv: i rättsväsendet, sjukvården, rekrytering och skolan.
 bakgrund: fokusljus
-- Datan | Vilken data användes för att träna modellen?
-- Besluten | Vilka beslut fattade modellen, och varför?
-- Det okända | Vad gör modellen när den stöter på okänd eller ovanlig information?
+- Transparens betyder att vi kan förstå
+- hur en AI-modell fungerar,
+- hur den har tränats
+- och varför den fattar sina beslut.
+> En transparent AI kan svara på: Vilken data användes för att träna modellen? Vilka beslut fattade modellen, och varför? Vad gör modellen när den stöter på okänd eller ovanlig information?
 > Transparens handlar om insyn. Ju större påverkan ett beslut har på en människas liv, desto viktigare är det att kunna förstå och ifrågasätta beslutet.
-> Extra viktigt när AI påverkar människors liv: rättsväsendet, sjukvården, rekrytering och skolan.
 
 ---
 
@@ -244,34 +242,33 @@ bakgrund: fokusljus
 
 ---
 
-[flöde]
+[vägval]
 etikett: Del 4 · Transparens
 rubrik: Bias och transparens hänger ihop
-slutsats: EU:s AI-förordning (AI Act) ställer krav på transparens och mänsklig kontroll när AI används i känsliga områden, t.ex. rekrytering, utbildning och kreditbedömning.
+vänster: Utan transparens
+höger: Med förklarbar AI
 bakgrund: fokusljus
-- bana: Utan transparens
-- Systemet är dolt | Vi förstår inte hur det fungerar
-- Bias syns inte | Den blir svår att upptäcka och åtgärda
-- Orättvisan består | Besluten granskas aldrig
-- bana: Med förklarbar AI
-- Besluten syns | Vi ser varför de fattas
-- Bias kan rättas | Den kan upptäckas och åtgärdas
-- Förtroende | AI kan accepteras i vården och rättsväsendet
+fokus: mjuk
+- Insyn | Vi förstår inte hur systemet fungerar | Vi ser varför besluten fattas
+- Bias | Blir svår att upptäcka och åtgärda | Kan upptäckas och rättas till
+- Följden | Orättvisa beslut lever kvar utan granskning | AI kan accepteras i vården och rättsväsendet
+> EU:s AI-förordning (AI Act) ställer krav på transparens och mänsklig kontroll när AI används i känsliga områden, t.ex. rekrytering, utbildning och kreditbedömning.
 > En AI som ger svar utan att man förstår varför kan dölja bias. Därför är förklarbar AI avgörande för om AI ska kunna accepteras i viktiga samhällsfunktioner.
 > Mer om EU:s AI-förordning i kapitel 6.
 
 ---
 
-[fokus]
+[kort]
 etikett: Del 5 · Datamängder
 rubrik: Data i verkligheten
 bakgrund: fokusljus
-- ImageNet | Bilder: över 14 miljoner bilder i tusentals kategorier, från ”katt” till ”skivstång”.
-- MNIST | Siffror: 70 000 handskrivna siffror. Används ofta för att lära ut hur AI fungerar.
-- Språkmodeller | Text: enorma textmängder från Wikipedia, böcker, artiklar och dialoger.
-- Taldata | Ljud: tusentals timmar inspelat tal med tillhörande text, ofta från frivilliga.
-- Sjukvårdsdata | Tabeller: anonymiserade journaler, en rad per patient med kolumner för ålder, symptom m.m.
-- Självspel | Egen data: AI:n spelar mot sig själv och lär sig av varje parti.
+steg: nej
+- ImageNet | Över 14 miljoner bilder i tusentals kategorier, från ”katt” till ”skivstång”
+- MNIST | 70 000 handskrivna siffror, klassiska i undervisning
+- Språkmodeller | Enorma textmängder: Wikipedia, böcker, artiklar och dialoger
+- Taldata | Tusentals timmar inspelat tal med text, ofta från frivilliga
+- Sjukvårdsdata | Anonymiserade journaler: en rad per patient, kolumner för ålder och symptom
+- Självspel | AI:n spelar mot sig själv och lär sig av varje parti
 > ImageNet har varit avgörande för bildigenkänning. MNIST är klassisk i undervisning: samma teknik som när mobilen förstår en siffra du ritar.
 > Taldata: öppna projekt som Mozilla Common Voice låter frivilliga spela in sig själva på olika språk. Tabelldata är vanligt inom medicin och ekonomi.
 
@@ -294,15 +291,16 @@ bakgrund: fokusljus
 
 ---
 
-[fokus]
+[karta]
 etikett: Sammanfattning
 rubrik: Det här tar vi med oss
 bakgrund: fokusljus
-- Data | Grunden för AI: AI lär sig av exempel i stället för färdiga regler.
-- Datakvalitet | Skräp in, skräp ut: bra data är korrekt, relevant och representativ.
-- Bias | Uppstår oftast i snedvriden data och kan ge orättvisa beslut.
-- Transparens | Gör det möjligt att förstå, granska och rätta AI:ns beslut.
-- Datamängder | AI lär sig som vi: genom att observera, lyssna, läsa och öva.
+steg: nej
+- Vad är data? | AI lär sig av exempel i stället för färdiga regler
+- Datakvalitet | Skräp in, skräp ut: korrekt, relevant, representativ
+- Bias | Uppstår oftast i snedvriden data
+- Transparens | Gör besluten möjliga att granska och rätta
+- Datamängder | AI lär sig som vi: observerar, lyssnar, läser, övar
 > Datan är grunden för AI. Det gäller oavsett om det handlar om bilder, text, ljud, simuleringar eller siffror i en tabell.
 
 ---

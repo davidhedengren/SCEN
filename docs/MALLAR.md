@@ -53,6 +53,8 @@ Varje bild i ett manus börjar med mallens namn inom hakparentes. Samma katalog 
 | `[omlopp]` | Banor | Ett begrepp i mitten och tre till sex delar som kretsar runt det. Varje del åker in längs banan på klick. |
 | `[gradskiva]` | Banor | En skala från ett ytterläge till ett annat. Nålen svänger till varje läge på klick och bågen fylls, medan förklaringen byts i mitten. |
 | `[bro]` | Banor | En process som en båge över ett golv. Bågen bär stegen, golvet är sammanhanget de börjar och slutar i. Hela modellen syns från början. Varje klick flyttar fokus ett steg, tidigare steg ligger kvar nedtonade och sista klicket visar helheten igen. Med retur blir bron en loop: resultatet leder längs golvet tillbaka till början, som i återkopplingar, kretslopp och cykler. |
+| `[graf]` | System | Noder och kanter i en fast karta. Hela grafen syns från början. Varje klick lyfter fram noder, kanter, vikter, en enskild nod eller en väg som ritas i färdriktningen. Resten ligger kvar nedtonat, och sista klicket visar helheten med en slutsats. |
+| `[träd]` | System | Ett träd eller beslutsträd ur en indragen lista. Hela trädet syns från början. Varje klick lyfter fram roten, en nivå, grenarna, löven eller en väg från roten till ett löv, som ritas nedåt gren för gren. |
 | `[ringar]` | Banor | Två eller tre begrepp som delvis överlappar, som ett Venndiagram. Det gemensamma skrivs i mitten och visas sist. |
 | `[lins]` | Banor | En bild där en rund lins lyser upp en detalj i taget. Resten är nedtonad. Varje rad: x y i procent | rubrik | text. |
 | `[mätare]` | Banor | Ett tal som andel av något, som en mätare som fylls medan talet räknas upp. Skriv 73 %, 4 av 8 eller ett tal med max. |
@@ -860,6 +862,61 @@ etikett: Övningen
 rubrik: Partiellt observerbara uppgifter
 tal: 4 av 8
 text: Poker, trafik, robotdammsugare och diagnos.
+```
+
+## System
+
+### `[graf]` Graf
+
+Noder och kanter i en fast karta. Hela grafen syns från början. Varje klick lyfter fram noder, kanter, vikter, en enskild nod eller en väg som ritas i färdriktningen. Resten ligger kvar nedtonat, och sista klicket visar helheten med en slutsats.
+
+**Undvik när:** Fler än tolv noder, eller när ordningen i en process är poängen (använd bro eller etapper). Vikterna är text du skriver själv.
+
+```
+[graf]
+etikett: Datastruktur
+rubrik: En graf är noder och kanter
+text: En graf beskriver saker och hur de hänger ihop.
+- nod: A | 10 20
+- nod: B | 45 5
+- nod: C | 85 30
+- nod: D | 60 90
+- nod: E | 15 80
+- kant: A - B | 4
+- kant: B - C | 3
+- kant: A - E | 2
+- kant: E - D | 6
+- kant: C - D | 2
+- kant: B - D | 7
+- fokus: noder | Noder | Punkterna. De kan vara platser, personer eller tillstånd.
+- fokus: kanter | Kanter | Linjerna visar vilka noder som hör ihop.
+- fokus: vikter | Vikter | Ett värde på varje kant, till exempel avstånd, kostnad eller tid.
+- fokus: A > B > C > D | En väg | Vägen följer kanterna från A till D.
+- fokus: A > E > D | En kortare väg | Samma start och mål, lägre summa.
+slutsats: Med vikter kan vi jämföra vägar och välja den bästa.
+```
+
+### `[träd]` Träd
+
+Ett träd eller beslutsträd ur en indragen lista. Hela trädet syns från början. Varje klick lyfter fram roten, en nivå, grenarna, löven eller en väg från roten till ett löv, som ritas nedåt gren för gren.
+
+**Undvik när:** Fler än åtta löv eller fem nivåer. Långa texter i noderna.
+
+```
+[träd]
+etikett: Beslutsträd
+rubrik: Ska vi ha lektionen ute?
+text: Varje fråga delar upp fallen. Varje löv är ett beslut.
+- Regnar det?
+  - Ja: Inne
+  - Nej: Är det kallare än 5 grader?
+    - Ja: Inne
+    - Nej: Ute
+- fokus: rot | Roten | Den första frågan ställs alltid.
+- fokus: grenar | Grenar | Varje gren är ett möjligt svar.
+- fokus: löv | Löv | Löven är de slutliga besluten.
+- fokus: väg Nej > Nej | Ett fall | Uppehåll och 12 grader ger lektion ute.
+slutsats: Samma frågor i samma ordning ger samma beslut varje gång.
 ```
 
 ## Ljus

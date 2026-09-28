@@ -5,7 +5,7 @@ const Manus = (() => {
     titel: 'title', avsnitt: 'section', 'påstående': 'statement', punkter: 'bullets', 'text-bild': 'split', helbild: 'image', bildregi: 'bildregi', terminal: 'terminal', 'kodförklaring': 'kodforklaring', typografi: 'typografisk', texttempo: 'texttempo',
     kort: 'cards', 'jämförelse': 'compare', tabell: 'table', tal: 'number', 'två-tal': 'duo', tidslinje: 'timeline',
     'fråga': 'question', 'omröstning': 'poll', reflektion: 'reflect', definition: 'define', samtal: 'chat', citat: 'quote',
-    omslag: 'omslag', karta: 'karta', triad: 'triad', motsats: 'motsats', bildkant: 'bildkant', skiften: 'skiften', prisma: 'prisma', verkningar: 'verkningar', 'belägg': 'belagg', 'sammanflöde': 'sammanflode', fri: 'tom', 'båge': 'båge', omlopp: 'omlopp', gradskiva: 'gradskiva', bro: 'bro', ringar: 'ringar', lins: 'lins', 'mätare': 'mätare', 'ridå': 'ridå', 'strålkastare': 'strålkastare', fokus: 'fokus', ordbild: 'ordbild', 'bildfält': 'bildfält', delning: 'delning', ljustal: 'ljustal', egen: 'egen'
+    omslag: 'omslag', karta: 'karta', triad: 'triad', motsats: 'motsats', bildkant: 'bildkant', skiften: 'skiften', prisma: 'prisma', verkningar: 'verkningar', 'belägg': 'belagg', 'sammanflöde': 'sammanflode', fri: 'tom', 'båge': 'båge', omlopp: 'omlopp', gradskiva: 'gradskiva', bro: 'bro', graf: 'graf', 'träd': 'trad', ringar: 'ringar', lins: 'lins', 'mätare': 'mätare', 'ridå': 'ridå', 'strålkastare': 'strålkastare', fokus: 'fokus', ordbild: 'ordbild', 'bildfält': 'bildfält', delning: 'delning', ljustal: 'ljustal', egen: 'egen'
   };
   const TAG_OF = Object.fromEntries(Object.entries(TAGS).map(([k, v]) => [v, k]));
   const KEYS = { accent: 'accent',
@@ -14,15 +14,15 @@ const Manus = (() => {
     bild: 'image', alt: 'alt', 'vänster': 'lt', 'höger': 'rt', start: 'start', slut: 'end', orsak: 'cause', konsekvens: 'effect', villkor: 'condition', alternativ: 'alternative', helhet: 'whole', reservation: 'reservation', gemensamt: 'common', 'spänning': 'tension', syntes: 'synthesis', band: 'banner', 'bild-vänster': 'flip', steg: 'steps', tona: 'dim', fokus: 'focus', retur: 'ret',
     'övergång': 'transition', bakgrund: 'bg', rubrikrörelse: 'ta', 'rörelse': 'ba', visa: 'reveal', rubrikrad: 'header', mall: 'tpl', aktiv: 'active', siffra: 'number', slutsats: 'text', max: 'max', mitten: 'text'
   };
-  const OUT_KEY = { max: 'max', active: 'aktiv', title: 'rubrik', text: 'text', caption: 'etikett', answer: 'svar', example: 'exempel', number: 'tal', minutes: 'tid', image: 'bild', alt: 'alt', lt: 'vänster', rt: 'höger', ret: 'retur', start: 'start', end: 'slut', question: 'fråga', cause: 'orsak', effect: 'konsekvens', condition: 'villkor', alternative: 'alternativ', source: 'källa', whole: 'helhet', reservation: 'reservation', common: 'gemensamt', tension: 'spänning', synthesis: 'syntes', transition: 'övergång', bg: 'bakgrund', ta: 'rubrikrörelse', ba: 'rörelse', tpl: 'mall' };
+  const OUT_KEY = { conclusion: 'slutsats', max: 'max', active: 'aktiv', title: 'rubrik', text: 'text', caption: 'etikett', answer: 'svar', example: 'exempel', number: 'tal', minutes: 'tid', image: 'bild', alt: 'alt', lt: 'vänster', rt: 'höger', ret: 'retur', start: 'start', end: 'slut', question: 'fråga', cause: 'orsak', effect: 'konsekvens', condition: 'villkor', alternative: 'alternativ', source: 'källa', whole: 'helhet', reservation: 'reservation', common: 'gemensamt', tension: 'spänning', synthesis: 'syntes', transition: 'övergång', bg: 'bakgrund', ta: 'rubrikrörelse', ba: 'rörelse', tpl: 'mall' };
   const IMAGE_DIRECTION_KEYS = { 'bildläge':'mode', fokuspunkt:'focus', 'beskärning':'crop', startutsnitt:'start', slututsnitt:'end', 'säker-yta':'safe', 'mörkning':'shade', riktning:'direction', hastighet:'speed' };
   const IMAGE_BRIEF_KEYS = { 'bild-id':'id', filnamn:'filename', scen:'scene', syfte:'purpose', motiv:'subject', komposition:'composition', motivplacering:'placement', format:'aspectRatio', undvik:'avoid', prompt:'prompt' };
   const IMAGE_DIRECTION_OUT = { mode:'bildläge', focus:'fokuspunkt', crop:'beskärning', start:'startutsnitt', end:'slututsnitt', safe:'säker-yta', shade:'mörkning', direction:'riktning', speed:'hastighet' };
   const IMAGE_BRIEF_OUT = { id:'bild-id', filename:'filnamn', scene:'scen', purpose:'syfte', subject:'motiv', composition:'komposition', placement:'motivplacering', aspectRatio:'format', avoid:'undvik', prompt:'prompt' };
   const REVEAL = { allt: 'none', rader: 'rows', facit: 'answers', 'facit-rader': 'rest' };
   const REVEAL_OUT = { none: 'allt', rows: 'rader', answers: 'facit', rest: 'facit-rader' };
-  const LIST_FIELD = {etapper:'items',vagval:'items',lager:'items',resonemang:'items',helhet:'items',skiften:'items',prisma:'items',verkningar:'items',belagg:'items',sammanflode:'items',register:'items',samband:'items',marginal:'items',sats:'items', bullets: 'bullets', split: 'bullets', question: 'bullets', poll: 'bullets', reflect: 'bullets', cards: 'items', timeline: 'items', bildregi:'items', terminal:'items', kodforklaring:'items', typografisk:'items', texttempo:'items', chat: 'items', duo: 'items', egen: 'items', compare: 'lb', karta: 'items', triad: 'items', motsats: 'items', bildkant: 'bullets', omlopp: 'items', gradskiva: 'items', bro: 'items', ringar: 'items', lins: 'items', 'strålkastare': 'items', fokus: 'items', 'bildfält': 'bullets', delning: 'items' };
-  const STEPPED = ["etapper","vagval","lager","resonemang","helhet","skiften","prisma","verkningar","belagg","sammanflode",'register','samband','marginal','sats','bullets', 'split', 'cards', 'compare', 'timeline', 'bildregi', 'terminal', 'kodforklaring', 'typografisk', 'texttempo', 'chat', 'duo', 'egen', 'karta', 'triad', 'motsats', 'bildkant', 'omlopp', 'gradskiva', 'bro', 'ringar', 'lins', 'strålkastare', 'fokus', 'bildfält', 'delning'];
+  const LIST_FIELD = {graf:'items',trad:'items',etapper:'items',vagval:'items',lager:'items',resonemang:'items',helhet:'items',skiften:'items',prisma:'items',verkningar:'items',belagg:'items',sammanflode:'items',register:'items',samband:'items',marginal:'items',sats:'items', bullets: 'bullets', split: 'bullets', question: 'bullets', poll: 'bullets', reflect: 'bullets', cards: 'items', timeline: 'items', bildregi:'items', terminal:'items', kodforklaring:'items', typografisk:'items', texttempo:'items', chat: 'items', duo: 'items', egen: 'items', compare: 'lb', karta: 'items', triad: 'items', motsats: 'items', bildkant: 'bullets', omlopp: 'items', gradskiva: 'items', bro: 'items', ringar: 'items', lins: 'items', 'strålkastare': 'items', fokus: 'items', 'bildfält': 'bullets', delning: 'items' };
+  const STEPPED = ["graf","trad","etapper","vagval","lager","resonemang","helhet","skiften","prisma","verkningar","belagg","sammanflode",'register','samband','marginal','sats','bullets', 'split', 'cards', 'compare', 'timeline', 'bildregi', 'terminal', 'kodforklaring', 'typografisk', 'texttempo', 'chat', 'duo', 'egen', 'karta', 'triad', 'motsats', 'bildkant', 'omlopp', 'gradskiva', 'bro', 'ringar', 'lins', 'strålkastare', 'fokus', 'bildfält', 'delning'];
   const yes = v => /^(ja|j|yes|true|1|på)$/i.test(String(v).trim());
   function enumVal(map, v) {
     const x = String(v).trim().toLowerCase();
@@ -76,9 +76,9 @@ const Manus = (() => {
       }
       const li = raw.match(/^(\s*)[-*•]\s+(.*)$/);
       if (li) {
-        const sub = li[1].length >= 2;
+        const depth = s.layout === 'trad' ? Math.min(8, Math.floor(li[1].replace(/\t/g, '  ').length / 2)) : (li[1].length >= 2 ? 1 : 0);
         const arr = s[listField] = Array.isArray(s[listField]) ? s[listField] : [];
-        arr.push((sub ? '- ' : '') + li[2].replace(/\\\\n/g, String.fromCharCode(10)));
+        arr.push('- '.repeat(depth) + li[2].replace(/\\\\n/g, String.fromCharCode(10)));
         last = null; lastImageBrief = null; continue;
       }
       const kv = line.match(/^([a-zåäöA-ZÅÄÖ-]+)\s*:\s*(.*)$/);
@@ -101,6 +101,7 @@ const Manus = (() => {
       }
       if (s.layout === 'prisma' && label === 'fråga') key = 'question';
       if (s.layout === 'belagg' && label === 'källa') key = 'source';
+      if ((s.layout === 'graf' || s.layout === 'trad') && label === 'slutsats') key = 'conclusion';
       if (key) {
         const v = kv[2];
         last = null; lastImageBrief = null;
@@ -191,6 +192,7 @@ const Manus = (() => {
     if (L === 'verkningar') { put('condition', s.condition); put('alternative', s.alternative); }
     if (L === 'belagg') { put('whole', s.whole); put('reservation', s.reservation); }
     if (L === 'sammanflode') put('synthesis', s.synthesis);
+    if (L === 'graf' || L === 'trad') put('conclusion', s.conclusion);
     if (['number', 'omslag', 'båge', 'lins', 'mätare', 'ljustal'].includes(L)) put('number', s.number);
     if (L === 'mätare' || L === 'ljustal') put('max', s.max);
     if (L === 'bro' || L === 'vagval') { put('lt', s.lt); put('rt', s.rt); }
@@ -223,7 +225,7 @@ const Manus = (() => {
     if (s.focus && Scen.FOCUS_STYLES[s.focus]) out.push(`fokus: ${lab(Scen.FOCUS_STYLES,s.focus)}`);
     if (s.dim) out.push('tona: ja');
     else if (s.dim === false && ['bro','etapper','vagval','lager','resonemang','helhet','skiften','prisma','verkningar','belagg','sammanflode'].includes(L)) out.push('tona: nej');
-    const list = (arr) => Scen.lines(arr).forEach(t => { t = String(t).split(String.fromCharCode(10)).join('\\\\n'); out.push(/^- /.test(t) ? '  - ' + t.slice(2) : '- ' + t); });
+    const list = (arr) => Scen.lines(arr).forEach(t => { t = String(t).split(String.fromCharCode(10)).join('\\\\n'); const d = (t.match(/^(- )+/) || [''])[0].length / 2; out.push('  '.repeat(d) + '- ' + t.slice(d * 2)); });
     if (L === 'compare') {
       out.push(`vänster: ${val(s.lt)}`); list(s.lb);
       out.push(`höger: ${val(s.rt)}`); list(s.rb);
@@ -346,6 +348,10 @@ const Manus = (() => {
       ex: '[gradskiva]\nrubrik: Hur mycket ser agenten?\n- Inget | Agenten gissar helt i blindo.\n- Delar | Sensorer ger en del av bilden.\n- Allt | Hela miljön är synlig, som i schack.' },
     { l: 'bro', cat: 'Banor', syfte: 'En process som en båge över ett golv. Bågen bär stegen, golvet är sammanhanget de börjar och slutar i. Hela modellen syns från början. Varje klick flyttar fokus ett steg, tidigare steg ligger kvar nedtonade och sista klicket visar helheten igen. Med retur blir bron en loop: resultatet leder längs golvet tillbaka till början, som i återkopplingar, kretslopp och cykler.', undvik: 'Fler än fem hållplatser. Delar utan inbördes ordning, använd kort eller omlopp.',
       ex: '[bro]\nrubrik: En agent arbetar i en loop\nvänster: Miljö\nhöger: Förändrad miljö\nretur: Handlingen förändrar miljön\n- Uppfatta | Sensorer eller annan indata\n- Besluta | Välj en handling\n- Agera | Utför en åtgärd\ntext: Miljön påverkar agenten, och agenten påverkar miljön.' },
+    { l: 'graf', cat: 'System', syfte: 'Noder och kanter i en fast karta. Hela grafen syns från början. Varje klick lyfter fram noder, kanter, vikter, en enskild nod eller en väg som ritas i färdriktningen. Resten ligger kvar nedtonat, och sista klicket visar helheten med en slutsats.', undvik: 'Fler än tolv noder, eller när ordningen i en process är poängen (använd bro eller etapper). Vikterna är text du skriver själv.',
+      ex: '[graf]\netikett: Datastruktur\nrubrik: En graf är noder och kanter\ntext: En graf beskriver saker och hur de hänger ihop.\n- nod: A | 10 20\n- nod: B | 45 5\n- nod: C | 85 30\n- nod: D | 60 90\n- nod: E | 15 80\n- kant: A - B | 4\n- kant: B - C | 3\n- kant: A - E | 2\n- kant: E - D | 6\n- kant: C - D | 2\n- kant: B - D | 7\n- fokus: noder | Noder | Punkterna. De kan vara platser, personer eller tillstånd.\n- fokus: kanter | Kanter | Linjerna visar vilka noder som hör ihop.\n- fokus: vikter | Vikter | Ett värde på varje kant, till exempel avstånd, kostnad eller tid.\n- fokus: A > B > C > D | En väg | Vägen följer kanterna från A till D.\n- fokus: A > E > D | En kortare väg | Samma start och mål, lägre summa.\nslutsats: Med vikter kan vi jämföra vägar och välja den bästa.' },
+    { l: 'trad', cat: 'System', syfte: 'Ett träd eller beslutsträd ur en indragen lista. Hela trädet syns från början. Varje klick lyfter fram roten, en nivå, grenarna, löven eller en väg från roten till ett löv, som ritas nedåt gren för gren.', undvik: 'Fler än åtta löv eller fem nivåer. Långa texter i noderna.',
+      ex: '[träd]\netikett: Beslutsträd\nrubrik: Ska vi ha lektionen ute?\ntext: Varje fråga delar upp fallen. Varje löv är ett beslut.\n- Regnar det?\n  - Ja: Inne\n  - Nej: Är det kallare än 5 grader?\n    - Ja: Inne\n    - Nej: Ute\n- fokus: rot | Roten | Den första frågan ställs alltid.\n- fokus: grenar | Grenar | Varje gren är ett möjligt svar.\n- fokus: löv | Löv | Löven är de slutliga besluten.\n- fokus: väg Nej > Nej | Ett fall | Uppehåll och 12 grader ger lektion ute.\nslutsats: Samma frågor i samma ordning ger samma beslut varje gång.' },
     { l: 'ringar', cat: 'Banor', syfte: 'Två eller tre begrepp som delvis överlappar, som ett Venndiagram. Det gemensamma skrivs i mitten och visas sist.', undvik: 'Begrepp som inte har något gemensamt.',
       ex: '[ringar]\nrubrik: Singel eller multi?\n- Singelagent | En agent, ingen koordinering\n- Multiagent | Flera agenter som påverkar varandra\nmitten: Schack mot dator kan ses på båda sätten' },
     { l: 'lins', cat: 'Banor', syfte: 'En bild där en rund lins lyser upp en detalj i taget. Resten är nedtonad. Varje rad: x y i procent | rubrik | text.', undvik: 'Bilder utan tydliga detaljer att peka på.',

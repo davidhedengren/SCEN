@@ -838,7 +838,7 @@
 .scen .slide[data-layout="bro"][data-dramaturgy] .br-node .halo{fill:color-mix(in srgb,var(--accent) 14%,transparent);transform-box:fill-box;transform-origin:center;transform:scale(.3);opacity:0;transition:transform .9s var(--dramaturgy-ease),opacity .5s var(--dramaturgy-soft-ease)}
 .scen .slide[data-layout="bro"][data-dramaturgy][data-dramaturgy-state="focus"] .br-node.dramaturgy-current .halo,.scen .slide[data-layout="bro"][data-dramaturgy][data-dramaturgy-state="restored"] .br-node .halo{transform:none;opacity:1}
 .scen .slide[data-layout="bro"][data-dramaturgy] .br-lab{position:absolute;margin:0;z-index:1;transition:opacity var(--dramaturgy-dim-duration) var(--dramaturgy-soft-ease),color var(--dramaturgy-focus-duration) var(--dramaturgy-ease)}
-.scen .slide[data-layout="bro"][data-dramaturgy][data-dramaturgy-state="overview"] .br-lab{opacity:var(--dramaturgy-overview-opacity)}
+.scen .slide[data-layout="bro"][data-dramaturgy][data-dramaturgy-state="overview"] :is(.br-lab,.br-seg,.br-node,.br-cap){opacity:var(--br-dim)}
 .scen .slide[data-layout="bro"][data-dramaturgy][data-dramaturgy-state="focus"] .br-lab.dramaturgy-current{opacity:1}
 .scen .slide[data-layout="bro"][data-dramaturgy][data-dramaturgy-state="focus"] .br-lab:not(.dramaturgy-current){opacity:var(--br-dim)}
 .scen .slide[data-layout="bro"][data-dramaturgy][data-bro-loop]:has(.br-last.dramaturgy-current) .br-start{opacity:var(--dramaturgy-overview-opacity)}

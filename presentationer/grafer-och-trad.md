@@ -63,16 +63,16 @@ slutsats: Ruttoptimering är att hitta vägen med lägst summa. Sökalgoritmer g
 - nod: Jönköping | 70 30
 - nod: Nässjö | 96 50
 - nod: Malmö | 34 96
-- kant: Göteborg - Falköping | 70
-- kant: Falköping - Jönköping | 50
-- kant: Jönköping - Nässjö | 25
-- kant: Göteborg - Malmö | 190
-- kant: Jönköping - Malmö | 150
-- kant: Nässjö - Malmö | 160
-- fokus: vikter | Vikter | Varje kant har ett värde. Här är det påhittade restider i minuter.
+- kant: Göteborg - Falköping | 128
+- kant: Falköping - Jönköping | 72
+- kant: Jönköping - Nässjö | 47
+- kant: Göteborg - Malmö | 276
+- kant: Jönköping - Malmö | 296
+- kant: Nässjö - Malmö | 314
+- fokus: vikter | Vikter | Varje kant har ett värde. Här är det vägavstånd i kilometer.
 - fokus: Göteborg > Malmö > Nässjö | En möjlig väg | Via Malmö kommer vi fram, men vägen är lång.
 - fokus: Göteborg > Falköping > Jönköping > Nässjö | Kortaste vägen | Samma start och mål. Lägst summa av vikterna.
-> Vikterna är exempelvärden, inte verkliga restider. Fråga gärna klassen innan klick 3: vilken väg är kortast?
+> Vikterna är vägavstånd med bil i kilometer, enligt ruttplanerare.se (september 2026). Fråga gärna klassen innan klick 3: vilken väg är kortast?
 
 ---
 
@@ -156,6 +156,25 @@ slutsats: Trädet ställer frågorna i tur och ordning tills det når ett löv.
 
 ---
 
+[sats]
+rubrik: Tre strukturer, ett syfte
+text: Verktyg för att representera data, fatta beslut och göra förutsägelser.
+- Grafer | Nätverk av noder: rutter, flöden och relationer.
+- Träd | Hierarkier: effektiv sökning och sortering.
+- Beslutsträd | Alternativ och utfall i en grenad struktur.
+
+---
+
+[kort]
+etikett: Uppgifter
+rubrik: Nu är det er tur
+- 1 Egen graf | Minst fem noder, till exempel ett vägnät. Vad kan grafen användas till?
+- 2 Valfritt träd | Minst tre nivåer, till exempel ett släktträd eller en katalogstruktur.
+- 3 Beslutsträd | Ett vardagligt val med minst fyra noder. Förklara logiken.
+- 4 Träd i AI | Hur kan ett träd användas i ett AI-system? Varför är träd viktiga?
+
+---
+
 [etapper]
 etikett: Lektionsaktivitet
 rubrik: Beslutsträd med apor
@@ -184,22 +203,3 @@ slutsats: Testa trädet på testdatan. Ett bra träd gissar rätt på apor det a
 - fokus: väg Ja | Tänderna syns | Svaret kommer direkt: bits.
 - fokus: väg Nej > Ja > Ja | Fler frågor | Tänderna syns inte, men munnen och ögonen är öppna: bits.
 - fokus: väg Nej > Nej | Stängd mun | Två frågor räcker: bits inte.
-
----
-
-[sats]
-rubrik: Tre strukturer, ett syfte
-text: Verktyg för att representera data, fatta beslut och göra förutsägelser.
-- Grafer | Nätverk av noder: rutter, flöden och relationer.
-- Träd | Hierarkier: effektiv sökning och sortering.
-- Beslutsträd | Alternativ och utfall i en grenad struktur.
-
----
-
-[kort]
-etikett: Uppgifter
-rubrik: Nu är det er tur
-- 1 Egen graf | Minst fem noder, till exempel ett vägnät. Vad kan grafen användas till?
-- 2 Valfritt träd | Minst tre nivåer, till exempel ett släktträd eller en katalogstruktur.
-- 3 Beslutsträd | Ett vardagligt val med minst fyra noder. Förklara logiken.
-- 4 Träd i AI | Hur kan ett träd användas i ett AI-system? Varför är träd viktiga?

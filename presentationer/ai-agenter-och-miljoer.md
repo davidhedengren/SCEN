@@ -224,7 +224,7 @@ bild: bilder/ai-agenter/ai12.jpg
 rubrik: Övning i par: fyll i och diskutera tabellen
 visa: facit-rader
 | Uppgift | Fullt/partiellt\nobserverbart | Singel/\nmultiagent | Deterministisk/\nstokastisk | Episodisk/\nsekventiell | Statiskt/\ndynamiskt | Diskret/\nkontinuerligt |
-| Schack mot dator | Fullt | Singel | Deterministisk | Sekventiell | Statisk | Diskret |
+| Schack mot dator | Fullt | Multi | Deterministisk | Sekventiell | Statisk | Diskret |
 | Korsord | Fullt | Singel | Deterministisk | Sekventiell | Statisk | Diskret |
 | Poker | Partiellt | Multi | Stokastisk | Sekventiell | Statisk | Diskret |
 | Bildklassificering | Fullt | Singel | Deterministisk | Episodisk | Statisk | Diskret |
@@ -236,7 +236,7 @@ visa: facit-rader
 >
 > Schack mot dator
 > Observerbarhet: Fullt observerbart eftersom alla bitar på schackbrädet och deras positioner är synliga för både spelaren och datorn.
-> Antal agenter: Single-agent om det är spelaren mot datorn, men eftersom datorn också räknas som en agent kan det tolkas som multi-agent. I detta fall fokuserar vi på en persons perspektiv mot en AI.
+> Antal agenter: Multi-agent eftersom både spelaren och datorn är agenter som fattar beslut, och deras drag påverkar varandras möjligheter och resultat (en konkurrerande miljö).
 > Deterministisk: Alla drag och deras konsekvenser är förutsägbara och leder till ett bestämt utfall.
 > Sekventiell: Varje drag påverkar brädets framtida tillstånd, så alla beslut måste tas med hänsyn till kommande drag.
 > Statisk: Brädets tillstånd förändras inte utanför agenternas kontroll.

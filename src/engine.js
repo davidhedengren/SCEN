@@ -555,31 +555,70 @@ function renderSlide(sl, i, deck, img) {
       break;
     }
     case 'bro': {
-      const uid = 'u' + hash((sl.id || '') + i + L);
-      cls = 'bana-bro ' + uid;
-      const its = lines(sl.items).slice(0, 6).map(t => { const p = t.split('|'); return { h: p[0].trim(), t: p.slice(1).join('|').trim() }; });
-      const ax = 250, bx = 1670, yb = 840, s = 280, c = bx - ax, R = (c * c / 4 + s * s) / (2 * s), ccx = (ax + bx) / 2, ccy = yb + (R - s);
-      const d = `M ${ax} ${yb} A ${R.toFixed(1)} ${R.toFixed(1)} 0 0 1 ${bx} ${yb}`;
-      const a0 = Math.atan2(yb - ccy, ax - ccx), a1 = Math.atan2(yb - ccy, bx - ccx);
-      const span = ((a1 - a0) + 2 * Math.PI) % (2 * Math.PI);
-      const n = its.length;
-      let css = '';
+      /* Bågen bär stegen, golvet är sammanhanget de börjar och slutar i.
+         Med retur blir bron en loop: sista fokus följer resultatet längs golvet tillbaka.
+         Geometrin är fast mellan klick. Bara ljus, tjocklek och opacitet ändras. */
+      const its = lines(sl.items).slice(0, 5).map(t => { const p = t.split('|'); return { h: p[0].trim(), t: p.slice(1).join('|').trim() }; });
+      const n = its.length, loop = !!plain(sl.ret || '');
+      const CX = 960, CY = 820, RX = 640, RY = 520, rad = d => d * Math.PI / 180;
+      const pt = d => [+(CX + RX * Math.cos(rad(d))).toFixed(2), +(CY - RY * Math.sin(rad(d))).toFixed(2)];
+      const angs = n === 1 ? [90] : its.map((_, j) => 150 - j * 120 / (n - 1));
+      const P = angs.map(pt), FL = [CX - RX, CY], FR = [CX + RX, CY];
+      const Mv = p => `M${p[0]} ${p[1]}`, Ac = p => `A${RX} ${RY} 0 0 1 ${p[0]} ${p[1]}`, Ln = p => `L${p[0]} ${p[1]}`;
+      const from = j => j === 0 ? 180 : angs[j - 1], to = j => j === n ? 0 : angs[j];
+      const halfArc = Math.PI * (3 * (RX + RY) - Math.sqrt((3 * RX + RY) * (RX + 3 * RY))) / 2, floor = 2 * RX;
+      const arcLen = j => halfArc * (from(j) - to(j)) / 180;
+      const segD = j => `${Mv(j === 0 ? FL : P[j - 1])} ${Ac(j === n ? FR : P[j])}`;
+      const T = (j, extra) => ` data-dramaturgy-target data-dramaturgy-index="${j}"${extra ? ` class="${extra}"` : ''}`;
+      const tag = j => (j === 0 ? ' br-first' : '') + (j === n ? ' br-last' : '');
+      const dur = len => Math.round(Math.max(1700, Math.min(3600, 900 + len * 1.9)));
+      const chev = (x, y, a, j) => `<path${T(j, 'br-chev' + tag(j))} d="M-6 -8 L4 0 L-6 8" transform="translate(${x.toFixed(1)} ${y.toFixed(1)}) rotate(${a.toFixed(1)})"/>`;
+      let segs = '', hls = '', sigs = '', chevs = '';
+      for (let j = 0; j <= n; j++) {
+        const d = segD(j), mid = (from(j) + to(j)) / 2, m = pt(mid);
+        const ang = Math.atan2(RY * Math.cos(rad(mid)), RX * Math.sin(rad(mid))) * 180 / Math.PI;
+        const lastLoop = j === n && loop, len = arcLen(j) + (lastLoop ? floor : 0);
+        segs += `<path${T(j, 'br-seg' + tag(j))} d="${d}"/>`;
+        hls += `<path${T(j, 'br-hl' + tag(j))} d="${d}" pathLength="1" style="--d:${(j * .15).toFixed(2)}s"/>`;
+        sigs += `<path${T(j, 'br-sig' + tag(j))} d="${d}${lastLoop ? ' ' + Ln(FL) : ''}" pathLength="1" style="--dur:${dur(len)}ms"/>`;
+        chevs += chev(m[0], m[1], ang, j);
+      }
+      let ret = '';
+      if (loop) {
+        const rd = `${Mv(FR)} ${Ln(FL)}`, lastLen = arcLen(n) + floor, D = dur(lastLen);
+        const land = .8 * (arcLen(n) / lastLen) / (1 + .07);
+        segs += `<path${T(n, 'br-seg br-ret br-last')} d="${rd}"/>`;
+        hls += `<path${T(n, 'br-hl br-ret br-last')} d="${rd}" pathLength="1" style="--d:${((n + .8) * .15).toFixed(2)}s"/>`;
+        chevs += chev(CX, CY, 180, n);
+        ret = `<ellipse${T(n, 'br-ripple br-last')} cx="${FR[0]}" cy="${FR[1]}" rx="200" ry="30" style="--dur:${D}ms;--rd:${Math.round(700 + land * D)}ms"/>`;
+      }
+      const orbit = `${Mv(FL)} ${Ac([CX, CY - RY])} ${Ac(FR)}${loop ? ' ' + Ln(FL) : ''}`;
+      const size = n <= 3 ? { h: 76, s: 28, w: 440 } : n === 4 ? { h: 60, s: 26, w: 360 } : { h: 44, s: 24, w: 300 };
       const stops = its.map((o, j) => {
-        const f = (j + 1) / (n + 1), an = a0 + span * f;
-        const x = ccx + R * Math.cos(an), y = ccy + R * Math.sin(an);
-        const lx = ccx + (R + 70) * Math.cos(an), ly = ccy + (R + 70) * Math.sin(an);
-        const sel = `.${uid}:has(.br-l.k${j}.in)`;
-        css += `${sel} .br-progress{stroke-dashoffset:${1-f}}.${uid}:has(.br-l.k${j}.step-current) .br-dot.k${j}{opacity:1;box-shadow:0 0 0 5px var(--hl)}${sel} .br-comet{offset-distance:${(f * 100).toFixed(2)}%}${sel} .br-dot.k${j}{background:var(--accent);transform:translate(-50%,-50%) scale(1.25)}`;
-        return `<span class="br-dot k${j}" style="left:${Math.round(x)}px;top:${Math.round(y)}px"></span><div class="br-l k${j}" style="left:${Math.round(lx)}px;top:${Math.round(ly)}px;width:${n>4?190:300}px;--br-heading:${n>4?28:38}px"${steps ? st('fade') : A('fade', 700 + j * 200)}><small class="br-index">${String(j+1).padStart(2,'0')}</small><b>${fmt(o.h)}</b>${o.t ? `<span>${fmt(o.t)}</span>` : ''}</div>`;
+        const [x, y] = P[j], a = angs[j];
+        const side = a > 125 ? 'l' : a < 55 ? 'r' : 'c';
+        const left = side === 'l' ? x + 70 : side === 'r' ? x - 70 - size.w : x - size.w / 2;
+        const top = side === 'c' ? y + (n === 5 ? 44 : 50) : y - (n === 5 ? 12 : size.h * .58);
+        return `<div${T(j, `br-lab br-stop side-${side}` + tag(j))} style="left:${Math.round(left)}px;top:${Math.round(top)}px;width:${size.w}px;--brh:${size.h}px;--brs:${size.s}px"><b>${fmt(o.h)}</b>${o.t ? `<span>${fmt(o.t)}</span>` : ''}</div>`;
       }).join('');
-      css += `.${uid}:has(.br-end.in) .br-progress{stroke-dashoffset:0}.${uid}:has(.br-end.step-current) .br-b b{color:var(--accent)}.scen.static .${uid} .br-progress{stroke-dashoffset:0}.${uid}:has(.br-end.in) .br-comet{offset-distance:100%}.${uid}:has(.br-end.in) .br-b i{background:var(--accent)}.scen.static .${uid} .br-comet{offset-distance:100%}`;
-      if (!steps) css += `.${uid} .br-progress{stroke-dashoffset:0}.${uid} .br-comet{offset-distance:100%}`;
-      body = `<style>${css}</style>` + (sl.caption ? `<p class="kicker"${A('fade')}>${fmt(sl.caption)}</p>` : '') + H2('', 'mask') +
-        (sl.text ? `<p class="lead br-lead"${A('fade', 300)}>${fmt(sl.text)}</p>` : '') +
-        `<svg class="br-svg" viewBox="0 0 1920 1080" aria-hidden="true"><path class="br-shadow" d="${d}"/><path class="br-arc" d="${d}" pathLength="1"${A('draw', 250, ' data-duration="1600"')}/><path class="br-progress" d="${d}" pathLength="1"/></svg>` +
-        `<div class="br-end-pt br-a" style="left:${ax}px;top:${yb}px"${A('pop', 150)}><i></i><b>${fmt(sl.lt || 'Start')}</b></div>` +
-        `<div class="br-end-pt br-b" style="left:${bx}px;top:${yb}px"${A('pop', 900)}><i></i><b>${fmt(sl.rt || 'Mål')}</b></div>` +
-        stops + `<div class="br-comet" style="offset-path:path('${d}')"${A('fade', 1400)}></div>` + `<span class="br-end"${steps ? st('fade') : ''}></span>`;
+      const nodes = P.map((p, j) => `<g${T(j, 'br-node' + tag(j))} transform="translate(${p[0]} ${p[1]})"><circle class="halo" r="32"/><circle class="mk" r="11"/></g>`).join('');
+      let cues = '';
+      if (steps) {
+        for (let j = 0; j <= n; j++) { const s = st('none'); cues += `<span data-dramaturgy-cue data-dramaturgy-focus="${k}" data-dramaturgy-target="${j}"${s} aria-hidden="true"></span>`; }
+        cues += `<span data-dramaturgy-restore${st('none')} aria-hidden="true"></span>`;
+      }
+      body = (sl.caption ? `<p class="kicker"${A('fade')}>${fmt(sl.caption)}</p>` : '') + H2('', 'mask') +
+        `<svg class="br-svg" viewBox="0 0 1920 1080" aria-hidden="true"${A(anim(ba, 'fade'), 150)}>` +
+        `<rect class="br-floor" x="0" y="${CY}" width="1920" height="${1080 - CY}"/><line class="br-ground" x1="0" y1="${CY}" x2="1920" y2="${CY}"/>` +
+        segs + hls + chevs + ret + sigs + `<path class="br-orbit" d="${orbit}" pathLength="1" style="--dur:${loop ? 9000 : 6000}ms"/>` +
+        `<line${T(0, 'br-foot br-first')} x1="${FL[0]}" y1="${CY - 12}" x2="${FL[0]}" y2="${CY + 12}"/><line${T(n, 'br-foot br-last')} x1="${FR[0]}" y1="${CY - 12}" x2="${FR[0]}" y2="${CY + 12}"/>` +
+        nodes + `</svg>` + stops +
+        `<p${T(0, 'br-lab br-floorlab br-start br-first')} style="left:${FL[0] - 260}px">${fmt(sl.lt || 'Start')}</p>` +
+        `<p${T(n, 'br-lab br-floorlab br-end br-last')} style="left:${FR[0] - 260}px">${fmt(sl.rt || 'Mål')}</p>` +
+        (loop ? `<p${T(n, 'br-lab br-retlab br-last')}>${fmt(sl.ret)}</p>` : '') +
+        (sl.text ? `<p class="br-cap" style="--capw:${n === 5 ? 760 : 1040}px"${A(anim(ba, 'fade'), 400)}>${fmt(sl.text)}</p>` : '') + cues;
+      if (plain(title).length > 44) cls = 'br-long';
+      attrs += ` data-dramaturgy="focus-restore" data-dramaturgy-state="${steps ? 'overview' : 'restored'}"${steps ? '' : ' data-dramaturgy-static="true"'}${loop ? ' data-bro-loop="true"' : ''}`;
       break;
     }
     case 'ringar': {

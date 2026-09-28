@@ -11,10 +11,10 @@ const Manus = (() => {
   const KEYS = { accent: 'accent',
     rubrik: 'title', 'fråga': 'title', term: 'title', text: 'text', ingress: 'text', underrubrik: 'text', citat: 'text', definition: 'text',
     etikett: 'caption', 'källa': 'caption', bildtext: 'caption', svar: 'answer', exempel: 'example', tal: 'number', tid: 'minutes',
-    bild: 'image', alt: 'alt', 'vänster': 'lt', 'höger': 'rt', start: 'start', slut: 'end', orsak: 'cause', konsekvens: 'effect', villkor: 'condition', alternativ: 'alternative', helhet: 'whole', reservation: 'reservation', gemensamt: 'common', 'spänning': 'tension', syntes: 'synthesis', band: 'banner', 'bild-vänster': 'flip', steg: 'steps', tona: 'dim', fokus: 'focus',
+    bild: 'image', alt: 'alt', 'vänster': 'lt', 'höger': 'rt', start: 'start', slut: 'end', orsak: 'cause', konsekvens: 'effect', villkor: 'condition', alternativ: 'alternative', helhet: 'whole', reservation: 'reservation', gemensamt: 'common', 'spänning': 'tension', syntes: 'synthesis', band: 'banner', 'bild-vänster': 'flip', steg: 'steps', tona: 'dim', fokus: 'focus', retur: 'ret',
     'övergång': 'transition', bakgrund: 'bg', rubrikrörelse: 'ta', 'rörelse': 'ba', visa: 'reveal', rubrikrad: 'header', mall: 'tpl', aktiv: 'active', siffra: 'number', slutsats: 'text', max: 'max', mitten: 'text'
   };
-  const OUT_KEY = { max: 'max', active: 'aktiv', title: 'rubrik', text: 'text', caption: 'etikett', answer: 'svar', example: 'exempel', number: 'tal', minutes: 'tid', image: 'bild', alt: 'alt', lt: 'vänster', rt: 'höger', start: 'start', end: 'slut', question: 'fråga', cause: 'orsak', effect: 'konsekvens', condition: 'villkor', alternative: 'alternativ', source: 'källa', whole: 'helhet', reservation: 'reservation', common: 'gemensamt', tension: 'spänning', synthesis: 'syntes', transition: 'övergång', bg: 'bakgrund', ta: 'rubrikrörelse', ba: 'rörelse', tpl: 'mall' };
+  const OUT_KEY = { max: 'max', active: 'aktiv', title: 'rubrik', text: 'text', caption: 'etikett', answer: 'svar', example: 'exempel', number: 'tal', minutes: 'tid', image: 'bild', alt: 'alt', lt: 'vänster', rt: 'höger', ret: 'retur', start: 'start', end: 'slut', question: 'fråga', cause: 'orsak', effect: 'konsekvens', condition: 'villkor', alternative: 'alternativ', source: 'källa', whole: 'helhet', reservation: 'reservation', common: 'gemensamt', tension: 'spänning', synthesis: 'syntes', transition: 'övergång', bg: 'bakgrund', ta: 'rubrikrörelse', ba: 'rörelse', tpl: 'mall' };
   const IMAGE_DIRECTION_KEYS = { 'bildläge':'mode', fokuspunkt:'focus', 'beskärning':'crop', startutsnitt:'start', slututsnitt:'end', 'säker-yta':'safe', 'mörkning':'shade', riktning:'direction', hastighet:'speed' };
   const IMAGE_BRIEF_KEYS = { 'bild-id':'id', filnamn:'filename', scen:'scene', syfte:'purpose', motiv:'subject', komposition:'composition', motivplacering:'placement', format:'aspectRatio', undvik:'avoid', prompt:'prompt' };
   const IMAGE_DIRECTION_OUT = { mode:'bildläge', focus:'fokuspunkt', crop:'beskärning', start:'startutsnitt', end:'slututsnitt', safe:'säker-yta', shade:'mörkning', direction:'riktning', speed:'hastighet' };
@@ -194,6 +194,7 @@ const Manus = (() => {
     if (['number', 'omslag', 'båge', 'lins', 'mätare', 'ljustal'].includes(L)) put('number', s.number);
     if (L === 'mätare' || L === 'ljustal') put('max', s.max);
     if (L === 'bro' || L === 'vagval') { put('lt', s.lt); put('rt', s.rt); }
+    if (L === 'bro') put('ret', s.ret);
     if (L === 'karta') put('active', s.active);
     if (L === 'reflect') put('minutes', s.minutes);
     if (L === 'define') put('example', s.example);
@@ -343,8 +344,8 @@ const Manus = (() => {
       ex: '[omlopp]\netikett: Tre egenskaper\nrubrik: AI-agent\n- Autonomi | Fattar egna beslut\n- Perception | Tar in data om omgivningen\n- Målorientering | Väljer det som bäst når målet' },
     { l: 'gradskiva', cat: 'Banor', syfte: 'En skala från ett ytterläge till ett annat. Nålen svänger till varje läge på klick och bågen fylls, medan förklaringen byts i mitten.', undvik: 'Saker utan ordning längs en skala.',
       ex: '[gradskiva]\nrubrik: Hur mycket ser agenten?\n- Inget | Agenten gissar helt i blindo.\n- Delar | Sensorer ger en del av bilden.\n- Allt | Hela miljön är synlig, som i schack.' },
-    { l: 'bro', cat: 'Banor', syfte: 'En ren processbana med tydlig typografi, numrerade hållplatser och en accentfärg. En markör följer varje klick. Aktuell rubrik framhävs och tidigare steg tonas ned. Stäng av fokus med tona: nej.', undvik: 'Fler än fem hållplatser.',
-      ex: '[bro]\nrubrik: Från omgivning till handling\nvänster: Omgivningen\nhöger: Åtgärd\n- Uppfattar | med sensorer eller data\n- Beslutar | utifrån sitt mål\n- Agerar | med aktuatorer' },
+    { l: 'bro', cat: 'Banor', syfte: 'En process som en båge över ett golv. Bågen bär stegen, golvet är sammanhanget de börjar och slutar i. Hela modellen syns från början. Varje klick flyttar fokus ett steg, tidigare steg ligger kvar nedtonade och sista klicket visar helheten igen. Med retur blir bron en loop: resultatet leder längs golvet tillbaka till början, som i återkopplingar, kretslopp och cykler.', undvik: 'Fler än fem hållplatser. Delar utan inbördes ordning, använd kort eller omlopp.',
+      ex: '[bro]\nrubrik: En agent arbetar i en loop\nvänster: Miljö\nhöger: Förändrad miljö\nretur: Handlingen förändrar miljön\n- Uppfatta | Sensorer eller annan indata\n- Besluta | Välj en handling\n- Agera | Utför en åtgärd\ntext: Miljön påverkar agenten, och agenten påverkar miljön.' },
     { l: 'ringar', cat: 'Banor', syfte: 'Två eller tre begrepp som delvis överlappar, som ett Venndiagram. Det gemensamma skrivs i mitten och visas sist.', undvik: 'Begrepp som inte har något gemensamt.',
       ex: '[ringar]\nrubrik: Singel eller multi?\n- Singelagent | En agent, ingen koordinering\n- Multiagent | Flera agenter som påverkar varandra\nmitten: Schack mot dator kan ses på båda sätten' },
     { l: 'lins', cat: 'Banor', syfte: 'En bild där en rund lins lyser upp en detalj i taget. Resten är nedtonad. Varje rad: x y i procent | rubrik | text.', undvik: 'Bilder utan tydliga detaljer att peka på.',

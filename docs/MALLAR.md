@@ -52,7 +52,7 @@ Varje bild i ett manus börjar med mallens namn inom hakparentes. Samma katalog 
 | `[båge]` | Banor | Öppning eller kapitelstart. Stora bågar ritas upp över bilden, etiketten glider längs en av dem och en planet rullar in på sin bana. Ett stort konturtal kan ligga i hörnet. |
 | `[omlopp]` | Banor | Ett begrepp i mitten och tre till sex delar som kretsar runt det. Varje del åker in längs banan på klick. |
 | `[gradskiva]` | Banor | En skala från ett ytterläge till ett annat. Nålen svänger till varje läge på klick och bågen fylls, medan förklaringen byts i mitten. |
-| `[bro]` | Banor | En ren processbana med tydlig typografi, numrerade hållplatser och en accentfärg. En markör följer varje klick. Aktuell rubrik framhävs och tidigare steg tonas ned. Stäng av fokus med tona: nej. |
+| `[bro]` | Banor | En process som en båge över ett golv. Bågen bär stegen, golvet är sammanhanget de börjar och slutar i. Hela modellen syns från början. Varje klick flyttar fokus ett steg, tidigare steg ligger kvar nedtonade och sista klicket visar helheten igen. Med retur blir bron en loop: resultatet leder längs golvet tillbaka till början, som i återkopplingar, kretslopp och cykler. |
 | `[ringar]` | Banor | Två eller tre begrepp som delvis överlappar, som ett Venndiagram. Det gemensamma skrivs i mitten och visas sist. |
 | `[lins]` | Banor | En bild där en rund lins lyser upp en detalj i taget. Resten är nedtonad. Varje rad: x y i procent | rubrik | text. |
 | `[mätare]` | Banor | Ett tal som andel av något, som en mätare som fylls medan talet räknas upp. Skriv 73 %, 4 av 8 eller ett tal med max. |
@@ -805,18 +805,20 @@ rubrik: Hur mycket ser agenten?
 
 ### `[bro]` Bro
 
-En ren processbana med tydlig typografi, numrerade hållplatser och en accentfärg. En markör följer varje klick. Aktuell rubrik framhävs och tidigare steg tonas ned. Stäng av fokus med tona: nej.
+En process som en båge över ett golv. Bågen bär stegen, golvet är sammanhanget de börjar och slutar i. Hela modellen syns från början. Varje klick flyttar fokus ett steg, tidigare steg ligger kvar nedtonade och sista klicket visar helheten igen. Med retur blir bron en loop: resultatet leder längs golvet tillbaka till början, som i återkopplingar, kretslopp och cykler.
 
-**Undvik när:** Fler än fem hållplatser.
+**Undvik när:** Fler än fem hållplatser. Delar utan inbördes ordning, använd kort eller omlopp.
 
 ```
 [bro]
-rubrik: Från omgivning till handling
-vänster: Omgivningen
-höger: Åtgärd
-- Uppfattar | med sensorer eller data
-- Beslutar | utifrån sitt mål
-- Agerar | med aktuatorer
+rubrik: En agent arbetar i en loop
+vänster: Miljö
+höger: Förändrad miljö
+retur: Handlingen förändrar miljön
+- Uppfatta | Sensorer eller annan indata
+- Besluta | Välj en handling
+- Agera | Utför en åtgärd
+text: Miljön påverkar agenten, och agenten påverkar miljön.
 ```
 
 ### `[ringar]` Ringar

@@ -1351,6 +1351,20 @@ function rgbaOf(c, a) {
   m = c.match(/rgba?\(([^)]+)\)/); if (m) { const p = m[1].split(/[ ,\/]+/).filter(Boolean); return `rgba(${p[0]},${p[1]},${p[2]},${a})`; }
   return `rgba(255,255,255,${a * .5})`;
 }
+function mixOf(a, b, t) {
+  const n = c => (rgbaOf(c, 1).match(/[\d.]+/g) || [0, 0, 0]).slice(0, 3).map(Number);
+  const A = n(a), B = n(b);
+  return `rgb(${A.map((v, i) => Math.round(v + (B[i] - v) * t)).join(',')})`;
+}
+let grainCanvas = null;
+function grainTile() {
+  if (grainCanvas) return grainCanvas;
+  const s = 128, cv = document.createElement('canvas'); cv.width = cv.height = s;
+  const x = cv.getContext('2d'), img = x.createImageData(s, s);
+  for (let i = 0; i < img.data.length; i += 4) { const v = Math.random() * 255 | 0; img.data[i] = img.data[i + 1] = img.data[i + 2] = v; img.data[i + 3] = 255; }
+  x.putImageData(img, 0, 0);
+  return (grainCanvas = cv);
+}
 const BG = {
   /* Fokusljus: ett mjukt ljus som följer scenens fokus. Stilla när fokus står still.
      st.goal sätts av player via Backdrop.focus(). Returnerar true medan ljuset rör sig. */
@@ -1363,23 +1377,25 @@ const BG = {
     p.x += (goal.x - p.x) * k; p.y += (goal.y - p.y) * k; p.f += (goal.f - p.f) * k;
     const M = Math.max(w, h), light = c.lum > .5, A = c.alpha * (light ? .6 : 1);
     const X = p.x * w, Y = p.y * h, f = p.f;
-    // motljus: svagt, stort, på motsatt sida om mitten, ger djup utan att konkurrera
-    const cx = (1 - p.x) * .7 + .15, cy = (1 - p.y) * .7 + .15;
-    let g = ctx.createRadialGradient(cx * w, cy * h, 0, cx * w, cy * h, M * .7);
-    g.addColorStop(0, rgbaOf(c.accent2, .07 * A * (1 - f * .5))); g.addColorStop(1, rgbaOf(c.accent2, 0));
+    // ljuset är accenten blandad mot textfärgen: ett kyligt scenljus snarare än en färgad fläck
+    const key = mixOf(c.accent, c.ink, light ? .2 : .42);
+    // huvudljuset: brett och tillplattat vid helheten, samlat och något starkare vid fokus
+    const R = M * (.78 - .34 * f), a = (light ? .1 + .1 * f : .085 + .085 * f) * A, flat = .62;
+    ctx.save(); ctx.translate(X, Y); ctx.scale(1, flat);
+    let g = ctx.createRadialGradient(0, 0, 0, 0, 0, R);
+    g.addColorStop(0, rgbaOf(key, a)); g.addColorStop(.42, rgbaOf(key, a * .4)); g.addColorStop(1, rgbaOf(key, 0));
+    ctx.fillStyle = g; ctx.fillRect(-X, -Y / flat, w, h / flat);
+    ctx.restore();
+    // vinjett hela tiden, lite djupare vid fokus så att omgivningen sjunker undan men syns
+    g = ctx.createRadialGradient(w / 2, h * .46, M * .3, w / 2, h * .46, M * .8);
+    g.addColorStop(0, light ? rgbaOf(c.ink, 0) : 'rgba(0,0,0,0)');
+    g.addColorStop(1, light ? rgbaOf(c.ink, (.04 + .03 * f) * c.alpha) : `rgba(0,0,0,${(.3 + .12 * f) * c.alpha})`);
     ctx.fillStyle = g; ctx.fillRect(0, 0, w, h);
-    // huvudljuset: brett och lågt vid helheten, samlat och starkare vid fokus
-    const R = M * (.8 - .38 * f), a = (.12 + .17 * f) * A;
-    g = ctx.createRadialGradient(X, Y, 0, X, Y, R);
-    g.addColorStop(0, rgbaOf(c.accent, a)); g.addColorStop(.38, rgbaOf(c.accent, a * .42)); g.addColorStop(1, rgbaOf(c.accent, 0));
-    ctx.fillStyle = g; ctx.fillRect(0, 0, w, h);
-    // skugga mot kanterna bara vid fokus, så att omgivningen sjunker undan men syns
-    if (f > .01) {
-      g = ctx.createRadialGradient(X, Y, R * .35, X, Y, M * 1.05);
-      const sh = light ? rgbaOf(c.ink, 0) : 'rgba(0,0,0,0)';
-      g.addColorStop(0, sh); g.addColorStop(1, light ? rgbaOf(c.ink, .06 * f * c.alpha) : `rgba(0,0,0,${.34 * f * c.alpha})`);
-      ctx.fillStyle = g; ctx.fillRect(0, 0, w, h);
-    }
+    // fint korn mot trappsteg i mörka gradienter på projektorer; slumpas en gång och står still
+    ctx.globalAlpha = (light ? .025 : .045) * c.alpha;
+    ctx.fillStyle = ctx.createPattern(grainTile(), 'repeat');
+    ctx.fillRect(0, 0, w, h);
+    ctx.globalAlpha = 1;
     return Math.abs(goal.x - p.x) + Math.abs(goal.y - p.y) + Math.abs(goal.f - p.f) > .0008;
   },
   ljus(ctx, w, h, t, c, d) {

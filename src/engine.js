@@ -1040,10 +1040,23 @@ function renderSlide(sl, i, deck, img) {
       const pos = [[50,10],[87,28],[79,69],[21,69],[13,28]];
       const uid = 'u' + hash((sl.id || '') + i + L);
       let css = '';
+      /* Strålen går från kärnans kant till etikettens kant, inte genom texten.
+         Etiketternas höjd uppskattas från textlängden; scenen är cirka 1452 × 570 px. */
+      const W = 1452, H = 570, gap = 18;
+      const lineCount = (text, px, width) => Math.max(1, Math.ceil(plain(text).length * px * .55 / width));
+      const qLines = lineCount(sl.question || 'Vad betraktar perspektiven?', 34, 378);
+      const coreX = 235 + gap, coreY = Math.max(95, (68 + qLines * 41) / 2) + gap;
       const rays = its.map((o, j) => {
         const [x, y] = pos[j];
         css += `.${uid}:has(.pr-node.k${j}.step-current) .pr-ray.k${j}{opacity:1;stroke:var(--accent);stroke-width:4}.${uid}:has(.pr-node.k${j}.step-current) .pr-core{box-shadow:0 0 0 14px var(--hl)}`;
-        return `<line class="pr-ray k${j}" x1="50" y1="50" x2="${x}" y2="${y}"/>`;
+        const boxW = its.length === 5 && j === 0 ? 440 : 330;
+        const nodeH = 30 + lineCount(o.emphasis, 29, boxW) * 34 + (o.basis ? 8 + lineCount(o.basis, 21, boxW) * 29 : 0);
+        const dx = (x - 50) * W / 100, dy = (y - 50) * H / 100;
+        const toEdge = Math.min(dx ? (boxW / 2 + gap) / Math.abs(dx) : Infinity, dy ? (nodeH / 2 + gap) / Math.abs(dy) : Infinity);
+        const fromCore = 1 / Math.hypot(dx / coreX, dy / coreY), toNode = 1 - toEdge;
+        if (!(toNode > fromCore)) return '';
+        const P = f => `x${f[0]}="${(50 + dx * f[1] / W * 100).toFixed(2)}" y${f[0]}="${(50 + dy * f[1] / H * 100).toFixed(2)}"`;
+        return `<line class="pr-ray k${j}" ${P([1, fromCore])} ${P([2, toNode])}/>`;
       }).join('');
       const nodes = its.map((o, j) => { const [x, y] = pos[j]; return `<article class="pr-node k${j}" style="left:${x}%;top:${y}%"${steps ? st(stepA('fade')) : A(stepA('fade'), 350 + j * 160)}><p class="pr-name">${fmt(o.name || `Perspektiv ${j + 1}`)}</p><h3>${fmt(o.emphasis)}</h3>${o.basis ? `<p>${fmt(o.basis)}</p>` : ''}</article>`; }).join('');
       body = `<style>${css}</style><header class="fn-head">${sl.caption ? `<p class="kicker"${A(stepA('fade'))}>${fmt(sl.caption)}</p>` : ''}${H2('', 'mask')}</header>` +

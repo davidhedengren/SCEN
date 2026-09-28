@@ -1168,3 +1168,63 @@
 .scen .slide[data-layout="urval"][data-dramaturgy-state="restored"] .ur-end{opacity:1;transform:none;transition-delay:.15s}
 @media (prefers-reduced-motion:reduce){.scen .slide:is([data-layout="flode"],[data-layout="urval"]) *{transition-duration:.01s!important;transition-delay:0s!important}}
 .scen .slide:is([data-layout="flode"],[data-layout="urval"])[data-body-motion="none"] *{transition:none!important}
+
+/* ---------- Fokusvandring: Rad, Rutor, Remsor, Mosaik, Kärna ----------
+   Allt syns från början. En fokusram glider mellan rutorna, tidigare rutor ligger kvar
+   nedtonade, kommande ännu svagare, och sista klicket tänder alla. */
+.scen .slide:is([data-layout="rad"],[data-layout="rutor"],[data-layout="remsor"],[data-layout="mosaik"],[data-layout="karna"]){align-content:start;gap:16px;isolation:isolate;--fv-past:.4;--fv-future:.24;--fv-ease:cubic-bezier(.65,0,.25,1)}
+.scen .slide:is([data-layout="rad"],[data-layout="rutor"],[data-layout="remsor"],[data-layout="mosaik"],[data-layout="karna"])>h2{position:relative;z-index:3;font-size:60px;line-height:1.08;max-width:1632px}
+.scen .slide:is([data-layout="rad"],[data-layout="rutor"],[data-layout="remsor"],[data-layout="mosaik"],[data-layout="karna"])>.kicker{position:relative;z-index:3}
+.scen .slide:is([data-layout="rad"],[data-layout="rutor"],[data-layout="remsor"],[data-layout="mosaik"],[data-layout="karna"]) .fv-lead{position:relative;z-index:3;display:grid;max-width:1500px}
+.scen .slide:is([data-layout="rad"],[data-layout="rutor"],[data-layout="remsor"],[data-layout="mosaik"]) .fv-lead p{grid-area:1/1;margin:0;font-size:32px;line-height:1.35;transition:opacity .5s var(--dramaturgy-soft-ease),transform .6s var(--dramaturgy-ease)}
+.scen .slide .fv-lead .fv-intro{color:var(--muted)}
+.scen .slide .fv-lead .fv-end{color:var(--ink);opacity:0;transform:translateY(10px)}
+.scen .slide[data-dramaturgy-state="restored"] .fv-lead:has(.fv-end) .fv-intro{opacity:0;transform:translateY(-10px)}
+.scen .slide[data-dramaturgy-state="restored"] .fv-lead .fv-end{opacity:1;transform:none;transition-delay:.25s}
+.scen .slide .fv-lead .fv-end::before{content:"";display:inline-block;width:14px;height:14px;border-radius:50%;background:var(--accent);margin-right:18px;vertical-align:.12em}
+.scen .slide .fv-stage{position:absolute;inset:0;pointer-events:none}
+.scen .slide .fv-svg{position:absolute;left:0;top:0;width:1920px;height:1080px;overflow:visible}
+
+/* rutan */
+.scen .slide .fv-box{position:absolute;box-sizing:border-box;margin:0;padding:clamp(24px,calc(var(--fh) * .7),44px);display:flex;flex-direction:column;justify-content:space-between;gap:12px;border-radius:var(--radius,20px);background:color-mix(in srgb,var(--surface) 82%,var(--bg));box-shadow:inset 0 0 0 1.5px color-mix(in srgb,var(--line) 85%,transparent);overflow:hidden;
+  transition:opacity .6s var(--dramaturgy-soft-ease),background .6s var(--dramaturgy-soft-ease),box-shadow .6s var(--dramaturgy-soft-ease),filter .6s var(--dramaturgy-soft-ease)}
+.scen .slide .fv-box::before{content:"";position:absolute;left:0;top:0;height:5px;width:100%;background:var(--accent);transform:scaleX(0);transform-origin:left;transition:transform .8s var(--dramaturgy-ease)}
+.scen .slide .fv-box .fv-n{font-family:var(--font-display,var(--font));font-weight:var(--h-weight,650);font-size:var(--fn,56px);line-height:.9;letter-spacing:-.03em;color:color-mix(in srgb,var(--muted) 45%,transparent);transition:color .5s}
+.scen .slide .fv-box .fv-body{display:grid;gap:calc(var(--ft) * .55)}
+.scen .slide .fv-box h3{margin:0;font-family:var(--font-display,var(--font));font-weight:var(--h-weight,650);font-style:var(--h-style,normal);letter-spacing:var(--h-track,-.03em);text-transform:var(--h-case,none);font-size:var(--fh,48px);line-height:1.04;color:var(--ink);text-wrap:balance;transition:color .5s}
+.scen .slide .fv-box p{margin:0;font-size:var(--ft,30px);line-height:1.35;color:var(--muted);text-wrap:pretty;transition:color .5s}
+.scen .slide .fv-box.fv-big{background:color-mix(in srgb,var(--accent) 10%,var(--surface))}
+.scen .slide[data-layout="remsor"] .fv-box{display:grid;grid-template-columns:120px minmax(0,.9fr) minmax(0,1.3fr);align-items:center;column-gap:40px;padding-block:0}
+.scen .slide[data-layout="remsor"] .fv-box .fv-body{display:contents}
+.scen .slide[data-layout="remsor"] .fv-box::before{width:5px;height:100%;transform:scaleY(0);transform-origin:top}
+
+/* fokus: aktuell ruta skarp, tidigare svag, kommande svagare */
+.scen .slide[data-dramaturgy-state="overview"] .fv-box{opacity:.9}
+.scen .slide[data-dramaturgy-state="focus"] .fv-box.dramaturgy-past{opacity:var(--fv-past);filter:saturate(.5)}
+.scen .slide[data-dramaturgy-state="focus"] .fv-box.dramaturgy-future{opacity:var(--fv-future);filter:saturate(.5)}
+.scen .slide[data-dramaturgy-state="focus"] .fv-box.dramaturgy-current{background:color-mix(in srgb,var(--accent) 12%,var(--surface))}
+.scen .slide[data-dramaturgy-state="focus"] .fv-box.dramaturgy-current :is(h3,.fv-n){color:var(--accent)}
+.scen .slide[data-dramaturgy-state="focus"] .fv-box.dramaturgy-current p{color:var(--ink)}
+.scen .slide[data-dramaturgy-state="restored"] .fv-box::before{transform:none;transition-delay:calc(var(--fv-i,0) * 80ms)}
+.scen .slide[data-dramaturgy-state="restored"] .fv-box p{color:var(--ink)}
+.scen .slide[data-dramaturgy-state="restored"] .fv-box .fv-n{color:var(--accent)}
+
+/* fokusramen som vandrar */
+.scen .slide .fv-frame{position:absolute;left:0;top:0;box-sizing:border-box;width:var(--fw);height:var(--fhh);transform:translate(var(--fx),var(--fy));border-radius:var(--radius,20px);box-shadow:inset 0 0 0 3px var(--accent),0 0 0 8px color-mix(in srgb,var(--accent) 14%,transparent),0 24px 70px -20px color-mix(in srgb,var(--accent) 45%,transparent);opacity:0;
+  transition:transform .75s var(--fv-ease),width .75s var(--fv-ease),height .75s var(--fv-ease),opacity .35s var(--dramaturgy-soft-ease)}
+.scen .slide .fv-frame.on{opacity:1}
+
+/* länkar: pilar i Rad med flöde, ekrar i Kärna */
+.scen .slide .fv-link{fill:none;stroke:color-mix(in srgb,var(--muted) 60%,var(--line));stroke-width:4;stroke-linecap:round;stroke-linejoin:round;transition:stroke .5s,opacity .5s,stroke-width .5s}
+.scen .slide .fv-spoke{stroke-width:2.5;stroke-dasharray:2 9}
+.scen .slide[data-dramaturgy-state="focus"] .fv-link:not(.dramaturgy-current){opacity:.3}
+.scen .slide[data-dramaturgy-state="focus"] .fv-link.dramaturgy-current,.scen .slide[data-dramaturgy-state="restored"] .fv-link{stroke:var(--accent)}
+.scen .slide[data-dramaturgy-state="focus"] .fv-spoke.dramaturgy-current{stroke-dasharray:none;stroke-width:4}
+
+/* kärnan: ligger alltid tänd som kontext */
+.scen .slide .fv-core{position:absolute;box-sizing:border-box;display:grid;place-content:center;gap:22px;padding:40px;text-align:center;border-radius:999px;background:color-mix(in srgb,var(--accent) 14%,var(--bg));box-shadow:inset 0 0 0 3px var(--accent)}
+.scen .slide .fv-core p{margin:0;font-family:var(--font-display,var(--font));font-weight:var(--h-weight,650);font-style:var(--h-style,normal);letter-spacing:var(--h-track,-.03em);font-size:48px;line-height:1.08;color:var(--ink);text-wrap:balance}
+.scen .slide .fv-core .fv-coreend{font-family:var(--font);font-weight:400;font-style:normal;letter-spacing:0;font-size:26px;line-height:1.3;color:var(--ink);max-height:0;opacity:0;overflow:hidden;transition:opacity .5s,max-height .6s var(--dramaturgy-ease)}
+.scen .slide[data-dramaturgy-state="restored"] .fv-core .fv-coreend{opacity:1;max-height:200px;transition-delay:.2s}
+@media (prefers-reduced-motion:reduce){.scen .slide .fv-frame{transition:opacity .2s}}
+.scen .slide[data-layout="rad"] .fv-box p{min-height:calc(var(--ft) * 1.35 * 2)}

@@ -1,228 +1,236 @@
 ---
 titel: AI-agenter och miljöer
-tema: atlas
+tema: natt
 ---
 
-[omslag]
-etikett: David Hedengren
-rubrik: Introduktion till AI-agenter och miljöer
-tal: 01
-bild: bilder/ai-agenter/ai01.jpg
+[bildregi]
+etikett: Introduktion · David Hedengren
+rubrik: AI-agenter och miljöer
+bild: bilder/ai-agenter-miljoer/korsning.jpg
+alt: Regnvåt stadskorsning i skymning sedd uppifrån, med bilar, cyklist och fotgängare.
+bildläge: hero
+fokuspunkt: 62 64
+startutsnitt: 50 50 1.08
+slututsnitt: 50 50 1
+säker-yta: 4 14 34 60
+mörkning: 0 0 42 100 0.5
+hastighet: slow
+> En värld där saker händer hela tiden, oavsett vad vi gör. Det är den sortens värld en AI-agent ska klara av.
 
 ---
 
-[definition]
-etikett: Vad är en AI-agent?
-rubrik: AI-agent
-text: Ett system som kan uppfatta sin omgivning (med t.ex. **sensorer** eller genom att analysera data), fatta beslut och vidta åtgärder (med **aktuatorer**).
-> Den interagerar med sin miljö, samlar in information och reagerar på förändringar.
-> Fråga klassen efter exempel på sensorer och aktuatorer.
+[bro]
+etikett: Begrepp 1
+rubrik: Vad är en agent?
+text: En aktör som uppfattar sin omgivning och agerar i den.
+vänster: Omgivningen
+höger: Omgivningen förändras
+retur: Agenten reagerar på förändringar
+- Uppfattar | med sinnen, sensorer eller data
+- Beslutar | utifrån sitt mål
+- Agerar | med kroppen eller aktuatorer
+> Klick 1–3 följer bågen: uppfatta, besluta, agera. Klick 4 följer handlingen längs golvet tillbaka till omgivningen. Klick 5 visar hela slingan.
+> Agenten interagerar med sin miljö, samlar in information och reagerar på förändringar.
+> Observera: här står inget om AI. En agent kan vara en människa, ett djur eller en maskin.
 
 ---
 
-[triad]
-rubrik: Vad är en AI-agent?
-bild: bilder/ai-agenter/ai02.jpg
+[bildregi]
+etikett: Exempel
+rubrik: Agent eller AI-agent?
+text: Agent betyder inte AI. Fotgängaren är en agent. En självkörande bil är en AI-agent.
+bild: bilder/ai-agenter-miljoer/korsning.jpg
+alt: Stadskorsning i skymning med fotgängare på ett övergångsställe och bilar.
+bildläge: spotlight
+fokuspunkt: 62 64
+säker-yta: 4 14 34 60
+mörkning: 0 0 42 100 0.55
+- manniska | Människan: agent | 75 | 70 | 16 | 12 | Ser trafiken, bestämmer sig och går över gatan.
+- bil | Självkörande bil: AI-agent | 59 | 59 | 12 | 12 | Använder AI för att välja och planera sina handlingar.
+> Tänk dig att bilen är självkörande. Båda uppfattar, beslutar och agerar i samma korsning, men bara bilen använder AI.
+> Det här kommer tillbaka senare: i trafiken finns många agenter samtidigt.
+
+---
+
+[typografi]
+etikett: Begrepp 2
+- statement | En **agent** uppfattar, beslutar och agerar. | Agent
+- precisering | En **AI-agent** är en artificiell agent som använder AI för att välja eller planera sina handlingar. | AI-agent
+> AI:n sitter i beslutsfattandet. Uppfatta och agera gör alla agenter.
+> Ursprunglig formulering: ett system som kan uppfatta sin omgivning (med t.ex. sensorer eller genom att analysera data), fatta beslut och vidta åtgärder (med aktuatorer).
+
+---
+
+[fokus]
+etikett: Tre egenskaper
+rubrik: Vad gör en agent till en agent?
 - Autonomi | Kan fatta egna beslut utan direkt mänsklig styrning.
 - Perception | Samlar in data om sin omgivning genom sensorer eller annan inmatning.
 - Målorientering | Använder sin autonomi och perception för att fatta beslut och ta de bästa möjliga åtgärderna för att nå sitt mål.
-slutsats: En rationell agent strävar alltid efter att fatta **de bästa besluten** för att uppnå sina mål.
+> Målorientering bygger på de två första: agenten använder sin autonomi och perception för att nå målet.
 
 ---
 
-[bildkant]
-etikett: Miljöer
-rubrik: Olika typer av AI-miljöer
-text: Det finns olika typer av miljöer där AI-agenter kan verka. De kan klassificeras enligt flera dimensioner som påverkar hur agenten interagerar med sin omgivning och fattar beslut.
-bild: bilder/ai-agenter/ai03.jpg
+[tidslinje]
+rubrik: Från agent till miljö
+- Agent | Grunden | Uppfattar, beslutar och agerar.
+- AI-agent | Plus AI | AI används i beslutsfattandet.
+- Rationell agent | Plus mål | Väljer den bästa handlingen utifrån mål och information.
+- Miljön | Villkoret | Avgör hur bra beslut agenten kan fatta.
+> Varje begrepp bygger på det föregående. En rationell agent strävar alltid efter att fatta de bästa besluten för att uppnå sina mål.
+> Det sista steget är vändpunkten i lektionen: hur bra beslut agenten kan fatta beror på vilken miljö den befinner sig i. Nu flyttar vi blicken från agenten till världen den verkar i.
 
 ---
 
-[karta]
-rubrik: Olika typer av AI-miljöer
-- Fullständigt/partiellt observerbar
-- Singel/multiagent
-- Statisk/dynamisk
-- Deterministisk/stokastisk
-- Diskret/kontinuerlig
-- Episodisk/sekventiell
+[fokus]
+etikett: Miljön
+rubrik: Sex frågor om agentens värld
+text: Miljöer kan klassificeras i dimensioner som påverkar hur agenten interagerar med sin omgivning och fattar beslut.
+- Fullständigt / partiellt observerbar | Ser agenten allt som händer i miljön?
+- Singel / multiagent | Är agenten ensam, eller finns det andra agenter?
+- Deterministisk / stokastisk | Leder samma handling alltid till samma utfall?
+- Episodisk / sekventiell | Påverkar ett beslut de beslut som kommer sedan?
+- Statisk / dynamisk | Förändras miljön även när agenten inte agerar?
+- Diskret / kontinuerlig | Är tillstånd och handlingar indelade i tydliga steg?
+> Samma ordning som i övningstabellen i slutet av lektionen.
 
 ---
 
-[karta]
-rubrik: Olika typer av AI-miljöer
-aktiv: 1
+[bildregi]
+etikett: 1 / 6 · Observerbarhet
+rubrik: Fullständigt observerbar
+text: Agenten har tillgång till all information om miljön och fattar beslut med komplett kunskap. Enkelt att modellera, men orealistiskt i verkliga scenarier.
+bild: bilder/ai-agenter-miljoer/schack-robotarm.jpg
+alt: Schackparti mellan en människa och en robotarm. Hela brädet är jämnt upplyst.
+bildläge: hero
+fokuspunkt: 60 66
+startutsnitt: 50 50 1
+slututsnitt: 50 50 1.05
+säker-yta: 4 5 38 46
+mörkning: 0 0 46 56 0.55
+hastighet: slow
+> Här behövs inget strålkastarljus. Allt syns: alla pjäser och deras positioner, för båda spelarna.
+> Fördel: enkel modellering, inga osäkerhetsfaktorer. Nackdel: orealistisk i verkliga scenarier.
+
+---
+
+[bildregi]
+etikett: 1 / 6 · Observerbarhet
+rubrik: Partiellt observerbar
+text: Agenten har bara delvis information och måste hantera osäkerhet och göra antaganden.
+bild: bilder/ai-agenter-miljoer/poker-pov.jpg
+alt: Pokerbord ur spelarens perspektiv. De egna korten ligger uppvända, motståndarnas kort är dolda.
+bildläge: spotlight
+fokuspunkt: 50 50
+säker-yta: 3 3 36 36
+mörkning: 0 0 42 46 0.7
+- egna | Sensordata | 26 | 78 | 26 | 22 | Agenten samlar in information. Här: sina egna kort.
+- dolda | Okänd information | 58 | 24 | 14 | 20 | Det finns alltid information som är osynlig för agenten.
+- beslut | Beslutsfattande | 49 | 48 | 20 | 18 | Agenten måste fatta beslut med ofullständig information.
+> Jämför med förra bilden: där var allt upplyst. Här ser agenten bara det som strålkastaren visar.
+> Sista klicket visar hela bordet igen, det vill säga det agenten inte kan se.
+
+---
+
+[jämförelse]
+rubrik: Ensam eller bland andra?
 steg: nej
-- Fullständigt/partiellt observerbar
-- Singel/multiagent
-- Statisk/dynamisk
-- Deterministisk/stokastisk
-- Diskret/kontinuerlig
-- Episodisk/sekventiell
+vänster: Singelagent
+- Endast en agent, ingen koordinering med andra
+- **Fördelar:** enkelhet, effektivt eftersom ingen konkurrerar
+- **Nackdelar:** begränsad kapacitet och tillämpbarhet
+höger: Multiagent
+- Agenterna interagerar med miljön och med varandra
+- **Fördelar:** ökad effektivitet, flexibilitet, samarbete mot gemensamma mål
+- **Nackdelar:** svår koordinering, risk för konflikter, svårare beslut
+> En lugn, statisk bild. Låt klassen läsa.
+> Lägg märke till att "effektivt" finns på båda sidor, av olika skäl. Varför?
+> Kom ihåg: agent betyder inte AI. I trafiken är den självkörande bilen en AI-agent, men fotgängaren och bilföraren är också agenter.
 
 ---
 
-[bildkant]
-etikett: Dimension 1
-rubrik: Fullständigt observerbara miljöer
-text: Agenten har tillgång till all information om miljön. Den kan se allt som händer och fatta beslut baserat på komplett kunskap.
-bild: bilder/ai-agenter/ai04.jpg
-- **Fördel:** enkel modellering, inga osäkerhetsfaktorer.
-- **Nackdel:** orealistisk i verkliga scenarier.
+[omröstning]
+rubrik: Schack mot dator: singel- eller multiagentmiljö?
+svar: Två agenter fattar beslut i samma miljö. Motståndarens drag påverkar direkt vilka handlingar och resultat som är möjliga för den andra agenten.
+- Singelagent
+- * Multiagent
+- Det beror på perspektivet
+> Räkna händer med tangenterna 1–3.
+> Människan är en agent och schackprogrammet är en AI-agent. Båda väljer drag, och dragen påverkar varandras möjligheter och resultat: en konkurrerande (adversarial) multiagentmiljö.
+> Att vi studerar en agents beslut gör inte miljön till en singelagentmiljö. Det avgörande är om det finns andra agenter vars handlingar påverkar utfallet.
+> Specialfall: om motståndaren bara spelar upp en helt förutbestämd sekvens av drag och inte själv fattar beslut, kan den modelleras som en del av miljön. Vanligt schack mot människa eller schackdator är multiagent.
 
 ---
 
-[bildkant]
-etikett: Dimension 1
-rubrik: Partiellt observerbara miljöer
-text: Agenten har bara delvis information om miljön och måste hantera osäkerhet och göra antaganden.
-bild: bilder/ai-agenter/ai05.jpg
-bild-vänster: ja
-- **Sensordata:** agenten samlar in information genom sensorer.
-- **Okänd information:** det finns alltid information som är osynlig för agenten.
-- **Beslutsfattande:** agenten måste fatta beslut med ofullständig information.
+[typografi]
+etikett: 3 / 6 · Deterministisk / stokastisk
+- statement | Samma handling. **Samma** utfall. | Deterministisk
+- ersättning | Samma handling. **Osäkert** utfall. | Stokastisk
+- precisering | Schack är deterministiskt.\\nPoker är **stokastiskt**. | Exempel
+> Deterministisk: utfallet av en viss handling är alltid förutsägbart.
+> Stokastisk: handlingar innehåller en viss grad av slump eller osäkerhet.
 
 ---
 
-[karta]
-rubrik: Olika typer av AI-miljöer
-aktiv: 2
-steg: nej
-- Fullständigt/partiellt observerbar
-- Singel/multiagent
-- Statisk/dynamisk
-- Deterministisk/stokastisk
-- Diskret/kontinuerlig
-- Episodisk/sekventiell
+[fokus]
+etikett: 4 / 6 · Episodisk / sekventiell
+rubrik: Påverkar ett beslut nästa?
+- Episodisk | Varje handling är fristående och påverkar inte framtida handlingar.
+- Sekventiell | Varje handling påverkar framtida tillstånd och beslut.
+- Exempel | Bildklassificering är episodisk. Planering för en självkörande bil är sekventiell.
 
 ---
 
-[bildkant]
-etikett: Dimension 2
-rubrik: Singelagentmiljö
-text: Endast en agent interagerar med miljön och behöver inte koordinera med andra agenter.
-bild: bilder/ai-agenter/ai06.jpg
-- **Fördelar:** enkelhet, och effektivt eftersom det inte finns någon konkurrens.
-- **Nackdelar:** begränsad kapacitet och begränsad tillämpbarhet.
+[bildregi]
+etikett: 5 / 6 · Statisk / dynamisk
+rubrik: Statisk eller dynamisk?
+text: Statisk: förändras bara när agenten agerar, som ett schackspel. Dynamisk: förändras hela tiden, som trafiken runt en självkörande bil.
+bild: bilder/ai-agenter-miljoer/korsning.jpg
+alt: Stadskorsning i skymning med ljusspår från trafiken.
+bildläge: hero
+fokuspunkt: 62 64
+startutsnitt: 50 50 1
+slututsnitt: 50 50 1.12
+säker-yta: 4 12 34 64
+mörkning: 0 0 42 100 0.55
+hastighet: medium
+> Samma korsning som i början. Ljusspåren visar att världen rör sig oavsett vad bilen gör.
 
 ---
 
-[bildkant]
-etikett: Dimension 2
-rubrik: Multiagentmiljö
-text: Flera agenter interagerar med miljön, men också med varandra.
-bild: bilder/ai-agenter/ai07.jpg
-bild-vänster: ja
-- **Fördelar:** ökad effektivitet, flexibilitet i problemlösning och samarbete för att nå gemensamma mål.
-- **Nackdelar:** komplexitet i koordinering, risk för konflikter och utmaningar i beslutsfattande.
+[bildregi]
+etikett: 6 / 6 · Diskret / kontinuerlig
+rubrik: Diskret eller kontinuerlig?
+text: Schack är en diskret miljö. Robotik i verkligheten är en kontinuerlig miljö.
+bild: bilder/ai-agenter-miljoer/schack-robotarm.jpg
+alt: Schackparti mellan en människa och en robotarm som lyfter en springare.
+bildläge: spotlight
+fokuspunkt: 60 60
+säker-yta: 4 5 38 46
+mörkning: 0 0 46 56 0.55
+- rutor | Diskret | 56 | 76 | 16 | 14 | Tillstånd och handlingar i separata steg: en ruta i taget.
+- arm | Kontinuerlig | 71 | 36 | 16 | 30 | Robotarmens rörelse har oändligt många lägen, utan tydliga avgränsningar.
+> Samma bild innehåller båda. Spelet är diskret, robotarmens rörelse är kontinuerlig. Det beror på vad vi väljer att modellera.
 
 ---
 
-[karta]
-rubrik: Olika typer av AI-miljöer
-aktiv: 3
-steg: nej
-- Fullständigt/partiellt observerbar
-- Singel/multiagent
-- Statisk/dynamisk
-- Deterministisk/stokastisk
-- Diskret/kontinuerlig
-- Episodisk/sekventiell
-
----
-
-[motsats]
-etikett: Dimension 3
-rubrik: Statisk/dynamisk miljö
-bild: bilder/ai-agenter/ai08.jpg
-- Statisk | En statisk miljö förändras inte med tiden, utom när agenten interagerar med den.
-- Dynamisk | En dynamisk miljö förändras hela tiden, oavsett om agenten agerar eller inte.
-- Exempel | Ett schackspel är statiskt, medan trafikmiljön är dynamisk och förändras oavsett vad en självkörande bil gör.
-
----
-
-[karta]
-rubrik: Olika typer av AI-miljöer
-aktiv: 4
-steg: nej
-- Fullständigt/partiellt observerbar
-- Singel/multiagent
-- Statisk/dynamisk
-- Deterministisk/stokastisk
-- Diskret/kontinuerlig
-- Episodisk/sekventiell
-
----
-
-[motsats]
-etikett: Dimension 4
-rubrik: Deterministiska/stokastiska miljöer
-bild: bilder/ai-agenter/ai09.jpg
-bild-vänster: ja
-- Deterministisk | I en deterministisk miljö är utfallet av en viss handling alltid förutsägbart.
-- Stokastisk | I en stokastisk miljö innehåller handlingar en viss grad av slump eller osäkerhet.
-- Exempel | Ett schackspel är deterministiskt, medan ett kortspel som poker är stokastiskt.
-
----
-
-[karta]
-rubrik: Olika typer av AI-miljöer
-aktiv: 5
-steg: nej
-- Fullständigt/partiellt observerbar
-- Singel/multiagent
-- Statisk/dynamisk
-- Deterministisk/stokastisk
-- Diskret/kontinuerlig
-- Episodisk/sekventiell
-
----
-
-[motsats]
-etikett: Dimension 5
-rubrik: Diskreta/kontinuerliga miljöer
-bild: bilder/ai-agenter/ai10.jpg
-band: ja
-- Diskret | I en diskret miljö är tillstånden och handlingarna indelade i separata steg eller enheter.
-- Kontinuerlig | I en kontinuerlig miljö är både tillstånd och handlingar oändligt många, utan tydliga avgränsningar.
-- Exempel | Schack är en diskret miljö, medan robotik i verkligheten är en kontinuerlig miljö.
-
----
-
-[karta]
-rubrik: Olika typer av AI-miljöer
-aktiv: 6
-steg: nej
-- Fullständigt/partiellt observerbar
-- Singel/multiagent
-- Statisk/dynamisk
-- Deterministisk/stokastisk
-- Diskret/kontinuerlig
-- Episodisk/sekventiell
-
----
-
-[motsats]
-etikett: Dimension 6
-rubrik: Episodiska/sekventiella miljöer
-bild: bilder/ai-agenter/ai11.jpg
-- Episodisk | I en episodisk miljö är varje handling fristående och påverkar inte framtida handlingar.
-- Sekventiell | I en sekventiell miljö påverkar varje handling framtida tillstånd och beslut.
-- Exempel | Bildklassificering är episodisk, medan ett planeringsproblem för en självkörande bil är sekventiellt.
-
----
-
-[omslag]
-etikett: Sammanfattning
-rubrik: Att välja rätt modell för AI-miljön är avgörande för att designa effektiva AI-system.
-text: AI-agenter verkar i olika miljöer med olika egenskaper. Att förstå dessa egenskaper är avgörande för att designa effektiva AI-system som kan navigera i komplexa och dynamiska omvärldar.
-bild: bilder/ai-agenter/ai12.jpg
+[fokus]
+etikett: Helheten
+rubrik: Schack mot dator: sex svar
+- Fullständigt observerbar | Alla pjäser och positioner syns för båda spelarna.
+- Multiagent | Två agenter vars drag påverkar varandra: en konkurrerande miljö.
+- Deterministisk | Alla drag och deras konsekvenser är förutsägbara.
+- Sekventiell | Varje drag påverkar brädets framtida tillstånd.
+- Statisk | Brädet förändras inte utanför agenternas kontroll.
+- Diskret | Ett begränsat antal möjliga drag och tillstånd.
+> Samma sex frågor som förut, nu besvarade för ett exempel. Så här ska ni göra i övningen.
 
 ---
 
 [tabell]
 rubrik: Övning i par: fyll i och diskutera tabellen
 visa: facit-rader
+fokus: mjuk
 | Uppgift | Fullt/partiellt\nobserverbart | Singel/\nmultiagent | Deterministisk/\nstokastisk | Episodisk/\nsekventiell | Statiskt/\ndynamiskt | Diskret/\nkontinuerligt |
 | Schack mot dator | Fullt | Multi | Deterministisk | Sekventiell | Statisk | Diskret |
 | Korsord | Fullt | Singel | Deterministisk | Sekventiell | Statisk | Diskret |
@@ -300,8 +308,30 @@ visa: facit-rader
 
 ---
 
+[bildregi]
+etikett: Sammanfattning
+rubrik: Rätt modell av miljön är avgörande för effektiva AI-system.
+text: AI-agenter verkar i miljöer med olika egenskaper. Att förstå dem är avgörande för system som ska navigera i komplexa och dynamiska omvärldar.
+bild: bilder/ai-agenter-miljoer/korsning.jpg
+alt: Stadskorsning i skymning med bilar, cyklist, fotgängare och trafikljus.
+bildläge: spotlight
+fokuspunkt: 62 64
+säker-yta: 3 8 40 78
+mörkning: 0 0 42 100 0.55
+- obs | Partiellt observerbar | 70 | 40 | 12 | 16 | Träd, hus och andra fordon skymmer. Bilen ser bara en del av vägen.
+- multi | Multiagent | 75 | 70 | 16 | 12 | Fotgängare, cyklister och förare är också agenter.
+- stok | Stokastisk | 58 | 59 | 10 | 10 | Vad föraren framför gör härnäst går inte att veta säkert.
+- sekv | Sekventiell | 52 | 74 | 12 | 10 | Att svänga eller bromsa nu påverkar nästa situation.
+- dyn | Dynamisk | 48 | 58 | 6 | 10 | Trafikljusen slår om och alla rör sig, oavsett vad bilen gör.
+- kont | Kontinuerlig | 58 | 86 | 14 | 10 | Hastighet och styrning har inga tydliga steg.
+> Genomgång efter övningen. Samma korsning som i början: tänk dig att en av bilarna är självkörande. Nu kan vi läsa miljön med alla sex frågorna, i samma ordning som tabellen.
+> Det här är facit för raden "Självkörande bil i trafik", därför kommer scenen efter övningen.
+
+---
+
 [tidslinje]
 rubrik: Aktivitet: observerbarhet i luffarschack
-- 1 | Spela några partier luffarschack med en kompis.
-- 2 | Spela sedan den modifierade versionen där vissa slumpmässigt valda rutor är dolda.
-- 3 | Diskutera frågorna som ligger i Teams.
+- Omgång 1 | Spela | Spela några partier luffarschack med en kompis.
+- Omgång 2 | Dölj rutor | Spela versionen där några slumpvis valda rutor är dolda.
+- Efteråt | Diskutera | Diskutera frågorna som ligger i Teams.
+> Nu upplever ni dimension 1 själva: hur förändras spelet när ni inte ser allt?

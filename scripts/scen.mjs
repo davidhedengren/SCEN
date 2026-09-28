@@ -103,7 +103,7 @@ const cmds = {
     if (missing.length) console.warn('Saknas: ' + missing.join(', '));
   },
   exportera(file) {
-    if (!file) return console.error('Ange ett manus, t.ex. presentationer/kastrorelse.md');
+    if (!file) return console.error('Ange ett manus, t.ex. presentationer/grafer-och-trad.md');
     const { html, missing } = standalone(readDeck(file));
     const out = 'dist/' + slug(file) + '.html';
     wr(out, html);

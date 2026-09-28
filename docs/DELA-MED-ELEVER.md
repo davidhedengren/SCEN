@@ -8,4 +8,4 @@ En lärplattform kan visa HTML som en nedladdning. Ladda då ned filen och öppn
 
 Detta är en visningsversion, inte ett kopieringsskydd. Den som har en HTML-fil kan ändra sin egen kopia via källkoden eller importera den i ett annat verktyg. Det ändrar aldrig lärarens original. Synliga svar och facit som ingår i presentationens klicksteg finns också i elevfilen.
 
-Kommandorad: `node scripts/scen.mjs exportera-elev presentationer/fem-redaktionella.md`.
+Kommandorad: `node scripts/scen.mjs exportera-elev presentationer/grafer-och-trad.md`.

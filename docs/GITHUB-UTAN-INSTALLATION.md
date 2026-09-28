@@ -39,7 +39,7 @@ Filer vars namn börjar med punkt kan försvinna vid uppladdningen. Den här fil
   ```json
   [
     "ai-agenter-och-miljoer.md",
-    "kastrorelse.md",
+    "grafer-och-trad.md",
     "min-nya-presentation.md"
   ]
   ```

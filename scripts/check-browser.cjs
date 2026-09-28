@@ -46,7 +46,7 @@ window.addEventListener('unhandledrejection', event => {
     result.indexCount = response.ok ? (await response.json()).length : 0;
     result.libraryReady = await waitFor(() => document.querySelector('#storeChip')?.textContent !== 'Ansluter…');
     result.storeChip = document.querySelector('#storeChip')?.textContent || '';
-    result.repoReady = await waitFor(() => [...document.querySelectorAll('#grid .tag')].filter(tag => tag.textContent.trim() === 'I repot').length === 8);
+    result.repoReady = await waitFor(() => [...document.querySelectorAll('#grid .tag')].filter(tag => tag.textContent.trim() === 'I repot').length === result.indexCount);
     result.repoCount = [...document.querySelectorAll('#grid .tag')].filter(tag => tag.textContent.trim() === 'I repot').length;
     result.undoExists = Boolean(document.querySelector('#btnUndo'));
     result.layerButtonCount = document.querySelectorAll('[data-add]').length;
@@ -152,8 +152,8 @@ async function main() {
         [result.errors.length === 0, `JavaScript-fel: ${result.errors.join(' | ')}`],
         [!result.probeError, `Testproben misslyckades: ${result.probeError}`],
         [result.libraryReady && result.storeChip !== 'Ansluter…', `Biblioteket startade inte: ${result.storeChip}`],
-        [result.indexStatus === 200 && result.indexCount === 8, `presentationer/index.json: status ${result.indexStatus}, antal ${result.indexCount}`],
-        [result.repoCount === 8, `Förväntade 8 repopresentationer, hittade ${result.repoCount}`],
+        [result.indexStatus === 200 && result.indexCount > 0, `presentationer/index.json: status ${result.indexStatus}, antal ${result.indexCount}`],
+        [result.repoCount === result.indexCount, `Förväntade ${result.indexCount} repopresentationer, hittade ${result.repoCount}`],
         [result.undoExists, '#btnUndo saknas'],
         [result.layerButtonCount === 6, `Förväntade 6 lagerknappar, hittade ${result.layerButtonCount}`],
         [result.copyButtonExists && result.editorOpened, 'Kunde inte öppna en repopresentation i editorn'],

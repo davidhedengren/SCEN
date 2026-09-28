@@ -73,7 +73,7 @@ Första raden är mallen inom hakparentes, t.ex. `[kort]`. Alla mallar finns i [
 | `steg` | `nej` visar allt direkt i stället för ett klick i taget |
 | `tona` | `ja` tonar ner tidigare punkter |
 | `övergång` | `automatisk`, `båge`, `tona`, `glid`, `skjut`, `stig`, `zooma`, `svep`, `morph`, `ingen` |
-| `bakgrund` | `ingen`, `banor`, `vektorfält`, `nätverk`, `vågor` |
+| `bakgrund` | `ingen`, `fokusljus`, `ljus`, `banor`, `vektorfält`, `nätverk`, `vågor`. `fokusljus` är ett mjukt ljus som följer fokus vid varje klick och står stilla däremellan. De andra rör sig hela tiden och passar bäst på titel- och avsnittsbilder. |
 | `rubrikrörelse`, `rörelse` | `mask`, `ord för ord`, `skärpa`, `stig`, `tona`, `skrivmaskin`, `svep`, `ingen` |
 
 Bildregi kan dessutom bära en framtida Image Brief med `bild-id`, `filnamn`, `scen`, `syfte`, `motiv`, `komposition`, `motivplacering`, `format`, `undvik` och `prompt`. Detaljområden skrivs som `- id | etikett | x | y | bredd | höjd | annotation`. Se [BILDREGI.md](BILDREGI.md).

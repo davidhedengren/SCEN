@@ -53,11 +53,11 @@ Varje bild i ett manus börjar med mallens namn inom hakparentes. Samma katalog 
 | `[omlopp]` | Banor | Ett begrepp i mitten och tre till sex delar som kretsar runt det. Varje del åker in längs banan på klick. |
 | `[gradskiva]` | Banor | En skala från ett ytterläge till ett annat. Nålen svänger till varje läge på klick och bågen fylls, medan förklaringen byts i mitten. |
 | `[bro]` | Banor | En process som en båge över ett golv. Bågen bär stegen, golvet är sammanhanget de börjar och slutar i. Hela modellen syns från början. Varje klick flyttar fokus ett steg, tidigare steg ligger kvar nedtonade och sista klicket visar helheten igen. Med retur blir bron en loop: resultatet leder längs golvet tillbaka till början, som i återkopplingar, kretslopp och cykler. |
-| `[rad]` | Fokusvandring | Två till fem rutor i en rad. Alla syns från början. En fokusram glider från ruta till ruta medan de andra tonas ned, och sista klicket tänder alla. Med flöde: ja visar pilar att rutorna följer på varandra. |
-| `[rutor]` | Fokusvandring | Två till sex rutor i ett rutnät, till exempel fyra delar i två rader. Hela rutnätet syns från början. Fokusramen vandrar i läsordning och sista klicket tänder alla rutor. |
-| `[remsor]` | Fokusvandring | Tre till fem breda band staplade på varandra, med nummer, rubrik och förklaring på samma rad. Fokus vandrar uppifrån och ned och sista klicket tänder alla. Bra för begrepp med lite längre förklaringar. |
-| `[mosaik]` | Fokusvandring | En stor ruta med helheten eller huvudsaken och två till fyra mindre rutor bredvid. Fokus börjar i den stora rutan och vandrar sedan genom de mindre. Sista klicket tänder alla. |
-| `[kärna]` | Fokusvandring | Ett begrepp i mitten och två till fyra rutor runt det. Kärnan ligger tänd hela tiden medan fokus vandrar medsols mellan rutorna, och ekern till den aktuella rutan tänds. Sista klicket tänder alla och visar en slutsats i kärnan. |
+| `[rad]` | Fokusvandring | Två till fem kolumner på en scen med stora siffror. Alla syns från början. En ljuskägla glider i sidled till kolumnen du pratar om medan de andra tonas ned, och sista klicket tänder alla. Med flöde: ja fylls en linje under kolumnerna i takt med stegen. |
+| `[rutor]` | Fokusvandring | Två till sex rutor av matt glas över ett mjukt färgsken, till exempel fyra delar i två rader. Hela rutnätet syns från början. Ett ljus glider bakom glaset till rutan du pratar om, de andra blir suddiga, och sista klicket tänder alla. |
+| `[remsor]` | Fokusvandring | Tre till fem rader med nummer, rubrik och förklaring. Ett ljusdrag sveper ned till raden du pratar om, och sista klicket tänder alla. Bra för begrepp med lite längre förklaringar. |
+| `[mosaik]` | Fokusvandring | En bentogrid: en stor ruta med helheten och två till fyra mindre. Allt börjar i gråskala och färgen tänds i rutan du pratar om, en i taget. Sista klicket ger färg åt alla. |
+| `[kärna]` | Fokusvandring | En lysande kärna i mitten och två till fyra delar runt den. Kärnan lyser hela tiden, och en ljusstråle ritas ut till delen du pratar om. Sista klicket tänder alla strålar och visar en slutsats i kärnan. |
 | `[graf]` | System | Noder och kanter i en fast karta. Hela grafen syns från början. Varje klick lyfter fram noder, kanter, vikter, en enskild nod eller en väg som ritas i färdriktningen. Resten ligger kvar nedtonat, och sista klicket visar helheten med en slutsats. |
 | `[träd]` | System | Ett träd eller beslutsträd ur en indragen lista. Hela trädet syns från början. Varje klick lyfter fram roten, en nivå, grenarna, löven eller en väg från roten till ett löv, som ritas nedåt gren för gren. |
 | `[flöde]` | System | Något flödar genom ett system: indata, bearbetning, utdata. En eller två banor genom samma steg. Hela flödet syns nedtonat från början. Varje klick tänder samma steg i alla banor och en markör följer flödet, så att två processer jämförs steg för steg. Ett steg som heter ? blir en stängd låda. Sista klicket visar hela kedjan och slutsatsen. |
@@ -875,7 +875,7 @@ text: Poker, trafik, robotdammsugare och diagnos.
 
 ### `[rad]` Rad
 
-Två till fem rutor i en rad. Alla syns från början. En fokusram glider från ruta till ruta medan de andra tonas ned, och sista klicket tänder alla. Med flöde: ja visar pilar att rutorna följer på varandra.
+Två till fem kolumner på en scen med stora siffror. Alla syns från början. En ljuskägla glider i sidled till kolumnen du pratar om medan de andra tonas ned, och sista klicket tänder alla. Med flöde: ja fylls en linje under kolumnerna i takt med stegen.
 
 **Undvik när:** Mer än fem delar eller långa texter i rutorna. Använd rutor när delarna inte har en ordning.
 
@@ -894,7 +894,7 @@ slutsats: Slutsatsen leder ofta till en ny fråga.
 
 ### `[rutor]` Rutor
 
-Två till sex rutor i ett rutnät, till exempel fyra delar i två rader. Hela rutnätet syns från början. Fokusramen vandrar i läsordning och sista klicket tänder alla rutor.
+Två till sex rutor av matt glas över ett mjukt färgsken, till exempel fyra delar i två rader. Hela rutnätet syns från början. Ett ljus glider bakom glaset till rutan du pratar om, de andra blir suddiga, och sista klicket tänder alla.
 
 **Undvik när:** Delar som bygger på varandra i en tydlig ordning (använd rad). Mer än sex rutor.
 
@@ -912,7 +912,7 @@ slutsats: Ingen fråga räcker ensam. Tillsammans ger de en bedömning.
 
 ### `[remsor]` Remsor
 
-Tre till fem breda band staplade på varandra, med nummer, rubrik och förklaring på samma rad. Fokus vandrar uppifrån och ned och sista klicket tänder alla. Bra för begrepp med lite längre förklaringar.
+Tre till fem rader med nummer, rubrik och förklaring. Ett ljusdrag sveper ned till raden du pratar om, och sista klicket tänder alla. Bra för begrepp med lite längre förklaringar.
 
 **Undvik när:** Mer än fem band eller förklaringar längre än två rader.
 
@@ -928,7 +928,7 @@ slutsats: Maktdelningen gör att ingen del ensam kan bestämma allt.
 
 ### `[mosaik]` Mosaik
 
-En stor ruta med helheten eller huvudsaken och två till fyra mindre rutor bredvid. Fokus börjar i den stora rutan och vandrar sedan genom de mindre. Sista klicket tänder alla.
+En bentogrid: en stor ruta med helheten och två till fyra mindre. Allt börjar i gråskala och färgen tänds i rutan du pratar om, en i taget. Sista klicket ger färg åt alla.
 
 **Undvik när:** Delar som är lika viktiga (använd rutor). Mer än fem rutor.
 
@@ -945,7 +945,7 @@ slutsats: Energin flödar genom systemet, medan ämnena går runt i ett kretslop
 
 ### `[kärna]` Kärna
 
-Ett begrepp i mitten och två till fyra rutor runt det. Kärnan ligger tänd hela tiden medan fokus vandrar medsols mellan rutorna, och ekern till den aktuella rutan tänds. Sista klicket tänder alla och visar en slutsats i kärnan.
+En lysande kärna i mitten och två till fyra delar runt den. Kärnan lyser hela tiden, och en ljusstråle ritas ut till delen du pratar om. Sista klicket tänder alla strålar och visar en slutsats i kärnan.
 
 **Undvik när:** Delar som inte hänger ihop med ett gemensamt begrepp. Mer än fyra rutor.
 

@@ -818,9 +818,9 @@ function renderSlide(sl, i, deck, img) {
       const H = Math.max(360, 968 - Y0), G = 28;
       let R = [], order = null, links = '';
       if (L === 'rad') {
-        const gap = sl.flow ? 76 : G, w = (W - gap * (n - 1)) / n, h = Math.min(H, Math.round(w * 1.3)), y = Y0 + (H - h) / 2;
+        const gap = 0, w = W / n, h = Math.min(H - (sl.flow ? 70 : 0), Math.round(w * 1.4)), y = Y0 + (H - (sl.flow ? 70 : 0) - h) / 2;
         R = its.map((_, j) => [X0 + j * (w + gap), y, w, h]);
-        if (sl.flow) for (let j = 0; j < n - 1; j++) { const x = X0 + (j + 1) * w + j * gap + gap / 2, y = Y0 + H / 2; links += `<path class="fv-link" data-dramaturgy-in="${j} ${j + 1}" d="M${(x - 10).toFixed(1)} ${(y - 16).toFixed(1)} L${(x + 8).toFixed(1)} ${y.toFixed(1)} L${(x - 10).toFixed(1)} ${(y + 16).toFixed(1)}"/>`; }
+
       } else if (L === 'rutor') {
         const cols = n <= 2 ? n : n === 4 ? 2 : 3, rows = Math.ceil(n / cols), w = (W - G * (cols - 1)) / cols, h = (H - G * (rows - 1)) / rows;
         R = its.map((_, j) => { const r = Math.floor(j / cols), inRow = r === rows - 1 ? n - r * cols : cols, off = (cols - inRow) * (w + G) / 2; return [X0 + off + (j % cols) * (w + G), Y0 + r * (h + G), w, h]; });
@@ -841,7 +841,9 @@ function renderSlide(sl, i, deck, img) {
         R = order.map(q => R[q]);
         const cx = X0 + sw + 64, ch = Math.min(H, 420), cy = Y0 + (H - ch) / 2;
         R.core = [cx, cy, cw, ch];
-        R.forEach((r, j) => { const fromX = r[0] < cx ? cx : cx + cw, toX = r[0] < cx ? r[0] + r[2] : r[0], y1 = cy + ch / 2, y2 = r[1] + r[3] / 2; links += `<path class="fv-link fv-spoke" data-dramaturgy-in="${j}" d="M${fromX} ${y1.toFixed(1)} C${((fromX + toX) / 2).toFixed(1)} ${y1.toFixed(1)} ${((fromX + toX) / 2).toFixed(1)} ${y2.toFixed(1)} ${toX} ${y2.toFixed(1)}"/>`; });
+        R.forEach((r, j) => { const fromX = r[0] < cx ? cx : cx + cw, toX = r[0] < cx ? r[0] + r[2] : r[0], y1 = cy + ch / 2, y2 = r[1] + r[3] / 2; const d = `M${fromX} ${y1.toFixed(1)} C${((fromX + toX) / 2).toFixed(1)} ${y1.toFixed(1)} ${((fromX + toX) / 2).toFixed(1)} ${y2.toFixed(1)} ${toX} ${y2.toFixed(1)}`, gid = `fvg${i}-${fromX < toX ? 'r' : 'l'}`;
+          links += `<path class="fv-link fv-spoke" data-dramaturgy-in="${j}" d="${d}"/><path class="fv-beamline" data-dramaturgy-in="${j}" d="${d}" pathLength="1" stroke="url(#${gid})"/><circle class="fv-node" data-dramaturgy-in="${j}" cx="${toX}" cy="${y2.toFixed(1)}" r="9"/>`; });
+        links = `<defs><linearGradient id="fvg${i}-r" x1="0" x2="1" y1="0" y2="0"><stop offset="0" style="stop-color:var(--accent)"/><stop offset="1" style="stop-color:var(--accent-2)"/></linearGradient><linearGradient id="fvg${i}-l" x1="1" x2="0" y1="0" y2="0"><stop offset="0" style="stop-color:var(--accent)"/><stop offset="1" style="stop-color:var(--accent-2)"/></linearGradient></defs>` + links;
       }
       const minW = R.length ? Math.min(...R.slice(L === 'mosaik' ? 1 : 0).map(r => r[2]).concat(L === 'mosaik' && R.length === 1 ? [R[0][2]] : [])) : 0;
       const minH = R.length ? Math.min(...R.map(r => r[3])) : 0;
@@ -854,11 +856,17 @@ function renderSlide(sl, i, deck, img) {
         const tight = L !== 'remsor' && L !== 'rad' && h < 380;
         const hB = big ? hs * 1.35 : tight ? Math.min(hs, Math.max(28, h * .16)) : hs, tB = tight ? Math.min(ts, Math.max(22, h * .1)) : ts;
         const fn = Math.round(L === 'rad' ? Math.min(150, w * .36) : L === 'remsor' ? hs * .9 : tight ? Math.max(24, h * .14) : Math.max(30, Math.min(big ? 120 : 84, h * .26)));
-        return `<article class="fv-box${big ? ' fv-big' : ''}" data-dramaturgy-in="${j}" data-rect="${Math.round(x)} ${Math.round(y)} ${Math.round(w)} ${Math.round(h)}" style="--fv-i:${j};left:${Math.round(x)}px;top:${Math.round(y)}px;width:${Math.round(w)}px;height:${Math.round(h)}px;--fh:${Math.round(hB)}px;--ft:${Math.round(tB)}px;--fn:${fn}px">` +
+        return `<article class="fv-box${big ? ' fv-big' : ''}${L === 'karna' && x < 960 ? ' fv-l' : ''}" data-dramaturgy-in="${j}" data-rect="${Math.round(x)} ${Math.round(y)} ${Math.round(w)} ${Math.round(h)}" style="--fv-i:${j};--tint:${Math.round(100 - j * 100 / Math.max(1, n - 1))}%;left:${Math.round(x)}px;top:${Math.round(y)}px;width:${Math.round(w)}px;height:${Math.round(h)}px;--fh:${Math.round(hB)}px;--ft:${Math.round(tB)}px;--fn:${fn}px">` +
           `<span class="fv-n">${String(j + 1).padStart(2, '0')}</span><div class="fv-body"><h3>${fmt(o.h)}</h3>${o.t ? `<p>${fmt(o.t)}</p>` : ''}</div></article>`;
       }).join('');
       const f0 = R[0] || [X0, Y0, 0, 0];
-      const frame = n ? `<div class="fv-frame" data-dramaturgy-follow aria-hidden="true" style="--fx:${Math.round(f0[0])}px;--fy:${Math.round(f0[1])}px;--fw:${Math.round(f0[2])}px;--fhh:${Math.round(f0[3])}px"></div>` : '';
+      const fcls = { rad: 'fv-beam', rutor: 'fv-glow', remsor: 'fv-sweep' }[L];
+      const U = R.length ? [Math.min(...R.map(r => r[0])), Math.min(...R.map(r => r[1])), Math.max(...R.map(r => r[0] + r[2])), Math.max(...R.map(r => r[1] + r[3]))] : [0, 0, 0, 0];
+      const aurora = L === 'rutor' ? `<div class="fv-aurora" aria-hidden="true" style="left:${Math.round(U[0])}px;top:${Math.round(U[1])}px;width:${Math.round(U[2] - U[0])}px;height:${Math.round(U[3] - U[1])}px"></div>` : '';
+      const track = L === 'rad' && sl.flow && n > 1 ? (() => { const x1 = R[0][0] + R[0][2] / 2, x2 = R[n - 1][0] + R[n - 1][2] / 2, ty = Y0 + H - 34;
+        return `<div class="fv-track" aria-hidden="true" style="left:${Math.round(x1)}px;top:${Math.round(ty)}px;width:${Math.round(x2 - x1)}px"></div><div class="fv-trackfill" data-dramaturgy-follow aria-hidden="true" style="left:${Math.round(x1)}px;top:${Math.round(ty)}px;--x0:${Math.round(x1)}px;--x1:${Math.round(x2)}px;--fx:${Math.round(R[0][0])}px;--fw:${Math.round(R[0][2])}px"></div>` +
+          R.map((r, j) => `<span class="fv-dot" data-dramaturgy-in="${j}" style="left:${Math.round(r[0] + r[2] / 2)}px;top:${Math.round(ty)}px"></span>`).join(''); })() : '';
+      const frame = n && fcls ? `<div class="${fcls}" data-dramaturgy-follow aria-hidden="true" style="--fx:${Math.round(f0[0])}px;--fy:${Math.round(f0[1])}px;--fw:${Math.round(f0[2])}px;--fhh:${Math.round(f0[3])}px"></div>` : '';
       const core = L === 'karna' && R.core ? `<div class="fv-core" style="left:${R.core[0]}px;top:${Math.round(R.core[1])}px;width:${R.core[2]}px;height:${R.core[3]}px"><p>${fmt(sl.text || 'Kärna')}</p>${end ? `<p class="fv-coreend">${fmt(sl.conclusion)}</p>` : ''}</div>` : '';
       let cues = '';
       if (steps) {
@@ -867,7 +875,7 @@ function renderSlide(sl, i, deck, img) {
       }
       body = (sl.caption ? `<p class="kicker"${A('fade')}>${fmt(sl.caption)}</p>` : '') + H2('', 'mask') +
         ((lead || end) && L !== 'karna' ? `<div class="fv-lead">${lead ? `<p class="fv-intro">${fmt(sl.text)}</p>` : ''}${end ? `<p class="fv-end">${fmt(sl.conclusion)}</p>` : ''}</div>` : '') +
-        `<div class="fv-stage"${A(anim(ba, 'fade'), 150)}>` + (links ? `<svg class="fv-svg" viewBox="0 0 1920 1080" aria-hidden="true">${links}</svg>` : '') + core + boxes + frame + `</div>` + cues;
+        `<div class="fv-stage"${A(anim(ba, 'fade'), 150)}>` + aurora + (links ? `<svg class="fv-svg" viewBox="0 0 1920 1080" aria-hidden="true">${links}</svg>` : '') + track + frame + core + boxes + `</div>` + cues;
       attrs += ` data-dramaturgy="focus-restore" data-dramaturgy-state="${steps ? 'overview' : 'restored'}"${steps ? '' : ' data-dramaturgy-static="true"'}${sl.flow ? ' data-fv-flow="true"' : ''}`;
       break;
     }

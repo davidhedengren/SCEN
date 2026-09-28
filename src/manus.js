@@ -240,7 +240,9 @@ const Manus = (() => {
   }
   function stringify(deck) {
     const t = deck.theme || {};
-    const head = ['---', `titel: ${deck.title || ''}`, `tema: ${t.id || 'scen'}`];
+    const head = ['---', `titel: ${deck.title || ''}`];
+    if (deck.course) head.push(`kurs: ${deck.course}`);
+    head.push(`tema: ${t.id || 'scen'}`);
     if (t.accent && t.accent !== 'auto' && (t.id || 'scen') === 'scen') head.push(`färg: ${t.accent}`);
     if ((t.id || 'scen') === 'scen' && t.look && t.look !== 'auto') head.push(`läge: ${t.look === 'dark' ? 'mörkt' : 'ljust'}`);
     head.push('---');
@@ -248,6 +250,7 @@ const Manus = (() => {
   }
   function applyMeta(deck, meta) {
     if (meta['titel']) deck.title = meta['titel'];
+    if (meta['kurs']) deck.course = meta['kurs']; else delete deck.course;
     deck.theme = Object.assign({}, deck.theme || {});
     if (meta['tema']) deck.theme.id = themeId(meta['tema']);
     if (meta['färg']) deck.theme.accent = accentId(meta['färg']);

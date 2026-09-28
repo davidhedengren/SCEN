@@ -29,6 +29,7 @@ tona: ja
 | Nyckel | Värden |
 |---|---|
 | `titel` | Presentationens namn |
+| `kurs` | Valfritt. Biblioteket grupperar presentationerna under en rubrik per kurs, t.ex. `Artificiell Intelligens 1` |
 | `tema` | `scen`, `djup`, `bana`, `nattbana`, `atlas`, `natt`, `tidskrift`, `kritvit`, `klassrum`, `solnedgang`, `skog`, `retro` |
 | `färg` | Bara för temat `scen`: `blue`, `green`, `orange`, `teal`, `purple`, `red`, `graphite` |
 | `läge` | Bara för temat `scen`: `ljust`, `mörkt` |

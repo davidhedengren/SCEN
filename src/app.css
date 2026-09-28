@@ -54,6 +54,8 @@ button,input,select,textarea{font:inherit;color:inherit}
 .lib-head h1{margin:0;font:650 32px/1.1 var(--display);letter-spacing:-.03em}
 .lib-head p{margin:6px 0 0}
 .grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:22px}
+.grid-group{grid-column:1/-1;margin:22px 0 -8px;font:650 22px/1.2 var(--display);letter-spacing:-.02em}
+.grid-group:first-child{margin-top:4px}
 .card{display:grid;gap:10px;align-content:start;min-width:0}
 .card-thumb{all:unset;cursor:pointer;display:block;border-radius:12px;outline:1px solid var(--line);overflow:hidden;transition:outline-color .15s,transform .15s}
 .card-thumb:hover{outline:2px solid var(--accent)}

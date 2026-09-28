@@ -1,5 +1,6 @@
 ---
 titel: Grafer, träd och beslutsträd inom AI
+kurs: Artificiell Intelligens 1
 tema: natt
 ---
 

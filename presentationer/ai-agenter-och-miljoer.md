@@ -1,5 +1,6 @@
 ---
 titel: AI-agenter och miljöer
+kurs: Artificiell Intelligens 1
 tema: natt
 ---
 

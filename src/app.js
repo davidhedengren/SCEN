@@ -223,12 +223,18 @@ async function showLibrary() {
 }
 function renderGrid() {
   const g = $('#grid'); g.innerHTML = '';
-  decks.forEach(d => g.appendChild(card(d)));
+  const entries = decks.map(d => [d, false]).concat(repoDecks && repoDecks.length ? repoDecks.map(d => [d, true]) : [[SAMPLE, true]]);
+  const courses = [...new Set(entries.map(([d]) => (d.course || '').trim()).filter(Boolean))].sort((a, b) => a.localeCompare(b, 'sv'));
+  const groups = courses.length ? courses.concat('') : [''];
+  groups.forEach(course => {
+    const members = entries.filter(([d]) => (d.course || '').trim() === course);
+    if (!members.length) return;
+    if (courses.length) { const h = document.createElement('h2'); h.className = 'grid-group'; h.textContent = course || 'Övrigt'; g.appendChild(h); }
+    members.forEach(([d, sample]) => g.appendChild(card(d, sample)));
+  });
   const nb = document.createElement('button'); nb.type = 'button'; nb.className = 'empty-new'; nb.textContent = '+ Ny presentation';
   nb.onclick = newDeck;
   const wrap = document.createElement('div'); wrap.className = 'card'; wrap.appendChild(nb);
-  if (repoDecks && repoDecks.length) repoDecks.forEach(d => g.appendChild(card(d, true)));
-  else g.appendChild(card(SAMPLE, true));
   g.appendChild(wrap);
   $('#libSub').textContent = decks.length ? plural(decks.length, 'presentation', 'presentationer') + '. Klicka på en för att redigera.' : 'Inga egna presentationer än. Börja med en ny, importera en PowerPoint eller spela exemplet.';
 }

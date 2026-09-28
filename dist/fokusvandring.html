@@ -1171,65 +1171,116 @@
 .scen .slide:is([data-layout="flode"],[data-layout="urval"])[data-body-motion="none"] *{transition:none!important}
 
 /* ---------- Fokusvandring: Rad, Rutor, Remsor, Mosaik, Kärna ----------
-   Allt syns från början. En fokusram glider mellan rutorna, tidigare rutor ligger kvar
-   nedtonade, kommande ännu svagare, och sista klicket tänder alla. */
-.scen .slide:is([data-layout="rad"],[data-layout="rutor"],[data-layout="remsor"],[data-layout="mosaik"],[data-layout="karna"]){align-content:start;gap:16px;isolation:isolate;--fv-past:.4;--fv-future:.24;--fv-ease:cubic-bezier(.65,0,.25,1)}
+   Samma dramaturgi (allt syns, fokus vandrar, sista klicket tänder allt),
+   men varje mall har ett eget ljus:
+   Rad = ljuskägla som glider över en scen, Rutor = glas med ett sken bakom,
+   Remsor = ljusdrag som sveper över raden, Mosaik = färgen tänds där fokus är,
+   Kärna = en lysande kärna som skickar strålar. */
+.scen .slide:is([data-layout="rad"],[data-layout="rutor"],[data-layout="remsor"],[data-layout="mosaik"],[data-layout="karna"]){align-content:start;gap:16px;isolation:isolate;--fv-ease:cubic-bezier(.65,0,.25,1);--fv-glide:.85s}
 .scen .slide:is([data-layout="rad"],[data-layout="rutor"],[data-layout="remsor"],[data-layout="mosaik"],[data-layout="karna"])>h2{position:relative;z-index:3;font-size:60px;line-height:1.08;max-width:1632px}
 .scen .slide:is([data-layout="rad"],[data-layout="rutor"],[data-layout="remsor"],[data-layout="mosaik"],[data-layout="karna"])>.kicker{position:relative;z-index:3}
-.scen .slide:is([data-layout="rad"],[data-layout="rutor"],[data-layout="remsor"],[data-layout="mosaik"],[data-layout="karna"]) .fv-lead{position:relative;z-index:3;display:grid;max-width:1500px}
-.scen .slide:is([data-layout="rad"],[data-layout="rutor"],[data-layout="remsor"],[data-layout="mosaik"]) .fv-lead p{grid-area:1/1;margin:0;font-size:32px;line-height:1.35;transition:opacity .5s var(--dramaturgy-soft-ease),transform .6s var(--dramaturgy-ease)}
+.scen .slide .fv-lead{position:relative;z-index:3;display:grid;max-width:1500px}
+.scen .slide .fv-lead p{grid-area:1/1;margin:0;font-size:32px;line-height:1.35;transition:opacity .5s var(--dramaturgy-soft-ease),transform .6s var(--dramaturgy-ease)}
 .scen .slide .fv-lead .fv-intro{color:var(--muted)}
 .scen .slide .fv-lead .fv-end{color:var(--ink);opacity:0;transform:translateY(10px)}
 .scen .slide[data-dramaturgy-state="restored"] .fv-lead:has(.fv-end) .fv-intro{opacity:0;transform:translateY(-10px)}
 .scen .slide[data-dramaturgy-state="restored"] .fv-lead .fv-end{opacity:1;transform:none;transition-delay:.25s}
-.scen .slide .fv-lead .fv-end::before{content:"";display:inline-block;width:14px;height:14px;border-radius:50%;background:var(--accent);margin-right:18px;vertical-align:.12em}
+.scen .slide .fv-lead .fv-end::before{content:"";display:inline-block;width:14px;height:14px;border-radius:50%;background:linear-gradient(135deg,var(--accent),var(--accent-2));margin-right:18px;vertical-align:.12em;box-shadow:0 0 18px var(--accent)}
 .scen .slide .fv-stage{position:absolute;inset:0;pointer-events:none}
 .scen .slide .fv-svg{position:absolute;left:0;top:0;width:1920px;height:1080px;overflow:visible}
 
-/* rutan */
-.scen .slide .fv-box{position:absolute;box-sizing:border-box;margin:0;padding:clamp(24px,calc(var(--fh) * .7),44px);display:flex;flex-direction:column;justify-content:space-between;gap:12px;border-radius:var(--radius,20px);background:color-mix(in srgb,var(--surface) 82%,var(--bg));box-shadow:inset 0 0 0 1.5px color-mix(in srgb,var(--line) 85%,transparent);overflow:hidden;
-  transition:opacity .6s var(--dramaturgy-soft-ease),background .6s var(--dramaturgy-soft-ease),box-shadow .6s var(--dramaturgy-soft-ease),filter .6s var(--dramaturgy-soft-ease)}
-.scen .slide .fv-box::before{content:"";position:absolute;left:0;top:0;height:5px;width:100%;background:var(--accent);transform:scaleX(0);transform-origin:left;transition:transform .8s var(--dramaturgy-ease)}
-.scen .slide .fv-box .fv-n{font-family:var(--font-display,var(--font));font-weight:var(--h-weight,650);font-size:var(--fn,56px);line-height:.9;letter-spacing:-.03em;color:color-mix(in srgb,var(--muted) 45%,transparent);transition:color .5s}
+/* gemensam typografi i en ruta */
+.scen .slide .fv-box{position:absolute;box-sizing:border-box;margin:0;padding:clamp(24px,calc(var(--fh) * .7),44px);display:flex;flex-direction:column;justify-content:space-between;gap:12px;overflow:hidden;
+  transition:opacity .7s var(--dramaturgy-soft-ease),filter .8s var(--dramaturgy-soft-ease),background .7s var(--dramaturgy-soft-ease),box-shadow .7s var(--dramaturgy-soft-ease),color .5s}
+.scen .slide .fv-box .fv-n{font-family:var(--font-display,var(--font));font-weight:var(--h-weight,650);font-size:var(--fn,56px);line-height:.9;letter-spacing:-.04em;font-variant-numeric:tabular-nums;color:color-mix(in srgb,var(--muted) 40%,transparent);transition:color .6s,opacity .6s}
 .scen .slide .fv-box .fv-body{display:grid;gap:calc(var(--ft) * .55)}
-.scen .slide .fv-box h3{margin:0;font-family:var(--font-display,var(--font));font-weight:var(--h-weight,650);font-style:var(--h-style,normal);letter-spacing:var(--h-track,-.03em);text-transform:var(--h-case,none);font-size:var(--fh,48px);line-height:1.04;color:var(--ink);text-wrap:balance;transition:color .5s}
-.scen .slide .fv-box p{margin:0;font-size:var(--ft,30px);line-height:1.35;color:var(--muted);text-wrap:pretty;transition:color .5s}
-.scen .slide .fv-box.fv-big{background:color-mix(in srgb,var(--accent) 10%,var(--surface))}
-.scen .slide[data-layout="remsor"] .fv-box{display:grid;grid-template-columns:120px minmax(0,.9fr) minmax(0,1.3fr);align-items:center;column-gap:40px;padding-block:0}
+.scen .slide .fv-box h3{margin:0;font-family:var(--font-display,var(--font));font-weight:var(--h-weight,650);font-style:var(--h-style,normal);letter-spacing:var(--h-track,-.03em);text-transform:var(--h-case,none);font-size:var(--fh,48px);line-height:1.04;color:var(--ink);text-wrap:balance;transition:color .6s}
+.scen .slide .fv-box p{margin:0;font-size:var(--ft,30px);line-height:1.38;color:var(--muted);text-wrap:pretty;transition:color .6s}
+.scen .slide[data-dramaturgy-state="focus"] .fv-box.dramaturgy-current p,.scen .slide[data-dramaturgy-state="restored"] .fv-box p{color:var(--ink)}
+/* följare (ljuset) */
+.scen .slide :is(.fv-beam,.fv-glow,.fv-sweep){position:absolute;left:0;top:0;box-sizing:border-box;width:var(--fw);height:var(--fhh);transform:translate(var(--fx),var(--fy));opacity:0;pointer-events:none;
+  transition:transform var(--fv-glide) var(--fv-ease),width var(--fv-glide) var(--fv-ease),height var(--fv-glide) var(--fv-ease),opacity .5s var(--dramaturgy-soft-ease)}
+.scen .slide :is(.fv-beam,.fv-glow,.fv-sweep).on{opacity:1}
+
+/* ===== Rad: en scen med ljuskägla ===== */
+.scen .slide[data-layout="rad"] .fv-box{border-left:1px solid color-mix(in srgb,var(--line) 80%,transparent);padding:40px 36px 36px;background:none}
+.scen .slide[data-layout="rad"] .fv-box:first-of-type{border-left-color:transparent}
+.scen .slide[data-layout="rad"] .fv-box .fv-n{font-size:var(--fn);background:linear-gradient(180deg,color-mix(in srgb,var(--ink) 34%,transparent),color-mix(in srgb,var(--ink) 4%,transparent));-webkit-background-clip:text;background-clip:text;color:transparent}
+.scen .slide[data-layout="rad"][data-dramaturgy-state="focus"] .fv-box.dramaturgy-current .fv-n,.scen .slide[data-layout="rad"][data-dramaturgy-state="restored"] .fv-box .fv-n{background-image:linear-gradient(180deg,var(--accent),color-mix(in srgb,var(--accent-2) 70%,transparent))}
+.scen .slide[data-layout="rad"] .fv-box p{min-height:calc(var(--ft) * 1.38 * 2)}
+.scen .slide[data-layout="rad"][data-dramaturgy-state="focus"] .fv-box:not(.dramaturgy-current){opacity:.34}
+.scen .slide[data-layout="rad"][data-dramaturgy-state="focus"] .fv-box.dramaturgy-future{opacity:.2}
+.scen .slide[data-layout="rad"] .fv-beam{background:
+  radial-gradient(90% 60% at 50% 0%,color-mix(in srgb,var(--accent) 34%,transparent),transparent 72%),
+  linear-gradient(180deg,color-mix(in srgb,var(--accent) 16%,transparent),transparent 78%);
+  border-top:3px solid var(--accent);box-shadow:0 -18px 60px -10px color-mix(in srgb,var(--accent) 60%,transparent)}
+.scen .slide[data-layout="rad"] .fv-track{position:absolute;height:2px;background:color-mix(in srgb,var(--line) 90%,transparent);border-radius:2px}
+.scen .slide[data-layout="rad"] .fv-trackfill{position:absolute;height:4px;margin-top:-1px;border-radius:4px;width:max(0px,calc(var(--fx) + var(--fw) / 2 - var(--x0)));background:linear-gradient(90deg,var(--accent-2),var(--accent));box-shadow:0 0 18px color-mix(in srgb,var(--accent) 70%,transparent);opacity:0;transition:width var(--fv-glide) var(--fv-ease),opacity .4s}
+.scen .slide[data-layout="rad"] .fv-trackfill.on{opacity:1}
+.scen .slide[data-layout="rad"][data-dramaturgy-state="restored"] .fv-trackfill{opacity:1;width:calc(var(--x1) - var(--x0))}
+.scen .slide[data-layout="rad"] .fv-dot{position:absolute;width:14px;height:14px;margin:-6px 0 0 -7px;border-radius:50%;background:var(--bg);box-shadow:inset 0 0 0 2px color-mix(in srgb,var(--muted) 70%,transparent);transition:background .5s,box-shadow .5s,transform .5s var(--dramaturgy-ease)}
+.scen .slide[data-layout="rad"][data-dramaturgy-state="focus"] .fv-dot:is(.dramaturgy-current,.dramaturgy-past),.scen .slide[data-layout="rad"][data-dramaturgy-state="restored"] .fv-dot{background:var(--accent);box-shadow:0 0 0 5px color-mix(in srgb,var(--accent) 22%,transparent),0 0 20px var(--accent)}
+.scen .slide[data-layout="rad"][data-dramaturgy-state="focus"] .fv-dot.dramaturgy-current{transform:scale(1.35)}
+
+/* ===== Rutor: glas över ett norrsken ===== */
+.scen .slide[data-layout="rutor"] .fv-aurora{position:absolute;opacity:.55;filter:blur(70px) saturate(1.2);background:
+  radial-gradient(40% 55% at 18% 25%,color-mix(in srgb,var(--accent) 55%,transparent),transparent 70%),
+  radial-gradient(45% 60% at 85% 80%,color-mix(in srgb,var(--accent-2) 55%,transparent),transparent 70%);transition:opacity 1s}
+.scen .slide[data-layout="rutor"][data-dramaturgy-state="focus"] .fv-aurora{opacity:.28}
+.scen .slide[data-layout="rutor"] .fv-box{border-radius:calc(var(--radius,20px) + 6px);background:color-mix(in srgb,var(--surface) 58%,transparent);-webkit-backdrop-filter:blur(26px) saturate(1.5);backdrop-filter:blur(26px) saturate(1.5);box-shadow:inset 0 1px 0 color-mix(in srgb,var(--ink) 16%,transparent),inset 0 0 0 1px color-mix(in srgb,var(--ink) 9%,transparent),0 30px 60px -30px color-mix(in srgb,var(--bg) 60%,transparent)}
+.scen .slide[data-layout="rutor"][data-dramaturgy-state="focus"] .fv-box:not(.dramaturgy-current){opacity:.42;filter:blur(1.2px) saturate(.6)}
+.scen .slide[data-layout="rutor"][data-dramaturgy-state="focus"] .fv-box.dramaturgy-current{background:color-mix(in srgb,var(--surface) 38%,transparent);box-shadow:inset 0 1px 0 color-mix(in srgb,var(--ink) 30%,transparent),inset 0 0 0 1.5px color-mix(in srgb,var(--accent) 70%,transparent),0 40px 80px -30px color-mix(in srgb,var(--accent) 45%,transparent)}
+.scen .slide[data-layout="rutor"][data-dramaturgy-state="focus"] .fv-box.dramaturgy-current :is(h3,.fv-n){color:var(--accent)}
+.scen .slide[data-layout="rutor"][data-dramaturgy-state="restored"] .fv-box .fv-n{color:var(--accent)}
+.scen .slide[data-layout="rutor"] .fv-glow{border-radius:50%;margin:-60px 0 0 -60px;padding:60px;width:calc(var(--fw) + 120px);height:calc(var(--fhh) + 120px);background:radial-gradient(closest-side,color-mix(in srgb,var(--accent) 70%,transparent),color-mix(in srgb,var(--accent-2) 30%,transparent) 55%,transparent);filter:blur(30px)}
+
+/* ===== Remsor: ett ljusdrag sveper över raden ===== */
+.scen .slide[data-layout="remsor"] .fv-box{display:grid;grid-template-columns:130px minmax(0,.9fr) minmax(0,1.3fr);align-items:center;column-gap:40px;padding:0 40px;background:none;border-top:1px solid color-mix(in srgb,var(--line) 85%,transparent);border-radius:0}
+.scen .slide[data-layout="remsor"] .fv-box:last-of-type{border-bottom:1px solid color-mix(in srgb,var(--line) 85%,transparent)}
 .scen .slide[data-layout="remsor"] .fv-box .fv-body{display:contents}
-.scen .slide[data-layout="remsor"] .fv-box::before{width:5px;height:100%;transform:scaleY(0);transform-origin:top}
+.scen .slide[data-layout="remsor"] .fv-box .fv-n{font-size:var(--fn)}
+.scen .slide[data-layout="remsor"][data-dramaturgy-state="focus"] .fv-box.dramaturgy-past{opacity:.45}
+.scen .slide[data-layout="remsor"][data-dramaturgy-state="focus"] .fv-box.dramaturgy-future{opacity:.25}
+.scen .slide[data-layout="remsor"][data-dramaturgy-state="focus"] .fv-box.dramaturgy-current :is(h3,.fv-n),.scen .slide[data-layout="remsor"][data-dramaturgy-state="restored"] .fv-box .fv-n{color:var(--accent)}
+.scen .slide[data-layout="remsor"] .fv-sweep{background:linear-gradient(90deg,color-mix(in srgb,var(--accent) 30%,transparent),color-mix(in srgb,var(--accent) 12%,transparent) 45%,color-mix(in srgb,var(--accent-2) 8%,transparent) 80%,transparent);box-shadow:inset 6px 0 0 var(--accent),-10px 0 40px -6px color-mix(in srgb,var(--accent) 70%,transparent)}
 
-/* fokus: aktuell ruta skarp, tidigare svag, kommande svagare */
-.scen .slide[data-dramaturgy-state="overview"] .fv-box{opacity:.9}
-.scen .slide[data-dramaturgy-state="focus"] .fv-box.dramaturgy-past{opacity:var(--fv-past);filter:saturate(.5)}
-.scen .slide[data-dramaturgy-state="focus"] .fv-box.dramaturgy-future{opacity:var(--fv-future);filter:saturate(.5)}
-.scen .slide[data-dramaturgy-state="focus"] .fv-box.dramaturgy-current{background:color-mix(in srgb,var(--accent) 12%,var(--surface))}
-.scen .slide[data-dramaturgy-state="focus"] .fv-box.dramaturgy-current :is(h3,.fv-n){color:var(--accent)}
-.scen .slide[data-dramaturgy-state="focus"] .fv-box.dramaturgy-current p{color:var(--ink)}
-.scen .slide[data-dramaturgy-state="restored"] .fv-box::before{transform:none;transition-delay:calc(var(--fv-i,0) * 80ms)}
-.scen .slide[data-dramaturgy-state="restored"] .fv-box p{color:var(--ink)}
-.scen .slide[data-dramaturgy-state="restored"] .fv-box .fv-n{color:var(--accent)}
+/* ===== Mosaik: färgen tänds där fokus är ===== */
+.scen .slide[data-layout="mosaik"] .fv-box{--c:color-mix(in oklab,var(--accent) var(--tint,100%),var(--accent-2));border-radius:calc(var(--radius,20px) + 8px);
+  background:linear-gradient(150deg,color-mix(in oklab,var(--c) 58%,var(--surface)),color-mix(in oklab,var(--c) 24%,var(--surface)) 75%);box-shadow:inset 0 1px 0 color-mix(in srgb,var(--ink) 18%,transparent),inset 0 0 0 1px color-mix(in srgb,var(--c) 45%,transparent)}
+.scen .slide[data-layout="mosaik"] .fv-box.fv-big{background:
+  radial-gradient(80% 70% at 85% 0%,color-mix(in oklab,var(--accent-2) 45%,transparent),transparent 70%),
+  linear-gradient(160deg,color-mix(in oklab,var(--accent) 66%,var(--surface)),color-mix(in oklab,var(--accent) 26%,var(--surface)))}
+.scen .slide[data-layout="mosaik"] .fv-box .fv-n{color:color-mix(in srgb,var(--ink) 70%,transparent)}
+.scen .slide[data-layout="mosaik"] .fv-box.fv-big .fv-n{color:color-mix(in srgb,var(--ink) 80%,transparent)}
+.scen .slide[data-layout="mosaik"] .fv-box p{color:color-mix(in srgb,var(--ink) 86%,transparent)}
+.scen .slide[data-layout="mosaik"][data-dramaturgy-state="overview"] .fv-box{filter:grayscale(1);opacity:.7}
+.scen .slide[data-layout="mosaik"][data-dramaturgy-state="focus"] .fv-box:not(.dramaturgy-current){filter:grayscale(1) brightness(.8);opacity:.42}
+.scen .slide[data-layout="mosaik"][data-dramaturgy-state="focus"] .fv-box.dramaturgy-current{box-shadow:inset 0 0 0 1.5px color-mix(in srgb,var(--c) 70%,transparent),0 40px 90px -30px color-mix(in srgb,var(--c) 70%,transparent)}
+.scen .slide[data-layout="mosaik"][data-dramaturgy-state="restored"] .fv-box{transition-delay:calc(var(--fv-i,0) * 110ms)}
 
-/* fokusramen som vandrar */
-.scen .slide .fv-frame{position:absolute;left:0;top:0;box-sizing:border-box;width:var(--fw);height:var(--fhh);transform:translate(var(--fx),var(--fy));border-radius:var(--radius,20px);box-shadow:inset 0 0 0 3px var(--accent),0 0 0 8px color-mix(in srgb,var(--accent) 14%,transparent),0 24px 70px -20px color-mix(in srgb,var(--accent) 45%,transparent);opacity:0;
-  transition:transform .75s var(--fv-ease),width .75s var(--fv-ease),height .75s var(--fv-ease),opacity .35s var(--dramaturgy-soft-ease)}
-.scen .slide .fv-frame.on{opacity:1}
+/* ===== Kärna: en lysande kärna som skickar strålar ===== */
+.scen .slide[data-layout="karna"] .fv-box{background:none;padding:28px 12px;justify-content:center;gap:10px}
+.scen .slide[data-layout="karna"] .fv-box .fv-n{font-size:calc(var(--fh) * .8)}
+.scen .slide[data-layout="karna"] .fv-box.fv-l{text-align:right;align-items:flex-end}
+.scen .slide[data-layout="karna"][data-dramaturgy-state="focus"] .fv-box.dramaturgy-past{opacity:.42}
+.scen .slide[data-layout="karna"][data-dramaturgy-state="focus"] .fv-box.dramaturgy-future{opacity:.26}
+.scen .slide[data-layout="karna"][data-dramaturgy-state="focus"] .fv-box.dramaturgy-current :is(h3,.fv-n),.scen .slide[data-layout="karna"][data-dramaturgy-state="restored"] .fv-box .fv-n{color:var(--accent)}
+.scen .slide[data-layout="karna"] .fv-spoke{fill:none;stroke:color-mix(in srgb,var(--muted) 50%,transparent);stroke-width:2;stroke-dasharray:2 10;stroke-linecap:round;transition:opacity .5s}
+.scen .slide[data-layout="karna"][data-dramaturgy-state="focus"] .fv-spoke{opacity:.4}
+.scen .slide[data-layout="karna"] .fv-beamline{fill:none;stroke-width:5;stroke-linecap:round;stroke-dasharray:1 1;stroke-dashoffset:1;opacity:0;filter:drop-shadow(0 0 10px var(--accent));transition:opacity .3s}
+.scen .slide[data-layout="karna"][data-dramaturgy-state="focus"] .fv-beamline.dramaturgy-current,.scen .slide[data-layout="karna"][data-dramaturgy-state="restored"] .fv-beamline{opacity:1;stroke-dashoffset:0;transition:stroke-dashoffset .9s cubic-bezier(.5,0,.2,1) .1s,opacity .2s}
+.scen .slide[data-layout="karna"] .fv-node{fill:var(--bg);stroke:color-mix(in srgb,var(--muted) 70%,transparent);stroke-width:2.5;transition:fill .5s,stroke .5s}
+.scen .slide[data-layout="karna"][data-dramaturgy-state="focus"] .fv-node.dramaturgy-current,.scen .slide[data-layout="karna"][data-dramaturgy-state="restored"] .fv-node{fill:var(--accent-2);stroke:var(--accent-2);filter:drop-shadow(0 0 8px var(--accent-2))}
+.scen .slide[data-layout="karna"] .fv-core{position:absolute;box-sizing:border-box;display:grid;place-content:center;gap:18px;padding:48px;text-align:center;border-radius:50%;
+  background:radial-gradient(circle at 50% 42%,color-mix(in srgb,var(--accent) 34%,var(--bg)),color-mix(in srgb,var(--accent-2) 16%,var(--bg)) 62%,var(--bg));
+  box-shadow:0 0 0 2px color-mix(in srgb,var(--accent) 80%,transparent),0 0 0 14px color-mix(in srgb,var(--accent) 8%,transparent),0 0 120px 10px color-mix(in srgb,var(--accent) 34%,transparent);transition:box-shadow .8s var(--dramaturgy-soft-ease)}
+.scen .slide[data-layout="karna"][data-dramaturgy-state="restored"] .fv-core{box-shadow:0 0 0 2px var(--accent),0 0 0 22px color-mix(in srgb,var(--accent) 12%,transparent),0 0 180px 30px color-mix(in srgb,var(--accent) 45%,transparent)}
+.scen .slide[data-layout="karna"] .fv-core p{margin:0;font-family:var(--font-display,var(--font));font-weight:var(--h-weight,650);font-style:var(--h-style,normal);letter-spacing:var(--h-track,-.03em);font-size:50px;line-height:1.06;color:var(--ink);text-wrap:balance}
+.scen .slide[data-layout="karna"] .fv-core .fv-coreend{font-family:var(--font);font-weight:400;font-style:normal;letter-spacing:0;font-size:26px;line-height:1.3;max-height:0;opacity:0;overflow:hidden;transition:opacity .5s,max-height .6s var(--dramaturgy-ease)}
+.scen .slide[data-layout="karna"][data-dramaturgy-state="restored"] .fv-core .fv-coreend{opacity:1;max-height:200px;transition-delay:.2s}
 
-/* länkar: pilar i Rad med flöde, ekrar i Kärna */
-.scen .slide .fv-link{fill:none;stroke:color-mix(in srgb,var(--muted) 60%,var(--line));stroke-width:4;stroke-linecap:round;stroke-linejoin:round;transition:stroke .5s,opacity .5s,stroke-width .5s}
-.scen .slide .fv-spoke{stroke-width:2.5;stroke-dasharray:2 9}
-.scen .slide[data-dramaturgy-state="focus"] .fv-link:not(.dramaturgy-current){opacity:.3}
-.scen .slide[data-dramaturgy-state="focus"] .fv-link.dramaturgy-current,.scen .slide[data-dramaturgy-state="restored"] .fv-link{stroke:var(--accent)}
-.scen .slide[data-dramaturgy-state="focus"] .fv-spoke.dramaturgy-current{stroke-dasharray:none;stroke-width:4}
-
-/* kärnan: ligger alltid tänd som kontext */
-.scen .slide .fv-core{position:absolute;box-sizing:border-box;display:grid;place-content:center;gap:22px;padding:40px;text-align:center;border-radius:999px;background:color-mix(in srgb,var(--accent) 14%,var(--bg));box-shadow:inset 0 0 0 3px var(--accent)}
-.scen .slide .fv-core p{margin:0;font-family:var(--font-display,var(--font));font-weight:var(--h-weight,650);font-style:var(--h-style,normal);letter-spacing:var(--h-track,-.03em);font-size:48px;line-height:1.08;color:var(--ink);text-wrap:balance}
-.scen .slide .fv-core .fv-coreend{font-family:var(--font);font-weight:400;font-style:normal;letter-spacing:0;font-size:26px;line-height:1.3;color:var(--ink);max-height:0;opacity:0;overflow:hidden;transition:opacity .5s,max-height .6s var(--dramaturgy-ease)}
-.scen .slide[data-dramaturgy-state="restored"] .fv-core .fv-coreend{opacity:1;max-height:200px;transition-delay:.2s}
-@media (prefers-reduced-motion:reduce){.scen .slide .fv-frame{transition:opacity .2s}}
-.scen .slide[data-layout="rad"] .fv-box p{min-height:calc(var(--ft) * 1.35 * 2)}
-</style><style>html,body{height:100%;margin:0;background:#000;overflow:hidden}#scen-root{position:fixed;inset:0}</style></head><body><div id="scen-root"></div><script type="application/json" id="scen-data">{"v":3,"title":"Fokusvandring – fem mallar","theme":{"id":"natt","accent":"auto","look":"auto"},"slides":[{"layout":"rad","caption":"Vetenskaplig metod","title":"Från fråga till slutsats","text":"Fyra steg som bygger på varandra.","flow":true,"items":["Fråga | Vad vill vi ta reda på?","Hypotes | Vad tror vi, och varför?","Undersökning | Hur prövar vi det?","Slutsats | Vad visar resultatet?"],"conclusion":"Slutsatsen leder ofta till en ny fråga.","steps":true},{"layout":"rutor","caption":"Källkritik","title":"Fyra frågor till varje källa","text":"Samma fyra frågor fungerar på en artikel, en bild och ett AI-svar.","items":["Äkthet | Är källan det den utger sig för att vara?","Tid | När skapades den, och spelar det roll?","Beroende | Bygger den på andra källor?","Tendens | Vill någon påverka oss?"],"conclusion":"Ingen fråga räcker ensam. Tillsammans ger de en bedömning.","steps":true},{"layout":"remsor","caption":"Demokrati","title":"Tre sätt att fördela makt","items":["Lagstiftande | Riksdagen stiftar lagar och beslutar om skatter och statens budget.","Verkställande | Regeringen styr landet och genomför riksdagens beslut.","Dömande | Domstolarna dömer utifrån lagarna, oberoende av regeringen."],"conclusion":"Maktdelningen gör att ingen del ensam kan bestämma allt.","steps":true},{"layout":"mosaik","caption":"Ekosystem","title":"Vad ett ekosystem består av","items":["Ekosystemet | Alla organismer i ett område och den miljö de lever i, sedda som en helhet.","Producenter | Växter som bygger upp energi med hjälp av solljus.","Konsumenter | Djur som äter växter eller andra djur.","Nedbrytare | Svampar och bakterier som bryter ned döda rester."],"conclusion":"Energin flödar genom systemet, medan ämnena går runt i ett kretslopp.","steps":true},{"layout":"karna","caption":"Hållbar utveckling","title":"Tre dimensioner av samma mål","text":"Hållbar utveckling","items":["Ekologisk | Naturens resurser ska räcka även för kommande generationer.","Social | Alla människor ska ha goda livsvillkor och inflytande.","Ekonomisk | Ekonomin ska kunna växa utan att skada människor eller miljö."],"conclusion":"Dimensionerna påverkar varandra.","steps":true},{"layout":"rutor","caption":"Variant","title":"Sex rutor i två rader","items":["Ett | Kort text","Två | Kort text","Tre | Kort text","Fyra | Kort text","Fem | Kort text","Sex | Kort text"],"steps":true},{"layout":"rad","title":"Tre rutor utan flöde och utan inledning","items":["Före | Hur det var innan förändringen.","Under | Vad som hände när det förändrades.","Efter | Hur det blev."],"steps":true},{"layout":"mosaik","caption":"Variant","title":"En stor ruta och fyra små","items":["Helheten | Den stora rutan bär sammanhanget som resten av rutorna beskriver.","Del A | Kort","Del B | Kort","Del C | Kort","Del D | Kort"],"steps":true},{"layout":"karna","title":"Fyra delar runt en kärna","text":"Lärande","items":["Motivation | Varför vill jag lära mig?","Förkunskap | Vad kan jag redan?","Övning | Hur tränar jag?","Återkoppling | Hur vet jag att det fungerar?"],"conclusion":"Alla fyra behövs.","steps":true}],"templates":{},"images":{},"audience":"teacher","exportedAt":"2026-09-28T19:44:10.543Z"}</script><script id="scen-engine">/* ===== Scen-motorn =====
+@media (prefers-reduced-motion:reduce){.scen .slide :is(.fv-beam,.fv-glow,.fv-sweep,.fv-trackfill){transition:opacity .2s}.scen .slide .fv-beamline{transition:none}}
+</style><style>html,body{height:100%;margin:0;background:#000;overflow:hidden}#scen-root{position:fixed;inset:0}</style></head><body><div id="scen-root"></div><script type="application/json" id="scen-data">{"v":3,"title":"Fokusvandring – fem mallar","theme":{"id":"natt","accent":"auto","look":"auto"},"slides":[{"layout":"rad","caption":"Vetenskaplig metod","title":"Från fråga till slutsats","text":"Fyra steg som bygger på varandra.","flow":true,"items":["Fråga | Vad vill vi ta reda på?","Hypotes | Vad tror vi, och varför?","Undersökning | Hur prövar vi det?","Slutsats | Vad visar resultatet?"],"conclusion":"Slutsatsen leder ofta till en ny fråga.","steps":true},{"layout":"rutor","caption":"Källkritik","title":"Fyra frågor till varje källa","text":"Samma fyra frågor fungerar på en artikel, en bild och ett AI-svar.","items":["Äkthet | Är källan det den utger sig för att vara?","Tid | När skapades den, och spelar det roll?","Beroende | Bygger den på andra källor?","Tendens | Vill någon påverka oss?"],"conclusion":"Ingen fråga räcker ensam. Tillsammans ger de en bedömning.","steps":true},{"layout":"remsor","caption":"Demokrati","title":"Tre sätt att fördela makt","items":["Lagstiftande | Riksdagen stiftar lagar och beslutar om skatter och statens budget.","Verkställande | Regeringen styr landet och genomför riksdagens beslut.","Dömande | Domstolarna dömer utifrån lagarna, oberoende av regeringen."],"conclusion":"Maktdelningen gör att ingen del ensam kan bestämma allt.","steps":true},{"layout":"mosaik","caption":"Ekosystem","title":"Vad ett ekosystem består av","items":["Ekosystemet | Alla organismer i ett område och den miljö de lever i, sedda som en helhet.","Producenter | Växter som bygger upp energi med hjälp av solljus.","Konsumenter | Djur som äter växter eller andra djur.","Nedbrytare | Svampar och bakterier som bryter ned döda rester."],"conclusion":"Energin flödar genom systemet, medan ämnena går runt i ett kretslopp.","steps":true},{"layout":"karna","caption":"Hållbar utveckling","title":"Tre dimensioner av samma mål","text":"Hållbar utveckling","items":["Ekologisk | Naturens resurser ska räcka även för kommande generationer.","Social | Alla människor ska ha goda livsvillkor och inflytande.","Ekonomisk | Ekonomin ska kunna växa utan att skada människor eller miljö."],"conclusion":"Dimensionerna påverkar varandra.","steps":true},{"layout":"rutor","caption":"Variant","title":"Sex rutor i två rader","items":["Ett | Kort text","Två | Kort text","Tre | Kort text","Fyra | Kort text","Fem | Kort text","Sex | Kort text"],"steps":true},{"layout":"rad","title":"Tre rutor utan flöde och utan inledning","items":["Före | Hur det var innan förändringen.","Under | Vad som hände när det förändrades.","Efter | Hur det blev."],"steps":true},{"layout":"mosaik","caption":"Variant","title":"En stor ruta och fyra små","items":["Helheten | Den stora rutan bär sammanhanget som resten av rutorna beskriver.","Del A | Kort","Del B | Kort","Del C | Kort","Del D | Kort"],"steps":true},{"layout":"karna","title":"Fyra delar runt en kärna","text":"Lärande","items":["Motivation | Varför vill jag lära mig?","Förkunskap | Vad kan jag redan?","Övning | Hur tränar jag?","Återkoppling | Hur vet jag att det fungerar?"],"conclusion":"Alla fyra behövs.","steps":true}],"templates":{},"images":{},"audience":"teacher","exportedAt":"2026-09-28T19:53:39.925Z"}</script><script id="scen-engine">/* ===== Scen-motorn =====
    Samma kod körs i appen och i exporterade presentationer.
    Scen.player(el, deck, {mode, images, start, onChange, onExit, speaker})
    Scen.thumb(slide, deck, images)   Scen.renderSlide(slide, i, deck, img)   Scen.standalone(deck) */
@@ -2049,9 +2100,9 @@ function renderSlide(sl, i, deck, img) {
       const H = Math.max(360, 968 - Y0), G = 28;
       let R = [], order = null, links = '';
       if (L === 'rad') {
-        const gap = sl.flow ? 76 : G, w = (W - gap * (n - 1)) / n, h = Math.min(H, Math.round(w * 1.3)), y = Y0 + (H - h) / 2;
+        const gap = 0, w = W / n, h = Math.min(H - (sl.flow ? 70 : 0), Math.round(w * 1.4)), y = Y0 + (H - (sl.flow ? 70 : 0) - h) / 2;
         R = its.map((_, j) => [X0 + j * (w + gap), y, w, h]);
-        if (sl.flow) for (let j = 0; j < n - 1; j++) { const x = X0 + (j + 1) * w + j * gap + gap / 2, y = Y0 + H / 2; links += `<path class="fv-link" data-dramaturgy-in="${j} ${j + 1}" d="M${(x - 10).toFixed(1)} ${(y - 16).toFixed(1)} L${(x + 8).toFixed(1)} ${y.toFixed(1)} L${(x - 10).toFixed(1)} ${(y + 16).toFixed(1)}"/>`; }
+
       } else if (L === 'rutor') {
         const cols = n <= 2 ? n : n === 4 ? 2 : 3, rows = Math.ceil(n / cols), w = (W - G * (cols - 1)) / cols, h = (H - G * (rows - 1)) / rows;
         R = its.map((_, j) => { const r = Math.floor(j / cols), inRow = r === rows - 1 ? n - r * cols : cols, off = (cols - inRow) * (w + G) / 2; return [X0 + off + (j % cols) * (w + G), Y0 + r * (h + G), w, h]; });
@@ -2072,7 +2123,9 @@ function renderSlide(sl, i, deck, img) {
         R = order.map(q => R[q]);
         const cx = X0 + sw + 64, ch = Math.min(H, 420), cy = Y0 + (H - ch) / 2;
         R.core = [cx, cy, cw, ch];
-        R.forEach((r, j) => { const fromX = r[0] < cx ? cx : cx + cw, toX = r[0] < cx ? r[0] + r[2] : r[0], y1 = cy + ch / 2, y2 = r[1] + r[3] / 2; links += `<path class="fv-link fv-spoke" data-dramaturgy-in="${j}" d="M${fromX} ${y1.toFixed(1)} C${((fromX + toX) / 2).toFixed(1)} ${y1.toFixed(1)} ${((fromX + toX) / 2).toFixed(1)} ${y2.toFixed(1)} ${toX} ${y2.toFixed(1)}"/>`; });
+        R.forEach((r, j) => { const fromX = r[0] < cx ? cx : cx + cw, toX = r[0] < cx ? r[0] + r[2] : r[0], y1 = cy + ch / 2, y2 = r[1] + r[3] / 2; const d = `M${fromX} ${y1.toFixed(1)} C${((fromX + toX) / 2).toFixed(1)} ${y1.toFixed(1)} ${((fromX + toX) / 2).toFixed(1)} ${y2.toFixed(1)} ${toX} ${y2.toFixed(1)}`, gid = `fvg${i}-${fromX < toX ? 'r' : 'l'}`;
+          links += `<path class="fv-link fv-spoke" data-dramaturgy-in="${j}" d="${d}"/><path class="fv-beamline" data-dramaturgy-in="${j}" d="${d}" pathLength="1" stroke="url(#${gid})"/><circle class="fv-node" data-dramaturgy-in="${j}" cx="${toX}" cy="${y2.toFixed(1)}" r="9"/>`; });
+        links = `<defs><linearGradient id="fvg${i}-r" x1="0" x2="1" y1="0" y2="0"><stop offset="0" style="stop-color:var(--accent)"/><stop offset="1" style="stop-color:var(--accent-2)"/></linearGradient><linearGradient id="fvg${i}-l" x1="1" x2="0" y1="0" y2="0"><stop offset="0" style="stop-color:var(--accent)"/><stop offset="1" style="stop-color:var(--accent-2)"/></linearGradient></defs>` + links;
       }
       const minW = R.length ? Math.min(...R.slice(L === 'mosaik' ? 1 : 0).map(r => r[2]).concat(L === 'mosaik' && R.length === 1 ? [R[0][2]] : [])) : 0;
       const minH = R.length ? Math.min(...R.map(r => r[3])) : 0;
@@ -2085,11 +2138,17 @@ function renderSlide(sl, i, deck, img) {
         const tight = L !== 'remsor' && L !== 'rad' && h < 380;
         const hB = big ? hs * 1.35 : tight ? Math.min(hs, Math.max(28, h * .16)) : hs, tB = tight ? Math.min(ts, Math.max(22, h * .1)) : ts;
         const fn = Math.round(L === 'rad' ? Math.min(150, w * .36) : L === 'remsor' ? hs * .9 : tight ? Math.max(24, h * .14) : Math.max(30, Math.min(big ? 120 : 84, h * .26)));
-        return `<article class="fv-box${big ? ' fv-big' : ''}" data-dramaturgy-in="${j}" data-rect="${Math.round(x)} ${Math.round(y)} ${Math.round(w)} ${Math.round(h)}" style="--fv-i:${j};left:${Math.round(x)}px;top:${Math.round(y)}px;width:${Math.round(w)}px;height:${Math.round(h)}px;--fh:${Math.round(hB)}px;--ft:${Math.round(tB)}px;--fn:${fn}px">` +
+        return `<article class="fv-box${big ? ' fv-big' : ''}${L === 'karna' && x < 960 ? ' fv-l' : ''}" data-dramaturgy-in="${j}" data-rect="${Math.round(x)} ${Math.round(y)} ${Math.round(w)} ${Math.round(h)}" style="--fv-i:${j};--tint:${Math.round(100 - j * 100 / Math.max(1, n - 1))}%;left:${Math.round(x)}px;top:${Math.round(y)}px;width:${Math.round(w)}px;height:${Math.round(h)}px;--fh:${Math.round(hB)}px;--ft:${Math.round(tB)}px;--fn:${fn}px">` +
           `<span class="fv-n">${String(j + 1).padStart(2, '0')}</span><div class="fv-body"><h3>${fmt(o.h)}</h3>${o.t ? `<p>${fmt(o.t)}</p>` : ''}</div></article>`;
       }).join('');
       const f0 = R[0] || [X0, Y0, 0, 0];
-      const frame = n ? `<div class="fv-frame" data-dramaturgy-follow aria-hidden="true" style="--fx:${Math.round(f0[0])}px;--fy:${Math.round(f0[1])}px;--fw:${Math.round(f0[2])}px;--fhh:${Math.round(f0[3])}px"></div>` : '';
+      const fcls = { rad: 'fv-beam', rutor: 'fv-glow', remsor: 'fv-sweep' }[L];
+      const U = R.length ? [Math.min(...R.map(r => r[0])), Math.min(...R.map(r => r[1])), Math.max(...R.map(r => r[0] + r[2])), Math.max(...R.map(r => r[1] + r[3]))] : [0, 0, 0, 0];
+      const aurora = L === 'rutor' ? `<div class="fv-aurora" aria-hidden="true" style="left:${Math.round(U[0])}px;top:${Math.round(U[1])}px;width:${Math.round(U[2] - U[0])}px;height:${Math.round(U[3] - U[1])}px"></div>` : '';
+      const track = L === 'rad' && sl.flow && n > 1 ? (() => { const x1 = R[0][0] + R[0][2] / 2, x2 = R[n - 1][0] + R[n - 1][2] / 2, ty = Y0 + H - 34;
+        return `<div class="fv-track" aria-hidden="true" style="left:${Math.round(x1)}px;top:${Math.round(ty)}px;width:${Math.round(x2 - x1)}px"></div><div class="fv-trackfill" data-dramaturgy-follow aria-hidden="true" style="left:${Math.round(x1)}px;top:${Math.round(ty)}px;--x0:${Math.round(x1)}px;--x1:${Math.round(x2)}px;--fx:${Math.round(R[0][0])}px;--fw:${Math.round(R[0][2])}px"></div>` +
+          R.map((r, j) => `<span class="fv-dot" data-dramaturgy-in="${j}" style="left:${Math.round(r[0] + r[2] / 2)}px;top:${Math.round(ty)}px"></span>`).join(''); })() : '';
+      const frame = n && fcls ? `<div class="${fcls}" data-dramaturgy-follow aria-hidden="true" style="--fx:${Math.round(f0[0])}px;--fy:${Math.round(f0[1])}px;--fw:${Math.round(f0[2])}px;--fhh:${Math.round(f0[3])}px"></div>` : '';
       const core = L === 'karna' && R.core ? `<div class="fv-core" style="left:${R.core[0]}px;top:${Math.round(R.core[1])}px;width:${R.core[2]}px;height:${R.core[3]}px"><p>${fmt(sl.text || 'Kärna')}</p>${end ? `<p class="fv-coreend">${fmt(sl.conclusion)}</p>` : ''}</div>` : '';
       let cues = '';
       if (steps) {
@@ -2098,7 +2157,7 @@ function renderSlide(sl, i, deck, img) {
       }
       body = (sl.caption ? `<p class="kicker"${A('fade')}>${fmt(sl.caption)}</p>` : '') + H2('', 'mask') +
         ((lead || end) && L !== 'karna' ? `<div class="fv-lead">${lead ? `<p class="fv-intro">${fmt(sl.text)}</p>` : ''}${end ? `<p class="fv-end">${fmt(sl.conclusion)}</p>` : ''}</div>` : '') +
-        `<div class="fv-stage"${A(anim(ba, 'fade'), 150)}>` + (links ? `<svg class="fv-svg" viewBox="0 0 1920 1080" aria-hidden="true">${links}</svg>` : '') + core + boxes + frame + `</div>` + cues;
+        `<div class="fv-stage"${A(anim(ba, 'fade'), 150)}>` + aurora + (links ? `<svg class="fv-svg" viewBox="0 0 1920 1080" aria-hidden="true">${links}</svg>` : '') + track + frame + core + boxes + `</div>` + cues;
       attrs += ` data-dramaturgy="focus-restore" data-dramaturgy-state="${steps ? 'overview' : 'restored'}"${steps ? '' : ' data-dramaturgy-static="true"'}${sl.flow ? ' data-fv-flow="true"' : ''}`;
       break;
     }

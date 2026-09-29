@@ -186,9 +186,9 @@ I `[fyrfält]` skrivs vilken fyrdel saken ligger i ut automatiskt, till exempel 
 
 En del i `[omlopp]` kan få en bild som tredje fält: `- Avlaten | Syndernas förlåtelse går inte att köpa | bilder/x.jpg`. Med `bild:` får kärnan en grundbild. När en del har fokus visas dess bild i kärnan.
 
-### Ordbild med fokuspunkt
+### Ordbild och bildfält med fokuspunkt
 
-I `[ordbild]` väljer `fokuspunkt: x y` (procent) vilken del av bilden som fyller ordet, till exempel `fokuspunkt: 72 24` för en sol uppe till höger. Utan fokuspunkt används bildens mitt.
+I `[ordbild]` och `[bildfält]` väljer `fokuspunkt: x y` (procent) vilken del av bilden som syns, till exempel `fokuspunkt: 85 30` för ett motiv uppe till höger. I ordbild är det den del som fyller ordet. Utan fokuspunkt används bildens mitt.
 
 ### Tid i förgrening
 

@@ -1093,7 +1093,10 @@ function renderSlide(sl, i, deck, img) {
     case 'bildfält': {
       const src = sl.image ? img(sl.image) : '';
       cls = 'lj-bf' + (sl.flip ? ' flip' : '') + (src ? '' : ' noimg');
-      body = (src ? `<figure class="bf-img"${A('fade', 0, ' data-duration="1600"')}><img src="${esc(src)}" alt="${esc(sl.alt || '')}" data-id="i-${hash(sl.image)}"></figure>` : '') +
+      /* fokuspunkt: x y bestämmer vilken del av bilden som syns i fältet. */
+      const fp = sl.imageDirection && Array.isArray(sl.imageDirection.focus) ? sl.imageDirection.focus : null;
+      const pos = fp ? ` style="object-position:${+fp[0]}% ${+fp[1]}%;transform-origin:${+fp[0]}% ${+fp[1]}%"` : '';
+      body = (src ? `<figure class="bf-img"${A('fade', 0, ' data-duration="1600"')}><img src="${esc(src)}" alt="${esc(sl.alt || '')}" data-id="i-${hash(sl.image)}"${pos}></figure>` : '') +
         `<div class="bf-text">${sl.caption ? `<p class="lj-kick"${A('fade', 200)}>${fmt(sl.caption)}</p>` : ''}${H2('', 'words')}` +
         (sl.text ? `<p class="lead"${A('fade', 600)}>${fmt(sl.text)}</p>` : '') + list(sl.bullets, 'bf-list', anim(ba, 'rise'), 900) + `</div>`;
       break;

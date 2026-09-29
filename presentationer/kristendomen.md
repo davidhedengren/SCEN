@@ -119,12 +119,19 @@ bakgrund: fokusljus
 
 ---
 
-[ordbild]
+[bildregi]
 etikett: 1600- och 1700-talet
 rubrik: Upplysningen
 text: En ny tid, och en personlig tro.
 bild: bilder/kristendomen/soluppgang.jpg
-fokuspunkt: 72 24
+alt: Soluppgång över bergsryggar i morgondimma.
+bildläge: hero
+fokuspunkt: 88 22
+startutsnitt: 50 50 1
+slututsnitt: 72 34 1.14
+säker-yta: 4 40 40 70
+mörkning: 0 30 48 100 0.4
+hastighet: slow
 > Soluppgången symboliserar upplysningen: ljus över en ny tid.
 
 ---
@@ -247,6 +254,7 @@ etikett: Att måla nya perspektiv
 rubrik: Nytolkningar
 text: Kan innebära både:
 bild: bilder/kristendomen/pensel.jpg
+fokuspunkt: 88 45
 - ”Det var aldrig så det var menat”
 - ”Det gällde då, men inte nu”
 - ”Det är principen bakom regeln/handlandet som är viktig och den måste omtolkas för att kunna äga relevans/kunna appliceras på olika tider/samhällskontexter.”

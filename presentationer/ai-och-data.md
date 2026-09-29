@@ -146,11 +146,11 @@ bakgrund: fokusljus
 
 ---
 
-[etapper]
+[rad]
 etikett: Exempel · Rekrytering
 rubrik: Mellanchefer och padel
-bakgrund: fokusljus
-fokus: mjuk
+slutsats: Ingen styrde resultatet medvetet. AI:n härmade ett mönster som inte säger något om vem som är en bra chef.
+flöde: ja
 - Träningsdata | AI:n tränas på tidigare chefsrekryteringar. Många av cheferna nämnde padel i sina cv:n.
 - Mönstret | AI:n drar slutsatsen: ”padel = bra chefskandidat”.
 - Nya ansökningar | Sökande som nämner padel hamnar högt, oavsett kompetens.

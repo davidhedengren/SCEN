@@ -64,10 +64,11 @@ bakgrund: fokusljus
 
 ---
 
-[fokus]
+[kärna]
 etikett: Tre egenskaper
 rubrik: Vad gör en agent till en agent?
-bakgrund: fokusljus
+text: Agent
+slutsats: Målorientering bygger på de två första.
 - Autonomi | Kan fatta egna beslut utan direkt mänsklig styrning.
 - Perception | Samlar in data om sin omgivning genom sensorer eller annan inmatning.
 - Målorientering | Använder sin autonomi och perception för att fatta beslut och ta de bästa möjliga åtgärderna för att nå sitt mål.
@@ -87,11 +88,10 @@ bakgrund: fokusljus
 
 ---
 
-[fokus]
+[rutor]
 etikett: Miljön
 rubrik: Sex frågor om agentens värld
 text: Miljöer kan klassificeras i dimensioner som påverkar hur agenten interagerar med sin omgivning och fattar beslut.
-bakgrund: fokusljus
 - Fullständigt / partiellt observerbar | Ser agenten allt som händer i miljön?
 - Singel / multiagent | Är agenten ensam, eller finns det andra agenter?
 - Deterministisk / stokastisk | Leder samma handling alltid till samma utfall?
@@ -341,10 +341,11 @@ mörkning: 0 0 42 100 0.55
 
 ---
 
-[tidslinje]
-rubrik: Aktivitet: observerbarhet i luffarschack
-bakgrund: fokusljus
-- Omgång 1 | Spela | Spela några partier luffarschack med en kompis.
-- Omgång 2 | Dölj rutor | Spela versionen där några slumpvis valda rutor är dolda.
-- Efteråt | Diskutera | Diskutera frågorna som ligger i Teams.
+[rad]
+etikett: Aktivitet
+rubrik: Observerbarhet i luffarschack
+flöde: ja
+- Spela | Spela några partier luffarschack med en kompis.
+- Dölj rutor | Spela versionen där några slumpvis valda rutor är dolda.
+- Diskutera | Diskutera frågorna som ligger i Teams.
 > Nu upplever ni dimension 1 själva: hur förändras spelet när ni inte ser allt?

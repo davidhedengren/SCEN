@@ -867,17 +867,22 @@ function renderSlide(sl, i, deck, img) {
         if (m === 4) { const w = (rw - G) / 2, h = (H - G) / 2; for (let j = 0; j < 4; j++) R.push([X0 + bw + G + (j % 2) * (w + G), Y0 + Math.floor(j / 2) * (h + G), w, h]); }
         else { const h = (H - G * (m - 1)) / Math.max(1, m); for (let j = 0; j < m; j++) R.push([X0 + bw + G, Y0 + j * (h + G), rw, h]); }
       } else {
-        const cw = Math.round(W * .3), sw = (W - cw - 2 * 64) / 2, left = Math.ceil(n / 2), right = n - left;
+        /* Luft mellan kärnan och delarna så att strålen syns som en tydlig linje. */
+        const cw = Math.round(W * .26), gap = 150, sw = (W - cw - 2 * gap) / 2, left = Math.ceil(n / 2), right = n - left;
         const col = (k, x) => { const h = (H - G * (k - 1)) / Math.max(1, k); return Array.from({ length: k }, (_, q) => [x, Y0 + q * (h + G), sw, h]); };
         const Lc = col(left, X0), Rc = col(right, X0 + W - sw);
         R = [...Lc, ...Rc];
         order = n === 4 ? [0, 2, 3, 1] : n === 3 ? [0, 2, 1] : [...R.keys()];
         R = order.map(q => R[q]);
-        const cx = X0 + sw + 64, ch = Math.min(H, 420), cy = Y0 + (H - ch) / 2;
+        const cx = X0 + sw + gap, ch = Math.min(H, 420), cy = Y0 + (H - ch) / 2;
         R.core = [cx, cy, cw, ch];
-        R.forEach((r, j) => { const fromX = r[0] < cx ? cx : cx + cw, toX = r[0] < cx ? r[0] + r[2] : r[0], y1 = cy + ch / 2, y2 = r[1] + r[3] / 2; const d = `M${fromX} ${y1.toFixed(1)} C${((fromX + toX) / 2).toFixed(1)} ${y1.toFixed(1)} ${((fromX + toX) / 2).toFixed(1)} ${y2.toFixed(1)} ${toX} ${y2.toFixed(1)}`, gid = `fvg${i}-${fromX < toX ? 'r' : 'l'}`;
+        /* Gradienten räknas i scenens koordinater: en helt vågrät stråle har höjden 0,
+           och då ritas en gradient i objektets egna koordinater inte alls. */
+        let defs = '';
+        R.forEach((r, j) => { const fromX = r[0] < cx ? cx : cx + cw, toX = r[0] < cx ? r[0] + r[2] : r[0], y1 = cy + ch / 2, y2 = r[1] + r[3] / 2; const d = `M${fromX} ${y1.toFixed(1)} C${((fromX + toX) / 2).toFixed(1)} ${y1.toFixed(1)} ${((fromX + toX) / 2).toFixed(1)} ${y2.toFixed(1)} ${toX} ${y2.toFixed(1)}`, gid = `fvg${i}-${j}`;
+          defs += `<linearGradient id="${gid}" gradientUnits="userSpaceOnUse" x1="${fromX}" y1="0" x2="${toX}" y2="0"><stop offset="0" style="stop-color:var(--accent)"/><stop offset="1" style="stop-color:var(--accent-2)"/></linearGradient>`;
           links += `<path class="fv-link fv-spoke" data-dramaturgy-in="${j}" d="${d}"/><path class="fv-beamline" data-dramaturgy-in="${j}" d="${d}" pathLength="1" stroke="url(#${gid})"/><circle class="fv-node" data-dramaturgy-in="${j}" cx="${toX}" cy="${y2.toFixed(1)}" r="9"/>`; });
-        links = `<defs><linearGradient id="fvg${i}-r" x1="0" x2="1" y1="0" y2="0"><stop offset="0" style="stop-color:var(--accent)"/><stop offset="1" style="stop-color:var(--accent-2)"/></linearGradient><linearGradient id="fvg${i}-l" x1="1" x2="0" y1="0" y2="0"><stop offset="0" style="stop-color:var(--accent)"/><stop offset="1" style="stop-color:var(--accent-2)"/></linearGradient></defs>` + links;
+        links = `<defs>${defs}</defs>` + links;
       }
       const minW = R.length ? Math.min(...R.slice(L === 'mosaik' ? 1 : 0).map(r => r[2]).concat(L === 'mosaik' && R.length === 1 ? [R[0][2]] : [])) : 0;
       const minH = R.length ? Math.min(...R.map(r => r[3])) : 0;

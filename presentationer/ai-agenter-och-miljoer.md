@@ -138,19 +138,17 @@ mörkning: 0 0 42 46 0.7
 
 ---
 
-[jämförelse]
+[vägval]
+etikett: 2 / 6 · Singel / multiagent
 rubrik: Ensam eller bland andra?
-bakgrund: fokusljus
-steg: nej
 vänster: Singelagent
-- Endast en agent, ingen koordinering med andra
-- **Fördelar:** enkelhet, effektivt eftersom ingen konkurrerar
-- **Nackdelar:** begränsad kapacitet och tillämpbarhet
 höger: Multiagent
-- Agenterna interagerar med miljön och med varandra
-- **Fördelar:** ökad effektivitet, flexibilitet, samarbete mot gemensamma mål
-- **Nackdelar:** svår koordinering, risk för konflikter, svårare beslut
-> En lugn, statisk bild. Låt klassen läsa.
+bakgrund: fokusljus
+fokus: mjuk
+- Vad | Endast en agent, ingen koordinering med andra | Agenterna interagerar med miljön och med varandra
+- Fördelar | Enkelhet, effektivt eftersom ingen konkurrerar | Ökad effektivitet, flexibilitet, samarbete mot gemensamma mål
+- Nackdelar | Begränsad kapacitet och tillämpbarhet | Svår koordinering, risk för konflikter, svårare beslut
+> Varje klick visar båda sidor av samma rad, så att klassen jämför singel och multi punkt för punkt.
 > Lägg märke till att "effektivt" finns på båda sidor, av olika skäl. Varför?
 > Kom ihåg: agent betyder inte AI. I trafiken är den självkörande bilen en AI-agent, men fotgängaren och bilföraren är också agenter.
 
@@ -238,6 +236,27 @@ bakgrund: fokusljus
 
 ---
 
+[bildregi]
+etikett: Sammanfattning
+rubrik: Rätt modell av miljön är avgörande för effektiva AI-system.
+text: AI-agenter verkar i miljöer med olika egenskaper. Att förstå dem är avgörande för system som ska navigera i komplexa och dynamiska omvärldar.
+bild: bilder/ai-agenter-miljoer/korsning.jpg
+alt: Stadskorsning i skymning med bilar, cyklist, fotgängare och trafikljus.
+bildläge: spotlight
+fokuspunkt: 62 64
+säker-yta: 3 8 40 78
+mörkning: 0 0 42 100 0.55
+- obs | Partiellt observerbar | 70 | 40 | 12 | 16 | Träd, hus och andra fordon skymmer. Bilen ser bara en del av vägen.
+- multi | Multiagent | 75 | 70 | 16 | 12 | Fotgängare, cyklister och förare är också agenter.
+- stok | Stokastisk | 58 | 59 | 10 | 10 | Vad föraren framför gör härnäst går inte att veta säkert.
+- sekv | Sekventiell | 52 | 74 | 12 | 10 | Att svänga eller bromsa nu påverkar nästa situation.
+- dyn | Dynamisk | 48 | 58 | 6 | 10 | Trafikljusen slår om och alla rör sig, oavsett vad bilen gör.
+- kont | Kontinuerlig | 58 | 86 | 14 | 10 | Hastighet och styrning har inga tydliga steg.
+> Sammanfattning före övningen. Samma korsning som i början: tänk dig att en av bilarna är självkörande. Nu kan vi läsa miljön med alla sex frågorna, i samma ordning som tabellen.
+> Scenen visar svaren för raden "Självkörande bil i trafik". Använd den som ett genomarbetat exempel, eller låt eleverna börja med de andra raderna.
+
+---
+
 [tabell]
 rubrik: Övning i par: fyll i och diskutera tabellen
 visa: facit-rader
@@ -317,27 +336,6 @@ fokus: mjuk
 > Episodisk: Varje diagnos är en separat episod och påverkar inte andra diagnoser.
 > Statisk: Miljön (patientens symptom) ändras inte under analysen.
 > Diskret: Diagnosen leder till ett val mellan fördefinierade sjukdomar eller tillstånd.
-
----
-
-[bildregi]
-etikett: Sammanfattning
-rubrik: Rätt modell av miljön är avgörande för effektiva AI-system.
-text: AI-agenter verkar i miljöer med olika egenskaper. Att förstå dem är avgörande för system som ska navigera i komplexa och dynamiska omvärldar.
-bild: bilder/ai-agenter-miljoer/korsning.jpg
-alt: Stadskorsning i skymning med bilar, cyklist, fotgängare och trafikljus.
-bildläge: spotlight
-fokuspunkt: 62 64
-säker-yta: 3 8 40 78
-mörkning: 0 0 42 100 0.55
-- obs | Partiellt observerbar | 70 | 40 | 12 | 16 | Träd, hus och andra fordon skymmer. Bilen ser bara en del av vägen.
-- multi | Multiagent | 75 | 70 | 16 | 12 | Fotgängare, cyklister och förare är också agenter.
-- stok | Stokastisk | 58 | 59 | 10 | 10 | Vad föraren framför gör härnäst går inte att veta säkert.
-- sekv | Sekventiell | 52 | 74 | 12 | 10 | Att svänga eller bromsa nu påverkar nästa situation.
-- dyn | Dynamisk | 48 | 58 | 6 | 10 | Trafikljusen slår om och alla rör sig, oavsett vad bilen gör.
-- kont | Kontinuerlig | 58 | 86 | 14 | 10 | Hastighet och styrning har inga tydliga steg.
-> Genomgång efter övningen. Samma korsning som i början: tänk dig att en av bilarna är självkörande. Nu kan vi läsa miljön med alla sex frågorna, i samma ordning som tabellen.
-> Det här är facit för raden "Självkörande bil i trafik", därför kommer scenen efter övningen.
 
 ---
 

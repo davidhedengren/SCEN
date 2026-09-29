@@ -21,16 +21,18 @@ hastighet: slow
 
 ---
 
-[bro]
+[kretslopp]
 etikett: Sökalgoritm
 rubrik: Så fungerar en sökalgoritm
 text: I frontiern finns de noder som upptäckts, men ännu inte utforskats.
-vänster: Frontiern innehåller startnoden
-höger: Målet är hittat
-retur: Upprepa. Är frontiern tom finns ingen lösning.
-- Ta ut | en nod ur frontiern
-- Målet? | då är lösningen hittad
-- Utforska | lägg nodens barn i frontiern
+slutsats: BFS, DFS, girig bäst först och A* går alla runt i den här loopen. Det som skiljer dem är vilken nod som tas ut.
+mitten: Frontiern
+start: Lägg startnoden i frontiern
+retur: Upprepa tills lösningen är hittad eller frontiern är tom.
+- Frontiern tom? | Finns det inga noder kvar att utforska? | Ingen lösning
+- Ta ut en nod | En nod tas ut ur frontiern.
+- Målet? | Är noden den vi letar efter? | Lösningen är hittad
+- Utforska | Lägg nodens barn i frontiern.
 > Start: börja med en frontier som innehåller rotnoden, grundtillståndet.
 > Upprepa följande steg: om frontiern är tom finns det ingen lösning, alla möjliga noder har utforskats utan att målet hittats. Ta bort en nod från frontiern för att utforska den. Om noden är målet är lösningen hittad. Utforska noden och lägg till dess barnnoder i frontiern.
 
@@ -121,6 +123,7 @@ slutsats: Ordningen blir A, B, C, D, E, F, G, H, I, J, K, L, M, N, O.
 - fokus: nivå 2 | Nivå 1 | B och C, barnen till A.
 - fokus: nivå 3 | Nivå 2 | D, E, F och G.
 - fokus: nivå 4 | Nivå 3 | H till O, trädets löv.
+- fokus: ordning bfs | Ordningen | Nivå för nivå, från vänster till höger. Följ ringen.
 
 ---
 

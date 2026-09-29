@@ -12,7 +12,7 @@ const ACCENTS = {
 };
 const LAYOUTS = {etapper:"Etapper",vagval:"Vägval",lager:"Lager",resonemang:"Resonemang",helhet:"Helhet",
   skiften: 'Skiften', prisma: 'Prisma', verkningar: 'Verkningar', belagg: 'Belägg', sammanflode: 'Sammanflöde',
-  lameller: 'Lameller', register: 'Register', samband: 'Samband', marginal: 'Marginal', sats: 'Sats', formel: 'Formel',
+  lameller: 'Lameller', register: 'Register', samband: 'Samband', marginal: 'Marginal', sats: 'Sats', formel: 'Formel', kretslopp: 'Kretslopp',
   title: 'Titel', section: 'Avsnitt', statement: 'Påstående', bullets: 'Punktlista', split: 'Text och bild',
   image: 'Helbild', bildregi: 'Bildregi', terminal: 'Terminal', kodforklaring: 'Kodförklaring', typografisk: 'Typografiskt statement', texttempo: 'Typografiskt tempo', cards: 'Kort', compare: 'Jämförelse', table: 'Tabell', number: 'Stort tal', timeline: 'Tidslinje',
   question: 'Fråga och svar', poll: 'Omröstning', reflect: 'Reflektion', define: 'Definition', chat: 'AI-samtal', duo: 'Två tal',
@@ -900,14 +900,23 @@ function renderSlide(sl, i, deck, img) {
       const fs = round ? 40 : N <= 3 ? 36 : N <= 5 ? 30 : N <= 7 ? 25 : 21;
       const P = n => [AX + (n.slot + .5) * slotW, Lv === 1 ? AY + AH / 2 : AY + n.depth * AH / (Lv - 1)];
       const hb = round ? 44 : fs * .72 + 12;
-      const inN = {}, inE = {}, extra = {}, routes = [];
+      const inN = {}, inE = {}, extra = {}, routes = [], orders = [];
       const leaves = T2.all.filter(n => !n.kids.length);
       const byLabel = t => T2.all.filter(n => gtKey(n.label) === t);
       const pathTo = n => { const p = []; while (n) { p.unshift(n); n = n.parent; } return p; };
       focus.forEach((f, j) => {
         const t = gtKey(f.target);
         let m;
-        if (t === 'rot') T2.roots.forEach(n => gtAdd(inN, n.i, j));
+        if ((m = t.match(/^ordning(?:\s+(.*))?$/))) {
+          /* Ordningen: bfs (nivå för nivå, standard), dfs (djupet först, vänster gren först) eller egna noder. */
+          const how = (m[1] || 'bfs').trim(); let seq;
+          if (/^(bfs|bredd)/.test(how)) seq = [...T2.all].sort((a, b) => a.depth - b.depth || a.slot - b.slot);
+          else if (/^(dfs|djup)/.test(how)) { seq = []; const walk = n => { seq.push(n); n.kids.forEach(walk); }; T2.roots.forEach(walk); }
+          else seq = how.split(/\s*(?:,|>|→|\s)\s*/).filter(Boolean).map(x => byLabel(x)[0]).filter(Boolean);
+          seq.forEach(n => gtAdd(inN, n.i, j));
+          if (seq.length) orders.push({ j, seq });
+        }
+        else if (t === 'rot') T2.roots.forEach(n => gtAdd(inN, n.i, j));
         else if (t === 'löv' || t === 'lövnoder') leaves.forEach(n => gtAdd(inN, n.i, j));
         else if (/^(föräldrar|föräldranoder|frågor|inre noder)$/.test(t)) T2.all.filter(n => n.kids.length).forEach(n => gtAdd(inN, n.i, j));
         else if (/^(grenar|kanter|svar)$/.test(t)) T2.all.filter(n => n.parent).forEach(n => gtAdd(inE, n.i, j));
@@ -940,17 +949,36 @@ function renderSlide(sl, i, deck, img) {
       }).join('');
       const nodes = T2.all.map(n => {
         const [x, y] = P(n), kind = n.kids.length ? (n.parent ? 'tr-inner' : 'tr-root') : 'tr-leaf';
-        return `<span class="tr-node ${kind}${round ? ' tr-round' : ''}"${gtIn(inN[n.i])} style="left:${Math.round(x)}px;top:${Math.round(y)}px;--ts:${fs}px;max-width:${Math.round(Math.max(120, slotW - 18))}px">${fmt(n.label)}</span>`;
+        return `<span class="tr-node ${kind}${round ? ' tr-round' : ''} n${n.i}"${gtIn(inN[n.i])} style="left:${Math.round(x)}px;top:${Math.round(y)}px;--ts:${fs}px;max-width:${Math.round(Math.max(120, slotW - 18))}px">${fmt(n.label)}</span>`;
       }).join('');
+      /* Ordningen visas i bild: en ring glider från nod till nod, varje nod tänds när ringen kommer
+         och får sitt nummer, och ett spår ritas mellan noderna. Numren står kvar när helheten visas. */
+      const uid = 'u' + hash((sl.id || '') + i + L);
+      let ordCss = '', ordSvg = '', ordHtml = '';
+      orders.forEach(({ j, seq }) => {
+        const hop = seq.length > 10 ? 360 : 460, pts = seq.map(P), dur = Math.max(1, seq.length - 1) * hop, rr = hb + 6, pre = `.${uid}[data-dramaturgy-focus="${j}"]`;
+        seq.forEach((n, q) => {
+          const [x, y] = pts[q], d = q * hop;
+          ordCss += `${pre} .tr-node.n${n.i}{animation:${round ? 'tr-visit-round' : 'tr-visit'} .35s ease ${d}ms both}`;
+          ordHtml += `<span class="tr-ord fin" data-dramaturgy-in="${j}" style="left:${Math.round(x + hb * .74)}px;top:${Math.round(y - hb * .74)}px;--d:${d}ms">${q + 1}</span>`;
+          if (q) {
+            const [x0, y0] = pts[q - 1], L2 = Math.hypot(x - x0, y - y0) || 1, ux = (x - x0) / L2, uy = (y - y0) / L2;
+            ordSvg += `<path class="tr-step${seq[q - 1].depth === n.depth ? '' : ' jump'}" data-dramaturgy-in="${j}" d="M${(x0 + ux * rr).toFixed(1)} ${(y0 + uy * rr).toFixed(1)} L${(x - ux * rr).toFixed(1)} ${(y - uy * rr).toFixed(1)}" pathLength="1" style="--d:${d - hop}ms;--h:${hop}ms"/>`;
+          }
+        });
+        const kf = pts.map(([x, y], q) => `${(q / Math.max(1, seq.length - 1) * 100).toFixed(3)}%{left:${Math.round(x)}px;top:${Math.round(y)}px}`).join('');
+        ordCss += `@keyframes kf${uid}${j}{${kf}}.scen .slide${pre} .tr-cur.o${j}{opacity:1;animation:kf${uid}${j} ${dur}ms cubic-bezier(.65,0,.35,1) forwards}`;
+        ordHtml += `<span class="tr-cur o${j}" style="left:${Math.round(pts[0][0])}px;top:${Math.round(pts[0][1])}px;--r:${Math.round(hb * 2 + 24)}px" aria-hidden="true"></span>`;
+      });
       let cues = '';
       if (steps) {
         focus.forEach((f, j) => { const s = st('none'); cues += `<span data-dramaturgy-cue data-dramaturgy-focus="${k}" data-dramaturgy-target="${j}"${s} aria-hidden="true"></span>`; });
         cues += `<span data-dramaturgy-restore${st('none')} aria-hidden="true"></span>`;
       }
-      body = (sl.caption ? `<p class="kicker"${A('fade')}>${fmt(sl.caption)}</p>` : '') + H2('', 'mask') +
-        `<div class="gt-stage"${A(anim(ba, 'fade'), 150)}><svg class="gt-svg" viewBox="0 0 1920 1080" aria-hidden="true">${edges}${route}</svg>${elabs}${nodes}</div>` +
+      body = (ordCss ? `<style>${ordCss}</style>` : '') + (sl.caption ? `<p class="kicker"${A('fade')}>${fmt(sl.caption)}</p>` : '') + H2('', 'mask') +
+        `<div class="gt-stage"${A(anim(ba, 'fade'), 150)}><svg class="gt-svg" viewBox="0 0 1920 1080" aria-hidden="true">${edges}${route}${ordSvg}</svg>${elabs}${nodes}${ordHtml}</div>` +
         (hasPan ? gtPanel(sl.text, focus, sl.conclusion, extra, 144, 330, 500) : '') + cues;
-      if (plain(title).length > 44) cls = 'gt-long';
+      cls = (orders.length ? uid : '') + (plain(title).length > 44 ? ' gt-long' : '');
       attrs += ` data-dramaturgy="focus-restore" data-dramaturgy-state="${steps ? 'overview' : 'restored'}"${steps ? '' : ' data-dramaturgy-static="true"'}`;
       break;
     }
@@ -1504,6 +1532,74 @@ function renderSlide(sl, i, deck, img) {
         `<div class="fg-foot" style="top:${LB + 130}px">${notes}${sl.conclusion ? `<p class="fg-end">${fmt(sl.conclusion)}</p>` : ''}</div></div>` + cues;
       if (plain(title).length > 44) cls = 'fl-long';
       attrs += ` data-dramaturgy="focus-restore" data-dramaturgy-state="${steps ? 'overview' : 'restored'}"${steps ? '' : ' data-dramaturgy-static="true"'}`;
+      break;
+    }
+    case 'kretslopp': {
+      /* En process som går runt. Stegen sitter på en ring och en ring av ljus glider ett steg per klick,
+         medan mitten förklarar steget. En ingång leder in i kretsloppet och ett steg kan ha en utgång ut ur
+         det. Näst sista klicket sluter ringen, sista visar helheten med slutsatsen i mitten. */
+      const its = lines(sl.items).slice(0, 6).map(t => { const p = String(t).replace(/^(- )+/, '').split('|').map(s => s.trim()); return { h: p[0] || '', t: p[1] || '', ut: p[2] || '' }; }).filter(o => o.h);
+      const n = Math.max(2, its.length), uid = 'u' + hash((sl.id || '') + i + L);
+      const cx = 880, cy = 640, R = 270, rad = d => d * Math.PI / 180, f1 = v => v.toFixed(1);
+      const angOf = j => -90 + j * 360 / n, at = (d, r = R) => [cx + r * Math.cos(rad(d)), cy + r * Math.sin(rad(d))];
+      const hasStart = !!plain(sl.start || ''), hasRet = !!plain(sl.ret || '');
+      const off = hasStart ? 1 : 0, cueOf = j => off + j, retCue = off + its.length, total = off + its.length + (hasRet ? 1 : 0);
+      const T = j => ` data-dramaturgy-target data-dramaturgy-index="${j}"`, IN = arr => arr.length ? ` data-dramaturgy-in="${arr.join(' ')}"` : '';
+      const range = (a, b) => Array.from({ length: Math.max(0, b - a) }, (_, q) => a + q);
+      const mk = (id, c) => `<marker id="${id}${uid}" viewBox="0 0 10 10" refX="7" refY="5" markerUnits="userSpaceOnUse" markerWidth="16" markerHeight="16" orient="auto-start-reverse"><path class="${c}" d="M0 0 L10 5 L0 10 z"/></marker>`;
+      let svg = `<defs>${mk('klm', 'kl-mk')}${mk('klo', 'kl-mk-on')}${mk('klx', 'kl-mk-x')}</defs><circle class="kl-track" cx="${cx}" cy="${cy}" r="${R}"/>`, html = '', css = '';
+      /* Bågarna mellan stegen. En båge tänds när markören har passerat den och står kvar varvet ut. */
+      const gap = 36 / R * 180 / Math.PI;
+      its.forEach((o, j) => {
+        const a1 = angOf(j) + gap, a2 = angOf(j + 1) - gap, [x1, y1] = at(a1), [x2, y2] = at(a2);
+        const d = `M${f1(x1)} ${f1(y1)} A${R} ${R} 0 ${a2 - a1 > 180 ? 1 : 0} 1 ${f1(x2)} ${f1(y2)}`;
+        const on = j === its.length - 1 ? (hasRet ? [retCue] : []) : range(cueOf(j + 1), total);
+        svg += `<path class="kl-arc" d="${d}" marker-end="url(#klm${uid})"/><path class="kl-arc-on fin" d="${d}" pathLength="1" marker-end="url(#klo${uid})"${IN(on)}/>`;
+      });
+      its.forEach((o, j) => {
+        const a = angOf(j), [x, y] = at(a), c = cueOf(j), seen = range(c, total), co = Math.cos(rad(a)), si = Math.sin(rad(a));
+        const side = co > .35 ? 'r' : co < -.35 ? 'l' : si < 0 ? 't' : 'b', q = /\?\s*$/.test(plain(o.h));
+        svg += `<g class="kl-node"><circle class="kl-dot" cx="${f1(x)}" cy="${f1(y)}" r="22"/><circle class="kl-seen fin" cx="${f1(x)}" cy="${f1(y)}" r="22"${IN(seen)}/>` +
+          `<circle class="kl-cur" cx="${f1(x)}" cy="${f1(y)}" r="22"${IN([c])}/><text class="kl-num" x="${f1(x)}" y="${f1(y + 7)}" text-anchor="middle">${j + 1}</text></g>`;
+        const lx = side === 'r' ? x + 44 : side === 'l' ? x - 44 : x, ly = side === 't' ? y - 44 : side === 'b' ? y + 44 : y;
+        const lift = o.ut && (side === 'r' || side === 'l') ? ' up' : '';
+        html += `<div class="kl-lab ${side}${lift}" style="left:${f1(lx)}px;top:${f1(ly)}px"${IN(seen)}><b${IN([c])}>${fmt(o.h)}</b></div>`;
+        if (o.ut) {
+          /* Utgången går vågrätt ut ur ringen, åt det håll steget sitter. */
+          const dir = x >= cx - 1 ? 1 : -1, xe = cx + dir * (R + 150), x0 = x + dir * 28;
+          const d = `M${f1(x0)} ${f1(y)} H${f1(xe - dir * 16)}`;
+          svg += `<path class="kl-exit" d="${d}"/><path class="kl-exit-on fin" d="${d}" pathLength="1" marker-end="url(#klx${uid})"${IN(seen)}/>`;
+          html += `<div class="kl-out ${dir > 0 ? 'r' : 'l'}" style="left:${f1(xe)}px;top:${f1(y)}px"${IN(seen)}><div${IN([c])}><span>${q ? 'Ja' : 'Utgång'}</span><b>${fmt(o.ut)}</b></div></div>`;
+          if (q) { const [tx, ty] = at(a + gap + 9, R - 34); html += `<span class="kl-tag fin" style="left:${f1(tx)}px;top:${f1(ty)}px"${IN(seen)}>Nej</span>`; }
+        }
+      });
+      if (hasStart) {
+        /* Ingången leder in i första steget från vänster. */
+        const [x, y] = at(angOf(0)), w = Math.min(420, x - 144 - 150), x1 = 144 + w + 18, d = `M${f1(x1)} ${f1(y)} H${f1(x - 34)}`;
+        svg += `<path class="kl-in" d="${d}"/><path class="kl-in-on fin" d="${d}" pathLength="1" marker-end="url(#klo${uid})"${IN(range(0, total))}/>`;
+        html += `<div class="kl-start" style="left:144px;top:${f1(y)}px;width:${Math.round(w)}px"${IN(range(0, total))}><div${IN([0])}><span>Start</span><b>${fmt(sl.start)}</b></div></div>`;
+      }
+      /* Ljusringen som går runt: ett varv är 360 grader, så den fortsätter framåt när kretsloppet sluts. */
+      svg += `<g class="kl-tok"><circle cx="${cx}" cy="${cy - R}" r="36"/></g>`;
+      if (hasStart) css += `.${uid}[data-dramaturgy-focus="0"] .kl-tok{opacity:1}`;
+      its.forEach((o, j) => { css += `.${uid}[data-dramaturgy-focus="${cueOf(j)}"] .kl-tok{opacity:1;transform:rotate(${f1(j * 360 / n)}deg)}`; });
+      if (hasRet) css += `.${uid}[data-dramaturgy-focus="${retCue}"] .kl-tok{opacity:1;transform:rotate(360deg)}`;
+      const hub = R - 76;
+      html += `<div class="kl-hub" style="left:${cx - hub}px;top:${cy - hub}px;width:${2 * hub}px;height:${2 * hub}px">` +
+        `<div class="kl-say kl-core">${sl.core ? `<b>${fmt(sl.core)}</b>` : ''}${sl.text ? `<p>${fmt(sl.text)}</p>` : ''}</div>` +
+        (hasStart ? `<div class="kl-say"${T(0)}><span>Start</span><p>${fmt(sl.start)}</p></div>` : '') +
+        its.map((o, j) => `<div class="kl-say"${T(cueOf(j))}><span>${j + 1} · ${fmt(o.h)}</span><p>${fmt(o.t || o.h)}</p></div>`).join('') +
+        (hasRet ? `<div class="kl-say kl-ret"${T(retCue)}><span>Upprepa</span><p>${fmt(sl.ret)}</p></div>` : '') +
+        (sl.conclusion ? `<div class="kl-say kl-end"><p>${fmt(sl.conclusion)}</p></div>` : '') + `</div>`;
+      let cues = '';
+      if (steps && its.length) {
+        for (let k2 = 0; k2 < total; k2++) { const s = st('none'); cues += `<span data-dramaturgy-cue data-dramaturgy-focus="${k}" data-dramaturgy-target="${k2}"${s} aria-hidden="true"></span>`; }
+        cues += `<span data-dramaturgy-restore${st('none')} aria-hidden="true"></span>`;
+      }
+      body = `<style>${css}</style>` + (sl.caption ? `<p class="kicker"${A('fade')}>${fmt(sl.caption)}</p>` : '') + H2('', 'mask') +
+        `<div class="kl-stage"${A(anim(ba, 'fade'), 150)}><svg class="kl-svg" viewBox="0 0 1920 1080" aria-hidden="true">${svg}</svg>${html}</div>` + cues;
+      cls = uid + (plain(title).length > 44 ? ' fl-long' : '');
+      attrs += ` data-dramaturgy="focus-restore" data-dramaturgy-state="${steps && its.length ? 'overview' : 'restored'}"${steps && its.length ? '' : ' data-dramaturgy-static="true"'}`;
       break;
     }
     case 'formel': {

@@ -256,6 +256,26 @@ I `[kö]` går köerna en i taget: elementen läggs in i ett klick, sedan är va
 
 Konventioner: BFS använder en FIFO-kö. DFS använder en stack, så den nod som lades till sist utforskas först; i ett träd blir det den högra grenen. Girig bäst först väljer lägst h, A* lägst g + h. Vid lika värden väljs den senast tillagda. I rutnät prövas grannarna i ordningen upp, vänster, höger, ned.
 
+### Kretslopp
+
+```text
+[kretslopp]
+rubrik: Så fungerar en sökalgoritm
+text: visas i mitten under mittordet innan första klicket
+slutsats: visas i mitten när hela kretsloppet syns
+mitten: Frontiern            (det som går runt)
+start: Lägg startnoden i frontiern          (valfri ingång)
+retur: Upprepa tills en utgång nås.         (valfri, sluter ringen)
+- Frontiern tom? | Finns det inga noder kvar? | Ingen lösning
+- Ta ut en nod | En nod tas ut ur frontiern.
+```
+
+Stegen sitter på en ring, högst sex. Varje klick flyttar en ljusring till nästa steg och mitten förklarar steget. Ett tredje fält blir en utgång ut ur ringen. Ett steg som slutar med frågetecken får ja mot utgången och nej vidare i ringen.
+
+### Ordning i ett träd
+
+I `[träd]` visar `- fokus: ordning | rubrik | text` i vilken ordning noderna gås igenom: en ring glider från nod till nod, varje nod tänds och får sitt nummer, och ett spår ritas mellan noderna. `ordning` och `ordning bfs` går nivå för nivå från vänster till höger, `ordning dfs` går djupet först med vänster gren först, och `ordning A C G O` följer de noder du skriver. Numren står kvar när slutsatsen visas.
+
 ### Ordbild och bildfält med fokuspunkt
 
 I `[ordbild]` och `[bildfält]` väljer `fokuspunkt: x y` (procent) vilken del av bilden som syns, till exempel `fokuspunkt: 85 30` för ett motiv uppe till höger. I ordbild är det den del som fyller ordet. Utan fokuspunkt används bildens mitt.

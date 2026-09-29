@@ -65,6 +65,9 @@ Varje bild i ett manus börjar med mallens namn inom hakparentes. Samma katalog 
 | `[inzoomning]` | System | Nivåer inuti varandra, som cirklar. Varje klick zoomar in en nivå: kameran går in i nästa cirkel, den yttre nivån glider ut ur bild men står kvar i stigen till höger, och nivåns förklaring visas. Sista klicket zoomar ut och visar hela vägen med slutsatsen. |
 | `[fyrfält]` | System | Två axlar med var sina motpoler och två till åtta saker placerade i fältet. Raderna x: och y: anger axlarnas poler, och varje sak får ett läge med x och y från 0 till 100. Varje klick lyfter en sak: stödlinjer visar var den ligger på båda axlarna, dess fyrdel tonas fram och förklaringen visas till höger. Sista klicket visar hela mönstret. |
 | `[vågskål]` | System | Argument för och emot i en fråga, som vikter i var sin skål. Varje argument har en sida (samma ord som i vänster eller höger) och en vikt från 1 till 3. Varje klick lägger nästa argument i sin skål och balken tippar efter den sammanlagda vikten. Sista klicket visar balansen och slutsatsen. |
+| `[sökning]` | System | En sökalgoritm arbetar i ett träd eller en graf, ett steg per klick. Algoritmen räknas fram automatiskt, så ordningen blir alltid rätt. I läget frontier syns algoritmstegen, frontiern (en liggande kö för BFS, en stående stack för DFS), noden som utforskas och de utforskade noderna, och varje steg förklaras i en rad under grafen. Läget vandring följer DFS eller BFS nod för nod med nummer. Läget övning visar upp till tre träd med markerade mål, och ett klick visar utforskningsordningen och nästa vägen. Egna kommentarer kan läggas vid valfritt klick. |
+| `[rutnät]` | System | En sökalgoritm i ett rutnät, till exempel en labyrint, en karta eller en spelplan. Rutnätet skrivs som text med # för vägg, punkt för fri ruta, A för start och B för mål. BFS går en nivå per klick som en våg, DFS, girig bäst först och A* en ruta per klick. Utforskade rutor färgas, frontiern ringas in och sista klicket ritar vägen. Rutorna kan visa h (Manhattan-avståndet till målet) eller g + h. |
+| `[kö]` | System | Två eller tre köer sida vid sida, till exempel en FIFO-kö, en stack och en prioritetskö. Varje klick lägger in ett element i alla köer eller tar ut ett, och då syns direkt vilket element varje kö lämnar ut. Varje kö kan visa en kodrad. |
 | `[förgrening]` | System | Ett släktträd över tid: en stam och grenar som skjuter ut ur varandra, till exempel kyrkor, språk, arter eller programspråk. Varje gren har ett namn, en tid, grenen den växer ur och en kort text. Tidsaxeln är schematisk, varje förgreningstid får en kolumn. Hela trädet syns nedtonat från början. Varje klick ritar nästa gren i tidsordning och visar dess text längst ner, medan tidigare grenar står kvar. En gren som delas i två vid samma tid slutar där. Sista klicket visar hela trädet med slutsatsen. |
 | `[ringar]` | Banor | Två eller tre begrepp som delvis överlappar, som ett Venndiagram. Det gemensamma skrivs i mitten och visas sist. |
 | `[lins]` | Banor | En bild där en rund lins lyser upp en detalj i taget. Resten är nedtonad. Varje rad: x y i procent | rubrik | text. |
@@ -1110,6 +1113,73 @@ höger: Emot
 - Emot | Mobilen är ett verktyg i undervisningen | 2
 - För | Mindre nätmobbning under skoldagen | 2
 - Emot | Eleverna behöver lära sig att hantera den | 2
+```
+
+### `[sökning]` Sökning
+
+En sökalgoritm arbetar i ett träd eller en graf, ett steg per klick. Algoritmen räknas fram automatiskt, så ordningen blir alltid rätt. I läget frontier syns algoritmstegen, frontiern (en liggande kö för BFS, en stående stack för DFS), noden som utforskas och de utforskade noderna, och varje steg förklaras i en rad under grafen. Läget vandring följer DFS eller BFS nod för nod med nummer. Läget övning visar upp till tre träd med markerade mål, och ett klick visar utforskningsordningen och nästa vägen. Egna kommentarer kan läggas vid valfritt klick.
+
+**Undvik när:** Mer än femton noder. Grafer där ordningen inte spelar någon roll (använd graf eller träd).
+
+```
+[sökning]
+etikett: Exempel
+rubrik: Hitta en väg från A till E
+text: Frontiern innehåller de noder som upptäckts men ännu inte utforskats.
+slutsats: Målet är hittat först när noden tas ut ur frontiern.
+- algoritm: bfs
+- mål: E
+- A
+  - B
+    - C
+      - E
+    - D
+      - F
+- not: 6 | C lades i frontiern före D och utforskas därför först.
+```
+
+### `[rutnät]` Rutnät
+
+En sökalgoritm i ett rutnät, till exempel en labyrint, en karta eller en spelplan. Rutnätet skrivs som text med # för vägg, punkt för fri ruta, A för start och B för mål. BFS går en nivå per klick som en våg, DFS, girig bäst först och A* en ruta per klick. Utforskade rutor färgas, frontiern ringas in och sista klicket ritar vägen. Rutorna kan visa h (Manhattan-avståndet till målet) eller g + h.
+
+**Undvik när:** Rutnät större än ungefär 14 × 14. Labyrinter utan väg mellan A och B om poängen är vägen.
+
+```
+[rutnät]
+etikett: Exempel
+rubrik: BFS i en labyrint
+text: Vi följer en nivå i taget.
+slutsats: BFS hittar alltid den kortaste vägen.
+- algoritm: bfs
+- .#####
+- ......
+- .##.##
+- .##B##
+- .#..##
+- .#.###
+- A..###
+```
+
+### `[kö]` Kö
+
+Två eller tre köer sida vid sida, till exempel en FIFO-kö, en stack och en prioritetskö. Varje klick lägger in ett element i alla köer eller tar ut ett, och då syns direkt vilket element varje kö lämnar ut. Varje kö kan visa en kodrad.
+
+**Undvik när:** Mer än fem element i en kö samtidigt. Mer än tre köer.
+
+```
+[kö]
+etikett: Datastrukturer
+rubrik: Tre sätt att köa
+text: Samma element läggs in i alla tre köerna.
+slutsats: Vilket element som kommer ut beror på kön.
+- kö: fifo | Kön i kassan | Först in, först ut
+- kö: stack | Tallrikstraven | Sist in, först ut
+- kö: prio | Akutmottagningen | Mest akut först
+- in: A 3
+- in: B 1
+- in: C 2
+- ut
+- ut
 ```
 
 ### `[förgrening]` Förgrening

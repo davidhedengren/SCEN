@@ -186,6 +186,44 @@ I `[fyrfält]` skrivs vilken fyrdel saken ligger i ut automatiskt, till exempel 
 
 En del i `[omlopp]` kan få en bild som tredje fält: `- Avlaten | Syndernas förlåtelse går inte att köpa | bilder/x.jpg`. Med `bild:` får kärnan en grundbild. När en del har fokus visas dess bild i kärnan.
 
+### Sökning, rutnät och kö
+
+Algoritmerna räknas fram automatiskt. Du skriver grafen eller labyrinten och väljer algoritm, och varje klick blir ett steg i rätt ordning.
+
+```text
+[sökning]
+- algoritm: bfs              (bfs eller dfs)
+- mål: E                     (flera mål: E, L)
+- läge: frontier             (frontier, vandring eller övning)
+- not: 4 | kommentar         (visas vid klick 4)
+- A                          (trädet med indrag, eller nod- och kantrader som i [graf])
+  - B
+    - C
+
+[sökning] i läget övning
+- läge: övning
+- uppgift: Exempel | E       (upp till tre träd, två klick per träd: ordningen, sedan vägen)
+- A
+  - B
+
+[rutnät]
+- algoritm: bfs              (bfs, dfs, girig eller a*)
+- takt: ruta                 (BFS går annars en nivå per klick)
+- siffror: h                 (h = Manhattan-avståndet till målet, eller g+h)
+- not: 6 | kommentar
+- #..B                       (# vägg, . fri ruta, A start, B mål)
+- A.#.
+
+[kö]
+- kö: fifo | FIFO-kö | First in, first out | frontier.pop(0)
+- kö: stack | Stack | Last in, first out | frontier.pop()
+- kö: prio | Prioriteringskö | Lägst värde först
+- in: A 3                    (element och prioritet)
+- ut
+```
+
+Konventioner: BFS använder en FIFO-kö. DFS använder en stack, så den nod som lades till sist utforskas först; i ett träd blir det den högra grenen. Girig bäst först väljer lägst h, A* lägst g + h. Vid lika värden väljs den senast tillagda. I rutnät prövas grannarna i ordningen upp, vänster, höger, ned.
+
 ### Ordbild och bildfält med fokuspunkt
 
 I `[ordbild]` och `[bildfält]` väljer `fokuspunkt: x y` (procent) vilken del av bilden som syns, till exempel `fokuspunkt: 85 30` för ett motiv uppe till höger. I ordbild är det den del som fyller ordet. Utan fokuspunkt används bildens mitt.

@@ -95,6 +95,24 @@ bakgrund: fokusljus
 
 ---
 
+[bildregi]
+etikett: Dopet
+rubrik: Troendedop
+text: Att sänkas ned under vattnet är en bild av att dö bort från det gamla livet och uppstå till ett nytt.
+bild: bilder/kyrka-och-frikyrka/troendedop.jpg
+alt: En brygga ut i en stilla sjö i soluppgång, med dimma över vattnet och en vikt vit handduk på bryggan.
+bildläge: hero
+fokuspunkt: 55 60
+startutsnitt: 50 50 1.04
+slututsnitt: 56 60 1.12
+säker-yta: 4 56 44 36
+mörkning: 0 45 56 55 0.6
+hastighet: slow
+> Troendedop sker ofta i en dopgrav eller i en sjö. Den som döps sänks ned helt under vattnet.
+> Handduken på bryggan väntar på den som ska döpas.
+
+---
+
 [spektrum]
 etikett: Gudstjänsten
 rubrik: Fast ordning eller frihet?
@@ -132,9 +150,20 @@ bakgrund: fokusljus
 
 ---
 
+[ridå]
+etikett: Pingströrelsen
+rubrik: Anden
+text: Som vinden: man ser den inte, men man ser vad den gör.
+bild: bilder/kyrka-och-frikyrka/anden.jpg
+alt: En ljus möteslokal i solnedgång där en vit gardin fladdrar i vinden från ett öppet fönster.
+> Vinden i gardinen och ljuset är symboler för den heliga Anden. På pingstdagen i Apostlagärningarna 2 beskrivs Anden som ett dån av vind och som tungor av eld.
+> Jämför Johannesevangeliet 3:8, där Jesus liknar Anden vid vinden.
+
+---
+
 [kärna]
 etikett: Anden
-rubrik: Den heliga Anden i pingströrelsen
+rubrik: Hur märks Anden i pingströrelsen?
 text: Den heliga Anden
 slutsats: Tanken är att Anden verkar också idag, inte bara i Bibelns berättelser.
 bakgrund: fokusljus
@@ -155,12 +184,15 @@ bakgrund: fokusljus
 
 ---
 
-[fokus]
+[bildfält]
 etikett: Anden
 rubrik: Andens kraft, också idag
-- Helande | Man ber om att den som är sjuk ska bli frisk. Tanken är att Gud kan hela också idag.
-- Handpåläggning | Man lägger händerna på den man ber för.
-- Andeutdrivning | Att driva ut onda andar.
+text: Tanken är att Gud kan hela också idag.
+bild: bilder/kyrka-och-frikyrka/handpalaggning.jpg
+fokuspunkt: 62 45
+- **Helande:** man ber om att den som är sjuk ska bli frisk.
+- **Handpåläggning:** man lägger händerna på den man ber för.
+- **Andeutdrivning:** att driva ut onda andar.
 > Handpåläggning förekommer också i Svenska kyrkan, till exempel när präster vigs. Skillnaden ligger i hur ofta och i vilket sammanhang.
 > Andeutdrivning bygger på berättelser i evangelierna där Jesus driver ut onda andar.
 

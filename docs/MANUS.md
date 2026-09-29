@@ -186,6 +186,19 @@ I `[fyrfält]` skrivs vilken fyrdel saken ligger i ut automatiskt, till exempel 
 
 En del i `[omlopp]` kan få en bild som tredje fält: `- Avlaten | Syndernas förlåtelse går inte att köpa | bilder/x.jpg`. Med `bild:` får kärnan en grundbild. När en del har fokus visas dess bild i kärnan.
 
+### Kodskrivning
+
+```text
+[kodskrivning]
+rubrik: BFS i Python
+text: def bfs(graph, start, goal):
+    frontier = [start]
+- takt: rad                  (valfri: en rad per klick; annars skrivs koden i realtid)
+- 2 | frontier = [start] | Frontiern börjar med startnoden. | resultat (valfritt)
+```
+
+Koden skrivs fram i ett terminalfönster med blinkande markör. Ett klick under skrivningen visar hela koden direkt. Därefter markerar varje klick en rad och ett uttryck. Skriv koden utan tomma rader. Filnamnet i fönstret tas från funktionens namn, till exempel `bfs.py`.
+
 ### Sökning, rutnät och kö
 
 Algoritmerna räknas fram automatiskt. Du skriver grafen eller labyrinten och väljer algoritm, och varje klick blir ett steg i rätt ordning.

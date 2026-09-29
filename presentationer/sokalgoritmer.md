@@ -96,7 +96,7 @@ flöde: ja
 
 ---
 
-[kodförklaring]
+[kodskrivning]
 etikett: Bredden först
 rubrik: BFS i Python
 text: def bfs(graph, start, goal):
@@ -281,7 +281,7 @@ text: En DFS utforskar grafer och träd genom att gå så djupt som möjligt lä
 
 ---
 
-[kodförklaring]
+[kodskrivning]
 etikett: Djupet först
 rubrik: DFS i Python
 text: def dfs(graph, start, goal):

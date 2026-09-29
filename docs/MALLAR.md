@@ -32,6 +32,7 @@ Varje bild i ett manus börjar med mallens namn inom hakparentes. Samma katalog 
 | `[bildregi]` | Bild | Regisserar en bild som cinematic hero, detaljresa, spotlight/annotation eller kontrollerad mask reveal. Samma bild och komposition bär hela klicksekvensen. |
 | `[terminal]` | Textregi | Regisserar en trovärdig terminalberättelse där kommando, output, fel, resultat och annotation har separata semantiska roller. Kommandon kan skrivas fram när skrivandet bär betydelse. |
 | `[kodförklaring]` | Textregi | Etablerar ett stabilt kodblock och flyttar sedan fokus mellan relevanta rader eller uttryck med annotation och resultat. |
+| `[kodskrivning]` | Textregi | Koden skrivs fram i ett terminalfönster, tecken för tecken och rad för rad, med en blinkande markör och färgade nyckelord. Ett klick under skrivningen visar hela koden direkt. Med takt: rad skriver varje klick en rad i stället. Därefter lyfter klicken fram rader och uttryck, övriga rader tonas ned och en förklaring kopplas till raden. Varje markering skrivs radnummer, uttryck, förklaring och ett valfritt resultat. |
 | `[typografi]` | Textregi | Låter en stor mening bära hela scenen och förändras genom fokus, ersättning eller precisering med mycket whitespace. |
 | `[texttempo]` | Textregi | Bygger ett resonemang genom kontrollerad typografisk pacing: påstående, kontrast, avslöjande och slutsats får egna kommunikativa klick. |
 | `[jämförelse]` | Data | Två sidor mot varandra: för och emot, före och efter. |
@@ -621,6 +622,25 @@ text: function add(total, value) {
 }
 - 2 | total + value | Uttrycket skapar nästa ackumulerade värde. | 12 + 5 = 17
 - 1 | add | Funktionen namnger operationen. | Ett nytt totalvärde returneras.
+```
+
+### `[kodskrivning]` Kodskrivning
+
+Koden skrivs fram i ett terminalfönster, tecken för tecken och rad för rad, med en blinkande markör och färgade nyckelord. Ett klick under skrivningen visar hela koden direkt. Med takt: rad skriver varje klick en rad i stället. Därefter lyfter klicken fram rader och uttryck, övriga rader tonas ned och en förklaring kopplas till raden. Varje markering skrivs radnummer, uttryck, förklaring och ett valfritt resultat.
+
+**Undvik när:** Mer än cirka 20 rader eller tomma rader i koden. När koden redan är känd och bara ska förklaras (använd kodförklaring).
+
+```
+[kodskrivning]
+etikett: Programmering
+rubrik: En loop som summerar
+text: def summa(tal):
+    total = 0
+    for x in tal:
+        total = total + x
+    return total
+- 3 | for x in tal | Loopen går igenom varje tal i listan.
+- 4 | total + x | Varje varv lägger till nästa tal. | 0 + 3 + 5 = 8
 ```
 
 ### `[typografi]` Typografiskt statement

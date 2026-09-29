@@ -16,7 +16,7 @@ const LAYOUTS = {etapper:"Etapper",vagval:"Vägval",lager:"Lager",resonemang:"Re
   title: 'Titel', section: 'Avsnitt', statement: 'Påstående', bullets: 'Punktlista', split: 'Text och bild',
   image: 'Helbild', bildregi: 'Bildregi', terminal: 'Terminal', kodforklaring: 'Kodförklaring', typografisk: 'Typografiskt statement', texttempo: 'Typografiskt tempo', cards: 'Kort', compare: 'Jämförelse', table: 'Tabell', number: 'Stort tal', timeline: 'Tidslinje',
   question: 'Fråga och svar', poll: 'Omröstning', reflect: 'Reflektion', define: 'Definition', chat: 'AI-samtal', duo: 'Två tal',
-  quote: 'Citat', omslag: 'Omslag', karta: 'Karta', triad: 'Triad', motsats: 'Motsats', bildkant: 'Bildkant', 'båge': 'Båge', omlopp: 'Omlopp', gradskiva: 'Gradskiva', bro: 'Bro', rad: 'Rad', rutor: 'Rutor', remsor: 'Remsor', mosaik: 'Mosaik', karna: 'Kärna', graf: 'Graf', trad: 'Träd', flode: 'Flöde', urval: 'Urval', forgrening: 'Förgrening', inzoomning: 'Inzoomning', fyrfalt: 'Fyrfält', vagskal: 'Vågskål', sokning: 'Sökning', rutnat: 'Rutnät', ko: 'Kö', ringar: 'Ringar', lins: 'Lins', 'mätare': 'Mätare', 'ridå': 'Ridå', 'strålkastare': 'Strålkastare', fokus: 'Fokus', ordbild: 'Ordbild', 'bildfält': 'Bildfält', delning: 'Delning', ljustal: 'Ljustal', tom: 'Fri yta', egen: 'Egen mall'
+  quote: 'Citat', omslag: 'Omslag', karta: 'Karta', triad: 'Triad', motsats: 'Motsats', bildkant: 'Bildkant', 'båge': 'Båge', omlopp: 'Omlopp', gradskiva: 'Gradskiva', bro: 'Bro', rad: 'Rad', rutor: 'Rutor', remsor: 'Remsor', mosaik: 'Mosaik', karna: 'Kärna', graf: 'Graf', trad: 'Träd', flode: 'Flöde', urval: 'Urval', forgrening: 'Förgrening', kodskrivning: 'Kodskrivning', inzoomning: 'Inzoomning', fyrfalt: 'Fyrfält', vagskal: 'Vågskål', sokning: 'Sökning', rutnat: 'Rutnät', ko: 'Kö', ringar: 'Ringar', lins: 'Lins', 'mätare': 'Mätare', 'ridå': 'Ridå', 'strålkastare': 'Strålkastare', fokus: 'Fokus', ordbild: 'Ordbild', 'bildfält': 'Bildfält', delning: 'Delning', ljustal: 'Ljustal', tom: 'Fri yta', egen: 'Egen mall'
 };
 const THEMES = {
   signal: { name: 'Signal', desc: 'Djup midnattsblå, elektrisk cyan och violett. Fylliga färgfält och tydlig typografi.', look: 'dark', v: { bg: '#080E25', surface: '#152444', ink: '#F0F6FF', muted: '#A5B6D4', line: '#2B4065', accent: '#5FE7ED', 'accent-2': '#9C87FF', hl: 'rgba(95,231,237,.22)' }, fd: '"Familjen Grotesk",system-ui,sans-serif', fb: '"Hanken Grotesk",system-ui,sans-serif', hw: 700, ht: '-.035em', r: '24px', ta: 'words', fonts: ['Familjen+Grotesk:wght@400;500;600;700', 'Hanken+Grotesk:wght@400;500;600'] },
@@ -1411,6 +1411,57 @@ function renderSlide(sl, i, deck, img) {
       attrs += ` data-dramaturgy="focus-restore" data-dramaturgy-state="${steps ? 'overview' : 'restored'}"${steps ? '' : ' data-dramaturgy-static="true"'}`;
       break;
     }
+    case 'kodskrivning': {
+      /* Koden skrivs fram i ett terminalfönster med blinkande markör, i realtid eller en rad per klick.
+         Därefter lyfter klicken fram rader och uttryck, med en förklaring vid raden. */
+      const cfg = {}, marks = [];
+      lines(sl.items).forEach(t => {
+        const s = String(t).replace(/^(- )+/, '').trim(), m = s.match(/^takt\s*:\s*(.*)$/i);
+        if (m) { cfg.takt = m[1].trim().toLowerCase(); return; }
+        const p = s.split('|').map(x => x.trim()), ln = parseInt(p[0], 10);
+        if (ln > 0) marks.push({ line: ln, token: p[1] || '', text: p[2] || '', result: p.slice(3).join(' | ') });
+      });
+      const code = String(sl.text || '').split(String.fromCharCode(13)).join('').split('\n').slice(0, 22);
+      const perLine = /rad/.test(cfg.takt || ''), L2 = code.length;
+      const lh = Math.round(Math.min(46, 640 / Math.max(1, L2))), fs = Math.round(lh * .56);
+      const KW = /^(def|class|return|if|elif|else|while|for|in|not|and|or|is|continue|break|import|from|as|pass|lambda|with|try|except|finally|raise|yield|True|False|None|function|const|let|var|new|this|of|async|await|null|true|false|public|private|static|void|int|double|boolean|String|print)$/;
+      const hl = seg => {
+        let out = '', m; const re = /(#.*$|\/\/.*$)|([fFrRbB]?"(?:[^"\\]|\\.)*"?|[fFrRbB]?'(?:[^'\\]|\\.)*'?)|(\b\d+(?:\.\d+)?\b)|([A-Za-z_]\w*)(\s*\()?|([^A-Za-z_\d#"'\/]+)|([\s\S])/g;
+        while ((m = re.exec(seg))) {
+          if (m[1]) out += `<i class="c">${esc(m[1])}</i>`;
+          else if (m[2]) out += `<i class="s">${esc(m[2])}</i>`;
+          else if (m[3]) out += `<i class="n">${esc(m[3])}</i>`;
+          else if (m[4]) out += KW.test(m[4]) ? `<i class="k">${esc(m[4])}</i>${esc(m[5] || '')}` : m[5] ? `<i class="f">${esc(m[4])}</i>${esc(m[5])}` : esc(m[4]);
+          else out += esc(m[6] || m[7] || '');
+          if (!m[0]) re.lastIndex++;
+        }
+        return out;
+      };
+      const T = j => ` data-dramaturgy-target data-dramaturgy-index="${j}"`;
+      const rowsHtml = code.map((raw, q) => {
+        const on = marks.map((mk, j) => mk.line === q + 1 ? j : -1).filter(j => j >= 0), mk = on.length ? marks[on[0]] : null;
+        let html = hl(raw);
+        if (mk && mk.token) { const at = raw.indexOf(mk.token); if (at >= 0) html = hl(raw.slice(0, at)) + `<mark>${hl(mk.token)}</mark>` + hl(raw.slice(at + mk.token.length)); }
+        const indent = (raw.match(/^\s*/) || [''])[0].length;
+        return `<div class="ks-line" data-len="${raw.length}" data-indent="${indent}" data-raw="${esc(raw)}"${on.length ? ` data-dramaturgy-in="${on.join(' ')}"` : ''}${perLine ? st('typeline') : ''}><span class="ks-no">${q + 1}</span><span class="ks-txt"><code>${html || ' '}</code><i class="ks-cur" aria-hidden="true"></i></span></div>`;
+      }).join('');
+      const fn = (String(sl.text || '').match(/^\s*(?:def|function|class)\s+([A-Za-z_]\w*)/m) || [])[1];
+      const py = /^\s*(def |class |import |from \S+ import)/m.test(String(sl.text || ''));
+      const file = (fn || 'exempel') + (py ? '.py' : '.js');
+      const top = 300, winTop = top, codeTop = winTop + 64 + 22;
+      const notes = marks.map((mk, j) => `<aside class="ks-note"${T(j)} style="top:${codeTop + (mk.line - 1) * lh + lh / 2}px"><b>${fmt(mk.text || `Rad ${mk.line}`)}</b>${mk.result ? `<p>${fmt(mk.result)}</p>` : ''}</aside>`).join('');
+      let cues = '';
+      if (steps && marks.length) {
+        marks.forEach((mk, j) => { const s = st('none'); cues += `<span data-dramaturgy-cue data-dramaturgy-focus="${k}" data-dramaturgy-target="${j}"${s} aria-hidden="true"></span>`; });
+        cues += `<span data-dramaturgy-restore${st('none')} aria-hidden="true"></span>`;
+      }
+      body = (sl.caption ? `<p class="kicker"${A('fade')}>${fmt(sl.caption)}</p>` : '') + H2('', 'mask') +
+        `<div class="ks-stage" style="--lh:${lh}px;--fs:${fs}px"><div class="ks-win" style="top:${winTop}px;height:${64 + 44 + L2 * lh}px"><div class="ks-bar" aria-hidden="true"><i></i><i></i><i></i><span>${esc(file)}</span></div>` +
+        `<div class="ks-code${perLine ? ' per-line' : ''}"${perLine ? '' : A('typecode', 350)}>${rowsHtml}</div></div>${notes}</div>` + cues;
+      cls = plain(title).length > 44 ? 'fl-long' : '';
+      attrs += ` data-dramaturgy="focus-restore" data-dramaturgy-state="${steps && marks.length ? 'overview' : 'restored'}"${steps && marks.length ? '' : ' data-dramaturgy-static="true"'}`;
+      break;
+    }
     case 'sokning': {
       /* En sökalgoritm arbetar i en graf eller ett träd. Läget frontier visar algoritmstegen, frontiern och
          vilka noder som är utforskade; varje klick är ett steg. Läget vandring följer DFS eller BFS nod för nod.
@@ -2055,6 +2106,36 @@ function countUp(el, delay, dur) {
   raf = requestAnimationFrame(tick);
   return { cancel() { cancelAnimationFrame(raf); a.cancel(); el.innerHTML = el._orig; }, finish() { cancelAnimationFrame(raf); a.finish(); el.innerHTML = el._orig; } };
 }
+/* Kodskrivning: raderna visas tecken för tecken genom att bredden (i ch) växer, så syntaxfärgerna
+   behålls. Indrag hoppar fram direkt, som i en editor. finish() visar allt direkt. */
+function typeCode(el, delay, only) {
+  const rows = only ? [only] : [...el.querySelectorAll('.ks-line')];
+  const set = (row, n) => { row.style.setProperty('--n', n); };
+  rows.forEach(r => { set(r, +r.dataset.indent || 0); r.classList.remove('cur', 'typed'); });
+  if (!only) el.classList.add('typing');
+  let li = 0, n = rows.length ? +rows[0].dataset.indent || 0 : 0, to;
+  const cur = r => { if (only) return; el.querySelectorAll('.ks-line.cur').forEach(x => x.classList.remove('cur')); if (r) r.classList.add('cur'); };
+  const tick = () => {
+    const row = rows[li]; if (!row) { end(); return; }
+    cur(row); row.classList.add('typed');
+    const len = +row.dataset.len || 0;
+    if (n < len) {
+      n++; set(row, n);
+      const ch = (row.dataset.raw || '').charAt(n - 1);
+      to = setTimeout(tick, (ch === ' ' ? 26 : 34) + Math.random() * 38 + (/[(:,\]]/.test(ch) ? 70 : 0));
+    } else {
+      li++; if (li < rows.length) { n = +rows[li].dataset.indent || 0; set(rows[li], n); to = setTimeout(tick, 230); } else end();
+    }
+  };
+  const end = () => {
+    clearTimeout(to);
+    rows.forEach(r => { set(r, +r.dataset.len || 0); r.classList.add('typed'); });
+    el.classList.remove('typing');
+    if (!only) cur(rows[rows.length - 1]); else cur(only);
+  };
+  to = setTimeout(tick, (delay || 0) + (only ? 60 : 500));
+  return { cancel: end, finish: end };
+}
 function typeOut(el, delay) {
   if (el._orig == null) el._orig = el.innerHTML;
   const txt = el.textContent;
@@ -2101,6 +2182,8 @@ function playNamed(el, name, delay, dur) {
     return { cancel: end, finish: end };
   }
   if (name === 'type') return typeOut(el, delay);
+  if (name === 'typecode') return typeCode(el, delay);
+  if (name === 'typeline') return typeCode(el.closest('.ks-code') || el, delay, el);
   const p = ANIMS[name] || ANIMS.fade;
   return el.animate(p.k, { duration: dur || p.d, delay: delay || 0, easing: EASE, fill: 'backwards' });
 }

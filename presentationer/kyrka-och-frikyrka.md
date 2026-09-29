@@ -17,7 +17,7 @@ alt: Två kyrkorum sida vid sida: en ljus möteslokal med scen och stolar, och e
 [bildregi]
 etikett: Rummet · Svenska kyrkan
 rubrik: Båda kallas kyrka
-text: Men rummen berättar olika saker om vad som står i centrum.
+text: Stor utsmyckning eller avskalad inredning. Rummet visar vad som står i centrum.
 bild: bilder/kyrka-och-frikyrka/titel.jpg
 alt: Två kyrkorum sida vid sida: en ljus möteslokal med scen och stolar, och ett gammalt kyrkorum med altartavla och ljus.
 bildläge: spotlight
@@ -26,7 +26,7 @@ säker-yta: 4 6 40 26
 mörkning: 0 0 50 42 0.75
 - altartavla | Altartavlan | 77 | 42 | 15 | 33 | Korset och Jesus i rummets mitt.
 - ljus | Ljus och konst | 78 | 17 | 18 | 24 | Rummet i sig ska väcka andakt.
-> Både kyrkobyggnaden och möteslokalen kan kallas kyrka. Först kyrkobyggnaden, sedan möteslokalen på nästa bild.
+> Både kyrkobyggnaden och möteslokalen kan kallas kyrka, men rummen berättar olika saker. Först kyrkobyggnaden, sedan möteslokalen på nästa bild.
 > Svenska kyrkans kyrkor är ofta gamla och rikt utsmyckade. Frikyrkans lokal är ofta enkel, med scen, talarstol och stolar i rader.
 
 ---
@@ -123,7 +123,7 @@ etikett: Pingströrelsen i sin början
 [två-tal]
 etikett: Gudstjänsten · Predikan
 rubrik: Hur lång är en predikan?
-text: I frikyrkan har predikan en stor och central roll, ofta utan manus.
+text: I frikyrkan har predikan en stor och central roll, ofta med ett folkligt tilltal och utan manus.
 bakgrund: fokusljus
 - 8 min | idealet i Svenska kyrkan
 - 60+ min | ofta i frikyrkans tradition
@@ -139,10 +139,30 @@ text: Den heliga Anden
 slutsats: Tanken är att Anden verkar också idag, inte bara i Bibelns berättelser.
 bakgrund: fokusljus
 - Andedop | En upplevelse där den troende fylls av den heliga Anden, ofta efter omvändelsen.
-- Tungotal | Att be eller tala på ett språk man inte har lärt sig, som en gåva från Anden.
-- Helande | Bön om helande och handpåläggning. Även andeutdrivning: att driva ut onda andar.
-> Pingströrelsen har sitt namn från pingstdagen i Apostlagärningarna, kapitel 2, då lärjungarna fylldes av Anden och talade på andra språk.
-> Handpåläggning: man lägger händerna på den man ber för.
+- Tungotal | En gåva från Anden: att tala eller be på ett språk man inte har lärt sig.
+- Helande | Bön för den som är sjuk, med handpåläggning. Även andeutdrivning.
+> Tre sätt som Anden märks på i pingströrelsen. De två sista fördjupar vi på nästa bilder.
+
+---
+
+[definition]
+etikett: Anden
+rubrik: Tungotal
+text: Att be eller tala på ett språk man inte har lärt sig, som en gåva från Anden.
+exempel: På pingstdagen i Apostlagärningarna, kapitel 2, fylldes lärjungarna av Anden och talade på andra språk. Därifrån har pingströrelsen fått sitt namn.
+bakgrund: fokusljus
+> Pingstdagen firas femtio dagar efter påsk.
+
+---
+
+[fokus]
+etikett: Anden
+rubrik: Andens kraft, också idag
+- Helande | Man ber om att den som är sjuk ska bli frisk. Tanken är att Gud kan hela också idag.
+- Handpåläggning | Man lägger händerna på den man ber för.
+- Andeutdrivning | Att driva ut onda andar.
+> Handpåläggning förekommer också i Svenska kyrkan, till exempel när präster vigs. Skillnaden ligger i hur ofta och i vilket sammanhang.
+> Andeutdrivning bygger på berättelser i evangelierna där Jesus driver ut onda andar.
 
 ---
 

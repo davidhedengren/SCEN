@@ -411,7 +411,7 @@ function applyDramaturgy(sec, step, final) {
   if (!staticState && typeof document !== 'undefined') sec.querySelectorAll('.say-term').forEach(el => {
     const host = el.closest('.dramaturgy-current, [data-dramaturgy-target], [data-dramaturgy-in]') || el;
     const on = phase.state === 'focus' && host.classList.contains('dramaturgy-current');
-    if (on && el.dataset.typed !== '1') { el.dataset.typed = '1'; typeOut(el, 150); }
+    if (on && el.dataset.typed !== '1') { el.dataset.typed = '1'; typeOut(el, 120, true); }
     else if (!on && el.dataset.typed === '1') { delete el.dataset.typed; if (el._type) el._type.finish(); }
   });
   let progress = 0;
@@ -958,8 +958,8 @@ function renderSlide(sl, i, deck, img) {
         const [x, y] = P(n), kind = n.kids.length ? (n.parent ? 'tr-inner' : 'tr-root') : 'tr-leaf';
         return `<span class="tr-node ${kind}${round ? ' tr-round' : ''} n${n.i}"${gtIn(inN[n.i])} style="left:${Math.round(x)}px;top:${Math.round(y)}px;--ts:${fs}px;max-width:${Math.round(Math.max(120, slotW - 18))}px">${fmt(n.label)}</span>`;
       }).join('');
-      /* Ordningen visas i bild: en ring glider från nod till nod, varje nod tänds när ringen kommer
-         och får sitt nummer, och ett spår ritas mellan noderna. Numren står kvar när helheten visas. */
+      /* Ordningen visas i bild: en ring glider från nod till nod, och varje nod tänds när ringen kommer
+         och får sitt nummer. Numren står kvar när helheten visas. */
       const uid = 'u' + hash((sl.id || '') + i + L);
       let ordCss = '', ordSvg = '', ordHtml = '';
       orders.forEach(({ j, seq, noLine }) => {
@@ -983,7 +983,7 @@ function renderSlide(sl, i, deck, img) {
         cues += `<span data-dramaturgy-restore${st('none')} aria-hidden="true"></span>`;
       }
       body = (ordCss ? `<style>${ordCss}</style>` : '') + (sl.caption ? `<p class="kicker"${A('fade')}>${fmt(sl.caption)}</p>` : '') + H2('', 'mask') +
-        `<div class="gt-stage"${A(anim(ba, 'fade'), 150)}><svg class="gt-svg" viewBox="0 0 1920 1080" aria-hidden="true">${edges}${route}${ordSvg}</svg>${elabs}${nodes}${ordHtml}</div>` +
+        `<div class="gt-stage"${A(anim(ba, 'fade'), 150)}><svg class="gt-svg" viewBox="0 0 1920 1080" aria-hidden="true">${edges}${route}</svg>${elabs}${nodes}${ordHtml}</div>` +
         (hasPan ? gtPanel(sl.text, focus, sl.conclusion, extra, 144, 330, 500) : '') + cues;
       cls = (orders.length ? uid : '') + (plain(title).length > 44 ? ' gt-long' : '');
       attrs += ` data-dramaturgy="focus-restore" data-dramaturgy-state="${steps ? 'overview' : 'restored'}"${steps ? '' : ' data-dramaturgy-static="true"'}`;
@@ -2500,7 +2500,7 @@ function typeCode(el, delay, only) {
 /* Skriver fram text tecken för tecken med ett blinkande block, som i en kommandotolk. Formatering och
    radbrytningar står still: det som ännu inte är skrivet finns redan på plats men är osynligt. */
 let TYPE_FREE = 0;
-function typeOut(el, delay) {
+function typeOut(el, delay, fast) {
   if (el._type) el._type.finish();
   const parts = [], walk = document.createTreeWalker(el, NodeFilter.SHOW_TEXT);
   for (let n; (n = walk.nextNode());) if (n.nodeValue.trim() && !(n.parentElement && n.parentElement.closest('svg,style,script'))) parts.push(n);
@@ -2510,9 +2510,10 @@ function typeOut(el, delay) {
   const cur = document.createElement('i'); cur.className = 'type-cur'; cur.setAttribute('aria-hidden', 'true');
   el.classList.add('typing');
   /* Takten räknas ut i förväg, så att flera texter på samma bild kan skrivas en i taget. */
-  const per = Math.max(14, Math.min(50, 2400 / total)), waits = [];
-  segs.forEach(s => { for (const ch of s.full) waits.push(per * (.6 + Math.random() * .8) + (/[.,:;!?]/.test(ch) ? per * 4 : 0)); });
-  const now = performance.now(), start = Math.max(now + (delay || 0) + 250, TYPE_FREE);
+  /* fast: algoritmens korta rader ska vara framme på under en sekund. */
+  const per = fast ? Math.max(5, Math.min(18, 420 / total)) : Math.max(14, Math.min(50, 2400 / total)), waits = [];
+  segs.forEach(s => { for (const ch of s.full) waits.push(per * (.6 + Math.random() * .8) + (/[.,:;!?]/.test(ch) ? per * (fast ? 1.5 : 4) : 0)); });
+  const now = performance.now(), start = Math.max(now + (delay || 0) + (fast ? 60 : 250), TYPE_FREE);
   TYPE_FREE = start + waits.reduce((a, w) => a + w, 0) + 150;
   let si = 0, ci = 0, k = 0, to, off;
   const at = () => { const s = segs[si]; s.rest.parentNode.insertBefore(cur, s.rest); };
@@ -2527,8 +2528,10 @@ function typeOut(el, delay) {
     let s = segs[si];
     while (ci >= s.full.length && si < segs.length - 1) { si++; ci = 0; s = segs[si]; at(); }
     if (ci >= s.full.length) { idle(); return; }
-    ci++; s.n.nodeValue = s.full.slice(0, ci); s.rest.textContent = s.full.slice(ci);
-    to = setTimeout(tick, waits[k++] || per);
+    /* Vid snabb takt skrivs två tecken per steg, eftersom webbläsarens timer inte hinner med kortare pauser. */
+    const step = per < 12 ? 2 : 1, w =(waits[k] || per) + (step > 1 ? (waits[k + 1] || per) : 0);
+    ci = Math.min(s.full.length, ci + step); k += step; s.n.nodeValue = s.full.slice(0, ci); s.rest.textContent = s.full.slice(ci);
+    to = setTimeout(tick, w);
   };
   to = setTimeout(() => { at(); tick(); }, start - now);
   el._type = { cancel: stop, finish: stop };

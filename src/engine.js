@@ -1476,14 +1476,14 @@ function renderSlide(sl, i, deck, img) {
       const n = Math.max(1, its.length), uid = 'u' + hash((sl.id || '') + i + L);
       let css = '';
       const mechanisms = its.map((o, j) => {
-        const x = 29 + j * 42 / Math.max(1, n - 1), progress = (j + 1) / (n + 1) * 100;
+        const f = (j + 1) / (n + 1), progress = f * 100;
         css += `.${uid}:has(.vk-mech.k${j}.in) .vk-flow{width:${progress.toFixed(2)}%}.${uid}:has(.vk-mech.k${j}.step-current) .vk-node.k${j}{background:var(--accent);transform:translate(-50%,-50%) scale(1.35);box-shadow:0 0 0 9px var(--hl)}`;
-        return `<article class="vk-mech k${j}" style="left:${x}%"${steps ? st(stepA('fade')) : A(stepA('fade'), 450 + j * 180)}><i class="vk-node k${j}" aria-hidden="true"></i><h3>${fmt(o.mechanism || `Mekanism ${j + 1}`)}</h3><p>${fmt(o.change)}</p></article>`;
+        return `<article class="vk-mech k${j}" style="--f:${f.toFixed(4)};--n:${n}"${steps ? st(stepA('fade')) : A(stepA('fade'), 450 + j * 180)}><i class="vk-node k${j}" aria-hidden="true"></i><h3>${fmt(o.mechanism || `Mekanism ${j + 1}`)}</h3><p>${fmt(o.change)}</p></article>`;
       }).join('');
       css += `.${uid}:has(.vk-effect.in) .vk-flow{width:100%}`;
       if (!steps) css += `.${uid} .vk-flow{width:100%}`;
       body = `<style>${css}</style><header class="fn-head">${sl.caption ? `<p class="kicker"${A(stepA('fade'))}>${fmt(sl.caption)}</p>` : ''}${H2('', 'mask')}</header>` +
-        `<div class="vk-stage ${uid}"><div class="vk-line" aria-hidden="true"><i class="vk-flow"></i></div><article class="vk-cause"><small>Orsak</small><h3>${fmt(sl.cause || 'Utgångspunkt')}</h3></article>${mechanisms}<article class="vk-effect"${steps ? st(stepA('mask')) : A(stepA('mask'), 1200)}><small>Konsekvens</small><h3>${fmt(sl.effect || 'Resultat')}</h3></article></div>` +
+        `<div class="vk-stage ${uid}${Math.max(plain(sl.cause || '').length, plain(sl.effect || '').length) > 60 ? ' vk-long' : ''}"><div class="vk-line" aria-hidden="true"><i class="vk-flow"></i></div><article class="vk-cause"><small>Orsak</small><h3>${fmt(sl.cause || 'Utgångspunkt')}</h3></article>${mechanisms}<article class="vk-effect"${steps ? st(stepA('mask')) : A(stepA('mask'), 1200)}><small>Konsekvens</small><h3>${fmt(sl.effect || 'Resultat')}</h3></article></div>` +
         `<div class="vk-guards">${sl.condition ? `<p class="vk-condition"${steps ? st(stepA('fade')) : A(stepA('fade'), 1450)}><b>Villkor</b>${fmt(sl.condition)}</p>` : ''}${sl.alternative ? `<p class="vk-alternative"${steps ? st(stepA('fade')) : A(stepA('fade'), 1650)}><b>Alternativ förklaring</b>${fmt(sl.alternative)}</p>` : ''}</div>`;
       cls = 'fn-layout ' + uid;
       break;

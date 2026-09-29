@@ -1010,15 +1010,17 @@
 .scen [data-layout="prisma"] .pr-outcomes b{display:block;font-size:16px;letter-spacing:.1em;text-transform:uppercase;color:var(--accent);margin-bottom:6px}
 
 /* Verkningar: mekanismerna är den kausala länken. */
-.scen [data-layout="verkningar"] .vk-stage{position:relative;min-height:500px;margin:0 20px}
-.scen [data-layout="verkningar"] .vk-line{position:absolute;left:8%;right:8%;top:42%;height:4px;background:var(--line);transform:translateY(-50%)}
+.scen [data-layout="verkningar"] .vk-stage{position:relative;min-height:500px;margin:0;--vk-side:20%;--vk-a:calc(var(--vk-side) + 36px)}
+.scen [data-layout="verkningar"] .vk-line{position:absolute;left:var(--vk-a);right:var(--vk-a);top:42%;height:4px;background:var(--line);transform:translateY(-50%)}
 .scen [data-layout="verkningar"] .vk-line::after{content:"";position:absolute;right:-4px;top:50%;width:20px;height:20px;border-top:4px solid var(--line);border-right:4px solid var(--line);transform:translateY(-50%) rotate(45deg)}
 .scen [data-layout="verkningar"] .vk-flow{display:block;width:0;height:100%;background:var(--accent);transition:width .85s cubic-bezier(.22,1,.36,1)}
-.scen [data-layout="verkningar"] .vk-cause,.scen [data-layout="verkningar"] .vk-effect{position:absolute;top:42%;width:280px;transform:translateY(-50%);display:grid;gap:12px;background:var(--bg);padding:24px 0}
-.scen [data-layout="verkningar"] .vk-cause{left:0}.scen [data-layout="verkningar"] .vk-effect{right:0;text-align:right}
-.scen [data-layout="verkningar"] .vk-cause h3,.scen [data-layout="verkningar"] .vk-effect h3{font-size:34px;line-height:1.15}
+.scen [data-layout="verkningar"] .vk-cause,.scen [data-layout="verkningar"] .vk-effect{position:absolute;top:42%;width:var(--vk-side);box-sizing:border-box;transform:translateY(-50%);display:grid;gap:12px;padding:0}
+.scen [data-layout="verkningar"] .vk-cause{left:0}.scen [data-layout="verkningar"] .vk-effect{right:0;text-align:left}
+.scen [data-layout="verkningar"] .vk-cause h3,.scen [data-layout="verkningar"] .vk-effect h3{font-size:36px;line-height:1.15;text-wrap:balance}
+.scen [data-layout="verkningar"] .vk-long :is(.vk-cause,.vk-effect) h3{font-size:30px;line-height:1.2}
+.scen [data-layout="verkningar"] :is(.vk-cause,.vk-effect) small{font-family:var(--font-mono,ui-monospace,Menlo,monospace);font-size:18px;letter-spacing:.16em;text-transform:uppercase;color:var(--muted)}
 .scen [data-layout="verkningar"] .vk-effect h3{color:var(--accent)}
-.scen [data-layout="verkningar"] .vk-mech{position:absolute;top:42%;width:260px;transform:translate(-50%,0);padding-top:48px;text-align:center;display:grid;gap:8px}
+.scen [data-layout="verkningar"] .vk-mech{position:absolute;top:42%;left:calc(var(--vk-a) + (100% - 2 * var(--vk-a)) * var(--f));width:min(320px,calc((100% - 2 * var(--vk-a)) / (var(--n) + 1) - 18px));transform:translate(-50%,0);padding-top:48px;text-align:center;display:grid;gap:8px}
 .scen [data-layout="verkningar"] .vk-node{position:absolute;left:50%;top:0;width:20px;height:20px;border:4px solid var(--bg);border-radius:50%;background:var(--muted);transform:translate(-50%,-50%);transition:.55s cubic-bezier(.16,1,.3,1)}
 .scen [data-layout="verkningar"] .vk-mech h3{font-size:27px}.scen [data-layout="verkningar"] .vk-mech p{font-size:21px;line-height:1.35;color:var(--muted)}
 .scen [data-layout="verkningar"] .vk-guards{display:grid;grid-template-columns:1.2fr 1fr;gap:64px;border-top:1px solid var(--line);padding-top:20px}

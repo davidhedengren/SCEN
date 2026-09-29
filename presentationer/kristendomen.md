@@ -136,6 +136,34 @@ hastighet: slow
 
 ---
 
+[remsor]
+etikett: Upplysningen · 1600-talet, Tyskland
+rubrik: Pietismen
+text: En reaktion mot lutherska dogmer och kollektivism.
+bakgrund: fokusljus
+- Personlig tro | Den personliga upplevelsen och det levda kristna livet. Tron ska synas utåt.
+- Individen i centrum | Personlig omvändelse är viktig. Relationen mellan individen och Gud står i centrum.
+- Konventiklar | Möten för lekfolk med bön och bibelstudier, utanför gudstjänsten. Men ingen utbrytning ur kyrkan.
+- Kyrkans oro | Präster och biskopar skulle leda möten och tolka Bibeln. Annars kunde folk göra hur som helst.
+> Dogmer betyder uppfattningar och regler.
+> Konventiklar hölls utanför både gudstjänsten och hushållet.
+
+---
+
+[mosaik]
+etikett: Upplysningen · 1700-talet, England
+rubrik: Metodismen
+bakgrund: fokusljus
+- Inspirerad av pietismen | Namnet kommer av det metodiska studiet av den egna andliga utvecklingen.
+- Helgelsen | Även efter omvändelsen ska du fortsätta att utvecklas som kristen.
+- Utåtriktad | Mission, socialt engagemang och predikningar utomhus.
+- En egen kyrka | Metodisterna ville inte bli en egen kyrka, men blev det ändå.
+- Frälsningsarmén | Rötter i metodismen. Enkelhet, askes och en tro som syns.
+> Helgelsen: utvecklingen av det heliga livet i världen.
+> Frälsningsarmén: det metodistiska arvet syns i det sociala, utåtriktade arbetet. Att vara kristen ska synas, även i vad man äter och vad man har på sig.
+
+---
+
 [ringar]
 etikett: Upplysningen
 rubrik: Pietismen och metodismen
@@ -143,15 +171,7 @@ text: Personlig tro som syns i livet
 bakgrund: fokusljus
 - Pietismen | 1600-talet, Tyskland. Egna bibelmöten, men stannade i kyrkan.
 - Metodismen | 1700-talet, England. Mission och socialt arbete. Blev en egen kyrka.
-> Pietismen (1600-talet, Tyskland) var en reaktion mot lutherska dogmer (uppfattningar och regler) och kollektivism.
-> Den betonade den personliga upplevelsen och det levda kristna livet. Det var mycket viktigt att det syns utåt.
-> Individualistiskt: personlig omvändelse var viktig, och relationen mellan individen och Gud stod i centrum.
-> Pietisterna förespråkade konventiklar, det vill säga möten för lekfolk med bön och bibelstudier utanför gudstjänsten och hushållet, men ingen utbrytning ur kyrkan.
-> Enligt den etablerade kyrkan skulle möten och bibeltolkningar ledas av präster och biskopar. Om människor gjorde detta själva så kunde de göra hur som helst.
-> Metodismen (1700-talet i England) var inspirerad av pietismen. Namnet kommer av det metodiska studiet av den egna andliga utvecklingen.
-> Helgelsen: utvecklingen av det heliga livet i världen. Även efter omvändelsen ska du fortsätta att utvecklas som kristen.
-> Utåtriktad och missionerande, med utomhuspredikningar. Metodisterna ville inte bli en egen kyrka, men blev det ändå. Socialt engagemang och mission.
-> Frälsningsarmén har sitt ursprung i metodismen, vilket syns i det sociala, utåtriktade arbetet. Betoning på enkelhet och askes. Att vara kristen ska synas: vad man äter och vad man har på sig.
+> Sammanfattning av de två rörelserna: båda sätter den personliga tron i centrum, och tron ska synas i livet.
 
 ---
 
@@ -234,8 +254,18 @@ bakgrund: fokusljus
 
 ---
 
-[belägg]
+[typografi]
 etikett: Att vara kristen och tolka Bibeln idag
+bakgrund: fokusljus
+- statement | **2000 år** gamla texter. | Texterna
+- precisering | Tolkningar som har **stötts och blötts**. | Tolkningarna
+> Bibeln är 2000 år gammal, och tolkningarna har prövats och diskuterats genom hela historien.
+> Härnäst ett exempel på en tolkningsfråga idag.
+
+---
+
+[belägg]
+etikett: Exempel på en tolkningsfråga idag
 rubrik: ”Får kvinnor vara andliga ledare?”
 källa: Paulus
 text: Kvinnan ska tiga vid sammankomsterna.
@@ -243,7 +273,6 @@ helhet: Hur stort tolkningsföreträde ska Paulus ha? Svaret får konsekvenser f
 bakgrund: fokusljus
 - ska tiga | Ett förbud mot att tala | Gällde det alla kvinnor, alltid, eller en viss församling då?
 - sammankomsterna | Församlingens möten och gudstjänster | Kan en kvinna då vara präst eller pastor?
-> 2000 år gamla texter. Tolkningar som har stötts och blötts.
 > Kyrkorna svarar olika idag. Svenska kyrkan har haft kvinnliga präster sedan 1960. Katolska kyrkan och ortodoxa kyrkor har bara manliga präster.
 > Konsekvens för både individ och samhälle, till exempel det amerikanska valet 2016: Trump mot Clinton.
 
@@ -282,35 +311,7 @@ rubrik: Frågan om sexualitet och äktenskap
 bakgrund: fokusljus
 - Texterna | Adam och Eva: ”Föröka er.” ”Om en man ligger med en annan man som med en kvinna, har de båda gjort något avskyvärt.” (3 Mos 20:13)
 - Nytolkningar | Berättelsen om Lot: handlar den om samkönad sex, eller om våld och brist på gästfrihet? Otukt: sex före äktenskapet? En tolkningsfråga idag.
-- Erfarenheter | Tidningen Dagen: 24 kristna homosexuella, ”Vi är en del av kyrkan”. SVT: Gud som haver barnen kär.
 > Adam och Eva. ”Föröka er.” ”Adam and Eve, not Adam and Steve.”
 > ”Om en man ligger med en annan man som med en kvinna, har de båda gjort något avskyvärt. De skall straffas med döden, skulden för deras död är deras egen.” (3 Mos 20:13)
 > Otukt/sexuell omoral = sex före äktenskapet? En tolkningsfråga idag.
 > Nytolkningar: berättelsen om Lot.
-> Erfarenheter: Tidningen Dagen, 24 kristna homosexuella: ”Vi är en del av kyrkan” (artikeln finns på Vklass). SVT: Gud som haver barnen kär.
-
----
-
-[reflektion]
-etikett: Diskutera
-rubrik: Hur kan kristna läsa samma text och komma fram till olika svar?
-tid: 3
-bakgrund: fokusljus
-- Tänk själv
-- Prata i par
-- Dela med klassen
-> Koppla gärna till de tre sätten att tolka om: aldrig menat, gällde då, principen.
-> Följdfråga: Vem ska ha rätt att bestämma hur texten tolkas, kyrkan eller den enskilda människan? Jämför med pietisterna och Luther.
-
----
-
-[kort]
-rubrik: Filmklipp
-bakgrund: fokusljus
-steg: nej
-- Religion förklarad: kristendomen | UR Play. Från de första kristna till Luther, som första halvan av lektionen.
-- Sveriges sekularisering | UR Play. Hur religionens roll i Sverige har förändrats.
-- Gud som haver barnen kär | SVT Play. Dokumentärserie.
-> Religion förklarad – kristendomen: https://urplay.se/program/220691-religionskunskap-forklarad-kristendomen
-> Sveriges sekularisering: https://urplay.se/program/220718-religionskunskap-forklarad-sveriges-sekularisering
-> Dokumentärserien ”Gud som haver barnen kär”: https://www.svtplay.se/video/K5ZGA7v/gud-som-haver-barnen-kar/2-gud-hor-alla-syndiga-tankar?video=visa

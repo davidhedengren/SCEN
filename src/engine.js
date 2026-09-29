@@ -407,6 +407,13 @@ function applyDramaturgy(sec, step, final) {
     el.classList.toggle('dramaturgy-past', phase.target >= 0 && actorIndex < phase.target);
     el.classList.toggle('dramaturgy-future', phase.target >= 0 && actorIndex > phase.target);
   });
+  /* Algoritmens tankar skrivs fram som i en kommandotolk när de blir aktuella. */
+  if (!staticState && typeof document !== 'undefined') sec.querySelectorAll('.say-term').forEach(el => {
+    const host = el.closest('.dramaturgy-current, [data-dramaturgy-target], [data-dramaturgy-in]') || el;
+    const on = phase.state === 'focus' && host.classList.contains('dramaturgy-current');
+    if (on && el.dataset.typed !== '1') { el.dataset.typed = '1'; typeOut(el, 150); }
+    else if (!on && el.dataset.typed === '1') { delete el.dataset.typed; if (el._type) el._type.finish(); }
+  });
   let progress = 0;
   if (phase.state === 'restored') progress = 1;
   else if (phase.state === 'focus' && focusNodes[phase.focus]) {
@@ -1800,7 +1807,7 @@ function renderSlide(sl, i, deck, img) {
           s.kind === 'goal' ? `${name(s.cur)} tas ut ur frontiern. Det är målet! Vägen: ${s.path.map(name).join(' → ')}.` : 'Frontiern är tom. Det finns ingen lösning.';
         html += `<div class="sk-status" style="left:${box.x}px;top:${box.y + box.h + 22}px;width:${box.w}px">` +
           (sl.text ? `<p class="sk-say sk-intro">${fmt(sl.text)}</p>` : '') +
-          S.map((s, k) => `<div class="sk-say"${T(k)}><p>${said(s)}</p>${notes[k + 1] ? `<p class="sk-note">${fmt(notes[k + 1])}</p>` : ''}</div>`).join('') +
+          S.map((s, k) => `<div class="sk-say"${T(k)}><p class="say-term">${said(s)}</p>${notes[k + 1] ? `<p class="sk-note">${fmt(notes[k + 1])}</p>` : ''}</div>`).join('') +
           (sl.conclusion ? `<p class="sk-say sk-end">${fmt(sl.conclusion)}</p>` : '') + `</div>`;
       } else if (mode === 'vandring') {
         const G = sokGraph(rows), W = G.nodes.length ? sokWalk(G, algo, 0) : [];
@@ -1822,7 +1829,7 @@ function renderSlide(sl, i, deck, img) {
         W.forEach((n, k) => { const [x, y] = P[n]; css += `.${uid}[data-dramaturgy-focus="${k}"] .sk-cursor{left:${Math.round(x - r - 13)}px;top:${Math.round(y - r - 13)}px;opacity:1}`; });
         const nm = j => esc(plain(G.nodes[j].name));
         html += `<div class="sk-status wide" style="left:144px;top:${box.y + box.h + 40}px;width:1632px">` + (sl.text ? `<p class="sk-say sk-intro">${fmt(sl.text)}</p>` : '') +
-          W.map((n, k) => `<div class="sk-say"${T(k)}><p>${first[n] === k ? `Utforskar ${nm(n)}.` : `Inga fler nya grannar. Backar till ${nm(n)}.`}</p>${notes[k + 1] ? `<p class="sk-note">${fmt(notes[k + 1])}</p>` : ''}</div>`).join('') +
+          W.map((n, k) => `<div class="sk-say"${T(k)}><p class="say-term">${first[n] === k ? `Utforskar ${nm(n)}.` : `Inga fler nya grannar. Backar till ${nm(n)}.`}</p>${notes[k + 1] ? `<p class="sk-note">${fmt(notes[k + 1])}</p>` : ''}</div>`).join('') +
           (sl.conclusion ? `<p class="sk-say sk-end">${fmt(sl.conclusion)}</p>` : '') + `</div>`;
       } else {
         /* Övning: ett till tre träd bredvid varandra. Två klick per träd: ordningen, sedan vägen. */
@@ -1946,7 +1953,7 @@ function renderSlide(sl, i, deck, img) {
             return base + (hit ? ' Målet B är hittat!' : '');
           };
           html += `<div class="rn-side"><p class="rn-tag">${esc(tag)}</p>` + (sl.text ? `<p class="rn-lead">${fmt(sl.text)}</p>` : '') +
-            `<div class="rn-says">` + Array.from({ length: nSteps }, (_, s) => `<div class="rn-say"${T(s)}><p>${say(s)}</p>${notes[s + 1] ? `<p class="sk-note">${fmt(notes[s + 1])}</p>` : ''}</div>`).join('') +
+            `<div class="rn-says">` + Array.from({ length: nSteps }, (_, s) => `<div class="rn-say"${T(s)}><p class="say-term">${say(s)}</p>${notes[s + 1] ? `<p class="sk-note">${fmt(notes[s + 1])}</p>` : ''}</div>`).join('') +
             (sl.conclusion ? `<p class="rn-say rn-end">${fmt(sl.conclusion)}</p>` : '') + `</div></div>`;
         }
       }
@@ -2016,7 +2023,7 @@ function renderSlide(sl, i, deck, img) {
         items.forEach(it => { const [x, y] = l.type === 'lifo' ? [x0 + cw / 2 - CH / 2, 350] : [x0 + cw - CH - 16, 520]; css += `.${uid} .ko-ch.l${li}.i${it.id}{left:${Math.round(x)}px;top:${Math.round(y)}px;width:${CH}px;height:${CH}px}`; html += `<b class="ko-ch l${li} i${it.id}">${esc(plain(it.name))}${l.type === 'prio' && it.prio != null ? `<small>${it.prio}</small>` : ''}</b>`; });
         html += `</div>`;
       });
-      html += `<div class="ko-says">` + (sl.text ? `<p class="ko-say ko-intro">${fmt(sl.text)}</p>` : '') + says.map((t, s) => `<div class="ko-say"${T(s)}><p>${t}</p>${notes[s + 1] ? `<p class="sk-note">${fmt(notes[s + 1])}</p>` : ''}</div>`).join('') + (sl.conclusion ? `<p class="ko-say ko-end">${fmt(sl.conclusion)}</p>` : '') + `</div>`;
+      html += `<div class="ko-says">` + (sl.text ? `<p class="ko-say ko-intro">${fmt(sl.text)}</p>` : '') + says.map((t, s) => `<div class="ko-say"${T(s)}><p class="say-term">${t}</p>${notes[s + 1] ? `<p class="sk-note">${fmt(notes[s + 1])}</p>` : ''}</div>`).join('') + (sl.conclusion ? `<p class="ko-say ko-end">${fmt(sl.conclusion)}</p>` : '') + `</div>`;
       if (steps) {
         plan.forEach((P, s2) => { const s = st('none'); cues += `<span data-dramaturgy-cue data-dramaturgy-focus="${k}" data-dramaturgy-target="${s2}"${s} aria-hidden="true"></span>`; });
         cues += `<span data-dramaturgy-restore${st('none')} aria-hidden="true"></span>`;

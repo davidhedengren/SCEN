@@ -254,6 +254,8 @@ Algoritmerna räknas fram automatiskt. Du skriver grafen eller labyrinten och v�
 
 I `[kö]` går köerna en i taget: elementen läggs in i ett klick, sedan är varje `ut` ett klick. Det som tas ut står kvar i en rad under kön, så att köerna kan jämföras på slutet. Ett fjärde fält efter förklaringen visar en kodrad under könamnet, men lägg hellre koden på en egen kodbild så att den går att hoppa över.
 
+Raderna som beskriver vad algoritmen gör, till exempel "Utforskar A." eller "Lägst f i frontiern", skrivs fram som i en kommandotolk när klicket kommer. Egna kommentarer med `not:` visas som vanlig text under.
+
 Konventioner: BFS använder en FIFO-kö. DFS använder en stack, så den nod som lades till sist utforskas först; i ett träd blir det den högra grenen. Girig bäst först väljer lägst h, A* lägst g + h. Vid lika värden väljs den senast tillagda. I rutnät prövas grannarna i ordningen upp, vänster, höger, ned.
 
 ### Kretslopp

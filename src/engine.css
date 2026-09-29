@@ -1430,6 +1430,10 @@
 .scen :is(.sk-say,.rn-say,.ko-say){grid-area:1/1;margin:0;opacity:0;transform:translateY(10px);transition:opacity .4s ease,transform .5s cubic-bezier(.16,1,.3,1)}
 .scen :is(.sk-say,.rn-say,.ko-say) p{margin:0;font-size:28px;line-height:1.35;color:var(--ink);text-wrap:pretty}
 .scen :is(.sk-say,.rn-say,.ko-say).dramaturgy-current{opacity:1;transform:none;transition-delay:.25s}
+/* algoritmens tankar som i en kommandotolk: prompt, kodtypsnitt, och texten skrivs fram */
+.scen :is(.sk-say,.rn-say,.ko-say) p.say-term{font-family:var(--font-mono,var(--mono));font-size:27px;line-height:1.45;letter-spacing:-.01em;color:var(--ink)}
+.scen p.say-term::before{content:"›";margin-right:.6ch;font-weight:700;color:var(--accent)}
+.scen .rn-say p.say-term{font-size:24px}
 .scen .slide[data-dramaturgy-state="overview"] :is(.sk-intro,.rn-lead,.rn-intro,.ko-intro){opacity:1;transform:none}
 .scen .slide[data-dramaturgy-state="restored"] :is(.sk-end,.rn-end,.ko-end){opacity:1;transform:none;transition-delay:.3s}
 .scen :is(.sk-intro,.ko-intro){color:var(--muted)!important;font-size:28px;line-height:1.35}

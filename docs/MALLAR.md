@@ -33,7 +33,6 @@ Varje bild i ett manus börjar med mallens namn inom hakparentes. Samma katalog 
 | `[terminal]` | Textregi | Regisserar en trovärdig terminalberättelse där kommando, output, fel, resultat och annotation har separata semantiska roller. Kommandon kan skrivas fram när skrivandet bär betydelse. |
 | `[kodförklaring]` | Textregi | Etablerar ett stabilt kodblock och flyttar sedan fokus mellan relevanta rader eller uttryck med annotation och resultat. |
 | `[kodskrivning]` | Textregi | Koden skrivs fram i ett terminalfönster, tecken för tecken och rad för rad, med en blinkande markör och färgade nyckelord. Ett klick under skrivningen visar hela koden direkt. Med takt: rad skriver varje klick en rad i stället. Därefter lyfter klicken fram rader och uttryck, övriga rader tonas ned och en förklaring kopplas till raden. Varje markering skrivs radnummer, uttryck, förklaring och ett valfritt resultat. Skriv gammalt -> nytt som uttryck för att byta ut det i det klicket, till exempel för att visa hur en variant skiljer sig. Det nya står kvar efteråt. |
-| `[kretslopp]` | System | En process som upprepas: stegen sitter på en ring och en ring av ljus glider till nästa steg för varje klick, medan mitten förklarar steget. En ingång (start) kan leda in i kretsloppet, och ett steg kan ha en utgång som leder ut ur det. Ett steg som slutar med frågetecken får ja mot utgången och nej vidare i ringen. Näst sista klicket sluter ringen (retur), sista visar helheten med slutsatsen i mitten. Passar loopar, cykler och kretslopp: algoritmer, vattnets kretslopp, cellcykeln, konjunkturer, skrivprocessen. |
 | `[formel]` | Textregi | En formel eller ett uttryck i stor text, som delas upp term för term. Varje klick tänder en term i sin egen färg och visar förklaringen under formeln, medan resten tonas ned. Tända termer behåller färgen, så sambandet byggs upp. Termerna får färg i tur och ordning: den första orange (accent 2), den andra i accentfärgen, den tredje i textfärgen. Sista klicket visar hela formeln i färg med slutsatsen. |
 | `[typografi]` | Textregi | Låter en stor mening bära hela scenen och förändras genom fokus, ersättning eller precisering med mycket whitespace. |
 | `[texttempo]` | Textregi | Bygger ett resonemang genom kontrollerad typografisk pacing: påstående, kontrast, avslöjande och slutsats får egna kommunikativa klick. |
@@ -73,9 +72,10 @@ Varje bild i ett manus börjar med mallens namn inom hakparentes. Samma katalog 
 | `[inzoomning]` | System | Nivåer inuti varandra, som cirklar. Varje klick zoomar in en nivå: kameran går in i nästa cirkel, den yttre nivån glider ut ur bild men står kvar i stigen till höger, och nivåns förklaring visas. Sista klicket zoomar ut och visar hela vägen med slutsatsen. |
 | `[fyrfält]` | System | Två axlar med var sina motpoler och två till åtta saker placerade i fältet. Raderna x: och y: anger axlarnas poler, och varje sak får ett läge med x och y från 0 till 100. Varje klick lyfter en sak: stödlinjer visar var den ligger på båda axlarna, dess fyrdel tonas fram och förklaringen visas till höger. Sista klicket visar hela mönstret. |
 | `[vågskål]` | System | Argument för och emot i en fråga, som vikter i var sin skål. Varje argument har en sida (samma ord som i vänster eller höger) och en vikt från 1 till 3. Varje klick lägger nästa argument i sin skål och balken tippar efter den sammanlagda vikten. Sista klicket visar balansen och slutsatsen. |
-| `[sökning]` | System | En sökalgoritm arbetar i ett träd eller en graf, ett steg per klick. Algoritmen räknas fram automatiskt, så ordningen blir alltid rätt. I läget frontier syns algoritmstegen, frontiern (en liggande kö för BFS, en stående stack för DFS), noden som utforskas och de utforskade noderna, och varje steg förklaras i en rad under grafen. Läget vandring följer DFS eller BFS nod för nod med nummer. Läget övning visar upp till tre träd med markerade mål, och ett klick visar utforskningsordningen och nästa vägen. Egna kommentarer kan läggas vid valfritt klick. |
+| `[sökning]` | System | En sökalgoritm arbetar i ett träd eller en graf, ett steg per klick. Algoritmen räknas fram automatiskt, så ordningen blir alltid rätt. I läget frontier syns algoritmstegen, frontiern (en liggande kö för BFS, en stående stack för DFS), noden som utforskas och de utforskade noderna, och varje steg förklaras i en rad under grafen som skrivs fram som i en kommandotolk. Läget vandring följer DFS eller BFS nod för nod med nummer. Läget övning visar upp till tre träd med markerade mål, och ett klick visar utforskningsordningen och nästa vägen. Egna kommentarer kan läggas vid valfritt klick. |
 | `[rutnät]` | System | En sökalgoritm i ett rutnät, till exempel en labyrint, en karta eller en spelplan. Rutnätet skrivs som text med # för vägg, punkt för fri ruta, A för start och B för mål. BFS går en nivå per klick som en våg, DFS, girig bäst först och A* en ruta per klick; takt: 3 ger tre rutor per klick. Utforskade rutor färgas, frontiern ringas in och sista klicket ritar vägen. Rutorna kan visa h (Manhattan-avståndet till målet) eller g + h, i samma färger som i formelmallen. Två algoritmer med komma, till exempel algoritm: bfs, dfs, söker bredvid varandra i samma labyrint med var sin räknare, så att de kan jämföras. |
 | `[kö]` | System | Två eller tre köer sida vid sida, till exempel en FIFO-kö, en stack och en prioritetskö, som får samma element. En kö i taget: först läggs elementen in i ett klick, sedan är varje ut ett klick, medan de andra köerna tonas ned. Det som tas ut hamnar på en rad under kön och står kvar, så att ordningen kan jämföras mellan köerna på slutet. Med takt: samtidigt gör alla köer samma steg på en gång. Varje kö kan visa en kodrad. |
+| `[kretslopp]` | System | En process som upprepas: stegen sitter på en ring och en ring av ljus glider till nästa steg för varje klick, medan mitten förklarar steget. En ingång (start) kan leda in i kretsloppet, och ett steg kan ha en utgång som leder ut ur det. Ett steg som slutar med frågetecken får ja mot utgången och nej vidare i ringen. Näst sista klicket sluter ringen (retur), sista visar helheten med slutsatsen i mitten. Passar loopar, cykler och kretslopp: algoritmer, vattnets kretslopp, cellcykeln, konjunkturer, skrivprocessen. |
 | `[förgrening]` | System | Ett släktträd över tid: en stam och grenar som skjuter ut ur varandra, till exempel kyrkor, språk, arter eller programspråk. Varje gren har ett namn, en tid, grenen den växer ur och en kort text. Tidsaxeln är schematisk, varje förgreningstid får en kolumn. Hela trädet syns nedtonat från början. Varje klick ritar nästa gren i tidsordning och visar dess text längst ner, medan tidigare grenar står kvar. En gren som delas i två vid samma tid slutar där. Sista klicket visar hela trädet med slutsatsen. |
 | `[ringar]` | Banor | Två eller tre begrepp som delvis överlappar, som ett Venndiagram. Det gemensamma skrivs i mitten och visas sist. |
 | `[lins]` | Banor | En bild där en rund lins lyser upp en detalj i taget. Resten är nedtonad. Varje rad: x y i procent | rubrik | text. |
@@ -696,261 +696,6 @@ etikett: PACING
 - conclusion | Förmågan förändras. **Ansvaret består.** | Slutsats
 ```
 
-## System
-
-### `[kretslopp]` Kretslopp
-
-En process som upprepas: stegen sitter på en ring och en ring av ljus glider till nästa steg för varje klick, medan mitten förklarar steget. En ingång (start) kan leda in i kretsloppet, och ett steg kan ha en utgång som leder ut ur det. Ett steg som slutar med frågetecken får ja mot utgången och nej vidare i ringen. Näst sista klicket sluter ringen (retur), sista visar helheten med slutsatsen i mitten. Passar loopar, cykler och kretslopp: algoritmer, vattnets kretslopp, cellcykeln, konjunkturer, skrivprocessen.
-
-**Undvik när:** Fler än sex steg. Steg utan inbördes ordning (använd omlopp). En process som inte upprepas (använd bro eller flöde).
-
-```
-[kretslopp]
-etikett: Problemlösning
-rubrik: Så löser du ett problem
-text: Man blir sällan klar på första försöket.
-slutsats: Att gå ett varv till är inte ett misslyckande. Det är metoden.
-mitten: Problemet
-start: Läs uppgiften och ta reda på vad som efterfrågas
-retur: Gör en ny plan tills svaret håller.
-- Planera | Välj en metod som kan fungera.
-- Genomför | Räkna eller pröva enligt planen.
-- Rimligt? | Stämmer svaret med uppgiften? | Klart: skriv svaret
-- Lär av försöket | Vad gick fel, och vad kan du ändra?
-```
-
-### `[graf]` Graf
-
-Noder och kanter i en fast karta. Hela grafen syns från början. Varje klick lyfter fram noder, kanter, vikter, en enskild nod eller en väg som ritas i färdriktningen. Resten ligger kvar nedtonat, och sista klicket visar helheten med en slutsats.
-
-**Undvik när:** Fler än tolv noder, eller när ordningen i en process är poängen (använd bro eller etapper). Vikterna är text du skriver själv.
-
-```
-[graf]
-etikett: Datastruktur
-rubrik: En graf är noder och kanter
-text: En graf beskriver saker och hur de hänger ihop.
-- nod: A | 10 20
-- nod: B | 45 5
-- nod: C | 85 30
-- nod: D | 60 90
-- nod: E | 15 80
-- kant: A - B | 4
-- kant: B - C | 3
-- kant: A - E | 2
-- kant: E - D | 6
-- kant: C - D | 2
-- kant: B - D | 7
-- fokus: noder | Noder | Punkterna. De kan vara platser, personer eller tillstånd.
-- fokus: kanter | Kanter | Linjerna visar vilka noder som hör ihop.
-- fokus: vikter | Vikter | Ett värde på varje kant, till exempel avstånd, kostnad eller tid.
-- fokus: A > B > C > D | En väg | Vägen följer kanterna från A till D.
-- fokus: A > E > D | En kortare väg | Samma start och mål, lägre summa.
-slutsats: Med vikter kan vi jämföra vägar och välja den bästa.
-```
-
-### `[träd]` Träd
-
-Ett träd eller beslutsträd ur en indragen lista. Hela trädet syns från början. Varje klick lyfter fram roten, en nivå, grenarna, löven eller en väg från roten till ett löv, som ritas nedåt gren för gren. Med fokus: ordning glider en ring genom noderna i tur och ordning, nivå för nivå (bfs), djupet först (dfs) eller i en egen ordning (ordning A C G), och varje nod får sitt nummer.
-
-**Undvik när:** Fler än åtta löv eller fem nivåer. Långa texter i noderna.
-
-```
-[träd]
-etikett: Beslutsträd
-rubrik: Ska vi ha lektionen ute?
-text: Varje fråga delar upp fallen. Varje löv är ett beslut.
-- Regnar det?
-  - Ja: Inne
-  - Nej: Är det kallare än 5 grader?
-    - Ja: Inne
-    - Nej: Ute
-- fokus: rot | Roten | Den första frågan ställs alltid.
-- fokus: grenar | Grenar | Varje gren är ett möjligt svar.
-- fokus: löv | Löv | Löven är de slutliga besluten.
-- fokus: väg Nej > Nej | Ett fall | Uppehåll och 12 grader ger lektion ute.
-slutsats: Samma frågor i samma ordning ger samma beslut varje gång.
-```
-
-### `[flöde]` Flöde
-
-Något flödar genom ett system: indata, bearbetning, utdata. En eller två banor genom samma steg. Hela flödet syns nedtonat från början. Varje klick tänder samma steg i alla banor och en markör följer flödet, så att två processer jämförs steg för steg. Ett steg som heter ? blir en stängd låda. Sista klicket visar hela kedjan och slutsatsen.
-
-**Undvik när:** Fler än två banor eller fem steg per bana. Steg utan inbördes ordning (använd fokus eller kort), eller orsak och verkan med villkor (använd verkningar).
-
-```
-[flöde]
-etikett: Två sätt att lösa ett problem
-rubrik: Regler eller exempel?
-- bana: Traditionell programmering
-- Regler | Människan skriver dem
-- Datorn | Följer reglerna
-- Svar | Bara för det reglerna täcker
-- bana: Maskininlärning
-- Data och svar | Många exempel
-- AI:n | Hittar mönstret själv
-- Modell | Kan förutsäga nya fall
-slutsats: Samma mål, omvänd ordning: maskininlärning börjar med exemplen.
-```
-
-### `[urval]` Urval
-
-En helhet av punkter i två till fyra grupper och ett urval ur den. Först syns helheten, sedan lyfts urvalet fram medan resten ligger kvar nedtonat, sedan den grupp som är mest underrepresenterad. Staplar visar andelarna i helheten och i urvalet. Sista klicket visar helheten igen med slutsatsen.
-
-**Undvik när:** Andelar som ser ut som verklig statistik utan källa. Skriv källan i reservation, annars står det Illustration. Fler än fyra grupper.
-
-```
-[urval]
-etikett: Representativ data
-rubrik: Speglar datan verkligheten?
-vänster: Verkligheten
-höger: Träningsdatan
-- Grupp A | 50 | 85
-- Grupp B | 50 | 15
-slutsats: En modell blir bäst på det den har sett mest av.
-```
-
-### `[inzoomning]` Inzoomning
-
-Nivåer inuti varandra, som cirklar. Varje klick zoomar in en nivå: kameran går in i nästa cirkel, den yttre nivån glider ut ur bild men står kvar i stigen till höger, och nivåns förklaring visas. Sista klicket zoomar ut och visar hela vägen med slutsatsen.
-
-**Undvik när:** Fler än fem nivåer. Saker som ligger bredvid varandra i stället för inuti varandra (använd kort eller omlopp).
-
-```
-[inzoomning]
-etikett: Hierarki
-rubrik: Var finns språkmodellerna?
-slutsats: En språkmodell är ett litet, specialiserat hörn av AI.
-- Artificiell intelligens | Datorer som löser uppgifter som kräver intelligens.
-- Maskininlärning | AI som lär sig av data i stället för regler.
-- Djupinlärning | Maskininlärning med neurala nätverk i många lager.
-- Språkmodeller | Djupinlärning tränad på enorma mängder text.
-```
-
-### `[fyrfält]` Fyrfält
-
-Två axlar med var sina motpoler och två till åtta saker placerade i fältet. Raderna x: och y: anger axlarnas poler, och varje sak får ett läge med x och y från 0 till 100. Varje klick lyfter en sak: stödlinjer visar var den ligger på båda axlarna, dess fyrdel tonas fram och förklaringen visas till höger. Sista klicket visar hela mönstret.
-
-**Undvik när:** Placeringar som ser exakta ut utan underlag; säg att det är en uppskattning. Fler än åtta saker eller långa namn.
-
-```
-[fyrfält]
-etikett: Prioritera
-rubrik: Vad ska göras först?
-slutsats: Det viktiga som inte är bråttom är lättast att glömma.
-- x: Inte bråttom | Bråttom
-- y: Oviktigt | Viktigt
-- Provet på fredag | 85 90 | Viktigt och bråttom: gör nu.
-- Träna inför loppet | 25 80 | Viktigt men inte bråttom: planera in.
-- Svara på chatten | 80 25 | Bråttom men oviktigt: gör snabbt.
-- Scrolla | 15 10 | Varken eller: skippa.
-```
-
-### `[vågskål]` Vågskål
-
-Argument för och emot i en fråga, som vikter i var sin skål. Varje argument har en sida (samma ord som i vänster eller höger) och en vikt från 1 till 3. Varje klick lägger nästa argument i sin skål och balken tippar efter den sammanlagda vikten. Sista klicket visar balansen och slutsatsen.
-
-**Undvik när:** Fler än tre argument per sida. Vikter som ser ut som fakta: säg att det är en bedömning, gärna klassens egen.
-
-```
-[vågskål]
-etikett: Debatt
-rubrik: Ska mobiler vara förbjudna i skolan?
-slutsats: Vikterna är en bedömning. Skulle du väga argumenten annorlunda?
-vänster: För
-höger: Emot
-- För | Bättre koncentration på lektionerna | 3
-- Emot | Mobilen är ett verktyg i undervisningen | 2
-- För | Mindre nätmobbning under skoldagen | 2
-- Emot | Eleverna behöver lära sig att hantera den | 2
-```
-
-### `[sökning]` Sökning
-
-En sökalgoritm arbetar i ett träd eller en graf, ett steg per klick. Algoritmen räknas fram automatiskt, så ordningen blir alltid rätt. I läget frontier syns algoritmstegen, frontiern (en liggande kö för BFS, en stående stack för DFS), noden som utforskas och de utforskade noderna, och varje steg förklaras i en rad under grafen. Läget vandring följer DFS eller BFS nod för nod med nummer. Läget övning visar upp till tre träd med markerade mål, och ett klick visar utforskningsordningen och nästa vägen. Egna kommentarer kan läggas vid valfritt klick.
-
-**Undvik när:** Mer än femton noder. Grafer där ordningen inte spelar någon roll (använd graf eller träd).
-
-```
-[sökning]
-etikett: Exempel
-rubrik: Hitta en väg från A till E
-text: Frontiern innehåller de noder som upptäckts men ännu inte utforskats.
-slutsats: Målet är hittat först när noden tas ut ur frontiern.
-- algoritm: bfs
-- mål: E
-- A
-  - B
-    - C
-      - E
-    - D
-      - F
-- not: 6 | C lades i frontiern före D och utforskas därför först.
-```
-
-### `[rutnät]` Rutnät
-
-En sökalgoritm i ett rutnät, till exempel en labyrint, en karta eller en spelplan. Rutnätet skrivs som text med # för vägg, punkt för fri ruta, A för start och B för mål. BFS går en nivå per klick som en våg, DFS, girig bäst först och A* en ruta per klick; takt: 3 ger tre rutor per klick. Utforskade rutor färgas, frontiern ringas in och sista klicket ritar vägen. Rutorna kan visa h (Manhattan-avståndet till målet) eller g + h, i samma färger som i formelmallen. Två algoritmer med komma, till exempel algoritm: bfs, dfs, söker bredvid varandra i samma labyrint med var sin räknare, så att de kan jämföras.
-
-**Undvik när:** Rutnät större än ungefär 14 × 14. Labyrinter utan väg mellan A och B om poängen är vägen.
-
-```
-[rutnät]
-etikett: Exempel
-rubrik: BFS i en labyrint
-text: Vi följer en nivå i taget.
-slutsats: BFS hittar alltid den kortaste vägen.
-- algoritm: bfs
-- .#####
-- ......
-- .##.##
-- .##B##
-- .#..##
-- .#.###
-- A..###
-```
-
-### `[kö]` Kö
-
-Två eller tre köer sida vid sida, till exempel en FIFO-kö, en stack och en prioritetskö, som får samma element. En kö i taget: först läggs elementen in i ett klick, sedan är varje ut ett klick, medan de andra köerna tonas ned. Det som tas ut hamnar på en rad under kön och står kvar, så att ordningen kan jämföras mellan köerna på slutet. Med takt: samtidigt gör alla köer samma steg på en gång. Varje kö kan visa en kodrad.
-
-**Undvik när:** Mer än fem element i en kö samtidigt. Mer än tre köer.
-
-```
-[kö]
-etikett: Datastrukturer
-rubrik: Tre sätt att köa
-text: Samma element läggs in i alla tre köerna.
-slutsats: Vilket element som kommer ut beror på kön.
-- kö: fifo | Kön i kassan | Först in, först ut
-- kö: stack | Tallrikstraven | Sist in, först ut
-- kö: prio | Akutmottagningen | Mest akut först
-- in: A 3
-- in: B 1
-- in: C 2
-- ut
-- ut
-```
-
-### `[förgrening]` Förgrening
-
-Ett släktträd över tid: en stam och grenar som skjuter ut ur varandra, till exempel kyrkor, språk, arter eller programspråk. Varje gren har ett namn, en tid, grenen den växer ur och en kort text. Tidsaxeln är schematisk, varje förgreningstid får en kolumn. Hela trädet syns nedtonat från början. Varje klick ritar nästa gren i tidsordning och visar dess text längst ner, medan tidigare grenar står kvar. En gren som delas i två vid samma tid slutar där. Sista klicket visar hela trädet med slutsatsen.
-
-**Undvik när:** Fler än åtta grenar. Långa namn. När exakta avstånd i tid är poängen (använd tidslinje).
-
-```
-[förgrening]
-etikett: Språkträd
-rubrik: Hur de nordiska språken skildes åt
-slutsats: Språk som delar förfader liknar varandra än idag.
-- Urnordiska | | | Ett gemensamt språk i hela Norden.
-- Östnordiska | 800-talet | Urnordiska | Språket i Sverige och Danmark.
-- Västnordiska | 800-talet | Urnordiska | Språket i Norge och på Island.
-- Svenska | 1200-talet | Östnordiska | Skiljer sig från danskan.
-- Danska | 1200-talet | Östnordiska | Egen skrift och eget uttal.
-- Isländska | 1400-talet | Västnordiska | Har förändrats minst.
-```
-
 ## Data
 
 ### `[jämförelse]` Jämförelse
@@ -1357,6 +1102,261 @@ etikett: Begrepp
 rubrik: Ord att känna till
 - Fotosyntes | Biologi | Växter bygger socker av koldioxid och vatten med hjälp av ljus. | Bladen är växtens solpaneler.
 - Cellandning | Biologi | Cellerna frigör energi ur socker med hjälp av syre. | Sker i alla levande celler.
+```
+
+## System
+
+### `[graf]` Graf
+
+Noder och kanter i en fast karta. Hela grafen syns från början. Varje klick lyfter fram noder, kanter, vikter, en enskild nod eller en väg som ritas i färdriktningen. Resten ligger kvar nedtonat, och sista klicket visar helheten med en slutsats.
+
+**Undvik när:** Fler än tolv noder, eller när ordningen i en process är poängen (använd bro eller etapper). Vikterna är text du skriver själv.
+
+```
+[graf]
+etikett: Datastruktur
+rubrik: En graf är noder och kanter
+text: En graf beskriver saker och hur de hänger ihop.
+- nod: A | 10 20
+- nod: B | 45 5
+- nod: C | 85 30
+- nod: D | 60 90
+- nod: E | 15 80
+- kant: A - B | 4
+- kant: B - C | 3
+- kant: A - E | 2
+- kant: E - D | 6
+- kant: C - D | 2
+- kant: B - D | 7
+- fokus: noder | Noder | Punkterna. De kan vara platser, personer eller tillstånd.
+- fokus: kanter | Kanter | Linjerna visar vilka noder som hör ihop.
+- fokus: vikter | Vikter | Ett värde på varje kant, till exempel avstånd, kostnad eller tid.
+- fokus: A > B > C > D | En väg | Vägen följer kanterna från A till D.
+- fokus: A > E > D | En kortare väg | Samma start och mål, lägre summa.
+slutsats: Med vikter kan vi jämföra vägar och välja den bästa.
+```
+
+### `[träd]` Träd
+
+Ett träd eller beslutsträd ur en indragen lista. Hela trädet syns från början. Varje klick lyfter fram roten, en nivå, grenarna, löven eller en väg från roten till ett löv, som ritas nedåt gren för gren. Med fokus: ordning glider en ring genom noderna i tur och ordning, nivå för nivå (bfs), djupet först (dfs) eller i en egen ordning (ordning A C G), och varje nod får sitt nummer.
+
+**Undvik när:** Fler än åtta löv eller fem nivåer. Långa texter i noderna.
+
+```
+[träd]
+etikett: Beslutsträd
+rubrik: Ska vi ha lektionen ute?
+text: Varje fråga delar upp fallen. Varje löv är ett beslut.
+- Regnar det?
+  - Ja: Inne
+  - Nej: Är det kallare än 5 grader?
+    - Ja: Inne
+    - Nej: Ute
+- fokus: rot | Roten | Den första frågan ställs alltid.
+- fokus: grenar | Grenar | Varje gren är ett möjligt svar.
+- fokus: löv | Löv | Löven är de slutliga besluten.
+- fokus: väg Nej > Nej | Ett fall | Uppehåll och 12 grader ger lektion ute.
+slutsats: Samma frågor i samma ordning ger samma beslut varje gång.
+```
+
+### `[flöde]` Flöde
+
+Något flödar genom ett system: indata, bearbetning, utdata. En eller två banor genom samma steg. Hela flödet syns nedtonat från början. Varje klick tänder samma steg i alla banor och en markör följer flödet, så att två processer jämförs steg för steg. Ett steg som heter ? blir en stängd låda. Sista klicket visar hela kedjan och slutsatsen.
+
+**Undvik när:** Fler än två banor eller fem steg per bana. Steg utan inbördes ordning (använd fokus eller kort), eller orsak och verkan med villkor (använd verkningar).
+
+```
+[flöde]
+etikett: Två sätt att lösa ett problem
+rubrik: Regler eller exempel?
+- bana: Traditionell programmering
+- Regler | Människan skriver dem
+- Datorn | Följer reglerna
+- Svar | Bara för det reglerna täcker
+- bana: Maskininlärning
+- Data och svar | Många exempel
+- AI:n | Hittar mönstret själv
+- Modell | Kan förutsäga nya fall
+slutsats: Samma mål, omvänd ordning: maskininlärning börjar med exemplen.
+```
+
+### `[urval]` Urval
+
+En helhet av punkter i två till fyra grupper och ett urval ur den. Först syns helheten, sedan lyfts urvalet fram medan resten ligger kvar nedtonat, sedan den grupp som är mest underrepresenterad. Staplar visar andelarna i helheten och i urvalet. Sista klicket visar helheten igen med slutsatsen.
+
+**Undvik när:** Andelar som ser ut som verklig statistik utan källa. Skriv källan i reservation, annars står det Illustration. Fler än fyra grupper.
+
+```
+[urval]
+etikett: Representativ data
+rubrik: Speglar datan verkligheten?
+vänster: Verkligheten
+höger: Träningsdatan
+- Grupp A | 50 | 85
+- Grupp B | 50 | 15
+slutsats: En modell blir bäst på det den har sett mest av.
+```
+
+### `[inzoomning]` Inzoomning
+
+Nivåer inuti varandra, som cirklar. Varje klick zoomar in en nivå: kameran går in i nästa cirkel, den yttre nivån glider ut ur bild men står kvar i stigen till höger, och nivåns förklaring visas. Sista klicket zoomar ut och visar hela vägen med slutsatsen.
+
+**Undvik när:** Fler än fem nivåer. Saker som ligger bredvid varandra i stället för inuti varandra (använd kort eller omlopp).
+
+```
+[inzoomning]
+etikett: Hierarki
+rubrik: Var finns språkmodellerna?
+slutsats: En språkmodell är ett litet, specialiserat hörn av AI.
+- Artificiell intelligens | Datorer som löser uppgifter som kräver intelligens.
+- Maskininlärning | AI som lär sig av data i stället för regler.
+- Djupinlärning | Maskininlärning med neurala nätverk i många lager.
+- Språkmodeller | Djupinlärning tränad på enorma mängder text.
+```
+
+### `[fyrfält]` Fyrfält
+
+Två axlar med var sina motpoler och två till åtta saker placerade i fältet. Raderna x: och y: anger axlarnas poler, och varje sak får ett läge med x och y från 0 till 100. Varje klick lyfter en sak: stödlinjer visar var den ligger på båda axlarna, dess fyrdel tonas fram och förklaringen visas till höger. Sista klicket visar hela mönstret.
+
+**Undvik när:** Placeringar som ser exakta ut utan underlag; säg att det är en uppskattning. Fler än åtta saker eller långa namn.
+
+```
+[fyrfält]
+etikett: Prioritera
+rubrik: Vad ska göras först?
+slutsats: Det viktiga som inte är bråttom är lättast att glömma.
+- x: Inte bråttom | Bråttom
+- y: Oviktigt | Viktigt
+- Provet på fredag | 85 90 | Viktigt och bråttom: gör nu.
+- Träna inför loppet | 25 80 | Viktigt men inte bråttom: planera in.
+- Svara på chatten | 80 25 | Bråttom men oviktigt: gör snabbt.
+- Scrolla | 15 10 | Varken eller: skippa.
+```
+
+### `[vågskål]` Vågskål
+
+Argument för och emot i en fråga, som vikter i var sin skål. Varje argument har en sida (samma ord som i vänster eller höger) och en vikt från 1 till 3. Varje klick lägger nästa argument i sin skål och balken tippar efter den sammanlagda vikten. Sista klicket visar balansen och slutsatsen.
+
+**Undvik när:** Fler än tre argument per sida. Vikter som ser ut som fakta: säg att det är en bedömning, gärna klassens egen.
+
+```
+[vågskål]
+etikett: Debatt
+rubrik: Ska mobiler vara förbjudna i skolan?
+slutsats: Vikterna är en bedömning. Skulle du väga argumenten annorlunda?
+vänster: För
+höger: Emot
+- För | Bättre koncentration på lektionerna | 3
+- Emot | Mobilen är ett verktyg i undervisningen | 2
+- För | Mindre nätmobbning under skoldagen | 2
+- Emot | Eleverna behöver lära sig att hantera den | 2
+```
+
+### `[sökning]` Sökning
+
+En sökalgoritm arbetar i ett träd eller en graf, ett steg per klick. Algoritmen räknas fram automatiskt, så ordningen blir alltid rätt. I läget frontier syns algoritmstegen, frontiern (en liggande kö för BFS, en stående stack för DFS), noden som utforskas och de utforskade noderna, och varje steg förklaras i en rad under grafen som skrivs fram som i en kommandotolk. Läget vandring följer DFS eller BFS nod för nod med nummer. Läget övning visar upp till tre träd med markerade mål, och ett klick visar utforskningsordningen och nästa vägen. Egna kommentarer kan läggas vid valfritt klick.
+
+**Undvik när:** Mer än femton noder. Grafer där ordningen inte spelar någon roll (använd graf eller träd).
+
+```
+[sökning]
+etikett: Exempel
+rubrik: Hitta en väg från A till E
+text: Frontiern innehåller de noder som upptäckts men ännu inte utforskats.
+slutsats: Målet är hittat först när noden tas ut ur frontiern.
+- algoritm: bfs
+- mål: E
+- A
+  - B
+    - C
+      - E
+    - D
+      - F
+- not: 6 | C lades i frontiern före D och utforskas därför först.
+```
+
+### `[rutnät]` Rutnät
+
+En sökalgoritm i ett rutnät, till exempel en labyrint, en karta eller en spelplan. Rutnätet skrivs som text med # för vägg, punkt för fri ruta, A för start och B för mål. BFS går en nivå per klick som en våg, DFS, girig bäst först och A* en ruta per klick; takt: 3 ger tre rutor per klick. Utforskade rutor färgas, frontiern ringas in och sista klicket ritar vägen. Rutorna kan visa h (Manhattan-avståndet till målet) eller g + h, i samma färger som i formelmallen. Två algoritmer med komma, till exempel algoritm: bfs, dfs, söker bredvid varandra i samma labyrint med var sin räknare, så att de kan jämföras.
+
+**Undvik när:** Rutnät större än ungefär 14 × 14. Labyrinter utan väg mellan A och B om poängen är vägen.
+
+```
+[rutnät]
+etikett: Exempel
+rubrik: BFS i en labyrint
+text: Vi följer en nivå i taget.
+slutsats: BFS hittar alltid den kortaste vägen.
+- algoritm: bfs
+- .#####
+- ......
+- .##.##
+- .##B##
+- .#..##
+- .#.###
+- A..###
+```
+
+### `[kö]` Kö
+
+Två eller tre köer sida vid sida, till exempel en FIFO-kö, en stack och en prioritetskö, som får samma element. En kö i taget: först läggs elementen in i ett klick, sedan är varje ut ett klick, medan de andra köerna tonas ned. Det som tas ut hamnar på en rad under kön och står kvar, så att ordningen kan jämföras mellan köerna på slutet. Med takt: samtidigt gör alla köer samma steg på en gång. Varje kö kan visa en kodrad.
+
+**Undvik när:** Mer än fem element i en kö samtidigt. Mer än tre köer.
+
+```
+[kö]
+etikett: Datastrukturer
+rubrik: Tre sätt att köa
+text: Samma element läggs in i alla tre köerna.
+slutsats: Vilket element som kommer ut beror på kön.
+- kö: fifo | Kön i kassan | Först in, först ut
+- kö: stack | Tallrikstraven | Sist in, först ut
+- kö: prio | Akutmottagningen | Mest akut först
+- in: A 3
+- in: B 1
+- in: C 2
+- ut
+- ut
+```
+
+### `[kretslopp]` Kretslopp
+
+En process som upprepas: stegen sitter på en ring och en ring av ljus glider till nästa steg för varje klick, medan mitten förklarar steget. En ingång (start) kan leda in i kretsloppet, och ett steg kan ha en utgång som leder ut ur det. Ett steg som slutar med frågetecken får ja mot utgången och nej vidare i ringen. Näst sista klicket sluter ringen (retur), sista visar helheten med slutsatsen i mitten. Passar loopar, cykler och kretslopp: algoritmer, vattnets kretslopp, cellcykeln, konjunkturer, skrivprocessen.
+
+**Undvik när:** Fler än sex steg. Steg utan inbördes ordning (använd omlopp). En process som inte upprepas (använd bro eller flöde).
+
+```
+[kretslopp]
+etikett: Problemlösning
+rubrik: Så löser du ett problem
+text: Man blir sällan klar på första försöket.
+slutsats: Att gå ett varv till är inte ett misslyckande. Det är metoden.
+mitten: Problemet
+start: Läs uppgiften och ta reda på vad som efterfrågas
+retur: Gör en ny plan tills svaret håller.
+- Planera | Välj en metod som kan fungera.
+- Genomför | Räkna eller pröva enligt planen.
+- Rimligt? | Stämmer svaret med uppgiften? | Klart: skriv svaret
+- Lär av försöket | Vad gick fel, och vad kan du ändra?
+```
+
+### `[förgrening]` Förgrening
+
+Ett släktträd över tid: en stam och grenar som skjuter ut ur varandra, till exempel kyrkor, språk, arter eller programspråk. Varje gren har ett namn, en tid, grenen den växer ur och en kort text. Tidsaxeln är schematisk, varje förgreningstid får en kolumn. Hela trädet syns nedtonat från början. Varje klick ritar nästa gren i tidsordning och visar dess text längst ner, medan tidigare grenar står kvar. En gren som delas i två vid samma tid slutar där. Sista klicket visar hela trädet med slutsatsen.
+
+**Undvik när:** Fler än åtta grenar. Långa namn. När exakta avstånd i tid är poängen (använd tidslinje).
+
+```
+[förgrening]
+etikett: Språkträd
+rubrik: Hur de nordiska språken skildes åt
+slutsats: Språk som delar förfader liknar varandra än idag.
+- Urnordiska | | | Ett gemensamt språk i hela Norden.
+- Östnordiska | 800-talet | Urnordiska | Språket i Sverige och Danmark.
+- Västnordiska | 800-talet | Urnordiska | Språket i Norge och på Island.
+- Svenska | 1200-talet | Östnordiska | Skiljer sig från danskan.
+- Danska | 1200-talet | Östnordiska | Egen skrift och eget uttal.
+- Isländska | 1400-talet | Västnordiska | Har förändrats minst.
 ```
 
 ## Ljus

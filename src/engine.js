@@ -16,7 +16,7 @@ const LAYOUTS = {etapper:"Etapper",vagval:"Vägval",lager:"Lager",resonemang:"Re
   title: 'Titel', section: 'Avsnitt', statement: 'Påstående', bullets: 'Punktlista', split: 'Text och bild',
   image: 'Helbild', bildregi: 'Bildregi', terminal: 'Terminal', kodforklaring: 'Kodförklaring', typografisk: 'Typografiskt statement', texttempo: 'Typografiskt tempo', cards: 'Kort', compare: 'Jämförelse', table: 'Tabell', number: 'Stort tal', timeline: 'Tidslinje',
   question: 'Fråga och svar', poll: 'Omröstning', reflect: 'Reflektion', define: 'Definition', chat: 'AI-samtal', duo: 'Två tal',
-  quote: 'Citat', omslag: 'Omslag', karta: 'Karta', triad: 'Triad', motsats: 'Motsats', bildkant: 'Bildkant', 'båge': 'Båge', omlopp: 'Omlopp', gradskiva: 'Gradskiva', bro: 'Bro', rad: 'Rad', rutor: 'Rutor', remsor: 'Remsor', mosaik: 'Mosaik', karna: 'Kärna', graf: 'Graf', trad: 'Träd', flode: 'Flöde', urval: 'Urval', forgrening: 'Förgrening', kodskrivning: 'Kodskrivning', inzoomning: 'Inzoomning', fyrfalt: 'Fyrfält', vagskal: 'Vågskål', sokning: 'Sökning', rutnat: 'Rutnät', ko: 'Kö', ringar: 'Ringar', lins: 'Lins', 'mätare': 'Mätare', 'ridå': 'Ridå', 'strålkastare': 'Strålkastare', fokus: 'Fokus', ordbild: 'Ordbild', 'bildfält': 'Bildfält', delning: 'Delning', ljustal: 'Ljustal', tom: 'Fri yta', egen: 'Egen mall'
+  quote: 'Citat', omslag: 'Omslag', karta: 'Karta', triad: 'Triad', motsats: 'Motsats', bildkant: 'Bildkant', 'båge': 'Båge', omlopp: 'Omlopp', gradskiva: 'Gradskiva', bro: 'Bro', spegel: 'Spegel', ordpar: 'Ordpar', spektrum: 'Spektrum', livslopp: 'Livslopp', lexikon: 'Lexikon', rad: 'Rad', rutor: 'Rutor', remsor: 'Remsor', mosaik: 'Mosaik', karna: 'Kärna', graf: 'Graf', trad: 'Träd', flode: 'Flöde', urval: 'Urval', forgrening: 'Förgrening', kodskrivning: 'Kodskrivning', inzoomning: 'Inzoomning', fyrfalt: 'Fyrfält', vagskal: 'Vågskål', sokning: 'Sökning', rutnat: 'Rutnät', ko: 'Kö', ringar: 'Ringar', lins: 'Lins', 'mätare': 'Mätare', 'ridå': 'Ridå', 'strålkastare': 'Strålkastare', fokus: 'Fokus', ordbild: 'Ordbild', 'bildfält': 'Bildfält', delning: 'Delning', ljustal: 'Ljustal', tom: 'Fri yta', egen: 'Egen mall'
 };
 const THEMES = {
   signal: { name: 'Signal', desc: 'Djup midnattsblå, elektrisk cyan och violett. Fylliga färgfält och tydlig typografi.', look: 'dark', v: { bg: '#080E25', surface: '#152444', ink: '#F0F6FF', muted: '#A5B6D4', line: '#2B4065', accent: '#5FE7ED', 'accent-2': '#9C87FF', hl: 'rgba(95,231,237,.22)' }, fd: '"Familjen Grotesk",system-ui,sans-serif', fb: '"Hanken Grotesk",system-ui,sans-serif', hw: 700, ht: '-.035em', r: '24px', ta: 'words', fonts: ['Familjen+Grotesk:wght@400;500;600;700', 'Hanken+Grotesk:wght@400;500;600'] },
@@ -1032,6 +1032,101 @@ function renderSlide(sl, i, deck, img) {
         ((lead || end) && L !== 'karna' ? `<div class="fv-lead">${lead ? `<p class="fv-intro">${fmt(sl.text)}</p>` : ''}${end ? `<p class="fv-end">${fmt(sl.conclusion)}</p>` : ''}</div>` : '') +
         `<div class="fv-stage"${A(anim(ba, 'fade'), 150)}>` + aurora + (links ? `<svg class="fv-svg" viewBox="0 0 1920 1080" aria-hidden="true">${links}</svg>` : '') + track + frame + core + boxes + `</div>` + cues;
       attrs += ` data-dramaturgy="focus-restore" data-dramaturgy-state="${steps ? 'overview' : 'restored'}"${steps ? '' : ' data-dramaturgy-static="true"'}${sl.flow ? ' data-fv-flow="true"' : ''}`;
+      break;
+    }
+    case 'spegel': case 'ordpar': case 'spektrum': case 'livslopp': case 'lexikon': {
+      /* Fem mallar för jämförelser och begrepp. Allt syns från början (eller som kontext),
+         varje rad i listan är ett fokussteg, och sista klicket visar helheten med en slutsats. */
+      const raw = lines(sl.items).map(t => String(t).replace(/^(- )+/, '').trim());
+      const lead = plain(sl.text || ''), end = plain(sl.conclusion || '');
+      const X0 = 144, W = 1632, tl = plain(title).length;
+      const Y0 = 112 + (sl.caption ? 44 : 0) + Math.max(1, Math.ceil(tl * 30 / W)) * 66 + ((lead || end) ? 20 + Math.max(lead ? Math.ceil(lead.length * 17 / W) : 0, end ? Math.ceil(end.length * 17 / W) : 0) * 46 : 0) + 44;
+      const leadHtml = (lead || end) ? `<div class="fv-lead">${lead ? `<p class="fv-intro">${fmt(sl.text)}</p>` : ''}${end ? `<p class="fv-end">${fmt(sl.conclusion)}</p>` : ''}</div>` : '';
+      const IN = (j, extra) => ` data-dramaturgy-in="${j}"${extra || ''}`;
+      const px = v => Math.round(v) + 'px';
+      let stage = '', nSteps = 0;
+      if (L === 'spegel') {
+        const sides = [], notes = [];
+        raw.forEach(t => {
+          const m = t.match(/^(vänster|höger)\s*:\s*(.*)$/i);
+          if (m) {
+            const p = m[2].split('|').map(x => x.trim()); let xy = null;
+            if (/^\d+(\.\d+)?\s+\d+(\.\d+)?$/.test(p[0] || '')) xy = p.shift().split(/\s+/).map(Number);
+            notes.push({ side: /^v/i.test(m[1]) ? 0 : 1, xy, h: p[0] || '', t: p.slice(1).join(' | ') });
+          } else if (sides.length < 2) { const p = t.split('|').map(x => x.trim()); const pic = p.length > 1 && IMG_REF.test(p[p.length - 1]) ? p.pop() : ''; sides.push({ name: p[0] || '', sub: p.slice(1).join(' | '), pic }); }
+        });
+        while (sides.length < 2) sides.push({ name: sides.length ? 'Höger' : 'Vänster', sub: '', pic: '' });
+        const G = 28, pw = (W - G) / 2, H = Math.max(420, 1000 - Y0);
+        nSteps = notes.length;
+        stage = sides.map((s, k) => {
+          const x = X0 + k * (pw + G), mine = notes.map((o, j) => ({ ...o, j })).filter(o => o.side === k);
+          const src = img(s.pic || (k === 0 ? sl.image : ''));
+          const pins = mine.filter(o => o.xy).map(o => `<i class="sp-pin"${IN(o.j)} style="left:${o.xy[0]}%;top:${o.xy[1]}%"></i>`).join('');
+          const caps = mine.map(o => `<div class="sp-note"${IN(o.j)}><b>${fmt(o.h)}</b>${o.t ? `<span>${fmt(o.t)}</span>` : ''}</div>`).join('');
+          return `<figure class="sp-side sp-${k ? 'r' : 'l'}"${IN(mine.map(o => o.j).join(' '))} style="left:${px(x)};top:${px(Y0)};width:${px(pw)};height:${px(H)}">` +
+            (src ? `<img src="${esc(src)}" alt="${esc(s.name)}">` : `<div class="ph">Ingen bild vald</div>`) +
+            `<figcaption class="sp-name"><b>${fmt(s.name)}</b>${s.sub ? `<span>${fmt(s.sub)}</span>` : ''}</figcaption>${pins}<div class="sp-notes">${caps}</div></figure>`;
+        }).join('');
+      } else if (L === 'ordpar') {
+        const its = raw.slice(0, 6).map(t => { const p = t.split('|').map(x => x.trim()); return { a: p[0] || '', b: p[1] || '', t: p.slice(2).join(' | ') }; });
+        const n = Math.max(1, its.length); nSteps = its.length;
+        const noteH = its.some(o => o.t) ? 150 : 0, avail = 1000 - (Y0 + 60) - noteH - 30, rh = Math.min(150, avail / n), fs = Math.round(Math.min(88, rh * .56)), top = Y0 + 60 + Math.max(0, (avail - n * rh) / 3);
+        const heads = `<p class="op-head op-hl" style="top:${px(top - 50)}">${fmt(sl.lt || 'Vänster')}</p><p class="op-head op-hr" style="top:${px(top - 50)}">${fmt(sl.rt || 'Höger')}</p>`;
+        const rows = its.map((o, j) => { const y = top + j * rh + rh / 2;
+          return `<div class="op-row"${IN(j)} style="top:${px(y)};--fs:${fs}px"><span class="op-a">${fmt(o.a)}</span><svg class="op-link" viewBox="0 0 160 20" aria-hidden="true"><line x1="6" y1="10" x2="154" y2="10"/><circle cx="80" cy="10" r="7"/></svg><span class="op-b">${fmt(o.b)}</span></div>`; }).join('');
+        const notes = noteH ? `<div class="op-notes" style="top:${px(top + n * rh + 30)}">` + its.map((o, j) => `<p class="op-note"${IN(j)}>${fmt(o.t)}</p>`).join('') + `</div>` : '';
+        stage = `<div class="op-spine" style="top:${px(top - 10)};height:${px(Math.max(0, n * rh + 20))}"></div>` + heads + rows + notes;
+      } else if (L === 'spektrum') {
+        const its = raw.slice(0, 6).map(t => { const p = t.split('|').map(x => x.trim()); const v = parseFloat(String(p[0]).replace(',', '.')); return { v: Number.isFinite(v) ? Math.max(0, Math.min(100, v)) : 50, h: p[1] || '', t: p.slice(2).join(' | ') }; });
+        nSteps = its.length;
+        const BX = 220, BW = 1480, BY = Math.round(Math.max(Y0 + 250, 600)), cw = 400;
+        const cards = its.map((o, j) => { const x = BX + o.v / 100 * BW, up = j % 2 === 0, cx = Math.max(X0, Math.min(X0 + W - cw, x - cw / 2));
+          return `<i class="sk-stem${up ? ' up' : ''}"${IN(j)} style="left:${px(x)};top:${px(up ? BY - 120 : BY + 18)}"></i><span class="sk-mark"${IN(j, ` data-rect="${Math.round(x - 22)} ${BY - 22} 44 44"`)} style="left:${px(x)};top:${px(BY)}"></span>` +
+            `<div class="sk-card${up ? ' up' : ''}"${IN(j)} style="left:${px(cx)};${up ? `bottom:${px(1080 - BY + 128)}` : `top:${px(BY + 128)}`};width:${cw}px;--ax:${Math.round(x - cx)}px"><b>${fmt(o.h)}</b>${o.t ? `<span>${fmt(o.t)}</span>` : ''}</div>`; }).join('');
+        const first = its.length ? BX + its[0].v / 100 * BW : BX;
+        stage = `<div class="sk-bar" style="left:${BX}px;top:${px(BY - 7)};width:${BW}px"></div>` +
+          `<p class="sk-pole l" style="left:${px(BX)};top:${px(BY + 30)}">${fmt(sl.lt || 'Ena ytterläget')}</p><p class="sk-pole r" style="left:${px(BX + BW)};top:${px(BY + 30)}">${fmt(sl.rt || 'Andra ytterläget')}</p>` +
+          `<span class="sk-cursor" data-dramaturgy-follow aria-hidden="true" style="--fx:${Math.round(first - 22)}px;--fy:${BY - 22}px;--fw:44px;--fhh:44px"></span>` + cards;
+      } else if (L === 'livslopp') {
+        const lanes = [], events = [], limits = []; let cur = null, j = 0;
+        raw.forEach(t => {
+          let m = t.match(/^bana\s*:\s*(.*)$/i);
+          if (m) { cur = { name: m[1].trim(), ev: [] }; lanes.push(cur); return; }
+          m = t.match(/^gräns\s*:\s*(.*)$/i);
+          if (m) { const p = m[1].split('|').map(x => x.trim()); limits.push({ v: Math.max(0, Math.min(100, parseFloat(p[0]) || 50)), h: p[1] || '', j: j++ }); return; }
+          if (!cur) { cur = { name: '', ev: [] }; lanes.push(cur); }
+          const p = t.split('|').map(x => x.trim()); const e = { v: Math.max(0, Math.min(100, parseFloat(p[0]) || 0)), h: p[1] || '', t: p.slice(2).join(' | '), j: j++, lane: lanes.length - 1 };
+          cur.ev.push(e); events.push(e);
+        });
+        nSteps = j;
+        const scale = String(sl.scale || '').split('|').map(x => x.trim()).filter(Boolean);
+        const AX = 520, AW = 1120, nl = Math.max(1, lanes.length), top = Y0 + 70, bottom = 930, gap = Math.min(300, (bottom - 170 - top) / nl);
+        const ly = k => top + gap * (k + .35);
+        const laneHtml = lanes.map((l, k) => `<p class="ll-lane" style="top:${px(ly(k))}">${fmt(l.name)}</p><i class="ll-line" style="left:${AX}px;top:${px(ly(k))};width:${AW}px"></i>`).join('');
+        const evHtml = events.map(e => { const x = AX + e.v / 100 * AW, y = ly(e.lane);
+          return `<span class="ll-dot"${IN(e.j)} style="left:${px(x)};top:${px(y)}"></span><div class="ll-ev"${IN(e.j)} style="left:${px(x)};top:${px(y)}"><b>${fmt(e.h)}</b>${e.t ? `<span>${fmt(e.t)}</span>` : ''}</div>`; }).join('');
+        const limHtml = limits.map(g => { const x = AX + g.v / 100 * AW;
+          return `<div class="ll-limit"${IN(g.j)} style="left:${px(x)};top:${px(top - 30)};height:${px(bottom - top + 40)}"><span>${fmt(g.h)}</span></div>`; }).join('');
+        const ticks = scale.map((s, k) => { const x = AX + (scale.length > 1 ? k / (scale.length - 1) : 0) * AW; return `<p class="ll-tick" style="left:${px(x)};top:${px(bottom + 22)}">${fmt(s)}</p>`; }).join('');
+        stage = `<i class="ll-axis" style="left:${AX}px;top:${px(bottom + 10)};width:${AW}px"></i>` + ticks + limHtml + laneHtml + evHtml;
+      } else {
+        const its = raw.slice(0, 8).map(t => { const p = t.split('|').map(x => x.trim()); return p.length >= 4 ? { w: p[0], k: p[1], d: p[2], e: p.slice(3).join(' | ') } : { w: p[0] || '', k: '', d: p[1] || '', e: p.slice(2).join(' | ') }; });
+        nSteps = its.length;
+        const n = Math.max(1, its.length), iw = 460, rh = Math.min(96, (1000 - Y0) / n), fs = Math.round(Math.min(44, rh * .46));
+        const idx = its.map((o, j) => `<li class="lx-i"${IN(j, ` data-rect="${X0} ${Math.round(Y0 + j * rh)} ${iw} ${Math.round(rh)}"`)} style="top:${px(Y0 + j * rh)};height:${px(rh)};--fs:${fs}px"><span>${String(j + 1).padStart(2, '0')}</span>${fmt(o.w)}</li>`).join('');
+        const ex = X0 + iw + 90, ew = X0 + W - ex;
+        const entries = its.map((o, j) => `<article class="lx-e"${IN(j)}>${o.k ? `<small>${fmt(o.k)}</small>` : ''}<h3>${fmt(o.w)}</h3><p class="lx-d">${fmt(o.d)}</p>${o.e ? `<p class="lx-x">${fmt(o.e)}</p>` : ''}</article>`).join('');
+        stage = `<span class="lx-mark" data-dramaturgy-follow aria-hidden="true" style="--fx:${X0}px;--fy:${px(Y0)};--fw:${iw}px;--fhh:${px(rh)}"></span><ol class="lx-idx">${idx}</ol>` +
+          `<div class="lx-entries" style="left:${px(ex)};top:${px(Y0)};width:${px(ew)};height:${px(1000 - Y0)}">${entries}</div>`;
+      }
+      let cues = '';
+      if (steps) {
+        for (let q = 0; q < nSteps; q++) { const s = st('none'); cues += `<span data-dramaturgy-cue data-dramaturgy-focus="${k}" data-dramaturgy-target="${q}"${s} aria-hidden="true"></span>`; }
+        cues += `<span data-dramaturgy-restore${st('none')} aria-hidden="true"></span>`;
+      }
+      body = (sl.caption ? `<p class="kicker"${A('fade')}>${fmt(sl.caption)}</p>` : '') + H2('', 'mask') + leadHtml +
+        `<div class="k5-stage"${A(anim(ba, 'fade'), 150)}>${stage}</div>` + cues;
+      attrs += ` data-dramaturgy="focus-restore" data-dramaturgy-state="${steps ? 'overview' : 'restored'}"${steps ? '' : ' data-dramaturgy-static="true"'}`;
       break;
     }
     case 'bro': {

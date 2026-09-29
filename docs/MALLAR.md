@@ -60,6 +60,11 @@ Varje bild i ett manus börjar med mallens namn inom hakparentes. Samma katalog 
 | `[remsor]` | Fokusvandring | Tre till fem rader med nummer, rubrik och förklaring. Ett ljusdrag sveper ned till raden du pratar om, och sista klicket tänder alla. Bra för begrepp med lite längre förklaringar. |
 | `[mosaik]` | Fokusvandring | En bentogrid: en stor ruta med helheten och två till fyra mindre. Allt börjar i gråskala och färgen tänds i rutan du pratar om, en i taget. Sista klicket ger färg åt alla. |
 | `[kärna]` | Fokusvandring | En lysande kärna i mitten och två till fyra delar runt den. Kärnan lyser hela tiden, och en ljusstråle ritas ut till delen du pratar om. Sista klicket tänder alla strålar och visar en slutsats i kärnan. |
+| `[spegel]` | Jämförelse | Två bilder sida vid sida, till exempel två platser, två epoker eller före och efter. Varje klick tänder en sida med en iakttagelse, och en ring kan peka ut en detalj i bilden. Den andra sidan ligger kvar nedtonad. Sista klicket visar båda. |
+| `[ordpar]` | Jämförelse | Ord som hör ihop i par: två traditioner, två språk eller före och efter. Alla par syns från början. Varje klick tänder ett par, drar en linje mellan orden och visar en förklaring under. |
+| `[spektrum]` | Jämförelse | En skala mellan två ytterlägen där exempel placeras ut. Hela skalan syns från början. En markör glider till exemplet du pratar om. Visar att det finns ett spann, inte bara två motsatser. |
+| `[livslopp]` | Jämförelse | Två eller tre banor på samma tidsaxel, till exempel två liv, två länder eller två processer. En streckad gräns kan markera en brytpunkt. Varje klick tänder en händelse eller gränsen, och läget på axeln visar när något sker. |
+| `[lexikon]` | Begrepp | Ett register med begrepp till vänster och ett stort uppslag till höger. Registret syns hela tiden, en markering glider till begreppet du pratar om och uppslaget visar definition och exempel. Skriv begrepp | definition | exempel, eller begrepp | kategori | definition | exempel. |
 | `[graf]` | System | Noder och kanter i en fast karta. Hela grafen syns från början. Varje klick lyfter fram noder, kanter, vikter, en enskild nod eller en väg som ritas i färdriktningen. Resten ligger kvar nedtonat, och sista klicket visar helheten med en slutsats. |
 | `[träd]` | System | Ett träd eller beslutsträd ur en indragen lista. Hela trädet syns från början. Varje klick lyfter fram roten, en nivå, grenarna, löven eller en väg från roten till ett löv, som ritas nedåt gren för gren. |
 | `[flöde]` | System | Något flödar genom ett system: indata, bearbetning, utdata. En eller två banor genom samma steg. Hela flödet syns nedtonat från början. Varje klick tänder samma steg i alla banor och en markör följer flödet, så att två processer jämförs steg för steg. Ett steg som heter ? blir en stängd låda. Sista klicket visar hela kedjan och slutsatsen. |
@@ -1004,6 +1009,98 @@ text: Hållbar utveckling
 - Social | Alla människor ska ha goda livsvillkor och inflytande.
 - Ekonomisk | Ekonomin ska kunna växa utan att skada människor eller miljö.
 slutsats: Dimensionerna påverkar varandra.
+```
+
+## Jämförelse
+
+### `[spegel]` Spegel
+
+Två bilder sida vid sida, till exempel två platser, två epoker eller före och efter. Varje klick tänder en sida med en iakttagelse, och en ring kan peka ut en detalj i bilden. Den andra sidan ligger kvar nedtonad. Sista klicket visar båda.
+
+**Undvik när:** Bilder med olika format eller motiv som inte går att jämföra. Mer än tre iakttagelser per sida.
+
+```
+[spegel]
+etikett: Jämförelse
+rubrik: Samma plats, två tider
+- Förr | Torget 1920 | bilder/exempel/torg-1920.jpg
+- Idag | Torget idag | bilder/exempel/torg-idag.jpg
+- vänster: 50 60 | Hästar och kärror | Gatan delas av alla
+- höger: 50 60 | Bilar och cyklar | Gatan är uppdelad
+slutsats: Samma plats, men rörelsen har förändrat den.
+```
+
+### `[ordpar]` Ordpar
+
+Ord som hör ihop i par: två traditioner, två språk eller före och efter. Alla par syns från början. Varje klick tänder ett par, drar en linje mellan orden och visar en förklaring under.
+
+**Undvik när:** Långa fraser. Fler än sex par.
+
+```
+[ordpar]
+etikett: Språk
+rubrik: Svenska och engelska ord för samma sak
+vänster: Svenska
+höger: Engelska
+- Dator | Computer | Från latinets computare, att räkna.
+- Tangentbord | Keyboard | Ordet kommer från pianots tangenter.
+- Skärm | Screen | Ursprungligen en skyddande vägg.
+slutsats: Många ord för teknik kommer från äldre saker.
+```
+
+### `[spektrum]` Spektrum
+
+En skala mellan två ytterlägen där exempel placeras ut. Hela skalan syns från början. En markör glider till exemplet du pratar om. Visar att det finns ett spann, inte bara två motsatser.
+
+**Undvik när:** Exempel som inte går att placera på samma skala. Fler än sex exempel.
+
+```
+[spektrum]
+etikett: Kemi
+rubrik: Från surt till basiskt
+vänster: Surt
+höger: Basiskt
+- 15 | Citronsaft | pH omkring 2
+- 50 | Rent vatten | pH 7, neutralt
+- 85 | Tvål | pH omkring 10
+slutsats: pH-skalan visar hur surt eller basiskt något är.
+```
+
+### `[livslopp]` Livslopp
+
+Två eller tre banor på samma tidsaxel, till exempel två liv, två länder eller två processer. En streckad gräns kan markera en brytpunkt. Varje klick tänder en händelse eller gränsen, och läget på axeln visar när något sker.
+
+**Undvik när:** Händelser utan tidsordning. Fler än fyra händelser per bana.
+
+```
+[livslopp]
+etikett: Skolan
+rubrik: Två skolsystem
+skala: 6 år | 10 år | 15 år | 19 år
+- bana: Land A
+- 0 | Skolstart | Vid sex års ålder
+- 70 | Gymnasiet | Ett val efter grundskolan
+- bana: Land B
+- 0 | Skolstart | Vid sex års ålder
+- 30 | Första valet | Eleverna delas upp tidigt
+- gräns: 50 | Tonåren
+slutsats: Var valet ligger i tiden säger något om synen på eleverna.
+```
+
+## Begrepp
+
+### `[lexikon]` Lexikon
+
+Ett register med begrepp till vänster och ett stort uppslag till höger. Registret syns hela tiden, en markering glider till begreppet du pratar om och uppslaget visar definition och exempel. Skriv begrepp | definition | exempel, eller begrepp | kategori | definition | exempel.
+
+**Undvik när:** Fler än åtta begrepp. Långa definitioner.
+
+```
+[lexikon]
+etikett: Begrepp
+rubrik: Ord att känna till
+- Fotosyntes | Biologi | Växter bygger socker av koldioxid och vatten med hjälp av ljus. | Bladen är växtens solpaneler.
+- Cellandning | Biologi | Cellerna frigör energi ur socker med hjälp av syre. | Sker i alla levande celler.
 ```
 
 ## System

@@ -1666,3 +1666,105 @@
 .scen .slide[data-layout="forgrening"][data-dramaturgy-state="restored"] .fg-end{opacity:1;transform:none;transition-delay:.2s}
 @media (prefers-reduced-motion:reduce){.scen .slide[data-layout="forgrening"] *{transition-duration:.01s!important;transition-delay:0s!important}}
 .scen .slide[data-layout="forgrening"][data-body-motion="none"] *{transition:none!important}
+
+/* ---------- Spegel, Ordpar, Spektrum, Livslopp, Lexikon ----------
+   Jämförelser och begrepp. Allt syns som kontext, fokus vandrar, sista klicket visar helheten. */
+.scen .slide:is([data-layout="spegel"],[data-layout="ordpar"],[data-layout="spektrum"],[data-layout="livslopp"],[data-layout="lexikon"]){align-content:start;gap:16px;isolation:isolate;--k5-ease:cubic-bezier(.65,0,.25,1)}
+.scen .slide:is([data-layout="spegel"],[data-layout="ordpar"],[data-layout="spektrum"],[data-layout="livslopp"],[data-layout="lexikon"])>:is(h2,.kicker){position:relative;z-index:3}
+.scen .slide:is([data-layout="spegel"],[data-layout="ordpar"],[data-layout="spektrum"],[data-layout="livslopp"],[data-layout="lexikon"])>h2{font-size:60px;line-height:1.08;max-width:1632px}
+.scen .slide .k5-stage{position:absolute;inset:0;pointer-events:none}
+.scen .slide .k5-stage [data-dramaturgy-in]{transition:opacity .6s var(--dramaturgy-soft-ease),filter .7s var(--dramaturgy-soft-ease),color .5s,background .5s,box-shadow .5s,transform .7s var(--dramaturgy-ease)}
+
+/* Spegel: två bilder, en sida i taget */
+.scen .slide[data-layout="spegel"] .sp-side{position:absolute;margin:0;overflow:hidden;border-radius:calc(var(--radius,20px) + 4px);background:var(--surface);box-shadow:0 40px 80px -40px color-mix(in srgb,var(--bg) 80%,transparent)}
+.scen .slide[data-layout="spegel"] .sp-side img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;transition:transform 1.6s var(--dramaturgy-ease)}
+.scen .slide[data-layout="spegel"] .sp-side::after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,color-mix(in srgb,var(--bg) 55%,transparent),transparent 26%,transparent 50%,color-mix(in srgb,var(--bg) 88%,transparent));pointer-events:none}
+.scen .slide[data-layout="spegel"] .sp-name{position:absolute;z-index:2;left:36px;top:30px;display:grid;gap:4px}
+.scen .slide[data-layout="spegel"] .sp-name b{font-family:var(--font-display,var(--font));font-weight:var(--h-weight,650);font-style:var(--h-style,normal);letter-spacing:var(--h-track,-.03em);font-size:52px;line-height:1;color:var(--ink)}
+.scen .slide[data-layout="spegel"] .sp-name span{font-size:26px;color:color-mix(in srgb,var(--ink) 80%,transparent)}
+.scen .slide[data-layout="spegel"] .sp-notes{position:absolute;z-index:2;left:36px;right:36px;bottom:32px;display:grid;gap:14px}
+.scen .slide[data-layout="spegel"] .sp-note{display:grid;gap:4px;padding-left:22px;border-left:4px solid var(--accent);opacity:0;transform:translateY(12px)}
+.scen .slide[data-layout="spegel"] .sp-note b{font-size:34px;line-height:1.1;color:var(--ink);font-family:var(--font-display,var(--font));font-weight:var(--h-weight,650);font-style:var(--h-style,normal)}
+.scen .slide[data-layout="spegel"] .sp-note span{font-size:26px;line-height:1.3;color:color-mix(in srgb,var(--ink) 82%,transparent)}
+.scen .slide[data-layout="spegel"][data-dramaturgy-state="focus"] .sp-note.dramaturgy-current{opacity:1;transform:none}
+.scen .slide[data-layout="spegel"][data-dramaturgy-state="focus"] .sp-note.dramaturgy-past{opacity:.5;transform:none;border-left-color:color-mix(in srgb,var(--accent) 40%,transparent)}
+.scen .slide[data-layout="spegel"][data-dramaturgy-state="restored"] .sp-note{opacity:1;transform:none}
+.scen .slide[data-layout="spegel"][data-dramaturgy-state="focus"] .sp-side:not(.dramaturgy-current){opacity:.38;filter:grayscale(.85) brightness(.75)}
+.scen .slide[data-layout="spegel"][data-dramaturgy-state="focus"] .sp-side.dramaturgy-current{box-shadow:0 0 0 3px var(--accent),0 50px 100px -40px color-mix(in srgb,var(--accent) 45%,transparent)}
+.scen .slide[data-layout="spegel"][data-dramaturgy-state="focus"] .sp-side.dramaturgy-current img{transform:scale(1.04)}
+.scen .slide[data-layout="spegel"] .sp-pin{position:absolute;z-index:2;width:30px;height:30px;margin:-15px 0 0 -15px;border-radius:50%;box-shadow:inset 0 0 0 4px var(--accent),0 0 0 10px color-mix(in srgb,var(--accent) 22%,transparent),0 0 30px var(--accent);opacity:0;transform:scale(.4)}
+.scen .slide[data-layout="spegel"][data-dramaturgy-state="focus"] .sp-pin.dramaturgy-current{opacity:1;transform:none}
+.scen .slide[data-layout="spegel"][data-dramaturgy-state="focus"] .sp-pin.dramaturgy-past,.scen .slide[data-layout="spegel"][data-dramaturgy-state="restored"] .sp-pin{opacity:.6;transform:scale(.7)}
+
+/* Ordpar: två ord möts över en mittlinje */
+.scen .slide[data-layout="ordpar"] .op-spine{position:absolute;left:959px;width:2px;background:linear-gradient(180deg,transparent,color-mix(in srgb,var(--line) 90%,transparent) 12%,color-mix(in srgb,var(--line) 90%,transparent) 88%,transparent)}
+.scen .slide[data-layout="ordpar"] .op-head{position:absolute;margin:0;font-family:var(--font-mono,ui-monospace,Menlo,monospace);font-size:22px;letter-spacing:.2em;text-transform:uppercase;color:var(--accent)}
+.scen .slide[data-layout="ordpar"] .op-hl{right:calc(1920px - 880px)}.scen .slide[data-layout="ordpar"] .op-hr{left:1040px}
+.scen .slide[data-layout="ordpar"] .op-row{position:absolute;left:0;width:1920px;height:0;display:grid;grid-template-columns:880px 160px 880px;align-items:center}
+.scen .slide[data-layout="ordpar"] .op-row>span{font-family:var(--font-display,var(--font));font-weight:var(--h-weight,650);font-style:var(--h-style,normal);letter-spacing:var(--h-track,-.03em);font-size:var(--fs,60px);line-height:1;color:var(--ink);white-space:nowrap}
+.scen .slide[data-layout="ordpar"] .op-a{justify-self:end;transform-origin:right center}
+.scen .slide[data-layout="ordpar"] .op-b{justify-self:start;transform-origin:left center}
+.scen .slide[data-layout="ordpar"] .op-link{width:160px;height:20px;overflow:visible}
+.scen .slide[data-layout="ordpar"] .op-link line{stroke:var(--accent);stroke-width:3;stroke-linecap:round;transform-origin:center;transform:scaleX(.08);transition:transform .8s var(--dramaturgy-ease)}
+.scen .slide[data-layout="ordpar"] .op-link circle{fill:var(--bg);stroke:color-mix(in srgb,var(--muted) 70%,transparent);stroke-width:3;transition:fill .5s,stroke .5s}
+.scen .slide[data-layout="ordpar"][data-dramaturgy-state="focus"] .op-row:not(.dramaturgy-current){opacity:.22}
+.scen .slide[data-layout="ordpar"][data-dramaturgy-state="focus"] .op-row.dramaturgy-current .op-a{color:var(--ink)}
+.scen .slide[data-layout="ordpar"][data-dramaturgy-state="focus"] .op-row.dramaturgy-current .op-b{color:var(--accent)}
+.scen .slide[data-layout="ordpar"][data-dramaturgy-state="focus"] .op-row.dramaturgy-current .op-link line,.scen .slide[data-layout="ordpar"][data-dramaturgy-state="restored"] .op-link line{transform:none}
+.scen .slide[data-layout="ordpar"][data-dramaturgy-state="focus"] .op-row.dramaturgy-current .op-link circle,.scen .slide[data-layout="ordpar"][data-dramaturgy-state="restored"] .op-link circle{fill:var(--accent);stroke:var(--accent)}
+.scen .slide[data-layout="ordpar"][data-dramaturgy-state="restored"] .op-b{color:var(--accent)}
+.scen .slide[data-layout="ordpar"] .op-notes{position:absolute;left:260px;right:260px;display:grid;text-align:center}
+.scen .slide[data-layout="ordpar"] .op-note{grid-area:1/1;margin:0;font-size:32px;line-height:1.4;color:var(--ink);text-wrap:balance;opacity:0;transform:translateY(12px)}
+.scen .slide[data-layout="ordpar"][data-dramaturgy-state="focus"] .op-note.dramaturgy-current{opacity:1;transform:none}
+
+/* Spektrum: en skala mellan två poler, en markör glider till varje exempel */
+.scen .slide[data-layout="spektrum"] .sk-bar{position:absolute;height:14px;border-radius:14px;background:linear-gradient(90deg,var(--accent-2),var(--accent));box-shadow:0 0 40px -6px color-mix(in srgb,var(--accent) 50%,transparent)}
+.scen .slide[data-layout="spektrum"] .sk-pole{position:absolute;margin:0;font-family:var(--font-display,var(--font));font-weight:var(--h-weight,650);font-style:var(--h-style,normal);font-size:38px;color:var(--muted);white-space:nowrap}
+.scen .slide[data-layout="spektrum"] .sk-pole.l{transform:translateX(0)}.scen .slide[data-layout="spektrum"] .sk-pole.r{transform:translateX(-100%)}
+.scen .slide[data-layout="spektrum"] .sk-mark{position:absolute;width:26px;height:26px;margin:-13px 0 0 -13px;border-radius:50%;background:var(--bg);box-shadow:inset 0 0 0 4px var(--ink)}
+.scen .slide[data-layout="spektrum"] .sk-stem{position:absolute;width:2px;height:102px;margin-left:-1px;background:color-mix(in srgb,var(--ink) 40%,transparent)}
+.scen .slide[data-layout="spektrum"] .sk-card{position:absolute;display:grid;gap:8px;text-align:center}
+.scen .slide[data-layout="spektrum"] .sk-card b{font-family:var(--font-display,var(--font));font-weight:var(--h-weight,650);font-style:var(--h-style,normal);letter-spacing:var(--h-track,-.02em);font-size:38px;line-height:1.08;color:var(--ink);text-wrap:balance}
+.scen .slide[data-layout="spektrum"] .sk-card span{font-size:26px;line-height:1.35;color:var(--muted);text-wrap:balance}
+.scen .slide[data-layout="spektrum"][data-dramaturgy-state="focus"] :is(.sk-card,.sk-stem,.sk-mark):not(.dramaturgy-current){opacity:.22}
+.scen .slide[data-layout="spektrum"][data-dramaturgy-state="focus"] .sk-card.dramaturgy-current b{color:var(--accent)}
+.scen .slide[data-layout="spektrum"][data-dramaturgy-state="focus"] .sk-card.dramaturgy-current span,.scen .slide[data-layout="spektrum"][data-dramaturgy-state="restored"] .sk-card span{color:var(--ink)}
+.scen .slide[data-layout="spektrum"][data-dramaturgy-state="focus"] .sk-stem.dramaturgy-current{background:var(--accent)}
+.scen .slide[data-layout="spektrum"] .sk-cursor{position:absolute;left:0;top:0;width:var(--fw);height:var(--fhh);transform:translate(var(--fx),var(--fy));border-radius:50%;background:var(--accent);box-shadow:0 0 0 10px color-mix(in srgb,var(--accent) 22%,transparent),0 0 40px var(--accent);opacity:0;transition:transform .9s var(--k5-ease),opacity .4s}
+.scen .slide[data-layout="spektrum"] .sk-cursor.on{opacity:1}
+
+/* Livslopp: banor på samma tidsaxel, med en gräns */
+.scen .slide[data-layout="livslopp"] .ll-lane{position:absolute;left:144px;width:340px;margin:0;transform:translateY(-50%);font-family:var(--font-display,var(--font));font-weight:var(--h-weight,650);font-style:var(--h-style,normal);font-size:40px;line-height:1.05;color:var(--ink)}
+.scen .slide[data-layout="livslopp"] .ll-line{position:absolute;height:3px;margin-top:-1.5px;background:linear-gradient(90deg,color-mix(in srgb,var(--line) 100%,transparent),color-mix(in srgb,var(--muted) 50%,transparent))}
+.scen .slide[data-layout="livslopp"] .ll-axis{position:absolute;height:2px;background:var(--line)}
+.scen .slide[data-layout="livslopp"] .ll-tick{position:absolute;margin:0;transform:translateX(-50%);font-family:var(--font-mono,ui-monospace,Menlo,monospace);font-size:20px;letter-spacing:.14em;text-transform:uppercase;color:var(--muted);white-space:nowrap}
+.scen .slide[data-layout="livslopp"] .ll-dot{position:absolute;width:30px;height:30px;margin:-15px 0 0 -15px;border-radius:50%;background:var(--bg);box-shadow:inset 0 0 0 4px var(--ink)}
+.scen .slide[data-layout="livslopp"] .ll-ev{position:absolute;width:300px;margin-left:-150px;padding-top:30px;display:grid;gap:6px;text-align:center}
+.scen .slide[data-layout="livslopp"] .ll-ev b{font-family:var(--font-display,var(--font));font-weight:var(--h-weight,650);font-style:var(--h-style,normal);font-size:34px;line-height:1.05;color:var(--ink)}
+.scen .slide[data-layout="livslopp"] .ll-ev span{font-size:23px;line-height:1.3;color:var(--muted);text-wrap:balance}
+.scen .slide[data-layout="livslopp"] .ll-limit{position:absolute;width:0;border-left:3px dashed var(--accent-2);opacity:.35}
+.scen .slide[data-layout="livslopp"] .ll-limit span{position:absolute;bottom:100%;left:0;transform:translateX(-50%);margin-bottom:8px;white-space:nowrap;font-family:var(--font-mono,ui-monospace,Menlo,monospace);font-size:21px;letter-spacing:.12em;text-transform:uppercase;color:var(--accent-2)}
+.scen .slide[data-layout="livslopp"][data-dramaturgy-state="focus"] :is(.ll-dot,.ll-ev):not(.dramaturgy-current){opacity:.25}
+.scen .slide[data-layout="livslopp"][data-dramaturgy-state="focus"] .ll-dot.dramaturgy-current,.scen .slide[data-layout="livslopp"][data-dramaturgy-state="restored"] .ll-dot{background:var(--accent);box-shadow:inset 0 0 0 4px var(--accent),0 0 0 12px color-mix(in srgb,var(--accent) 20%,transparent),0 0 30px var(--accent)}
+.scen .slide[data-layout="livslopp"][data-dramaturgy-state="focus"] .ll-ev.dramaturgy-current b{color:var(--accent)}
+.scen .slide[data-layout="livslopp"][data-dramaturgy-state="focus"] .ll-ev.dramaturgy-current span,.scen .slide[data-layout="livslopp"][data-dramaturgy-state="restored"] .ll-ev span{color:var(--ink)}
+.scen .slide[data-layout="livslopp"][data-dramaturgy-state="focus"] .ll-limit.dramaturgy-current,.scen .slide[data-layout="livslopp"][data-dramaturgy-state="focus"] .ll-limit.dramaturgy-past,.scen .slide[data-layout="livslopp"][data-dramaturgy-state="restored"] .ll-limit{opacity:1;filter:drop-shadow(0 0 10px var(--accent-2))}
+
+/* Lexikon: register till vänster, uppslag till höger */
+.scen .slide[data-layout="lexikon"] .lx-idx{position:absolute;inset:0;margin:0;padding:0;list-style:none}
+.scen .slide[data-layout="lexikon"] .lx-i{position:absolute;left:144px;width:460px;box-sizing:border-box;display:flex;align-items:center;gap:22px;padding-left:26px;font-family:var(--font-display,var(--font));font-weight:var(--h-weight,650);font-style:var(--h-style,normal);letter-spacing:var(--h-track,-.02em);font-size:var(--fs,40px);color:var(--ink);border-top:1px solid color-mix(in srgb,var(--line) 80%,transparent)}
+.scen .slide[data-layout="lexikon"] .lx-i span{font-family:var(--font-mono,ui-monospace,Menlo,monospace);font-weight:400;font-style:normal;font-size:18px;letter-spacing:.12em;color:var(--muted)}
+.scen .slide[data-layout="lexikon"][data-dramaturgy-state="focus"] .lx-i.dramaturgy-past{opacity:.55}
+.scen .slide[data-layout="lexikon"][data-dramaturgy-state="focus"] .lx-i.dramaturgy-future{opacity:.3}
+.scen .slide[data-layout="lexikon"][data-dramaturgy-state="focus"] .lx-i.dramaturgy-current{color:var(--accent)}
+.scen .slide[data-layout="lexikon"][data-dramaturgy-state="focus"] .lx-i.dramaturgy-current span{color:var(--accent)}
+.scen .slide[data-layout="lexikon"] .lx-mark{position:absolute;left:0;top:0;width:var(--fw);height:var(--fhh);transform:translate(var(--fx),var(--fy));background:linear-gradient(90deg,color-mix(in srgb,var(--accent) 22%,transparent),transparent);box-shadow:inset 5px 0 0 var(--accent);opacity:0;transition:transform .7s var(--k5-ease),opacity .4s}
+.scen .slide[data-layout="lexikon"] .lx-mark.on{opacity:1}
+.scen .slide[data-layout="lexikon"] .lx-entries{position:absolute;display:grid;align-content:start}
+.scen .slide[data-layout="lexikon"] .lx-e{grid-area:1/1;display:grid;gap:22px;opacity:0;transform:translateX(24px);transition:opacity .5s var(--dramaturgy-soft-ease),transform .7s var(--dramaturgy-ease)}
+.scen .slide[data-layout="lexikon"][data-dramaturgy-state="focus"] .lx-e.dramaturgy-current{opacity:1;transform:none;transition-delay:.12s}
+.scen .slide[data-layout="lexikon"] .lx-e small{font-family:var(--font-mono,ui-monospace,Menlo,monospace);font-size:20px;letter-spacing:.2em;text-transform:uppercase;color:var(--accent-2)}
+.scen .slide[data-layout="lexikon"] .lx-e h3{margin:0;font-family:var(--font-display,var(--font));font-weight:var(--h-weight,650);font-style:var(--h-style,normal);letter-spacing:var(--h-track,-.03em);font-size:104px;line-height:.95;color:var(--ink)}
+.scen .slide[data-layout="lexikon"] .lx-d{margin:0;font-size:38px;line-height:1.35;color:var(--ink);text-wrap:pretty;max-width:1000px}
+.scen .slide[data-layout="lexikon"] .lx-x{margin:0;padding-left:26px;border-left:3px solid var(--accent);font-size:30px;line-height:1.4;font-style:italic;color:var(--muted);max-width:1000px}
+@media (prefers-reduced-motion:reduce){.scen .slide :is(.sk-cursor,.lx-mark){transition:opacity .2s}}

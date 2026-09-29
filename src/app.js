@@ -178,7 +178,24 @@ function storeChip() {
   c.textContent = t; c.className = 'chip ' + Store.mode;
   c.title = { cloud: 'Bara du ser dina presentationer. De finns kvar när du öppnar Scen igen, på alla dina enheter.', local: 'Presentationerna finns bara i den här webbläsaren på den här datorn.', memory: 'Den här vyn kan inte spara. Ladda ner presentationen innan du stänger.' }[Store.mode];
 }
-let repoDecks = null, missingRepo = [];
+let repoDecks = null, missingRepo = [], staleCode = false;
+/* Webbläsaren får spara motorn i några minuter, men manusen hämtas alltid färska. Direkt efter en
+   uppdatering kan ett manus alltså använda en mall som den sparade motorn inte känner till. */
+function usesUnknownTemplates(txt, slides) {
+  const tags = [...String(txt).matchAll(/^\s*\[([^\]\n:]+)(?::[^\]\n]*)?\]\s*$/gm)].map(m => m[1].trim().toLowerCase());
+  return tags.some(t => !(t in Manus.TAGS)) || slides.some(s => s.layout && !Scen.LAYOUTS[s.layout]);
+}
+/* Hämtar programfilerna på nytt och laddar om sidan, högst en gång per minut. */
+async function refreshCode() {
+  try {
+    const last = +sessionStorage.getItem('scen-uppdaterad') || 0;
+    if (Date.now() - last < 60000) return false;
+    sessionStorage.setItem('scen-uppdaterad', String(Date.now()));
+  } catch (e) { return false; }
+  await Promise.all(['index.html', 'src/engine.js', 'src/engine.css', 'src/manus.js', 'src/app.js', 'src/app.css', 'src/pptx.js'].map(f => fetch(f, { cache: 'reload' }).catch(() => {})));
+  location.reload();
+  return true;
+}
 async function loadRepoDecks() {
   if (repoDecks) return repoDecks;
   repoDecks = [];
@@ -201,11 +218,13 @@ async function loadRepoDecks() {
           if (!res.ok || /^\s*<!doctype html/i.test(txt) || !/\[[^\]\n]+\]/.test(txt)) { missingRepo.push(file); continue; }
         }
         const p = Manus.parse(txt);
+        if (!baked && usesUnknownTemplates(txt, p.slides)) staleCode = true;
         const d = normalize(Manus.applyMeta({ id: 'repo-' + file.replace(/\W+/g, '-'), title: file, slides: p.slides, repo: true, file, templates: {} }, p.meta));
         repoDecks.push(d);
       } catch (e) { /* hoppa över trasig fil */ }
     }
   } catch (e) { /* inte ett repo, t.ex. i claude.ai */ }
+  if (staleCode && !(await refreshCode())) toast('Presentationerna använder mallar som inte har laddats än. Ladda om sidan med Ctrl+F5.');
   if (missingRepo.length) setTimeout(() => modal(`<h2>${plural(missingRepo.length, 'manus', 'manus')} gick inte att läsa</h2>
     <p>Scen hittar ${missingRepo.map(f => '<code>' + esc(f) + '</code>').join(', ')} i <code>presentationer/index.json</code>, men får inte tillbaka själva filen.</p>
     <p><b>På GitHub Pages beror det nästan alltid på att filen <code>.nojekyll</code> saknas.</b> Utan den gör GitHub om manusen till webbsidor. Lägg till den i repots översta mapp: <b>Add file → Create new file</b>, döp den till <code>.nojekyll</code>, lämna den tom och klicka <b>Commit changes</b>. Vänta en minut och ladda om sidan.</p>

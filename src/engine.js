@@ -2223,6 +2223,9 @@ function typeCode(el, delay, only) {
   const set = (row, n) => { row.style.setProperty('--n', n); };
   rows.forEach(r => { set(r, +r.dataset.indent || 0); r.classList.remove('cur', 'typed'); });
   if (!only) el.classList.add('typing');
+  /* Takten anpassas efter kodens längd: hela koden skrivs på omkring fyra sekunder, oavsett antal rader. */
+  const chars = rows.reduce((a, r) => a + Math.max(0, (+r.dataset.len || 0) - (+r.dataset.indent || 0)), 0);
+  const per = Math.max(6, Math.min(30, 2600 / Math.max(1, chars))), gap = only ? 0 : Math.max(40, Math.min(120, 900 / Math.max(1, rows.length)));
   let li = 0, n = rows.length ? +rows[0].dataset.indent || 0 : 0, to;
   const cur = r => { if (only) return; el.querySelectorAll('.ks-line.cur').forEach(x => x.classList.remove('cur')); if (r) r.classList.add('cur'); };
   const tick = () => {
@@ -2230,11 +2233,13 @@ function typeCode(el, delay, only) {
     cur(row); row.classList.add('typed');
     const len = +row.dataset.len || 0;
     if (n < len) {
-      n++; set(row, n);
+      /* Vid snabb takt skrivs två tecken åt gången, eftersom webbläsarens timer inte hinner med kortare pauser. */
+      const k = per < 12 ? 2 : 1;
+      n = Math.min(len, n + k); set(row, n);
       const ch = (row.dataset.raw || '').charAt(n - 1);
-      to = setTimeout(tick, (ch === ' ' ? 26 : 34) + Math.random() * 38 + (/[(:,\]]/.test(ch) ? 70 : 0));
+      to = setTimeout(tick, k * per * (ch === ' ' ? .6 : .5 + Math.random()) + (/[(:,\]]/.test(ch) ? per * 1.5 : 0));
     } else {
-      li++; if (li < rows.length) { n = +rows[li].dataset.indent || 0; set(rows[li], n); to = setTimeout(tick, 230); } else end();
+      li++; if (li < rows.length) { n = +rows[li].dataset.indent || 0; set(rows[li], n); to = setTimeout(tick, gap); } else end();
     }
   };
   const end = () => {

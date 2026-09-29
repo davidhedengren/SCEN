@@ -14,19 +14,39 @@ alt: Två kyrkorum sida vid sida: en ljus möteslokal med scen och stolar, och e
 
 ---
 
-[spegel]
-etikett: Rummet
+[bildregi]
+etikett: Rummet · Svenska kyrkan
 rubrik: Båda kallas kyrka
 text: Men rummen berättar olika saker om vad som står i centrum.
-slutsats: Stor utsmyckning eller avskalad inredning: rummet visar vad som står i centrum.
-- Svenska kyrkan | Kyrkobyggnaden | bilder/kyrka-och-frikyrka/halva-kyrka.jpg
-- Frikyrkan | Möteslokalen | bilder/kyrka-och-frikyrka/halva-frikyrka.jpg
-- vänster: 55 38 | Altartavlan | Korset och Jesus i rummets mitt.
-- vänster: 32 57 | Ljus och konst | Rummet i sig ska väcka andakt.
-- höger: 54 53 | Talarstolen | Ordet och predikan står i centrum.
-- höger: 24 50 | Piano och instrument | Plats för musik och lovsång.
-> Både kyrkobyggnaden och möteslokalen kan kallas kyrka.
+bild: bilder/kyrka-och-frikyrka/titel.jpg
+alt: Två kyrkorum sida vid sida: en ljus möteslokal med scen och stolar, och ett gammalt kyrkorum med altartavla och ljus.
+bildläge: spotlight
+fokuspunkt: 50 50
+säker-yta: 4 6 40 26
+mörkning: 0 0 50 42 0.75
+- altartavla | Altartavlan | 77 | 42 | 15 | 33 | Korset och Jesus i rummets mitt.
+- ljus | Ljus och konst | 78 | 17 | 18 | 24 | Rummet i sig ska väcka andakt.
+> Både kyrkobyggnaden och möteslokalen kan kallas kyrka. Först kyrkobyggnaden, sedan möteslokalen på nästa bild.
 > Svenska kyrkans kyrkor är ofta gamla och rikt utsmyckade. Frikyrkans lokal är ofta enkel, med scen, talarstol och stolar i rader.
+
+---
+
+[bildregi]
+etikett: Rummet · Frikyrkan
+rubrik: Ett möte
+text: Mellan människan och Gud, och mellan människor.
+bild: bilder/kyrka-och-frikyrka/moteslokal.jpg
+alt: En ljus frikyrklig möteslokal med scen, talarstol, piano, gitarr och stolar i rader.
+bildläge: spotlight
+fokuspunkt: 50 55
+säker-yta: 4 6 40 26
+mörkning: 0 0 50 42 0.75
+- talarstol | Talarstolen | 51 | 50 | 9 | 24 | Ordet och predikan står i centrum.
+- musik | Musiken | 33 | 52 | 22 | 22 | Plats för musik och lovsång: piano, gitarr och band.
+- stolar | Församlingen | 30 | 80 | 36 | 30 | Mötet sker också mellan människorna i rummet.
+> Frikyrkan säger ofta möte i stället för gudstjänst. Ordet säger något om synen på gudstjänsten: en gemenskap, inte bara en ceremoni.
+> Predikan har en stor och central roll. Mycket sång, med piano, gitarr och band.
+> Sammanfatta rummen: stor utsmyckning eller avskalad inredning. Rummet visar vad som står i centrum.
 
 ---
 
@@ -37,27 +57,11 @@ slutsats: Det här är tendenser, inte regler. Variationen är stor.
 vänster: Svenska kyrkan
 höger: Frikyrkan
 - Präst | Pastor | Prästen vigs av en biskop. Pastorn kallas eller anställs av församlingen.
-- Gudstjänst | Möte | Båda säger gudstjänst. Frikyrkan säger också möte: mellan människan och Gud, och mellan människor.
+- Gudstjänst | Möte | Båda säger gudstjänst. Frikyrkan säger också möte.
 - Barndop | Troendedop | Döps man som spädbarn, eller när man själv tror?
 - Psalm | Lovsång | Psalmbok och orgel, eller nyare sånger med band och texten på en skärm.
 > Varje par får ett klick. Vi fördjupar dopet och gudstjänsten strax.
 > Pastor betyder herde.
-
----
-
-[bildregi]
-etikett: Gudstjänsten
-rubrik: Ett möte
-text: Mellan människan och Gud, och mellan människor.
-bild: bilder/kyrka-och-frikyrka/moteslokal.jpg
-alt: En ljus frikyrklig möteslokal med scen, talarstol, piano, gitarr och stolar i rader.
-bildläge: spotlight
-fokuspunkt: 50 55
-säker-yta: 4 6 40 26
-- talarstol | Talarstolen | 51 | 50 | 9 | 24 | Predikan har en stor och central roll.
-- musik | Musiken | 33 | 52 | 22 | 22 | Mycket sång. Piano, gitarr och band.
-- stolar | Församlingen | 30 | 80 | 36 | 30 | Mötet sker också mellan människorna i rummet.
-> Frikyrkan säger ofta möte i stället för gudstjänst. Ordet säger något om synen på gudstjänsten: en gemenskap, inte bara en ceremoni.
 
 ---
 

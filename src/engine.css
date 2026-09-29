@@ -1470,9 +1470,13 @@
 .scen .slide[data-dramaturgy-static="true"] .fm-say{display:none}
 
 /* rutnätet */
-.scen .rn-board{fill:color-mix(in srgb,var(--surface) 70%,var(--bg));stroke:color-mix(in srgb,var(--ink) 18%,var(--line));stroke-width:2;filter:drop-shadow(0 24px 50px color-mix(in srgb,var(--bg) 70%,transparent))}
-.scen .rn-floor{fill:color-mix(in srgb,var(--ink) 12%,var(--surface))}
-.scen .rn-wall{fill:color-mix(in srgb,var(--muted) 42%,var(--surface))}
+.scen .rn-board{fill:color-mix(in srgb,var(--surface) 55%,var(--bg));stroke:color-mix(in srgb,var(--ink) 14%,var(--line));stroke-width:2;filter:drop-shadow(0 24px 50px color-mix(in srgb,var(--bg) 70%,transparent))}
+.scen .rn-floor{fill:color-mix(in srgb,var(--ink) 6%,var(--surface))}
+/* Väggarna som upphöjda block: framkant, ljus överkant, yta och en mjuk skugga mot golvet. */
+.scen .rn-walls{--wall:color-mix(in srgb,var(--ink) 24%,var(--surface));filter:drop-shadow(0 8px 10px rgba(0,0,0,.28))}
+.scen .rn-wall{fill:var(--wall)}
+.scen .rn-wall-lip{fill:color-mix(in srgb,var(--ink) 55%,var(--wall))}
+.scen .rn-wall-side{fill:color-mix(in srgb,var(--wall),black 42%)}
 .scen .rn-ex{fill:color-mix(in srgb,var(--accent) 30%,transparent);opacity:0}
 .scen .rn-fr{fill:none;stroke:var(--accent);stroke-width:3;stroke-dasharray:5 6;opacity:0}
 .scen .rn-cu{fill:color-mix(in srgb,var(--accent) 72%,transparent);opacity:0;filter:drop-shadow(0 0 14px var(--accent))}

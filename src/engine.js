@@ -1790,12 +1790,12 @@ function renderSlide(sl, i, deck, img) {
           const box = dual ? { x: 144 + ri * 856, y: 392, w: 776, h: 530 } : { x: 144, y: 300, w: 1140, h: 680 };
           const cs = Math.floor(Math.min(box.w / C, box.h / R)), ox = box.x + Math.round((box.w - cs * C) / 2), oy = box.y + Math.round((box.h - cs * R) / 2);
           /* Spelplanen: en ram runt hela rutnätet, sammanhängande väggar och golvet som rutor. */
-          let ends = '', walls = '';
-          const pad = Math.round(Math.max(10, cs * .2));
+          let ends = '';
+          const wallSet = new Set(), pad = Math.round(Math.max(10, cs * .2));
           svg += `<rect class="rn-board" x="${ox - pad}" y="${oy - pad}" width="${cs * C + 2 * pad}" height="${cs * R + 2 * pad}" rx="${pad + Math.round(cs * .12)}"/>`;
           for (let r = 0; r < R; r++) for (let c = 0; c < C; c++) {
             const x = ox + c * cs, y = oy + r * cs, ch = at(r, c), k2 = r * C + c, rx = Math.round(cs * .12);
-            if (ch === '#') { walls += `<rect x="${x}" y="${y}" width="${cs}" height="${cs}"/>`; continue; }
+            if (ch === '#') { wallSet.add(k2); continue; }
             svg += `<rect class="rn-floor" x="${x + 2}" y="${y + 2}" width="${cs - 4}" height="${cs - 4}" rx="${rx}"/>`;
             const s0 = stepOf[k2], ex = s0 == null ? [] : all(t => t >= s0);
             const fr = all(t => t < G2.length && frAt(t).has(k2) && !(s0 != null && t >= s0));
@@ -1807,7 +1807,21 @@ function renderSlide(sl, i, deck, img) {
             else if (nums === 'h') svg += `<text class="rn-num${s0 != null ? ' fin' : ''}" x="${x + cs / 2}" y="${y + cs / 2 + fs * .36}" text-anchor="middle" style="font-size:${fs}px"${IN(ex)}>${res.h([r, c])}</text>`;
             else if (nums === 'gh' && o) svg += `<text class="rn-num gh fin" x="${x + cs / 2}" y="${y + cs / 2 + fs * .36}" text-anchor="middle" style="font-size:${fs}px"${IN(ex)}><tspan class="g">${o.g}</tspan>+<tspan class="h">${o.h}</tspan></text>`;
           }
-          svg += `<g class="rn-wall">${walls}</g>`;
+          /* Väggarna blir en sammanhängande form: varje vägg ett rundat block, broar till grannväggar och fyllda
+             mittpunkter i 2 × 2-block. Formen ritas tre gånger: framkanten nedflyttad, en ljus kant och ytan. */
+          const m = Math.max(3, cs * .07), wr = Math.max(4, cs * .16), dep = Math.max(3, cs * .08), lip = Math.max(1.5, cs * .025), f1 = v => v.toFixed(1);
+          const rrect = (x, y, w, h, r) => `M${f1(x + r)} ${f1(y)}H${f1(x + w - r)}A${f1(r)} ${f1(r)} 0 0 1 ${f1(x + w)} ${f1(y + r)}V${f1(y + h - r)}A${f1(r)} ${f1(r)} 0 0 1 ${f1(x + w - r)} ${f1(y + h)}H${f1(x + r)}A${f1(r)} ${f1(r)} 0 0 1 ${f1(x)} ${f1(y + h - r)}V${f1(y + r)}A${f1(r)} ${f1(r)} 0 0 1 ${f1(x + r)} ${f1(y)}Z`;
+          const rect = (x, y, w, h) => `M${f1(x)} ${f1(y)}H${f1(x + w)}V${f1(y + h)}H${f1(x)}Z`;
+          const isW = (r, c) => r >= 0 && c >= 0 && r < R && c < C && wallSet.has(r * C + c);
+          let wd = '';
+          wallSet.forEach(k2 => {
+            const r = Math.floor(k2 / C), c = k2 % C, x = ox + c * cs, y = oy + r * cs;
+            wd += rrect(x + m, y + m, cs - 2 * m, cs - 2 * m, wr);
+            if (isW(r, c + 1)) wd += rect(x + cs / 2, y + m, cs, cs - 2 * m);
+            if (isW(r + 1, c)) wd += rect(x + m, y + cs / 2, cs - 2 * m, cs);
+            if (isW(r, c + 1) && isW(r + 1, c) && isW(r + 1, c + 1)) wd += rect(x + cs / 2, y + cs / 2, cs, cs);
+          });
+          if (wd) svg += `<g class="rn-walls"><path class="rn-wall-side" d="${wd}" transform="translate(0 ${f1(dep)})"/><path class="rn-wall-lip" d="${wd}"/><path class="rn-wall" d="${wd}" transform="translate(0 ${f1(lip)})"/></g>`;
           if (res.found) {
             const pts = res.path.map(k2 => [ox + (k2 % C) * cs + cs / 2, oy + Math.floor(k2 / C) * cs + cs / 2]);
             svg += `<polyline class="rn-path fin" points="${pts.map(p => p.map(v => v.toFixed(1)).join(',')).join(' ')}" pathLength="1"${IN([pathStep])}/>`;

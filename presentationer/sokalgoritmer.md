@@ -67,18 +67,19 @@ bild: bilder/sokalgoritmer/ko.jpg
 [kö]
 etikett: Datastrukturer
 rubrik: Olika köer i algoritmer
-text: Köer är en datastruktur som används i sökalgoritmer för att hålla reda på vilka noder som ska besökas.
+text: Köer är en datastruktur som används i sökalgoritmer för att hålla reda på vilka noder som ska utforskas.
 slutsats: Vilken nod i frontiern som utforskas beror på vilken kö algoritmen använder.
-- kö: fifo | FIFO-kö | First in, first out | frontier.pop(0)
-- kö: stack | Stack (LIFO-kö) | Last in, first out | frontier.pop()
-- kö: prio | Prioriteringskö | Lägst värde först
+- kö: fifo | FIFO-kö | First in, first out
+- kö: stack | Stack (LIFO-kö) | Last in, first out
+- kö: prio | Prioritetskö | Lägst värde först
 - in: A 3
 - in: B 1
 - in: C 2
 - ut
 - ut
-> A, B och C läggs in i alla tre köerna. Siffran är prioriteten, som bara prioritetskön bryr sig om.
-> Vid första "ta ut": FIFO-kön lämnar ut A (först in), stacken C (sist in) och prioritetskön B (lägst värde).
+> En kö i taget. Först läggs A, B och C in, sedan tas två ut. Siffran är prioriteten, som bara prioritetskön bryr sig om.
+> FIFO-kön lämnar ut A (först in), stacken C (sist in) och prioritetskön B (lägst värde).
+> Raden längst ner visar i vilken ordning elementen kom ut. På sista klicket kan köerna jämföras.
 > BFS använder en FIFO-kö, DFS en stack och de informerade sökningarna en prioritetskö.
 
 ---
@@ -86,39 +87,13 @@ slutsats: Vilken nod i frontiern som utforskas beror på vilken kö algoritmen a
 [rad]
 etikett: Bredden först
 rubrik: Bredden först-sökning (Breadth-First Search, BFS)
-text: En algoritm som utforskar ett sökträd genom att besöka alla noder på en viss nivå innan den går vidare till nästa nivå. BFS använder en FIFO-kö.
+text: En algoritm som utforskar ett sökträd genom att utforska alla noder på en viss nivå innan den går vidare till nästa nivå. BFS använder en FIFO-kö.
 flöde: ja
 - Start | Börjar vid en given startnod.
 - Nivå 1 | Alla barnnoder till startnoden utforskas.
 - Nivå 2 | Alla noder som är anslutna till noderna på nivå 1 utforskas.
-- Tills målet | Processen fortsätter tills målnoden hittas eller alla noder har besökts.
+- Tills målet | Processen fortsätter tills målnoden hittas eller alla noder har utforskats.
 > BFS använder en FIFO-kö där noderna utforskas i den ordning de läggs till i frontiern.
-
----
-
-[kodskrivning]
-etikett: Bredden först
-rubrik: BFS i Python
-text: def bfs(graph, start, goal):
-    frontier = [start]
-    visited = set()
-    while frontier:
-        current = frontier.pop(0)
-        if current in visited:
-            continue
-        visited.add(current)
-        if current == goal:
-            return f"Found {goal}"
-        for neighbor in graph[current]:
-            if neighbor not in visited:
-                frontier.append(neighbor)
-    return f"{goal} not found"
-- 2 | frontier = [start] | Frontiern börjar med startnoden.
-- 5 | frontier.pop(0) | Tar ut den nod som lades in först: en FIFO-kö.
-- 9 | current == goal | Är noden målet? Då är lösningen hittad.
-- 13 | frontier.append(neighbor) | Barnnoderna läggs sist i kön.
-> Jämför med algoritmstegen: ta ut en nod, kontrollera om det är målet, lägg till barnen.
-> visited ser till att samma nod inte utforskas två gånger.
 
 ---
 
@@ -274,7 +249,7 @@ text: En DFS utforskar grafer och träd genom att gå så djupt som möjligt lä
 - Start | Börjar vid en given startnod.
 - Djupt | Går vidare till en barnnod och följer vägen tills den når ett löv.
 - Backa | Utan nya grannar backar DFS till den senaste noden med oupptäckta grannar.
-- Tills målet | Processen fortsätter tills målnoden hittas eller alla noder har besökts.
+- Tills målet | Processen fortsätter tills målnoden hittas eller alla noder har utforskats.
 > Djupt: algoritmen går vidare till den första tillgängliga barnnoden och fortsätter att följa denna väg tills den når ett löv.
 > Backa: när DFS når en nod utan nya grannar backar algoritmen tillbaka till den senaste noden med oupptäckta grannar och utforskar nästa tillgängliga väg.
 > DFS använder en stack, där den senaste noden som lagts till i frontiern utforskas först.
@@ -282,13 +257,13 @@ text: En DFS utforskar grafer och träd genom att gå så djupt som möjligt lä
 ---
 
 [kodskrivning]
-etikett: Djupet först
-rubrik: DFS i Python
-text: def dfs(graph, start, goal):
+etikett: Programmering
+rubrik: BFS och DFS i Python
+text: def bfs(graph, start, goal):
     frontier = [start]
     visited = set()
     while frontier:
-        current = frontier.pop()
+        current = frontier.pop(0)
         if current in visited:
             continue
         visited.add(current)
@@ -298,18 +273,25 @@ text: def dfs(graph, start, goal):
             if neighbor not in visited:
                 frontier.append(neighbor)
     return f"{goal} not found"
-- 5 | frontier.pop() | Tar ut den nod som lades in sist: en stack.
-- 13 | frontier.append(neighbor) | Barnen läggs överst. Den sist tillagda utforskas först.
-> Koden är nästan densamma som för BFS. Den enda skillnaden är pop() i stället för pop(0).
-> Därför utforskar DFS här trädets högra gren först: det barn som lades in sist ligger överst i stacken.
+- 2 | frontier = [start] | Frontiern börjar med startnoden.
+- 5 | frontier.pop(0) | Tar ut den nod som lades in först: en FIFO-kö.
+- 9 | current == goal | Är noden målet? Då är lösningen hittad.
+- 13 | frontier.append(neighbor) | Barnnoderna läggs sist i kön.
+- 5 | frontier.pop(0) -> frontier.pop() | Ta ut den nod som lades in sist i stället: en stack.
+- 1 | bfs -> dfs | Det var hela skillnaden. Nu är det en DFS.
+> Kodbilden går att hoppa över i klasser som inte programmerar.
+> Jämför med algoritmstegen: ta ut en nod, kontrollera om det är målet, lägg till barnen.
+> visited ser till att samma nod inte utforskas två gånger.
+> Koden för DFS är nästan densamma som för BFS. Den enda skillnaden är pop() i stället för pop(0).
+> Därför utforskar DFS trädets högra gren först: det barn som lades in sist ligger överst i stacken.
 
 ---
 
 [sökning]
 etikett: Djupet först
 rubrik: DFS följer en gren i taget
-text: DFS går så djupt som möjligt och backar sedan till närmaste nod med obesökta grannar.
-slutsats: Besöksordningen blir A, C, G, O, N, F, M, L, B, E, K, J, D, I, H.
+text: DFS går så djupt som möjligt och backar sedan till närmaste nod med grannar som inte har utforskats.
+slutsats: Ordningen blir A, C, G, O, N, F, M, L, B, E, K, J, D, I, H.
 - algoritm: dfs
 - läge: vandring
 - A
@@ -327,7 +309,7 @@ slutsats: Besöksordningen blir A, C, G, O, N, F, M, L, B, E, K, J, D, I, H.
     - G
       - N
       - O
-> Varje klick flyttar ringen ett steg. Siffrorna visar i vilken ordning noderna besöks.
+> Varje klick flyttar ringen ett steg. Siffrorna visar i vilken ordning noderna utforskas.
 > Samma ordning som stacken ger: barnet som lades in sist, alltså det högra, utforskas först.
 
 ---
@@ -347,6 +329,24 @@ slutsats: En DFS skulle därför kunna föreslå vägen som visas: 10 steg.
 - A..###
 > Grannarna prövas i ordningen upp, vänster, höger, ned.
 > Jämför med BFS i samma labyrint: där blev vägen 6 steg.
+
+---
+
+[rutnät]
+etikett: Jämförelse
+rubrik: BFS och DFS i samma labyrint
+text: Samma labyrint, samma start och samma mål.
+slutsats: Båda utforskade 13 rutor. BFS hittade den kortaste vägen, 6 steg. DFS hittade en väg på 10 steg.
+- algoritm: bfs, dfs
+- takt: 2
+- .#####
+- ......
+- .##.##
+- .##B##
+- .#..##
+- .#.###
+- A..###
+> Båda söker samtidigt, två rutor per klick. Räknaren ovanför visar hur många rutor som har utforskats.
 
 ---
 
@@ -414,12 +414,13 @@ text: DFS
 
 ---
 
-[delning]
+[kärna]
 etikett: Djupet först
 rubrik: Nackdelar med DFS
+text: DFS
 - Garanterar inte kortaste vägen | Eftersom DFS följer en gren hela vägen ner kan en kortare lösning finnas på en nivå högre upp.
 - Kan fastna i djupa grenar | I oändliga eller mycket djupa träd kan DFS fastna och aldrig återvända till tidigare oupptäckta vägar.
-- Exempel | I diskussionen returnerade DFS vägen A, C, F fast A, F var kortare.
+> Exempel: I diskussionen returnerade DFS vägen A, C, F fast A, F var kortare.
 
 ---
 
@@ -499,31 +500,11 @@ fokuspunkt: 55 50
 
 ---
 
-[motsats]
-etikett: Informerade sökningar
-rubrik: Girig bäst först eller A*?
-- Girig bäst först | Väljer den nod med lägst uppskattad kostnad till målet, h(n).
-- A* | Väljer den nod med lägst summa: kostnaden för att nå noden plus en uppskattad kostnad för att nå målet från noden.
-- Gemensamt | Båda använder en prioritetskö, men sorterar på olika värden.
-> Girig bäst först heter Greedy best-first på engelska.
-
----
-
-[sats]
-etikett: A*-algoritmen
-rubrik: Kostnaden för en nod
-text: A* utforskar alltid den nod i frontiern som har lägst f(n).
-- f(n) = g(n) + h(n) | Den uppskattade totala kostnaden för en väg genom noden n.
-- g(n) | Kostnad att nå noden n.
-- h(n) | Uppskattad kostnad att nå målet från n.
-
----
-
 [rutnät]
 etikett: Informerad sökning
 rubrik: Girig bäst först-sökning
-text: Här vet vi Manhattan-avståndet till målet från varje ruta.
-slutsats: Vägen blev 33 steg. Girig bäst först tittar bara på h och kan därför välja en lång omväg.
+text: Väljer den ruta med lägst uppskattad kostnad till målet, h(n). Här är h Manhattan-avståndet.
+slutsats: Vägen blev 33 steg. Finns det en kortare väg?
 - algoritm: girig
 - siffror: h
 - #..........B
@@ -534,8 +515,35 @@ slutsats: Vägen blev 33 steg. Girig bäst först tittar bara på h och kan där
 - ###.#.#####.
 - A...#.......
 - not: 6 | 11 är lägre än 13, därför utforskas den rutan först.
+> Girig bäst först heter Greedy best-first på engelska.
 > Manhattan-avståndet är antalet steg till målet om det inte fanns några väggar: steg i sidled plus steg i höjdled.
 > Algoritmen väljer alltid den ruta i frontiern som har lägst h.
+
+---
+
+[fråga]
+etikett: Diskutera
+rubrik: Varför blev det en sådan omväg?
+svar: Den bryr sig inte om hur långt den redan har gått. Girig bäst först tittar bara på h, hur långt det verkar vara kvar.
+rubrikrörelse: skrivmaskin
+- Algoritmen valde en ruta på måfå
+- Den vet inte hur långt det är kvar till målet
+- Den bryr sig inte om hur långt den redan har gått
+> Låt eleverna diskutera i par innan svaret visas.
+> Alternativ 2 stämmer inte: algoritmen har en uppskattning, h. Det som saknas är kostnaden för vägen hittills.
+
+---
+
+[formel]
+etikett: A*-algoritmen
+rubrik: Kostnaden för en nod
+formel: f(n) = g(n) + h(n)
+slutsats: A* utforskar alltid den nod i frontiern som har lägst f(n).
+- h(n) | Uppskattad kostnad att nå målet från n. Det enda som girig bäst först tittar på.
+- g(n) | Kostnad att nå noden n. Den delen saknade girig bäst först.
+- f(n) | Den uppskattade totala kostnaden för en väg genom noden n.
+> Båda algoritmerna använder en prioritetskö, men sorterar på olika värden: girig bäst först på h, A* på g + h.
+> Färgerna följer med till A*-labyrinten: g i turkost och h i orange.
 
 ---
 
@@ -558,3 +566,21 @@ slutsats: A* hittar den kortaste vägen: 21 steg.
 - not: 15 | Här byter vi väg eftersom 6 + 13 är lägre än 15 + 6.
 > Vid lika värden väljer A* här den ruta som lades till senast.
 > Jämför med girig bäst först i samma labyrint: där blev vägen 33 steg.
+
+---
+
+[rutnät]
+etikett: Jämförelse
+rubrik: Girig bäst först och A* i samma labyrint
+text: Samma labyrint och samma mål. Vilken hittar den kortaste vägen?
+slutsats: A* utforskade färre rutor, 30 mot 33, och hittade den kortaste vägen: 21 steg mot 33.
+- algoritm: girig, a*
+- takt: 3
+- #..........B
+- #.#########.
+- #.#.......#.
+- #.#.#####.#.
+- #...#.....#.
+- ###.#.#####.
+- A...#.......
+> Båda söker samtidigt, tre rutor per klick.

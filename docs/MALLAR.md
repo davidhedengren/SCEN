@@ -32,7 +32,8 @@ Varje bild i ett manus börjar med mallens namn inom hakparentes. Samma katalog 
 | `[bildregi]` | Bild | Regisserar en bild som cinematic hero, detaljresa, spotlight/annotation eller kontrollerad mask reveal. Samma bild och komposition bär hela klicksekvensen. |
 | `[terminal]` | Textregi | Regisserar en trovärdig terminalberättelse där kommando, output, fel, resultat och annotation har separata semantiska roller. Kommandon kan skrivas fram när skrivandet bär betydelse. |
 | `[kodförklaring]` | Textregi | Etablerar ett stabilt kodblock och flyttar sedan fokus mellan relevanta rader eller uttryck med annotation och resultat. |
-| `[kodskrivning]` | Textregi | Koden skrivs fram i ett terminalfönster, tecken för tecken och rad för rad, med en blinkande markör och färgade nyckelord. Ett klick under skrivningen visar hela koden direkt. Med takt: rad skriver varje klick en rad i stället. Därefter lyfter klicken fram rader och uttryck, övriga rader tonas ned och en förklaring kopplas till raden. Varje markering skrivs radnummer, uttryck, förklaring och ett valfritt resultat. |
+| `[kodskrivning]` | Textregi | Koden skrivs fram i ett terminalfönster, tecken för tecken och rad för rad, med en blinkande markör och färgade nyckelord. Ett klick under skrivningen visar hela koden direkt. Med takt: rad skriver varje klick en rad i stället. Därefter lyfter klicken fram rader och uttryck, övriga rader tonas ned och en förklaring kopplas till raden. Varje markering skrivs radnummer, uttryck, förklaring och ett valfritt resultat. Skriv gammalt -> nytt som uttryck för att byta ut det i det klicket, till exempel för att visa hur en variant skiljer sig. Det nya står kvar efteråt. |
+| `[formel]` | Textregi | En formel eller ett uttryck i stor text, som delas upp term för term. Varje klick tänder en term i sin egen färg och visar förklaringen under formeln, medan resten tonas ned. Tända termer behåller färgen, så sambandet byggs upp. Termerna får färg i tur och ordning: den första orange (accent 2), den andra i accentfärgen, den tredje i textfärgen. Sista klicket visar hela formeln i färg med slutsatsen. |
 | `[typografi]` | Textregi | Låter en stor mening bära hela scenen och förändras genom fokus, ersättning eller precisering med mycket whitespace. |
 | `[texttempo]` | Textregi | Bygger ett resonemang genom kontrollerad typografisk pacing: påstående, kontrast, avslöjande och slutsats får egna kommunikativa klick. |
 | `[jämförelse]` | Data | Två sidor mot varandra: för och emot, före och efter. |
@@ -67,8 +68,8 @@ Varje bild i ett manus börjar med mallens namn inom hakparentes. Samma katalog 
 | `[fyrfält]` | System | Två axlar med var sina motpoler och två till åtta saker placerade i fältet. Raderna x: och y: anger axlarnas poler, och varje sak får ett läge med x och y från 0 till 100. Varje klick lyfter en sak: stödlinjer visar var den ligger på båda axlarna, dess fyrdel tonas fram och förklaringen visas till höger. Sista klicket visar hela mönstret. |
 | `[vågskål]` | System | Argument för och emot i en fråga, som vikter i var sin skål. Varje argument har en sida (samma ord som i vänster eller höger) och en vikt från 1 till 3. Varje klick lägger nästa argument i sin skål och balken tippar efter den sammanlagda vikten. Sista klicket visar balansen och slutsatsen. |
 | `[sökning]` | System | En sökalgoritm arbetar i ett träd eller en graf, ett steg per klick. Algoritmen räknas fram automatiskt, så ordningen blir alltid rätt. I läget frontier syns algoritmstegen, frontiern (en liggande kö för BFS, en stående stack för DFS), noden som utforskas och de utforskade noderna, och varje steg förklaras i en rad under grafen. Läget vandring följer DFS eller BFS nod för nod med nummer. Läget övning visar upp till tre träd med markerade mål, och ett klick visar utforskningsordningen och nästa vägen. Egna kommentarer kan läggas vid valfritt klick. |
-| `[rutnät]` | System | En sökalgoritm i ett rutnät, till exempel en labyrint, en karta eller en spelplan. Rutnätet skrivs som text med # för vägg, punkt för fri ruta, A för start och B för mål. BFS går en nivå per klick som en våg, DFS, girig bäst först och A* en ruta per klick. Utforskade rutor färgas, frontiern ringas in och sista klicket ritar vägen. Rutorna kan visa h (Manhattan-avståndet till målet) eller g + h. |
-| `[kö]` | System | Två eller tre köer sida vid sida, till exempel en FIFO-kö, en stack och en prioritetskö. Varje klick lägger in ett element i alla köer eller tar ut ett, och då syns direkt vilket element varje kö lämnar ut. Varje kö kan visa en kodrad. |
+| `[rutnät]` | System | En sökalgoritm i ett rutnät, till exempel en labyrint, en karta eller en spelplan. Rutnätet skrivs som text med # för vägg, punkt för fri ruta, A för start och B för mål. BFS går en nivå per klick som en våg, DFS, girig bäst först och A* en ruta per klick; takt: 3 ger tre rutor per klick. Utforskade rutor färgas, frontiern ringas in och sista klicket ritar vägen. Rutorna kan visa h (Manhattan-avståndet till målet) eller g + h, i samma färger som i formelmallen. Två algoritmer med komma, till exempel algoritm: bfs, dfs, söker bredvid varandra i samma labyrint med var sin räknare, så att de kan jämföras. |
+| `[kö]` | System | Två eller tre köer sida vid sida, till exempel en FIFO-kö, en stack och en prioritetskö, som får samma element. En kö i taget: först läggs elementen in i ett klick, sedan är varje ut ett klick, medan de andra köerna tonas ned. Det som tas ut hamnar på en rad under kön och står kvar, så att ordningen kan jämföras mellan köerna på slutet. Med takt: samtidigt gör alla köer samma steg på en gång. Varje kö kan visa en kodrad. |
 | `[förgrening]` | System | Ett släktträd över tid: en stam och grenar som skjuter ut ur varandra, till exempel kyrkor, språk, arter eller programspråk. Varje gren har ett namn, en tid, grenen den växer ur och en kort text. Tidsaxeln är schematisk, varje förgreningstid får en kolumn. Hela trädet syns nedtonat från början. Varje klick ritar nästa gren i tidsordning och visar dess text längst ner, medan tidigare grenar står kvar. En gren som delas i två vid samma tid slutar där. Sista klicket visar hela trädet med slutsatsen. |
 | `[ringar]` | Banor | Två eller tre begrepp som delvis överlappar, som ett Venndiagram. Det gemensamma skrivs i mitten och visas sist. |
 | `[lins]` | Banor | En bild där en rund lins lyser upp en detalj i taget. Resten är nedtonad. Varje rad: x y i procent | rubrik | text. |
@@ -626,7 +627,7 @@ text: function add(total, value) {
 
 ### `[kodskrivning]` Kodskrivning
 
-Koden skrivs fram i ett terminalfönster, tecken för tecken och rad för rad, med en blinkande markör och färgade nyckelord. Ett klick under skrivningen visar hela koden direkt. Med takt: rad skriver varje klick en rad i stället. Därefter lyfter klicken fram rader och uttryck, övriga rader tonas ned och en förklaring kopplas till raden. Varje markering skrivs radnummer, uttryck, förklaring och ett valfritt resultat.
+Koden skrivs fram i ett terminalfönster, tecken för tecken och rad för rad, med en blinkande markör och färgade nyckelord. Ett klick under skrivningen visar hela koden direkt. Med takt: rad skriver varje klick en rad i stället. Därefter lyfter klicken fram rader och uttryck, övriga rader tonas ned och en förklaring kopplas till raden. Varje markering skrivs radnummer, uttryck, förklaring och ett valfritt resultat. Skriv gammalt -> nytt som uttryck för att byta ut det i det klicket, till exempel för att visa hur en variant skiljer sig. Det nya står kvar efteråt.
 
 **Undvik när:** Mer än cirka 20 rader eller tomma rader i koden. När koden redan är känd och bara ska förklaras (använd kodförklaring).
 
@@ -641,6 +642,24 @@ text: def summa(tal):
     return total
 - 3 | for x in tal | Loopen går igenom varje tal i listan.
 - 4 | total + x | Varje varv lägger till nästa tal. | 0 + 3 + 5 = 8
+- 5 | total -> total / len(tal) | Delar vi med antalet tal blir det medelvärdet i stället.
+```
+
+### `[formel]` Formel
+
+En formel eller ett uttryck i stor text, som delas upp term för term. Varje klick tänder en term i sin egen färg och visar förklaringen under formeln, medan resten tonas ned. Tända termer behåller färgen, så sambandet byggs upp. Termerna får färg i tur och ordning: den första orange (accent 2), den andra i accentfärgen, den tredje i textfärgen. Sista klicket visar hela formeln i färg med slutsatsen.
+
+**Undvik när:** Mer än fem termer eller formler som inte ryms på en rad. Termer som bara är ett tecken som också finns tidigare i formeln.
+
+```
+[formel]
+etikett: Fysik
+rubrik: Newtons andra lag
+formel: F = m · a
+slutsats: Samma kraft ger mindre acceleration när massan är större.
+- F | Den totala kraften på föremålet, i newton.
+- m | Föremålets massa, i kilogram.
+- a | Accelerationen, i meter per sekund i kvadrat.
 ```
 
 ### `[typografi]` Typografiskt statement
@@ -1160,7 +1179,7 @@ slutsats: Målet är hittat först när noden tas ut ur frontiern.
 
 ### `[rutnät]` Rutnät
 
-En sökalgoritm i ett rutnät, till exempel en labyrint, en karta eller en spelplan. Rutnätet skrivs som text med # för vägg, punkt för fri ruta, A för start och B för mål. BFS går en nivå per klick som en våg, DFS, girig bäst först och A* en ruta per klick. Utforskade rutor färgas, frontiern ringas in och sista klicket ritar vägen. Rutorna kan visa h (Manhattan-avståndet till målet) eller g + h.
+En sökalgoritm i ett rutnät, till exempel en labyrint, en karta eller en spelplan. Rutnätet skrivs som text med # för vägg, punkt för fri ruta, A för start och B för mål. BFS går en nivå per klick som en våg, DFS, girig bäst först och A* en ruta per klick; takt: 3 ger tre rutor per klick. Utforskade rutor färgas, frontiern ringas in och sista klicket ritar vägen. Rutorna kan visa h (Manhattan-avståndet till målet) eller g + h, i samma färger som i formelmallen. Två algoritmer med komma, till exempel algoritm: bfs, dfs, söker bredvid varandra i samma labyrint med var sin räknare, så att de kan jämföras.
 
 **Undvik när:** Rutnät större än ungefär 14 × 14. Labyrinter utan väg mellan A och B om poängen är vägen.
 
@@ -1182,7 +1201,7 @@ slutsats: BFS hittar alltid den kortaste vägen.
 
 ### `[kö]` Kö
 
-Två eller tre köer sida vid sida, till exempel en FIFO-kö, en stack och en prioritetskö. Varje klick lägger in ett element i alla köer eller tar ut ett, och då syns direkt vilket element varje kö lämnar ut. Varje kö kan visa en kodrad.
+Två eller tre köer sida vid sida, till exempel en FIFO-kö, en stack och en prioritetskö, som får samma element. En kö i taget: först läggs elementen in i ett klick, sedan är varje ut ett klick, medan de andra köerna tonas ned. Det som tas ut hamnar på en rad under kön och står kvar, så att ordningen kan jämföras mellan köerna på slutet. Med takt: samtidigt gör alla köer samma steg på en gång. Varje kö kan visa en kodrad.
 
 **Undvik när:** Mer än fem element i en kö samtidigt. Mer än tre köer.
 

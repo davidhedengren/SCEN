@@ -75,7 +75,7 @@ Första raden är mallen inom hakparentes, t.ex. `[kort]`. Alla mallar finns i [
 | `tona` | `ja` tonar ner tidigare punkter |
 | `övergång` | `automatisk`, `båge`, `tona`, `glid`, `skjut`, `stig`, `zooma`, `svep`, `morph`, `ingen` |
 | `bakgrund` | `ingen`, `fokusljus`, `ljus`, `banor`, `vektorfält`, `nätverk`, `vågor`. `fokusljus` är ett mjukt ljus som följer fokus vid varje klick och står stilla däremellan. De andra rör sig hela tiden och passar bäst på titel- och avsnittsbilder. |
-| `rubrikrörelse`, `rörelse` | `mask`, `ord för ord`, `skärpa`, `stig`, `tona`, `skrivmaskin`, `svep`, `ingen` |
+| `rubrikrörelse`, `rörelse` | `mask`, `ord för ord`, `skärpa`, `stig`, `tona`, `skrivmaskin`, `svep`, `ingen`. `skrivmaskin` skriver fram texten tecken för tecken med ett blinkande block, som i en kommandotolk. Flera texter på samma bild skrivs en i taget. Passar en fråga eller ett påstående som ska få liv, inte långa stycken. |
 
 Bildregi kan dessutom bära en framtida Image Brief med `bild-id`, `filnamn`, `scen`, `syfte`, `motiv`, `komposition`, `motivplacering`, `format`, `undvik` och `prompt`. Detaljområden skrivs som `- id | etikett | x | y | bredd | höjd | annotation`. Se [BILDREGI.md](BILDREGI.md).
 
@@ -195,9 +195,25 @@ text: def bfs(graph, start, goal):
     frontier = [start]
 - takt: rad                  (valfri: en rad per klick; annars skrivs koden i realtid)
 - 2 | frontier = [start] | Frontiern börjar med startnoden. | resultat (valfritt)
+- 5 | frontier.pop(0) -> frontier.pop() | Nu blir det en stack.
 ```
 
 Koden skrivs fram i ett terminalfönster med blinkande markör. Ett klick under skrivningen visar hela koden direkt. Därefter markerar varje klick en rad och ett uttryck. Skriv koden utan tomma rader. Filnamnet i fönstret tas från funktionens namn, till exempel `bfs.py`.
+
+Med `gammalt -> nytt` som uttryck byts koden ut i det klicket: det som skiljer raderas och skrivs om, och det nya står kvar i resten av klicken. Så kan en bild visa hur en variant skiljer sig, till exempel BFS och DFS i samma kod.
+
+### Formel
+
+```text
+[formel]
+rubrik: Kostnaden för en nod
+formel: f(n) = g(n) + h(n)
+- h(n) | Uppskattad kostnad till målet.      (termerna i den ordning de ska tändas, högst fem)
+- g(n) | Kostnad för att nå noden.
+slutsats: visas när hela formeln syns i färg
+```
+
+Formeln står i stor text. Varje klick tänder en term i formeln och visar förklaringen under. Termerna får färg i tur och ordning: den första orange (accent 2), den andra i accentfärgen, den tredje i textfärgen. Samma färger används för g och h i `[rutnät]` med `siffror: g+h`.
 
 ### Sökning, rutnät och kö
 
@@ -220,20 +236,23 @@ Algoritmerna räknas fram automatiskt. Du skriver grafen eller labyrinten och v�
   - B
 
 [rutnät]
-- algoritm: bfs              (bfs, dfs, girig eller a*)
-- takt: ruta                 (BFS går annars en nivå per klick)
+- algoritm: bfs              (bfs, dfs, girig eller a*; två med komma, t.ex. bfs, dfs, söker bredvid varandra)
+- takt: ruta                 (BFS går annars en nivå per klick; ett tal, t.ex. 3, ger tre rutor per klick)
 - siffror: h                 (h = Manhattan-avståndet till målet, eller g+h)
 - not: 6 | kommentar
 - #..B                       (# vägg, . fri ruta, A start, B mål)
 - A.#.
 
 [kö]
-- kö: fifo | FIFO-kö | First in, first out | frontier.pop(0)
-- kö: stack | Stack | Last in, first out | frontier.pop()
-- kö: prio | Prioriteringskö | Lägst värde först
+- kö: fifo | FIFO-kö | First in, first out
+- kö: stack | Stack | Last in, first out
+- kö: prio | Prioritetskö | Lägst värde först
 - in: A 3                    (element och prioritet)
 - ut
+- takt: samtidigt            (valfri: alla köer gör samma steg på en gång)
 ```
+
+I `[kö]` går köerna en i taget: elementen läggs in i ett klick, sedan är varje `ut` ett klick. Det som tas ut står kvar i en rad under kön, så att köerna kan jämföras på slutet. Ett fjärde fält efter förklaringen visar en kodrad under könamnet, men lägg hellre koden på en egen kodbild så att den går att hoppa över.
 
 Konventioner: BFS använder en FIFO-kö. DFS använder en stack, så den nod som lades till sist utforskas först; i ett träd blir det den högra grenen. Girig bäst först väljer lägst h, A* lägst g + h. Vid lika värden väljs den senast tillagda. I rutnät prövas grannarna i ordningen upp, vänster, höger, ned.
 

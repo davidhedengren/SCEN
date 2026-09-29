@@ -12,7 +12,7 @@ const ACCENTS = {
 };
 const LAYOUTS = {etapper:"Etapper",vagval:"Vägval",lager:"Lager",resonemang:"Resonemang",helhet:"Helhet",
   skiften: 'Skiften', prisma: 'Prisma', verkningar: 'Verkningar', belagg: 'Belägg', sammanflode: 'Sammanflöde',
-  lameller: 'Lameller', register: 'Register', samband: 'Samband', marginal: 'Marginal', sats: 'Sats',
+  lameller: 'Lameller', register: 'Register', samband: 'Samband', marginal: 'Marginal', sats: 'Sats', formel: 'Formel',
   title: 'Titel', section: 'Avsnitt', statement: 'Påstående', bullets: 'Punktlista', split: 'Text och bild',
   image: 'Helbild', bildregi: 'Bildregi', terminal: 'Terminal', kodforklaring: 'Kodförklaring', typografisk: 'Typografiskt statement', texttempo: 'Typografiskt tempo', cards: 'Kort', compare: 'Jämförelse', table: 'Tabell', number: 'Stort tal', timeline: 'Tidslinje',
   question: 'Fråga och svar', poll: 'Omröstning', reflect: 'Reflektion', define: 'Definition', chat: 'AI-samtal', duo: 'Två tal',
@@ -43,7 +43,7 @@ const TRANSITIONS = { auto: 'Automatisk', djup: 'Djup', arc: 'Båge', fade: 'Ton
 const FOCUS_STYLES = { none: 'Ingen', soft: 'Mjuk', spotlight: 'Spotlight', line: 'Accentlinje', frame: 'Inramning' };
 const BACKGROUNDS = { none: 'Ingen', fokusljus: 'Fokusljus', ljus: 'Ljus', orbits: 'Banor', field: 'Vektorfält', nodes: 'Nätverk', waves: 'Vågor' };
 const TITLE_ANIMS = { auto: 'Automatisk', mask: 'Mask', words: 'Ord för ord', blur: 'Skärpa', rise: 'Stig', fade: 'Tona', type: 'Skrivmaskin', wipe: 'Svep', drop: 'Fall', none: 'Ingen' };
-const BODY_ANIMS = { auto: 'Automatisk', mask: 'Mask', rise: 'Stig', fade: 'Tona', left: 'Från vänster', right: 'Från höger', zoom: 'Zooma', pop: 'Studsa', blur: 'Skärpa', wipe: 'Svep', none: 'Ingen' };
+const BODY_ANIMS = { auto: 'Automatisk', mask: 'Mask', rise: 'Stig', fade: 'Tona', left: 'Från vänster', right: 'Från höger', zoom: 'Zooma', pop: 'Studsa', blur: 'Skärpa', wipe: 'Svep', type: 'Skrivmaskin', none: 'Ingen' };
 
 /* ---------- text ---------- */
 function esc(s) { return String(s == null ? '' : s).replace(/[&<>"]/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c])); }
@@ -1411,6 +1411,41 @@ function renderSlide(sl, i, deck, img) {
       attrs += ` data-dramaturgy="focus-restore" data-dramaturgy-state="${steps ? 'overview' : 'restored'}"${steps ? '' : ' data-dramaturgy-static="true"'}`;
       break;
     }
+    case 'formel': {
+      /* En formel i stor text. Varje klick tänder en term i sin färg och visar förklaringen under,
+         medan resten av formeln tonas ned. Tända termer behåller färgen. Sista klicket visar allt. */
+      const formula = String(sl.text || '').split('\n')[0].trim();
+      const terms = lines(sl.items).slice(0, 5).map(v => { const [t, ...b] = String(v).replace(/^(- )+/, '').split('|'); return { t: t.trim(), text: b.join('|').trim() }; });
+      const T = j => ` data-dramaturgy-target data-dramaturgy-index="${j}"`, n = terms.length;
+      const from = j => Array.from({ length: n }, (_, t) => t).filter(t => t >= j).join(' ');
+      /* Termerna letas upp i formeln från vänster; en term som inte finns i formeln förklaras ändå. */
+      const hits = [];
+      terms.forEach((tm, j) => {
+        let at = -1, pos = 0;
+        while (tm.t && (at = formula.indexOf(tm.t, pos)) >= 0 && hits.some(h => at < h.at + h.len && h.at < at + tm.t.length)) pos = at + 1;
+        if (tm.t && at >= 0) hits.push({ at, len: tm.t.length, j });
+      });
+      hits.sort((a, b) => a.at - b.at);
+      let fHtml = '', pos = 0;
+      hits.forEach(h => {
+        fHtml += `<span class="fm-op">${fmt(formula.slice(pos, h.at))}</span><span class="fm-t c${h.j}" data-dramaturgy-in="${from(h.j)}"><span class="fm-now" data-dramaturgy-in="${h.j}">${fmt(formula.slice(h.at, h.at + h.len))}</span></span>`;
+        pos = h.at + h.len;
+      });
+      fHtml += `<span class="fm-op">${fmt(formula.slice(pos))}</span>`;
+      const size = Math.round(Math.max(64, Math.min(150, 2600 / Math.max(8, formula.length))));
+      const says = terms.map((tm, j) => `<div class="fm-say c${j}"${T(j)}><b>${fmt(tm.t)}</b><p>${fmt(tm.text)}</p></div>`).join('');
+      let cues = '';
+      if (steps && n) {
+        terms.forEach((_, j) => { const s = st('none'); cues += `<span data-dramaturgy-cue data-dramaturgy-focus="${k}" data-dramaturgy-target="${j}"${s} aria-hidden="true"></span>`; });
+        cues += `<span data-dramaturgy-restore${st('none')} aria-hidden="true"></span>`;
+      }
+      body = (sl.caption ? `<p class="kicker"${A('fade')}>${fmt(sl.caption)}</p>` : '') + H2('', 'mask') +
+        `<div class="fm-stage"${A(anim(ba, 'rise'), 200)}><p class="fm-f" style="font-size:${size}px">${fHtml}</p>` +
+        `<div class="fm-says">${says}${sl.conclusion ? `<p class="fm-end">${fmt(sl.conclusion)}</p>` : ''}</div></div>` + cues;
+      if (plain(title).length > 44) cls = 'fl-long';
+      attrs += ` data-dramaturgy="focus-restore" data-dramaturgy-state="${steps && n ? 'overview' : 'restored'}"${steps && n ? '' : ' data-dramaturgy-static="true"'}`;
+      break;
+    }
     case 'kodskrivning': {
       /* Koden skrivs fram i ett terminalfönster med blinkande markör, i realtid eller en rad per klick.
          Därefter lyfter klicken fram rader och uttryck, med en förklaring vid raden. */
@@ -1421,9 +1456,11 @@ function renderSlide(sl, i, deck, img) {
         const p = s.split('|').map(x => x.trim()), ln = parseInt(p[0], 10);
         if (ln > 0) marks.push({ line: ln, token: p[1] || '', text: p[2] || '', result: p.slice(3).join(' | ') });
       });
+      /* "pop(0) -> pop()" byter ut uttrycket i det klicket och behåller det nya efteråt. */
+      marks.forEach(mk => { const sw = mk.token.split(/\s*(?:->|→)\s*/); if (sw.length === 2 && sw[0]) { mk.token = sw[0]; mk.swap = sw[1]; } });
       const code = String(sl.text || '').split(String.fromCharCode(13)).join('').split('\n').slice(0, 22);
       const perLine = /rad/.test(cfg.takt || ''), L2 = code.length;
-      const lh = Math.round(Math.min(46, 640 / Math.max(1, L2))), fs = Math.round(lh * .56);
+      const lh = Math.floor(Math.min(48, 590 / Math.max(1, L2))), fs = Math.round(Math.min(32, lh * .7));
       const KW = /^(def|class|return|if|elif|else|while|for|in|not|and|or|is|continue|break|import|from|as|pass|lambda|with|try|except|finally|raise|yield|True|False|None|function|const|let|var|new|this|of|async|await|null|true|false|public|private|static|void|int|double|boolean|String|print)$/;
       const hl = seg => {
         let out = '', m; const re = /(#.*$|\/\/.*$)|([fFrRbB]?"(?:[^"\\]|\\.)*"?|[fFrRbB]?'(?:[^'\\]|\\.)*'?)|(\b\d+(?:\.\d+)?\b)|([A-Za-z_]\w*)(\s*\()?|([^A-Za-z_\d#"'\/]+)|([\s\S])/g;
@@ -1439,11 +1476,34 @@ function renderSlide(sl, i, deck, img) {
       };
       const T = j => ` data-dramaturgy-target data-dramaturgy-index="${j}"`;
       const rowsHtml = code.map((raw, q) => {
-        const on = marks.map((mk, j) => mk.line === q + 1 ? j : -1).filter(j => j >= 0), mk = on.length ? marks[on[0]] : null;
-        let html = hl(raw);
-        if (mk && mk.token) { const at = raw.indexOf(mk.token); if (at >= 0) html = hl(raw.slice(0, at)) + `<mark>${hl(mk.token)}</mark>` + hl(raw.slice(at + mk.token.length)); }
+        const on = marks.map((mk, j) => mk.line === q + 1 ? j : -1).filter(j => j >= 0);
+        /* Varje uttryck lyser i sina egna klick. Ett utbytt uttryck står kvar i alla senare klick. */
+        const spans = [];
+        on.forEach(j => {
+          const mk = marks[j]; if (!mk.token) return;
+          let sp = spans.find(x => x.token === mk.token);
+          if (!sp) { const at = raw.indexOf(mk.token); if (at < 0 || spans.some(x => at < x.at + x.token.length && x.at < at + mk.token.length)) return; sp = { at, token: mk.token, idx: [] }; spans.push(sp); }
+          sp.idx.push(j); if (mk.swap != null && sp.swap == null) { sp.swap = mk.swap; sp.from = j; }
+        });
+        spans.sort((a, b) => a.at - b.at);
+        let html = '', pos = 0, len = raw.length;
+        spans.forEach(sp => {
+          let inner = hl(sp.token);
+          if (sp.swap != null) {
+            /* Bara det som skiljer raderas och skrivs om: pop(0) -> pop() tar bort nollan. */
+            const a = sp.token, b = sp.swap, later = marks.map((_, j) => j).filter(j => j >= sp.from);
+            let p = 0, q = 0;
+            while (p < a.length && p < b.length && a[p] === b[p]) p++;
+            while (q < a.length - p && q < b.length - p && a[a.length - 1 - q] === b[b.length - 1 - q]) q++;
+            const oldMid = a.slice(p, a.length - q), newMid = b.slice(p, b.length - q);
+            inner = hl(a.slice(0, p)) + `<span class="ks-swap fin" style="--o:${Math.max(1, oldMid.length)};--w:${Math.max(1, newMid.length)}" data-dramaturgy-in="${later.join(' ')}"><s>${hl(oldMid)}</s><ins>${hl(newMid)}</ins></span>` + hl(a.slice(a.length - q));
+            len = Math.max(len, raw.length - a.length + b.length);
+          }
+          html += hl(raw.slice(pos, sp.at)) + `<mark data-dramaturgy-in="${sp.idx.join(' ')}">${inner}</mark>`; pos = sp.at + sp.token.length;
+        });
+        html += hl(raw.slice(pos));
         const indent = (raw.match(/^\s*/) || [''])[0].length;
-        return `<div class="ks-line" data-len="${raw.length}" data-indent="${indent}" data-raw="${esc(raw)}"${on.length ? ` data-dramaturgy-in="${on.join(' ')}"` : ''}${perLine ? st('typeline') : ''}><span class="ks-no">${q + 1}</span><span class="ks-txt"><code>${html || ' '}</code><i class="ks-cur" aria-hidden="true"></i></span></div>`;
+        return `<div class="ks-line" data-len="${len}" data-indent="${indent}" data-raw="${esc(raw)}"${on.length ? ` data-dramaturgy-in="${on.join(' ')}"` : ''}${perLine ? st('typeline') : ''}><span class="ks-no">${q + 1}</span><span class="ks-txt"><code>${html || ' '}</code><i class="ks-cur" aria-hidden="true"></i></span></div>`;
       }).join('');
       const fn = (String(sl.text || '').match(/^\s*(?:def|function|class)\s+([A-Za-z_]\w*)/m) || [])[1];
       const py = /^\s*(def |class |import |from \S+ import)/m.test(String(sl.text || ''));
@@ -1493,7 +1553,7 @@ function renderSlide(sl, i, deck, img) {
         const start = cfg['start'] ? (G.nodes.find(n => plain(n.name).toLowerCase() === plain(cfg['start']).toLowerCase()) || G.nodes[0] || {}).i : 0;
         const S = G.nodes.length ? sokTrace(G, algo, goals, start) : [];
         nSteps = S.length;
-        const box = { x: 900, y: 290, w: 876, h: 530 }, { r, P } = drawGraph(G, box);
+        const box = { x: 1020, y: 300, w: 756, h: 500 }, { r, P } = drawGraph(G, box);
         const name = j => esc(plain(G.nodes[j].name));
         const fin = S[S.length - 1] || { done: [], path: [] }, finPath = new Set(fin.path || []);
         G.edges.forEach(([a, b]) => {
@@ -1522,17 +1582,18 @@ function renderSlide(sl, i, deck, img) {
         html += `<div class="sk-alg"><p class="sk-algh"><b>Algoritmen</b><span>${stack ? 'DFS · stack' : 'BFS · FIFO-kö'}</span></p><ol>` +
           AL.map((t, q) => `<li class="l${q}${q === 3 ? ' goalline' : ''}"${IN(S.map((s, k) => LINE[s.kind] === q ? k : -1).filter(k => k >= 0))}>${t}</li>`).join('') +
           `</ol></div>`;
-        const CH = 64, GAP = 12, FX = 144, FY = stack ? 640 : 650;
+        /* Frontiern under algoritmen: en liggande kö för BFS, en stående stack för DFS. */
+        const CH = stack ? 64 : 72, GAP = stack ? 10 : 12, FX = 144, FY = stack ? 654 : 668;
         html += stack
-          ? `<div class="sk-lane stack" style="left:${FX}px;top:${FY}px;width:${CH + 28}px;height:${4 * (CH + GAP) + 44}px"><p class="sk-lanel">Frontier · stack</p><span class="sk-io">in och ut ↕</span></div>`
-          : `<div class="sk-lane fifo" style="left:${FX}px;top:${FY}px;width:660px;height:${CH + 28}px"><p class="sk-lanel">Frontier · FIFO-kö</p><span class="sk-io l">← ut</span><span class="sk-io r">← in</span></div>`;
-        const CX = stack ? 330 : 144, CY = stack ? 680 : 800, EX = stack ? 330 : 144, EY = stack ? 830 : 920, per = stack ? 9 : 12;
-        html += `<p class="sk-lbl" style="left:${CX}px;top:${CY - 34}px">Utforskas nu</p><div class="sk-curbox" style="left:${CX}px;top:${CY}px;width:${CH + 16}px;height:${CH + 16}px"></div>` +
-          `<p class="sk-lbl" style="left:${EX}px;top:${EY - 34}px">Utforskade</p>`;
+          ? `<div class="sk-lane stack" style="left:${FX}px;top:${FY}px;width:${CH + 28}px;height:${4 * (CH + GAP) + 44}px"><p class="sk-lanel">Frontier · stack</p><span class="sk-io">↕ in och ut</span></div>`
+          : `<div class="sk-lane fifo" style="left:${FX}px;top:${FY}px;width:800px;height:${CH + 28}px"><p class="sk-lanel">Frontier · FIFO-kö</p><span class="sk-io l">← ut</span><span class="sk-io r">← in</span></div>`;
+        const CX = stack ? 440 : 144, CY = stack ? 700 : 858, EX = stack ? 440 : 340, EY = stack ? 860 : 866, ES = 52, per = 8;
+        html += `<p class="sk-lbl" style="left:${CX}px;top:${CY - 36}px">Utforskas nu</p><div class="sk-curbox" style="left:${CX}px;top:${CY}px;width:${CH + 16}px;height:${CH + 16}px"></div>` +
+          `<p class="sk-lbl" style="left:${EX}px;top:${EY - 44}px">Utforskade</p>`;
         const slotFr = q => stack ? [FX + 14, FY + 14 + (3 - Math.min(q, 3)) * (CH + GAP) + (q > 3 ? -(q - 3) * 18 : 0)] : [FX + 14 + q * (CH + GAP), FY + 14];
-        const slotCur = [CX + 8, CY + 8], ES = 46, slotDone = q => [EX + (q % per) * (ES + 8), EY + Math.floor(q / per) * (ES + 8)];
-        const rule = (sel, [x, y], kind) => `${sel}{left:${Math.round(x)}px;top:${Math.round(y)}px;opacity:1;${kind === 'cur' ? 'background:var(--accent);color:var(--bg);border-color:var(--accent);box-shadow:0 0 0 8px var(--hl),0 0 38px var(--hl)' : kind === 'done' ? `width:${ES}px;height:${ES}px;font-size:22px;border-radius:12px;opacity:.75` : ''}}`;
-        G.nodes.forEach((n, j) => { const [x, y] = P[j]; css += `.${uid} .sk-ch.n${j}{left:${Math.round(x - CH / 2)}px;top:${Math.round(y - CH / 2)}px;width:${CH}px;height:${CH}px}`; html += `<b class="sk-ch n${j}${goals.has(j) ? ' goal' : ''}">${name(j)}</b>`; });
+        const slotCur = [CX + 8, CY + 8], slotDone = q => [EX + (q % per) * (ES + 8), EY + Math.floor(q / per) * (ES + 8)];
+        const rule = (sel, [x, y], kind) => `${sel}{left:${Math.round(x)}px;top:${Math.round(y)}px;opacity:1;transform:none;${kind === 'cur' ? 'background:var(--accent);color:var(--bg);border-color:var(--accent);box-shadow:0 0 0 8px var(--hl),0 0 38px var(--hl)' : kind === 'done' ? `width:${ES}px;height:${ES}px;font-size:25px;border-radius:13px;opacity:.75` : ''}}`;
+        G.nodes.forEach((n, j) => { const [x, y] = P[j]; css += `.${uid} .sk-ch.n${j}{left:${Math.round(x - CH / 2)}px;top:${Math.round(y - CH / 2)}px;width:${CH}px;height:${CH}px;font-size:${Math.round(CH * .47)}px}`; html += `<b class="sk-ch n${j}${goals.has(j) ? ' goal' : ''}">${name(j)}</b>`; });
         const place = (s, pre) => {
           let out = '';
           s.fr.forEach((j, q) => { out += rule(`${pre} .sk-ch.n${j}`, slotFr(stack ? q : q), ''); });
@@ -1558,7 +1619,7 @@ function renderSlide(sl, i, deck, img) {
         const edgeAt = {}; W.forEach((n, k) => { if (k) { const a = W[k - 1], key = Math.min(a, n) + '-' + Math.max(a, n); if (!(key in edgeAt)) edgeAt[key] = k; } });
         G.edges.forEach(([a, b]) => {
           const key = Math.min(a, b) + '-' + Math.max(a, b), k0 = edgeAt[key], on = k0 == null ? [] : W.map((_, k) => k >= k0 ? k : -1).filter(k => k >= 0);
-          svg += `<path class="sk-e" d="${edgeD(P, a, b, r)}" marker-end="url(#skm${uid})"/><path class="sk-ep${k0 != null ? ' fin' : ''}" d="${edgeD(P, a, b, r)}" pathLength="1"${IN(on)}/>`;
+          svg += `<path class="sk-e" d="${edgeD(P, a, b, r)}" marker-end="url(#skm${uid})"/><path class="sk-ep walk${k0 != null ? ' fin' : ''}" d="${edgeD(P, a, b, r)}" pathLength="1"${IN(on)}/>`;
         });
         G.nodes.forEach((n, j) => {
           const [x, y] = P[j], seen = first[j] == null ? [] : W.map((_, k) => k >= first[j] ? k : -1).filter(k => k >= 0);
@@ -1570,7 +1631,7 @@ function renderSlide(sl, i, deck, img) {
         W.forEach((n, k) => { const [x, y] = P[n]; css += `.${uid}[data-dramaturgy-focus="${k}"] .sk-cursor{left:${Math.round(x - r - 13)}px;top:${Math.round(y - r - 13)}px;opacity:1}`; });
         const nm = j => esc(plain(G.nodes[j].name));
         html += `<div class="sk-status wide" style="left:144px;top:${box.y + box.h + 40}px;width:1632px">` + (sl.text ? `<p class="sk-say sk-intro">${fmt(sl.text)}</p>` : '') +
-          W.map((n, k) => `<div class="sk-say"${T(k)}><p>${first[n] === k ? `Besöker ${nm(n)}.` : `Inga fler nya grannar. Backar till ${nm(n)}.`}</p>${notes[k + 1] ? `<p class="sk-note">${fmt(notes[k + 1])}</p>` : ''}</div>`).join('') +
+          W.map((n, k) => `<div class="sk-say"${T(k)}><p>${first[n] === k ? `Utforskar ${nm(n)}.` : `Inga fler nya grannar. Backar till ${nm(n)}.`}</p>${notes[k + 1] ? `<p class="sk-note">${fmt(notes[k + 1])}</p>` : ''}</div>`).join('') +
           (sl.conclusion ? `<p class="sk-say sk-end">${fmt(sl.conclusion)}</p>` : '') + `</div>`;
       } else {
         /* Övning: ett till tre träd bredvid varandra. Två klick per träd: ordningen, sedan vägen. */
@@ -1608,54 +1669,81 @@ function renderSlide(sl, i, deck, img) {
     case 'rutnat': {
       /* Sökning i ett rutnät. Utforskade rutor färgas, frontiern ringas in, den aktuella rutan lyser.
          BFS går en nivå per klick, övriga algoritmer en ruta per klick. Sista steget ritar vägen. */
-      const { cfg, notes, rows } = sokSplit(sl.items);
-      const algo = sokAlgo(cfg['algoritm']), uid = 'u' + hash((sl.id || '') + i + L);
+      const { cfg, notes, rows } = sokSplit(sl.items), uid = 'u' + hash((sl.id || '') + i + L);
+      /* En algoritm, eller två bredvid varandra i samma labyrint: "algoritm: bfs, dfs". */
+      const algos = String(cfg['algoritm'] || 'bfs').split(/\s*(?:,|\boch\b|\bmot\b|\bvs\b)\s*/i).filter(Boolean).slice(0, 2).map(sokAlgo);
+      const dual = algos.length > 1, takt = String(cfg['takt'] || ''), chunk = Math.max(1, parseInt(takt, 10) || 1);
       const grid = rows.filter(r => r.t != null && /^[#.AB]+$/i.test(r.t.replace(/\s+/g, ''))).map(r => r.t.replace(/\s+/g, '').toUpperCase()).slice(0, 14);
-      const res = grid.length ? rnSearch(grid, algo) : null;
-      const level = algo === 'bfs' && !/ruta/i.test(cfg['takt'] || '');
       const nums = /g\s*\+\s*h/i.test(cfg['siffror'] || '') ? 'gh' : /^h$|avst|manhattan/i.test((cfg['siffror'] || '').trim()) ? 'h' : '';
       const T = j => ` data-dramaturgy-target data-dramaturgy-index="${j}"`, IN = arr => arr.length ? ` data-dramaturgy-in="${arr.join(' ')}"` : '';
       let svg = '', html = '', cues = '', nSteps = 0;
-      if (res) {
-        const { R, C, at, key } = res, ord = res.order.slice(1), groups = [];
+      const runs = grid.length ? algos.map(algo => {
+        const res = rnSearch(grid, algo); if (!res) return null;
+        const level = algo === 'bfs' && !dual && !/ruta|\d/.test(takt), ord = res.order.slice(1), groups = [];
         if (level) ord.forEach((o, j) => { (groups[o.g - 1] = groups[o.g - 1] || []).push(j + 1); });
-        else ord.forEach((o, j) => groups.push([j + 1]));
-        const G2 = groups.filter(Boolean), pathStep = res.found ? G2.length : -1;
-        nSteps = G2.length + (res.found ? 1 : 0);
-        const stepOf = {}; G2.forEach((g, s) => g.forEach(j => { stepOf[key(res.order[j].p)] = s; }));
-        const frAt = s => { const lastJ = G2[Math.min(s, G2.length - 1)].slice(-1)[0]; return res.frontier[Math.min(lastJ, res.frontier.length - 1)] || new Set(); };
-        const box = { x: 144, y: 300, w: 1140, h: 680 }, cs = Math.floor(Math.min(box.w / C, box.h / R)), ox = box.x + Math.round((box.w - cs * C) / 2), oy =box.y + Math.round((box.h - cs * R) / 2);
+        else for (let j = 0; j < ord.length; j += chunk) groups.push(Array.from({ length: Math.min(chunk, ord.length - j) }, (_, q) => j + q + 1));
+        return { algo, res, level, G2: groups.filter(Boolean) };
+      }).filter(Boolean) : [];
+      if (runs.length) {
+        const nG = Math.max(...runs.map(r => r.G2.length)), anyFound = runs.some(r => r.res.found), pathStep = anyFound ? nG : -1;
+        nSteps = nG + (anyFound ? 1 : 0);
         const all = n => Array.from({ length: nSteps }, (_, t) => t).filter(n);
-        let ends = '';
-        for (let r = 0; r < R; r++) for (let c = 0; c < C; c++) {
-          const x = ox + c * cs, y = oy + r * cs, ch = at(r, c), k2 = r * C + c;
-          if (ch === '#') { svg += `<rect class="rn-wall" x="${x + 2}" y="${y + 2}" width="${cs - 4}" height="${cs - 4}" rx="${Math.round(cs * .12)}"/>`; continue; }
-          svg += `<rect class="rn-floor" x="${x + 2}" y="${y + 2}" width="${cs - 4}" height="${cs - 4}" rx="${Math.round(cs * .12)}"/>`;
-          const s0 = stepOf[k2], ex = s0 == null ? [] : all(t => t >= s0);
-          const fr = all(t => t < G2.length && frAt(t).has(k2) && !(s0 != null && t >= s0));
-          if (ch !== 'A') svg += `<rect class="rn-ex${s0 != null ? ' fin' : ''}" x="${x + 2}" y="${y + 2}" width="${cs - 4}" height="${cs - 4}" rx="${Math.round(cs * .12)}"${IN(ex)}/>` +
-            `<rect class="rn-fr" x="${x + 6}" y="${y + 6}" width="${cs - 12}" height="${cs - 12}" rx="${Math.round(cs * .1)}"${IN(fr)}/>` +
-            (s0 != null ? `<rect class="rn-cu" x="${x + 2}" y="${y + 2}" width="${cs - 4}" height="${cs - 4}" rx="${Math.round(cs * .12)}"${IN([s0])}/>` : '');
-          const o = ord.find(q => q.p[0] === r && q.p[1] === c), fs = Math.round(cs * (nums === 'gh' ? .26 : .3));
-          if (ch === 'A' || ch === 'B') ends += `<rect class="rn-${ch === 'A' ? 'start' : 'goal'}" x="${x + 8}" y="${y + 8}" width="${cs - 16}" height="${cs - 16}" rx="${Math.round(cs * .12)}"/><text class="rn-ab" x="${x + cs / 2}" y="${y + cs / 2 + cs * .15}" text-anchor="middle" style="font-size:${Math.round(cs * .42)}px">${ch}</text>`;
-          else if (nums === 'h') svg += `<text class="rn-num${s0 != null ? ' fin' : ''}" x="${x + cs / 2}" y="${y + cs / 2 + fs * .36}" text-anchor="middle" style="font-size:${fs}px"${IN(ex)}>${res.h([r, c])}</text>`;
-          else if (nums === 'gh' && o) svg += `<text class="rn-num gh fin" x="${x + cs / 2}" y="${y + cs / 2 + fs * .36}" text-anchor="middle" style="font-size:${fs}px"${IN(ex)}>${o.g}+${o.h}</text>`;
+        runs.forEach((run, ri) => {
+          const { res, G2 } = run, { R, C, at, key } = res, ord = res.order.slice(1);
+          const stepOf = {}; G2.forEach((g, s) => g.forEach(j => { stepOf[key(res.order[j].p)] = s; }));
+          const frAt = s => { const lastJ = G2[Math.min(s, G2.length - 1)].slice(-1)[0]; return res.frontier[Math.min(lastJ, res.frontier.length - 1)] || new Set(); };
+          const box = dual ? { x: 144 + ri * 856, y: 392, w: 776, h: 530 } : { x: 144, y: 300, w: 1140, h: 680 };
+          const cs = Math.floor(Math.min(box.w / C, box.h / R)), ox = box.x + Math.round((box.w - cs * C) / 2), oy = box.y + Math.round((box.h - cs * R) / 2);
+          /* Spelplanen: en ram runt hela rutnätet, sammanhängande väggar och golvet som rutor. */
+          let ends = '', walls = '';
+          const pad = Math.round(Math.max(10, cs * .2));
+          svg += `<rect class="rn-board" x="${ox - pad}" y="${oy - pad}" width="${cs * C + 2 * pad}" height="${cs * R + 2 * pad}" rx="${pad + Math.round(cs * .12)}"/>`;
+          for (let r = 0; r < R; r++) for (let c = 0; c < C; c++) {
+            const x = ox + c * cs, y = oy + r * cs, ch = at(r, c), k2 = r * C + c, rx = Math.round(cs * .12);
+            if (ch === '#') { walls += `<rect x="${x}" y="${y}" width="${cs}" height="${cs}"/>`; continue; }
+            svg += `<rect class="rn-floor" x="${x + 2}" y="${y + 2}" width="${cs - 4}" height="${cs - 4}" rx="${rx}"/>`;
+            const s0 = stepOf[k2], ex = s0 == null ? [] : all(t => t >= s0);
+            const fr = all(t => t < G2.length && frAt(t).has(k2) && !(s0 != null && t >= s0));
+            if (ch !== 'A') svg += `<rect class="rn-ex${s0 != null ? ' fin' : ''}" x="${x + 2}" y="${y + 2}" width="${cs - 4}" height="${cs - 4}" rx="${rx}"${IN(ex)}/>` +
+              `<rect class="rn-fr" x="${x + 6}" y="${y + 6}" width="${cs - 12}" height="${cs - 12}" rx="${Math.round(cs * .1)}"${IN(fr)}/>` +
+              (s0 != null ? `<rect class="rn-cu" x="${x + 2}" y="${y + 2}" width="${cs - 4}" height="${cs - 4}" rx="${rx}"${IN([s0])}/>` : '');
+            const o = ord.find(q => q.p[0] === r && q.p[1] === c), fs = Math.round(cs * (nums === 'gh' ? .26 : .3));
+            if (ch === 'A' || ch === 'B') ends += `<rect class="rn-${ch === 'A' ? 'start' : 'goal'}" x="${x + 8}" y="${y + 8}" width="${cs - 16}" height="${cs - 16}" rx="${rx}"/><text class="rn-ab" x="${x + cs / 2}" y="${y + cs / 2 + cs * .15}" text-anchor="middle" style="font-size:${Math.round(cs * .42)}px">${ch}</text>`;
+            else if (nums === 'h') svg += `<text class="rn-num${s0 != null ? ' fin' : ''}" x="${x + cs / 2}" y="${y + cs / 2 + fs * .36}" text-anchor="middle" style="font-size:${fs}px"${IN(ex)}>${res.h([r, c])}</text>`;
+            else if (nums === 'gh' && o) svg += `<text class="rn-num gh fin" x="${x + cs / 2}" y="${y + cs / 2 + fs * .36}" text-anchor="middle" style="font-size:${fs}px"${IN(ex)}><tspan class="g">${o.g}</tspan>+<tspan class="h">${o.h}</tspan></text>`;
+          }
+          svg += `<g class="rn-wall">${walls}</g>`;
+          if (res.found) {
+            const pts = res.path.map(k2 => [ox + (k2 % C) * cs + cs / 2, oy + Math.floor(k2 / C) * cs + cs / 2]);
+            svg += `<polyline class="rn-path fin" points="${pts.map(p => p.map(v => v.toFixed(1)).join(',')).join(' ')}" pathLength="1"${IN([pathStep])}/>`;
+          }
+          svg += ends;
+          if (dual) {
+            /* Namn och räknare ovanför varje rutnät. */
+            const count = s => G2.slice(0, Math.min(s, G2.length - 1) + 1).reduce((a, g) => a + g.length, 0);
+            html += `<div class="rn-head" style="left:${box.x}px;width:${box.w}px;top:${oy - pad - 96}px"><p class="rn-name">${esc(SOK_NAME[run.algo])}</p><div class="rn-count">` +
+              `<span class="rn-c0">Redo att söka</span>` +
+              Array.from({ length: nSteps }, (_, s) => `<span${IN([s])}>${s === pathStep && res.found ? `Vägen: <b>${res.path.length - 1} steg</b>` : `Utforskade rutor: ${count(s)}`}</span>`).join('') +
+              (res.found ? `<span class="rn-cfin">Vägen: <b>${res.path.length - 1} steg</b> · ${ord.length} rutor utforskade</span>` : '') + `</div></div>`;
+          }
+        });
+        if (dual) {
+          html += `<div class="rn-foot">` + (sl.text ? `<p class="rn-say rn-intro">${fmt(sl.text)}</p>` : '') +
+            Array.from({ length: nSteps }, (_, s) => notes[s + 1] ? `<div class="rn-say"${T(s)}><p class="sk-note">${fmt(notes[s + 1])}</p></div>` : `<i${T(s)}></i>`).join('') +
+            (sl.conclusion ? `<p class="rn-say rn-end">${fmt(sl.conclusion)}</p>` : '') + `</div>`;
+        } else {
+          const { algo, res, level, G2 } = runs[0], key = res.key;
+          const tag = SOK_NAME[algo] + (level ? ' · en nivå per klick' : chunk > 1 ? ` · ${chunk} rutor per klick` : ' · en ruta per klick');
+          const say = s => {
+            if (s === pathStep) return `Vägen från A till B: ${res.path.length - 1} steg.`;
+            const js = G2[s], o = res.order[js[js.length - 1]], hit = res.T && js.some(j => key(res.order[j].p) === key(res.T));
+            const base = level ? `Nivå ${o.g}: ${js.length} ${js.length === 1 ? 'ny ruta' : 'nya rutor'}.` : algo === 'girig' ? `Lägst h i frontiern: ${o.h}.` : algo === 'astar' ? `Lägst f i frontiern: ${o.g} + ${o.h} = ${o.g + o.h}.` : `Utforskade rutor: ${js[js.length - 1]}.`;
+            return base + (hit ? ' Målet B är hittat!' : '');
+          };
+          html += `<div class="rn-side"><p class="rn-tag">${esc(tag)}</p>` + (sl.text ? `<p class="rn-lead">${fmt(sl.text)}</p>` : '') +
+            `<div class="rn-says">` + Array.from({ length: nSteps }, (_, s) => `<div class="rn-say"${T(s)}><p>${say(s)}</p>${notes[s + 1] ? `<p class="sk-note">${fmt(notes[s + 1])}</p>` : ''}</div>`).join('') +
+            (sl.conclusion ? `<p class="rn-say rn-end">${fmt(sl.conclusion)}</p>` : '') + `</div></div>`;
         }
-        if (res.found) {
-          const pts = res.path.map(k2 => [ox + (k2 % C) * cs + cs / 2, oy + Math.floor(k2 / C) * cs + cs / 2]);
-          svg += `<polyline class="rn-path fin" points="${pts.map(p => p.map(v => v.toFixed(1)).join(',')).join(' ')}" pathLength="1"${IN([pathStep])}/>`;
-        }
-        svg += ends;
-        const tag = SOK_NAME[algo] + (level ? ' · en nivå per klick' : ' · en ruta per klick');
-        const say = s => {
-          if (s === pathStep) return `Vägen från A till B: ${res.path.length - 1} steg.`;
-          const js = G2[s], o = res.order[js[js.length - 1]], hit = res.T && js.some(j => key(res.order[j].p) === key(res.T));
-          const base = level ? `Nivå ${o.g}: ${js.length} ${js.length === 1 ? 'ny ruta' : 'nya rutor'}.` : algo === 'girig' ? `Lägst h i frontiern: ${o.h}.` : algo === 'astar' ? `Lägst f i frontiern: ${o.g} + ${o.h} = ${o.g + o.h}.` : `Utforskade rutor: ${js[js.length - 1]}.`;
-          return base + (hit ? ' Målet B är hittat!' : '');
-        };
-        html += `<div class="rn-side"><p class="rn-tag">${esc(tag)}</p>` + (sl.text ? `<p class="rn-lead">${fmt(sl.text)}</p>` : '') +
-          `<div class="rn-says">` + Array.from({ length: nSteps }, (_, s) => `<div class="rn-say"${T(s)}><p>${say(s)}</p>${notes[s + 1] ? `<p class="sk-note">${fmt(notes[s + 1])}</p>` : ''}</div>`).join('') +
-          (sl.conclusion ? `<p class="rn-say rn-end">${fmt(sl.conclusion)}</p>` : '') + `</div></div>`;
       }
       if (steps) {
         for (let k2 = 0; k2 < nSteps; k2++) { const s = st('none'); cues += `<span data-dramaturgy-cue data-dramaturgy-focus="${k}" data-dramaturgy-target="${k2}"${s} aria-hidden="true"></span>`; }
@@ -1668,44 +1756,66 @@ function renderSlide(sl, i, deck, img) {
       break;
     }
     case 'ko': {
-      /* Tre köer sida vid sida får samma element. Vid "ut" syns direkt vilket element varje kö lämnar ut. */
-      const { notes, rows } = sokSplit(sl.items), uid = 'u' + hash((sl.id || '') + i + L);
+      /* Två eller tre köer sida vid sida får samma element. En kö i taget: först läggs elementen in (ett klick),
+         sedan är varje "ut" ett klick. Det som tas ut hamnar på en rad under kön, så ordningen står kvar och
+         kan jämföras med nästa kö. Med takt: samtidigt gör alla köer samma steg på en gång. */
+      const { cfg, notes, rows } = sokSplit(sl.items), uid = 'u' + hash((sl.id || '') + i + L);
       const lanes = rows.filter(r => r.key === 'kö').slice(0, 3).map(r => {
         const p = r.v.split('|').map(s => s.trim()), t = (p[0] || '').toLowerCase();
-        return { type: /lifo|stack/.test(t) ? 'lifo' : /prio/.test(t) ? 'prio' : 'fifo', name: p[1] || p[0] || '', sub: p[2] || '', code: p[3] || '', q: [], out: null };
+        return { type: /lifo|stack/.test(t) ? 'lifo' : /prio/.test(t) ? 'prio' : 'fifo', name: p[1] || p[0] || '', sub: p[2] || '', code: p[3] || '' };
       });
       const ops = rows.filter(r => r.key === 'in' || r.key === 'ut').slice(0, 12).map(r => { if (r.key === 'ut') return { ut: true }; const m = r.v.match(/^(.+?)(?:\s+(-?\d+))?$/); return { name: (m && m[1] || r.v).trim(), prio: m && m[2] != null ? +m[2] : null }; });
       const items = []; ops.forEach(o => { if (!o.ut) { o.id = items.length; items.push(o); } });
+      const together = /samtid|alla|på en gång/i.test(cfg['takt'] || '');
       const n = Math.max(1, lanes.length), gap = 56, cw = (1632 - gap * (n - 1)) / n, CH = 80, SP = 92;
       const T = j => ` data-dramaturgy-target data-dramaturgy-index="${j}"`;
+      const nm = o => esc(plain(o.name));
       let css = '', html = '', cues = '';
-      const pos = (l, q, x0) => l.type === 'lifo' ? [x0 + cw / 2 - CH / 2, 860 - 14 - CH - q * SP] : [x0 + 16 + q * SP, 614];
-      const outPos = x0 => [x0 + cw / 2 - CH / 2, 900];
+      const pos = (l, q, x0) => l.type === 'lifo' ? [x0 + cw / 2 - CH / 2, 830 - 14 - CH - q * SP] : [x0 + 16 + q * SP, 614];
+      const outPos = (q, x0) => [x0 + q * SP, 904];
+      /* Klicken: vilka köer och vilka steg varje klick gäller. */
+      const plan = [];
+      if (together) ops.forEach((o, s) => plan.push({ lanes: lanes.map((_, li) => li), ops: [s] }));
+      else lanes.forEach((l, li) => { for (let j = 0; j < ops.length;) { const g = []; if (ops[j].ut) g.push(j++); else while (j < ops.length && !ops[j].ut) g.push(j++); plan.push({ lanes: [li], ops: g }); } });
+      const state = lanes.map(() => ({ q: [], outs: [], last: null, fresh: [] }));
+      const take = (l, s) => { if (!s.q.length) return null; const idx = l.type === 'lifo' ? s.q.length - 1 : l.type === 'prio' ? s.q.reduce((b, it, j) => (it.prio ?? 0) < (s.q[b].prio ?? 0) ? j : b, 0) : 0; const it = s.q.splice(idx, 1)[0]; s.outs.push(it); return it; };
+      const HOT = 'background:var(--accent);color:var(--bg);border-color:var(--accent);box-shadow:0 0 0 8px var(--hl),0 0 40px var(--hl)';
+      const place = (pre, li, s, hot) => {
+        const l = lanes[li], x0 = 144 + li * (cw + gap); let out = '';
+        s.q.forEach((it, q) => { const [x, y] = pos(l, q, x0), f = hot ? s.fresh.indexOf(it.id) : -1; out += `${pre} .ko-ch.l${li}.i${it.id}{left:${Math.round(x)}px;top:${Math.round(y)}px;opacity:1;transform:none${f > 0 ? `;transition-delay:${(f * .32).toFixed(2)}s` : ''}}`; });
+        s.outs.forEach((it, q) => { const [x, y] = outPos(q, x0); out += `${pre} .ko-ch.l${li}.i${it.id}{left:${Math.round(x)}px;top:${Math.round(y)}px;opacity:1;transform:none;${hot && it === s.last ? HOT : 'border-color:color-mix(in srgb,var(--accent) 35%,var(--line))'}}`; });
+        return out;
+      };
       const says = [];
-      ops.forEach((o, s) => {
-        lanes.forEach((l, li) => {
-          const x0 = 144 + li * (cw + gap);
-          if (o.ut) { const idx = l.type === 'lifo' ? l.q.length - 1 : l.type === 'prio' ? l.q.reduce((b, it, j) => (it.prio ?? 0) < (l.q[b].prio ?? 0) ? j : b, 0) : 0; l.out = l.q.length ? l.q.splice(idx, 1)[0] : null; }
-          else { l.out = null; l.q.push(o); if (l.type === 'prio') l.q.sort((a, b) => (a.prio ?? 0) - (b.prio ?? 0) || a.id - b.id); }
-          l.q.forEach((it, q) => { const [x, y] = pos(l, q, x0); css += `.${uid}[data-dramaturgy-focus="${s}"] .ko-ch.l${li}.i${it.id}{left:${Math.round(x)}px;top:${Math.round(y)}px;opacity:1;transform:none}`; });
-          if (l.out) { const [x, y] = outPos(x0); css += `.${uid}[data-dramaturgy-focus="${s}"] .ko-ch.l${li}.i${l.out.id}{left:${Math.round(x)}px;top:${Math.round(y)}px;opacity:1;transform:none;background:var(--accent);color:var(--bg);border-color:var(--accent);box-shadow:0 0 0 8px var(--hl),0 0 40px var(--hl)}`; }
+      plan.forEach((P, t) => {
+        P.lanes.forEach(li => {
+          const s = state[li]; s.last = null; s.fresh = [];
+          P.ops.forEach(j => { const o = ops[j]; if (o.ut) s.last = take(lanes[li], s); else { s.q.push(o); s.fresh.push(o.id); if (lanes[li].type === 'prio') s.q.sort((a, b) => (a.prio ?? 0) - (b.prio ?? 0) || a.id - b.id); } });
         });
-        says.push(o.ut ? `Ta ut: ${lanes.map(l => `${esc(plain(l.name))} lämnar ut ${l.out ? esc(plain(l.out.name)) : 'ingenting'}`).join(', ')}.` : `${esc(plain(o.name))} läggs in${o.prio != null ? ` med prioritet ${o.prio}` : ''}.`);
+        lanes.forEach((l, li) => { css += place(`.${uid}[data-dramaturgy-focus="${t}"]`, li, state[li], P.lanes.includes(li)); });
+        const o = ops[P.ops[0]], ins = P.ops.map(j => ops[j]).filter(x => !x.ut);
+        if (together) says.push(o.ut ? `Ta ut: ${lanes.map((l, li) => `${esc(plain(l.name))} lämnar ut ${state[li].last ? nm(state[li].last) : 'ingenting'}`).join(', ')}.` : `${nm(o)} läggs in${o.prio != null ? ` med prioritet ${o.prio}` : ''}.`);
+        else {
+          const l = lanes[P.lanes[0]], s = state[P.lanes[0]], who = `<b>${esc(plain(l.name))}</b>`;
+          says.push(o.ut ? (s.last ? `${who} lämnar ut ${nm(s.last)}.` : `${who} är tom.`) :
+            `${who}: ${sokList(ins.map(nm))} läggs in${ins.length > 1 ? ' i tur och ordning' : ''}.${l.type === 'prio' && ins.some(x => x.prio != null) ? ' Kön ordnas efter prioritet.' : ''}`);
+        }
       });
+      lanes.forEach((l, li) => { state[li].last = null; css += place(`.${uid}[data-dramaturgy-state="restored"]`, li, state[li], false); });
       lanes.forEach((l, li) => {
-        const x0 = 144 + li * (cw + gap);
-        html += `<div class="ko-col" style="left:${Math.round(x0)}px;width:${Math.round(cw)}px"><h3>${fmt(l.name)}</h3>${l.sub ? `<p>${fmt(l.sub)}</p>` : ''}${l.code ? `<code>${esc(l.code)}</code>` : ''}</div>` +
-          (l.type === 'lifo' ? `<div class="ko-lane lifo" style="left:${Math.round(x0 + cw / 2 - CH / 2 - 14)}px;top:470px;width:${CH + 28}px;height:390px"><span class="ko-io">in och ut ↕</span></div>`
+        const x0 = 144 + li * (cw + gap), act = plan.map((P, t) => P.lanes.includes(li) ? t : -1).filter(t => t >= 0);
+        html += `<div class="ko-set"${act.length ? ` data-dramaturgy-in="${act.join(' ')}"` : ''}><div class="ko-col" style="left:${Math.round(x0)}px;width:${Math.round(cw)}px"><h3>${fmt(l.name)}</h3>${l.sub ? `<p>${fmt(l.sub)}</p>` : ''}${l.code ? `<code>${esc(l.code)}</code>` : ''}</div>` +
+          (l.type === 'lifo' ? `<div class="ko-lane lifo" style="left:${Math.round(x0 + cw / 2 - CH / 2 - 14)}px;top:440px;width:${CH + 28}px;height:390px"><span class="ko-io">in och ut ↕</span></div>`
             : `<div class="ko-lane ${l.type}" style="left:${Math.round(x0)}px;top:600px;width:${Math.round(cw)}px;height:${CH + 28}px"><span class="ko-io l">← ut</span><span class="ko-io r">← in</span></div>`) +
-          `<p class="ko-out" style="left:${Math.round(x0)}px;top:916px">Ut</p>`;
-        items.forEach(it => { const [x, y] = l.type === 'lifo' ? [x0 + cw / 2 - CH / 2, 380] : [x0 + cw - CH - 16, 520]; css += `.${uid} .ko-ch.l${li}.i${it.id}{left:${Math.round(x)}px;top:${Math.round(y)}px;width:${CH}px;height:${CH}px}`; html += `<b class="ko-ch l${li} i${it.id}">${esc(plain(it.name))}${l.type === 'prio' && it.prio != null ? `<small>${it.prio}</small>` : ''}</b>`; });
+          `<p class="ko-out" style="left:${Math.round(x0)}px;top:866px">Ut, i ordning</p>`;
+        items.forEach(it => { const [x, y] = l.type === 'lifo' ? [x0 + cw / 2 - CH / 2, 350] : [x0 + cw - CH - 16, 520]; css += `.${uid} .ko-ch.l${li}.i${it.id}{left:${Math.round(x)}px;top:${Math.round(y)}px;width:${CH}px;height:${CH}px}`; html += `<b class="ko-ch l${li} i${it.id}">${esc(plain(it.name))}${l.type === 'prio' && it.prio != null ? `<small>${it.prio}</small>` : ''}</b>`; });
+        html += `</div>`;
       });
       html += `<div class="ko-says">` + (sl.text ? `<p class="ko-say ko-intro">${fmt(sl.text)}</p>` : '') + says.map((t, s) => `<div class="ko-say"${T(s)}><p>${t}</p>${notes[s + 1] ? `<p class="sk-note">${fmt(notes[s + 1])}</p>` : ''}</div>`).join('') + (sl.conclusion ? `<p class="ko-say ko-end">${fmt(sl.conclusion)}</p>` : '') + `</div>`;
       if (steps) {
-        ops.forEach((o, s2) => { const s = st('none'); cues += `<span data-dramaturgy-cue data-dramaturgy-focus="${k}" data-dramaturgy-target="${s2}"${s} aria-hidden="true"></span>`; });
+        plan.forEach((P, s2) => { const s = st('none'); cues += `<span data-dramaturgy-cue data-dramaturgy-focus="${k}" data-dramaturgy-target="${s2}"${s} aria-hidden="true"></span>`; });
         cues += `<span data-dramaturgy-restore${st('none')} aria-hidden="true"></span>`;
       }
-      if (ops.length) { const lastRules = css.split('}').filter(r => r.includes(`[data-dramaturgy-focus="${ops.length - 1}"]`)).map(r => r.replace(`[data-dramaturgy-focus="${ops.length - 1}"]`, '[data-dramaturgy-state="restored"]') + '}'); css += lastRules.join(''); }
       body = `<style>${css}</style>` + (sl.caption ? `<p class="kicker"${A('fade')}>${fmt(sl.caption)}</p>` : '') + H2('', 'mask') +
         `<div class="ko-stage"${A(anim(ba, 'fade'), 150)}>${html}</div>` + cues;
       cls = uid + (plain(title).length > 44 ? ' fl-long' : '');
@@ -2136,16 +2246,42 @@ function typeCode(el, delay, only) {
   to = setTimeout(tick, (delay || 0) + (only ? 60 : 500));
   return { cancel: end, finish: end };
 }
+/* Skriver fram text tecken för tecken med ett blinkande block, som i en kommandotolk. Formatering och
+   radbrytningar står still: det som ännu inte är skrivet finns redan på plats men är osynligt. */
+let TYPE_FREE = 0;
 function typeOut(el, delay) {
-  if (el._orig == null) el._orig = el.innerHTML;
-  const txt = el.textContent;
-  el.textContent = ''; el.classList.add('typing');
-  let i = 0, to, iv;
-  const done = () => { clearInterval(iv); clearTimeout(to); el.innerHTML = el._orig; el.classList.remove('typing'); };
-  to = setTimeout(() => {
-    iv = setInterval(() => { i++; el.textContent = txt.slice(0, i); if (i >= txt.length) { clearInterval(iv); setTimeout(done, 500); } }, Math.max(18, Math.min(55, 1400 / txt.length)));
-  }, delay || 0);
-  return { cancel: done, finish: done };
+  if (el._type) el._type.finish();
+  const parts = [], walk = document.createTreeWalker(el, NodeFilter.SHOW_TEXT);
+  for (let n; (n = walk.nextNode());) if (n.nodeValue.trim() && !(n.parentElement && n.parentElement.closest('svg,style,script'))) parts.push(n);
+  const total = parts.reduce((a, n) => a + n.nodeValue.length, 0);
+  if (!total) return { cancel() {}, finish() {} };
+  const segs = parts.map(n => { const full = n.nodeValue, rest = document.createElement('span'); rest.className = 'type-rest'; rest.textContent = full; n.nodeValue = ''; n.parentNode.insertBefore(rest, n.nextSibling); return { n, rest, full }; });
+  const cur = document.createElement('i'); cur.className = 'type-cur'; cur.setAttribute('aria-hidden', 'true');
+  el.classList.add('typing');
+  /* Takten räknas ut i förväg, så att flera texter på samma bild kan skrivas en i taget. */
+  const per = Math.max(14, Math.min(50, 2400 / total)), waits = [];
+  segs.forEach(s => { for (const ch of s.full) waits.push(per * (.6 + Math.random() * .8) + (/[.,:;!?]/.test(ch) ? per * 4 : 0)); });
+  const now = performance.now(), start = Math.max(now + (delay || 0) + 250, TYPE_FREE);
+  TYPE_FREE = start + waits.reduce((a, w) => a + w, 0) + 150;
+  let si = 0, ci = 0, k = 0, to, off;
+  const at = () => { const s = segs[si]; s.rest.parentNode.insertBefore(cur, s.rest); };
+  const clean = () => { clearTimeout(to); clearTimeout(off); segs.forEach(s => { s.n.nodeValue = s.full; s.rest.remove(); }); cur.remove(); el.classList.remove('typing'); el._type = null; };
+  const stop = () => { clean(); TYPE_FREE = 0; };
+  const idle = () => {
+    el.classList.remove('typing');
+    if (TYPE_FREE > performance.now() + 250) { cur.remove(); off = setTimeout(clean, 50); return; }
+    off = setTimeout(() => { cur.classList.add('bye'); off = setTimeout(clean, 450); }, 1500);
+  };
+  const tick = () => {
+    let s = segs[si];
+    while (ci >= s.full.length && si < segs.length - 1) { si++; ci = 0; s = segs[si]; at(); }
+    if (ci >= s.full.length) { idle(); return; }
+    ci++; s.n.nodeValue = s.full.slice(0, ci); s.rest.textContent = s.full.slice(ci);
+    to = setTimeout(tick, waits[k++] || per);
+  };
+  to = setTimeout(() => { at(); tick(); }, start - now);
+  el._type = { cancel: stop, finish: stop };
+  return el._type;
 }
 function playNamed(el, name, delay, dur) {
   if (name === 'none') return { cancel() {}, finish() {} };

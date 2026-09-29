@@ -33,9 +33,9 @@ slutsats: Stor utsmyckning eller avskalad inredning: rummet visar vad som står 
 [ordpar]
 etikett: Orden
 rubrik: Samma tro, olika ord
+slutsats: Det här är tendenser, inte regler. Variationen är stor.
 vänster: Svenska kyrkan
 höger: Frikyrkan
-slutsats: Det här är tendenser, inte regler. Variationen är stor.
 - Präst | Pastor | Prästen vigs av en biskop. Pastorn kallas eller anställs av församlingen.
 - Gudstjänst | Möte | Båda säger gudstjänst. Frikyrkan säger också möte: mellan människan och Gud, och mellan människor.
 - Barndop | Troendedop | Döps man som spädbarn, eller när man själv tror?
@@ -65,8 +65,8 @@ säker-yta: 4 6 40 26
 etikett: Dopet
 rubrik: När döps man?
 text: Frågan är om dopet kommer före eller efter att man själv kan välja.
-skala: Födelse | Barndom | Tonår | Vuxen
 slutsats: Barndopet är Guds gåva före egen tro. Troendedopet är ett svar på en egen tro.
+skala: Födelse | Barndom | Tonår | Vuxen
 - bana: Svenska kyrkan
 - 3 | Barndop | Spädbarnet döps. Vatten öses över huvudet.
 - 62 | Konfirmation | Den unga bekräftar sitt dop.
@@ -82,11 +82,11 @@ slutsats: Barndopet är Guds gåva före egen tro. Troendedopet är ett svar på
 
 [omröstning]
 rubrik: En vän döptes som 25-åring genom att sänkas ned i en sjö. Troligen i …
+svar: Troligen en frikyrka: troendedop genom nedsänkning. Men vuxna kan döpas i Svenska kyrkan också.
+bakgrund: fokusljus
 - Svenska kyrkan
 - * En frikyrka
 - Det går inte att säga
-svar: Troligen en frikyrka: troendedop genom nedsänkning. Men vuxna kan döpas i Svenska kyrkan också.
-bakgrund: fokusljus
 > Poängen med alternativ tre: det finns inga regler utan undantag.
 
 ---
@@ -94,9 +94,9 @@ bakgrund: fokusljus
 [spektrum]
 etikett: Gudstjänsten
 rubrik: Fast ordning eller frihet?
+slutsats: Frikyrkliga gudstjänster kan vara friare, men variationen är stor.
 vänster: Fast liturgisk ordning
 höger: Frihet och spontanitet
-slutsats: Frikyrkliga gudstjänster kan vara friare, men variationen är stor.
 - 10 | Högmässan i Svenska kyrkan | Samma bestämda moment i samma ordning varje gång.
 - 58 | En frikyrklig gudstjänst idag | Friare, men ofta med en tydlig plan.
 - 92 | Pingströrelsen i sin början | Enkelhet, lekmän som medverkar och rum för det oväntade.
@@ -119,10 +119,10 @@ etikett: Pingströrelsen i sin början
 [två-tal]
 etikett: Gudstjänsten · Predikan
 rubrik: Hur lång är en predikan?
-- 8 min | idealet i Svenska kyrkan
-- 60+ min | ofta i frikyrkans tradition
 text: I frikyrkan har predikan en stor och central roll, ofta utan manus.
 bakgrund: fokusljus
+- 8 min | idealet i Svenska kyrkan
+- 60+ min | ofta i frikyrkans tradition
 > Frikyrklig predikan har ofta ett folkligt tilltal och hålls ofta utan manus. Man kan inte riktigt veta hur länge någon kommer att predika.
 > Mycket sång. Det icke-liturgiska draget är ett motstånd mot traditioner och fasta mötesstrukturer.
 

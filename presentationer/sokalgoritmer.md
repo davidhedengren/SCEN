@@ -150,15 +150,15 @@ slutsats: Vilken nod som tas ut ur kön beror på vilken sorts kö algoritmen an
 ---
 
 [bildregi]
-rubrik: Bredden först
+rubrik: Bredden först‑sökning (BFS)
 bild: bilder/sokalgoritmer/labyrint-bfs.jpg
 alt: En labyrint i mörker där turkost ljus sprider sig jämnt i alla gångar från startlampan.
 bildläge: hero
 fokuspunkt: 60 50
 startutsnitt: 50 50 1.04
 slututsnitt: 54 48 1.1
-säker-yta: 4 14 36 64
-mörkning: 0 0 44 100 0.4
+säker-yta: 4 14 52 64
+mörkning: 0 0 56 100 0.45
 hastighet: slow
 > Kapitelbild. Fråga: hur skulle du leta om du fick skicka ut en hjälpare i varje gång samtidigt?
 
@@ -338,15 +338,15 @@ text: Vi följer en nivå i taget.
 ---
 
 [bildregi]
-rubrik: Djupet först
+rubrik: Djupet först-sökning (DFS)
 bild: bilder/sokalgoritmer/labyrint-dfs.jpg
 alt: Samma labyrint. En enda smal ljusstråle slingrar sig djupt in i en gång, med korta mörka återvändsgränder bakom sig.
 bildläge: hero
 fokuspunkt: 73 66
 startutsnitt: 50 50 1.04
 slututsnitt: 62 60 1.12
-säker-yta: 4 14 36 64
-mörkning: 0 0 44 100 0.4
+säker-yta: 4 14 52 64
+mörkning: 0 0 56 100 0.45
 hastighet: slow
 > Kapitelbild. Fråga: vad händer om man alltid väljer första bästa gång och fortsätter tills det tar stopp?
 
@@ -585,15 +585,15 @@ text: def bfs(graph, start, goal):
 ---
 
 [bildregi]
-rubrik: Girig bäst först
+rubrik: Girig bäst först-sökning
 bild: bilder/sokalgoritmer/labyrint-girig.jpg
 alt: Samma labyrint. Ljuset rusar mot målet uppe till höger och fastnar i en återvändsgränd strax nedanför det. En svagare väg visar omvägen.
 bildläge: hero
 fokuspunkt: 70 17
 startutsnitt: 50 50 1.04
 slututsnitt: 64 30 1.12
-säker-yta: 4 14 36 64
-mörkning: 0 0 44 100 0.4
+säker-yta: 4 14 52 64
+mörkning: 0 0 56 100 0.45
 hastighet: slow
 > Kapitelbild. Fråga: är det alltid smart att gå åt det håll där målet ser ut att ligga?
 
@@ -647,15 +647,15 @@ rubrikrörelse: skrivmaskin
 ---
 
 [bildregi]
-rubrik: A*
+rubrik: A*-sökning
 bild: bilder/sokalgoritmer/labyrint-astjarna.jpg
 alt: Samma labyrint. En gyllene väg leder från startlampan fram till målet uppe till höger.
 bildläge: hero
 fokuspunkt: 93 10
 startutsnitt: 50 50 1.04
 slututsnitt: 66 36 1.1
-säker-yta: 4 14 36 64
-mörkning: 0 0 44 100 0.4
+säker-yta: 4 14 52 64
+mörkning: 0 0 56 100 0.45
 hastighet: slow
 > Kapitelbild. A* väger ihop hur långt vi har gått med hur långt det verkar vara kvar.
 

@@ -16,7 +16,7 @@ const LAYOUTS = {etapper:"Etapper",vagval:"Vägval",lager:"Lager",resonemang:"Re
   title: 'Titel', section: 'Avsnitt', statement: 'Påstående', bullets: 'Punktlista', split: 'Text och bild',
   image: 'Helbild', bildregi: 'Bildregi', terminal: 'Terminal', kodforklaring: 'Kodförklaring', typografisk: 'Typografiskt statement', texttempo: 'Typografiskt tempo', cards: 'Kort', compare: 'Jämförelse', table: 'Tabell', number: 'Stort tal', timeline: 'Tidslinje',
   question: 'Fråga och svar', poll: 'Omröstning', reflect: 'Reflektion', define: 'Definition', chat: 'AI-samtal', duo: 'Två tal',
-  quote: 'Citat', omslag: 'Omslag', karta: 'Karta', triad: 'Triad', motsats: 'Motsats', bildkant: 'Bildkant', 'båge': 'Båge', omlopp: 'Omlopp', gradskiva: 'Gradskiva', bro: 'Bro', spegel: 'Spegel', ordpar: 'Ordpar', spektrum: 'Spektrum', livslopp: 'Livslopp', lexikon: 'Lexikon', rad: 'Rad', rutor: 'Rutor', remsor: 'Remsor', provning: 'Prövning', mosaik: 'Mosaik', karna: 'Kärna', graf: 'Graf', trad: 'Träd', flode: 'Flöde', urval: 'Urval', forgrening: 'Förgrening', kodskrivning: 'Kodskrivning', inzoomning: 'Inzoomning', fyrfalt: 'Fyrfält', vagskal: 'Vågskål', sokning: 'Sökning', rutnat: 'Rutnät', ko: 'Kö', ringar: 'Ringar', lins: 'Lins', 'mätare': 'Mätare', 'ridå': 'Ridå', 'strålkastare': 'Strålkastare', fokus: 'Fokus', ordbild: 'Ordbild', 'bildfält': 'Bildfält', delning: 'Delning', ljustal: 'Ljustal', tom: 'Fri yta', egen: 'Egen mall'
+  quote: 'Citat', omslag: 'Omslag', karta: 'Karta', triad: 'Triad', motsats: 'Motsats', bildkant: 'Bildkant', 'båge': 'Båge', omlopp: 'Omlopp', gradskiva: 'Gradskiva', bro: 'Bro', spegel: 'Spegel', ordpar: 'Ordpar', spektrum: 'Spektrum', livslopp: 'Livslopp', lexikon: 'Lexikon', rad: 'Rad', rutor: 'Rutor', remsor: 'Remsor', provning: 'Prövning', sammaform: 'Samma form', mosaik: 'Mosaik', karna: 'Kärna', graf: 'Graf', trad: 'Träd', flode: 'Flöde', urval: 'Urval', forgrening: 'Förgrening', kodskrivning: 'Kodskrivning', inzoomning: 'Inzoomning', fyrfalt: 'Fyrfält', vagskal: 'Vågskål', sokning: 'Sökning', rutnat: 'Rutnät', ko: 'Kö', ringar: 'Ringar', lins: 'Lins', 'mätare': 'Mätare', 'ridå': 'Ridå', 'strålkastare': 'Strålkastare', fokus: 'Fokus', ordbild: 'Ordbild', 'bildfält': 'Bildfält', delning: 'Delning', ljustal: 'Ljustal', tom: 'Fri yta', egen: 'Egen mall'
 };
 const THEMES = {
   signal: { name: 'Signal', desc: 'Djup midnattsblå, elektrisk cyan och violett. Fylliga färgfält och tydlig typografi.', look: 'dark', v: { bg: '#080E25', surface: '#152444', ink: '#F0F6FF', muted: '#A5B6D4', line: '#2B4065', accent: '#5FE7ED', 'accent-2': '#9C87FF', hl: 'rgba(95,231,237,.22)' }, fd: '"Familjen Grotesk",system-ui,sans-serif', fb: '"Hanken Grotesk",system-ui,sans-serif', hw: 700, ht: '-.035em', r: '24px', ta: 'words', fonts: ['Familjen+Grotesk:wght@400;500;600;700', 'Hanken+Grotesk:wght@400;500;600'] },
@@ -484,7 +484,7 @@ function renderSlide(sl, i, deck, img) {
       const li = its.map(o => `<li${steps && bodyA !== 'none' ? st(bodyA) : ''}>${o.h ? `<h3>${fmt(o.h)}</h3>` : ''}${o.t ? `<p>${fmt(o.t)}</p>` : ''}</li>`).join('');
       const grp = (!steps && bodyA !== 'none') ? A(bodyA, 350, ' data-stagger="140"') : '';
       body = H2('', 'words') + (sl.text ? `<p class="lead"${A(anim(ba, 'fade'), 300)}>${fmt(sl.text)}</p>` : '') +
-        `<ul class="cards${its.length > 3 && side ? ' dense' : ''}" style="--cols:${n}"${dim && steps ? ' data-dim' : ''}${grp}>${li}</ul>` +
+        `<ul class="cards${its.length > 3 && side ? ' dense' : ''}" style="--cols:${n}"${dim && steps ? ' data-dim' : ''}${grp}>${li}</ul>` + (steps && bodyA !== 'none' && its.length > 1 ? `<i class="fx-done"${st('none')} aria-hidden="true"></i>` : '') +
         (side ? figure(sl.image, anim(ba, 'zoom') === 'rise' ? 'zoom' : anim(ba, 'zoom'), 200) : '');
       break;
     }
@@ -891,7 +891,7 @@ function renderSlide(sl, i, deck, img) {
       }
       body = (sl.caption ? `<p class="kicker"${A('fade')}>${fmt(sl.caption)}</p>` : '') + H2('', 'mask') +
         `<div class="gt-stage"${A(anim(ba, 'fade'), 150)}><svg class="gt-svg" viewBox="0 0 1920 1080" aria-hidden="true">${edges}${chev}${route}${svgNodes}</svg>${weights}${labs}</div>` +
-        (hasPan ? gtPanel(sl.text, focus, sl.conclusion, extra, 144, 330, 520) : '') + cues;
+        (hasPan ? gtPanel(sl.text, focus, sl.conclusion, extra, 144, 320, 560) : '') + cues;
       if (plain(title).length > 44) cls = 'gt-long';
       attrs += ` data-dramaturgy="focus-restore" data-dramaturgy-state="${steps ? 'overview' : 'restored'}"${steps ? '' : ' data-dramaturgy-static="true"'}`;
       break;
@@ -985,7 +985,7 @@ function renderSlide(sl, i, deck, img) {
       }
       body = (ordCss ? `<style>${ordCss}</style>` : '') + (sl.caption ? `<p class="kicker"${A('fade')}>${fmt(sl.caption)}</p>` : '') + H2('', 'mask') +
         `<div class="gt-stage"${A(anim(ba, 'fade'), 150)}><svg class="gt-svg" viewBox="0 0 1920 1080" aria-hidden="true">${edges}${route}</svg>${elabs}${nodes}${ordHtml}</div>` +
-        (hasPan ? gtPanel(sl.text, focus, sl.conclusion, extra, 144, 330, 500) : '') + cues;
+        (hasPan ? gtPanel(sl.text, focus, sl.conclusion, extra, 144, 320, 540) : '') + cues;
       cls = (orders.length ? uid : '') + (plain(title).length > 44 ? ' gt-long' : '');
       attrs += ` data-dramaturgy="focus-restore" data-dramaturgy-state="${steps ? 'overview' : 'restored'}"${steps ? '' : ' data-dramaturgy-static="true"'}`;
       break;
@@ -1068,6 +1068,52 @@ function renderSlide(sl, i, deck, img) {
         ((lead || end) && L !== 'karna' ? `<div class="fv-lead">${lead ? `<p class="fv-intro">${fmt(sl.text)}</p>` : ''}${end ? `<p class="fv-end">${fmt(sl.conclusion)}</p>` : ''}</div>` : '') +
         `<div class="fv-stage"${A(anim(ba, 'fade'), 150)}>` + aurora + (links ? `<svg class="fv-svg" viewBox="0 0 1920 1080" aria-hidden="true">${links}</svg>` : '') + track + frame + core + boxes + `</div>` + cues;
       attrs += ` data-dramaturgy="focus-restore" data-dramaturgy-state="${steps ? 'overview' : 'restored'}"${steps ? '' : ' data-dramaturgy-static="true"'}${sl.flow ? ' data-fv-flow="true"' : ''}`;
+      break;
+    }
+    case 'sammaform': {
+      /* Samma form: en struktur ligger still medan betydelsen byter. Noder och kanter har fast
+         geometri. Varje vy byter bara etiketterna och vad noder och kanter står för. Före första
+         klicket och efter sista syns bara den rena formen. */
+      const nodes = [], edges = [], views = [];
+      lines(sl.items).forEach(raw => {
+        const t = String(raw).replace(/^(- )+/, '').trim();
+        let m = t.match(/^nod\s*:\s*(.*)$/i);
+        if (m) { const p = m[1].split('|').map(x => x.trim()); const c = (p.length > 1 ? p[1] : p[0]).split(/[\s,]+/).map(Number); nodes.push({ name: p.length > 1 ? p[0] : '', x: Math.max(0, Math.min(100, c[0] || 0)), y: Math.max(0, Math.min(100, c[1] || 0)) }); return; }
+        m = t.match(/^kant\s*:\s*(.+?)\s*[-–—]\s*(.+)$/i);
+        if (m) { edges.push([m[1].trim(), m[2].trim()]); return; }
+        m = t.match(/^vy\s*:\s*(.*)$/i);
+        if (m) { const p = m[1].split('|').map(x => x.trim()); views.push({ name: p[0] || '', nod: p[1] || '', kant: p[2] || '', labs: (p[3] || '').split(',').map(x => x.trim()), text: p.slice(4).join(' | ') }); }
+      });
+      const idx = r => { const n = parseInt(r, 10); if (Number.isFinite(n) && String(n) === r) return n - 1; return nodes.findIndex(o => gtKey(o.name) === gtKey(r)); };
+      const E = edges.map(([a, b]) => [idx(a), idx(b)]).filter(([a, b]) => a >= 0 && b >= 0 && a < nodes.length && b < nodes.length && a !== b);
+      const lift = plain(title).length > 40 ? 70 : 0, AX = 860, AY = 320 + lift, AW = 860, AH = 580 - lift, R = 18;
+      const P = nodes.map(n => [AX + n.x / 100 * AW, AY + n.y / 100 * AH]);
+      const cx = nodes.reduce((a, n) => a + n.x, 0) / (nodes.length || 1), cy = nodes.reduce((a, n) => a + n.y, 0) / (nodes.length || 1);
+      const trim = (a, b, d) => { const L = Math.hypot(b[0] - a[0], b[1] - a[1]) || 1; return [a[0] + (b[0] - a[0]) * d / L, a[1] + (b[1] - a[1]) * d / L]; };
+      const line = ([i, j2]) => { const a = trim(P[i], P[j2], R + 8), b = trim(P[j2], P[i], R + 8); return `x1="${a[0].toFixed(1)}" y1="${a[1].toFixed(1)}" x2="${b[0].toFixed(1)}" y2="${b[1].toFixed(1)}"`; };
+      let svg = E.map(e => `<line class="sf-edge" ${line(e)}/>`).join('');
+      views.forEach((v, j) => { svg += `<g class="sf-sweep" data-dramaturgy-in="${j}">` + E.map(e => `<line ${line(e)} pathLength="1"/>`).join('') + `</g>`; });
+      svg += P.map(([x, y], q) => `<g class="sf-node" transform="translate(${x.toFixed(1)} ${y.toFixed(1)})">` + views.map((_, j) => `<circle class="sf-pulse" data-dramaturgy-in="${j}" r="${R}" style="--d:${q * 70}ms"/>`).join('') + `<circle class="mk" r="${R}"/></g>`).join('');
+      const size = nodes.length <= 6 ? 36 : nodes.length <= 9 ? 30 : 24;
+      let labs = '';
+      nodes.forEach((n, q) => {
+        const [x, y] = P[q], dx = n.x - cx, dy = n.y - cy;
+        const side = Math.abs(dx) * .8 > Math.abs(dy) ? (dx < 0 ? 'l' : 'r') : (dy < 0 ? 't' : 'b');
+        views.forEach((v, j) => { if (v.labs[q]) labs += `<span class="sf-lab side-${side}" data-dramaturgy-in="${j}" style="left:${Math.round(x)}px;top:${Math.round(y)}px;--gs:${size}px;--d:${q * 70}ms">${fmt(v.labs[q])}</span>`; });
+      });
+      const pan = `<div class="sf-pan">` + (sl.text ? `<div class="sf-say sf-intro"><p class="sf-text">${fmt(sl.text)}</p></div>` : '') +
+        views.map((v, j) => `<div class="sf-say" data-dramaturgy-in="${j}"><p class="sf-count">${j + 1} av ${views.length}</p><h3 class="sf-name">${fmt(v.name)}</h3>` +
+          (v.nod || v.kant ? `<dl class="sf-map">${v.nod ? `<div><dt>Noder</dt><dd>${fmt(v.nod)}</dd></div>` : ''}${v.kant ? `<div><dt>Kanter</dt><dd>${fmt(v.kant)}</dd></div>` : ''}</dl>` : '') +
+          (v.text ? `<p class="sf-text">${fmt(v.text)}</p>` : '') + `</div>`).join('') +
+        `<div class="sf-say sf-end">${sl.conclusion ? `<p class="sf-text">${fmt(sl.conclusion)}</p>` : ''}<p class="sf-chips">${views.map(v => `<span>${fmt(v.name)}</span>`).join('')}</p></div></div>`;
+      let cues = '';
+      if (steps) {
+        views.forEach((_, j) => { cues += `<span data-dramaturgy-cue data-dramaturgy-focus="${k}" data-dramaturgy-target="${j}"${st('none')} aria-hidden="true"></span>`; });
+        cues += `<span data-dramaturgy-restore${st('none')} aria-hidden="true"></span>`;
+      }
+      body = (sl.caption ? `<p class="kicker"${A('fade')}>${fmt(sl.caption)}</p>` : '') + H2('', 'mask') +
+        `<div class="sf-stage"${A(anim(ba, 'fade'), 150)}><svg class="sf-svg" viewBox="0 0 1920 1080" aria-hidden="true">${svg}</svg>${labs}</div>` + pan.replace('<div class="sf-pan">', `<div class="sf-pan" style="top:${360 + lift}px">`) + cues;
+      attrs += ` data-dramaturgy="focus-restore" data-dramaturgy-state="${steps ? 'overview' : 'restored'}"${steps ? '' : ' data-dramaturgy-static="true"'}`;
       break;
     }
     case 'provning': {
@@ -1425,7 +1471,7 @@ function renderSlide(sl, i, deck, img) {
       break;
     }
     case 'sats': {
-      body=H2('', 'mask')+`<div class="sig-equation">`+lines(sl.items).slice(0,3).map((v,j)=>{const [h,...b]=v.split('|');return `<article${steps ? st('focusline') : A('focusline',j*220)}><span class="sig-index">${String(j+1).padStart(2,'0')}</span><div class="sig-term">${fmt(h)}</div><p>${fmt(b.join('|'))}</p></article>`;}).join('')+`</div><div class="sig-conclusion"${steps ? st('mask') : A('mask',1000)}>${fmt(sl.text || '')}</div>`;
+      body=H2('', 'mask')+`<div class="sig-equation">`+lines(sl.items).slice(0,3).map((v,j)=>{const [h,...b]=v.split('|');return `<article${steps ? st('focusline') : A('focusline',j*220)}><span class="sig-index">${String(j+1).padStart(2,'0')}</span><div class="sig-term">${fmt(h)}</div><p>${fmt(b.join('|'))}</p></article>`;}).join('')+`</div><div class="sig-conclusion${steps ? ' fx-done' : ''}"${steps ? st('mask') : A('mask',1000)}>${fmt(sl.text || '')}</div>`;
       break;
     }
 
@@ -2227,7 +2273,7 @@ function renderSlide(sl, i, deck, img) {
       body=`<header class="ed-header">${sl.caption ? `<p class="ed-caption"${A('fade')}>${fmt(sl.caption)}</p>` : ''}${H2('','mask')}</header>`;
       if(L==='vagval') body+=`<div class="ed-comparison"><div class="ed-colheads"><span></span><h3>${fmt(sl.lt||'Alternativ A')}</h3><h3>${fmt(sl.rt||'Alternativ B')}</h3></div>`+items.map((p,j)=>`<article class="ed-row"${reveal()}><h3>${fmt(p[0])}</h3><p>${fmt(p[1]||'')}</p><p>${fmt(p.slice(2).join(' | '))}</p></article>`).join('')+'</div>';
       else if(L==='resonemang') body+=`<div class="ed-reason"><div class="ed-premises">`+items.map((p,j)=>`<article${reveal()}>${content(p,j)}</article>`).join('')+`</div><aside class="ed-landing"${steps ? st('mask') : A('mask',900)}><small class="ed-num">Slutsats</small><h3>${fmt(sl.text||'')}</h3></aside></div>`;
-      else body+=`<div class="ed-${L}" style="--ed-count:${items.length}">`+items.map((p,j)=>`<article style="--ed-i:${j}"${reveal()}>${content(p,j)}</article>`).join('')+'</div>';
+      else body+=`<div class="ed-${L}" style="--ed-count:${items.length}">`+items.map((p,j)=>`<article style="--ed-i:${j}"${reveal()}>${content(p,j)}</article>`).join('')+'</div>'+(steps && L==='etapper' && items.length>1 ? `<i class="fx-done"${st('none')} aria-hidden="true"></i>` : '');
       break;
     }
 

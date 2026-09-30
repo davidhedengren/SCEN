@@ -76,15 +76,28 @@ slutsats: Ruttoptimering är att hitta vägen med lägst summa. Sökalgoritmer g
 
 ---
 
-[prisma]
+[samma form]
 etikett: Grafer i AI
 rubrik: En struktur, många användningar
-fråga: Vad hänger ihop med vad?
-gemensamt: Alla beskriver relationer som noder och kanter.
-- Sociala nätverk | Relationer mellan användare | Används för att rekommendera kontakter
-- Rekommendationer | Användare och produkter | Hittar produkter eller tjänster någon troligen gillar
-- Ruttoptimering | Platser och vägar | Hittar den kortaste vägen mellan två punkter
-- Bildigenkänning | Objekt i en bild | Identifierar objekt och relationerna mellan dem
+text: Formen ligger still. Bara betydelsen byter.
+slutsats: Alla beskriver relationer som noder och kanter.
+- nod: 4 52
+- nod: 38 12
+- nod: 70 30
+- nod: 96 50
+- nod: 34 96
+- kant: 1 - 2
+- kant: 2 - 3
+- kant: 3 - 4
+- kant: 1 - 5
+- kant: 3 - 5
+- kant: 4 - 5
+- vy: Vägnät | orter | vägar | Göteborg, Falköping, Jönköping, Nässjö, Malmö | Hitta den kortaste vägen mellan två orter.
+- vy: Sociala nätverk | personer | vänskaper | Anna, Bo, Cleo, Dani, Elif | Föreslå vänner till vänner. Anna och Cleo har Bo gemensamt.
+- vy: Webben | sidor | länkar | Start, Nyheter, Sport, Väder, Kontakt | Sökmotorer hittar sidor genom att följa länkarna.
+- vy: Kollektivtrafik | hållplatser | sträckor | Centralen, Torget, Skolan, Parken, Hamnen | Hitta resan med minst antal hållplatser.
+> Samma graf som tidigare, men med nya etiketter. Fråga klassen efter varje klick: vad skulle en kant betyda här?
+> Poängen: algoritmerna bryr sig inte om vad noderna är. Samma sökalgoritm hittar vägar mellan orter, vänner och webbsidor.
 
 ---
 
@@ -134,6 +147,16 @@ rubrik: Tre sorters träd
 - Sökträd | Organiserar data så att den går snabbt att söka i.
 - Beslutsträd | Visualiserar och strukturerar beslutsprocesser.
 - Spelträd | Simulerar möjliga drag för att hitta den bästa strategin.
+
+---
+
+[ordbild]
+etikett: Del 3
+rubrik: Beslutsträd
+text: Frågor i tur och ordning tills svaret är klart.
+bild: bilder/grafer-och-trad/trad-ljus.jpg
+fokuspunkt: 50 35
+> Bildförslag: en egen bild för beslutsträd (bilder/grafer-och-trad/beslutstrad.jpg). Tills den finns används trädbilden.
 
 ---
 

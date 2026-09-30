@@ -57,6 +57,7 @@ Varje bild i ett manus börjar med mallens namn inom hakparentes. Samma katalog 
 | `[bro]` | Banor | En process som en båge över ett golv. Bågen bär stegen, golvet är sammanhanget de börjar och slutar i. Hela modellen syns från början. Varje klick flyttar fokus ett steg, tidigare steg ligger kvar nedtonade och sista klicket visar helheten igen. Med retur blir bron en loop: resultatet leder längs golvet tillbaka till början, som i återkopplingar, kretslopp och cykler. |
 | `[rad]` | Fokusvandring | Två till fem kolumner på en scen med stora siffror. Alla syns från början. En ljuskägla glider i sidled till kolumnen du pratar om medan de andra tonas ned, och sista klicket tänder alla. Med flöde: ja fylls en linje under kolumnerna i takt med stegen. |
 | `[rutor]` | Fokusvandring | Två till sex rutor av matt glas över ett mjukt färgsken, till exempel fyra delar i två rader. Hela rutnätet syns från början. Ett ljus glider bakom glaset till rutan du pratar om, de andra blir suddiga, och sista klicket tänder alla. |
+| `[samma form]` | System | Samma struktur, olika betydelser. En graf ligger still medan varje klick byter vad noderna och kanterna står för. Bra för att visa att en abstrakt form återkommer i många sammanhang. |
 | `[prövning]` | Begrepp | Ett fall prövas mot kriterier, ett i taget. Först tänds frågan, på nästa klick belägget och omdömet. Övriga kriterier är nedtonade. Sista klicket visar allt och slutsatsen landar stort. Skriv \n i belägget för radbrytning. |
 | `[remsor]` | Fokusvandring | Tre till fem rader med nummer, rubrik och förklaring. Ett ljusdrag sveper ned till raden du pratar om, och sista klicket tänder alla. Bra för begrepp med lite längre förklaringar. |
 | `[mosaik]` | Fokusvandring | En bentogrid: en stor ruta med helheten och två till fyra mindre. Allt börjar i gråskala och färgen tänds i rutan du pratar om, en i taget. Sista klicket ger färg åt alla. |
@@ -1037,116 +1038,37 @@ text: Hållbar utveckling
 slutsats: Dimensionerna påverkar varandra.
 ```
 
-## Begrepp
-
-### `[prövning]` Prövning
-
-Ett fall prövas mot kriterier, ett i taget. Först tänds frågan, på nästa klick belägget och omdömet. Övriga kriterier är nedtonade. Sista klicket visar allt och slutsatsen landar stort. Skriv \n i belägget för radbrytning.
-
-**Undvik när:** Mer än fem kriterier, eller när det inte finns något fall att pröva. Använd triad för premisser utan fall.
-
-```
-[prövning]
-etikett: Demokrati
-rubrik: Är landet en demokrati?
-text: Vi prövar ett påhittat land mot tre kriterier.
-- Fria val? | Val hålls vart fjärde år och flera partier ställer upp. | Ja
-- Yttrandefrihet? | Kritiska tidningar stängs ibland. | Delvis
-- Rättsstat? | Domstolarna styrs av regeringen. | Nej
-slutsats: **Nej**, inte fullt ut. Alla kriterier behöver vara uppfyllda.
-```
-
-### `[lexikon]` Lexikon
-
-Ett register med begrepp till vänster och ett stort uppslag till höger. Registret syns hela tiden, en markering glider till begreppet du pratar om och uppslaget visar definition och exempel. Skriv begrepp | definition | exempel, eller begrepp | kategori | definition | exempel.
-
-**Undvik när:** Fler än åtta begrepp. Långa definitioner.
-
-```
-[lexikon]
-etikett: Begrepp
-rubrik: Ord att känna till
-- Fotosyntes | Biologi | Växter bygger socker av koldioxid och vatten med hjälp av ljus. | Bladen är växtens solpaneler.
-- Cellandning | Biologi | Cellerna frigör energi ur socker med hjälp av syre. | Sker i alla levande celler.
-```
-
-## Jämförelse
-
-### `[spegel]` Spegel
-
-Två bilder sida vid sida, till exempel två platser, två epoker eller före och efter. Varje klick tänder en sida med en iakttagelse, och en ring kan peka ut en detalj i bilden. Den andra sidan ligger kvar nedtonad. Sista klicket visar båda.
-
-**Undvik när:** Bilder med olika format eller motiv som inte går att jämföra. Mer än tre iakttagelser per sida.
-
-```
-[spegel]
-etikett: Jämförelse
-rubrik: Samma plats, två tider
-- Förr | Torget 1920 | bilder/exempel/torg-1920.jpg
-- Idag | Torget idag | bilder/exempel/torg-idag.jpg
-- vänster: 50 60 | Hästar och kärror | Gatan delas av alla
-- höger: 50 60 | Bilar och cyklar | Gatan är uppdelad
-slutsats: Samma plats, men rörelsen har förändrat den.
-```
-
-### `[ordpar]` Ordpar
-
-Ord som hör ihop i par: två traditioner, två språk eller före och efter. Alla par syns från början. Varje klick tänder ett par, drar en linje mellan orden och visar en förklaring under.
-
-**Undvik när:** Långa fraser. Fler än sex par.
-
-```
-[ordpar]
-etikett: Språk
-rubrik: Svenska och engelska ord för samma sak
-vänster: Svenska
-höger: Engelska
-- Dator | Computer | Från latinets computare, att räkna.
-- Tangentbord | Keyboard | Ordet kommer från pianots tangenter.
-- Skärm | Screen | Ursprungligen en skyddande vägg.
-slutsats: Många ord för teknik kommer från äldre saker.
-```
-
-### `[spektrum]` Spektrum
-
-En skala mellan två ytterlägen där exempel placeras ut. Hela skalan syns från början. En markör glider till exemplet du pratar om. Visar att det finns ett spann, inte bara två motsatser.
-
-**Undvik när:** Exempel som inte går att placera på samma skala. Fler än sex exempel.
-
-```
-[spektrum]
-etikett: Kemi
-rubrik: Från surt till basiskt
-vänster: Surt
-höger: Basiskt
-- 15 | Citronsaft | pH omkring 2
-- 50 | Rent vatten | pH 7, neutralt
-- 85 | Tvål | pH omkring 10
-slutsats: pH-skalan visar hur surt eller basiskt något är.
-```
-
-### `[livslopp]` Livslopp
-
-Två eller tre banor på samma tidsaxel, till exempel två liv, två länder eller två processer. En streckad gräns kan markera en brytpunkt. Varje klick tänder en händelse eller gränsen, och läget på axeln visar när något sker.
-
-**Undvik när:** Händelser utan tidsordning. Fler än fyra händelser per bana.
-
-```
-[livslopp]
-etikett: Skolan
-rubrik: Två skolsystem
-skala: 6 år | 10 år | 15 år | 19 år
-- bana: Land A
-- 0 | Skolstart | Vid sex års ålder
-- 70 | Gymnasiet | Ett val efter grundskolan
-- bana: Land B
-- 0 | Skolstart | Vid sex års ålder
-- 30 | Första valet | Eleverna delas upp tidigt
-- gräns: 50 | Tonåren
-slutsats: Var valet ligger i tiden säger något om synen på eleverna.
-```
-
 ## System
+
+### `[samma form]` Samma form
+
+Samma struktur, olika betydelser. En graf ligger still medan varje klick byter vad noderna och kanterna står för. Bra för att visa att en abstrakt form återkommer i många sammanhang.
+
+**Undvik när:** Mer än fem vyer eller tio noder, eller när strukturen skiljer sig mellan exemplen.
+
+```
+[samma form]
+etikett: Hierarkier
+rubrik: Samma form, olika världar
+text: Formen ligger still. Bara betydelsen byter.
+slutsats: Alla är hierarkier: en överst, flera under.
+- nod: 50 8
+- nod: 22 50
+- nod: 78 50
+- nod: 10 92
+- nod: 34 92
+- nod: 66 92
+- nod: 90 92
+- kant: 1 - 2
+- kant: 1 - 3
+- kant: 2 - 4
+- kant: 2 - 5
+- kant: 3 - 6
+- kant: 3 - 7
+- vy: Släktträd | personer | föräldrar och barn | Mormor, Mamma, Morbror, Jag, Syster, Kusin, Kusin
+- vy: Mappar | mappar | ligger i | Dokument, Skola, Bilder, Svenska, Matte, Resa, Djur
+- vy: Organisation | roller | leder | Rektor, Lärare, Lärare, Elev, Elev, Elev, Elev
+```
 
 ### `[graf]` Graf
 
@@ -1399,6 +1321,115 @@ slutsats: Språk som delar förfader liknar varandra än idag.
 - Svenska | 1200-talet | Östnordiska | Skiljer sig från danskan.
 - Danska | 1200-talet | Östnordiska | Egen skrift och eget uttal.
 - Isländska | 1400-talet | Västnordiska | Har förändrats minst.
+```
+
+## Begrepp
+
+### `[prövning]` Prövning
+
+Ett fall prövas mot kriterier, ett i taget. Först tänds frågan, på nästa klick belägget och omdömet. Övriga kriterier är nedtonade. Sista klicket visar allt och slutsatsen landar stort. Skriv \n i belägget för radbrytning.
+
+**Undvik när:** Mer än fem kriterier, eller när det inte finns något fall att pröva. Använd triad för premisser utan fall.
+
+```
+[prövning]
+etikett: Demokrati
+rubrik: Är landet en demokrati?
+text: Vi prövar ett påhittat land mot tre kriterier.
+- Fria val? | Val hålls vart fjärde år och flera partier ställer upp. | Ja
+- Yttrandefrihet? | Kritiska tidningar stängs ibland. | Delvis
+- Rättsstat? | Domstolarna styrs av regeringen. | Nej
+slutsats: **Nej**, inte fullt ut. Alla kriterier behöver vara uppfyllda.
+```
+
+### `[lexikon]` Lexikon
+
+Ett register med begrepp till vänster och ett stort uppslag till höger. Registret syns hela tiden, en markering glider till begreppet du pratar om och uppslaget visar definition och exempel. Skriv begrepp | definition | exempel, eller begrepp | kategori | definition | exempel.
+
+**Undvik när:** Fler än åtta begrepp. Långa definitioner.
+
+```
+[lexikon]
+etikett: Begrepp
+rubrik: Ord att känna till
+- Fotosyntes | Biologi | Växter bygger socker av koldioxid och vatten med hjälp av ljus. | Bladen är växtens solpaneler.
+- Cellandning | Biologi | Cellerna frigör energi ur socker med hjälp av syre. | Sker i alla levande celler.
+```
+
+## Jämförelse
+
+### `[spegel]` Spegel
+
+Två bilder sida vid sida, till exempel två platser, två epoker eller före och efter. Varje klick tänder en sida med en iakttagelse, och en ring kan peka ut en detalj i bilden. Den andra sidan ligger kvar nedtonad. Sista klicket visar båda.
+
+**Undvik när:** Bilder med olika format eller motiv som inte går att jämföra. Mer än tre iakttagelser per sida.
+
+```
+[spegel]
+etikett: Jämförelse
+rubrik: Samma plats, två tider
+- Förr | Torget 1920 | bilder/exempel/torg-1920.jpg
+- Idag | Torget idag | bilder/exempel/torg-idag.jpg
+- vänster: 50 60 | Hästar och kärror | Gatan delas av alla
+- höger: 50 60 | Bilar och cyklar | Gatan är uppdelad
+slutsats: Samma plats, men rörelsen har förändrat den.
+```
+
+### `[ordpar]` Ordpar
+
+Ord som hör ihop i par: två traditioner, två språk eller före och efter. Alla par syns från början. Varje klick tänder ett par, drar en linje mellan orden och visar en förklaring under.
+
+**Undvik när:** Långa fraser. Fler än sex par.
+
+```
+[ordpar]
+etikett: Språk
+rubrik: Svenska och engelska ord för samma sak
+vänster: Svenska
+höger: Engelska
+- Dator | Computer | Från latinets computare, att räkna.
+- Tangentbord | Keyboard | Ordet kommer från pianots tangenter.
+- Skärm | Screen | Ursprungligen en skyddande vägg.
+slutsats: Många ord för teknik kommer från äldre saker.
+```
+
+### `[spektrum]` Spektrum
+
+En skala mellan två ytterlägen där exempel placeras ut. Hela skalan syns från början. En markör glider till exemplet du pratar om. Visar att det finns ett spann, inte bara två motsatser.
+
+**Undvik när:** Exempel som inte går att placera på samma skala. Fler än sex exempel.
+
+```
+[spektrum]
+etikett: Kemi
+rubrik: Från surt till basiskt
+vänster: Surt
+höger: Basiskt
+- 15 | Citronsaft | pH omkring 2
+- 50 | Rent vatten | pH 7, neutralt
+- 85 | Tvål | pH omkring 10
+slutsats: pH-skalan visar hur surt eller basiskt något är.
+```
+
+### `[livslopp]` Livslopp
+
+Två eller tre banor på samma tidsaxel, till exempel två liv, två länder eller två processer. En streckad gräns kan markera en brytpunkt. Varje klick tänder en händelse eller gränsen, och läget på axeln visar när något sker.
+
+**Undvik när:** Händelser utan tidsordning. Fler än fyra händelser per bana.
+
+```
+[livslopp]
+etikett: Skolan
+rubrik: Två skolsystem
+skala: 6 år | 10 år | 15 år | 19 år
+- bana: Land A
+- 0 | Skolstart | Vid sex års ålder
+- 70 | Gymnasiet | Ett val efter grundskolan
+- bana: Land B
+- 0 | Skolstart | Vid sex års ålder
+- 30 | Första valet | Eleverna delas upp tidigt
+- gräns: 50 | Tonåren
+slutsats: Var valet ligger i tiden säger något om synen på eleverna.
 ```
 
 ## Ljus

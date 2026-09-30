@@ -23,7 +23,7 @@ hastighet: slow
 
 [definition]
 etikett: Ett ord vi behöver
-rubrik: Kön
+rubrik: Kö
 text: De noder som vi har hittat, men ännu inte undersökt.
 exempel: Som en att göra-lista med platser du vet finns men inte har besökt. Algoritmen tar en plats i taget från listan.
 bakgrund: fokusljus
@@ -35,7 +35,7 @@ bakgrund: fokusljus
 [kretslopp]
 etikett: Sökalgoritm
 rubrik: Så fungerar en sökalgoritm
-text: I kön finns de noder som upptäckts, men ännu inte utforskats.
+text: Kön innehåller de noder som upptäckts, men ännu inte utforskats.
 slutsats: BFS, DFS, girig bäst först och A* går alla runt i den här loopen. Det som skiljer dem är vilken nod som tas ut.
 mitten: Kön
 start: Lägg startnoden i kön

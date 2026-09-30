@@ -261,6 +261,14 @@ rubrik: Fördelar med BFS
 
 > Personer du kanske känner: vänner till dina vänner är nivå 2 i ett nätverk av vänskaper.
 > Pussel: BFS provar alla lösningar med ett drag, sedan alla med två drag, och så vidare. Den första lösningen den hittar har därför minst antal drag.
+> Fler exempel på BFS, där varje steg kostar lika mycket:
+> Wikipedia-spelet: hur få klick behövs från en artikel till en annan? BFS provar alla artiklar ett klick bort, sedan två klick bort.
+> Springaren i schack: hur få drag behöver den från ett hörn till det motsatta? Går att prova på ett riktigt bräde.
+> Minst antal byten i kollektivtrafiken: färst byten, inte kortast sträcka.
+> Kontakter till kontakter: vid smittspårning eller när ett rykte sprids, först de närmaste, sedan deras kontakter.
+> Sex steg bort: ett Kevin Bacon-tal räknar hur många filmer bort en skådespelare är från Kevin Bacon.
+> Enkla datorspel på rutnät: en figur som ska hitta kortaste vägen till spelaren.
+
 ---
 
 [rutor]
@@ -477,6 +485,12 @@ text: DFS
 - Effektivitet | DFS är effektiv för problem med en stor sökrymd, eftersom den bara behöver utforska en del av sökrymden.
 - Minnesanvändning | Den kräver mindre minne än bredden först-sökningar, eftersom den bara behöver lagra information om den nuvarande grenen.
 - Djupa lösningar | Den kan hitta lösningar snabbare än BFS, om lösningarna är djupt ner i trädet.
+> Exempel på DFS: följ ett val så långt det går, backa när det tar stopp och prova nästa.
+> Sudoku: skriv en siffra, gå vidare, backa när något krockar och prova nästa siffra. Det kallas backtracking.
+> Mappar på datorn: öppna en mapp, sedan en undermapp, längst ned, backa och ta nästa.
+> Bygga labyrinter: gräv åt ett slumpat håll tills det tar stopp, backa till närmaste ställe där det går att gräva vidare.
+> Luffarschack mot datorn: datorn provar ett drag, ditt svar, sitt nästa drag, ända till slutet, och backar sedan.
+> Finns det en väg alls? Då räcker DFS, och den behöver ofta mindre minne än BFS eftersom den bara håller reda på grenen den är i.
 
 ---
 

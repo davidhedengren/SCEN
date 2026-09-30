@@ -91,6 +91,7 @@ slutsats: Vilken nod som tas ut ur kön beror på vilken sorts kö algoritmen an
 - in: C 2
 - ut
 - ut
+- berättelse: dold
 > En kö i taget. Först läggs A, B och C in, sedan tas två ut. Siffran är prioriteten, som bara prioritetskön bryr sig om.
 > FIFO-kön lämnar ut A (först in), stacken C (sist in) och prioritetskön B (lägst värde).
 > Raden längst ner visar i vilken ordning elementen kom ut. På sista klicket kan köerna jämföras.
@@ -150,7 +151,7 @@ slutsats: Ordningen blir A, B, C, D, E, F, G, H, I, J, K, L, M, N, O.
 - fokus: nivå 2 | Nivå 1 | B och C, barnen till A.
 - fokus: nivå 3 | Nivå 2 | D, E, F och G.
 - fokus: nivå 4 | Nivå 3 | H till O, trädets löv.
-- fokus: ordning bfs | Ordningen | Nivå för nivå, från vänster till höger. Följ ringen.
+- fokus: ordning bfs utan linje | Ordningen | Nivå för nivå, från vänster till höger. Följ ringen.
 
 ---
 

@@ -252,6 +252,7 @@ Algoritmerna räknas fram automatiskt. Du skriver grafen eller labyrinten och v�
 - in: A 3                    (element och prioritet)
 - ut
 - takt: samtidigt            (valfri: alla köer gör samma steg på en gång)
+- berättelse: dold           (valfri: ingen textrad om vad som händer, du berättar själv)
 ```
 
 I `[kö]` går köerna en i taget: elementen läggs in i ett klick, sedan är varje `ut` ett klick. Det som tas ut står kvar i en rad under kön, så att köerna kan jämföras på slutet. Ett fjärde fält efter förklaringen visar en kodrad under könamnet, men lägg hellre koden på en egen kodbild så att den går att hoppa över.
@@ -278,7 +279,7 @@ Stegen sitter på en ring, högst sex. Varje klick flyttar en ljusring till näs
 
 ### Ordning i ett träd
 
-I `[träd]` visar `- fokus: ordning | rubrik | text` i vilken ordning noderna gås igenom: en ring glider från nod till nod, varje nod tänds och får sitt nummer, och ett spår ritas mellan noderna. `ordning` och `ordning bfs` går nivå för nivå från vänster till höger, `ordning dfs` går djupet först med vänster gren först, och `ordning A C G O` följer de noder du skriver. Numren står kvar när slutsatsen visas.
+I `[träd]` visar `- fokus: ordning | rubrik | text` i vilken ordning noderna gås igenom: en ring glider från nod till nod, varje nod tänds och får sitt nummer, och ett spår ritas mellan noderna. `ordning` och `ordning bfs` går nivå för nivå från vänster till höger, `ordning dfs` går djupet först med vänster gren först, och `ordning A C G O` följer de noder du skriver. Lägg till `utan linje`, till exempel `ordning bfs utan linje`, om du inte vill ha spåret mellan noderna. Numren står kvar när slutsatsen visas.
 
 ### Ordbild och bildfält med fokuspunkt
 

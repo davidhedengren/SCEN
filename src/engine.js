@@ -243,7 +243,7 @@ function sokSplit(items) {
   const cfg = {}, notes = {}, rows = [];
   lines(items).forEach(raw => {
     const s = String(raw), pre = (s.match(/^(- )+/) || [''])[0], depth = pre.length / 2, t = s.slice(pre.length).trim();
-    const m = !depth && t.match(/^(?:(algoritmen|algoritm|mål|start|läge|takt|siffror|not|uppgift|kötyp|kö|in)\s*:\s*(.*)|(ut))$/i);
+    const m = !depth && t.match(/^(?:(algoritmen|algoritm|mål|start|läge|takt|siffror|not|uppgift|kötyp|kö|in|berättelse)\s*:\s*(.*)|(ut))$/i);
     if (m) {
       const key = (m[1] || m[3]).toLowerCase(), v = (m[2] || '').trim();
       if (key === 'not') { const p = v.split('|'), n = parseInt(p[0], 10); if (n > 0) notes[n] = p.slice(1).join('|').trim(); }
@@ -916,12 +916,12 @@ function renderSlide(sl, i, deck, img) {
         let m;
         if ((m = t.match(/^ordning(?:\s+(.*))?$/))) {
           /* Ordningen: bfs (nivå för nivå, standard), dfs (djupet först, vänster gren först) eller egna noder. */
-          const how = (m[1] || 'bfs').trim(); let seq;
+          const noLine = /\butan\s+linjer?\b/.test(m[1] || ''), how = ((m[1] || '').replace(/,?\s*utan\s+linjer?\b/, '').trim() || 'bfs'); let seq;
           if (/^(bfs|bredd)/.test(how)) seq = [...T2.all].sort((a, b) => a.depth - b.depth || a.slot - b.slot);
           else if (/^(dfs|djup)/.test(how)) { seq = []; const walk = n => { seq.push(n); n.kids.forEach(walk); }; T2.roots.forEach(walk); }
           else seq = how.split(/\s*(?:,|>|→|\s)\s*/).filter(Boolean).map(x => byLabel(x)[0]).filter(Boolean);
           seq.forEach(n => gtAdd(inN, n.i, j));
-          if (seq.length) orders.push({ j, seq });
+          if (seq.length) orders.push({ j, seq, noLine });
         }
         else if (t === 'rot') T2.roots.forEach(n => gtAdd(inN, n.i, j));
         else if (t === 'löv' || t === 'lövnoder') leaves.forEach(n => gtAdd(inN, n.i, j));
@@ -962,13 +962,13 @@ function renderSlide(sl, i, deck, img) {
          och får sitt nummer, och ett spår ritas mellan noderna. Numren står kvar när helheten visas. */
       const uid = 'u' + hash((sl.id || '') + i + L);
       let ordCss = '', ordSvg = '', ordHtml = '';
-      orders.forEach(({ j, seq }) => {
+      orders.forEach(({ j, seq, noLine }) => {
         const hop = seq.length > 10 ? 360 : 460, pts = seq.map(P), dur = Math.max(1, seq.length - 1) * hop, rr = hb + 6, pre = `.${uid}[data-dramaturgy-focus="${j}"]`;
         seq.forEach((n, q) => {
           const [x, y] = pts[q], d = q * hop;
           ordCss += `${pre} .tr-node.n${n.i}{animation:${round ? 'tr-visit-round' : 'tr-visit'} .35s ease ${d}ms both}`;
           ordHtml += `<span class="tr-ord fin" data-dramaturgy-in="${j}" style="left:${Math.round(x + hb * .74)}px;top:${Math.round(y - hb * .74)}px;--d:${d}ms">${q + 1}</span>`;
-          if (q) {
+          if (q && !noLine) {
             const [x0, y0] = pts[q - 1], L2 = Math.hypot(x - x0, y - y0) || 1, ux = (x - x0) / L2, uy = (y - y0) / L2;
             ordSvg += `<path class="tr-step${seq[q - 1].depth === n.depth ? '' : ' jump'}" data-dramaturgy-in="${j}" d="M${(x0 + ux * rr).toFixed(1)} ${(y0 + uy * rr).toFixed(1)} L${(x - ux * rr).toFixed(1)} ${(y - uy * rr).toFixed(1)}" pathLength="1" style="--d:${d - hop}ms;--h:${hop}ms"/>`;
           }
@@ -2001,7 +2001,7 @@ function renderSlide(sl, i, deck, img) {
         s.outs.forEach((it, q) => { const [x, y] = outPos(q, x0); out += `${pre} .ko-ch.l${li}.i${it.id}{left:${Math.round(x)}px;top:${Math.round(y)}px;opacity:1;transform:none;${hot && it === s.last ? HOT : 'border-color:color-mix(in srgb,var(--accent) 35%,var(--line))'}}`; });
         return out;
       };
-      const says = [];
+      const says = [], quiet = /dold|nej/i.test(cfg['berättelse'] || '');
       plan.forEach((P, t) => {
         P.lanes.forEach(li => {
           const s = state[li]; s.last = null; s.fresh = [];
@@ -2026,7 +2026,7 @@ function renderSlide(sl, i, deck, img) {
         items.forEach(it => { const [x, y] = l.type === 'lifo' ? [x0 + cw / 2 - CH / 2, 350] : [x0 + cw - CH - 16, 520]; css += `.${uid} .ko-ch.l${li}.i${it.id}{left:${Math.round(x)}px;top:${Math.round(y)}px;width:${CH}px;height:${CH}px}`; html += `<b class="ko-ch l${li} i${it.id}">${esc(plain(it.name))}${l.type === 'prio' && it.prio != null ? `<small>${it.prio}</small>` : ''}</b>`; });
         html += `</div>`;
       });
-      html += `<div class="ko-says">` + (sl.text ? `<p class="ko-say ko-intro">${fmt(sl.text)}</p>` : '') + says.map((t, s) => `<div class="ko-say"${T(s)}><p class="say-term">${t}</p>${notes[s + 1] ? `<p class="sk-note">${fmt(notes[s + 1])}</p>` : ''}</div>`).join('') + (sl.conclusion ? `<p class="ko-say ko-end">${fmt(sl.conclusion)}</p>` : '') + `</div>`;
+      html += `<div class="ko-says">` + (sl.text ? `<p class="ko-say ko-intro">${fmt(sl.text)}</p>` : '') + says.map((t, s) => `<div class="ko-say"${T(s)}>${quiet ? '' : `<p class="say-term">${t}</p>`}${notes[s + 1] ? `<p class="sk-note">${fmt(notes[s + 1])}</p>` : ''}</div>`).join('') + (sl.conclusion ? `<p class="ko-say ko-end">${fmt(sl.conclusion)}</p>` : '') + `</div>`;
       if (steps) {
         plan.forEach((P, s2) => { const s = st('none'); cues += `<span data-dramaturgy-cue data-dramaturgy-focus="${k}" data-dramaturgy-target="${s2}"${s} aria-hidden="true"></span>`; });
         cues += `<span data-dramaturgy-restore${st('none')} aria-hidden="true"></span>`;

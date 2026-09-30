@@ -76,7 +76,6 @@ Varje bild i ett manus börjar med mallens namn inom hakparentes. Samma katalog 
 | `[sökning]` | System | En sökalgoritm arbetar i ett träd eller en graf, ett steg per klick. Algoritmen räknas fram automatiskt, så ordningen blir alltid rätt. I läget frontier syns algoritmstegen, kön (en liggande kö för BFS, en stående stack för DFS), noden som utforskas och de utforskade noderna, och varje steg förklaras i en rad under grafen som skrivs fram som i en kommandotolk. Läget vandring följer DFS eller BFS nod för nod med nummer. Läget övning visar upp till tre träd med markerade mål, och ett klick visar utforskningsordningen och nästa vägen. Egna kommentarer kan läggas vid valfritt klick. |
 | `[rutnät]` | System | En sökalgoritm i ett rutnät, till exempel en labyrint, en karta eller en spelplan. Rutnätet skrivs som text med # för vägg, punkt för fri ruta, A för start och B för mål. BFS går en nivå per klick som en våg, DFS, girig bäst först och A* en ruta per klick; takt: 3 ger tre rutor per klick. Utforskade rutor färgas, kön ringas in och sista klicket ritar vägen. Rutorna kan visa h (Manhattan-avståndet till målet) eller g + h, i samma färger som i formelmallen. Två algoritmer med komma, till exempel algoritm: bfs, dfs, söker bredvid varandra i samma labyrint med var sin räknare, så att de kan jämföras. |
 | `[kö]` | System | Två eller tre köer sida vid sida, till exempel en FIFO-kö, en stack och en prioritetskö, som får samma element. En kö i taget: först läggs elementen in i ett klick, sedan är varje ut ett klick, medan de andra köerna tonas ned. Det som tas ut hamnar på en rad under kön och står kvar, så att ordningen kan jämföras mellan köerna på slutet. Med takt: samtidigt gör alla köer samma steg på en gång. Varje kö kan visa en kodrad. |
-| `[röster]` | Redaktionellt | Röster i serie: ett citat i taget i stor kursiv text, med ett stort nummer (02 av 06) vid citatet. En röst kan ha ett samtal under sig, med indrag: namn: text för den som skriver och du: för den som håller i telefonen. Samtalet spelas upp i en telefon. Sista klicket visar slutsatsen i stor text. Passar elevröster, intervjuer, vittnesmål, källcitat och dialoger, gärna ovanpå en miljö. |
 | `[mobil]` | Redaktionellt | Ett samtal i en mobil, ett meddelande per klick: en gruppchatt, sms, en AI-chatt eller en dialog på ett annat språk. Varje rad skrivs namn: text, och du: är den som håller i telefonen. I en grupp får varje person en egen färg på namnet, och den som svarar syns med tre prickar innan meddelandet kommer. Bredvid telefonen står rubrik och ingress, och en kommentar kan läggas vid valfritt klick (not: 3 | text). Sista klicket visar slutsatsen. |
 | `[kretslopp]` | System | En process som upprepas: stegen sitter på en ring och en ring av ljus glider till nästa steg för varje klick, medan mitten förklarar steget. En ingång (start) kan leda in i kretsloppet, och ett steg kan ha en utgång som leder ut ur det. Ett steg som slutar med frågetecken får ja mot utgången och nej vidare i ringen. Näst sista klicket sluter ringen (retur), sista visar helheten med slutsatsen i mitten. Passar loopar, cykler och kretslopp: algoritmer, vattnets kretslopp, cellcykeln, konjunkturer, skrivprocessen. |
 | `[förgrening]` | System | Ett släktträd över tid: en stam och grenar som skjuter ut ur varandra, till exempel kyrkor, språk, arter eller programspråk. Varje gren har ett namn, en tid, grenen den växer ur och en kort text. Tidsaxeln är schematisk, varje förgreningstid får en kolumn. Hela trädet syns nedtonat från början. Varje klick ritar nästa gren i tidsordning och visar dess text längst ner, medan tidigare grenar står kvar. En gren som delas i två vid samma tid slutar där. Sista klicket visar hela trädet med slutsatsen. |
@@ -256,24 +255,6 @@ rubrik: Kaströrelse
 text: Två rörelser på en gång.
 - Konstant fart framåt
 - Fritt fall nedåt
-```
-
-### `[röster]` Röster
-
-Röster i serie: ett citat i taget i stor kursiv text, med ett stort nummer (02 av 06) vid citatet. En röst kan ha ett samtal under sig, med indrag: namn: text för den som skriver och du: för den som håller i telefonen. Samtalet spelas upp i en telefon. Sista klicket visar slutsatsen i stor text. Passar elevröster, intervjuer, vittnesmål, källcitat och dialoger, gärna ovanpå en miljö.
-
-**Undvik när:** Påhittade citat som ser ut som riktiga. Fler än åtta röster.
-
-```
-[röster]
-etikett: Efter lektionen
-slutsats: Samma lektion. Tre olika upplevelser.
-- Jag fattade först när jag fick förklara det för någon annan. | Elev, 17 år
-- Jag frågade chatten innan jag frågade dig. | Elev, 16 år
-  - du: Hur skriver jag en bra inledning?
-  - Chatten: Börja med en fråga eller en bild som väcker nyfikenhet.
-- Jag vet inte om jag lärde mig något, eller bara blev klar. | Elev, 18 år
-- räknare: Elev
 ```
 
 ### `[mobil]` Mobil

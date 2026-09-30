@@ -35,7 +35,7 @@ bakgrund: fokusljus
 [kretslopp]
 etikett: Sökalgoritm
 rubrik: Så fungerar en sökalgoritm
-text: Kön innehåller de noder som upptäckts, men ännu inte utforskats.
+text: I kön finns de noder som upptäckts, men ännu inte utforskats.
 slutsats: BFS, DFS, girig bäst först och A* går alla runt i den här loopen. Det som skiljer dem är vilken nod som tas ut.
 mitten: Kön
 start: Lägg startnoden i kön

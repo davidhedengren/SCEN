@@ -1081,7 +1081,7 @@ function renderSlide(sl, i, deck, img) {
         const v = o.v.toLowerCase(), vc = /^(ja|yes|✓)/.test(v) ? 'ja' : /^(nej|no|✗)/.test(v) ? 'nej' : v ? 'delvis' : '';
         return `<li class="pv-row" data-dramaturgy-in="${ei >= 0 ? qi + ' ' + ei : qi}"><span class="pv-n">${String(j + 1).padStart(2, '0')}</span>` +
           `<h3 class="pv-q">${fmt(o.q)}</h3>` +
-          `<p class="pv-ev"${ei >= 0 ? ` data-dramaturgy-in="${ei}"` : ''}>${fmt(o.ev)}</p>` +
+          `<p class="pv-ev"${ei >= 0 ? ` data-dramaturgy-in="${ei}"` : ''}>${fmt(o.ev).replace(/\\n/g, '<br>')}</p>` +
           (vc ? `<span class="pv-mark ${vc}"${ei >= 0 ? ` data-dramaturgy-in="${ei}"` : ''}>${esc(o.v)}</span>` : '<span class="pv-mark none"></span>') + `</li>`;
       }).join('');
       let cues = '';

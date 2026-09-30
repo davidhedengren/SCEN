@@ -57,7 +57,7 @@ Varje bild i ett manus börjar med mallens namn inom hakparentes. Samma katalog 
 | `[bro]` | Banor | En process som en båge över ett golv. Bågen bär stegen, golvet är sammanhanget de börjar och slutar i. Hela modellen syns från början. Varje klick flyttar fokus ett steg, tidigare steg ligger kvar nedtonade och sista klicket visar helheten igen. Med retur blir bron en loop: resultatet leder längs golvet tillbaka till början, som i återkopplingar, kretslopp och cykler. |
 | `[rad]` | Fokusvandring | Två till fem kolumner på en scen med stora siffror. Alla syns från början. En ljuskägla glider i sidled till kolumnen du pratar om medan de andra tonas ned, och sista klicket tänder alla. Med flöde: ja fylls en linje under kolumnerna i takt med stegen. |
 | `[rutor]` | Fokusvandring | Två till sex rutor av matt glas över ett mjukt färgsken, till exempel fyra delar i två rader. Hela rutnätet syns från början. Ett ljus glider bakom glaset till rutan du pratar om, de andra blir suddiga, och sista klicket tänder alla. |
-| `[prövning]` | Begrepp | Ett fall prövas mot kriterier, ett i taget. Först tänds frågan, på nästa klick belägget och omdömet. Övriga kriterier är nedtonade. Sista klicket visar allt och slutsatsen landar stort. |
+| `[prövning]` | Begrepp | Ett fall prövas mot kriterier, ett i taget. Först tänds frågan, på nästa klick belägget och omdömet. Övriga kriterier är nedtonade. Sista klicket visar allt och slutsatsen landar stort. Skriv \n i belägget för radbrytning. |
 | `[remsor]` | Fokusvandring | Tre till fem rader med nummer, rubrik och förklaring. Ett ljusdrag sveper ned till raden du pratar om, och sista klicket tänder alla. Bra för begrepp med lite längre förklaringar. |
 | `[mosaik]` | Fokusvandring | En bentogrid: en stor ruta med helheten och två till fyra mindre. Allt börjar i gråskala och färgen tänds i rutan du pratar om, en i taget. Sista klicket ger färg åt alla. |
 | `[kärna]` | Fokusvandring | En lysande kärna i mitten och två till fyra delar runt den. Kärnan lyser hela tiden, och en ljusstråle ritas ut till delen du pratar om. Sista klicket tänder alla strålar och visar en slutsats i kärnan. |
@@ -1017,7 +1017,7 @@ slutsats: Dimensionerna påverkar varandra.
 
 ### `[prövning]` Prövning
 
-Ett fall prövas mot kriterier, ett i taget. Först tänds frågan, på nästa klick belägget och omdömet. Övriga kriterier är nedtonade. Sista klicket visar allt och slutsatsen landar stort.
+Ett fall prövas mot kriterier, ett i taget. Först tänds frågan, på nästa klick belägget och omdömet. Övriga kriterier är nedtonade. Sista klicket visar allt och slutsatsen landar stort. Skriv \n i belägget för radbrytning.
 
 **Undvik när:** Mer än fem kriterier, eller när det inte finns något fall att pröva. Använd triad för premisser utan fall.
 

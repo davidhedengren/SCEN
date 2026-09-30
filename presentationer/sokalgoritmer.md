@@ -98,6 +98,23 @@ slutsats: Vilken nod i frontiern som utforskas beror på vilken kö algoritmen a
 
 ---
 
+[bildregi]
+etikett: Kapitel 1
+rubrik: Bredden först
+text: Ljuset sprider sig åt alla håll samtidigt.
+bild: bilder/sokalgoritmer/labyrint-bfs.jpg
+alt: En labyrint i mörker där turkost ljus sprider sig jämnt i alla gångar från startlampan.
+bildläge: hero
+fokuspunkt: 60 50
+startutsnitt: 50 50 1.04
+slututsnitt: 54 48 1.1
+säker-yta: 4 14 36 64
+mörkning: 0 0 44 100 0.4
+hastighet: slow
+> Kapitelbild. Fråga: hur skulle du leta om du fick skicka ut en hjälpare i varje gång samtidigt?
+
+---
+
 [rad]
 etikett: Bredden först
 rubrik: Bredden först-sökning (Breadth-First Search, BFS)
@@ -255,6 +272,23 @@ text: Vi följer en nivå i taget.
 - A...##......
 > Låt eleverna först rita sin lösning. Varje klick visar sedan en nivå.
 > Vägen till B är 23 steg.
+
+---
+
+[bildregi]
+etikett: Kapitel 2
+rubrik: Djupet först
+text: En tråd av ljus, så långt det går.
+bild: bilder/sokalgoritmer/labyrint-dfs.jpg
+alt: Samma labyrint. En enda smal ljusstråle slingrar sig djupt in i en gång, med korta mörka återvändsgränder bakom sig.
+bildläge: hero
+fokuspunkt: 73 66
+startutsnitt: 50 50 1.04
+slututsnitt: 62 60 1.12
+säker-yta: 4 14 36 64
+mörkning: 0 0 44 100 0.4
+hastighet: slow
+> Kapitelbild. Fråga: vad händer om man alltid väljer första bästa gång och fortsätter tills det tar stopp?
 
 ---
 
@@ -517,6 +551,23 @@ fokuspunkt: 55 50
 
 ---
 
+[bildregi]
+etikett: Kapitel 3
+rubrik: Girig bäst först
+text: Rakt mot målet, även när det leder fel.
+bild: bilder/sokalgoritmer/labyrint-girig.jpg
+alt: Samma labyrint. Ljuset rusar rakt mot det lysande målet uppe till höger men fastnar i en återvändsgränd nära målet.
+bildläge: hero
+fokuspunkt: 70 17
+startutsnitt: 50 50 1.04
+slututsnitt: 64 30 1.12
+säker-yta: 4 14 36 64
+mörkning: 0 0 44 100 0.4
+hastighet: slow
+> Kapitelbild. Fråga: är det alltid smart att gå åt det håll där målet ser ut att ligga?
+
+---
+
 [rutnät]
 etikett: Informerad sökning
 rubrik: Girig bäst först-sökning
@@ -548,6 +599,23 @@ rubrikrörelse: skrivmaskin
 - Den bryr sig inte om hur långt den redan har gått
 > Låt eleverna diskutera i par innan svaret visas.
 > Alternativ 2 stämmer inte: algoritmen har en uppskattning, h. Det som saknas är kostnaden för vägen hittills.
+
+---
+
+[bildregi]
+etikett: Kapitel 4
+rubrik: A*
+text: Vägen hit och vägen kvar, tillsammans.
+bild: bilder/sokalgoritmer/labyrint-astjarna.jpg
+alt: Samma labyrint. En gyllene väg leder från startlampan fram till målet uppe till höger.
+bildläge: hero
+fokuspunkt: 93 10
+startutsnitt: 50 50 1.04
+slututsnitt: 66 36 1.1
+säker-yta: 4 14 36 64
+mörkning: 0 0 44 100 0.4
+hastighet: slow
+> Kapitelbild. A* väger ihop hur långt vi har gått med hur långt det verkar vara kvar.
 
 ---
 
@@ -601,3 +669,20 @@ slutsats: A* utforskade färre rutor, 30 mot 33, och hittade den kortaste vägen
 - ###.#.#####.
 - A...#.......
 > Båda söker samtidigt, tre rutor per klick.
+
+---
+
+[bildregi]
+etikett: Sammanfattning
+rubrik: Fyra sätt att leta
+text: Bredden först, djupet först, girig bäst först och A*.
+bild: bilder/sokalgoritmer/labyrint-natt.jpg
+alt: Den mörka labyrinten igen, med startlampan tänd nere till vänster och målet lysande uppe till höger.
+bildläge: hero
+fokuspunkt: 50 50
+startutsnitt: 56 44 1.1
+slututsnitt: 50 50 1.02
+säker-yta: 4 14 36 64
+mörkning: 0 0 44 100 0.4
+hastighet: slow
+> Avslutning. Fråga klassen: vilken algoritm skulle du själv välja i en riktig labyrint, och varför?

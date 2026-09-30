@@ -103,7 +103,7 @@ slutsats: Alla beskriver relationer som noder och kanter.
 - vy: Vägnät | orter | vägar | Göteborg, Falköping, Jönköping, Nässjö, Malmö | Hitta den kortaste vägen mellan två orter.
 - vy: Sociala nätverk | personer | vänskaper | Marie, Pär, David, Lars-Åke, Anneli | Föreslå vänner till vänner. Marie och David har Pär gemensamt.
 - vy: Webben | sidor | länkar | Start, Nyheter, Sport, Väder, Kontakt | Sökmotorer hittar sidor genom att följa länkarna.
-- vy: Kollektivtrafik | hållplatser | sträckor | Centralen, Torget, Skolan, Parken, Hamnen | Hitta resan med minst antal hållplatser.
+- vy: Kollektivtrafik | hållplatser | sträckor | Sofiakyrkan, Juneporten, Rådhusparken, Östra Centrum, Spira | Hitta resan med minst antal hållplatser.
 > Samma graf som tidigare, men med nya etiketter. Fråga klassen efter varje klick: vad skulle en kant betyda här?
 > Poängen: algoritmerna bryr sig inte om vad noderna är. Samma sökalgoritm hittar vägar mellan orter, vänner och webbsidor.
 

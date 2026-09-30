@@ -1086,7 +1086,13 @@ function renderSlide(sl, i, deck, img) {
       });
       const idx = r => { const n = parseInt(r, 10); if (Number.isFinite(n) && String(n) === r) return n - 1; return nodes.findIndex(o => gtKey(o.name) === gtKey(r)); };
       const E = edges.map(([a, b]) => [idx(a), idx(b)]).filter(([a, b]) => a >= 0 && b >= 0 && a < nodes.length && b < nodes.length && a !== b);
-      const lift = plain(title).length > 40 ? 70 : 0, AX = 860, AY = 320 + lift, AW = 860, AH = 580 - lift, R = 18;
+      const lift = plain(title).length > 40 ? 70 : 0, AY = 320 + lift, AH = 580 - lift, R = 18;
+      /* Längsta etiketten till höger och vänster avgör hur bred grafen får vara. */
+      const labSize = nodes.length <= 6 ? 36 : nodes.length <= 9 ? 30 : 24, labW = t => plain(t || '').length * labSize * .58 + 30;
+      const xMax = Math.max(0, ...nodes.map(n => n.x)), xMin = Math.min(100, ...nodes.map(n => n.x));
+      const rightW = Math.max(0, ...nodes.filter(n => n.x >= xMax - 1).flatMap((n, _) => views.map(v => labW(v.labs[nodes.indexOf(n)]))));
+      const leftW = Math.max(0, ...nodes.filter(n => n.x <= xMin + 1).flatMap(n => views.map(v => labW(v.labs[nodes.indexOf(n)]))));
+      const AX = Math.max(800, 760 + leftW - 40), AW = Math.max(420, Math.min(860, 1840 - rightW - AX));
       const P = nodes.map(n => [AX + n.x / 100 * AW, AY + n.y / 100 * AH]);
       const cx = nodes.reduce((a, n) => a + n.x, 0) / (nodes.length || 1), cy = nodes.reduce((a, n) => a + n.y, 0) / (nodes.length || 1);
       const trim = (a, b, d) => { const L = Math.hypot(b[0] - a[0], b[1] - a[1]) || 1; return [a[0] + (b[0] - a[0]) * d / L, a[1] + (b[1] - a[1]) * d / L]; };

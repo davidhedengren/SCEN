@@ -584,19 +584,6 @@ text: def bfs(graph, start, goal):
 
 ---
 
-[omröstning]
-etikett: Diskutera
-rubrik: Du bygger en GPS. BFS eller DFS?
-- Bredden först (BFS)
-- Djupet först (DFS)
-- Ingen av dem
-> Låt eleverna rösta och motivera.
-> BFS hittar kortaste vägen i antal steg, men vägar på en karta är olika långa och kartan är enorm. BFS letar åt alla håll, även bort från målet.
-> DFS kan hitta en väg, men sällan en bra, och kan gå långt åt fel håll.
-> Ingen av dem vet var målet ligger. Det leder till nästa del: tänk om algoritmen hade en tumregel om åt vilket håll målet finns?
-
----
-
 [bildregi]
 rubrik: Girig bäst först
 bild: bilder/sokalgoritmer/labyrint-girig.jpg
@@ -707,17 +694,3 @@ slutsats: A* hittar den kortaste vägen: 21 steg.
 - not: 15 | Här byter vi väg eftersom 6 + 13 är lägre än 15 + 6.
 > Vid lika värden väljer A* här den ruta som lades till senast.
 > Jämför med girig bäst först i samma labyrint: där blev vägen 33 steg.
-
----
-
-[omröstning]
-etikett: Diskutera
-rubrik: Du bygger en GPS. Vilken algoritm väljer du nu?
-- Bredden först (BFS)
-- Djupet först (DFS)
-- Girig bäst först
-- A*
-> Samma fråga som tidigare, nu med alla fyra. Har någon ändrat sig?
-> Det finns inget självklart svar. A* hittar kortaste vägen om uppskattningen aldrig överskattar, men girig bäst först kan räcka när det går fort och vägen inte behöver vara bäst.
-> A* väger ihop sträckan hittills med en uppskattning av vad som är kvar, till exempel fågelvägen till målet.
-> Följdfråga: vad borde en GPS räkna som kostnad? Avstånd, restid, bränsle eller avgifter?

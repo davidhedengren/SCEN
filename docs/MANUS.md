@@ -225,6 +225,8 @@ Algoritmerna räknas fram automatiskt. Du skriver grafen eller labyrinten och v�
 - mål: E                     (flera mål: E, L)
 - läge: frontier             (frontier, vandring eller övning)
 - not: 4 | kommentar         (visas vid klick 4)
+- algoritmen: dold           (valfri: tar bort algoritmstegen, den skrivna raden står där i stället)
+- kötyp: dold                (valfri: döljer BFS/DFS och köns namn, t.ex. innan köerna gåtts igenom)
 - A                          (trädet med indrag, eller nod- och kantrader som i [graf])
   - B
     - C

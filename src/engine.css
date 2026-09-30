@@ -1852,3 +1852,7 @@
 .scen .slide[data-layout="lexikon"] .lx-d{margin:0;font-size:38px;line-height:1.35;color:var(--ink);text-wrap:pretty;max-width:1000px}
 .scen .slide[data-layout="lexikon"] .lx-x{margin:0;padding-left:26px;border-left:3px solid var(--accent);font-size:30px;line-height:1.4;font-style:italic;color:var(--muted);max-width:1000px}
 @media (prefers-reduced-motion:reduce){.scen .slide :is(.sk-cursor,.lx-mark){transition:opacity .2s}}
+/* Sökning utan algoritmsteg: den skrivna raden står där stegen stod, större */
+.scen .sk-status.sk-big :is(.sk-say) p{font-size:34px;line-height:1.4}
+.scen .sk-status.sk-big :is(.sk-say) p.say-term{font-size:34px;line-height:1.45}
+.scen .sk-status.sk-big .sk-note{font-size:28px}

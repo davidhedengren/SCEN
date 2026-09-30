@@ -243,7 +243,7 @@ function sokSplit(items) {
   const cfg = {}, notes = {}, rows = [];
   lines(items).forEach(raw => {
     const s = String(raw), pre = (s.match(/^(- )+/) || [''])[0], depth = pre.length / 2, t = s.slice(pre.length).trim();
-    const m = !depth && t.match(/^(?:(algoritm|mål|start|läge|takt|siffror|not|uppgift|kö|in)\s*:\s*(.*)|(ut))$/i);
+    const m = !depth && t.match(/^(?:(algoritmen|algoritm|mål|start|läge|takt|siffror|not|uppgift|kötyp|kö|in)\s*:\s*(.*)|(ut))$/i);
     if (m) {
       const key = (m[1] || m[3]).toLowerCase(), v = (m[2] || '').trim();
       if (key === 'not') { const p = v.split('|'), n = parseInt(p[0], 10); if (n > 0) notes[n] = p.slice(1).join('|').trim(); }
@@ -1777,14 +1777,17 @@ function renderSlide(sl, i, deck, img) {
           'Är noden målet? Då är lösningen hittad.',
           'Utforska noden: lägg dess barn i frontiern'
         ], LINE = { start: 0, fail: 1, take: 2, goal: 3, add: 4 };
-        html += `<div class="sk-alg"><p class="sk-algh"><b>Algoritmen</b><span>${stack ? 'DFS · stack' : 'BFS · FIFO-kö'}</span></p><ol>` +
+        /* - algoritmen: dold tar bort stegen till vänster; den skrivna raden tar då deras plats.
+           - kötyp: dold döljer BFS/DFS och köns namn, till exempel innan köerna har gåtts igenom. */
+        const showAlg = !/dold|nej/i.test(cfg['algoritmen'] || ''), showKind = !/dold|nej/i.test(cfg['kötyp'] || '');
+        if (showAlg) html += `<div class="sk-alg"><p class="sk-algh"><b>Algoritmen</b>${showKind ? `<span>${stack ? 'DFS · stack' : 'BFS · FIFO-kö'}</span>` : ''}</p><ol>` +
           AL.map((t, q) => `<li class="l${q}${q === 3 ? ' goalline' : ''}"${IN(S.map((s, k) => LINE[s.kind] === q ? k : -1).filter(k => k >= 0))}>${t}</li>`).join('') +
           `</ol></div>`;
         /* Frontiern under algoritmen: en liggande kö för BFS, en stående stack för DFS. */
         const CH = stack ? 64 : 72, GAP = stack ? 10 : 12, FX = 144, FY = stack ? 654 : 668;
         html += stack
-          ? `<div class="sk-lane stack" style="left:${FX}px;top:${FY}px;width:${CH + 28}px;height:${4 * (CH + GAP) + 44}px"><p class="sk-lanel">Frontier · stack</p><span class="sk-io">↕ in och ut</span></div>`
-          : `<div class="sk-lane fifo" style="left:${FX}px;top:${FY}px;width:800px;height:${CH + 28}px"><p class="sk-lanel">Frontier · FIFO-kö</p><span class="sk-io l">← ut</span><span class="sk-io r">← in</span></div>`;
+          ? `<div class="sk-lane stack" style="left:${FX}px;top:${FY}px;width:${CH + 28}px;height:${4 * (CH + GAP) + 44}px"><p class="sk-lanel">Frontier${showKind ? ' · stack' : ''}</p><span class="sk-io">↕ in och ut</span></div>`
+          : `<div class="sk-lane fifo" style="left:${FX}px;top:${FY}px;width:800px;height:${CH + 28}px"><p class="sk-lanel">Frontier${showKind ? ' · FIFO-kö' : ''}</p><span class="sk-io l">← ut</span><span class="sk-io r">← in</span></div>`;
         const CX = stack ? 440 : 144, CY = stack ? 700 : 858, EX = stack ? 440 : 340, EY = stack ? 860 : 866, ES = 52, per = 8;
         html += `<p class="sk-lbl" style="left:${CX}px;top:${CY - 36}px">Utforskas nu</p><div class="sk-curbox" style="left:${CX}px;top:${CY}px;width:${CH + 16}px;height:${CH + 16}px"></div>` +
           `<p class="sk-lbl" style="left:${EX}px;top:${EY - 44}px">Utforskade</p>`;
@@ -1805,7 +1808,7 @@ function renderSlide(sl, i, deck, img) {
         const said = s => s.kind === 'start' ? `${name(s.added[0])} läggs i frontiern.` : s.kind === 'take' ? `${name(s.cur)} tas ut ur frontiern. Är det målet? Nej.` :
           s.kind === 'add' ? (s.added.length ? `${name(s.cur)} utforskas. ${sokList(s.added.map(name))} läggs i frontiern.` : `${name(s.cur)} utforskas. Inga nya noder att lägga till.`) :
           s.kind === 'goal' ? `${name(s.cur)} tas ut ur frontiern. Det är målet! Vägen: ${s.path.map(name).join(' → ')}.` : 'Frontiern är tom. Det finns ingen lösning.';
-        html += `<div class="sk-status" style="left:${box.x}px;top:${box.y + box.h + 22}px;width:${box.w}px">` +
+        html += (showAlg ? `<div class="sk-status" style="left:${box.x}px;top:${box.y + box.h + 22}px;width:${box.w}px">` : `<div class="sk-status sk-big" style="left:144px;top:300px;width:800px">`) +
           (sl.text ? `<p class="sk-say sk-intro">${fmt(sl.text)}</p>` : '') +
           S.map((s, k) => `<div class="sk-say"${T(k)}><p class="say-term">${said(s)}</p>${notes[k + 1] ? `<p class="sk-note">${fmt(notes[k + 1])}</p>` : ''}</div>`).join('') +
           (sl.conclusion ? `<p class="sk-say sk-end">${fmt(sl.conclusion)}</p>` : '') + `</div>`;

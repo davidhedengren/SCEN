@@ -21,6 +21,17 @@ hastighet: slow
 
 ---
 
+[definition]
+etikett: Ett ord vi behöver
+rubrik: Frontiern
+text: De noder som vi har hittat, men ännu inte undersökt.
+exempel: Som en att göra-lista med platser du vet finns men inte har besökt. Algoritmen tar en plats i taget från listan.
+bakgrund: fokusljus
+> Frontier betyder gräns: gränsen mellan det vi redan har utforskat och det som är okänt.
+> I vilken ordning platserna tas från listan bestämmer vilken algoritm det är. Det kommer vi till när vi pratar om köer.
+
+---
+
 [kretslopp]
 etikett: Sökalgoritm
 rubrik: Så fungerar en sökalgoritm
@@ -44,6 +55,7 @@ rubrik: Hitta en väg från A till E
 text: Frontiern innehåller de noder som upptäckts men ännu inte utforskats.
 slutsats: Målet är hittat först när noden tas ut ur frontiern och utforskas.
 - algoritm: bfs
+- kötyp: dold
 - mål: E
 - A
   - B
@@ -150,6 +162,7 @@ etikett: Bredden först
 rubrik: Hitta en väg från A till F med BFS
 slutsats: BFS hittar F på nivå 2. Vägen är A, C, F.
 - algoritm: bfs
+- algoritmen: dold
 - mål: F
 - A
   - B
@@ -358,6 +371,7 @@ etikett: Djupet först
 rubrik: Hitta en väg från A till F med DFS
 slutsats: DFS hittar F efter att ha gått ned i den högra grenen först.
 - algoritm: dfs
+- algoritmen: dold
 - mål: F
 - A
   - B

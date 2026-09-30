@@ -257,10 +257,9 @@ etikett: Bredden först
 rubrik: Fördelar med BFS
 - Garanterar kortaste vägen | BFS hittar alltid den kortaste vägen mellan två noder i en graf, mätt i antalet kanter.
 - Utforskar alla noder på samma nivå | BFS utforskar noder nivå för nivå, vilket gör det användbart för att hitta alla noder på ett visst avstånd från startnoden.
-- Används i vardagen | ”Personer du kanske känner” i sociala medier, hinken som fyller en yta i ett ritprogram och pussel som ska lösas med minst antal drag.
+- Används i vardagen | ”Personer du kanske känner” i sociala medier och pussel som ska lösas med minst antal drag.
 
 > Personer du kanske känner: vänner till dina vänner är nivå 2 i ett nätverk av vänskaper.
-> Hinken i ett ritprogram: fyllningen sprider sig ruta för ruta från där du klickar, precis som BFS i labyrinten.
 > Pussel: BFS provar alla lösningar med ett drag, sedan alla med två drag, och så vidare. Den första lösningen den hittar har därför minst antal drag.
 ---
 

@@ -20,20 +20,22 @@ hastighet: slow
 
 ---
 
-[bro]
+[kretslopp]
 etikett: Begrepp 1
 rubrik: Vad är en agent?
 text: En aktör som uppfattar sin omgivning och agerar i den.
-vänster: Omgivningen
-höger: Omgivningen förändras
-retur: Agenten reagerar på förändringar
-bakgrund: fokusljus
-- Uppfattar | med sinnen, sensorer eller data
-- Beslutar | utifrån sitt mål
-- Agerar | med kroppen eller aktuatorer
-> Klick 1–3 följer bågen: uppfatta, besluta, agera. Klick 4 följer handlingen längs golvet tillbaka till omgivningen. Klick 5 visar hela slingan.
+slutsats: Här står inget om AI. En agent kan vara en människa, ett djur eller en maskin.
+mitten: Agenten
+retur: Agenten reagerar på förändringar, varv efter varv.
+miljö: bilder/ai-agenter-miljoer/korsning.jpg | 80
+- Uppfattar | Med sinnen, sensorer eller data.
+- Beslutar | Utifrån sitt mål.
+- Agerar | Med kroppen eller aktuatorer.
+- Omgivningen förändras | Både av agentens handling och av sig själv.
+> Klick 1–4 går runt loopen: uppfatta, besluta, agera, och omgivningen förändras. Klick 5 sluter ringen: agenten börjar om och uppfattar den nya situationen. Sista klicket visar hela loopen.
 > Agenten interagerar med sin miljö, samlar in information och reagerar på förändringar.
 > Observera: här står inget om AI. En agent kan vara en människa, ett djur eller en maskin.
+> Miljön bakom är samma korsning som på titelbilden. Den följer med genom hela delen om agenten.
 
 ---
 
@@ -57,6 +59,7 @@ mörkning: 0 0 42 100 0.55
 [typografi]
 etikett: Begrepp 2
 bakgrund: fokusljus
+miljö: bilder/ai-agenter-miljoer/korsning.jpg | 84
 - statement | En **agent** uppfattar, beslutar och agerar. | Agent
 - precisering | En **AI-agent** är en artificiell agent som använder AI för att välja eller planera sina handlingar. | AI-agent
 > AI:n sitter i beslutsfattandet. Uppfatta och agera gör alla agenter.
@@ -69,6 +72,7 @@ etikett: Tre egenskaper
 rubrik: Vad gör en agent till en agent?
 text: Agent
 slutsats: Målorientering bygger på de två första.
+miljö: bilder/ai-agenter-miljoer/korsning.jpg | 84
 - Autonomi | Kan fatta egna beslut utan direkt mänsklig styrning.
 - Perception | Samlar in data om sin omgivning genom sensorer eller annan inmatning.
 - Målorientering | Använder sin autonomi och perception för att fatta beslut och ta de bästa möjliga åtgärderna för att nå sitt mål.
@@ -79,6 +83,7 @@ slutsats: Målorientering bygger på de två första.
 [tidslinje]
 rubrik: Från agent till miljö
 bakgrund: fokusljus
+miljö: bilder/ai-agenter-miljoer/korsning.jpg | 84
 - Agent | Grunden | Uppfattar, beslutar och agerar.
 - AI-agent | Plus AI | AI används i beslutsfattandet.
 - Rationell agent | Plus bästa valet | Väljer den bästa handlingen utifrån mål och information.
@@ -144,6 +149,7 @@ rubrik: Ensam eller bland andra?
 vänster: Singelagent
 höger: Multiagent
 bakgrund: fokusljus
+miljö: bilder/ai-agenter-miljoer/korsning.jpg | 84
 fokus: mjuk
 - Vad | Endast en agent, ingen koordinering med andra | Agenterna interagerar med miljön och med varandra
 - Fördelar | Enkelhet, effektivt eftersom ingen konkurrerar | Ökad effektivitet, flexibilitet, samarbete mot gemensamma mål
@@ -158,6 +164,7 @@ fokus: mjuk
 rubrik: Schack mot dator: singel- eller multiagentmiljö?
 svar: Två agenter fattar beslut i samma miljö. Motståndarens drag påverkar direkt vilka handlingar och resultat som är möjliga för den andra agenten.
 bakgrund: fokusljus
+miljö: bilder/ai-agenter-miljoer/schack-robotarm.jpg | 84
 - Singelagent
 - * Multiagent
 - Det beror på perspektivet
@@ -171,6 +178,7 @@ bakgrund: fokusljus
 [typografi]
 etikett: 3 / 6 · Deterministisk / stokastisk
 bakgrund: fokusljus
+miljö: bilder/ai-agenter-miljoer/poker-pov.jpg | 84
 - statement | Samma handling. **Samma** utfall. | Deterministisk
 - ersättning | Samma handling. **Osäkert** utfall. | Stokastisk
 - precisering | Schack är deterministiskt.\\nPoker är **stokastiskt**. | Exempel
@@ -186,6 +194,7 @@ bakgrund: fokusljus
 - Episodisk | Varje handling är fristående och påverkar inte framtida handlingar.
 - Sekventiell | Varje handling påverkar framtida tillstånd och beslut.
 - Exempel | Bildklassificering är episodisk. Planering för en självkörande bil är sekventiell.
+> Bildförslag: en lång rad dominobrickor där de första har börjat falla, som miljö bakom bilden. Varje bricka påverkar nästa, precis som i en sekventiell miljö.
 
 ---
 
@@ -226,6 +235,7 @@ mörkning: 0 0 46 56 0.55
 etikett: Helheten
 rubrik: Schack mot dator: sex svar
 bakgrund: fokusljus
+miljö: bilder/ai-agenter-miljoer/schack-robotarm.jpg | 84
 - Fullständigt observerbar | Alla pjäser och positioner syns för båda spelarna.
 - Multiagent | Två agenter vars drag påverkar varandra: en konkurrerande miljö.
 - Deterministisk | Alla drag och deras konsekvenser är förutsägbara.

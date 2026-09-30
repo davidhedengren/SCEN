@@ -266,23 +266,6 @@ Raderna som beskriver vad algoritmen gör, till exempel "Utforskar A." eller "L�
 
 Konventioner: BFS använder en FIFO-kö. DFS använder en stack, så den nod som lades till sist utforskas först; i ett träd blir det den högra grenen. Girig bäst först väljer lägst h, A* lägst g + h. Vid lika värden väljs den senast tillagda. I rutnät prövas grannarna i ordningen upp, vänster, höger, ned.
 
-### Röster
-
-```text
-[röster]
-etikett: Efter lektionen
-miljö: bilder/kurs/korridor.jpg | 70
-slutsats: Samma lektion. Tre olika upplevelser.   (visas i stor text efter sista rösten)
-- Jag fattade först när jag fick förklara det för någon annan. | Elev, 17 år
-- Jag frågade chatten innan jag frågade dig. | Elev, 16 år
-  - du: Hur skriver jag en bra inledning?
-  - Chatten: Börja med en fråga eller en bild som väcker nyfikenhet.
-- Jag vet inte om jag lärde mig något, eller bara blev klar. | Elev, 18 år
-- räknare: Elev                            (valfri, ordet vid numret)
-```
-
-En röst per klick, med ett stort nummer (02 av 06) vid citatet. Raderna med indrag är ett samtal som spelas upp i telefonen, ett meddelande i taget. Svaren föregås av tre prickar som när någon skriver. `app: Namn` byter namnet högst upp i telefonen.
-
 ### Mobil
 
 ```text
@@ -299,7 +282,7 @@ slutsats: visas när hela samtalet syns
 - not: 2 | Kommentar som visas vid klick 2.
 ```
 
-En Android-telefon med ett samtal, ett meddelande per klick. I en grupp får varje person en egen färg på namnet. Den som svarar syns med tre prickar innan meddelandet kommer. Samma telefon används i `[röster]`.
+En Android-telefon med ett samtal, ett meddelande per klick. I en grupp får varje person en egen färg på namnet. Den som svarar syns med tre prickar innan meddelandet kommer.
 
 ### Kretslopp
 

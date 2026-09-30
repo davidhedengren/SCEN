@@ -12,7 +12,7 @@ const ACCENTS = {
 };
 const LAYOUTS = {etapper:"Etapper",vagval:"Vägval",lager:"Lager",resonemang:"Resonemang",helhet:"Helhet",
   skiften: 'Skiften', prisma: 'Prisma', verkningar: 'Verkningar', belagg: 'Belägg', sammanflode: 'Sammanflöde',
-  lameller: 'Lameller', register: 'Register', samband: 'Samband', marginal: 'Marginal', sats: 'Sats', formel: 'Formel', kretslopp: 'Kretslopp', roster: 'Röster', mobil: 'Mobil',
+  lameller: 'Lameller', register: 'Register', samband: 'Samband', marginal: 'Marginal', sats: 'Sats', formel: 'Formel', kretslopp: 'Kretslopp', mobil: 'Mobil',
   title: 'Titel', section: 'Avsnitt', statement: 'Påstående', bullets: 'Punktlista', split: 'Text och bild',
   image: 'Helbild', bildregi: 'Bildregi', terminal: 'Terminal', kodforklaring: 'Kodförklaring', typografisk: 'Typografiskt statement', texttempo: 'Typografiskt tempo', cards: 'Kort', compare: 'Jämförelse', table: 'Tabell', number: 'Stort tal', timeline: 'Tidslinje',
   question: 'Fråga och svar', poll: 'Omröstning', reflect: 'Reflektion', define: 'Definition', chat: 'AI-samtal', duo: 'Två tal',
@@ -1606,52 +1606,6 @@ function renderSlide(sl, i, deck, img) {
       attrs += ` data-dramaturgy="focus-restore" data-dramaturgy-state="${steps && nStep ? 'overview' : 'restored'}"${steps && nStep ? '' : ' data-dramaturgy-static="true"'}`;
       break;
     }
-    case 'roster': {
-      /* Röster i serie: ett citat i taget med ett stort nummer vid citatet. En röst kan ha ett samtal
-         som visas i telefonen, meddelande för meddelande. Sista klicket visar slutsatsen i stor text. */
-      const voices = [], cfg = {};
-      lines(sl.items).forEach(raw => {
-        const depth = (String(raw).match(/^(- )*/)[0].length) / 2, t = String(raw).replace(/^(- )+/, '').trim();
-        const kv = t.match(/^([a-zåäöA-ZÅÄÖ][\wåäöÅÄÖ .-]{0,24}?)\s*:\s*(.+)$/);
-        if (!depth && kv && /^räknare$/i.test(kv[1])) { cfg.label = kv[2].trim(); return; }
-        if (!depth && kv && /^tid$/i.test(kv[1])) { cfg.time = kv[2].trim(); return; }
-        if (!depth || !voices.length) { const p = t.split('|').map(s => s.trim()); voices.push({ q: p[0] || '', who: p.slice(1).join(' | '), chat: [], app: '' }); return; }
-        const v = voices[voices.length - 1];
-        if (kv && /^app$/i.test(kv[1])) v.app = kv[2].trim();
-        else if (kv) v.chat.push({ me: /^du$/i.test(kv[1].trim()), who: kv[1].trim(), text: kv[2].trim() });
-      });
-      const n = voices.length, label = cfg.label || 'Röst', pad = x => String(x).padStart(2, '0');
-      const anyChat = voices.some(v => v.chat.length), hasEnd = !!plain(sl.conclusion || '');
-      const T = j => ` data-dramaturgy-target data-dramaturgy-index="${j}"`, IN = arr => arr.length ? ` data-dramaturgy-in="${arr.join(' ')}"` : '';
-      /* Röst 0 syns före första klicket, klick j visar röst j + 1. */
-      const cueOf = v => v - 1, cues0 = Array.from({ length: Math.max(0, n - 1) }, (_, j) => j);
-      const qTop = title ? 330 : 230, qW = anyChat ? 1000 : 1420;
-      const say = voices.map((v, k) => {
-        const L2 = plain(v.q).length, fs = L2 < 80 ? 68 : L2 < 140 ? 56 : L2 < 220 ? 46 : 40;
-        return `<div class="rs-voice v${k}"${k ? T(cueOf(k)) : ''}><p class="rs-no"><b>${pad(k + 1)}</b><span>${esc(label)}<br>av ${pad(n)}</span></p>` +
-          `<p class="rs-q" style="font-size:${fs}px">${fmt(v.q)}</p>${v.who ? `<p class="rs-who">${fmt(v.who)}</p>` : ''}</div>`;
-      }).join('');
-      /* Samtalen ligger som lager i samma telefon; rösten som visas bestämmer vilket samtal som syns. */
-      const chats = voices.map((v, k) => {
-        if (!v.chat.length) return '';
-        const { msgs } = phoneMsgs(v.chat);
-        return `<div class="rs-chat ph-auto v${k}"${k ? IN([cueOf(k)]) : ''}>${msgs.map((m, q) => phoneMsg(m, { k: q })).join('')}</div>`;
-      }).join('');
-      const withChat = voices.map((v, k) => v.chat.length && k ? cueOf(k) : -1).filter(j => j >= 0);
-      const first = voices.find(v => v.chat.length) || {}, app = (voices.find(v => v.app) || {}).app || (first.chat ? (first.chat.find(m => !/^du$/i.test(m.who)) || {}).who : '') || 'Chatt';
-      const phone = anyChat ? phoneShell({ app, time: cfg.time, attrs: IN(withChat) }, chats, 'rs-phone' + (voices[0] && voices[0].chat.length ? ' v0chat' : '')) : '';
-      let cues = '';
-      if (steps && n > 1) {
-        cues0.forEach(j => { const s = st('none'); cues += `<span data-dramaturgy-cue data-dramaturgy-focus="${k}" data-dramaturgy-target="${j}"${s} aria-hidden="true"></span>`; });
-        if (hasEnd) cues += `<span data-dramaturgy-restore${st('none')} aria-hidden="true"></span>`;
-      }
-      body = (sl.caption ? `<p class="kicker"${A('fade')}>${fmt(sl.caption)}</p>` : '') + H2('', 'mask') +
-        `<div class="rs-stage"${A(anim(ba, 'fade'), 150)}>` +
-        `<div class="rs-voices" style="top:${qTop}px;width:${qW}px">${say}${hasEnd ? `<p class="rs-end">${fmt(sl.conclusion)}</p>` : ''}</div>${phone}</div>` + cues;
-      cls = (plain(title).length > 44 ? 'fl-long' : '') + (hasEnd ? ' rs-hasend' : '');
-      attrs += ` data-dramaturgy="focus-restore" data-dramaturgy-state="${steps && n > 1 ? 'overview' : 'restored'}"${steps && n > 1 ? '' : ' data-dramaturgy-static="true"'}`;
-      break;
-    }
     case 'kretslopp': {
       /* En process som går runt. Stegen sitter på en ring och en ring av ljus glider ett steg per klick,
          medan mitten förklarar steget. En ingång leder in i kretsloppet och ett steg kan ha en utgång ut ur
@@ -2900,7 +2854,7 @@ function resolve(ref, images) {
   return '';
 }
 /* ---------- telefonen ----------
-   En Android-telefon med statusrad, appfält, meddelanden och inmatningsfält. Används av [mobil] och [röster].
+   En Android-telefon med statusrad, appfält, meddelanden och inmatningsfält. Används av [mobil].
    Meddelanden: { me, sys, who, text }. Avsändarna i en grupp får var sin färg på namnet. */
 const PH_COLORS = ['var(--accent-2)', 'color-mix(in srgb,var(--accent) 60%,var(--accent-2))', 'color-mix(in srgb,var(--accent-2) 45%,var(--ink))', 'color-mix(in srgb,var(--accent) 55%,var(--ink))'];
 function phoneMsgs(lines_) {

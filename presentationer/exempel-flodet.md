@@ -10,32 +10,17 @@ rubrik: Du valde inte det här klippet.
 text: Klockan är 23.40. Mobilen lyser.
 miljö: bilder/ai-agenter-miljoer/korsning.jpg | 64
 märke: AI 1 · Exempel
-> Exempel på temat Reportage. Miljön ligger kvar över de två första bilderna, så att kapitlet får ett rum.
+> Exempel på temat Reportage. Miljön ligger kvar över de två första bilderna utan att tona om.
 > Rubriken är ett påstående som resten av lektionen prövar.
 
 ---
 
-[röster]
-etikett: Kapitel 1 · Flödet
-slutsats: Vem väljer egentligen?
-miljö: bilder/ai-agenter-miljoer/korsning.jpg | 64
-källrad: Gestaltade röster
-- Jag skulle bara kolla en sak. Sen var klockan ett. | Elev, 16 år
-- Flödet känner mig bättre än mina kompisar. | Elev, 17 år
-  - du: Varför får jag bara träningsklipp?
-  - Chatten: Flödet visar mer av det du stannar vid. Har du tittat länge på träningsklipp på sistone?
-- Jag har aldrig valt något av det jag ser. Eller har jag? | Elev, 18 år
-> Rösterna är gestaltade för exemplet, inte citat.
-> Den andra rösten har ett samtal som spelas upp i telefonen.
-
----
-
 [mobil]
-etikett: Kapitel 2 · I chatten
+etikett: Kapitel 1 · Flödet
 rubrik: Ett klipp, fem minuter senare
 text: Det som fastnar hos en dyker upp hos fler.
 slutsats: Klippet valdes inte av någon i chatten.
-miljö: bilder/sokalgoritmer/natverk.jpg | 78
+miljö: bilder/ai-agenter-miljoer/korsning.jpg | 78
 - app: Klassen
 - tid: 23:46
 - system: Idag
@@ -49,7 +34,7 @@ miljö: bilder/sokalgoritmer/natverk.jpg | 78
 ---
 
 [kretslopp]
-etikett: Kapitel 3 · Loopen
+etikett: Kapitel 2 · Loopen
 rubrik: Så lär sig flödet
 text: Varje klipp är en liten fråga till dig.
 slutsats: Du svarar hela tiden, utan att skriva ett ord.
@@ -74,7 +59,7 @@ tid: 2
 ---
 
 [påstående]
-etikett: Kapitel 4 · Tillbaka
+etikett: Kapitel 3 · Tillbaka
 rubrik: Nästa klipp är redan valt.
 text: Klockan är 00.15.
 miljö: bilder/ai-agenter-miljoer/korsning.jpg | 64

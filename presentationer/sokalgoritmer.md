@@ -49,10 +49,32 @@ rubrik: Vad gör en instruktion till en algoritm?
 - Bestämd ordning | Stegen görs i en viss ordning, ibland om och om igen.
 - Ett slut | Den vet när den är klar, eller när den ska ge upp.
 slutsats: En **algoritm** är en exakt instruktion i steg som löser ett problem.
-> Vardagsexempel: ett recept, en bruksanvisning till en möbel, att dela upp en lång division.
+> Vardagsexempel: en bruksanvisning till en möbel, att dela upp en lång division. Receptet sparar vi till nästa bild.
 > Datorer gör bara det de blir tillsagda. Allt en dator gör, från att sortera en lista till att hitta en väg i en karta, är algoritmer.
 > Ordet kommer från namnet på den persiska matematikern al-Khwarizmi.
 > Håll kvar tanken på "om och om igen": sökalgoritmerna vi ska titta på upprepar samma steg tills de hittar målet.
+
+---
+
+[omröstning]
+etikett: Vad tror du?
+rubrik: Är ett recept för att baka en kaka en algoritm?
+- Ja
+- Nej
+> Låt eleverna rösta först och motivera. Visa inget svar, nästa bild prövar receptet mot kriterierna.
+
+---
+
+[triad]
+etikett: Algoritm
+rubrik: Håller kakreceptet måttet?
+- Exakta steg? | ”Vispa 3 ägg och 3 dl socker.” Varje steg går att följa.
+- Bestämd ordning? | Smeten blandas före gräddningen. ”Vispa tills det är pösigt” upprepas tills det är klart.
+- Ett slut? | ”Grädda i 40 minuter.” Sedan är kakan klar.
+slutsats: **Ja**, ett recept är en algoritm.
+> Gå igenom kriterierna ett i taget och låt klassen svara ja eller nej på varje.
+> Kocken följer receptet som en dator följer ett program.
+> Nyans: ”en nypa salt” eller ”tills den är gyllenbrun” fungerar för en människa men inte för en robot. Samma sak som i robotfrågan: en dator kan inte gissa.
 
 ---
 

@@ -1957,7 +1957,7 @@ function renderSlide(sl, i, deck, img) {
             if (s === pathStep) return `Vägen från A till B: ${res.path.length - 1} steg.`;
             const js = G2[s], o = res.order[js[js.length - 1]], hit = res.T && js.some(j => key(res.order[j].p) === key(res.T));
             const base = level ? `Nivå ${o.g}: ${js.length} ${js.length === 1 ? 'ny ruta' : 'nya rutor'}.` : algo === 'girig' ? `Lägst h i kön: ${o.h}.` : algo === 'astar' ? `Lägst f i kön: ${o.g} + ${o.h} = ${o.g + o.h}.` : `Utforskade rutor: ${js[js.length - 1]}.`;
-            if (onlyEnd && !notes[s + 1]) return hit ? `Utforskade rutor: ${js[js.length - 1]}. Målet B är hittat!` : '';
+            if (onlyEnd && !notes[s + 1]) return hit ? `Målet B är hittat! Utforskade rutor: ${js[js.length - 1]}.` : '';
             return base + (hit ? ' Målet B är hittat!' : '');
           };
           html += `<div class="rn-side"><p class="rn-tag">${esc(tag)}</p>` + (sl.text ? `<p class="rn-lead">${fmt(sl.text)}</p>` : '') +

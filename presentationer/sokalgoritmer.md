@@ -67,7 +67,7 @@ rubrik: Är ett recept för att baka en kaka en algoritm?
 
 [triad]
 etikett: Algoritm
-rubrik: Håller kakreceptet måttet?
+rubrik: Vi undersöker kakreceptet
 - Exakta steg? | ”Vispa 3 ägg och 3 dl socker.” Varje steg går att följa.
 - Bestämd ordning? | Smeten blandas före gräddningen. ”Vispa tills det är pösigt” upprepas tills det är klart.
 - Ett slut? | ”Grädda i 40 minuter.” Sedan är kakan klar.

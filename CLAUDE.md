@@ -25,6 +25,19 @@ Läs `docs/MANUS.md` och `docs/MALLAR.md`. Använd skillen `planera`. Kör `npm 
 - Hitta aldrig på statistik, citat, årtal eller källor. Saknas underlag: skriv förslag i talaranteckningar i stället.
 - Bilder ligger i `bilder/<presentation>/`. Saknas bild: skriv `> Bildförslag: …` i anteckningen.
 
+## Känslan när man presenterar
+
+En Scen-presentation ska kännas som en berättelse eller en kort dokumentär, inte som en uppsättning bilder. Den bär en fråga genom hela lektionen och landar där den började.
+
+- **Kapitel med en röd tråd.** Dela in presentationen i kapitel med egna etiketter. Varje kapitel har en fråga eller en tanke som driver det framåt.
+- **Återkommande motiv.** Plantera något tidigt och ta tillbaka det senare: en fråga som får vänta på sitt svar, en bild eller en röst från början som återkommer i slutet. Avslutningen knyter an till inledningen.
+- **En miljö per kapitel.** Använd `miljö:` med ett foto eller en kort filmloop som står kvar över flera bilder, så att kapitlet får ett rum. Bilden är stämning och ska vara nedtonad, inte dekor. Be om bildprompter när miljöer saknas.
+- **En tanke per bild, få ord.** En stor mening, gärna med en kort kursiv ingress ovanför. Resonemanget står i talaranteckningarna, inte på bilden.
+- **Röster.** Låt människor tala med `[röster]` och `[mobil]`: elever, forskare, debattörer, en gruppchatt. Ordagranna citat får källa.
+- **Rytm.** Växla mellan stora påståenden, röster, data, bilder och frågor till publiken. Lägg in pauser där publiken får tänka, till exempel en reflektion eller en fråga som får stå kvar.
+- **Tema.** Temat Reportage (mörkt, varmvit text, korallröd accent, smala versaler, kursiv serif och filmkorn) passar berättande föreläsningar. Andra teman går bra, men känslan och dramaturgin ska vara densamma.
+- **Låna känsla, inte form.** Hämtar vi inspiration från någon annans presentation tar vi med idéerna (berättande, miljöer, röster, rytm) men aldrig formuleringar, bilder, färger, typsnitt eller uppställningar rakt av. Resultatet ska se ut som Scen.
+
 ## Göra om en PowerPoint
 
 - Ta inte bort delar av originalet på egen hand: bilder, ikoner, kartor, porträtt, symboler eller textrader. Lista dem i regin och fråga vad de fyller för syfte. Bestäm sedan tillsammans med läraren.

@@ -74,6 +74,9 @@ Första raden är mallen inom hakparentes, t.ex. `[kort]`. Alla mallar finns i [
 | `steg` | `nej` visar allt direkt i stället för ett klick i taget |
 | `tona` | `ja` tonar ner tidigare punkter |
 | `övergång` | `automatisk`, `båge`, `tona`, `glid`, `skjut`, `stig`, `zooma`, `svep`, `morph`, `ingen` |
+| `miljö` | Ett foto eller en kort filmloop som fyller bakgrunden bakom vilken mall som helst, t.ex. `bilder/kurs/gata.jpg` eller `bilder/kurs/gata.mp4 \| 70`. Siffran efter `\|` är mörkningen i procent (standard 62). Bilder i rad med samma miljö delar den: den står kvar och fortsätter röra sig i stället för att tona om. |
+| `märke` | En liten lapp uppe till höger, t.ex. föreläsarens namn eller kursen |
+| `källrad` | En rad nere till vänster i mono, t.ex. `AI-genererad miljöbild` eller varifrån en siffra kommer |
 | `bakgrund` | `ingen`, `fokusljus`, `ljus`, `banor`, `vektorfält`, `nätverk`, `vågor`. `fokusljus` är ett mjukt ljus som följer fokus vid varje klick och står stilla däremellan. De andra rör sig hela tiden och passar bäst på titel- och avsnittsbilder. |
 | `rubrikrörelse`, `rörelse` | `mask`, `ord för ord`, `skärpa`, `stig`, `tona`, `skrivmaskin`, `svep`, `ingen`. `skrivmaskin` skriver fram texten tecken för tecken med ett blinkande block, som i en kommandotolk. Flera texter på samma bild skrivs en i taget. Passar en fråga eller ett påstående som ska få liv, inte långa stycken. |
 
@@ -262,6 +265,41 @@ I `[kö]` går köerna en i taget: elementen läggs in i ett klick, sedan är va
 Raderna som beskriver vad algoritmen gör, till exempel "Utforskar A." eller "Lägst f i kön", skrivs fram som i en kommandotolk när klicket kommer. Egna kommentarer med `not:` visas som vanlig text under.
 
 Konventioner: BFS använder en FIFO-kö. DFS använder en stack, så den nod som lades till sist utforskas först; i ett träd blir det den högra grenen. Girig bäst först väljer lägst h, A* lägst g + h. Vid lika värden väljs den senast tillagda. I rutnät prövas grannarna i ordningen upp, vänster, höger, ned.
+
+### Röster
+
+```text
+[röster]
+etikett: Efter lektionen
+miljö: bilder/kurs/korridor.jpg | 70
+slutsats: Samma lektion. Tre olika upplevelser.   (visas i stor text efter sista rösten)
+- Jag fattade först när jag fick förklara det för någon annan. | Elev, 17 år
+- Jag frågade chatten innan jag frågade dig. | Elev, 16 år
+  - du: Hur skriver jag en bra inledning?
+  - Chatten: Börja med en fråga eller en bild som väcker nyfikenhet.
+- Jag vet inte om jag lärde mig något, eller bara blev klar. | Elev, 18 år
+- räknare: Elev                            (valfri, ordet vid numret)
+```
+
+En röst per klick, med ett stort nummer (02 av 06) vid citatet. Raderna med indrag är ett samtal som spelas upp i telefonen, ett meddelande i taget. Svaren föregås av tre prickar som när någon skriver. `app: Namn` byter namnet högst upp i telefonen.
+
+### Mobil
+
+```text
+[mobil]
+rubrik: Hur sprids ett rykte?
+text: Ingress bredvid telefonen.
+slutsats: visas när hela samtalet syns
+- app: Klassen                 (namnet högst upp, valfritt)
+- tid: 21:47                   (klockan i statusraden, valfritt)
+- under: 3 deltagare           (raden under namnet, valfritt)
+- system: Idag                 (en grå rad mitt i samtalet)
+- Sara: Har ni sett? Provet är inställt imorgon!
+- du: Har läraren sagt något?  (du: är den som håller i telefonen)
+- not: 2 | Kommentar som visas vid klick 2.
+```
+
+En Android-telefon med ett samtal, ett meddelande per klick. I en grupp får varje person en egen färg på namnet. Den som svarar syns med tre prickar innan meddelandet kommer. Samma telefon används i `[röster]`.
 
 ### Kretslopp
 

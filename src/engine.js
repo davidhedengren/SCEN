@@ -12,7 +12,7 @@ const ACCENTS = {
 };
 const LAYOUTS = {etapper:"Etapper",vagval:"Vägval",lager:"Lager",resonemang:"Resonemang",helhet:"Helhet",
   skiften: 'Skiften', prisma: 'Prisma', verkningar: 'Verkningar', belagg: 'Belägg', sammanflode: 'Sammanflöde',
-  lameller: 'Lameller', register: 'Register', samband: 'Samband', marginal: 'Marginal', sats: 'Sats', formel: 'Formel', kretslopp: 'Kretslopp',
+  lameller: 'Lameller', register: 'Register', samband: 'Samband', marginal: 'Marginal', sats: 'Sats', formel: 'Formel', kretslopp: 'Kretslopp', roster: 'Röster', mobil: 'Mobil',
   title: 'Titel', section: 'Avsnitt', statement: 'Påstående', bullets: 'Punktlista', split: 'Text och bild',
   image: 'Helbild', bildregi: 'Bildregi', terminal: 'Terminal', kodforklaring: 'Kodförklaring', typografisk: 'Typografiskt statement', texttempo: 'Typografiskt tempo', cards: 'Kort', compare: 'Jämförelse', table: 'Tabell', number: 'Stort tal', timeline: 'Tidslinje',
   question: 'Fråga och svar', poll: 'Omröstning', reflect: 'Reflektion', define: 'Definition', chat: 'AI-samtal', duo: 'Två tal',
@@ -25,9 +25,10 @@ const THEMES = {
   bana: { name: 'Bana', desc: 'Ljust stengrått, grafit och signalorange. Syne och Figtree, med ett fint korn i ytan. Gjort för banmallarna.', look: 'light', v: { bg: '#ECEDEA', surface: '#F7F7F4', ink: '#15171C', muted: '#5C6169', line: '#C8CAC4', accent: '#F2521D', 'accent-2': '#1D3FD1', hl: 'rgba(242,82,29,.16)' }, fd: '"Syne",system-ui,sans-serif', fb: '"Figtree",system-ui,sans-serif', fm: '"JetBrains Mono",ui-monospace,Menlo,monospace', hw: 700, ht: '-.035em', r: '26px', ta: 'mask', grain: true, fonts: ['Syne:wght@600;700;800', 'Figtree:wght@400;500;600', 'JetBrains+Mono:wght@400;500'] },
   nattbana: { name: 'Nattbana', desc: 'Banmallarna i mörker: nästan svart grafit, glödande orange och kobolt, med korn.', look: 'dark', v: { bg: '#0F1013', surface: '#17191E', ink: '#EDEDE8', muted: '#8F949C', line: '#2A2D34', accent: '#FF6B35', 'accent-2': '#7D95FF', hl: 'rgba(255,107,53,.2)' }, fd: '"Syne",system-ui,sans-serif', fb: '"Figtree",system-ui,sans-serif', fm: '"JetBrains Mono",ui-monospace,Menlo,monospace', hw: 700, ht: '-.035em', r: '26px', ta: 'mask', grain: true, fonts: ['Syne:wght@600;700;800', 'Figtree:wght@400;500;600', 'JetBrains+Mono:wght@400;500'] },
   atlas: { name: 'Atlas', desc: 'Redaktionellt och mörkt. Kursiv serif, mono-etiketter och bärnsten. Rubriker glider fram ur en mask.', look: 'dark', v: { bg: '#0A0E13', surface: '#121922', ink: '#EEF0EA', muted: '#8D97A5', line: '#232D39', accent: '#F2A541', 'accent-2': '#5CC8D0', hl: 'rgba(242,165,65,.22)' }, fd: '"Instrument Serif",Georgia,serif', fb: '"IBM Plex Sans",system-ui,sans-serif', fm: '"IBM Plex Mono",ui-monospace,Menlo,monospace', hw: 400, ht: '-.012em', hs: 'italic', r: '14px', ta: 'mask', fonts: ['Instrument+Serif:ital@0;1', 'IBM+Plex+Sans:wght@400;500;600', 'IBM+Plex+Mono:wght@400;500'] },
+  reportage: { name: 'Reportage', desc: 'Berättande och filmiskt: mörkt, varmvit text och en korallröd accent. Smala versalrubriker i Barlow Condensed, kursiv Source Serif för ingresser och citat, etiketter i DM Mono och filmkorn. Gjort för miljöbilder.', look: 'dark', v: { bg: '#0A0B0D', surface: '#17191D', ink: '#F4F1EB', muted: '#9C9A94', line: '#2B2C31', accent: '#FF6B4A', 'accent-2': '#7FD1C7', hl: 'rgba(255,107,74,.22)' }, fd: '"Barlow Condensed",system-ui,sans-serif', fb: '"Barlow",system-ui,sans-serif', fm: '"DM Mono",ui-monospace,Menlo,monospace', hw: 700, ht: '-.005em', hc: 'uppercase', r: '14px', ta: 'mask', grain: true, fonts: ['Barlow+Condensed:wght@500;600;700;800', 'Barlow:wght@400;500;600', 'Source+Serif+4:ital,opsz,wght@1,8..60,400;1,8..60,500', 'DM+Mono:wght@400;500'] },
   natt: { name: 'Natt', desc: 'Mörk och futuristisk med turkos. Sora och IBM Plex Sans.', look: 'dark', v: { bg: '#070D17', surface: '#0F1A2B', ink: '#E6F1F5', muted: '#8BA3B4', line: '#1D3045', accent: '#3DD6D0', 'accent-2': '#FFB547', hl: 'rgba(61,214,208,.26)' }, fd: '"Sora",system-ui,sans-serif', fb: '"IBM Plex Sans",system-ui,sans-serif', hw: 600, ht: '-.035em', r: '24px', ta: 'blur', fonts: ['Sora:wght@400;600;700', 'IBM+Plex+Sans:wght@400;500;600'] },
   tidskrift: { name: 'Tidskrift', desc: 'Som ett fint magasin. Serif, varmt mörkt och guld.', look: 'dark', v: { bg: '#14120E', surface: '#1D1A14', ink: '#F2EDE0', muted: '#A39A84', line: '#2F2A20', accent: '#D4A24C', 'accent-2': '#E07A5F', hl: 'rgba(212,162,76,.28)' }, fd: '"Instrument Serif",Georgia,serif', fb: '"Source Sans 3",system-ui,sans-serif', hw: 400, ht: '-.015em', r: '6px', ta: 'fade', orn: 'line', fonts: ['Instrument+Serif:ital@0;1', 'Source+Sans+3:wght@400;600'] },
-  kritvit: { name: 'Kritvit', desc: 'Vitt, svart och en röd accent. Tät, fet grotesk.', look: 'light', v: { bg: '#FFFFFF', surface: '#F2F2F0', ink: '#0A0A0A', muted: '#595959', line: '#D9D9D6', accent: '#D7001F', 'accent-2': '#0A0A0A', hl: 'rgba(215,0,31,.16)' }, fd: '"Archivo",system-ui,sans-serif', fb: '"Archivo",system-ui,sans-serif', hw: 800, ht: '-.045em', r: '0px', ta: 'rise', orn: 'square', fonts: ['Archivo:wght@400;600;800'] },
+  kritvit: { name: 'Kritvit', desc: 'Vitt, svart och en röd accent. Tät, fet grotesk.', look: 'light', v: { bg: '#FFFFFF', surface: '#F2F2F0', ink: '#0A0A0A', muted: '#595959', line: '#D9D9D6', accent: '#D7001F', 'accent-2': '#0A0A0A', hl: 'rgba(215,0,31,.16)' }, fd: '"Archivo",system-ui,sans-serif', fb: '"Archivo",system-ui,sans-serif', hw: 800, ht: '-.045em', r: '0px', ta: 'rise', orn: 'square', fonts: ['Archivo:wdth,wght@62..125,400..900'] },
   klassrum: { name: 'Klassrum', desc: 'Ljust och lättläst med Lexend. Varm orange accent.', look: 'light', v: { bg: '#F3F6FA', surface: '#FFFFFF', ink: '#14213D', muted: '#56637F', line: '#D5DEEA', accent: '#D9481C', 'accent-2': '#2F5BF5', hl: 'rgba(217,72,28,.2)' }, fd: '"Lexend",system-ui,sans-serif', fb: '"Lexend",system-ui,sans-serif', hw: 600, ht: '-.03em', r: '22px', ta: 'rise', fonts: ['Lexend:wght@400;500;600'] },
   solnedgang: { name: 'Solnedgång', desc: 'Varmt och berättande. Playfair Display och Manrope.', look: 'dark', v: { bg: '#1A0A14', surface: '#271522', ink: '#F6E9DD', muted: '#B39C97', line: '#3B2432', accent: '#FF7A6B', 'accent-2': '#F9C74F', hl: 'rgba(255,122,107,.3)' }, fd: '"Playfair Display",Georgia,serif', fb: '"Manrope",system-ui,sans-serif', hw: 700, ht: '-.02em', r: '20px', ta: 'fade', fonts: ['Playfair+Display:wght@600;700', 'Manrope:wght@400;600'] },
   skog: { name: 'Skog', desc: 'Mörkgrönt och mossa. Fraunces och Nunito Sans.', look: 'dark', v: { bg: '#0E1A14', surface: '#16261E', ink: '#ECF2E8', muted: '#9DB0A2', line: '#243A2E', accent: '#9BD17A', 'accent-2': '#E9C46A', hl: 'rgba(155,209,122,.26)' }, fd: '"Fraunces",Georgia,serif', fb: '"Nunito Sans",system-ui,sans-serif', hw: 600, ht: '-.02em', r: '18px', ta: 'words', fonts: ['Fraunces:opsz,wght@9..144,500;9..144,650', 'Nunito+Sans:wght@400;600'] },
@@ -1567,6 +1568,90 @@ function renderSlide(sl, i, deck, img) {
       attrs += ` data-dramaturgy="focus-restore" data-dramaturgy-state="${steps ? 'overview' : 'restored'}"${steps ? '' : ' data-dramaturgy-static="true"'}`;
       break;
     }
+    case 'mobil': {
+      /* En konversation i en Android-telefon, ett meddelande per klick. Avsändarna skrivs "namn: text"
+         och "du: text" är den som håller i telefonen. Bredvid står rubrik, ingress och en kommentar per klick. */
+      const cfg = {}, lines2 = [], notes = {};
+      lines(sl.items).forEach(raw => {
+        const t = String(raw).replace(/^(- )+/, '').trim(), kv = t.match(/^([^:|]{1,28}?)\s*:\s*(.+)$/);
+        if (kv && /^app$/i.test(kv[1].trim())) { cfg.app = kv[2].trim(); return; }
+        if (kv && /^tid$/i.test(kv[1].trim())) { cfg.time = kv[2].trim(); return; }
+        if (kv && /^under(rubrik)?$/i.test(kv[1].trim())) { cfg.sub = kv[2].trim(); return; }
+        if (kv && /^not$/i.test(kv[1].trim())) { const m = kv[2].match(/^(\d+)\s*\|\s*(.*)$/); if (m) notes[+m[1]] = m[2]; return; }
+        if (kv) lines2.push({ who: kv[1].trim(), text: kv[2].trim() }); else if (t) lines2.push({ who: 'system', text: t });
+      });
+      const { msgs, senders } = phoneMsgs(lines2);
+      /* Klicken: varje meddelande som inte är en systemrad är ett klick. Systemrader följer med nästa meddelande. */
+      let nStep = 0; const stepOf = [];
+      msgs.forEach(m => { stepOf.push(m.sys ? null : nStep); if (!m.sys) nStep++; });
+      for (let q = msgs.length - 1, nx = null; q >= 0; q--) { if (stepOf[q] == null) stepOf[q] = nx; else nx = stepOf[q]; }
+      const hasEnd = !!plain(sl.conclusion || ''), IN = arr => arr.length ? ` data-dramaturgy-in="${arr.join(' ')}"` : '';
+      const T = j => ` data-dramaturgy-target data-dramaturgy-index="${j}"`, from = s => Array.from({ length: Math.max(0, nStep - s) }, (_, q) => s + q);
+      const feed = msgs.map((m, q) => {
+        const s = stepOf[q];
+        return s == null ? phoneMsg(m, { cls: 'always' }) : phoneMsg(m, { cls: 'fin', attrs: IN(from(s)), dots: IN([s]) });
+      }).join('');
+      const app = cfg.app || (senders.length === 1 ? senders[0] : 'Gruppchatt'), sub = cfg.sub || (senders.length > 1 ? `${senders.length + 1} deltagare` : '');
+      const side = (sl.text ? `<p class="mb-intro">${fmt(sl.text)}</p>` : '') + `<div class="mb-says${sl.text ? '' : ' top'}">` +
+        Array.from({ length: nStep }, (_, s) => notes[s + 1] ? `<p class="mb-say"${T(s)}>${fmt(notes[s + 1])}</p>` : `<i${T(s)}></i>`).join('') +
+        (hasEnd ? `<p class="mb-say mb-end">${fmt(sl.conclusion)}</p>` : '') + `</div>`;
+      let cues = '';
+      if (steps && nStep) {
+        for (let s2 = 0; s2 < nStep; s2++) { const s = st('none'); cues += `<span data-dramaturgy-cue data-dramaturgy-focus="${k}" data-dramaturgy-target="${s2}"${s} aria-hidden="true"></span>`; }
+        cues += `<span data-dramaturgy-restore${st('none')} aria-hidden="true"></span>`;
+      }
+      body = (sl.caption ? `<p class="kicker"${A('fade')}>${fmt(sl.caption)}</p>` : '') + H2('', 'mask') +
+        `<div class="mb-stage"${A(anim(ba, 'rise'), 150)}>${side}${phoneShell({ app, sub, time: cfg.time }, feed, 'mb-phone ph-steps')}</div>` + cues;
+      if (plain(title).length > 40) cls = 'fl-long';
+      attrs += ` data-dramaturgy="focus-restore" data-dramaturgy-state="${steps && nStep ? 'overview' : 'restored'}"${steps && nStep ? '' : ' data-dramaturgy-static="true"'}`;
+      break;
+    }
+    case 'roster': {
+      /* Röster i serie: ett citat i taget med ett stort nummer vid citatet. En röst kan ha ett samtal
+         som visas i telefonen, meddelande för meddelande. Sista klicket visar slutsatsen i stor text. */
+      const voices = [], cfg = {};
+      lines(sl.items).forEach(raw => {
+        const depth = (String(raw).match(/^(- )*/)[0].length) / 2, t = String(raw).replace(/^(- )+/, '').trim();
+        const kv = t.match(/^([a-zåäöA-ZÅÄÖ][\wåäöÅÄÖ .-]{0,24}?)\s*:\s*(.+)$/);
+        if (!depth && kv && /^räknare$/i.test(kv[1])) { cfg.label = kv[2].trim(); return; }
+        if (!depth && kv && /^tid$/i.test(kv[1])) { cfg.time = kv[2].trim(); return; }
+        if (!depth || !voices.length) { const p = t.split('|').map(s => s.trim()); voices.push({ q: p[0] || '', who: p.slice(1).join(' | '), chat: [], app: '' }); return; }
+        const v = voices[voices.length - 1];
+        if (kv && /^app$/i.test(kv[1])) v.app = kv[2].trim();
+        else if (kv) v.chat.push({ me: /^du$/i.test(kv[1].trim()), who: kv[1].trim(), text: kv[2].trim() });
+      });
+      const n = voices.length, label = cfg.label || 'Röst', pad = x => String(x).padStart(2, '0');
+      const anyChat = voices.some(v => v.chat.length), hasEnd = !!plain(sl.conclusion || '');
+      const T = j => ` data-dramaturgy-target data-dramaturgy-index="${j}"`, IN = arr => arr.length ? ` data-dramaturgy-in="${arr.join(' ')}"` : '';
+      /* Röst 0 syns före första klicket, klick j visar röst j + 1. */
+      const cueOf = v => v - 1, cues0 = Array.from({ length: Math.max(0, n - 1) }, (_, j) => j);
+      const qTop = title ? 330 : 230, qW = anyChat ? 1000 : 1420;
+      const say = voices.map((v, k) => {
+        const L2 = plain(v.q).length, fs = L2 < 80 ? 68 : L2 < 140 ? 56 : L2 < 220 ? 46 : 40;
+        return `<div class="rs-voice v${k}"${k ? T(cueOf(k)) : ''}><p class="rs-no"><b>${pad(k + 1)}</b><span>${esc(label)}<br>av ${pad(n)}</span></p>` +
+          `<p class="rs-q" style="font-size:${fs}px">${fmt(v.q)}</p>${v.who ? `<p class="rs-who">${fmt(v.who)}</p>` : ''}</div>`;
+      }).join('');
+      /* Samtalen ligger som lager i samma telefon; rösten som visas bestämmer vilket samtal som syns. */
+      const chats = voices.map((v, k) => {
+        if (!v.chat.length) return '';
+        const { msgs } = phoneMsgs(v.chat);
+        return `<div class="rs-chat ph-auto v${k}"${k ? IN([cueOf(k)]) : ''}>${msgs.map((m, q) => phoneMsg(m, { k: q })).join('')}</div>`;
+      }).join('');
+      const withChat = voices.map((v, k) => v.chat.length && k ? cueOf(k) : -1).filter(j => j >= 0);
+      const first = voices.find(v => v.chat.length) || {}, app = (voices.find(v => v.app) || {}).app || (first.chat ? (first.chat.find(m => !/^du$/i.test(m.who)) || {}).who : '') || 'Chatt';
+      const phone = anyChat ? phoneShell({ app, time: cfg.time, attrs: IN(withChat) }, chats, 'rs-phone' + (voices[0] && voices[0].chat.length ? ' v0chat' : '')) : '';
+      let cues = '';
+      if (steps && n > 1) {
+        cues0.forEach(j => { const s = st('none'); cues += `<span data-dramaturgy-cue data-dramaturgy-focus="${k}" data-dramaturgy-target="${j}"${s} aria-hidden="true"></span>`; });
+        if (hasEnd) cues += `<span data-dramaturgy-restore${st('none')} aria-hidden="true"></span>`;
+      }
+      body = (sl.caption ? `<p class="kicker"${A('fade')}>${fmt(sl.caption)}</p>` : '') + H2('', 'mask') +
+        `<div class="rs-stage"${A(anim(ba, 'fade'), 150)}>` +
+        `<div class="rs-voices" style="top:${qTop}px;width:${qW}px">${say}${hasEnd ? `<p class="rs-end">${fmt(sl.conclusion)}</p>` : ''}</div>${phone}</div>` + cues;
+      cls = (plain(title).length > 44 ? 'fl-long' : '') + (hasEnd ? ' rs-hasend' : '');
+      attrs += ` data-dramaturgy="focus-restore" data-dramaturgy-state="${steps && n > 1 ? 'overview' : 'restored'}"${steps && n > 1 ? '' : ' data-dramaturgy-static="true"'}`;
+      break;
+    }
     case 'kretslopp': {
       /* En process som går runt. Stegen sitter på en ring och en ring av ljus glider ett steg per klick,
          medan mitten förklarar steget. En ingång leder in i kretsloppet och ett steg kan ha en utgång ut ur
@@ -2364,7 +2449,14 @@ function renderSlide(sl, i, deck, img) {
   const palette=ACCENTS[sl.accent];
   const paint=palette ? ` style="--slide-accent-light:${palette[0]};--slide-accent-dark:${palette[1]}" data-slide-accent="true"` : '';
   if (cls.includes('fn-layout') && plain(title).length > 64) cls += ' fn-long';
-  return `<section class="slide ${cls}" data-layout="${L}" data-transition="${tr}" data-bg="${bg}" data-i="${i}"${dim ? ` data-focus="${focus}"` : ''}${ba === 'none' ? ' data-body-motion="none"' : ''}${paint}${attrs}>${body}</section>`;
+  /* Miljö bakom bilden, en lapp uppe till höger och en källrad nere till vänster fungerar i alla mallar.
+     I spelaren ligger miljön i ett eget lager som står kvar mellan bilder med samma miljö. */
+  const envSrc = sl.env ? img('img:' + envPath(sl.env)) : '', envD = envDim(sl.env);
+  const envAttr = envSrc ? ` data-env="${esc(envSrc)}" data-env-dim="${envD}"` : '';
+  const envLayer = envSrc ? (isVideo(envSrc) ? `<div class="sl-env" style="--env-dim:${envD}" aria-hidden="true"></div>` : `<div class="sl-env" style="--env-dim:${envD};background-image:url('${esc(envSrc)}')" aria-hidden="true"></div>`) : '';
+  const badge = sl.badge && !/data-own-badge/.test(attrs) ? `<p class="sl-badge">${fmt(sl.badge)}</p>` : '';
+  const credit = sl.credit ? `<p class="sl-credit">${fmt(sl.credit)}</p>` : '';
+  return `<section class="slide ${cls}" data-layout="${L}" data-transition="${tr}" data-bg="${bg}" data-i="${i}"${dim ? ` data-focus="${focus}"` : ''}${ba === 'none' ? ' data-body-motion="none"' : ''}${paint}${envAttr}${attrs}>${envLayer}${body}${badge}${credit}</section>`;
 }
 
 /* ---------- egna mallar: rensa HTML och CSS ---------- */
@@ -2795,7 +2887,7 @@ function thumb(slide, deck, images, i) {
 /* Alla bilder en bild använder: bild:, fria lager och bildfält i punkter (t.ex. "namn | text | bilder/x.jpg"). */
 const IMG_REF = /^(img:)?[^|\s][^|]*\.(jpe?g|png|webp|gif|svg|avif)$/i;
 function imagesOf(sl) {
-  const out = [sl.image, ...(sl.layers || []).filter(l => l.type === 'bild').map(l => l.src)];
+  const out = [sl.image, envPath(sl.env), ...(sl.layers || []).filter(l => l.type === 'bild').map(l => l.src)];
   lines(sl.items).forEach(t => String(t).split('|').slice(1).forEach(p => { p = p.trim(); if (IMG_REF.test(p)) out.push(p); }));
   return out.filter(Boolean).map(s => String(s).replace(/^img:/, ''));
 }
@@ -2804,9 +2896,45 @@ function resolve(ref, images) {
   if (/^(data:|blob:|https?:)/.test(ref)) return ref;
   const k = ref.replace(/^img:/, '');
   if (images && images[k]) return images[k];
-  if (/\.(jpe?g|png|webp|gif|svg|avif)$/i.test(k)) return k;
+  if (/\.(jpe?g|png|webp|gif|svg|avif|mp4|webm)$/i.test(k)) return k;
   return '';
 }
+/* ---------- telefonen ----------
+   En Android-telefon med statusrad, appfält, meddelanden och inmatningsfält. Används av [mobil] och [röster].
+   Meddelanden: { me, sys, who, text }. Avsändarna i en grupp får var sin färg på namnet. */
+const PH_COLORS = ['var(--accent-2)', 'color-mix(in srgb,var(--accent) 60%,var(--accent-2))', 'color-mix(in srgb,var(--accent-2) 45%,var(--ink))', 'color-mix(in srgb,var(--accent) 55%,var(--ink))'];
+function phoneMsgs(lines_) {
+  const senders = [];
+  const msgs = lines_.map(({ who, text }) => {
+    const w = String(who || '').trim(), me = /^du$/i.test(w), sys = /^(system|dag|datum)$/i.test(w);
+    if (!me && !sys && !senders.includes(w)) senders.push(w);
+    return { me, sys, who: w, text };
+  });
+  const group = senders.length > 1;
+  msgs.forEach(m => { if (!m.me && !m.sys) { m.color = PH_COLORS[senders.indexOf(m.who) % PH_COLORS.length]; m.showName = group; } });
+  return { msgs, senders, group };
+}
+/* o: { cls, attrs, dots, k } – extra klass, attribut på meddelandet och på skrivprickarna, ordningsnummer. */
+function phoneMsg(m, o) {
+  o = o || {};
+  const c = o.cls ? ' ' + o.cls : '';
+  if (m.sys) return `<p class="ph-sys${c}"${o.attrs || ''}>${fmt(m.text)}</p>`;
+  return `<div class="ph-msg ${m.me ? 'me' : 'other'}${c}"${o.attrs || ''} style="--k:${o.k || 0}${m.color ? `;--c:${m.color}` : ''}">` +
+    (m.me ? '' : `<i class="ph-dots"${o.dots || ''} aria-hidden="true"><b></b><b></b><b></b></i>`) +
+    (m.showName ? `<span class="ph-name">${esc(m.who)}</span>` : '') + `<p>${fmt(m.text)}</p></div>`;
+}
+function phoneShell(o, feed, cls) {
+  const app = plain(o.app || 'Chatt'), ini = (app.trim()[0] || 'C').toUpperCase();
+  return `<div class="ph${cls ? ' ' + cls : ''}"${o.attrs || ''}><div class="ph-screen">` +
+    `<div class="ph-status"><span class="ph-time">${esc(o.time || '21:47')}</span><i class="ph-cam"></i><span class="ph-icons"><i class="ph-sig"><b></b><b></b><b></b><b></b></i><i class="ph-bat"><b></b></i></span></div>` +
+    `<div class="ph-appbar"><span class="ph-back" aria-hidden="true">←</span><i class="ph-avatar">${esc(ini)}</i><div class="ph-title"><b>${esc(app)}</b>${o.sub ? `<small>${esc(o.sub)}</small>` : ''}</div><span class="ph-more" aria-hidden="true">⋮</span></div>` +
+    `<div class="ph-feed">${feed}</div>` +
+    `<div class="ph-input"><span>Skriv ett meddelande</span><i class="ph-send"></i></div><i class="ph-nav"></i></div></div>`;
+}
+/* Miljö: "bilder/kurs/gata.jpg" eller "bilder/kurs/gata.mp4 | 70" (mörkning i procent). */
+function envPath(v) { return String(v || '').split('|')[0].trim(); }
+function envDim(v) { const n = parseFloat(String(v || '').split('|')[1]); return Number.isFinite(n) ? Math.max(0, Math.min(95, n)) : 62; }
+const isVideo = s => /\.(mp4|webm|mov)(\?|$)/i.test(s) || /^data:video\//.test(s);
 
 /* ---------- spelaren ---------- */
 const PRESENT_UI = `
@@ -2827,7 +2955,7 @@ function player(root, deck, opt) {
   const sc = document.createElement('div');
   sc.className = 'scen ' + mode;
   applyTheme(sc, deck.theme);
-  sc.innerHTML = `<div class="sc-viewport"><canvas class="sc-bg" aria-hidden="true"></canvas><div class="sc-stage"><div class="sc-deck"></div><div class="sc-counter"></div><div class="sc-progress"></div></div></div>` + (mode === 'present' ? PRESENT_UI : '');
+  sc.innerHTML = `<div class="sc-viewport"><div class="sc-env" aria-hidden="true"></div><canvas class="sc-bg" aria-hidden="true"></canvas><div class="sc-stage"><div class="sc-deck"></div><div class="sc-counter"></div><div class="sc-progress"></div></div></div>` + (mode === 'present' ? PRESENT_UI : '');
   if (opt.student) {
     sc.querySelector('[data-a="notes"]')?.remove();
     sc.querySelectorAll('.sc-keys dt').forEach(dt => {
@@ -2840,6 +2968,20 @@ function player(root, deck, opt) {
   let slides = [], cur = -1, step = 0, scale = 1, running = [], trans = null, alive = true, autoTimer = 0, t0 = Date.now(), timers = [], themeOverride = null;
   const bg = Backdrop($('.sc-bg'), sc, () => alive && mode === 'present');
   const img = r => resolve(r, images);
+  /* Miljön: samma miljö på flera bilder i rad står kvar och fortsätter röra sig, en ny miljö tonas in. */
+  let envCur = null;
+  function setEnv(sec) {
+    const src = (sec && sec.dataset.env) || '', dim = (sec && sec.dataset.envDim) || '62';
+    if (envCur && envCur.src === src) { envCur.el.style.setProperty('--env-dim', dim); return; }
+    if (envCur) { const old = envCur.el; old.classList.remove('on'); setTimeout(() => old.remove(), 1500); envCur = null; }
+    if (!src) return;
+    const el = document.createElement('div'); el.className = 'sc-env-l'; el.style.setProperty('--env-dim', dim);
+    if (isVideo(src)) { const v = document.createElement('video'); v.src = src; v.muted = true; v.loop = true; v.autoplay = true; v.playsInline = true; v.setAttribute('playsinline', ''); el.appendChild(v); v.play && v.play().catch(() => {}); }
+    else { const d = document.createElement('div'); d.className = 'sc-env-img'; d.style.backgroundImage = `url("${src.replace(/"/g, '%22')}")`; el.appendChild(d); }
+    $('.sc-env').appendChild(el);
+    void el.offsetWidth; el.classList.add('on');
+    envCur = { src, el };
+  }
 
   function build() {
     deckEl.innerHTML = deck.slides.map((s, i) => renderSlide(s, i, deck, img)).join('');
@@ -3020,6 +3162,7 @@ function player(root, deck, opt) {
     cur = i;
     if (o.anim !== false && !o.atEnd) entrance(B, base, skip);
     bg.set(B.dataset.bg);
+    setEnv(B);
     trackFocus(B, step);
     update();
   }

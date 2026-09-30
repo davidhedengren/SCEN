@@ -192,10 +192,10 @@ En del i `[omlopp]` kan få en bild som tredje fält: `- Avlaten | Syndernas fö
 [kodskrivning]
 rubrik: BFS i Python
 text: def bfs(graph, start, goal):
-    ko = [start]
+    queue = [start]
 - takt: rad                  (valfri: en rad per klick; annars skrivs koden i realtid)
-- 2 | ko = [start] | Kön börjar med startnoden. | resultat (valfritt)
-- 5 | ko.pop(0) -> ko.pop() | Nu blir det en stack.
+- 2 | queue = [start] | Kön börjar med startnoden. | resultat (valfritt)
+- 5 | queue.pop(0) -> queue.pop() | Nu blir det en stack.
 ```
 
 Koden skrivs fram i ett terminalfönster med blinkande markör. Ett klick under skrivningen visar hela koden direkt. Därefter markerar varje klick en rad och ett uttryck. Skriv koden utan tomma rader. Filnamnet i fönstret tas från funktionens namn, till exempel `bfs.py`.

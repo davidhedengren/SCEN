@@ -310,10 +310,10 @@ text: En DFS utforskar grafer och träd genom att gå så djupt som möjligt lä
 etikett: Programmering
 rubrik: BFS och DFS i Python
 text: def bfs(graph, start, goal):
-    ko = [start]
+    queue = [start]
     visited = set()
-    while ko:
-        current = ko.pop(0)
+    while queue:
+        current = queue.pop(0)
         if current in visited:
             continue
         visited.add(current)
@@ -321,13 +321,13 @@ text: def bfs(graph, start, goal):
             return f"Found {goal}"
         for neighbor in graph[current]:
             if neighbor not in visited:
-                ko.append(neighbor)
+                queue.append(neighbor)
     return f"{goal} not found"
-- 2 | ko = [start] | Kön börjar med startnoden.
-- 5 | ko.pop(0) | Tar ut den nod som lades in först: en FIFO-kö.
+- 2 | queue = [start] | Kön börjar med startnoden.
+- 5 | queue.pop(0) | Tar ut den nod som lades in först: en FIFO-kö.
 - 9 | current == goal | Är noden målet? Då är lösningen hittad.
-- 13 | ko.append(neighbor) | Barnnoderna läggs sist i kön.
-- 5 | ko.pop(0) -> ko.pop() | Ta ut den nod som lades in sist i stället: en stack.
+- 13 | queue.append(neighbor) | Barnnoderna läggs sist i kön.
+- 5 | queue.pop(0) -> queue.pop() | Ta ut den nod som lades in sist i stället: en stack.
 - 1 | bfs -> dfs | Det var hela skillnaden. Nu är det en DFS.
 > Kodbilden går att hoppa över i klasser som inte programmerar.
 > Jämför med algoritmstegen: ta ut en nod, kontrollera om det är målet, lägg till barnen.

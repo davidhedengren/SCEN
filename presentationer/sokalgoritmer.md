@@ -21,6 +21,14 @@ hastighet: slow
 
 ---
 
+[ordbild]
+rubrik: Algoritm
+text: Steg för steg mot en lösning.
+bild: bilder/sokalgoritmer/algoritm.jpg
+> Innan vi kan prata om sökalgoritmer behöver vi veta vad en algoritm är.
+
+---
+
 [fråga]
 etikett: Innan vi börjar
 rubrik: Vilken instruktion kan en robot följa till matsalen?
@@ -52,13 +60,14 @@ slutsats: En **algoritm** är en exakt instruktion i steg som löser ett problem
 etikett: En sökalgoritm
 rubrik: Du har tappat nycklarna. Hur letar du?
 text: Letar du på måfå kan du leta på samma ställe två gånger eller missa ett rum. En sökalgoritm letar systematiskt.
+bild: bilder/sokalgoritmer/nycklar.jpg
+alt: Ett mörkt rum där en ficklampa lyser över golvet och fångar ett par nycklar.
 - Lite i varje rum först, sedan grundligare
 - Ett rum i taget, ända till botten
 - Där de troligast ligger först
 > Låt eleverna säga hur de själva brukar leta.
 > De tre sätten motsvarar ungefär det vi ska gå igenom: bredden först, djupet först och informerad sökning, som använder en tumregel om var målet troligast finns.
 > Gemensamt: man måste hålla reda på vilka ställen man har kvar att leta på. Det är nästa ord.
-> Bildförslag: ett mörkt rum där en ficklampa lyser över golvet och fångar ett par nycklar (bilder/sokalgoritmer/nycklar.jpg).
 
 ---
 

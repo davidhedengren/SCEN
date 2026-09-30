@@ -56,6 +56,25 @@ mörkning: 0 0 42 100 0.55
 
 ---
 
+[bildregi]
+etikett: Perception
+rubrik: Korsningen, som bilen ser den
+text: Sensorerna gör gatan till punkter och rutor. Det är den bilden AI-agenten fattar beslut utifrån.
+bild: bilder/ai-agenter-miljoer/sensorvy.jpg
+alt: Regnig stadskorsning på natten, täckt av blå mätpunkter. Fotgängare, bilar och en cyklist har var sin genomskinlig ruta runt sig.
+bildläge: spotlight
+fokuspunkt: 50 60
+säker-yta: 3 4 40 30
+mörkning: 0 0 52 40 0.7
+- fotgangare | Fotgängare | 25 | 47 | 9 | 17 | En ruta i punktmolnet. Vart är den på väg?
+- bil | Bil | 45 | 64 | 18 | 24 | En annan förare. Vad den gör härnäst påverkar AI-agentens nästa beslut.
+- cyklist | Cyklist | 80 | 70 | 10 | 21 | Ännu en agent, med egna mål.
+> Bilden är en illustration av hur sensordata kan se ut, inte en skärmbild från en riktig bil.
+> Koppla till loopen: det här är steget Uppfattar. Rutorna är det agenten vet om korsningen.
+> Fråga klassen: vad i bilden har ingen ruta? Trafikljusen, till exempel. Här börjar frågan om vad agenten kan se, som kommer tillbaka när vi går igenom miljöerna.
+
+---
+
 [typografi]
 etikett: Begrepp 2
 bakgrund: fokusljus
@@ -97,6 +116,7 @@ miljö: bilder/ai-agenter-miljoer/korsning.jpg | 84
 etikett: Miljön
 rubrik: Sex frågor om agentens värld
 text: Miljöer kan klassificeras i dimensioner som påverkar hur agenten interagerar med sin omgivning och fattar beslut.
+miljö: bilder/ai-agenter-miljoer/robotdammsugare.jpg | 72
 - Fullständigt / partiellt observerbar | Ser agenten allt som händer i miljön?
 - Singel / multiagent | Är agenten ensam, eller finns det andra agenter?
 - Deterministisk / stokastisk | Leder samma handling alltid till samma utfall?
@@ -104,6 +124,7 @@ text: Miljöer kan klassificeras i dimensioner som påverkar hur agenten interag
 - Statisk / dynamisk | Förändras miljön även när agenten inte agerar?
 - Diskret / kontinuerlig | Är tillstånd och handlingar indelade i tydliga steg?
 > Samma ordning som i övningstabellen i slutet av lektionen.
+> I bakgrunden arbetar en robotdammsugare i ett vardagsrum. Den finns med i övningen. Vilken värld lever den i? Leksaker, stolsben och mattor, och allt kan ha flyttats sedan i går.
 
 ---
 
@@ -191,10 +212,11 @@ miljö: bilder/ai-agenter-miljoer/poker-pov.jpg | 84
 etikett: 4 / 6 · Episodisk / sekventiell
 rubrik: Påverkar ett beslut nästa?
 bakgrund: fokusljus
+miljö: bilder/ai-agenter-miljoer/domino.jpg | 80
 - Episodisk | Varje handling är fristående och påverkar inte framtida handlingar.
 - Sekventiell | Varje handling påverkar framtida tillstånd och beslut.
 - Exempel | Bildklassificering är episodisk. Planering för en självkörande bil är sekventiell.
-> Bildförslag: en lång rad dominobrickor där de första har börjat falla, som miljö bakom bilden. Varje bricka påverkar nästa, precis som i en sekventiell miljö.
+> Dominobrickorna i bakgrunden: varje bricka påverkar nästa, precis som i en sekventiell miljö.
 
 ---
 

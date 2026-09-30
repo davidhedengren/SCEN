@@ -1771,11 +1771,11 @@ function renderSlide(sl, i, deck, img) {
         });
         /* Algoritmen till vänster, frontiern under. */
         const stack = algo === 'dfs', AL = [
-          'Lägg startnoden i frontiern',
-          'Är frontiern tom? Då finns ingen lösning.',
-          'Ta ut en nod ur frontiern',
+          'Lägg startnoden i kön',
+          'Är kön tom? Då finns ingen lösning.',
+          'Ta ut en nod ur kön',
           'Är noden målet? Då är lösningen hittad.',
-          'Utforska noden: lägg dess barn i frontiern'
+          'Utforska noden: lägg dess barn i kön'
         ], LINE = { start: 0, fail: 1, take: 2, goal: 3, add: 4 };
         /* - algoritmen: dold tar bort stegen till vänster; den skrivna raden tar då deras plats.
            - kötyp: dold döljer BFS/DFS och köns namn, till exempel innan köerna har gåtts igenom. */
@@ -1786,8 +1786,8 @@ function renderSlide(sl, i, deck, img) {
         /* Frontiern under algoritmen: en liggande kö för BFS, en stående stack för DFS. */
         const CH = stack ? 64 : 72, GAP = stack ? 10 : 12, FX = 144, FY = stack ? 654 : 668;
         html += stack
-          ? `<div class="sk-lane stack" style="left:${FX}px;top:${FY}px;width:${CH + 28}px;height:${4 * (CH + GAP) + 44}px"><p class="sk-lanel">Frontier${showKind ? ' · stack' : ''}</p><span class="sk-io">↕ in och ut</span></div>`
-          : `<div class="sk-lane fifo" style="left:${FX}px;top:${FY}px;width:800px;height:${CH + 28}px"><p class="sk-lanel">Frontier${showKind ? ' · FIFO-kö' : ''}</p><span class="sk-io l">← ut</span><span class="sk-io r">← in</span></div>`;
+          ? `<div class="sk-lane stack" style="left:${FX}px;top:${FY}px;width:${CH + 28}px;height:${4 * (CH + GAP) + 44}px"><p class="sk-lanel">${showKind ? 'Kö · stack' : 'Kö'}</p><span class="sk-io">↕ in och ut</span></div>`
+          : `<div class="sk-lane fifo" style="left:${FX}px;top:${FY}px;width:800px;height:${CH + 28}px"><p class="sk-lanel">${showKind ? 'FIFO-kö' : 'Kö'}</p><span class="sk-io l">← ut</span><span class="sk-io r">← in</span></div>`;
         const CX = stack ? 440 : 144, CY = stack ? 700 : 858, EX = stack ? 440 : 340, EY = stack ? 860 : 866, ES = 52, per = 8;
         html += `<p class="sk-lbl" style="left:${CX}px;top:${CY - 36}px">Utforskas nu</p><div class="sk-curbox" style="left:${CX}px;top:${CY}px;width:${CH + 16}px;height:${CH + 16}px"></div>` +
           `<p class="sk-lbl" style="left:${EX}px;top:${EY - 44}px">Utforskade</p>`;
@@ -1805,9 +1805,9 @@ function renderSlide(sl, i, deck, img) {
         S.forEach((s, k) => { css += place(s, `.${uid}[data-dramaturgy-focus="${k}"]`); });
         if (S.length) css += place(S[S.length - 1], `.${uid}[data-dramaturgy-state="restored"]`);
         /* Status: vad som händer i varje steg, med lärarens egna kommentarer. */
-        const said = s => s.kind === 'start' ? `${name(s.added[0])} läggs i frontiern.` : s.kind === 'take' ? `${name(s.cur)} tas ut ur frontiern. Är det målet? Nej.` :
-          s.kind === 'add' ? (s.added.length ? `${name(s.cur)} utforskas. ${sokList(s.added.map(name))} läggs i frontiern.` : `${name(s.cur)} utforskas. Inga nya noder att lägga till.`) :
-          s.kind === 'goal' ? `${name(s.cur)} tas ut ur frontiern. Det är målet! Vägen: ${s.path.map(name).join(' → ')}.` : 'Frontiern är tom. Det finns ingen lösning.';
+        const said = s => s.kind === 'start' ? `${name(s.added[0])} läggs i kön.` : s.kind === 'take' ? `${name(s.cur)} tas ut ur kön. Är det målet? Nej.` :
+          s.kind === 'add' ? (s.added.length ? `${name(s.cur)} utforskas. ${sokList(s.added.map(name))} läggs i kön.` : `${name(s.cur)} utforskas. Inga nya noder att lägga till.`) :
+          s.kind === 'goal' ? `${name(s.cur)} tas ut ur kön. Det är målet! Vägen: ${s.path.map(name).join(' → ')}.` : 'Kön är tom. Det finns ingen lösning.';
         html += (showAlg ? `<div class="sk-status" style="left:${box.x}px;top:${box.y + box.h + 22}px;width:${box.w}px">` : `<div class="sk-status sk-big" style="left:144px;top:300px;width:800px">`) +
           (sl.text ? `<p class="sk-say sk-intro">${fmt(sl.text)}</p>` : '') +
           S.map((s, k) => `<div class="sk-say"${T(k)}><p class="say-term">${said(s)}</p>${notes[k + 1] ? `<p class="sk-note">${fmt(notes[k + 1])}</p>` : ''}</div>`).join('') +
@@ -1952,7 +1952,7 @@ function renderSlide(sl, i, deck, img) {
           const say = s => {
             if (s === pathStep) return `Vägen från A till B: ${res.path.length - 1} steg.`;
             const js = G2[s], o = res.order[js[js.length - 1]], hit = res.T && js.some(j => key(res.order[j].p) === key(res.T));
-            const base = level ? `Nivå ${o.g}: ${js.length} ${js.length === 1 ? 'ny ruta' : 'nya rutor'}.` : algo === 'girig' ? `Lägst h i frontiern: ${o.h}.` : algo === 'astar' ? `Lägst f i frontiern: ${o.g} + ${o.h} = ${o.g + o.h}.` : `Utforskade rutor: ${js[js.length - 1]}.`;
+            const base = level ? `Nivå ${o.g}: ${js.length} ${js.length === 1 ? 'ny ruta' : 'nya rutor'}.` : algo === 'girig' ? `Lägst h i kön: ${o.h}.` : algo === 'astar' ? `Lägst f i kön: ${o.g} + ${o.h} = ${o.g + o.h}.` : `Utforskade rutor: ${js[js.length - 1]}.`;
             return base + (hit ? ' Målet B är hittat!' : '');
           };
           html += `<div class="rn-side"><p class="rn-tag">${esc(tag)}</p>` + (sl.text ? `<p class="rn-lead">${fmt(sl.text)}</p>` : '') +

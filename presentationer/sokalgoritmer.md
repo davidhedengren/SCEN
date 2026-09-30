@@ -23,11 +23,11 @@ hastighet: slow
 
 [definition]
 etikett: Ett ord vi behöver
-rubrik: Frontiern
+rubrik: Kön
 text: De noder som vi har hittat, men ännu inte undersökt.
 exempel: Som en att göra-lista med platser du vet finns men inte har besökt. Algoritmen tar en plats i taget från listan.
 bakgrund: fokusljus
-> Frontier betyder gräns: gränsen mellan det vi redan har utforskat och det som är okänt.
+> På engelska kallas kön ofta frontier, gränsen mellan det vi redan har utforskat och det som är okänt.
 > I vilken ordning platserna tas från listan bestämmer vilken algoritm det är. Det kommer vi till när vi pratar om köer.
 
 ---
@@ -35,25 +35,25 @@ bakgrund: fokusljus
 [kretslopp]
 etikett: Sökalgoritm
 rubrik: Så fungerar en sökalgoritm
-text: I frontiern finns de noder som upptäckts, men ännu inte utforskats.
+text: I kön finns de noder som upptäckts, men ännu inte utforskats.
 slutsats: BFS, DFS, girig bäst först och A* går alla runt i den här loopen. Det som skiljer dem är vilken nod som tas ut.
-mitten: Frontiern
-start: Lägg startnoden i frontiern
-retur: Upprepa tills lösningen är hittad eller frontiern är tom.
-- Frontiern tom? | Finns det inga noder kvar att utforska? | Ingen lösning
-- Ta ut en nod | En nod tas ut ur frontiern.
+mitten: Kön
+start: Lägg startnoden i kön
+retur: Upprepa tills lösningen är hittad eller kön är tom.
+- Kön tom? | Finns det inga noder kvar att utforska? | Ingen lösning
+- Ta ut en nod | En nod tas ut ur kön.
 - Målet? | Är noden den vi letar efter? | Lösningen är hittad
-- Utforska | Lägg nodens barn i frontiern.
-> Start: börja med en frontier som innehåller rotnoden, grundtillståndet.
-> Upprepa följande steg: om frontiern är tom finns det ingen lösning, alla möjliga noder har utforskats utan att målet hittats. Ta bort en nod från frontiern för att utforska den. Om noden är målet är lösningen hittad. Utforska noden och lägg till dess barnnoder i frontiern.
+- Utforska | Lägg nodens barn i kön.
+> Start: börja med en kö som innehåller rotnoden, grundtillståndet.
+> Upprepa följande steg: om kön är tom finns det ingen lösning, alla möjliga noder har utforskats utan att målet hittats. Ta bort en nod från kön för att utforska den. Om noden är målet är lösningen hittad. Utforska noden och lägg till dess barnnoder i kön.
 
 ---
 
 [sökning]
 etikett: Exempel
 rubrik: Hitta en väg från A till E
-text: Frontiern innehåller de noder som upptäckts men ännu inte utforskats.
-slutsats: Målet är hittat först när noden tas ut ur frontiern och utforskas.
+text: Kön innehåller de noder som upptäckts men ännu inte utforskats.
+slutsats: Målet är hittat först när noden tas ut ur kön och utforskas.
 - algoritm: bfs
 - kötyp: dold
 - mål: E
@@ -63,9 +63,9 @@ slutsats: Målet är hittat först när noden tas ut ur frontiern och utforskas.
       - E
     - D
       - F
-- not: 6 | C lades i frontiern före D och utforskas därför först. Mer om det när vi pratar om köer.
+- not: 6 | C lades i kön före D och utforskas därför först. Mer om det när vi pratar om köer.
 > Varje klick är ett steg i algoritmen. Algoritmstegen till vänster lyser i takt med grafen, och raden under grafen säger vad som händer.
-> Poängen: E upptäcks redan när C utforskas, men lösningen är hittad först när E tas ut ur frontiern.
+> Poängen: E upptäcks redan när C utforskas, men lösningen är hittad först när E tas ut ur kön.
 
 ---
 
@@ -74,7 +74,7 @@ etikett: Datastrukturer
 rubrik: Olika köer
 text: Vem står på tur?
 bild: bilder/sokalgoritmer/ko.jpg
-> Vilken nod i frontiern som utforskas härnäst beror på vilken sorts kö algoritmen använder.
+> Vilken nod som tas ut ur kön härnäst beror på vilken sorts kö algoritmen använder.
 
 ---
 
@@ -82,7 +82,7 @@ bild: bilder/sokalgoritmer/ko.jpg
 etikett: Datastrukturer
 rubrik: Olika köer i algoritmer
 text: Köer är en datastruktur som används i sökalgoritmer för att hålla reda på vilka noder som ska utforskas.
-slutsats: Vilken nod i frontiern som utforskas beror på vilken kö algoritmen använder.
+slutsats: Vilken nod som tas ut ur kön beror på vilken sorts kö algoritmen använder.
 - kö: fifo | FIFO-kö | First in, first out
 - kö: stack | Stack (LIFO-kö) | Last in, first out
 - kö: prio | Prioritetskö | Lägst värde först
@@ -124,7 +124,7 @@ flöde: ja
 - Nivå 1 | Alla barnnoder till startnoden utforskas.
 - Nivå 2 | Alla noder som är anslutna till noderna på nivå 1 utforskas.
 - Tills målet | Processen fortsätter tills målnoden hittas eller alla noder har utforskats.
-> BFS använder en FIFO-kö där noderna utforskas i den ordning de läggs till i frontiern.
+> BFS använder en FIFO-kö där noderna utforskas i den ordning de läggs till i kön.
 
 ---
 
@@ -169,7 +169,7 @@ slutsats: En BFS föreslår därför vägen som visas: 6 steg.
 - .#..##
 - .#.###
 - A..###
-> Varje klick är en nivå: alla rutor på samma avstånd från A utforskas samtidigt. Den streckade ramen är frontiern, nästa nivå.
+> Varje klick är en nivå: alla rutor på samma avstånd från A utforskas samtidigt. Den streckade ramen är kön, nästa nivå.
 > Sista klicket ritar vägen. BFS hittar alltid den kortaste vägen, mätt i antal steg.
 
 ---
@@ -197,7 +197,7 @@ slutsats: BFS hittar F på nivå 2. Vägen är A, C, F.
       - N
       - O
 > FIFO-kön gör att hela nivå 1 utforskas innan nivå 2.
-> Lägg märke till att F upptäcks när C utforskas, men hittas först när den tas ut ur frontiern.
+> Lägg märke till att F upptäcks när C utforskas, men hittas först när den tas ut ur kön.
 
 ---
 
@@ -302,7 +302,7 @@ text: En DFS utforskar grafer och träd genom att gå så djupt som möjligt lä
 - Tills målet | Processen fortsätter tills målnoden hittas eller alla noder har utforskats.
 > Djupt: algoritmen går vidare till den första tillgängliga barnnoden och fortsätter att följa denna väg tills den når ett löv.
 > Backa: när DFS når en nod utan nya grannar backar algoritmen tillbaka till den senaste noden med oupptäckta grannar och utforskar nästa tillgängliga väg.
-> DFS använder en stack, där den senaste noden som lagts till i frontiern utforskas först.
+> DFS använder en stack, där den senaste noden som lagts till i kön utforskas först.
 
 ---
 
@@ -310,10 +310,10 @@ text: En DFS utforskar grafer och träd genom att gå så djupt som möjligt lä
 etikett: Programmering
 rubrik: BFS och DFS i Python
 text: def bfs(graph, start, goal):
-    frontier = [start]
+    ko = [start]
     visited = set()
-    while frontier:
-        current = frontier.pop(0)
+    while ko:
+        current = ko.pop(0)
         if current in visited:
             continue
         visited.add(current)
@@ -321,13 +321,13 @@ text: def bfs(graph, start, goal):
             return f"Found {goal}"
         for neighbor in graph[current]:
             if neighbor not in visited:
-                frontier.append(neighbor)
+                ko.append(neighbor)
     return f"{goal} not found"
-- 2 | frontier = [start] | Frontiern börjar med startnoden.
-- 5 | frontier.pop(0) | Tar ut den nod som lades in först: en FIFO-kö.
+- 2 | ko = [start] | Kön börjar med startnoden.
+- 5 | ko.pop(0) | Tar ut den nod som lades in först: en FIFO-kö.
 - 9 | current == goal | Är noden målet? Då är lösningen hittad.
-- 13 | frontier.append(neighbor) | Barnnoderna läggs sist i kön.
-- 5 | frontier.pop(0) -> frontier.pop() | Ta ut den nod som lades in sist i stället: en stack.
+- 13 | ko.append(neighbor) | Barnnoderna läggs sist i kön.
+- 5 | ko.pop(0) -> ko.pop() | Ta ut den nod som lades in sist i stället: en stack.
 - 1 | bfs -> dfs | Det var hela skillnaden. Nu är det en DFS.
 > Kodbilden går att hoppa över i klasser som inte programmerar.
 > Jämför med algoritmstegen: ta ut en nod, kontrollera om det är målet, lägg till barnen.
@@ -423,7 +423,7 @@ slutsats: DFS hittar F efter att ha gått ned i den högra grenen först.
       - N
       - O
 - not: 4 | Vi utforskar den nod som lades till sist, högst upp i stacken.
-- not: 5 | Redan här har vi hittat F och lagt till den i frontiern, men det är inte förrän vi utforskar noden som algoritmen förstår att lösningen är hittad!
+- not: 5 | Redan här har vi hittat F och lagt till den i kön, men det är inte förrän vi utforskar noden som algoritmen förstår att lösningen är hittad!
 > Stacken står upp: in och ut sker överst.
 
 ---
@@ -585,7 +585,7 @@ slutsats: Vägen blev 33 steg. Finns det en kortare väg?
 - not: 6 | 11 är lägre än 13, därför utforskas den rutan först.
 > Girig bäst först heter Greedy best-first på engelska.
 > Manhattan-avståndet är antalet steg till målet om det inte fanns några väggar: steg i sidled plus steg i höjdled.
-> Algoritmen väljer alltid den ruta i frontiern som har lägst h.
+> Algoritmen väljer alltid den ruta i kön som har lägst h.
 
 ---
 
@@ -623,7 +623,7 @@ hastighet: slow
 etikett: A*-algoritmen
 rubrik: Kostnaden för en nod
 formel: f(n) = g(n) + h(n)
-slutsats: A* utforskar alltid den nod i frontiern som har lägst f(n).
+slutsats: A* utforskar alltid den nod i kön som har lägst f(n).
 - h(n) | Uppskattad kostnad att nå målet från n. Det enda som girig bäst först tittar på.
 - g(n) | Kostnad att nå noden n. Den delen saknade girig bäst först.
 - f(n) | Den uppskattade totala kostnaden för en väg genom noden n.

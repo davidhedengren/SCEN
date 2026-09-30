@@ -192,10 +192,10 @@ En del i `[omlopp]` kan få en bild som tredje fält: `- Avlaten | Syndernas fö
 [kodskrivning]
 rubrik: BFS i Python
 text: def bfs(graph, start, goal):
-    frontier = [start]
+    ko = [start]
 - takt: rad                  (valfri: en rad per klick; annars skrivs koden i realtid)
-- 2 | frontier = [start] | Frontiern börjar med startnoden. | resultat (valfritt)
-- 5 | frontier.pop(0) -> frontier.pop() | Nu blir det en stack.
+- 2 | ko = [start] | Kön börjar med startnoden. | resultat (valfritt)
+- 5 | ko.pop(0) -> ko.pop() | Nu blir det en stack.
 ```
 
 Koden skrivs fram i ett terminalfönster med blinkande markör. Ett klick under skrivningen visar hela koden direkt. Därefter markerar varje klick en rad och ett uttryck. Skriv koden utan tomma rader. Filnamnet i fönstret tas från funktionens namn, till exempel `bfs.py`.
@@ -223,7 +223,7 @@ Algoritmerna räknas fram automatiskt. Du skriver grafen eller labyrinten och v�
 [sökning]
 - algoritm: bfs              (bfs eller dfs)
 - mål: E                     (flera mål: E, L)
-- läge: frontier             (frontier, vandring eller övning)
+- läge: kö                   (kö, vandring eller övning)
 - not: 4 | kommentar         (visas vid klick 4)
 - algoritmen: dold           (valfri: tar bort algoritmstegen, den skrivna raden står där i stället)
 - kötyp: dold                (valfri: döljer BFS/DFS och köns namn, t.ex. innan köerna gåtts igenom)
@@ -256,7 +256,7 @@ Algoritmerna räknas fram automatiskt. Du skriver grafen eller labyrinten och v�
 
 I `[kö]` går köerna en i taget: elementen läggs in i ett klick, sedan är varje `ut` ett klick. Det som tas ut står kvar i en rad under kön, så att köerna kan jämföras på slutet. Ett fjärde fält efter förklaringen visar en kodrad under könamnet, men lägg hellre koden på en egen kodbild så att den går att hoppa över.
 
-Raderna som beskriver vad algoritmen gör, till exempel "Utforskar A." eller "Lägst f i frontiern", skrivs fram som i en kommandotolk när klicket kommer. Egna kommentarer med `not:` visas som vanlig text under.
+Raderna som beskriver vad algoritmen gör, till exempel "Utforskar A." eller "Lägst f i kön", skrivs fram som i en kommandotolk när klicket kommer. Egna kommentarer med `not:` visas som vanlig text under.
 
 Konventioner: BFS använder en FIFO-kö. DFS använder en stack, så den nod som lades till sist utforskas först; i ett träd blir det den högra grenen. Girig bäst först väljer lägst h, A* lägst g + h. Vid lika värden väljs den senast tillagda. I rutnät prövas grannarna i ordningen upp, vänster, höger, ned.
 
@@ -267,11 +267,11 @@ Konventioner: BFS använder en FIFO-kö. DFS använder en stack, så den nod som
 rubrik: Så fungerar en sökalgoritm
 text: visas i mitten under mittordet innan första klicket
 slutsats: visas i mitten när hela kretsloppet syns
-mitten: Frontiern            (det som går runt)
-start: Lägg startnoden i frontiern          (valfri ingång)
+mitten: Kön            (det som går runt)
+start: Lägg startnoden i kön          (valfri ingång)
 retur: Upprepa tills en utgång nås.         (valfri, sluter ringen)
-- Frontiern tom? | Finns det inga noder kvar? | Ingen lösning
-- Ta ut en nod | En nod tas ut ur frontiern.
+- Kön tom? | Finns det inga noder kvar? | Ingen lösning
+- Ta ut en nod | En nod tas ut ur kön.
 ```
 
 Stegen sitter på en ring, högst sex. Varje klick flyttar en ljusring till nästa steg och mitten förklarar steget. Ett tredje fält blir en utgång ut ur ringen. Ett steg som slutar med frågetecken får ja mot utgången och nej vidare i ringen.

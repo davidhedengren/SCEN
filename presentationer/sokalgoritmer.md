@@ -379,24 +379,6 @@ slutsats: En DFS skulle därför kunna föreslå vägen som visas: 10 steg.
 
 ---
 
-[rutnät]
-etikett: Jämförelse
-rubrik: BFS och DFS i samma labyrint
-text: Samma labyrint, samma start och samma mål.
-slutsats: Båda utforskade 13 rutor. BFS hittade den kortaste vägen, 6 steg. DFS hittade en väg på 10 steg.
-- algoritm: bfs, dfs
-- takt: 2
-- .#####
-- ......
-- .##.##
-- .##B##
-- .#..##
-- .#.###
-- A..###
-> Båda söker samtidigt, två rutor per klick. Räknaren ovanför visar hur många rutor som har utforskats.
-
----
-
 [sökning]
 etikett: Djupet först
 rubrik: Hitta en väg från A till F med DFS
@@ -644,21 +626,3 @@ slutsats: A* hittar den kortaste vägen: 21 steg.
 - not: 15 | Här byter vi väg eftersom 6 + 13 är lägre än 15 + 6.
 > Vid lika värden väljer A* här den ruta som lades till senast.
 > Jämför med girig bäst först i samma labyrint: där blev vägen 33 steg.
-
----
-
-[rutnät]
-etikett: Jämförelse
-rubrik: Girig bäst först och A* i samma labyrint
-text: Samma labyrint och samma mål. Vilken hittar den kortaste vägen?
-slutsats: A* utforskade färre rutor, 30 mot 33, och hittade den kortaste vägen: 21 steg mot 33.
-- algoritm: girig, a*
-- takt: 3
-- #..........B
-- #.#########.
-- #.#.......#.
-- #.#.#####.#.
-- #...#.....#.
-- ###.#.#####.
-- A...#.......
-> Båda söker samtidigt, tre rutor per klick.

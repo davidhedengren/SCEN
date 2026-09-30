@@ -1614,7 +1614,10 @@
 .scen .ko-say p{font-size:26px}
 .scen .ko-say b{color:var(--accent)}
 .scen .ko-set{transition:opacity .5s ease}
-.scen .slide[data-dramaturgy-state="focus"] .ko-set:not(.dramaturgy-current){opacity:.3}
+.scen .slide[data-dramaturgy-state="focus"] .ko-set:not(.dramaturgy-current){opacity:.22}
+.scen .ko-frame{position:absolute;top:292px;height:716px;border-radius:30px;border:2px solid var(--accent);background:color-mix(in srgb,var(--accent) 5%,transparent);box-shadow:0 0 0 6px color-mix(in srgb,var(--accent) 10%,transparent),0 0 60px color-mix(in srgb,var(--accent) 22%,transparent);opacity:0;transform:scale(.985);transition:opacity .45s ease,transform .5s cubic-bezier(.2,.8,.2,1)}
+.scen .slide[data-dramaturgy-state="focus"] .ko-set.dramaturgy-current .ko-frame{opacity:1;transform:none}
+.scen .slide[data-dramaturgy-state="focus"] .ko-set.dramaturgy-current .ko-col h3{color:var(--accent)}
 @media (prefers-reduced-motion:reduce){.scen :is(.sk-stage,.rn-stage,.ko-stage) *{transition-duration:.01s!important;transition-delay:0s!important}}
 .scen .slide[data-body-motion="none"] :is(.sk-stage,.rn-stage,.ko-stage) *{transition:none!important}
 

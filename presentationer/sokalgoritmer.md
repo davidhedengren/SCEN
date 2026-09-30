@@ -91,9 +91,10 @@ slutsats: Vilken nod som tas ut ur kön beror på vilken sorts kö algoritmen an
 - in: C 2
 - ut
 - ut
+- ut
 - berättelse: dold
-> En kö i taget. Först läggs A, B och C in, sedan tas två ut. Siffran är prioriteten, som bara prioritetskön bryr sig om.
-> FIFO-kön lämnar ut A (först in), stacken C (sist in) och prioritetskön B (lägst värde).
+> En kö i taget. Först läggs A, B och C in, sedan tas alla tre ut. Siffran är prioriteten, som bara prioritetskön bryr sig om.
+> FIFO-kön lämnar ut A, B, C (först in först ut), stacken C, B, A (sist in först ut) och prioritetskön B, C, A (lägst värde först).
 > Raden längst ner visar i vilken ordning elementen kom ut. På sista klicket kan köerna jämföras.
 > BFS använder en FIFO-kö, DFS en stack och de informerade sökningarna en prioritetskö.
 

@@ -2020,7 +2020,7 @@ function renderSlide(sl, i, deck, img) {
       lanes.forEach((l, li) => { state[li].last = null; css += place(`.${uid}[data-dramaturgy-state="restored"]`, li, state[li], false); });
       lanes.forEach((l, li) => {
         const x0 = 144 + li * (cw + gap), act = plan.map((P, t) => P.lanes.includes(li) ? t : -1).filter(t => t >= 0);
-        html += `<div class="ko-set"${act.length ? ` data-dramaturgy-in="${act.join(' ')}"` : ''}><div class="ko-col" style="left:${Math.round(x0)}px;width:${Math.round(cw)}px"><h3>${fmt(l.name)}</h3>${l.sub ? `<p>${fmt(l.sub)}</p>` : ''}${l.code ? `<code>${esc(l.code)}</code>` : ''}</div>` +
+        html += `<div class="ko-set"${act.length ? ` data-dramaturgy-in="${act.join(' ')}"` : ''}><div class="ko-frame" aria-hidden="true" style="left:${Math.round(x0 - 22)}px;width:${Math.round(cw + 44)}px"></div><div class="ko-col" style="left:${Math.round(x0)}px;width:${Math.round(cw)}px"><h3>${fmt(l.name)}</h3>${l.sub ? `<p>${fmt(l.sub)}</p>` : ''}${l.code ? `<code>${esc(l.code)}</code>` : ''}</div>` +
           (l.type === 'lifo' ? `<div class="ko-lane lifo" style="left:${Math.round(x0 + cw / 2 - CH / 2 - 14)}px;top:440px;width:${CH + 28}px;height:390px"><span class="ko-io">in och ut ↕</span></div>`
             : `<div class="ko-lane ${l.type}" style="left:${Math.round(x0)}px;top:600px;width:${Math.round(cw)}px;height:${CH + 28}px"><span class="ko-io l">← ut</span><span class="ko-io r">← in</span></div>`) +
           `<p class="ko-out" style="left:${Math.round(x0)}px;top:866px">Ut, i ordning</p>`;

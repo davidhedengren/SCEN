@@ -1587,7 +1587,7 @@
 .scen .slide[data-dramaturgy-state="restored"] .rn-stage .rn-path.fin{stroke-dashoffset:0}
 .scen .rn-side{position:absolute;left:1340px;top:300px;width:436px;display:grid;gap:22px;align-content:start}
 .scen .rn-tag{margin:0;font:500 17px var(--font-mono,var(--mono));letter-spacing:.12em;text-transform:uppercase;color:var(--accent)}
-.scen .rn-lead{margin:0;font-size:26px;line-height:1.35;color:var(--muted)}
+.scen .rn-lead{margin:0;font-size:32px;line-height:1.3;color:var(--ink);text-wrap:pretty}
 .scen .rn-says{display:grid}
 /* två algoritmer bredvid varandra */
 .scen .rn-head{position:absolute;display:grid;justify-items:center;gap:8px;text-align:center}

@@ -1948,7 +1948,7 @@ function renderSlide(sl, i, deck, img) {
             (sl.conclusion ? `<p class="rn-say rn-end">${fmt(sl.conclusion)}</p>` : '') + `</div>`;
         } else {
           const { algo, res, level, G2 } = runs[0], key = res.key;
-          const onlyEnd = /slut|sista/i.test(cfg['berättelse'] || ''), tag = SOK_NAME[algo] + (level ? ' · en nivå per klick' : chunk > 1 ? ` · ${chunk} rutor per klick` : ' · en ruta per klick');
+          const onlyEnd = /slut|sista/i.test(cfg['berättelse'] || ''), tag = SOK_NAME[algo];
           const say = s => {
             if (s === pathStep) return `Vägen från A till B: ${res.path.length - 1} steg.`;
             const js = G2[s], o = res.order[js[js.length - 1]], hit = res.T && js.some(j => key(res.order[j].p) === key(res.T));

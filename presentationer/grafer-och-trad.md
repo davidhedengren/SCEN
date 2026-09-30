@@ -4,11 +4,19 @@ kurs: Artificiell Intelligens 1
 tema: natt
 ---
 
-[titel]
+[bildregi]
 etikett: Klassisk AI
 rubrik: Grafer, träd och beslutsträd
 text: Strukturer som låter en dator representera relationer och fatta beslut.
-bild: bilder/grafer-och-trad/natverk-titel.jpg
+bild: bilder/grafer-och-trad/natverk-till-trad.jpg
+alt: Ett lysande nätverk av noder till vänster som växer ihop till ett träd till höger.
+bildläge: hero
+fokuspunkt: 72 45
+startutsnitt: 50 50 1.04
+slututsnitt: 58 46 1.1
+säker-yta: 4 14 40 64
+mörkning: 0 0 44 100 0.35
+hastighet: slow
 > Presentation av David Hedengren.
 
 ---
@@ -144,6 +152,7 @@ svar: Fyra. I exemplet är det noderna 4, 5, 6 och 7.
 [fokus]
 etikett: Träd i AI
 rubrik: Tre sorters träd
+miljö: bilder/grafer-och-trad/speltrad.jpg | 80
 - Sökträd | Organiserar data så att den går snabbt att söka i.
 - Beslutsträd | Visualiserar och strukturerar beslutsprocesser.
 - Spelträd | Simulerar möjliga drag för att hitta den bästa strategin.
@@ -154,9 +163,8 @@ rubrik: Tre sorters träd
 etikett: Del 3
 rubrik: Beslutsträd
 text: Frågor i tur och ordning tills svaret är klart.
-bild: bilder/grafer-och-trad/trad-ljus.jpg
-fokuspunkt: 50 35
-> Bildförslag: en egen bild för beslutsträd (bilder/grafer-och-trad/beslutstrad.jpg). Tills den finns används trädbilden.
+bild: bilder/grafer-och-trad/beslutstrad-ord.jpg
+fokuspunkt: 50 45
 
 ---
 

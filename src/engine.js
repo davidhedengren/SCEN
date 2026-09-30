@@ -1805,12 +1805,16 @@ function renderSlide(sl, i, deck, img) {
         S.forEach((s, k) => { css += place(s, `.${uid}[data-dramaturgy-focus="${k}"]`); });
         if (S.length) css += place(S[S.length - 1], `.${uid}[data-dramaturgy-state="restored"]`);
         /* Status: vad som händer i varje steg, med lärarens egna kommentarer. */
-        const said = s => s.kind === 'start' ? `${name(s.added[0])} läggs i kön.` : s.kind === 'take' ? `${name(s.cur)} tas ut ur kön. Är det målet? Nej.` :
+        const kort = /kort/i.test(cfg['berättelse'] || '');
+        const saidShort = s => s.kind === 'start' ? '' : s.kind === 'take' ? `Är ${name(s.cur)} målet? Nej.` :
+          s.kind === 'add' ? (showAlg ? '' : s.added.length ? `${sokList(s.added.map(name))} läggs i kön.` : 'Inga nya noder.') :
+          s.kind === 'goal' ? `Är ${name(s.cur)} målet? Ja! Vägen: ${s.path.map(name).join(' → ')}.` : 'Kön är tom. Ingen lösning.';
+        const said = s => kort ? saidShort(s) : s.kind === 'start' ? `${name(s.added[0])} läggs i kön.` : s.kind === 'take' ? `${name(s.cur)} tas ut ur kön. Är det målet? Nej.` :
           s.kind === 'add' ? (s.added.length ? `${name(s.cur)} utforskas. ${sokList(s.added.map(name))} läggs i kön.` : `${name(s.cur)} utforskas. Inga nya noder att lägga till.`) :
           s.kind === 'goal' ? `${name(s.cur)} tas ut ur kön. Det är målet! Vägen: ${s.path.map(name).join(' → ')}.` : 'Kön är tom. Det finns ingen lösning.';
         html += (showAlg ? `<div class="sk-status" style="left:${box.x}px;top:${box.y + box.h + 22}px;width:${box.w}px">` : `<div class="sk-status sk-big" style="left:144px;top:300px;width:800px">`) +
           (sl.text ? `<p class="sk-say sk-intro">${fmt(sl.text)}</p>` : '') +
-          S.map((s, k) => `<div class="sk-say"${T(k)}><p class="say-term">${said(s)}</p>${notes[k + 1] ? `<p class="sk-note">${fmt(notes[k + 1])}</p>` : ''}</div>`).join('') +
+          S.map((s, k) => `<div class="sk-say"${T(k)}>${said(s) ? `<p class="say-term">${said(s)}</p>` : ''}${notes[k + 1] ? `<p class="sk-note">${fmt(notes[k + 1])}</p>` : ''}</div>`).join('') +
           (sl.conclusion ? `<p class="sk-say sk-end">${fmt(sl.conclusion)}</p>` : '') + `</div>`;
       } else if (mode === 'vandring') {
         const G = sokGraph(rows), W = G.nodes.length ? sokWalk(G, algo, 0) : [];

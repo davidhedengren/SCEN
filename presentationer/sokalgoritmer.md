@@ -55,6 +55,7 @@ rubrik: Hitta en väg från A till E
 text: Kön innehåller de noder som upptäckts men ännu inte utforskats.
 slutsats: Målet är hittat först när noden tas ut ur kön och utforskas.
 - algoritm: bfs
+- berättelse: kort
 - kötyp: dold
 - mål: E
 - A
@@ -64,7 +65,7 @@ slutsats: Målet är hittat först när noden tas ut ur kön och utforskas.
     - D
       - F
 - not: 6 | C lades i kön före D och utforskas därför först. Mer om det när vi pratar om köer.
-> Varje klick är ett steg i algoritmen. Algoritmstegen till vänster lyser i takt med grafen, och raden under grafen säger vad som händer.
+> Varje klick är ett steg i algoritmen. Algoritmstegen till vänster lyser i takt med grafen. Texten under grafen svarar bara på frågan om noden är målet.
 > Poängen: E upptäcks redan när C utforskas, men lösningen är hittad först när E tas ut ur kön.
 
 ---
@@ -180,6 +181,7 @@ etikett: Bredden först
 rubrik: Hitta en väg från A till F med BFS
 slutsats: BFS hittar F på nivå 2. Vägen är A, C, F.
 - algoritm: bfs
+- berättelse: kort
 - algoritmen: dold
 - mål: F
 - A
@@ -388,6 +390,7 @@ etikett: Djupet först
 rubrik: Hitta en väg från A till F med DFS
 slutsats: DFS hittar F efter att ha gått ned i den högra grenen först.
 - algoritm: dfs
+- berättelse: kort
 - algoritmen: dold
 - mål: F
 - A

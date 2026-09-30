@@ -224,6 +224,7 @@ Algoritmerna räknas fram automatiskt. Du skriver grafen eller labyrinten och v�
 - algoritm: bfs              (bfs eller dfs)
 - mål: E                     (flera mål: E, L)
 - läge: kö                   (kö, vandring eller övning)
+- berättelse: kort           (valfri: bara "Är A målet? Nej." i stället för hela förloppet)
 - not: 4 | kommentar         (visas vid klick 4)
 - algoritmen: dold           (valfri: tar bort algoritmstegen, den skrivna raden står där i stället)
 - kötyp: dold                (valfri: döljer BFS/DFS och köns namn, t.ex. innan köerna gåtts igenom)

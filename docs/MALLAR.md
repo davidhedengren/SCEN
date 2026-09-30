@@ -57,6 +57,7 @@ Varje bild i ett manus börjar med mallens namn inom hakparentes. Samma katalog 
 | `[bro]` | Banor | En process som en båge över ett golv. Bågen bär stegen, golvet är sammanhanget de börjar och slutar i. Hela modellen syns från början. Varje klick flyttar fokus ett steg, tidigare steg ligger kvar nedtonade och sista klicket visar helheten igen. Med retur blir bron en loop: resultatet leder längs golvet tillbaka till början, som i återkopplingar, kretslopp och cykler. |
 | `[rad]` | Fokusvandring | Två till fem kolumner på en scen med stora siffror. Alla syns från början. En ljuskägla glider i sidled till kolumnen du pratar om medan de andra tonas ned, och sista klicket tänder alla. Med flöde: ja fylls en linje under kolumnerna i takt med stegen. |
 | `[rutor]` | Fokusvandring | Två till sex rutor av matt glas över ett mjukt färgsken, till exempel fyra delar i två rader. Hela rutnätet syns från början. Ett ljus glider bakom glaset till rutan du pratar om, de andra blir suddiga, och sista klicket tänder alla. |
+| `[prövning]` | Begrepp | Ett fall prövas mot kriterier, ett i taget. Först tänds frågan, på nästa klick belägget och omdömet. Övriga kriterier är nedtonade. Sista klicket visar allt och slutsatsen landar stort. |
 | `[remsor]` | Fokusvandring | Tre till fem rader med nummer, rubrik och förklaring. Ett ljusdrag sveper ned till raden du pratar om, och sista klicket tänder alla. Bra för begrepp med lite längre förklaringar. |
 | `[mosaik]` | Fokusvandring | En bentogrid: en stor ruta med helheten och två till fyra mindre. Allt börjar i gråskala och färgen tänds i rutan du pratar om, en i taget. Sista klicket ger färg åt alla. |
 | `[kärna]` | Fokusvandring | En lysande kärna i mitten och två till fyra delar runt den. Kärnan lyser hela tiden, och en ljusstråle ritas ut till delen du pratar om. Sista klicket tänder alla strålar och visar en slutsats i kärnan. |
@@ -1012,6 +1013,39 @@ text: Hållbar utveckling
 slutsats: Dimensionerna påverkar varandra.
 ```
 
+## Begrepp
+
+### `[prövning]` Prövning
+
+Ett fall prövas mot kriterier, ett i taget. Först tänds frågan, på nästa klick belägget och omdömet. Övriga kriterier är nedtonade. Sista klicket visar allt och slutsatsen landar stort.
+
+**Undvik när:** Mer än fem kriterier, eller när det inte finns något fall att pröva. Använd triad för premisser utan fall.
+
+```
+[prövning]
+etikett: Demokrati
+rubrik: Är landet en demokrati?
+text: Vi prövar ett påhittat land mot tre kriterier.
+- Fria val? | Val hålls vart fjärde år och flera partier ställer upp. | Ja
+- Yttrandefrihet? | Kritiska tidningar stängs ibland. | Delvis
+- Rättsstat? | Domstolarna styrs av regeringen. | Nej
+slutsats: **Nej**, inte fullt ut. Alla kriterier behöver vara uppfyllda.
+```
+
+### `[lexikon]` Lexikon
+
+Ett register med begrepp till vänster och ett stort uppslag till höger. Registret syns hela tiden, en markering glider till begreppet du pratar om och uppslaget visar definition och exempel. Skriv begrepp | definition | exempel, eller begrepp | kategori | definition | exempel.
+
+**Undvik när:** Fler än åtta begrepp. Långa definitioner.
+
+```
+[lexikon]
+etikett: Begrepp
+rubrik: Ord att känna till
+- Fotosyntes | Biologi | Växter bygger socker av koldioxid och vatten med hjälp av ljus. | Bladen är växtens solpaneler.
+- Cellandning | Biologi | Cellerna frigör energi ur socker med hjälp av syre. | Sker i alla levande celler.
+```
+
 ## Jämförelse
 
 ### `[spegel]` Spegel
@@ -1086,22 +1120,6 @@ skala: 6 år | 10 år | 15 år | 19 år
 - 30 | Första valet | Eleverna delas upp tidigt
 - gräns: 50 | Tonåren
 slutsats: Var valet ligger i tiden säger något om synen på eleverna.
-```
-
-## Begrepp
-
-### `[lexikon]` Lexikon
-
-Ett register med begrepp till vänster och ett stort uppslag till höger. Registret syns hela tiden, en markering glider till begreppet du pratar om och uppslaget visar definition och exempel. Skriv begrepp | definition | exempel, eller begrepp | kategori | definition | exempel.
-
-**Undvik när:** Fler än åtta begrepp. Långa definitioner.
-
-```
-[lexikon]
-etikett: Begrepp
-rubrik: Ord att känna till
-- Fotosyntes | Biologi | Växter bygger socker av koldioxid och vatten med hjälp av ljus. | Bladen är växtens solpaneler.
-- Cellandning | Biologi | Cellerna frigör energi ur socker med hjälp av syre. | Sker i alla levande celler.
 ```
 
 ## System

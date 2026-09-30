@@ -65,12 +65,12 @@ rubrik: Är ett recept för att baka en kaka en algoritm?
 
 ---
 
-[triad]
+[prövning]
 etikett: Algoritm
 rubrik: Vi undersöker kakreceptet
-- Exakta steg? | ”Vispa 3 ägg och 3 dl socker.” Varje steg går att följa.
-- Bestämd ordning? | Smeten blandas före gräddningen. ”Vispa tills det är pösigt” upprepas tills det är klart.
-- Ett slut? | ”Grädda i 40 minuter.” Sedan är kakan klar.
+- Exakta steg? | ”Vispa 3 ägg och 3 dl socker.” Varje steg går att följa. | Ja
+- Bestämd ordning? | Smeten blandas före gräddningen. ”Vispa tills det är pösigt” upprepas. | Ja
+- Ett slut? | ”Grädda i 40 minuter.” Sedan är kakan klar. | Ja
 slutsats: **Ja**, ett recept är en algoritm.
 > Gå igenom kriterierna ett i taget och låt klassen svara ja eller nej på varje.
 > Kocken följer receptet som en dator följer ett program.

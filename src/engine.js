@@ -16,7 +16,7 @@ const LAYOUTS = {etapper:"Etapper",vagval:"Vägval",lager:"Lager",resonemang:"Re
   title: 'Titel', section: 'Avsnitt', statement: 'Påstående', bullets: 'Punktlista', split: 'Text och bild',
   image: 'Helbild', bildregi: 'Bildregi', terminal: 'Terminal', kodforklaring: 'Kodförklaring', typografisk: 'Typografiskt statement', texttempo: 'Typografiskt tempo', cards: 'Kort', compare: 'Jämförelse', table: 'Tabell', number: 'Stort tal', timeline: 'Tidslinje',
   question: 'Fråga och svar', poll: 'Omröstning', reflect: 'Reflektion', define: 'Definition', chat: 'AI-samtal', duo: 'Två tal',
-  quote: 'Citat', omslag: 'Omslag', karta: 'Karta', triad: 'Triad', motsats: 'Motsats', bildkant: 'Bildkant', 'båge': 'Båge', omlopp: 'Omlopp', gradskiva: 'Gradskiva', bro: 'Bro', spegel: 'Spegel', ordpar: 'Ordpar', spektrum: 'Spektrum', livslopp: 'Livslopp', lexikon: 'Lexikon', rad: 'Rad', rutor: 'Rutor', remsor: 'Remsor', mosaik: 'Mosaik', karna: 'Kärna', graf: 'Graf', trad: 'Träd', flode: 'Flöde', urval: 'Urval', forgrening: 'Förgrening', kodskrivning: 'Kodskrivning', inzoomning: 'Inzoomning', fyrfalt: 'Fyrfält', vagskal: 'Vågskål', sokning: 'Sökning', rutnat: 'Rutnät', ko: 'Kö', ringar: 'Ringar', lins: 'Lins', 'mätare': 'Mätare', 'ridå': 'Ridå', 'strålkastare': 'Strålkastare', fokus: 'Fokus', ordbild: 'Ordbild', 'bildfält': 'Bildfält', delning: 'Delning', ljustal: 'Ljustal', tom: 'Fri yta', egen: 'Egen mall'
+  quote: 'Citat', omslag: 'Omslag', karta: 'Karta', triad: 'Triad', motsats: 'Motsats', bildkant: 'Bildkant', 'båge': 'Båge', omlopp: 'Omlopp', gradskiva: 'Gradskiva', bro: 'Bro', spegel: 'Spegel', ordpar: 'Ordpar', spektrum: 'Spektrum', livslopp: 'Livslopp', lexikon: 'Lexikon', rad: 'Rad', rutor: 'Rutor', remsor: 'Remsor', provning: 'Prövning', mosaik: 'Mosaik', karna: 'Kärna', graf: 'Graf', trad: 'Träd', flode: 'Flöde', urval: 'Urval', forgrening: 'Förgrening', kodskrivning: 'Kodskrivning', inzoomning: 'Inzoomning', fyrfalt: 'Fyrfält', vagskal: 'Vågskål', sokning: 'Sökning', rutnat: 'Rutnät', ko: 'Kö', ringar: 'Ringar', lins: 'Lins', 'mätare': 'Mätare', 'ridå': 'Ridå', 'strålkastare': 'Strålkastare', fokus: 'Fokus', ordbild: 'Ordbild', 'bildfält': 'Bildfält', delning: 'Delning', ljustal: 'Ljustal', tom: 'Fri yta', egen: 'Egen mall'
 };
 const THEMES = {
   signal: { name: 'Signal', desc: 'Djup midnattsblå, elektrisk cyan och violett. Fylliga färgfält och tydlig typografi.', look: 'dark', v: { bg: '#080E25', surface: '#152444', ink: '#F0F6FF', muted: '#A5B6D4', line: '#2B4065', accent: '#5FE7ED', 'accent-2': '#9C87FF', hl: 'rgba(95,231,237,.22)' }, fd: '"Familjen Grotesk",system-ui,sans-serif', fb: '"Hanken Grotesk",system-ui,sans-serif', hw: 700, ht: '-.035em', r: '24px', ta: 'words', fonts: ['Familjen+Grotesk:wght@400;500;600;700', 'Hanken+Grotesk:wght@400;500;600'] },
@@ -1067,6 +1067,32 @@ function renderSlide(sl, i, deck, img) {
         ((lead || end) && L !== 'karna' ? `<div class="fv-lead">${lead ? `<p class="fv-intro">${fmt(sl.text)}</p>` : ''}${end ? `<p class="fv-end">${fmt(sl.conclusion)}</p>` : ''}</div>` : '') +
         `<div class="fv-stage"${A(anim(ba, 'fade'), 150)}>` + aurora + (links ? `<svg class="fv-svg" viewBox="0 0 1920 1080" aria-hidden="true">${links}</svg>` : '') + track + frame + core + boxes + `</div>` + cues;
       attrs += ` data-dramaturgy="focus-restore" data-dramaturgy-state="${steps ? 'overview' : 'restored'}"${steps ? '' : ' data-dramaturgy-static="true"'}${sl.flow ? ' data-fv-flow="true"' : ''}`;
+      break;
+    }
+    case 'provning': {
+      /* Prövning: ett fall prövas mot kriterier. Alla kriterier syns svagt från början.
+         Varje kriterium tänds för sig: först frågan, på nästa klick belägget och omdömet.
+         Tidigare kriterier ligger kvar nedtonade, kommande är nästan släckta. Sista klicket
+         tänder allt och slutsatsen landar stort. */
+      const its = lines(sl.items).slice(0, 5).map(t => { const p = String(t).split('|').map(x => x.trim()); return { q: p[0] || '', ev: p[1] || '', v: p[2] || '' }; });
+      let c = 0;
+      const rows = its.map((o, j) => {
+        const qi = c++, ei = o.ev || o.v ? c++ : -1;
+        const v = o.v.toLowerCase(), vc = /^(ja|yes|✓)/.test(v) ? 'ja' : /^(nej|no|✗)/.test(v) ? 'nej' : v ? 'delvis' : '';
+        return `<li class="pv-row" data-dramaturgy-in="${ei >= 0 ? qi + ' ' + ei : qi}"><span class="pv-n">${String(j + 1).padStart(2, '0')}</span>` +
+          `<h3 class="pv-q">${fmt(o.q)}</h3>` +
+          `<p class="pv-ev"${ei >= 0 ? ` data-dramaturgy-in="${ei}"` : ''}>${fmt(o.ev)}</p>` +
+          (vc ? `<span class="pv-mark ${vc}"${ei >= 0 ? ` data-dramaturgy-in="${ei}"` : ''}>${esc(o.v)}</span>` : '<span class="pv-mark none"></span>') + `</li>`;
+      }).join('');
+      let cues = '';
+      if (steps) {
+        for (let q = 0; q < c; q++) cues += `<span data-dramaturgy-cue data-dramaturgy-focus="${k}" data-dramaturgy-target="${q}"${st('none')} aria-hidden="true"></span>`;
+        cues += `<span data-dramaturgy-restore${st('none')} aria-hidden="true"></span>`;
+      }
+      body = (sl.caption ? `<p class="kicker"${A('fade')}>${fmt(sl.caption)}</p>` : '') + H2('', 'mask') +
+        `<div class="pv-stage"${A(anim(ba, 'fade'), 150)}>` + (sl.text ? `<p class="pv-case">${fmt(sl.text)}</p>` : '') +
+        `<ol class="pv-list${its.length >= 4 ? ' pv-dense' : ''}">${rows}</ol>` + (sl.conclusion ? `<p class="pv-end">${fmt(sl.conclusion)}</p>` : '') + `</div>` + cues;
+      attrs += ` data-dramaturgy="focus-restore" data-dramaturgy-state="${steps ? 'overview' : 'restored'}"${steps ? '' : ' data-dramaturgy-static="true"'}`;
       break;
     }
     case 'spegel': case 'ordpar': case 'spektrum': case 'livslopp': case 'lexikon': {

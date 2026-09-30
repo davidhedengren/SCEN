@@ -166,8 +166,8 @@ hastighet: slow
 
 [rad]
 etikett: Bredden först
-rubrik: Bredden först-sökning (Breadth-First Search, BFS)
-text: En algoritm som utforskar ett sökträd genom att utforska alla noder på en viss nivå innan den går vidare till nästa nivå. BFS använder en FIFO-kö.
+rubrik: Så arbetar BFS
+text: BFS står för Breadth-First Search. Algoritmen utforskar ett sökträd genom att utforska alla noder på en viss nivå innan den går vidare till nästa nivå. BFS använder en FIFO-kö.
 flöde: ja
 - Start | Börjar vid en given startnod.
 - Nivå 1 | Alla barnnoder till startnoden utforskas.
@@ -257,8 +257,11 @@ etikett: Bredden först
 rubrik: Fördelar med BFS
 - Garanterar kortaste vägen | BFS hittar alltid den kortaste vägen mellan två noder i en graf, mätt i antalet kanter.
 - Utforskar alla noder på samma nivå | BFS utforskar noder nivå för nivå, vilket gör det användbart för att hitta alla noder på ett visst avstånd från startnoden.
-- Många tillämpningar | BFS är effektivt för många olika problem som exempelvis ruttplanering, labyrintlösning och spelutveckling.
+- Används i vardagen | ”Personer du kanske känner” i sociala medier, hinken som fyller en yta i ett ritprogram och pussel som ska lösas med minst antal drag.
 
+> Personer du kanske känner: vänner till dina vänner är nivå 2 i ett nätverk av vänskaper.
+> Hinken i ett ritprogram: fyllningen sprider sig ruta för ruta från där du klickar, precis som BFS i labyrinten.
+> Pussel: BFS provar alla lösningar med ett drag, sedan alla med två drag, och så vidare. Den första lösningen den hittar har därför minst antal drag.
 ---
 
 [rutor]
@@ -354,8 +357,8 @@ hastighet: slow
 
 [remsor]
 etikett: Djupet först
-rubrik: Djupet först-sökning (Depth-First Search, DFS)
-text: En DFS utforskar grafer och träd genom att gå så djupt som möjligt längs varje gren innan den backar. DFS använder en stack (LIFO-kö).
+rubrik: Så arbetar DFS
+text: DFS står för Depth-First Search. Algoritmen utforskar grafer och träd genom att gå så djupt som möjligt längs varje gren innan den backar. DFS använder en stack (LIFO-kö).
 - Start | Börjar vid en given startnod.
 - Djupt | Går vidare till en barnnod och följer vägen tills den når ett löv.
 - Backa | Utan nya grannar backar DFS till den senaste noden med oupptäckta grannar.

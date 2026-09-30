@@ -87,7 +87,6 @@ slutsats: Ruttoptimering är att hitta vägen med lägst summa. Sökalgoritmer g
 [samma form]
 etikett: Grafer i AI
 rubrik: En struktur, många användningar
-text: Formen ligger still. Bara betydelsen byter.
 slutsats: Alla beskriver relationer som noder och kanter.
 - nod: 4 52
 - nod: 38 12
@@ -188,7 +187,7 @@ slutsats: Trädet ställer frågorna i tur och ordning tills det når ett löv.
 ---
 
 [sats]
-rubrik: Tre strukturer, ett syfte
+rubrik: Tre strukturer med samma syfte
 text: Verktyg för att representera data, fatta beslut och göra förutsägelser.
 - Grafer | Nätverk av noder: rutter, flöden och relationer.
 - Träd | Hierarkier: effektiv sökning och sortering.
@@ -198,7 +197,7 @@ text: Verktyg för att representera data, fatta beslut och göra förutsägelser
 
 [kort]
 etikett: Uppgifter
-rubrik: Nu är det er tur
+rubrik: Testa själva
 - 1 Egen graf | Minst fem noder, till exempel ett vägnät. Vad kan grafen användas till?
 - 2 Valfritt träd | Minst tre nivåer, till exempel ett släktträd eller en katalogstruktur.
 - 3 Beslutsträd | Ett vardagligt val med minst fyra noder. Förklara logiken.

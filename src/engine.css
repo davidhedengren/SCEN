@@ -299,6 +299,9 @@
 .scen .opts li b{color:var(--accent)}
 .scen .answer{font-size:46px;line-height:1.3;padding:32px 40px;border-radius:var(--radius,24px);background:var(--surface);border-left:10px solid var(--accent);max-width:1500px}
 .scen .answer b{color:var(--accent);margin-right:.4em}
+.scen .opts li{transition:opacity .45s ease,border-color .45s ease,box-shadow .45s ease}
+.scen .slide:has(.answer.in) .opts li.correct,.scen.static .opts li.correct{border-color:var(--accent);box-shadow:0 0 0 4px var(--hl),0 0 40px color-mix(in srgb,var(--accent) 25%,transparent)}
+.scen .slide:has(.answer.in) .opts:has(.correct) li:not(.correct){opacity:.4}
 
 .scen [data-layout="quote"]{align-content:center;gap:48px}
 .scen [data-layout="quote"] blockquote{margin:0;font-size:84px;line-height:1.12;letter-spacing:-.025em;font-weight:600;max-width:22ch;text-wrap:balance}

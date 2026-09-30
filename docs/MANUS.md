@@ -306,7 +306,7 @@ Skriv `\n` i en cell för radbrytning.
 
 ### Omröstning
 
-Markera rätt svar med `*`:
+Markera rätt svar med `*`. Det fungerar också i `[fråga]`: rätt alternativ lyser när svaret visas.
 
 ```
 [omröstning]

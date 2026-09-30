@@ -629,7 +629,7 @@ function renderSlide(sl, i, deck, img) {
     }
     case 'question': {
       const its = lines(sl.bullets);
-      const opts = its.length ? `<ol class="opts"${A(anim(ba, 'pop'), 500, ' data-stagger="120"')}>${its.map((t, j) => `<li><b>${String.fromCharCode(65 + j)}</b><span>${fmt(t)}</span></li>`).join('')}</ol>` : '';
+      const opts = its.length ? `<ol class="opts"${A(anim(ba, 'pop'), 500, ' data-stagger="120"')}>${its.map((t, j) => `<li${/^\*\s*/.test(t) ? ' class="correct"' : ''}><b>${String.fromCharCode(65 + j)}</b><span>${fmt(t.replace(/^\*\s*/, ''))}</span></li>`).join('')}</ol>` : '';
       body = `<h2${tid(title)}${A(tA('words'))}>${fmt(title || 'Fråga?')}</h2>` + opts +
         (sl.answer ? `<p class="answer"${st('rise')}><b>Svar</b>${fmt(sl.answer)}</p>` : '');
       break;

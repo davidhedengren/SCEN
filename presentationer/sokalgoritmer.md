@@ -34,8 +34,8 @@ etikett: Innan vi börjar
 rubrik: Vilken instruktion kan en robot följa till matsalen?
 - ”Gå till matsalen.”
 - ”Gå rakt fram och sväng höger vid trappan, sen ser du den.”
-- ”Gå 40 steg framåt. Sväng höger. Gå 25 steg. Stanna vid dörren.”
-svar: Den sista. En robot kan inte gissa, den behöver exakta steg i rätt ordning och veta när den är klar.
+- * ”Gå 40 steg framåt. Sväng höger. Gå 25 steg. Stanna vid dörren.”
+svar: C. En robot kan inte gissa, den behöver exakta steg i rätt ordning och veta när den är klar.
 > Låt eleverna välja först. Fråga sedan vad som är fel med de två första.
 > Den första förutsätter att roboten redan vet vägen. Den andra är vag: hur långt är rakt fram, och hur ser den att det är matsalen?
 > Poängen: det vi människor fyller i med sunt förnuft måste skrivas ut för en dator.

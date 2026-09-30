@@ -1560,7 +1560,7 @@ function renderSlide(sl, i, deck, img) {
       its.forEach((o, j) => {
         const a1 = angOf(j) + gap, a2 = angOf(j + 1) - gap, [x1, y1] = at(a1), [x2, y2] = at(a2);
         const d = `M${f1(x1)} ${f1(y1)} A${R} ${R} 0 ${a2 - a1 > 180 ? 1 : 0} 1 ${f1(x2)} ${f1(y2)}`;
-        const on = j === its.length - 1 ? (hasRet ? [retCue] : []) : range(cueOf(j + 1), total);
+        const on = j === its.length - 1 ? (hasRet ? [retCue] : []) : [cueOf(j + 1)];
         svg += `<path class="kl-arc" d="${d}" marker-end="url(#klm${uid})"/><path class="kl-arc-on fin" d="${d}" pathLength="1" marker-end="url(#klo${uid})"${IN(on)}/>`;
       });
       its.forEach((o, j) => {
@@ -1575,7 +1575,7 @@ function renderSlide(sl, i, deck, img) {
           /* Utgången går vågrätt ut ur ringen, åt det håll steget sitter. */
           const dir = x >= cx - 1 ? 1 : -1, xe = cx + dir * (R + 150), x0 = x + dir * 28;
           const d = `M${f1(x0)} ${f1(y)} H${f1(xe - dir * 16)}`;
-          svg += `<path class="kl-exit" d="${d}"/><path class="kl-exit-on fin" d="${d}" pathLength="1" marker-end="url(#klx${uid})"${IN(seen)}/>`;
+          svg += `<path class="kl-exit" d="${d}"/><path class="kl-exit-on fin" d="${d}" pathLength="1" marker-end="url(#klx${uid})"${IN([c])}/>`;
           html += `<div class="kl-out ${dir > 0 ? 'r' : 'l'}" style="left:${f1(xe)}px;top:${f1(y)}px"${IN(seen)}><div${IN([c])}><span>${q ? 'Ja' : 'Utgång'}</span><b>${fmt(o.ut)}</b></div></div>`;
           if (q) { const [tx, ty] = at(a + gap + 9, R - 34); html += `<span class="kl-tag fin" style="left:${f1(tx)}px;top:${f1(ty)}px"${IN(seen)}>Nej</span>`; }
         }
@@ -1583,7 +1583,7 @@ function renderSlide(sl, i, deck, img) {
       if (hasStart) {
         /* Ingången leder in i första steget från vänster. */
         const [x, y] = at(angOf(0)), w = Math.min(420, x - 144 - 150), x1 = 144 + w + 18, d = `M${f1(x1)} ${f1(y)} H${f1(x - 34)}`;
-        svg += `<path class="kl-in" d="${d}"/><path class="kl-in-on fin" d="${d}" pathLength="1" marker-end="url(#klo${uid})"${IN(range(0, total))}/>`;
+        svg += `<path class="kl-in" d="${d}"/><path class="kl-in-on fin" d="${d}" pathLength="1" marker-end="url(#klo${uid})"${IN([0])}/>`;
         html += `<div class="kl-start" style="left:144px;top:${f1(y)}px;width:${Math.round(w)}px"${IN(range(0, total))}><div${IN([0])}><span>Start</span><b>${fmt(sl.start)}</b></div></div>`;
       }
       /* Ljusringen som går runt: ett varv är 360 grader, så den fortsätter framåt när kretsloppet sluts. */

@@ -1504,9 +1504,20 @@
 .scen .kl-tag{position:absolute;transform:translate(-50%,-50%);font:600 15px var(--font-mono,var(--mono));letter-spacing:.12em;text-transform:uppercase;color:var(--muted);opacity:0;transition:opacity .45s ease}
 .scen .kl-tag.dramaturgy-current,.scen .slide[data-dramaturgy-state="restored"] .kl-tag.fin{opacity:1}
 /* fokus: det som inte är aktuellt tonas ned men står kvar */
-.scen .slide[data-dramaturgy-state="focus"] :is(.kl-lab,.kl-out,.kl-start){opacity:.32}
-.scen .slide[data-dramaturgy-state="focus"] :is(.kl-lab,.kl-out,.kl-start).dramaturgy-current{opacity:.62}
+.scen .slide[data-dramaturgy-state="focus"] :is(.kl-lab,.kl-out,.kl-start){opacity:.16}
+.scen .slide[data-dramaturgy-state="focus"] :is(.kl-lab,.kl-out,.kl-start).dramaturgy-current{opacity:.3}
 .scen .slide[data-dramaturgy-state="focus"] :is(.kl-lab,.kl-out,.kl-start):has(.dramaturgy-current){opacity:1}
+/* det aktuella steget lyser: större namn med sken, större och lysande nod */
+.scen .kl-lab b{transform-origin:var(--kl-o,50% 50%);transition:color .45s ease,transform .45s cubic-bezier(.2,.8,.2,1),text-shadow .45s ease}
+.scen .kl-lab.r b{--kl-o:0 50%}.scen .kl-lab.l b{--kl-o:100% 50%}
+.scen .kl-lab b.dramaturgy-current{transform:scale(1.14);text-shadow:0 0 28px color-mix(in srgb,var(--accent) 55%,transparent)}
+.scen .kl-stage circle{transition:opacity .45s ease,r .45s cubic-bezier(.2,.8,.2,1),fill .4s ease}
+.scen .kl-cur.dramaturgy-current{r:30px;filter:drop-shadow(0 0 16px var(--accent)) drop-shadow(0 0 36px color-mix(in srgb,var(--accent) 60%,transparent))}
+.scen .slide[data-dramaturgy-state="focus"] .kl-node:not(:has(.kl-cur.dramaturgy-current)){opacity:.4}
+.scen .slide[data-dramaturgy-state="focus"] :is(.kl-arc,.kl-exit,.kl-in,.kl-mk){opacity:.35}
+.scen .slide[data-dramaturgy-state="focus"] .kl-track{opacity:.5}
+.scen .kl-stage .dramaturgy-past:is(.kl-arc-on,.kl-in-on,.kl-exit-on){opacity:.28;stroke-dashoffset:0;filter:none}
+.scen .slide[data-dramaturgy-state="focus"] .kl-hub .kl-say.dramaturgy-current{text-shadow:0 0 24px color-mix(in srgb,var(--accent) 25%,transparent)}
 /* mitten förklarar steget */
 .scen .kl-hub{position:absolute;display:grid;place-items:center;border-radius:50%;background:radial-gradient(circle,color-mix(in srgb,var(--surface) 70%,transparent) 0,color-mix(in srgb,var(--surface) 30%,transparent) 68%,transparent 71%)}
 .scen .kl-say{grid-area:1/1;width:80%;text-align:center;opacity:0;transform:translateY(10px);transition:opacity .4s ease,transform .5s cubic-bezier(.16,1,.3,1)}

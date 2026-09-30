@@ -21,6 +21,47 @@ hastighet: slow
 
 ---
 
+[fråga]
+etikett: Innan vi börjar
+rubrik: Vilken instruktion kan en robot följa till matsalen?
+- ”Gå till matsalen.”
+- ”Gå rakt fram och sväng höger vid trappan, sen ser du den.”
+- ”Gå 40 steg framåt. Sväng höger. Gå 25 steg. Stanna vid dörren.”
+svar: Den sista. En robot kan inte gissa, den behöver exakta steg i rätt ordning och veta när den är klar.
+> Låt eleverna välja först. Fråga sedan vad som är fel med de två första.
+> Den första förutsätter att roboten redan vet vägen. Den andra är vag: hur långt är rakt fram, och hur ser den att det är matsalen?
+> Poängen: det vi människor fyller i med sunt förnuft måste skrivas ut för en dator.
+
+---
+
+[triad]
+etikett: Algoritm
+rubrik: Vad gör en instruktion till en algoritm?
+- Exakta steg | Varje steg går att följa utan att gissa.
+- Bestämd ordning | Stegen görs i en viss ordning, ibland om och om igen.
+- Ett slut | Den vet när den är klar, eller när den ska ge upp.
+slutsats: En **algoritm** är en exakt instruktion i steg som löser ett problem.
+> Vardagsexempel: ett recept, en bruksanvisning till en möbel, att dela upp en lång division.
+> Datorer gör bara det de blir tillsagda. Allt en dator gör, från att sortera en lista till att hitta en väg i en karta, är algoritmer.
+> Ordet kommer från namnet på den persiska matematikern al-Khwarizmi.
+> Håll kvar tanken på "om och om igen": sökalgoritmerna vi ska titta på upprepar samma steg tills de hittar målet.
+
+---
+
+[bildfält]
+etikett: En sökalgoritm
+rubrik: Du har tappat nycklarna. Hur letar du?
+text: Letar du på måfå kan du leta på samma ställe två gånger eller missa ett rum. En sökalgoritm letar systematiskt.
+- Lite i varje rum först, sedan grundligare
+- Ett rum i taget, ända till botten
+- Där de troligast ligger först
+> Låt eleverna säga hur de själva brukar leta.
+> De tre sätten motsvarar ungefär det vi ska gå igenom: bredden först, djupet först och informerad sökning, som använder en tumregel om var målet troligast finns.
+> Gemensamt: man måste hålla reda på vilka ställen man har kvar att leta på. Det är nästa ord.
+> Bildförslag: ett mörkt rum där en ficklampa lyser över golvet och fångar ett par nycklar (bilder/sokalgoritmer/nycklar.jpg).
+
+---
+
 [definition]
 etikett: Ett ord vi behöver
 rubrik: Kö

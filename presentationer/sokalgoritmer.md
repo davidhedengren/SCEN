@@ -85,7 +85,6 @@ bakgrund: fokusljus
 [kretslopp]
 etikett: Sökalgoritm
 rubrik: Så fungerar en sökalgoritm
-text: I kön finns de noder som upptäckts, men ännu inte utforskats.
 slutsats: BFS, DFS, girig bäst först och A* går alla runt i den här loopen. Det som skiljer dem är vilken nod som tas ut.
 mitten: Kön
 start: Lägg startnoden i kön
@@ -102,7 +101,6 @@ retur: Upprepa tills lösningen är hittad eller kön är tom.
 [sökning]
 etikett: Exempel
 rubrik: Hitta en väg från A till E
-text: Kön innehåller de noder som upptäckts men ännu inte utforskats.
 slutsats: Målet är hittat först när noden tas ut ur kön och utforskas.
 - algoritm: bfs
 - berättelse: kort
@@ -207,25 +205,6 @@ slutsats: Ordningen blir A, B, C, D, E, F, G, H, I, J, K, L, M, N, O.
 
 ---
 
-[rutnät]
-etikett: Exempel
-rubrik: BFS i en labyrint
-text: Vi följer en nivå i taget.
-slutsats: En BFS föreslår därför vägen som visas: 6 steg.
-- algoritm: bfs
-- berättelse: slut
-- .#####
-- ......
-- .##.##
-- .##B##
-- .#..##
-- .#.###
-- A..###
-> Varje klick är en nivå: alla rutor på samma avstånd från A utforskas samtidigt. Den streckade ramen är kön, nästa nivå.
-> Sista klicket ritar vägen. BFS hittar alltid den kortaste vägen, mätt i antal steg.
-
----
-
 [sökning]
 etikett: Bredden först
 rubrik: Hitta en väg från A till F med BFS
@@ -254,12 +233,41 @@ slutsats: BFS hittar F på nivå 2. Vägen är A, C, F.
 
 ---
 
+[rutnät]
+etikett: Exempel
+rubrik: BFS i en labyrint
+text: Vi följer en nivå i taget.
+slutsats: En BFS föreslår därför vägen som visas: 6 steg.
+- algoritm: bfs
+- berättelse: slut
+- .#####
+- ......
+- .##.##
+- .##B##
+- .#..##
+- .#.###
+- A..###
+> Varje klick är en nivå: alla rutor på samma avstånd från A utforskas samtidigt. Den streckade ramen är kön, nästa nivå.
+> Sista klicket ritar vägen. BFS hittar alltid den kortaste vägen, mätt i antal steg.
+
+---
+
 [rutor]
 etikett: Bredden först
 rubrik: Fördelar med BFS
 - Garanterar kortaste vägen | BFS hittar alltid den kortaste vägen mellan två noder i en graf, mätt i antalet kanter.
 - Utforskar alla noder på samma nivå | BFS utforskar noder nivå för nivå, vilket gör det användbart för att hitta alla noder på ett visst avstånd från startnoden.
 - Många tillämpningar | BFS är effektivt för många olika problem som exempelvis ruttplanering, labyrintlösning och spelutveckling.
+
+---
+
+[rutor]
+etikett: Bredden först
+rubrik: Nackdelar med BFS
+- Kräver mycket minne | BFS måste hålla en hel nivå i kön. I breda träd växer kön snabbt.
+- Långsam när målet ligger djupt | Varje nivå utforskas helt innan nästa, även om målet ligger långt ned i en enda gren.
+- Kortast i steg, inte i avstånd | Kortaste vägen räknas i antal kanter. Är vägarna olika långa, som på en karta, räcker det inte.
+> Den sista punkten är en bra bro till A*, som räknar med kostnad och inte bara antal steg.
 
 ---
 
@@ -358,37 +366,6 @@ text: En DFS utforskar grafer och träd genom att gå så djupt som möjligt lä
 
 ---
 
-[kodskrivning]
-etikett: Programmering
-rubrik: BFS och DFS i Python
-text: def bfs(graph, start, goal):
-    queue = [start]
-    visited = set()
-    while queue:
-        current = queue.pop(0)
-        if current in visited:
-            continue
-        visited.add(current)
-        if current == goal:
-            return f"Found {goal}"
-        for neighbor in graph[current]:
-            if neighbor not in visited:
-                queue.append(neighbor)
-    return f"{goal} not found"
-- 2 | queue = [start] | Kön börjar med startnoden.
-- 5 | queue.pop(0) | Tar ut den nod som lades in först: en FIFO-kö.
-- 9 | current == goal | Är noden målet? Då är lösningen hittad.
-- 13 | queue.append(neighbor) | Barnnoderna läggs sist i kön.
-- 5 | queue.pop(0) -> queue.pop() | Ta ut den nod som lades in sist i stället: en stack.
-- 1 | bfs -> dfs | Det var hela skillnaden. Nu är det en DFS.
-> Kodbilden går att hoppa över i klasser som inte programmerar.
-> Jämför med algoritmstegen: ta ut en nod, kontrollera om det är målet, lägg till barnen.
-> visited ser till att samma nod inte utforskas två gånger.
-> Koden för DFS är nästan densamma som för BFS. Den enda skillnaden är pop() i stället för pop(0).
-> Därför utforskar DFS trädets högra gren först: det barn som lades in sist ligger överst i stacken.
-
----
-
 [sökning]
 etikett: Djupet först
 rubrik: DFS följer en gren i taget
@@ -413,25 +390,6 @@ slutsats: Ordningen blir A, C, G, O, N, F, M, L, B, E, K, J, D, I, H.
       - O
 > Varje klick flyttar ringen ett steg. Siffrorna visar i vilken ordning noderna utforskas.
 > Samma ordning som stacken ger: barnet som lades in sist, alltså det högra, utforskas först.
-
----
-
-[rutnät]
-etikett: Exempel
-rubrik: DFS i en labyrint
-text: Vi följer en gren till slutet och går vidare till nästa.
-slutsats: En DFS skulle därför kunna föreslå vägen som visas: 10 steg.
-- algoritm: dfs
-- berättelse: slut
-- .#####
-- ......
-- .##.##
-- .##B##
-- .#..##
-- .#.###
-- A..###
-> Grannarna prövas i ordningen upp, vänster, höger, ned.
-> Jämför med BFS i samma labyrint: där blev vägen 6 steg.
 
 ---
 
@@ -461,6 +419,25 @@ slutsats: DFS hittar F efter att ha gått ned i den högra grenen först.
 - not: 4 | Vi utforskar den nod som lades till sist, högst upp i stacken.
 - not: 5 | Redan här har vi hittat F och lagt till den i kön, men det är inte förrän vi utforskar noden som algoritmen förstår att lösningen är hittad!
 > Stacken står upp: in och ut sker överst.
+
+---
+
+[rutnät]
+etikett: Exempel
+rubrik: DFS i en labyrint
+text: Vi följer en gren till slutet och går vidare till nästa.
+slutsats: En DFS skulle därför kunna föreslå vägen som visas: 10 steg.
+- algoritm: dfs
+- berättelse: slut
+- .#####
+- ......
+- .##.##
+- .##B##
+- .#..##
+- .#.###
+- A..###
+> Grannarna prövas i ordningen upp, vänster, höger, ned.
+> Jämför med BFS i samma labyrint: där blev vägen 6 steg.
 
 ---
 
@@ -576,15 +553,34 @@ text: Vi följer en gren till slutet och går vidare till nästa.
 
 ---
 
-[bildfält]
-etikett: Informerade sökningar
-rubrik: Heuristik
-text: En form av tumregel som, baserat på tidigare erfarenheter eller tillgänglig information, hjälper till att guida sökningen åt rätt håll snarare än att analysera alla möjliga alternativ noggrant.
-bild: bilder/sokalgoritmer/labyrint.jpg
-fokuspunkt: 55 50
-- Algoritmer som använder heuristik nyttjar en prioritetskö.
-- Heuristiken avgör vilken nod som utforskas först.
-> BFS och DFS är oinformerade: de vet inget om var målet finns. En informerad sökning har en uppskattning av hur långt det är kvar.
+[kodskrivning]
+etikett: Programmering
+rubrik: BFS och DFS i Python
+text: def bfs(graph, start, goal):
+    queue = [start]
+    visited = set()
+    while queue:
+        current = queue.pop(0)
+        if current in visited:
+            continue
+        visited.add(current)
+        if current == goal:
+            return f"Found {goal}"
+        for neighbor in graph[current]:
+            if neighbor not in visited:
+                queue.append(neighbor)
+    return f"{goal} not found"
+- 2 | queue = [start] | Kön börjar med startnoden.
+- 5 | queue.pop(0) | Tar ut den nod som lades in först: en FIFO-kö.
+- 9 | current == goal | Är noden målet? Då är lösningen hittad.
+- 13 | queue.append(neighbor) | Barnnoderna läggs sist i kön.
+- 5 | queue.pop(0) -> queue.pop() | Ta ut den nod som lades in sist i stället: en stack.
+- 1 | bfs -> dfs | Det var hela skillnaden. Nu är det en DFS.
+> Kodbilden går att hoppa över i klasser som inte programmerar.
+> Jämför med algoritmstegen: ta ut en nod, kontrollera om det är målet, lägg till barnen.
+> visited ser till att samma nod inte utforskas två gånger.
+> Koden för DFS är nästan densamma som för BFS. Den enda skillnaden är pop() i stället för pop(0).
+> Därför utforskar DFS trädets högra gren först: det barn som lades in sist ligger överst i stacken.
 
 ---
 
@@ -600,6 +596,18 @@ säker-yta: 4 14 36 64
 mörkning: 0 0 44 100 0.4
 hastighet: slow
 > Kapitelbild. Fråga: är det alltid smart att gå åt det håll där målet ser ut att ligga?
+
+---
+
+[bildfält]
+etikett: Informerade sökningar
+rubrik: Heuristik
+text: En form av tumregel som, baserat på tidigare erfarenheter eller tillgänglig information, hjälper till att guida sökningen åt rätt håll snarare än att analysera alla möjliga alternativ noggrant.
+bild: bilder/sokalgoritmer/labyrint.jpg
+fokuspunkt: 55 50
+- Algoritmer som använder heuristik nyttjar en prioritetskö.
+- Heuristiken avgör vilken nod som utforskas först.
+> BFS och DFS är oinformerade: de vet inget om var målet finns. En informerad sökning har en uppskattning av hur långt det är kvar.
 
 ---
 
@@ -686,3 +694,17 @@ slutsats: A* hittar den kortaste vägen: 21 steg.
 - not: 15 | Här byter vi väg eftersom 6 + 13 är lägre än 15 + 6.
 > Vid lika värden väljer A* här den ruta som lades till senast.
 > Jämför med girig bäst först i samma labyrint: där blev vägen 33 steg.
+
+---
+
+[omröstning]
+etikett: Diskutera
+rubrik: Du bygger en GPS. Vilken algoritm väljer du?
+- Bredden först (BFS)
+- Djupet först (DFS)
+- Girig bäst först
+- * A*
+svar: A* hittar den kortaste vägen och använder avståndet till målet för att slippa leta åt fel håll.
+> Låt eleverna rösta och motivera innan du visar svaret.
+> BFS hittar kortaste vägen i antal steg, men vägar på en karta är olika långa. DFS kan hitta en väg, men sällan en bra. Girig bäst först är snabb men kan ta omvägar, som i labyrinten.
+> A* väger ihop sträckan hittills med en uppskattning av vad som är kvar, till exempel fågelvägen till målet.

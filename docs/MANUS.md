@@ -241,6 +241,7 @@ Algoritmerna räknas fram automatiskt. Du skriver grafen eller labyrinten och v�
 - algoritm: bfs              (bfs, dfs, girig eller a*; två med komma, t.ex. bfs, dfs, söker bredvid varandra)
 - takt: ruta                 (BFS går annars en nivå per klick; ett tal, t.ex. 3, ger tre rutor per klick)
 - siffror: h                 (h = Manhattan-avståndet till målet, eller g+h)
+- berättelse: slut           (valfri: skriv bara ut steg med en not, när målet hittas och vägen)
 - not: 6 | kommentar
 - #..B                       (# vägg, . fri ruta, A start, B mål)
 - A.#.

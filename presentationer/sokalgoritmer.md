@@ -161,6 +161,7 @@ rubrik: BFS i en labyrint
 text: Vi följer en nivå i taget.
 slutsats: En BFS föreslår därför vägen som visas: 6 steg.
 - algoritm: bfs
+- berättelse: slut
 - .#####
 - ......
 - .##.##
@@ -262,6 +263,7 @@ etikett: Övning
 rubrik: Hur skulle en BFS-algoritm söka igenom följande labyrint?
 text: Vi följer en nivå i taget.
 - algoritm: bfs
+- berättelse: slut
 - .#.#.###..#B
 - .#.#...#.##.
 - ...#.#...##.
@@ -367,6 +369,7 @@ rubrik: DFS i en labyrint
 text: Vi följer en gren till slutet och går vidare till nästa.
 slutsats: En DFS skulle därför kunna föreslå vägen som visas: 10 steg.
 - algoritm: dfs
+- berättelse: slut
 - .#####
 - ......
 - .##.##
@@ -506,6 +509,7 @@ etikett: Övning
 rubrik: Hur skulle en DFS-algoritm söka igenom följande labyrint?
 text: Vi följer en gren till slutet och går vidare till nästa.
 - algoritm: dfs
+- berättelse: slut
 - .#.#.###..#B
 - .#.#...#.##.
 - ...#.#...##.
@@ -551,6 +555,7 @@ rubrik: Girig bäst först-sökning
 text: Väljer den ruta med lägst uppskattad kostnad till målet, h(n). Här är h Manhattan-avståndet.
 slutsats: Vägen blev 33 steg. Finns det en kortare väg?
 - algoritm: girig
+- berättelse: slut
 - siffror: h
 - #..........B
 - #.#########.
@@ -613,6 +618,7 @@ rubrik: A*-sökning
 text: Varje utforskad ruta visar g + h: kostnaden hit plus uppskattningen till målet.
 slutsats: A* hittar den kortaste vägen: 21 steg.
 - algoritm: a*
+- berättelse: slut
 - siffror: g+h
 - #..........B
 - #.#########.

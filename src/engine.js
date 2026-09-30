@@ -1948,15 +1948,16 @@ function renderSlide(sl, i, deck, img) {
             (sl.conclusion ? `<p class="rn-say rn-end">${fmt(sl.conclusion)}</p>` : '') + `</div>`;
         } else {
           const { algo, res, level, G2 } = runs[0], key = res.key;
-          const tag = SOK_NAME[algo] + (level ? ' · en nivå per klick' : chunk > 1 ? ` · ${chunk} rutor per klick` : ' · en ruta per klick');
+          const onlyEnd = /slut|sista/i.test(cfg['berättelse'] || ''), tag = SOK_NAME[algo] + (level ? ' · en nivå per klick' : chunk > 1 ? ` · ${chunk} rutor per klick` : ' · en ruta per klick');
           const say = s => {
             if (s === pathStep) return `Vägen från A till B: ${res.path.length - 1} steg.`;
             const js = G2[s], o = res.order[js[js.length - 1]], hit = res.T && js.some(j => key(res.order[j].p) === key(res.T));
             const base = level ? `Nivå ${o.g}: ${js.length} ${js.length === 1 ? 'ny ruta' : 'nya rutor'}.` : algo === 'girig' ? `Lägst h i kön: ${o.h}.` : algo === 'astar' ? `Lägst f i kön: ${o.g} + ${o.h} = ${o.g + o.h}.` : `Utforskade rutor: ${js[js.length - 1]}.`;
+            if (onlyEnd && !notes[s + 1]) return hit ? `Utforskade rutor: ${js[js.length - 1]}. Målet B är hittat!` : '';
             return base + (hit ? ' Målet B är hittat!' : '');
           };
           html += `<div class="rn-side"><p class="rn-tag">${esc(tag)}</p>` + (sl.text ? `<p class="rn-lead">${fmt(sl.text)}</p>` : '') +
-            `<div class="rn-says">` + Array.from({ length: nSteps }, (_, s) => `<div class="rn-say"${T(s)}><p class="say-term">${say(s)}</p>${notes[s + 1] ? `<p class="sk-note">${fmt(notes[s + 1])}</p>` : ''}</div>`).join('') +
+            `<div class="rn-says">` + Array.from({ length: nSteps }, (_, s) => `<div class="rn-say"${T(s)}>${say(s) ? `<p class="say-term">${say(s)}</p>` : ''}${notes[s + 1] ? `<p class="sk-note">${fmt(notes[s + 1])}</p>` : ''}</div>`).join('') +
             (sl.conclusion ? `<p class="rn-say rn-end">${fmt(sl.conclusion)}</p>` : '') + `</div></div>`;
         }
       }

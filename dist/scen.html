@@ -6896,10 +6896,7 @@ async function loadRepoDecks() {
         const p = Manus.parse(txt);
         if (!baked && usesUnknownTemplates(txt, p.slides)) staleCode = true;
         const d = normalize(Manus.applyMeta({ id: 'repo-' + file.replace(/\W+/g, '-'), title: file, slides: p.slides, repo: true, file, templates: {} }, p.meta));
-        d.slides.filter(s => s.layout === 'egen').forEach(s => {
-          const t = myTpls.find(t => t.id === s.tpl);
-          if (t) d.templates[s.tpl] = { id: t.id, name: t.name, desc: t.desc || '', html: t.html, css: t.css };
-        });
+        await ensureDeckTemplates(d);
         repoDecks.push(d);
       } catch (e) { /* hoppa över trasig fil */ }
     }
@@ -6980,6 +6977,7 @@ function card(d, sample) {
 async function safeImages(id) { try { return await Store.loadImages(id); } catch (e) { toast('Bilderna kunde inte hämtas: ' + errMsg(e)); return {}; } }
 async function duplicate(src, fromSample) {
   const d = clone(src); delete d.sample;
+  await ensureDeckTemplates(d);
   d.id = rid(); d.title = fromSample ? src.title : src.title + ' (kopia)'; d.createdAt = d.updatedAt = now();
   delete d.repo; delete d.file;
   const imgs = src.repo ? {} : fromSample ? { 'ex-parabel': PARABEL } : await safeImages(src.id);
@@ -7002,11 +7000,14 @@ async function newDeck() {
 async function openDeck(id) {
   const d = decks.find(x => x.id === id); if (!d) return;
   Object.assign(IMG, await safeImages(id));
-  deck = normalize(clone(d)); cur = 0; showEditor();
+  deck = normalize(clone(d));
+  await ensureDeckTemplates(deck);
+  cur = 0; showEditor();
 }
 
 /* =================== uppspelning =================== */
-function play(d, start) {
+async function play(d, start) {
+  await ensureDeckTemplates(d);
   const host = $('#present'); host.hidden = false;
   if (presenter) presenter.destroy();
   presenter = Scen.player(host, d, {
@@ -7028,11 +7029,12 @@ async function toDataUrl(url) {
 }
 async function engineSources() {
   let css = ($('#scen-engine-css') || {}).textContent || '', js = ($('#scen-engine') || {}).textContent || '';
-  if (!css.trim()) css = await (await fetch('src/engine.css')).text();
-  if (!js.trim()) js = await (await fetch('src/engine.js')).text();
+  if (!css.trim()) css = await (await fetch($('#scen-engine-css')?.href || 'src/engine.css', { cache: 'no-cache' })).text();
+  if (!js.trim()) js = await (await fetch($('#scen-engine')?.src || 'src/engine.js', { cache: 'no-cache' })).text();
   return { css, js };
 }
 async function standaloneHtml(d, student = false) {
+  await ensureDeckTemplates(d);
   const images = {};
   usedImages(d).forEach(id => { if (IMG[id]) images[id] = IMG[id]; });
   for (const k of usedImages(d)) {
@@ -7627,6 +7629,29 @@ function autoSteps() {
 }
 
 /* =================== egna mallar =================== */
+/* En sparad kopia kan sakna mallar från en tidigare inläsning. Behåll befintliga
+   mallkopior, men återställ saknade definitioner även om indexhämtningen misslyckades. */
+async function ensureDeckTemplates(d) {
+  const ids = [...new Set((d.slides || []).filter(s => s.layout === 'egen' && s.tpl).map(s => s.tpl))];
+  d.templates = d.templates || {};
+  for (const id of ids) {
+    if (typeof d.templates[id]?.html === 'string' && d.templates[id].html.trim()) continue;
+    let t = myTpls.find(t => t.id === id && typeof t.html === 'string' && t.html.trim());
+    if (!t && Array.isArray(window.SCEN_MALLAR)) t = window.SCEN_MALLAR.find(t => t.id === id);
+    if (!t && !Array.isArray(window.SCEN_MALLAR) && /^[a-z0-9_-]+$/i.test(id)) {
+      try {
+        const r = await fetch('mallar/' + encodeURIComponent(id) + '.json', { cache: 'reload' });
+        if (r.ok) {
+          const candidate = await r.json();
+          if (candidate.id === id && typeof candidate.html === 'string' && candidate.html.trim()) t = candidate;
+        }
+      } catch (e) { /* nästa öppning kan försöka igen */ }
+    }
+    if (t && typeof t.html === 'string' && t.html.trim()) {
+      d.templates[id] = { id: t.id, name: t.name, desc: t.desc || '', html: t.html, css: t.css || '' };
+    }
+  }
+}
 function useTemplate(id) {
   if (!id || !deck) return;
   const t = myTpls.find(x => x.id === id);

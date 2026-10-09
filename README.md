@@ -27,6 +27,8 @@ npm start            # öppnar http://localhost:5173
 
 Filen `.nojekyll` måste finnas kvar. Utan den gör GitHub om manusfilerna till webbsidor.
 
+När du ändrar programfiler i `src/`, kör `npm run bygg` före push. Kommandot uppdaterar filversionerna i `index.html` utifrån innehållet, så webbläsaren hämtar de nya filerna. Det bygger också de fristående appfilerna. `npm run test:inlasning` kontrollerar versionerna och återhämtning av saknade egna mallar.
+
 ## Mappar
 
 ```
@@ -64,11 +66,11 @@ CLAUDE.md                instruktioner för Claude Code
 |---|---|
 | `npm start` | Startar en lokal server |
 | `npm run index` | Uppdaterar `presentationer/index.json` och `mallar/index.json` |
-| `npm run kolla` | Läser alla manus och varnar för saknade bilder och rubriker |
+| `npm run kolla` | Läser alla manus och varnar för saknade bilder |
 | `npm run exportera` | Exporterar alla presentationer till `dist/` |
 | `node scripts/scen.mjs exportera presentationer/x.md` | Exporterar en presentation |
 | `npm run mallar` | Skriver om `docs/MALLAR.md` från mallkatalogen |
-| `npm run bygg` | Bygger `dist/scen.html`, hela appen i en fil |
+| `npm run bygg` | Versionsmärker programfilerna i `index.html` och bygger `scen.html` samt `dist/scen.html` |
 
 ## Scen i claude.ai
 

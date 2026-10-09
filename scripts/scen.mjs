@@ -11,6 +11,7 @@
 import fs from 'node:fs';
 import path from 'node:path';
 import vm from 'node:vm';
+import { createHash } from 'node:crypto';
 import { fileURLToPath } from 'node:url';
 
 const ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
@@ -66,15 +67,20 @@ function standalone(deck, student = false) {
 }
 const cmds = {
   bygg() {
-    let s = rd('index.html');
-    s = s.replace('<link rel="stylesheet" href="src/app.css">', () => `<style id="app-css">${rd('src/app.css')}</style>`);
-    s = s.replace('<link rel="stylesheet" id="scen-engine-css" href="src/engine.css">', () => `<style id="scen-engine-css">${rd('src/engine.css')}</style>`);
+    const index = rd('index.html').replace(/\b(src|href)="(src\/[^"?]+\.(?:js|css))(?:\?v=[^"]*)?"/g, (_, attr, file) => {
+      const version = createHash('sha256').update(rd(file)).digest('hex').slice(0, 12);
+      return `${attr}="${file}?v=${version}"`;
+    });
+    let s = index;
+    s = s.replace(/<link rel="stylesheet" href="src\/app\.css(?:\?v=[^"]*)?">/, () => `<style id="app-css">${rd('src/app.css')}</style>`);
+    s = s.replace(/<link rel="stylesheet" id="scen-engine-css" href="src\/engine\.css(?:\?v=[^"]*)?">/, () => `<style id="scen-engine-css">${rd('src/engine.css')}</style>`);
     for (const f of ['engine', 'pptx', 'manus', 'app']) {
-      const tag = f === 'engine' ? '<script id="scen-engine" src="src/engine.js"></script>' : `<script src="src/${f}.js"></script>`;
+      const tag = new RegExp('<script' + (f === 'engine' ? ' id="scen-engine"' : '') + ' src="src/' + f + '\\.js(?:\\?v=[^"]*)?"></script>');
       const js = rd(`src/${f}.js`);
       if (/<\/script/i.test(js)) throw new Error(`src/${f}.js innehåller </script och kan inte bäddas in`);
       s = s.replace(tag, () => (f === 'engine' ? '<script id="scen-engine">' : '<script>') + js + '</script>');
     }
+    wr('index.html', index);
     wr('dist/scen.html', s);
     console.log('dist/scen.html', Math.round(s.length / 1024) + ' kB. Den här filen kan publiceras som artefakt i claude.ai.');
     // Samma app med repots presentationer och mallar inbakade. Fungerar med dubbelklick, utan server.

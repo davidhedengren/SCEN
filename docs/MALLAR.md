@@ -37,7 +37,7 @@ Varje bild i ett manus börjar med mallens namn inom hakparentes. Samma katalog 
 | `[typografi]` | Textregi | Låter en stor mening bära hela scenen och förändras genom fokus, ersättning eller precisering med mycket whitespace. |
 | `[texttempo]` | Textregi | Bygger ett resonemang genom kontrollerad typografisk pacing: påstående, kontrast, avslöjande och slutsats får egna kommunikativa klick. |
 | `[jämförelse]` | Data | Två sidor mot varandra: för och emot, före och efter. |
-| `[tabell]` | Data | Tabell, gärna som övning där facit klickas fram rad för rad. |
+| `[tabell]` | Data | Tabell med facit per rad eller ett fall i taget. Med visa: fall blir första kolumnen fallet och övriga kolumner frågor. Ett klick visar svaren, nästa byter fall. Sista klicket visar hela tabellen. |
 | `[tal]` | Data | Ett tal som räknas upp, med förklaring. |
 | `[två-tal]` | Data | Två eller tre tal bredvid varandra som ska jämföras. |
 | `[citat]` | Struktur | Ett citat med källa. |
@@ -743,9 +743,9 @@ höger: Språkmodell
 
 ### `[tabell]` Tabell
 
-Tabell, gärna som övning där facit klickas fram rad för rad.
+Tabell med facit per rad eller ett fall i taget. Med visa: fall blir första kolumnen fallet och övriga kolumner frågor. Ett klick visar svaren, nästa byter fall. Sista klicket visar hela tabellen.
 
-**Undvik när:** Tabeller med fler än åtta rader.
+**Undvik när:** Fallvisning med fler än sex svarskolumner eller åtta fall. Mycket långa celltexter.
 
 ```
 [tabell]
@@ -1536,7 +1536,12 @@ text: Poker, trafik, robotdammsugare och diagnos.
 
 ## Egna mallar i repot
 
+- `[egen: aterkomst]` **Återkomst**. Återvänder till ett tidigare motiv med två till fyra nya insikter. Ett samband lyfts i taget; till sist syns allt och slutsatsen. Återanvänd samma bild som i öppningen. Passar syntes, återkoppling till en inledande fråga och sammanfattning efter analys.
+- `[egen: byt-antagande]` **Byt antagande**. Samma fall ligger kvar medan en förutsättning ändras. Varje antagande följs av ett eget klick för bedömning och motivering. Slutet jämför alla. Använd 2–3 poster: antagande | bedömning | motivering. Valfri gemensam bild och rubrik. För villkor, modeller och alternativa tolkningar. Valfritt fjärde fält: vy: x y bredd höjd i procent, som döljer bilden utanför synfältet.
+- `[egen: genomlysning]` **Genomlysning**. Lägger två till fyra begreppsliga informationslager över samma motiv. Ett lager får fokus per klick, sedan visas helheten. Listan skrivs lager | förklaring. Passar när samband under ytan ska förklaras; lagren är en schematisk modell, inte uppmätta sensordata.
 - `[egen: numrerade-kort]` **Numrerade kort**. Tre till fyra steg eller principer med stora siffror.
+- `[egen: omformning]` **Omformning**. Två till fyra observationer flyttar till en gemensam modell. Samma textobjekt behåller sin identitet genom rörelsen. Skriv observation | begrepp. Använd för konkret → abstrakt, exempel → kategori eller iakttagelse → slutsats.
+- `[egen: tva-forlopp]` **Två förlopp**. Två händelsekedjor börjar i samma situation. Fyra listpunkter: först val och följd i det övre förloppet, sedan val och följd i det undre. Klicka genom ett förlopp i taget och jämför till sist. Text är utgångsläget; svar är slutsatsen. Innehållet ska vara uttryckligen beskrivet, inte automatiskt förutsagt.
 
 ## Teman
 

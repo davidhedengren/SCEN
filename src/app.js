@@ -220,6 +220,10 @@ async function loadRepoDecks() {
         const p = Manus.parse(txt);
         if (!baked && usesUnknownTemplates(txt, p.slides)) staleCode = true;
         const d = normalize(Manus.applyMeta({ id: 'repo-' + file.replace(/\W+/g, '-'), title: file, slides: p.slides, repo: true, file, templates: {} }, p.meta));
+        d.slides.filter(s => s.layout === 'egen').forEach(s => {
+          const t = myTpls.find(t => t.id === s.tpl);
+          if (t) d.templates[s.tpl] = { id: t.id, name: t.name, desc: t.desc || '', html: t.html, css: t.css };
+        });
         repoDecks.push(d);
       } catch (e) { /* hoppa över trasig fil */ }
     }
@@ -838,7 +842,7 @@ function tableEditor(s) {
     <div class="tbl-btns"><button type="button" class="btn small" data-act="row+">+ Rad</button><button type="button" class="btn small" data-act="col+">+ Kolumn</button><button type="button" class="btn small" data-act="row-" ${t.rows.length < 2 ? 'disabled' : ''}>− Rad</button><button type="button" class="btn small" data-act="col-" ${n < 2 ? 'disabled' : ''}>− Kolumn</button></div>
     <span class="hint">Klistra in celler från Excel eller Sheets direkt i en ruta.</span></div>
     <label class="chk"><input type="checkbox" id="f-thead" data-t="thead"${t.header ? ' checked' : ''}> Första raden är rubriker</label>
-    <div class="fld"><label for="f-reveal">Visa</label><select id="f-reveal" data-t="reveal">${opt({ none: 'Hela tabellen direkt', rows: 'En rad i taget', answers: 'Sista kolumnen en rad i taget (facit)', rest: 'Allt utom första kolumnen, en rad i taget (facit)' }, t.reveal || 'none')}</select></div>`;
+    <div class="fld"><label for="f-reveal">Visa</label><select id="f-reveal" data-t="reveal">${opt({ none: 'Hela tabellen direkt', rows: 'En rad i taget', answers: 'Sista kolumnen en rad i taget (facit)', rest: 'Allt utom första kolumnen, en rad i taget (facit)', cases: 'Ett fall i taget, sedan hela tabellen' }, t.reveal || 'none')}</select></div>`;
 }
 function onInspInput(e) {
   const el = e.target; const t = el.dataset.t; if (!t || !deck) return;

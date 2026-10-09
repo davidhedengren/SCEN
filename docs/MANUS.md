@@ -69,7 +69,7 @@ Första raden är mallen inom hakparentes, t.ex. `[kort]`. Alla mallar finns i [
 | `band` | `ja` visar bilden som band överst (`[kort]`, `[motsats]`) |
 | `bild-vänster` | `ja` byter sida på bilden |
 | `vänster`, `höger` | Kolumnrubriker i `[jämförelse]`. Listan efter hamnar i den kolumnen. |
-| `visa` | Tabeller: `allt`, `rader`, `facit` (sista kolumnen) eller `facit-rader` (allt utom första kolumnen) |
+| `visa` | Tabeller: `allt`, `rader`, `facit` (sista kolumnen), `facit-rader` (allt utom första kolumnen) eller `fall` (en rad som stort fall, klicka fram svaren och gå sedan vidare; avsluta med hela tabellen). Fallvisning passar upp till åtta fall och sex svarskolumner. |
 | `rubrikrad` | Tabeller: `nej` om första raden inte är rubriker |
 | `steg` | `nej` visar allt direkt i stället för ett klick i taget |
 | `tona` | `ja` tonar ner tidigare punkter |

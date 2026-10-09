@@ -143,7 +143,6 @@ const cmds = {
       d.slides.forEach((s, i) => {
         const k = String(s.image || '').replace(/^img:/, '');
         if (k && !/^(data:|https?:)/.test(k) && !fs.existsSync(path.join(ROOT, k))) probs.push(`bild ${i + 1}: saknar ${k}`);
-        if (!s.title && !['quote', 'image', 'egen', 'strålkastare', 'tom'].includes(s.layout)) probs.push(`bild ${i + 1}: ingen rubrik`);
       });
       console.log(`${probs.length ? '✗' : '✓'} ${f}: ${d.slides.length} bilder, tema ${d.theme.id}`);
       probs.forEach(p => console.log('    ' + p));

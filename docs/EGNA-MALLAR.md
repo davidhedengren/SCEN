@@ -25,7 +25,11 @@ I manus: `[egen: numrerade-kort]`.
 | `{{etikett}}` | Etiketten |
 | `{{svar}}` | Svaret |
 | `{{bild}}` | Bildens adress. Använd som `<img src="{{bild}}">` |
+| `{{bildid}}` | Stabil identitet från bildens sökväg. Använd `data-id="{{bildid}}"` på bilden för att låta samma bild följa med genom en morph-övergång. |
+| `{{alt}}` | Bildens `alt`-beskrivning, säker att använda som `alt="{{alt}}"`. |
 | `{{punkter}}` | En `<li>` per rad i listan, var och en ett klicksteg. `- A \| B` blir `<b>A</b><span>B</span>`. |
+| `{{prövningar}}` | En `<li class="assumption">` per post `antagande \| bedömning \| motivering`. Antagandet får ett klick och dess `.assumption-answer` nästa. Bedömning och motivering ligger i `.assumption-result`. Ett valfritt fjärde fält `vy: x y bredd höjd` ger `.assumption-window` med synfältets procentkoordinater på ett inre `i`; mallen placerar fönstret ovanpå den gemensamma bilden. CSS ska dölja resultatet tills svarsklicket och visa en samlad jämförelse vid `{{slutsteg}}`. Använd antingen denna platshållare eller `{{punkter}}` i samma mall. |
+| `{{slutsteg}}` | En osynlig markör med `data-template-end`, som får nästa klicknummer efter listan. CSS kan använda `:has([data-template-end].in)` för att visa en slutsats. Med `steg: nej` saknar markören `data-step`; använd då `:has([data-template-end]:not([data-step]))`. Placera markören en gång. |
 
 ## Regler
 

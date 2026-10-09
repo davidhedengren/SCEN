@@ -22,7 +22,8 @@
     "test:textregi": "node scripts/check-text-direction.cjs",
     "test:textregi:browser": "node scripts/check-text-direction-browser.cjs",
     "test:bro": "node scripts/check-bro.cjs",
-    "test": "npm run kolla && node scripts/check-editorial.cjs && npm run test:mallar && npm run test:tidslinje && npm run test:bildregi && npm run test:textregi && node scripts/check-focus.cjs && npm run test:bro && node scripts/check-signaturer.cjs && node scripts/check-student-export.cjs && npm run test:browser && npm run test:mallar:browser && npm run test:tidslinje:browser && npm run test:bildregi:browser && npm run test:textregi:browser"
+    "test:berattande": "node scripts/check-storytelling.cjs",
+    "test": "npm run kolla && npm run test:berattande && node scripts/check-editorial.cjs && npm run test:mallar && npm run test:tidslinje && npm run test:bildregi && npm run test:textregi && node scripts/check-focus.cjs && npm run test:bro && node scripts/check-signaturer.cjs && node scripts/check-student-export.cjs && npm run test:browser && npm run test:mallar:browser && npm run test:tidslinje:browser && npm run test:bildregi:browser && npm run test:textregi:browser"
   },
   "engines": { "node": ">=18" }
 }

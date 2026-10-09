@@ -11,7 +11,7 @@ bild: bilder/ai-agenter-miljoer/korsning.jpg
 alt: Regnvåt stadskorsning i skymning sedd uppifrån, med bilar, cyklist och fotgängare.
 bildläge: hero
 fokuspunkt: 62 64
-startutsnitt: 50 50 1.08
+startutsnitt: 50 50 1
 slututsnitt: 50 50 1
 säker-yta: 4 14 34 60
 mörkning: 0 0 42 100 0.5
@@ -21,6 +21,7 @@ hastighet: slow
 ---
 
 [kretslopp]
+övergång: morph
 etikett: Begrepp 1
 rubrik: Vad är en agent?
 text: En aktör som uppfattar sin omgivning och agerar i den.
@@ -40,6 +41,7 @@ miljö: bilder/ai-agenter-miljoer/korsning.jpg | 80
 ---
 
 [bildregi]
+övergång: morph
 etikett: Exempel
 rubrik: Agent eller AI-agent?
 text: Agent betyder inte AI. Fotgängaren är en agent. En självkörande bil är en AI-agent.
@@ -57,18 +59,16 @@ mörkning: 0 0 42 100 0.55
 ---
 
 [bildregi]
-etikett: Perception
-rubrik: Korsningen, som bilen ser den
-text: Sensorerna gör gatan till punkter och rutor. Det är den bilden AI-agenten fattar beslut utifrån.
-bild: bilder/ai-agenter-miljoer/sensorvy.jpg
+övergång: tona
+bild: bilder/ai-agenter-miljoer/sensorvy-korsning.png
 alt: Regnig stadskorsning på natten, täckt av blå mätpunkter. Fotgängare, bilar och en cyklist har var sin genomskinlig ruta runt sig.
 bildläge: spotlight
 fokuspunkt: 50 60
 säker-yta: 3 4 40 30
 mörkning: 0 0 52 40 0.7
-- fotgangare | Fotgängare | 25 | 47 | 9 | 17 | En ruta i punktmolnet. Vart är den på väg?
-- bil | Bil | 45 | 64 | 18 | 24 | En annan förare. Vad den gör härnäst påverkar AI-agentens nästa beslut.
-- cyklist | Cyklist | 80 | 70 | 10 | 21 | Ännu en agent, med egna mål.
+- fotgangare | Fotgängare | 74 | 70 | 10 | 13 | En ruta i punktmolnet. Vart är den på väg?
+- bil | Bil | 59 | 59 | 9 | 12 | En annan förare. Vad den gör härnäst påverkar AI-agentens nästa beslut.
+- cyklist | Cyklist | 83 | 79 | 8 | 16 | Ännu en agent, med egna mål.
 > Bilden är en illustration av hur sensordata kan se ut, inte en skärmbild från en riktig bil.
 > Koppla till loopen: det här är steget Uppfattar. Rutorna är det agenten vet om korsningen.
 > Fråga klassen: vad i bilden har ingen ruta? Trafikljusen, till exempel. Här börjar frågan om vad agenten kan se, som kommer tillbaka när vi går igenom miljöerna.
@@ -76,6 +76,7 @@ mörkning: 0 0 52 40 0.7
 ---
 
 [typografi]
+övergång: morph
 etikett: Begrepp 2
 bakgrund: fokusljus
 miljö: bilder/ai-agenter-miljoer/korsning.jpg | 84
@@ -87,6 +88,7 @@ miljö: bilder/ai-agenter-miljoer/korsning.jpg | 84
 ---
 
 [kärna]
+övergång: morph
 etikett: Tre egenskaper
 rubrik: Vad gör en agent till en agent?
 text: Agent
@@ -99,7 +101,8 @@ miljö: bilder/ai-agenter-miljoer/korsning.jpg | 84
 
 ---
 
-[tidslinje]
+[lexikon]
+övergång: morph
 rubrik: Från agent till miljö
 bakgrund: fokusljus
 miljö: bilder/ai-agenter-miljoer/korsning.jpg | 84
@@ -113,6 +116,7 @@ miljö: bilder/ai-agenter-miljoer/korsning.jpg | 84
 ---
 
 [rutor]
+övergång: morph
 etikett: Miljön
 rubrik: Sex frågor om agentens värld
 text: Miljöer kan klassificeras i dimensioner som påverkar hur agenten interagerar med sin omgivning och fattar beslut.
@@ -129,6 +133,7 @@ miljö: bilder/ai-agenter-miljoer/robotdammsugare.jpg | 72
 ---
 
 [bildregi]
+övergång: morph
 etikett: 1 / 6 · Observerbarhet
 rubrik: Fullständigt observerbar
 text: Agenten har tillgång till all information om miljön och fattar beslut med komplett kunskap. Enkelt att modellera, men orealistiskt i verkliga scenarier.
@@ -147,6 +152,7 @@ hastighet: slow
 ---
 
 [bildregi]
+övergång: morph
 etikett: 1 / 6 · Observerbarhet
 rubrik: Partiellt observerbar
 text: Agenten har bara delvis information och måste hantera osäkerhet och göra antaganden.
@@ -165,6 +171,7 @@ mörkning: 0 0 42 46 0.7
 ---
 
 [vägval]
+övergång: morph
 etikett: 2 / 6 · Singel / multiagent
 rubrik: Ensam eller bland andra?
 vänster: Singelagent
@@ -182,6 +189,7 @@ fokus: mjuk
 ---
 
 [omröstning]
+övergång: morph
 rubrik: Schack mot dator: singel- eller multiagentmiljö?
 svar: Två agenter fattar beslut i samma miljö. Motståndarens drag påverkar direkt vilka handlingar och resultat som är möjliga för den andra agenten.
 bakgrund: fokusljus
@@ -197,6 +205,7 @@ miljö: bilder/ai-agenter-miljoer/schack-robotarm.jpg | 84
 ---
 
 [typografi]
+övergång: morph
 etikett: 3 / 6 · Deterministisk / stokastisk
 bakgrund: fokusljus
 miljö: bilder/ai-agenter-miljoer/poker-pov.jpg | 84
@@ -209,6 +218,7 @@ miljö: bilder/ai-agenter-miljoer/poker-pov.jpg | 84
 ---
 
 [fokus]
+övergång: morph
 etikett: 4 / 6 · Episodisk / sekventiell
 rubrik: Påverkar ett beslut nästa?
 bakgrund: fokusljus
@@ -221,6 +231,7 @@ miljö: bilder/ai-agenter-miljoer/domino.jpg | 80
 ---
 
 [bildregi]
+övergång: morph
 etikett: 5 / 6 · Statisk / dynamisk
 rubrik: Statisk eller dynamisk?
 text: Statisk: förändras bara när agenten agerar, som ett schackspel. Dynamisk: förändras hela tiden, som trafiken runt en självkörande bil.
@@ -238,6 +249,7 @@ hastighet: medium
 ---
 
 [bildregi]
+övergång: morph
 etikett: 6 / 6 · Diskret / kontinuerlig
 rubrik: Diskret eller kontinuerlig?
 text: Schack är en diskret miljö. Robotik i verkligheten är en kontinuerlig miljö.
@@ -254,6 +266,7 @@ mörkning: 0 0 46 56 0.55
 ---
 
 [fokus]
+övergång: morph
 etikett: Helheten
 rubrik: Schack mot dator: sex svar
 bakgrund: fokusljus
@@ -269,7 +282,9 @@ miljö: bilder/ai-agenter-miljoer/schack-robotarm.jpg | 84
 ---
 
 [bildregi]
+övergång: morph
 etikett: Sammanfattning
+fokus: spotlight
 rubrik: Rätt modell av miljön är avgörande för effektiva AI-system.
 text: AI-agenter verkar i miljöer med olika egenskaper. Att förstå dem är avgörande för system som ska navigera i komplexa och dynamiska omvärldar.
 bild: bilder/ai-agenter-miljoer/korsning.jpg
@@ -289,9 +304,25 @@ mörkning: 0 0 42 100 0.55
 
 ---
 
+[egen: byt-antagande]
+övergång: morph
+etikett: Observerbarhet
+rubrik: Navigering genom labyrint
+bild: bilder/ai-agenter-miljoer/labyrint.svg
+alt: Samma labyrint och agent ligger kvar medan antagandet om agentens information ändras.
+text: Singel · Deterministisk · Sekventiell · Statisk · Diskret
+- Hela labyrinten är synlig för agenten. | Fullt | Hela labyrinten är synlig för agenten.
+- Delar är dolda. | Partiellt | Om delar är dolda kan det vara partiellt observerbart. | vy: 0 16 32 54
+> Byt antagande: första klicket visar förutsättningen, andra klicket visar bedömningen. Därefter byter vi förutsättning. Sista klicket jämför båda.
+> Diagrammet visar samma labyrint under hela sekvensen. I det andra antagandet döljer en mask den information agenten saknar. Väggarna och agentens position ändras inte. Sista klicket återställer hela kartan.
+> Fallet kommer från övningens befintliga labyrintrad och dess talaranteckning. Övriga svar ligger kvar så att förändringen i observerbarhet får fokus.
+
+---
+
 [tabell]
+övergång: morph
 rubrik: Övning i par: fyll i och diskutera tabellen
-visa: facit-rader
+visa: fall
 bakgrund: fokusljus
 fokus: mjuk
 | Uppgift | Fullt/partiellt\nobserverbart | Singel/\nmultiagent | Deterministisk/\nstokastisk | Episodisk/\nsekventiell | Statiskt/\ndynamiskt | Diskret/\nkontinuerligt |
@@ -372,6 +403,7 @@ fokus: mjuk
 ---
 
 [rad]
+övergång: morph
 etikett: Aktivitet
 rubrik: Observerbarhet i luffarschack
 flöde: ja

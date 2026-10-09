@@ -517,7 +517,7 @@ function renderSlide(sl, i, deck, img) {
       const duration = d.speed === 'fast' ? '8s' : d.speed === 'medium' ? '14s' : '22s';
       const vars = [`--image-start-x:${d.start[0]}%`,`--image-start-y:${d.start[1]}%`,`--image-start-scale:${Math.max(1,d.start[2])}`,`--image-end-x:${d.end[0]}%`,`--image-end-y:${d.end[1]}%`,`--image-end-scale:${Math.max(1,d.end[2])}`,`--image-safe-x:${d.safe[0]}%`,`--image-safe-y:${d.safe[1]}%`,`--image-safe-w:${d.safe[2]}%`,`--image-safe-h:${d.safe[3]}%`,`--image-shade-x:${d.shade[0]}%`,`--image-shade-y:${d.shade[1]}%`,`--image-shade-w:${d.shade[2]}%`,`--image-shade-h:${d.shade[3]}%`,`--image-shade-opacity:${Math.max(0,Math.min(1,d.shade[4]))}`,`--image-duration:${duration}`].join(';');
       const image = src ? `<img src="${esc(src)}" alt="${esc(sl.alt || plain(title) || 'Bild')}" data-id="i-${hash(sl.image)}">` : `<div class="ph">Ingen bild vald</div>`;
-      const copy = (title || sl.text || sl.caption) ? `<div class="ir-copy">${sl.caption ? `<p class="ir-kicker">${fmt(sl.caption)}</p>` : ''}${title ? `<h2${tid(title)}>${fmt(title)}</h2>` : ''}${sl.text ? `<p>${fmt(sl.text)}</p>` : ''}</div>` : '';
+      const copy = (title || sl.text || sl.caption) ? `<div class="ir-copy">${sl.caption ? `<p class="ir-kicker">${fmt(sl.caption)}</p>` : ''}${title ? `<h2${plain(title).length > 48 ? ' class="long"' : ''}${tid(title)}>${fmt(title)}</h2>` : ''}${sl.text ? `<p>${fmt(sl.text)}</p>` : ''}</div>` : '';
       const detailNodes = d.details.map((o, index) => {
         const scale = Math.max(1.16, Math.min(2.1, 72 / Math.max(o.w, o.h, 12)));
         return `<div class="ir-detail${o.x > 58 ? ' ir-detail-left' : ''}${o.y > 64 ? ' ir-detail-up' : ''}${o.y < 42 ? ' ir-detail-down' : ''}" data-dramaturgy-item data-dramaturgy-focus="${index + 1}" data-image-x="${o.x}" data-image-y="${o.y}" data-image-scale="${scale.toFixed(3)}" style="--detail-x:${o.x}%;--detail-y:${o.y}%;--detail-w:${o.w}%;--detail-h:${o.h}%"${steps ? st('none') : ''}><i aria-hidden="true"></i><div><b>${fmt(o.label)}</b>${o.note ? `<p>${fmt(o.note)}</p>` : ''}</div></div>`;
@@ -603,6 +603,17 @@ function renderSlide(sl, i, deck, img) {
       });
       const tA = reveal === 'none' ? A(anim(ba, 'rise'), 300) : A(anim(ba, 'fade'), 250);
       body = H2('', 'words') + `<div class="tbl-wrap"${tA}><table${dense}>${h}</table></div>`;
+      if (reveal === 'cases') {
+        const labels = header ? rows[0] : Array.from({length:ncols}, (_, c) => String(c + 1));
+        const cases = header ? rows.slice(1) : rows;
+        const frames = cases.map((r, ri) => {
+          const question = ri && steps ? st('none') : '';
+          const answer = steps ? st('none') : '';
+          return `<article class="tbl-case"${question}><p class="tbl-case-number">${ri + 1} / ${cases.length}</p><h3>${fmt(r[0] || '')}</h3><span class="tbl-case-answer"${answer} aria-hidden="true"></span><dl>${labels.slice(1).map((label, c) => `<div><dt>${fmt(label).replace(/\\n/g, '<br>')}</dt><dd>${fmt(r[c + 1] || '')}</dd></div>`).join('')}</dl></article>`;
+        }).join('');
+        body += `<div class="tbl-cases">${frames}</div><span class="tbl-overview"${steps ? st('none') : ''} aria-hidden="true"></span>`;
+        attrs += ' data-table-cases="true"';
+      }
       break;
     }
     case 'number':
@@ -2398,10 +2409,20 @@ function renderSlide(sl, i, deck, img) {
       if (!T) { body = `<h2>${fmt(title || 'Egen mall')}</h2><p class="lead">Mallen finns inte i den här presentationen.</p>`; break; }
       const its = lines(sl.items && lines(sl.items).length ? sl.items : sl.bullets);
       const item = t => { const p = t.split('|'); return p.length > 1 ? `<b>${fmt(p[0].trim())}</b><span>${fmt(p.slice(1).join('|').trim())}</span>` : `<span>${fmt(t)}</span>`; };
+      const uses = name => new RegExp('\\{\\{\\s*' + name + '\\s*\\}\\}', 'i').test(T.html || '');
       const slot = {
         rubrik: fmt(title), text: fmt(sl.text || ''), etikett: fmt(sl.caption || ''), svar: fmt(sl.answer || ''),
         bild: esc(sl.image ? img(sl.image) : ''),
-        punkter: its.map(t => `<li${steps ? st(bodyA === 'none' ? 'fade' : bodyA) : ''}>${item(t)}</li>`).join('')
+        bildid: sl.image ? `i-${hash(sl.image)}` : '', alt: esc(sl.alt || plain(title) || 'Bild'),
+        punkter: uses('punkter') ? its.map(t => `<li${steps ? st(bodyA) : ''}>${item(t)}</li>`).join('') : '',
+        prövningar: uses('prövningar') ? its.map(t => {
+          const p = t.split('|').map(x => x.trim());
+          const condition = steps ? st('none') : '', answer = steps ? st('none') : '';
+          const view = sl.image && /^vy:\s*[\d.]+\s+[\d.]+\s+[\d.]+\s+[\d.]+$/i.test(p[3] || '') ? numericTuple(p[3].slice(3), [0, 0, 100, 100], 4).map(n => Math.max(0, Math.min(100, n))) : null;
+          const window = view ? `<div class="assumption-window" aria-hidden="true"><i style="left:${view[0]}%;top:${view[1]}%;width:${view[2]}%;height:${view[3]}%"></i></div>` : '';
+          return `<li class="assumption"${condition}>${window}<b>${fmt(p[0] || '')}</b><span class="assumption-answer"${answer} aria-hidden="true"></span><div class="assumption-result"><strong>${fmt(p[1] || '')}</strong><p>${fmt(p.slice(2, view ? 3 : undefined).join(' | '))}</p></div></li>`;
+        }).join('') : '',
+        slutsteg: uses('slutsteg') ? `<span data-template-end${steps ? st('none') : ''} aria-hidden="true"></span>` : ''
       };
       const html = cleanHtml(T.html || '').replace(/\{\{\s*([a-zåäö]+)\s*\}\}/gi, (m, key) => slot[key.toLowerCase()] != null ? slot[key.toLowerCase()] : '');
       body = `<style>[data-tpl="${tplId}"]{${cleanCss(T.css || '')}}</style>` + html;

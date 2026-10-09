@@ -139,6 +139,9 @@
 .scen .ir-safe{position:absolute;z-index:3;left:var(--image-safe-x);top:var(--image-safe-y);width:var(--image-safe-w);height:var(--image-safe-h);pointer-events:none}
 .scen .ir-copy{position:absolute;z-index:5;box-sizing:border-box;left:var(--image-safe-x);top:var(--image-safe-y);width:var(--image-safe-w);height:var(--image-safe-h);display:grid;align-content:center;gap:24px;padding:clamp(18px,2.2vw,42px);color:#fff;text-shadow:0 3px 24px rgba(0,0,0,.7)}
 .scen .ir-copy h2{font-family:var(--font-display,var(--font));font-size:clamp(56px,5.15vw,98px);line-height:.98;letter-spacing:var(--h-track,-.045em);font-weight:var(--h-weight,700);text-wrap:balance}
+.scen .ir-copy h2.long{font-size:64px;line-height:1.07}
+.scen .ir-copy{transition:opacity .55s ease}
+.scen [data-layout="bildregi"][data-focus="spotlight"][data-dramaturgy-state="focus"] .ir-copy{opacity:.12}
 .scen .ir-copy>p:not(.ir-kicker){font-size:clamp(25px,1.7vw,34px);line-height:1.32;color:rgba(255,255,255,.88);max-width:34ch;text-wrap:pretty}
 .scen .ir-kicker{font-family:var(--mono);font-size:18px;line-height:1.2;letter-spacing:.16em;text-transform:uppercase;color:rgba(255,255,255,.76)}
 .scen .ir-spotlight{position:absolute;z-index:3;inset:0;background:rgba(2,5,10,.73);opacity:0;pointer-events:none;transition:opacity var(--dramaturgy-dim-duration) var(--dramaturgy-soft-ease);-webkit-mask:radial-gradient(ellipse 13% 18% at var(--image-active-x,50%) var(--image-active-y,50%),transparent 0 62%,rgba(0,0,0,.38) 76%,#000 100%);mask:radial-gradient(ellipse 13% 18% at var(--image-active-x,50%) var(--image-active-y,50%),transparent 0 62%,rgba(0,0,0,.38) 76%,#000 100%)}
@@ -176,6 +179,7 @@
 .scen [data-layout="bildregi"][data-body-motion="none"] .ir-camera,
 .scen [data-layout="bildregi"][data-body-motion="none"] .ir-camera img,
 .scen [data-layout="bildregi"][data-body-motion="none"] .ir-spotlight,
+.scen [data-layout="bildregi"][data-body-motion="none"] .ir-copy,
 .scen [data-layout="bildregi"][data-body-motion="none"] .ir-detail{animation:none!important;transition:none!important}
 
 /* ---------- Semantisk textregi: terminal, kod och typografi ---------- */
@@ -271,6 +275,25 @@
 .scen .tbl-wrap:has(table.dense){justify-self:stretch}
 .scen .slide table.dense{width:100%}
 .scen .slide td.ans{color:var(--accent);font-weight:600}
+
+/* Fallvisning behåller tabellens innehåll och avslutar med hela översikten. */
+.scen [data-table-cases]>h2{font-size:60px;line-height:1.1;position:relative;z-index:2}
+.scen [data-table-cases] .tbl-wrap{visibility:hidden;opacity:0;transition:opacity .45s ease}
+.scen .tbl-cases{position:absolute;inset:310px 144px 120px}
+.scen .tbl-case{position:absolute;inset:0;opacity:0!important;visibility:hidden;transition:opacity .45s ease}
+.scen .tbl-case:first-child:not(:has(~.tbl-case.in)),.scen .tbl-case.in:not(:has(~.tbl-case.in)){opacity:1!important;visibility:inherit}
+.scen .tbl-case-number{color:var(--accent);font:500 24px/1.2 var(--font-mono,var(--mono));letter-spacing:.12em}
+.scen .tbl-case h3{position:absolute;left:0;top:65px;width:510px;font-size:64px;line-height:1.12;text-wrap:balance;overflow-wrap:anywhere}
+.scen .tbl-case dl{position:absolute;left:620px;right:0;top:0;display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:30px 38px;margin:0}
+.scen .tbl-case dl>div{min-height:146px;border-top:1px solid var(--line);padding-top:18px}
+.scen .tbl-case dt{font-size:25px;line-height:1.25;color:var(--muted)}
+.scen .tbl-case dd{margin:14px 0 0;font-size:40px;line-height:1.15;color:var(--accent);opacity:0;visibility:hidden;transition:opacity .4s ease;overflow-wrap:anywhere}
+.scen .tbl-case:has(.tbl-case-answer.in) dd{opacity:1;visibility:inherit}
+.scen .tbl-case-answer,.scen .tbl-overview{position:absolute;width:0;height:0;overflow:hidden}
+.scen [data-table-cases]:has(.tbl-overview.in,.tbl-overview:not([data-step])) .tbl-wrap,.scen.static [data-table-cases] .tbl-wrap{opacity:1;visibility:inherit}
+.scen [data-table-cases]:has(.tbl-overview.in,.tbl-overview:not([data-step])) .tbl-cases,.scen.static [data-table-cases] .tbl-cases{display:none}
+.scen [data-table-cases][data-body-motion="none"] :is(.tbl-case,.tbl-wrap,dd){transition:none!important}
+@media(prefers-reduced-motion:reduce){.scen [data-table-cases] :is(.tbl-case,.tbl-wrap,dd),.scen .ir-copy{transition:none!important}}
 
 .scen [data-layout="number"]{align-content:center;gap:32px}
 .scen [data-layout="number"] .label{font-size:40px;color:var(--accent);font-weight:600}

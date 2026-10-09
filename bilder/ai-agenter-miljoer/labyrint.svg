@@ -1,0 +1,15 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="960" height="580" viewBox="0 0 960 580" role="img" aria-labelledby="title desc">
+  <title id="title">Labyrint med en agent</title>
+  <desc id="desc">En stillastående agent vid ingången till samma labyrint. Diagrammet visar hela kartan för publiken.</desc>
+  <rect x="5" y="5" width="950" height="570" rx="24" fill="#101e28"/>
+  <g fill="none" stroke="#cadbe5" stroke-width="9" stroke-linecap="square">
+    <path d="M60 160V60H900V520H60V260"/>
+    <path d="M180 60V160H300V260H180V400H420V520"/>
+    <path d="M300 60V160H540V60M420 160V280H540V400H660V520"/>
+    <path d="M60 400H180M300 400V340H420M660 60V280H780V160H900"/>
+    <path d="M780 280V400H900M660 280H540M780 520V460"/>
+  </g>
+  <circle cx="100" cy="210" r="35" fill="#62ddf1" fill-opacity=".12"/>
+  <circle cx="100" cy="210" r="16" fill="#62ddf1"/>
+  <path d="M125 210H157M145 200L158 210L145 220" fill="none" stroke="#62ddf1" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/>
+</svg>

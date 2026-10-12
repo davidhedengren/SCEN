@@ -374,6 +374,91 @@ fokus: mjuk
 > Statisk: Miljön (patientens symptom) ändras inte under analysen.
 > Diskret: Diagnosen leder till ett val mellan fördefinierade sjukdomar eller tillstånd.
 
+
+---
+
+[tabell]
+övergång: morph
+rubrik: Övning i par: fyll i och diskutera tabellen
+visa: facit-rader
+bakgrund: fokusljus
+fokus: mjuk
+rörelse: tona
+| Uppgift | Fullt/partiellt\nobserverbart | Singel/\nmultiagent | Deterministisk/\nstokastisk | Episodisk/\nsekventiell | Statiskt/\ndynamiskt | Diskret/\nkontinuerligt |
+| Schack mot dator | Fullt | Multi | Deterministisk | Sekventiell | Statisk | Diskret |
+| Korsord | Fullt | Singel | Deterministisk | Sekventiell | Statisk | Diskret |
+| Poker | Partiellt | Multi | Stokastisk | Sekventiell | Statisk | Diskret |
+| Bildklassificering | Fullt | Singel | Deterministisk | Episodisk | Statisk | Diskret |
+| Självkörande bil i trafik | Partiellt | Multi | Stokastisk | Sekventiell | Dynamisk | Kontinuerlig |
+| Robotdammsugare | Partiellt | Singel | Stokastisk | Sekventiell | Dynamisk | Kontinuerlig |
+| Navigering genom labyrint | Fullt | Singel | Deterministisk | Sekventiell | Statisk | Diskret |
+| Diagnos av sjukdom utifrån symptom | Partiellt | Singel | Stokastisk | Episodisk | Statisk | Diskret |
+> Klicka fram en rad i taget. Den aktuella raden får en färgad bakgrund och uppgiften markeras. Tidigare svar ligger kvar nedtonade så att ni kan jämföra och diskutera.
+>
+> Schack mot dator
+> Observerbarhet: Fullt observerbart eftersom alla bitar på schackbrädet och deras positioner är synliga för både spelaren och datorn.
+> Antal agenter: Multi-agent eftersom både spelaren och datorn är agenter som fattar beslut, och deras drag påverkar varandras möjligheter och resultat (en konkurrerande miljö).
+> Deterministisk: Alla drag och deras konsekvenser är förutsägbara och leder till ett bestämt utfall.
+> Sekventiell: Varje drag påverkar brädets framtida tillstånd, så alla beslut måste tas med hänsyn till kommande drag.
+> Statisk: Brädets tillstånd förändras inte utanför agenternas kontroll.
+> Diskret: Schack har ett begränsat antal möjliga drag och tillstånd.
+>
+> Korsord
+> Observerbarhet: Fullt observerbart eftersom alla rutor och ledtrådar är synliga och tillgängliga för spelaren från början.
+> Antal agenter: Single-agent eftersom en person vanligtvis löser korsordet ensam. (Flera personer kan hjälpa till, men det betraktas som en enskild agentuppgift).
+> Deterministisk: Lösningarna är deterministiska eftersom varje korrekt ord har en fast plats i rutnätet och påverkar andra ord förutsägbart.
+> Sekventiell: Varje ord påverkar framtida möjligheter genom att fylla i bokstäver som är gemensamma med andra ord.
+> Statisk: Korsordet förändras inte av sig självt, utan enbart när spelaren fyller i det.
+> Diskret: Varje ruta är en enskild enhet och varje inmatning är en diskret bokstav.
+>
+> Poker
+> Observerbarhet: Partiellt observerbart eftersom spelarna inte kan se varandras kort.
+> Antal agenter: Multi-agent eftersom flera spelare interagerar.
+> Stokastisk: Slumpen avgör vilka kort som delas ut, vilket gör spelet osäkert.
+> Sekventiell: Varje satsning påverkar hur nästa runda spelas och hur spelet utvecklas.
+> Statisk: Spelmiljön (korten och spelreglerna) förändras inte utan spelarens interaktion.
+> Diskret: Spelet har ett antal fördefinierade val, som att satsa, lägga sig eller höja.
+>
+> Bildklassificering
+> Observerbarhet: Fullt observerbart eftersom hela bilden är tillgänglig för AI-agenten.
+> Antal agenter: Single-agent eftersom endast ett system analyserar bilden.
+> Deterministisk: Systemet klassificerar bilden baserat på fasta regler eller inlärd information, utan slump.
+> Episodisk: Varje bild klassificeras oberoende av tidigare eller framtida bilder.
+> Statisk: Bildens innehåll förändras inte medan den analyseras.
+> Diskret: Systemet väljer mellan ett antal fördefinierade kategorier (t.ex. "katt", "hund").
+>
+> Självkörande bil i trafiken
+> Observerbarhet: Partiellt observerbart eftersom bilen inte kan ha fullständig information om alla andra förares beteenden eller dolda objekt.
+> Antal agenter: Multi-agent eftersom flera bilar (agenter) interagerar med varandra i trafiken.
+> Stokastisk: Även om bilen kan göra noggranna beräkningar, är det fortfarande osäkert hur andra förare eller väderförhållanden kommer att bete sig.
+> Sekventiell: Varje beslut, som att svänga eller bromsa, påverkar framtida situationer på vägen.
+> Dynamisk: Trafikmiljön förändras konstant och oberoende av bilen (t.ex. genom andra bilar och trafikljus).
+> Kontinuerlig: Hastighet och styrning är kontinuerliga variabler.
+>
+> Robotdammsugare
+> Observerbarhet: Partiellt observerbart eftersom roboten inte kan se hela rummet samtidigt.
+> Antal agenter: Single-agent eftersom roboten agerar ensam.
+> Stokastisk: Det finns en viss osäkerhet om hur roboten interagerar med hinder eller möbler.
+> Sekventiell: Varje rörelse påverkar var roboten är i nästa ögonblick och vilka beslut den kommer att ta.
+> Dynamisk: Miljön kan förändras när människor flyttar på saker eller går in i rummet.
+> Kontinuerlig: Robotens rörelser är kontinuerliga, eftersom den rör sig genom rummet.
+>
+> Navigering genom en labyrint
+> Observerbarhet: Fullt observerbart om hela labyrinten är synlig för agenten. Om delar är dolda kan det vara partiellt observerbart.
+> Antal agenter: Single-agent om endast en agent navigerar genom labyrinten.
+> Deterministisk: Varje rörelse har en förutsägbar effekt (t.ex. gå åt vänster flyttar agenten åt vänster).
+> Sekventiell: Varje rörelse påverkar agentens nästa position och möjliga val.
+> Statisk: Labyrinten förändras inte oberoende av agenten.
+> Diskret: Rörelserna sker i diskreta steg (t.ex. upp, ner, vänster, höger).
+>
+> Diagnos av sjukdom utifrån symptom
+> Observerbarhet: Partiellt observerbart eftersom läkaren eller AI-systemet inte kan se alla aspekter av patientens hälsa direkt (dolda faktorer).
+> Antal agenter: Single-agent eftersom AI-systemet eller läkaren ensam analyserar symptomen.
+> Stokastisk: Diagnosen är inte alltid säker, eftersom olika sjukdomar kan ha liknande symptom.
+> Episodisk: Varje diagnos är en separat episod och påverkar inte andra diagnoser.
+> Statisk: Miljön (patientens symptom) ändras inte under analysen.
+> Diskret: Diagnosen leder till ett val mellan fördefinierade sjukdomar eller tillstånd.
+
 ---
 
 [rad]

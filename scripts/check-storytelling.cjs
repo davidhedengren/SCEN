@@ -38,4 +38,8 @@ assert(unsafe.includes('&lt;img'));
 const parsed = Manus.parse(Manus.stringify({ ...deck, slides: [assumption] })).slides[0];
 assert.deepEqual(parsed.items, assumption.items);
 assert.equal(parsed.tpl, assumption.tpl);
+const rest = Manus.parseBlock('[tabell]\nvisa: facit-rader\n| Fall | A | B |\n| Första | Ett | Två |\n| Andra | Tre | Fyra |');
+assert.deepEqual(steps(render(rest)), [1, 1, 2, 2], 'Alla svar på samma rad visas med samma klick.');
+assert(render(rest).includes('data-table-reveal="rest"'));
+assert.deepEqual(steps(render({ ...rest, steps: false })), [], 'Statisk facitvisning visar alla svar utan klicksteg.');
 console.log('OK: fallvisning, separata svarsklick, oförändrade tabellvärden, manusrundtur och escaping.');

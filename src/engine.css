@@ -285,6 +285,8 @@
 .scen .tbl-wrap:has(table.dense){justify-self:stretch}
 .scen .slide table.dense{width:100%}
 .scen .slide td.ans{color:var(--accent);font-weight:600}
+.scen [data-table-reveal="rest"] tr:has(td.step-current) td{background:color-mix(in srgb,var(--accent) 16%,transparent)}
+.scen [data-table-reveal="rest"] tr:has(td.step-current) td:first-child{color:var(--accent);text-decoration:underline;text-decoration-thickness:3px;text-underline-offset:5px}
 
 /* Fallvisning behåller tabellens innehåll och avslutar med hela översikten. */
 .scen [data-table-cases]>h2{font-size:60px;line-height:1.1;position:relative;z-index:2}

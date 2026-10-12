@@ -2,7 +2,7 @@
 
 Underlag: de ursprungliga 20 bilderna i `presentationer/ai-agenter-och-miljoer.md`, renderad översikt och närmare visuell kontroll av centrala scener. Numreringen nedan avser den versionen.
 
-Efter granskningen bad användaren om de visuella förbättringarna med oförändrade formuleringar. Den nya sensorbilden, fokusväxlingen mellan begreppen, den lugnare sammanfattningen och fallvisningen är nu införda. Presentationen innehåller nu 19 bilder: sammanfattningen med fokusstyrd film är bild 17, den tomma övningstabellen bild 18 och aktiviteten bild 19. Formuleringsförslagen nedan är fortfarande förslag och använder den ursprungliga numreringen.
+Efter granskningen bad användaren om de visuella förbättringarna med oförändrade formuleringar. Den nya sensorbilden, fokusväxlingen mellan begreppen, den lugnare sammanfattningen och fallvisningen är nu införda. Presentationen innehåller nu 20 bilder: sammanfattningen med fokusstyrd film är bild 17, den tomma övningstabellen bild 18, facit bild 19 och aktiviteten bild 20. Formuleringsförslagen nedan är fortfarande förslag och använder den ursprungliga numreringen.
 
 På användarens begäran har avsnittet ”Vad gör en agent till en agent?” tagits bort helt. Det upprepade agentbegreppet och fokusområdena i korsningen. Bild 5 följs direkt av ”Från agent till miljö” som bild 6. De kvarvarande bildernas formuleringar och talaranteckningar är oförändrade.
 
@@ -10,7 +10,7 @@ Exemplet **Ett beslut i korsningen** är färdigt i biblioteket och som friståe
 
 ## Den levande korsningen
 
-Användarens skärminspelning har beskärts till själva filmen, utan ramen. En sammanhängande omgång på cirka 4,17 sekunder används i `korsning-levande.mp4`, utan ljud. `korsning-levande.jpg` är dess första bildruta. Filmen ligger i sammanfattningen (bild 17 efter borttagna scener), med den befintliga Spotlight-regin. `filmsteg: dyn` startar filmen när Dynamisk får fokus. Rutan markerar personen med paraply; ingen zoom används. Föregående och efterföljande fokussteg visar stillbilden. Den fristående filmscenen och ”Navigering genom labyrint” har tagits bort på användarens begäran. Övningen visar hela tabellen med tomma svarsceller; facit finns endast i talaranteckningarna.
+Användarens skärminspelning har beskärts till själva filmen, utan ramen. En sammanhängande omgång på cirka 4,17 sekunder används i `korsning-levande.mp4`, utan ljud. `korsning-levande.jpg` är dess första bildruta. Filmen ligger i sammanfattningen (bild 17 efter borttagna scener), med den befintliga Spotlight-regin. `filmsteg: dyn` startar filmen när Dynamisk får fokus. Rutan markerar personen med paraply; ingen zoom används. Föregående och efterföljande fokussteg visar stillbilden. Den fristående filmscenen och ”Navigering genom labyrint” har tagits bort på användarens begäran. Övningen visar hela tabellen med tomma svarsceller. Nästa scen fyller i svaren en rad per klick och framhäver den aktuella raden med färgad bakgrund; tidigare svar ligger kvar nedtonade.
 
 ## Prioritering
 

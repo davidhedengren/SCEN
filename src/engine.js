@@ -597,6 +597,7 @@ function renderSlide(sl, i, deck, img) {
       const rows = (sl.table && sl.table.rows) || [];
       const header = !!(sl.table && sl.table.header) && rows.length > 1;
       const reveal = (sl.table && sl.table.reveal) || 'none';
+      if (reveal === 'rest') attrs += ' data-table-reveal="rest"';
       const ncols = rows.reduce((m, r) => Math.max(m, r.length), 0);
       const dense = ncols >= 7 ? ' class="dense xdense"' : (rows.length > 7 || ncols > 5 ? ' class="dense"' : '');
       const stepA = anim(ba, 'fade') === 'none' ? 'fade' : anim(ba, 'fade');
@@ -604,7 +605,7 @@ function renderSlide(sl, i, deck, img) {
       rows.forEach((r, ri) => {
         const isHead = header && ri === 0;
         const cells = [];
-        const restStep = (!isHead && reveal === 'rest') ? ` data-step="${++k}" data-step-anim="${stepA}"` : '';
+        const restStep = (steps && !isHead && reveal === 'rest') ? ` data-step="${++k}" data-step-anim="${stepA}"` : '';
         for (let c = 0; c < ncols; c++) {
           const v = r[c] == null ? '' : r[c];
           if (isHead) cells.push(`<th>${fmt(v)}</th>`);

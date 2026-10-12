@@ -2,9 +2,9 @@
 
 Underlag: de ursprungliga 20 bilderna i `presentationer/ai-agenter-och-miljoer.md`, renderad översikt och närmare visuell kontroll av centrala scener. Numreringen nedan avser den versionen.
 
-Efter granskningen bad användaren om de visuella förbättringarna med oförändrade formuleringar. Den nya sensorbilden, fokusväxlingen på bild 7, den lugnare sammanfattningen och fallvisningen är nu införda. Byt antagande har lagts till som bild 19; övningen och aktiviteten blir bild 20–21. Alla texter och talaranteckningar från de tidigare 20 bilderna är bevarade. Formuleringsförslagen nedan är fortfarande förslag.
+Efter granskningen bad användaren om de visuella förbättringarna med oförändrade formuleringar. Den nya sensorbilden, fokusväxlingen mellan begreppen, den lugnare sammanfattningen och fallvisningen är nu införda. Presentationen innehåller nu 20 bilder: Byt antagande är bild 18, övningen bild 19 och aktiviteten bild 20. Formuleringsförslagen nedan är fortfarande förslag och använder den ursprungliga numreringen.
 
-Bild 6 har därefter gjorts om till en tillämpning på samma bil som i bild 3. Bild 2 behåller det allmänna kretsloppet. Med den befintliga Bildregi-mallen lyfts bilens beslut (Autonomi), trafiken framför bilen (Perception) och vägen vidare (Målorientering) fram i tur och ordning. Ett fjärde klick återvänder till bilen med den ursprungliga slutsatsen; det sista återställer helhetsbilden. Alla befintliga formuleringar finns kvar. Talaranteckningen har kompletterats med konkreta exempel och förtydligandet att markeringen framför bilen inte är ett uppmätt synfält. Ingen ny bild eller mall behövs.
+På användarens begäran har avsnittet ”Vad gör en agent till en agent?” tagits bort helt. Det upprepade agentbegreppet och fokusområdena i korsningen. Bild 5 följs nu direkt av ”Från agent till miljö” som bild 6. De kvarvarande bildernas formuleringar och talaranteckningar är oförändrade.
 
 Exemplet **Ett beslut i korsningen** är färdigt i biblioteket och som fristående presentation: `dist/ett-beslut-i-korsningen.html`. Där demonstreras Genomlysning, Omformning, Två förlopp och Återkomst. Se `BERATTANDE-MALLAR.md` för användning.
 

@@ -41,7 +41,7 @@ Mallen passar AI (tillgång till information), matematik (definitionsområde), f
 
 Den befintliga tabellmallen har fått `visa: fall`. Första kolumnen anger fallet och övriga kolumnrubriker blir frågor. Svaren är dolda före sitt klick. Nästa klick byter till nästa fall med dolda svar, och sista klicket visar hela tabellen. Det fungerar bäst med högst åtta fall och sex svarskolumner. Samma tabellvärden används i båda vyerna. `steg: nej` och miniatyrer visar hela tabellen.
 
-Originalpresentationen innehåller nu 21 bilder. De tidigare 20 bildernas formuleringar, svar och talaranteckningar är bevarade. Bild 4 använder den genererade `sensorvy-korsning.png`, med markeringar i Scen. Bild 7 använder Lexikon för fokusväxling mellan samma begrepp. Sammanfattningen har mindre rubriktypografi och tonar ned texten när ett detaljområde lyfts. Labyrintexemplet har lagts till före övningen.
+Originalpresentationen innehåller nu 20 bilder. Avsnittet ”Vad gör en agent till en agent?” har tagits bort på användarens begäran för att undvika upprepning. De kvarvarande bildernas formuleringar, svar och talaranteckningar är bevarade. Bild 4 använder den genererade `sensorvy-korsning.png`, med markeringar i Scen. Bild 6 använder Lexikon för fokusväxling mellan samma begrepp. Sammanfattningen har mindre rubriktypografi och tonar ned texten när ett detaljområde lyfts. Labyrintexemplet har lagts till före övningen.
 
 Den nya mallen och fallvisningen har kontrollerats i Chromium i Natt och Klassrum: varje fråga före sitt svar, framåt/bakåt, statiskt läge, reducerad rörelse, miniatyrer och längre texter. Innehåll från inaktiva bilder ska förbli dolt. `npm run test:berattande` kontrollerar fallvisningens steg, tabellvärden, manusrundtur och escaping.
 

@@ -20,6 +20,8 @@ Principen används efter scenens kommunikativa behov. Cinematic hero har exempel
 
 ## Levande bild
 
+Film kan också kopplas till en befintlig Spotlight-ruta utan zoom. Behåll `bildläge: spotlight`, lägg till `film:` och ange detaljens id i `filmsteg:`, exempelvis `filmsteg: dyn`. Filmen startar på samma klick som markerar området och återställs till stillbilden när fokus flyttas. Alla vanliga detaljmarkeringar och klicksteg finns kvar. Använd filmens första bildruta som stillbild så att bytet till rörelse blir mjukt.
+
 Använd läget när publiken först ska observera en stillbild och sedan se vad som förändras. Det skiljer sig från en filmloop i `miljö:`: rörelsen startas uttryckligen av presentatören och är en del av klickföljden. Samma struktur fungerar för exempelvis trafik, biologiska förlopp, fysikexperiment, maskiner och scenkonst. Bild, film och fokuspunkt kommer helt från manuset.
 
 ```text

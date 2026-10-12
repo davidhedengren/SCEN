@@ -11,10 +11,10 @@ const Manus = (() => {
   const KEYS = { accent: 'accent',
     rubrik: 'title', 'fråga': 'title', term: 'title', text: 'text', ingress: 'text', underrubrik: 'text', citat: 'text', definition: 'text',
     etikett: 'caption', 'källa': 'caption', bildtext: 'caption', svar: 'answer', exempel: 'example', tal: 'number', tid: 'minutes',
-    bild: 'image', film: 'video', alt: 'alt', 'vänster': 'lt', 'höger': 'rt', start: 'start', slut: 'end', orsak: 'cause', konsekvens: 'effect', villkor: 'condition', alternativ: 'alternative', helhet: 'whole', reservation: 'reservation', gemensamt: 'common', 'spänning': 'tension', syntes: 'synthesis', band: 'banner', 'bild-vänster': 'flip', steg: 'steps', tona: 'dim', fokus: 'focus', retur: 'ret',
+    bild: 'image', film: 'video', filmsteg: 'videoFocus', alt: 'alt', 'vänster': 'lt', 'höger': 'rt', start: 'start', slut: 'end', orsak: 'cause', konsekvens: 'effect', villkor: 'condition', alternativ: 'alternative', helhet: 'whole', reservation: 'reservation', gemensamt: 'common', 'spänning': 'tension', syntes: 'synthesis', band: 'banner', 'bild-vänster': 'flip', steg: 'steps', tona: 'dim', fokus: 'focus', retur: 'ret',
     'övergång': 'transition', bakgrund: 'bg', 'miljö': 'env', 'märke': 'badge', 'källrad': 'credit', rubrikrörelse: 'ta', 'rörelse': 'ba', visa: 'reveal', rubrikrad: 'header', mall: 'tpl', aktiv: 'active', siffra: 'number', slutsats: 'text', max: 'max', mitten: 'text'
   };
-  const OUT_KEY = { video: 'film', scale: 'skala', conclusion: 'slutsats', max: 'max', active: 'aktiv', title: 'rubrik', text: 'text', caption: 'etikett', answer: 'svar', example: 'exempel', number: 'tal', minutes: 'tid', image: 'bild', alt: 'alt', lt: 'vänster', rt: 'höger', ret: 'retur', start: 'start', end: 'slut', question: 'fråga', cause: 'orsak', effect: 'konsekvens', condition: 'villkor', alternative: 'alternativ', source: 'källa', whole: 'helhet', reservation: 'reservation', common: 'gemensamt', tension: 'spänning', synthesis: 'syntes', transition: 'övergång', bg: 'bakgrund', ta: 'rubrikrörelse', ba: 'rörelse', tpl: 'mall' };
+  const OUT_KEY = { video: 'film', videoFocus: 'filmsteg', scale: 'skala', conclusion: 'slutsats', max: 'max', active: 'aktiv', title: 'rubrik', text: 'text', caption: 'etikett', answer: 'svar', example: 'exempel', number: 'tal', minutes: 'tid', image: 'bild', alt: 'alt', lt: 'vänster', rt: 'höger', ret: 'retur', start: 'start', end: 'slut', question: 'fråga', cause: 'orsak', effect: 'konsekvens', condition: 'villkor', alternative: 'alternativ', source: 'källa', whole: 'helhet', reservation: 'reservation', common: 'gemensamt', tension: 'spänning', synthesis: 'syntes', transition: 'övergång', bg: 'bakgrund', ta: 'rubrikrörelse', ba: 'rörelse', tpl: 'mall' };
   const IMAGE_DIRECTION_KEYS = { 'bildläge':'mode', fokuspunkt:'focus', 'beskärning':'crop', startutsnitt:'start', slututsnitt:'end', 'säker-yta':'safe', 'mörkning':'shade', riktning:'direction', hastighet:'speed' };
   const IMAGE_BRIEF_KEYS = { 'bild-id':'id', filnamn:'filename', scen:'scene', syfte:'purpose', motiv:'subject', komposition:'composition', motivplacering:'placement', format:'aspectRatio', undvik:'avoid', prompt:'prompt' };
   const IMAGE_DIRECTION_OUT = { mode:'bildläge', focus:'fokuspunkt', crop:'beskärning', start:'startutsnitt', end:'slututsnitt', safe:'säker-yta', shade:'mörkning', direction:'riktning', speed:'hastighet' };
@@ -212,6 +212,7 @@ const Manus = (() => {
     if (L === 'question' || L === 'poll' || L === 'egen') put('answer', s.answer);
     if (s.image) out.push(`bild: ${String(s.image).startsWith('img:') ? s.image.slice(4) : '(inbäddad bild)'}`);
     put('video', s.video);
+    put('videoFocus', s.videoFocus);
     if ((s.image || s.video) && s.alt) put('alt', s.alt);
     if (L === 'bildregi' && s.imageDirection) Object.entries(IMAGE_DIRECTION_OUT).forEach(([field,label]) => {
       const v=s.imageDirection[field]; if(v==null||v==='') return; out.push(`${label}: ${Array.isArray(v)?v.join(' '):v}`);

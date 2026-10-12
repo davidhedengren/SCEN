@@ -533,14 +533,15 @@ function renderSlide(sl, i, deck, img) {
       }
       const detailNodes = d.details.map((o, index) => {
         const scale = Math.max(1.16, Math.min(2.1, 72 / Math.max(o.w, o.h, 12)));
-        return `<div class="ir-detail${o.x > 58 ? ' ir-detail-left' : ''}${o.y > 64 ? ' ir-detail-up' : ''}${o.y < 42 ? ' ir-detail-down' : ''}" data-dramaturgy-item data-dramaturgy-focus="${index + 1}" data-image-x="${o.x}" data-image-y="${o.y}" data-image-scale="${scale.toFixed(3)}" style="--detail-x:${o.x}%;--detail-y:${o.y}%;--detail-w:${o.w}%;--detail-h:${o.h}%"${steps ? st('none') : ''}><i aria-hidden="true"></i><div><b>${fmt(o.label)}</b>${o.note ? `<p>${fmt(o.note)}</p>` : ''}</div></div>`;
+        return `<div class="ir-detail${o.x > 58 ? ' ir-detail-left' : ''}${o.y > 64 ? ' ir-detail-up' : ''}${o.y < 42 ? ' ir-detail-down' : ''}" data-image-detail-id="${esc(o.id)}" data-dramaturgy-item data-dramaturgy-focus="${index + 1}" data-image-x="${o.x}" data-image-y="${o.y}" data-image-scale="${scale.toFixed(3)}" style="--detail-x:${o.x}%;--detail-y:${o.y}%;--detail-w:${o.w}%;--detail-h:${o.h}%"${steps ? st('none') : ''}><i aria-hidden="true"></i><div><b>${fmt(o.label)}</b>${o.note ? `<p>${fmt(o.note)}</p>` : ''}</div></div>`;
       }).join('');
       let semantic = '', restore = '';
       if (d.mode === 'detail' || d.mode === 'spotlight') {
         semantic = detailNodes;
         restore = steps ? `<span data-dramaturgy-restore${st('none')} aria-hidden="true"></span>` : '';
       } else if (d.mode === 'reveal') semantic = detailNodes;
-      body = `<div class="ir-stage" data-image-stage data-image-mode="${d.mode}" data-image-crop="${d.crop}" data-image-direction="${d.direction}" style="${vars}"><div class="ir-camera">${image}</div><div class="ir-shade" aria-hidden="true"></div><div class="ir-spotlight" aria-hidden="true"></div><div class="ir-safe" data-safe-area aria-hidden="true"></div>${semantic}${copy}${restore}</div>`;
+      const focusFilm = sl.video && sl.videoFocus && d.mode === 'spotlight' ? `<video class="ir-live-video" data-film-src="${esc(img(sl.video))}" data-film-focus="${esc(sl.videoFocus)}" muted playsinline preload="none" aria-label="${esc(sl.alt || plain(title) || 'Film')}"></video>` : '';
+      body = `<div class="ir-stage" data-image-stage data-image-mode="${d.mode}" data-image-crop="${d.crop}" data-image-direction="${d.direction}" style="${vars}"><div class="ir-camera">${image}${focusFilm}</div><div class="ir-shade" aria-hidden="true"></div><div class="ir-spotlight" aria-hidden="true"></div><div class="ir-safe" data-safe-area aria-hidden="true"></div>${semantic}${copy}${restore}</div>`;
       attrs += ` data-dramaturgy="image-direction" data-dramaturgy-state="${steps && d.mode !== 'hero' ? 'overview' : 'restored'}"${steps && d.mode !== 'hero' ? '' : ' data-dramaturgy-static="true"'} data-image-mode="${d.mode}"`;
       break;
     }
@@ -3093,7 +3094,9 @@ function player(root, deck, opt) {
     if (sec && sec.dataset.imageMode === 'live') sec.dataset.liveState = n >= 2 ? 'playing' : n >= 1 ? 'zoom' : 'overview';
     deckEl.querySelectorAll('[data-film-src]').forEach(v => {
       const owner = v.closest('.slide');
-      const want = allowFilm && owner === sec && n >= 2 && mode === 'present' && !document.hidden;
+      const focusId = v.dataset.filmFocus;
+      const atFilmStep = focusId ? [...owner.querySelectorAll('.dramaturgy-current[data-image-detail-id]')].some(el => el.dataset.imageDetailId === focusId) : n >= 2;
+      const want = allowFilm && owner === sec && atFilmStep && mode === 'present' && !document.hidden;
       if (want) { if (!v._wanted) { v._wanted = true; playFilm(v); } }
       else {
         v._wanted = false; v._resume = false; v.pause();

@@ -424,6 +424,7 @@ textarea.code{width:100%;border:1px solid var(--line-2);border-radius:8px;backgr
 .scen .ir-live-camera :is(img,video){position:absolute;inset:0;width:100%;height:100%;object-fit:cover;max-width:none;max-height:none}
 .scen .ir-stage[data-image-crop="contain"] .ir-live-camera :is(img,video){object-fit:contain}
 .scen .ir-live-video{opacity:0}
+.scen .ir-camera video{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
 .scen [data-live-ready="true"] .ir-live-video{opacity:1}
 .scen [data-live-state="zoom"] .ir-live-camera,.scen [data-live-state="playing"] .ir-live-camera{transform:var(--live-end)}
 .scen [data-image-mode="live"]:not([data-live-state="overview"]) .ir-copy{opacity:0}
@@ -575,7 +576,7 @@ textarea.code{width:100%;border:1px solid var(--line-2);border-radius:8px;backgr
 
 .scen [data-layout="table"]{grid-template-rows:auto 1fr}
 .scen .tbl-wrap{align-self:center;justify-self:start;max-width:100%}
-.scen .slide table{border-collapse:collapse;font-size:38px;font-variant-numeric:tabular-nums}
+.scen .slide table{border-collapse:collapse;font-size:38px;font-variant-numeric:tabular-nums;color:var(--ink)}
 .scen .slide td,.scen .slide th{padding:18px 48px 18px 0;text-align:left;border-bottom:1px solid var(--line);vertical-align:top}
 .scen .slide th{font-size:30px;font-weight:600;color:var(--muted);border-bottom:2px solid var(--ink)}
 .scen .slide table.dense{font-size:28px}
@@ -2999,14 +3000,15 @@ function renderSlide(sl, i, deck, img) {
       }
       const detailNodes = d.details.map((o, index) => {
         const scale = Math.max(1.16, Math.min(2.1, 72 / Math.max(o.w, o.h, 12)));
-        return `<div class="ir-detail${o.x > 58 ? ' ir-detail-left' : ''}${o.y > 64 ? ' ir-detail-up' : ''}${o.y < 42 ? ' ir-detail-down' : ''}" data-dramaturgy-item data-dramaturgy-focus="${index + 1}" data-image-x="${o.x}" data-image-y="${o.y}" data-image-scale="${scale.toFixed(3)}" style="--detail-x:${o.x}%;--detail-y:${o.y}%;--detail-w:${o.w}%;--detail-h:${o.h}%"${steps ? st('none') : ''}><i aria-hidden="true"></i><div><b>${fmt(o.label)}</b>${o.note ? `<p>${fmt(o.note)}</p>` : ''}</div></div>`;
+        return `<div class="ir-detail${o.x > 58 ? ' ir-detail-left' : ''}${o.y > 64 ? ' ir-detail-up' : ''}${o.y < 42 ? ' ir-detail-down' : ''}" data-image-detail-id="${esc(o.id)}" data-dramaturgy-item data-dramaturgy-focus="${index + 1}" data-image-x="${o.x}" data-image-y="${o.y}" data-image-scale="${scale.toFixed(3)}" style="--detail-x:${o.x}%;--detail-y:${o.y}%;--detail-w:${o.w}%;--detail-h:${o.h}%"${steps ? st('none') : ''}><i aria-hidden="true"></i><div><b>${fmt(o.label)}</b>${o.note ? `<p>${fmt(o.note)}</p>` : ''}</div></div>`;
       }).join('');
       let semantic = '', restore = '';
       if (d.mode === 'detail' || d.mode === 'spotlight') {
         semantic = detailNodes;
         restore = steps ? `<span data-dramaturgy-restore${st('none')} aria-hidden="true"></span>` : '';
       } else if (d.mode === 'reveal') semantic = detailNodes;
-      body = `<div class="ir-stage" data-image-stage data-image-mode="${d.mode}" data-image-crop="${d.crop}" data-image-direction="${d.direction}" style="${vars}"><div class="ir-camera">${image}</div><div class="ir-shade" aria-hidden="true"></div><div class="ir-spotlight" aria-hidden="true"></div><div class="ir-safe" data-safe-area aria-hidden="true"></div>${semantic}${copy}${restore}</div>`;
+      const focusFilm = sl.video && sl.videoFocus && d.mode === 'spotlight' ? `<video class="ir-live-video" data-film-src="${esc(img(sl.video))}" data-film-focus="${esc(sl.videoFocus)}" muted playsinline preload="none" aria-label="${esc(sl.alt || plain(title) || 'Film')}"></video>` : '';
+      body = `<div class="ir-stage" data-image-stage data-image-mode="${d.mode}" data-image-crop="${d.crop}" data-image-direction="${d.direction}" style="${vars}"><div class="ir-camera">${image}${focusFilm}</div><div class="ir-shade" aria-hidden="true"></div><div class="ir-spotlight" aria-hidden="true"></div><div class="ir-safe" data-safe-area aria-hidden="true"></div>${semantic}${copy}${restore}</div>`;
       attrs += ` data-dramaturgy="image-direction" data-dramaturgy-state="${steps && d.mode !== 'hero' ? 'overview' : 'restored'}"${steps && d.mode !== 'hero' ? '' : ' data-dramaturgy-static="true"'} data-image-mode="${d.mode}"`;
       break;
     }
@@ -5559,7 +5561,9 @@ function player(root, deck, opt) {
     if (sec && sec.dataset.imageMode === 'live') sec.dataset.liveState = n >= 2 ? 'playing' : n >= 1 ? 'zoom' : 'overview';
     deckEl.querySelectorAll('[data-film-src]').forEach(v => {
       const owner = v.closest('.slide');
-      const want = allowFilm && owner === sec && n >= 2 && mode === 'present' && !document.hidden;
+      const focusId = v.dataset.filmFocus;
+      const atFilmStep = focusId ? [...owner.querySelectorAll('.dramaturgy-current[data-image-detail-id]')].some(el => el.dataset.imageDetailId === focusId) : n >= 2;
+      const want = allowFilm && owner === sec && atFilmStep && mode === 'present' && !document.hidden;
       if (want) { if (!v._wanted) { v._wanted = true; playFilm(v); } }
       else {
         v._wanted = false; v._resume = false; v.pause();
@@ -6286,10 +6290,10 @@ const Manus = (() => {
   const KEYS = { accent: 'accent',
     rubrik: 'title', 'fråga': 'title', term: 'title', text: 'text', ingress: 'text', underrubrik: 'text', citat: 'text', definition: 'text',
     etikett: 'caption', 'källa': 'caption', bildtext: 'caption', svar: 'answer', exempel: 'example', tal: 'number', tid: 'minutes',
-    bild: 'image', film: 'video', alt: 'alt', 'vänster': 'lt', 'höger': 'rt', start: 'start', slut: 'end', orsak: 'cause', konsekvens: 'effect', villkor: 'condition', alternativ: 'alternative', helhet: 'whole', reservation: 'reservation', gemensamt: 'common', 'spänning': 'tension', syntes: 'synthesis', band: 'banner', 'bild-vänster': 'flip', steg: 'steps', tona: 'dim', fokus: 'focus', retur: 'ret',
+    bild: 'image', film: 'video', filmsteg: 'videoFocus', alt: 'alt', 'vänster': 'lt', 'höger': 'rt', start: 'start', slut: 'end', orsak: 'cause', konsekvens: 'effect', villkor: 'condition', alternativ: 'alternative', helhet: 'whole', reservation: 'reservation', gemensamt: 'common', 'spänning': 'tension', syntes: 'synthesis', band: 'banner', 'bild-vänster': 'flip', steg: 'steps', tona: 'dim', fokus: 'focus', retur: 'ret',
     'övergång': 'transition', bakgrund: 'bg', 'miljö': 'env', 'märke': 'badge', 'källrad': 'credit', rubrikrörelse: 'ta', 'rörelse': 'ba', visa: 'reveal', rubrikrad: 'header', mall: 'tpl', aktiv: 'active', siffra: 'number', slutsats: 'text', max: 'max', mitten: 'text'
   };
-  const OUT_KEY = { video: 'film', scale: 'skala', conclusion: 'slutsats', max: 'max', active: 'aktiv', title: 'rubrik', text: 'text', caption: 'etikett', answer: 'svar', example: 'exempel', number: 'tal', minutes: 'tid', image: 'bild', alt: 'alt', lt: 'vänster', rt: 'höger', ret: 'retur', start: 'start', end: 'slut', question: 'fråga', cause: 'orsak', effect: 'konsekvens', condition: 'villkor', alternative: 'alternativ', source: 'källa', whole: 'helhet', reservation: 'reservation', common: 'gemensamt', tension: 'spänning', synthesis: 'syntes', transition: 'övergång', bg: 'bakgrund', ta: 'rubrikrörelse', ba: 'rörelse', tpl: 'mall' };
+  const OUT_KEY = { video: 'film', videoFocus: 'filmsteg', scale: 'skala', conclusion: 'slutsats', max: 'max', active: 'aktiv', title: 'rubrik', text: 'text', caption: 'etikett', answer: 'svar', example: 'exempel', number: 'tal', minutes: 'tid', image: 'bild', alt: 'alt', lt: 'vänster', rt: 'höger', ret: 'retur', start: 'start', end: 'slut', question: 'fråga', cause: 'orsak', effect: 'konsekvens', condition: 'villkor', alternative: 'alternativ', source: 'källa', whole: 'helhet', reservation: 'reservation', common: 'gemensamt', tension: 'spänning', synthesis: 'syntes', transition: 'övergång', bg: 'bakgrund', ta: 'rubrikrörelse', ba: 'rörelse', tpl: 'mall' };
   const IMAGE_DIRECTION_KEYS = { 'bildläge':'mode', fokuspunkt:'focus', 'beskärning':'crop', startutsnitt:'start', slututsnitt:'end', 'säker-yta':'safe', 'mörkning':'shade', riktning:'direction', hastighet:'speed' };
   const IMAGE_BRIEF_KEYS = { 'bild-id':'id', filnamn:'filename', scen:'scene', syfte:'purpose', motiv:'subject', komposition:'composition', motivplacering:'placement', format:'aspectRatio', undvik:'avoid', prompt:'prompt' };
   const IMAGE_DIRECTION_OUT = { mode:'bildläge', focus:'fokuspunkt', crop:'beskärning', start:'startutsnitt', end:'slututsnitt', safe:'säker-yta', shade:'mörkning', direction:'riktning', speed:'hastighet' };
@@ -6487,6 +6491,7 @@ const Manus = (() => {
     if (L === 'question' || L === 'poll' || L === 'egen') put('answer', s.answer);
     if (s.image) out.push(`bild: ${String(s.image).startsWith('img:') ? s.image.slice(4) : '(inbäddad bild)'}`);
     put('video', s.video);
+    put('videoFocus', s.videoFocus);
     if ((s.image || s.video) && s.alt) put('alt', s.alt);
     if (L === 'bildregi' && s.imageDirection) Object.entries(IMAGE_DIRECTION_OUT).forEach(([field,label]) => {
       const v=s.imageDirection[field]; if(v==null||v==='') return; out.push(`${label}: ${Array.isArray(v)?v.join(' '):v}`);
@@ -7228,7 +7233,7 @@ sats: [["title", "Rubrik", "text"], ["items", "Högst 3 rader: rubrik | text", "
   cards: [['title', 'Rubrik', 'text'], ['text', 'Ingress', 'area'], ['items', 'Kort, ett per rad: rubrik | text', 'list'], ['image', 'Bild', 'image'], ['banner', 'Visa bilden som band överst', 'check'], ['flip', 'Bilden till vänster', 'check']],
   split: [['title', 'Rubrik', 'text'], ['text', 'Ingress', 'area'], ['bullets', 'Punkter', 'list'], ['image', 'Bild', 'image'], ['flip', 'Bilden till vänster', 'check']],
   image: [['image', 'Bild', 'image'], ['title', 'Rubrik', 'text'], ['caption', 'Bildtext', 'text']],
-  bildregi: [['image', 'Bild eller filmens första bildruta', 'image'], ['video', 'Film (sökväg till MP4 eller WebM)', 'text'], ['caption', 'Etikett', 'text'], ['title', 'Rubrik', 'text'], ['text', 'Text', 'area'], ['items', 'Detaljer: id | etikett | x | y | bredd | höjd | förklaring', 'list']],
+  bildregi: [['image', 'Bild eller filmens första bildruta', 'image'], ['video', 'Film (sökväg till MP4 eller WebM)', 'text'], ['videoFocus', 'Starta filmen vid detaljens id (Spotlight)', 'text'], ['caption', 'Etikett', 'text'], ['title', 'Rubrik', 'text'], ['text', 'Text', 'area'], ['items', 'Detaljer: id | etikett | x | y | bredd | höjd | förklaring', 'list']],
   terminal: [['caption', 'Etikett', 'text'], ['title', 'Rubrik', 'text'], ['items', 'Terminalhändelser: roll | innehåll | annotation', 'list']],
   kodforklaring: [['caption', 'Etikett', 'text'], ['title', 'Rubrik', 'text'], ['text', 'Kodblock', 'area'], ['items', 'Fokus: radnummer | token | annotation | resultat', 'list']],
   kodskrivning: [['caption', 'Etikett', 'text'], ['title', 'Rubrik', 'text'], ['text', 'Koden som skrivs fram (utan tomma rader)', 'area'], ['items', 'Markeringar efter skrivningen: radnummer | uttryck | förklaring | resultat. Uttrycket gammalt -> nytt byter ut koden i det klicket. Lägg till - takt: rad för att skriva en rad per klick.', 'list']],

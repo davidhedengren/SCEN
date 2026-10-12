@@ -87,21 +87,6 @@ miljö: bilder/ai-agenter-miljoer/korsning.jpg | 84
 
 ---
 
-[bildregi]
-övergång: tona
-bild: bilder/ai-agenter-miljoer/korsning-levande.jpg
-film: bilder/ai-agenter-miljoer/korsning-levande.mp4
-alt: En person med paraply står kvar på övergångsstället medan bilar, cyklister och andra fotgängare rör sig omkring personen.
-bildläge: levande
-fokuspunkt: 65 72
-startutsnitt: 50 50 1
-slututsnitt: 65 72 1.9
-> Börja med stillbilden. Klick 1 zoomar in mot personen med paraply. Klick 2 startar filmen; låt den spela färdigt innan du går vidare.
-> Personen står kvar, men miljön fortsätter att förändras. Fråga: vad behöver personen hålla reda på, även när den inte själv går?
-> Filmen är en AI-genererad illustration. Nästa bild kopplar observationen till agentens beslut och miljön. Vänsterpil återställer stillbilden; R börjar om scenen.
-
----
-
 [lexikon]
 övergång: morph
 rubrik: Från agent till miljö
@@ -288,7 +273,9 @@ etikett: Sammanfattning
 fokus: spotlight
 rubrik: Rätt modell av miljön är avgörande för effektiva AI-system.
 text: AI-agenter verkar i miljöer med olika egenskaper. Att förstå dem är avgörande för system som ska navigera i komplexa och dynamiska omvärldar.
-bild: bilder/ai-agenter-miljoer/korsning.jpg
+bild: bilder/ai-agenter-miljoer/korsning-levande.jpg
+film: bilder/ai-agenter-miljoer/korsning-levande.mp4
+filmsteg: dyn
 alt: Stadskorsning i skymning med bilar, cyklist, fotgängare och trafikljus.
 bildläge: spotlight
 fokuspunkt: 62 64
@@ -298,44 +285,30 @@ mörkning: 0 0 42 100 0.55
 - multi | Multiagent | 75 | 70 | 16 | 12 | Fotgängare, cyklister och förare är också agenter.
 - stok | Stokastisk | 58 | 59 | 10 | 10 | Vad föraren framför gör härnäst går inte att veta säkert.
 - sekv | Sekventiell | 52 | 74 | 12 | 10 | Att svänga eller bromsa nu påverkar nästa situation.
-- dyn | Dynamisk | 48 | 58 | 6 | 10 | Trafikljusen slår om och alla rör sig, oavsett vad bilen gör.
+- dyn | Dynamisk | 65 | 72 | 8 | 18 | Trafikljusen slår om och alla rör sig, oavsett vad bilen gör.
 - kont | Kontinuerlig | 58 | 86 | 14 | 10 | Hastighet och styrning har inga tydliga steg.
 > Sammanfattning före övningen. Samma korsning som i början: tänk dig att en av bilarna är självkörande. Nu kan vi läsa miljön med alla sex frågorna, i samma ordning som tabellen.
 > Scenen visar svaren för raden "Självkörande bil i trafik". Använd den som ett genomarbetat exempel, eller låt eleverna börja med de andra raderna.
 
----
-
-[egen: byt-antagande]
-övergång: morph
-etikett: Observerbarhet
-rubrik: Navigering genom labyrint
-bild: bilder/ai-agenter-miljoer/labyrint.svg
-alt: Samma labyrint och agent ligger kvar medan antagandet om agentens information ändras.
-text: Singel · Deterministisk · Sekventiell · Statisk · Diskret
-- Hela labyrinten är synlig för agenten. | Fullt | Hela labyrinten är synlig för agenten.
-- Delar är dolda. | Partiellt | Om delar är dolda kan det vara partiellt observerbart. | vy: 0 16 32 54
-> Byt antagande: första klicket visar förutsättningen, andra klicket visar bedömningen. Därefter byter vi förutsättning. Sista klicket jämför båda.
-> Diagrammet visar samma labyrint under hela sekvensen. I det andra antagandet döljer en mask den information agenten saknar. Väggarna och agentens position ändras inte. Sista klicket återställer hela kartan.
-> Fallet kommer från övningens befintliga labyrintrad och dess talaranteckning. Övriga svar ligger kvar så att förändringen i observerbarhet får fokus.
-
+> När Dynamisk får fokus startar filmen automatiskt. Personen med paraply står kvar medan trafiken rör sig. Kameran ligger stilla och rutan styr blicken. Vid nästa fokussteg återställs stillbilden.
 ---
 
 [tabell]
 övergång: morph
 rubrik: Övning i par: fyll i och diskutera tabellen
-visa: fall
+visa: allt
 bakgrund: fokusljus
 fokus: mjuk
 | Uppgift | Fullt/partiellt\nobserverbart | Singel/\nmultiagent | Deterministisk/\nstokastisk | Episodisk/\nsekventiell | Statiskt/\ndynamiskt | Diskret/\nkontinuerligt |
-| Schack mot dator | Fullt | Multi | Deterministisk | Sekventiell | Statisk | Diskret |
-| Korsord | Fullt | Singel | Deterministisk | Sekventiell | Statisk | Diskret |
-| Poker | Partiellt | Multi | Stokastisk | Sekventiell | Statisk | Diskret |
-| Bildklassificering | Fullt | Singel | Deterministisk | Episodisk | Statisk | Diskret |
-| Självkörande bil i trafik | Partiellt | Multi | Stokastisk | Sekventiell | Dynamisk | Kontinuerlig |
-| Robotdammsugare | Partiellt | Singel | Stokastisk | Sekventiell | Dynamisk | Kontinuerlig |
-| Navigering genom labyrint | Fullt | Singel | Deterministisk | Sekventiell | Statisk | Diskret |
-| Diagnos av sjukdom utifrån symptom | Partiellt | Singel | Stokastisk | Episodisk | Statisk | Diskret |
-> Visa tabellen tom medan eleverna arbetar. Klicka sedan fram facit en rad i taget.
+| Schack mot dator |  |  |  |  |  |  |
+| Korsord |  |  |  |  |  |  |
+| Poker |  |  |  |  |  |  |
+| Bildklassificering |  |  |  |  |  |  |
+| Självkörande bil i trafik |  |  |  |  |  |  |
+| Robotdammsugare |  |  |  |  |  |  |
+| Navigering genom labyrint |  |  |  |  |  |  |
+| Diagnos av sjukdom utifrån symptom |  |  |  |  |  |  |
+> Visa hela den tomma tabellen medan eleverna arbetar. Facit finns i talaranteckningarna för diskussionen efteråt.
 >
 > Schack mot dator
 > Observerbarhet: Fullt observerbart eftersom alla bitar på schackbrädet och deras positioner är synliga för både spelaren och datorn.

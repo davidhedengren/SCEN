@@ -125,6 +125,7 @@
 .scen .ir-live-camera :is(img,video){position:absolute;inset:0;width:100%;height:100%;object-fit:cover;max-width:none;max-height:none}
 .scen .ir-stage[data-image-crop="contain"] .ir-live-camera :is(img,video){object-fit:contain}
 .scen .ir-live-video{opacity:0}
+.scen .ir-camera video{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
 .scen [data-live-ready="true"] .ir-live-video{opacity:1}
 .scen [data-live-state="zoom"] .ir-live-camera,.scen [data-live-state="playing"] .ir-live-camera{transform:var(--live-end)}
 .scen [data-image-mode="live"]:not([data-live-state="overview"]) .ir-copy{opacity:0}
@@ -276,7 +277,7 @@
 
 .scen [data-layout="table"]{grid-template-rows:auto 1fr}
 .scen .tbl-wrap{align-self:center;justify-self:start;max-width:100%}
-.scen .slide table{border-collapse:collapse;font-size:38px;font-variant-numeric:tabular-nums}
+.scen .slide table{border-collapse:collapse;font-size:38px;font-variant-numeric:tabular-nums;color:var(--ink)}
 .scen .slide td,.scen .slide th{padding:18px 48px 18px 0;text-align:left;border-bottom:1px solid var(--line);vertical-align:top}
 .scen .slide th{font-size:30px;font-weight:600;color:var(--muted);border-bottom:2px solid var(--ink)}
 .scen .slide table.dense{font-size:28px}

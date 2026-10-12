@@ -8,7 +8,7 @@ Grundprincipen är:
 
 Principen används efter scenens kommunikativa behov. Cinematic hero har exempelvis en lugn kamerarörelse utan en påtvingad focus/fade-sekvens. Crop/mask reveal använder progressivt avslöjande eftersom ny information är själva poängen.
 
-## Fyra lägen
+## Fem lägen
 
 | `bildläge` | Dramaturgi |
 |---|---|
@@ -16,6 +16,27 @@ Principen används efter scenens kommunikativa behov. Cinematic hero har exempel
 | `detail` | Helhet → en eller flera betydelsefulla detaljer → eget restore-klick. |
 | `spotlight` | Helheten ligger kvar; ett område får fokus och en annotation. Avslutas med restore. |
 | `reveal` | Definierade bildområden avslöjas i ordning. Ingen artificiell restore krävs. |
+| `levande` | Stillbild → zoom på första klicket → film på nästa. Filmen spelar en gång och stannar på sista rutan. |
+
+## Levande bild
+
+Använd läget när publiken först ska observera en stillbild och sedan se vad som förändras. Det skiljer sig från en filmloop i `miljö:`: rörelsen startas uttryckligen av presentatören och är en del av klickföljden. Samma struktur fungerar för exempelvis trafik, biologiska förlopp, fysikexperiment, maskiner och scenkonst. Bild, film och fokuspunkt kommer helt från manuset.
+
+```text
+[bildregi]
+bild: bilder/kurs/forsta-bildrutan.jpg
+film: bilder/kurs/forlopp.mp4
+alt: Beskriv motivet och vad som förändras.
+bildläge: levande
+startutsnitt: 50 50 1
+slututsnitt: 65 72 1.9
+```
+
+Rubrik och text är valfria. Använd filmens första bildruta som `bild:` för ett mjukt byte till rörelse. Utsnitten anger centrum i procent och skala; skala 1 visar helheten, större värden zoomar in. Centrum begränsas så att zoomen inte lämnar tomma kanter. Videon bör ha samma format som stillbilden, helst 16:9.
+
+Filmen är ljudlös och laddas först vid uppspelningssteget. Vänsterpil till zoomsteget återställer filmen till början, R återställer hela scenen och ett byte av scen stoppar filmen. Bakåtnavigering till scenens slut, miniatyrer, redigerarens förhandsvisning och `steg: nej` visar stillbilden utan att spela film. Reducerad rörelse och `rörelse: ingen` tar bort den animerade zoomningen; filmen kan fortfarande startas uttryckligen med nästa klick. MP4 och WebM följer med i fristående export och den inbakade appen.
+
+Kontroller: `npm run test:film` verifierar manus, resurser för export och klickstruktur. Uppspelningen har även kontrollerats i Chromium i Natt och Klassrum: zoom, start, slutruta, bakåtsteg, snabb växling framåt/bakåt, omstart, byte av scen, miniatyrer, reducerad rörelse och saknad film. Både export från appen och export via byggskriptet har spelats upp utan nätanslutning. Hela `npm test` stannar fortfarande på det tidigare felet i `check-editorial.cjs` (Etapper förväntas ha tre steg men har fyra).
 
 ## Bildmetadata i manus
 

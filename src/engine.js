@@ -66,10 +66,10 @@ function numericTuple(value, fallback, length) {
 function normalizeImageDirection(sl) {
   sl = sl || {};
   const raw = sl.imageDirection || {};
-  const modeMap = { cinematic: 'hero', hero: 'hero', detalj: 'detail', detail: 'detail', spotlight: 'spotlight', annotation: 'spotlight', reveal: 'reveal', mask: 'reveal' };
+  const modeMap = { cinematic: 'hero', hero: 'hero', detalj: 'detail', detail: 'detail', spotlight: 'spotlight', annotation: 'spotlight', reveal: 'reveal', mask: 'reveal', levande: 'live', live: 'live' };
   const dirMap = { höger: 'right', hoger: 'right', right: 'right', vänster: 'left', vanster: 'left', left: 'left', upp: 'up', up: 'up', ned: 'down', down: 'down', stilla: 'none', none: 'none' };
   const speedMap = { långsam: 'slow', langsamt: 'slow', slow: 'slow', normal: 'medium', medium: 'medium', snabb: 'fast', fast: 'fast' };
-  const mode = modeMap[String(raw.mode || 'hero').toLowerCase()] || 'hero';
+  const mode = modeMap[String(raw.mode || (sl.video ? 'live' : 'hero')).toLowerCase()] || 'hero';
   const focus = numericTuple(raw.focus, [50, 50], 2);
   const start = numericTuple(raw.start, [50, 50, 1], 3);
   const end = numericTuple(raw.end, [focus[0], focus[1], mode === 'hero' ? 1.08 : 1], 3);
@@ -518,6 +518,19 @@ function renderSlide(sl, i, deck, img) {
       const vars = [`--image-start-x:${d.start[0]}%`,`--image-start-y:${d.start[1]}%`,`--image-start-scale:${Math.max(1,d.start[2])}`,`--image-end-x:${d.end[0]}%`,`--image-end-y:${d.end[1]}%`,`--image-end-scale:${Math.max(1,d.end[2])}`,`--image-safe-x:${d.safe[0]}%`,`--image-safe-y:${d.safe[1]}%`,`--image-safe-w:${d.safe[2]}%`,`--image-safe-h:${d.safe[3]}%`,`--image-shade-x:${d.shade[0]}%`,`--image-shade-y:${d.shade[1]}%`,`--image-shade-w:${d.shade[2]}%`,`--image-shade-h:${d.shade[3]}%`,`--image-shade-opacity:${Math.max(0,Math.min(1,d.shade[4]))}`,`--image-duration:${duration}`].join(';');
       const image = src ? `<img src="${esc(src)}" alt="${esc(sl.alt || plain(title) || 'Bild')}" data-id="i-${hash(sl.image)}">` : `<div class="ph">Ingen bild vald</div>`;
       const copy = (title || sl.text || sl.caption) ? `<div class="ir-copy">${sl.caption ? `<p class="ir-kicker">${fmt(sl.caption)}</p>` : ''}${title ? `<h2${plain(title).length > 48 ? ' class="long"' : ''}${tid(title)}>${fmt(title)}</h2>` : ''}${sl.text ? `<p>${fmt(sl.text)}</p>` : ''}</div>` : '';
+      if (d.mode === 'live') {
+        const camera = tuple => {
+          const z = Math.max(1, Math.min(3, tuple[2]));
+          const at = v => Math.max(50 / z, Math.min(100 - 50 / z, v));
+          return `translate(${((50 - at(tuple[0])) * z).toFixed(3)}%,${((50 - at(tuple[1])) * z).toFixed(3)}%) scale(${z})`;
+        };
+        const film = sl.video ? img(sl.video) : '';
+        const video = film ? `<video class="ir-live-video" data-film-src="${esc(film)}" muted playsinline preload="none" aria-label="${esc(sl.alt || plain(title) || 'Film')}"></video>` : '';
+        const cues = steps ? `<i data-live-zoom${st('none')} aria-hidden="true"></i><i data-live-play${st('none')} aria-hidden="true"></i>` : '';
+        body = `<div class="ir-stage" data-image-crop="${d.crop}" style="${vars};--live-start:${camera(d.start)};--live-end:${camera(d.end)}"><div class="ir-live-camera">${image}${video}</div>${copy ? '<div class="ir-shade" aria-hidden="true"></div>' + copy : ''}${cues}</div>`;
+        attrs += ` data-image-mode="live" data-live-state="overview"`;
+        break;
+      }
       const detailNodes = d.details.map((o, index) => {
         const scale = Math.max(1.16, Math.min(2.1, 72 / Math.max(o.w, o.h, 12)));
         return `<div class="ir-detail${o.x > 58 ? ' ir-detail-left' : ''}${o.y > 64 ? ' ir-detail-up' : ''}${o.y < 42 ? ' ir-detail-down' : ''}" data-dramaturgy-item data-dramaturgy-focus="${index + 1}" data-image-x="${o.x}" data-image-y="${o.y}" data-image-scale="${scale.toFixed(3)}" style="--detail-x:${o.x}%;--detail-y:${o.y}%;--detail-w:${o.w}%;--detail-h:${o.h}%"${steps ? st('none') : ''}><i aria-hidden="true"></i><div><b>${fmt(o.label)}</b>${o.note ? `<p>${fmt(o.note)}</p>` : ''}</div></div>`;
@@ -2914,7 +2927,7 @@ function thumb(slide, deck, images, i) {
 /* Alla bilder en bild använder: bild:, fria lager och bildfält i punkter (t.ex. "namn | text | bilder/x.jpg"). */
 const IMG_REF = /^(img:)?[^|\s][^|]*\.(jpe?g|png|webp|gif|svg|avif)$/i;
 function imagesOf(sl) {
-  const out = [sl.image, envPath(sl.env), ...(sl.layers || []).filter(l => l.type === 'bild').map(l => l.src)];
+  const out = [sl.image, sl.video, envPath(sl.env), ...(sl.layers || []).filter(l => l.type === 'bild').map(l => l.src)];
   lines(sl.items).forEach(t => String(t).split('|').slice(1).forEach(p => { p = p.trim(); if (IMG_REF.test(p)) out.push(p); }));
   return out.filter(Boolean).map(s => String(s).replace(/^img:/, ''));
 }
@@ -3029,12 +3042,13 @@ function player(root, deck, opt) {
   if (ro) ro.observe(vp); else G.addEventListener('resize', fit);
 
   function stopAll() {
+    syncFilms(null, 0);
     running.forEach(a => { try { a.finish(); } catch (e) {} });
     running = [];
     if (trans) { trans.forEach(a => { try { a.finish(); } catch (e) {} }); trans = null; }
     clearTimeout(autoTimer);
   }
-  function setSteps(sec, n, animate) {
+  function setSteps(sec, n, animate, allowFilm = true) {
     const groups = sec._groups || [];
     groups.forEach((els, idx) => els.forEach(el => {
       el.classList.toggle('in', idx < n);
@@ -3046,12 +3060,58 @@ function player(root, deck, opt) {
       shown.forEach((c, j) => c.classList.toggle('dimmed', !sec.dataset.focus && j < shown.length - 1));
     });
     applyDramaturgy(sec, n, false);
+    syncFilms(sec, n, allowFilm);
     if (sec === slides[cur] || sec.classList.contains('active')) trackFocus(sec, n);
     if (animate && n > 0 && groups[n - 1] && !reduced()) {
       groups[n - 1].forEach(el => running.push(playNamed(el, el.dataset.stepAnim || 'fade', 0)));
     }
     if (animate && n > 0 && groups[n - 1]) groups[n - 1].forEach(el => { if (el.dataset.timer) startTimer(el); });
   }
+  /* A film starts only at its explicit play step. Posters remain usable in previews and exports. */
+  function playFilm(v) {
+    const failed = () => {
+      if (!alive || !v._wanted) return;
+      v._wanted = false;
+      v.closest('.slide').removeAttribute('data-live-ready');
+      if (mode === 'present') toast('Filmen kunde inte starta. Backa ett steg och försök igen.');
+    };
+    if (!v._bound) {
+      v._bound = true;
+      v.addEventListener('playing', () => {
+        if (alive && v._wanted && !document.hidden) v.closest('.slide').dataset.liveReady = 'true';
+        else v.pause();
+      });
+      v.addEventListener('error', failed);
+    }
+    v.muted = true;
+    if (!v.getAttribute('src')) v.src = v.dataset.filmSrc;
+    else if (v.error) v.load();
+    try { const p = v.play(); if (p) p.then(() => { if (!alive || !v._wanted || document.hidden) v.pause(); }).catch(failed); }
+    catch (e) { failed(); }
+  }
+  function syncFilms(sec, n, allowFilm = true) {
+    if (sec && sec.dataset.imageMode === 'live') sec.dataset.liveState = n >= 2 ? 'playing' : n >= 1 ? 'zoom' : 'overview';
+    deckEl.querySelectorAll('[data-film-src]').forEach(v => {
+      const owner = v.closest('.slide');
+      const want = allowFilm && owner === sec && n >= 2 && mode === 'present' && !document.hidden;
+      if (want) { if (!v._wanted) { v._wanted = true; playFilm(v); } }
+      else {
+        v._wanted = false; v._resume = false; v.pause();
+        // Behåll sista filmrutan medan scenen tonas ut. Återställ först vid återbesök.
+        if (owner === sec) {
+          owner.removeAttribute('data-live-ready');
+          try { if (v.currentTime) v.currentTime = 0; } catch (e) {}
+        }
+      }
+    });
+  }
+  function filmVisibility() {
+    deckEl.querySelectorAll('[data-film-src]').forEach(v => {
+      if (document.hidden) { v._resume = v._wanted && !v.paused; v.pause(); }
+      else if (v._resume && v._wanted && alive) { v._resume = false; playFilm(v); }
+    });
+  }
+  document.addEventListener('visibilitychange', filmVisibility);
   /* Var i scenen ligger fokus just nu? Används av bakgrunden Fokusljus.
      Dramaturgimallar anger målet själva; övriga mallar följer senaste klicksteget. */
   let focusT = 0;
@@ -3182,7 +3242,7 @@ function player(root, deck, opt) {
     B.getAnimations({ subtree: true }).forEach(a => a.cancel());
     B.classList.add('active');
     step = o.atEnd ? (B._groups || []).length : 0;
-    setSteps(B, step, false);
+    setSteps(B, step, false, false);
     let base = 0, skip = null;
     if (A && A !== B && o.anim !== false) { const t = transition(A, B, o.dir || 1); base = t.base; skip = t.skip; }
     else if (A && A !== B) A.classList.remove('active');
@@ -3371,6 +3431,7 @@ button{font:inherit;padding:8px 14px;border-radius:8px;border:1px solid #26345A;
     toast,
     destroy() {
       alive = false; stopAll(); stopTimers(); bg.stop(); ro && ro.disconnect(); clearInterval(timerIv); clearTimeout(idleT);
+      document.removeEventListener('visibilitychange', filmVisibility);
       if (keyH) G.removeEventListener('keydown', keyH);
       if (spk && !spk.closed) spk.close();
       root.innerHTML = '';

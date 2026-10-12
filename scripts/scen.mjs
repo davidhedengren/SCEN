@@ -24,7 +24,7 @@ vm.runInThisContext(rd('src/engine.js'), { filename: 'engine.js' });
 vm.runInThisContext(rd('src/manus.js') + '\n;globalThis.Manus = Manus;', { filename: 'manus.js' });
 const { Scen, Manus } = globalThis;
 
-const MIME = { jpg: 'image/jpeg', jpeg: 'image/jpeg', png: 'image/png', webp: 'image/webp', gif: 'image/gif', svg: 'image/svg+xml', avif: 'image/avif' };
+const MIME = { jpg: 'image/jpeg', jpeg: 'image/jpeg', png: 'image/png', webp: 'image/webp', gif: 'image/gif', svg: 'image/svg+xml', avif: 'image/avif', mp4: 'video/mp4', webm: 'video/webm' };
 const esc = s => String(s).replace(/[&<>"]/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]));
 const slug = s => s.replace(/\.md$/i, '').replace(/^.*[\\/]/, '');
 
@@ -147,8 +147,9 @@ const cmds = {
       const d = readDeck('presentationer/' + f);
       const probs = [];
       d.slides.forEach((s, i) => {
-        const k = String(s.image || '').replace(/^img:/, '');
-        if (k && !/^(data:|https?:)/.test(k) && !fs.existsSync(path.join(ROOT, k))) probs.push(`bild ${i + 1}: saknar ${k}`);
+        for (const k of Scen.imagesOf(s)) {
+          if (k && !/^(data:|https?:)/.test(k) && !fs.existsSync(path.join(ROOT, k))) probs.push(`bild ${i + 1}: saknar ${k}`);
+        }
       });
       console.log(`${probs.length ? '✗' : '✓'} ${f}: ${d.slides.length} bilder, tema ${d.theme.id}`);
       probs.forEach(p => console.log('    ' + p));

@@ -2,11 +2,15 @@
 
 Underlag: de ursprungliga 20 bilderna i `presentationer/ai-agenter-och-miljoer.md`, renderad översikt och närmare visuell kontroll av centrala scener. Numreringen nedan avser den versionen.
 
-Efter granskningen bad användaren om de visuella förbättringarna med oförändrade formuleringar. Den nya sensorbilden, fokusväxlingen mellan begreppen, den lugnare sammanfattningen och fallvisningen är nu införda. Presentationen innehåller nu 20 bilder: Byt antagande är bild 18, övningen bild 19 och aktiviteten bild 20. Formuleringsförslagen nedan är fortfarande förslag och använder den ursprungliga numreringen.
+Efter granskningen bad användaren om de visuella förbättringarna med oförändrade formuleringar. Den nya sensorbilden, fokusväxlingen mellan begreppen, den lugnare sammanfattningen och fallvisningen är nu införda. Presentationen innehåller nu 21 bilder: den levande korsningen är bild 6, Byt antagande bild 19, övningen bild 20 och aktiviteten bild 21. Formuleringsförslagen nedan är fortfarande förslag och använder den ursprungliga numreringen.
 
-På användarens begäran har avsnittet ”Vad gör en agent till en agent?” tagits bort helt. Det upprepade agentbegreppet och fokusområdena i korsningen. Bild 5 följs nu direkt av ”Från agent till miljö” som bild 6. De kvarvarande bildernas formuleringar och talaranteckningar är oförändrade.
+På användarens begäran har avsnittet ”Vad gör en agent till en agent?” tagits bort helt. Det upprepade agentbegreppet och fokusområdena i korsningen. Efter bild 5 finns nu en rubriklös filmscen, följd av ”Från agent till miljö” som bild 7. De kvarvarande bildernas formuleringar och talaranteckningar är oförändrade.
 
 Exemplet **Ett beslut i korsningen** är färdigt i biblioteket och som fristående presentation: `dist/ett-beslut-i-korsningen.html`. Där demonstreras Genomlysning, Omformning, Två förlopp och Återkomst. Se `BERATTANDE-MALLAR.md` för användning.
+
+## Den levande korsningen
+
+Användarens skärminspelning har beskärts till själva filmen, utan ramen. Inspelningen innehåller upprepningar; en sammanhängande omgång på cirka 4,17 sekunder används i `korsning-levande.mp4`, utan ljud. `korsning-levande.jpg` är exakt dess första bildruta. Bild 6 använder Bildregis generella läge `levande`: helhet → zoom mot personen med paraply → film på ett eget klick. Filmen stannar på sista rutan. Alla tidigare 20 bilder ligger kvar med samma texter.
 
 ## Prioritering
 

@@ -121,6 +121,15 @@
 .scen [data-layout="image"] .cap p{font-size:28px;color:var(--muted)}
 
 /* ---------- Bildregi: bild som dramaturgisk scen ---------- */
+.scen .ir-live-camera{position:absolute;inset:0;transform:var(--live-start);transition:transform 1.2s var(--dramaturgy-ease);transform-origin:center}
+.scen .ir-live-camera :is(img,video){position:absolute;inset:0;width:100%;height:100%;object-fit:cover;max-width:none;max-height:none}
+.scen .ir-stage[data-image-crop="contain"] .ir-live-camera :is(img,video){object-fit:contain}
+.scen .ir-live-video{opacity:0}
+.scen [data-live-ready="true"] .ir-live-video{opacity:1}
+.scen [data-live-state="zoom"] .ir-live-camera,.scen [data-live-state="playing"] .ir-live-camera{transform:var(--live-end)}
+.scen [data-image-mode="live"]:not([data-live-state="overview"]) .ir-copy{opacity:0}
+.scen [data-body-motion="none"] .ir-live-camera,.scen.static .ir-live-camera{transition:none}
+@media(prefers-reduced-motion:reduce){.scen .ir-live-camera{transition:none}}
 .scen [data-layout="bildregi"]{display:block;padding:0;overflow:hidden;background:#05070b;color:#fff}
 .scen .ir-stage{position:absolute;inset:0;overflow:hidden;isolation:isolate;background:#05070b}
 .scen .ir-camera{position:absolute;inset:-1px;overflow:hidden;transform:scale(1);transform-origin:var(--image-active-x,50%) var(--image-active-y,50%);transition:transform var(--dramaturgy-focus-duration) var(--dramaturgy-ease)}

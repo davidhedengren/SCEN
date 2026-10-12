@@ -58,8 +58,9 @@ Första raden är mallen inom hakparentes, t.ex. `[kort]`. Alla mallar finns i [
 | `källa`, `helhet`, `reservation` | Proveniens, samlad tolkning och avgränsning i `[belägg]` |
 | `syntes` | Den nya slutsats som växer fram i `[sammanflöde]` |
 | `bild` | Sökväg till en bild, t.ex. `bilder/kurs/foto.jpg` |
+| `film` | `[bildregi]` med `bildläge: levande`: MP4 eller WebM som startar på andra klicket, efter inzoomningen. Använd första bildrutan i `bild:`. |
 | `alt` | Bildbeskrivning för skärmläsare |
-| `bildläge` | `[bildregi]`: `hero`, `detail`, `spotlight` eller `reveal` |
+| `bildläge` | `[bildregi]`: `hero`, `detail`, `spotlight`, `reveal` eller `levande` |
 | `fokuspunkt` | `[bildregi]`: bildens semantiska fokuspunkt som `x y` i procent |
 | `beskärning` | `[bildregi]`: `cover` eller medvetet letterboxad `contain` |
 | `startutsnitt`, `slututsnitt` | `[bildregi]`: `x y skala` för planerad kamerarörelse |

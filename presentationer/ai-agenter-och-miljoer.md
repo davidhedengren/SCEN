@@ -87,6 +87,21 @@ miljö: bilder/ai-agenter-miljoer/korsning.jpg | 84
 
 ---
 
+[bildregi]
+övergång: tona
+bild: bilder/ai-agenter-miljoer/korsning-levande.jpg
+film: bilder/ai-agenter-miljoer/korsning-levande.mp4
+alt: En person med paraply står kvar på övergångsstället medan bilar, cyklister och andra fotgängare rör sig omkring personen.
+bildläge: levande
+fokuspunkt: 65 72
+startutsnitt: 50 50 1
+slututsnitt: 65 72 1.9
+> Börja med stillbilden. Klick 1 zoomar in mot personen med paraply. Klick 2 startar filmen; låt den spela färdigt innan du går vidare.
+> Personen står kvar, men miljön fortsätter att förändras. Fråga: vad behöver personen hålla reda på, även när den inte själv går?
+> Filmen är en AI-genererad illustration. Nästa bild kopplar observationen till agentens beslut och miljön. Vänsterpil återställer stillbilden; R börjar om scenen.
+
+---
+
 [lexikon]
 övergång: morph
 rubrik: Från agent till miljö

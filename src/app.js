@@ -346,7 +346,7 @@ async function play(d, start) {
 }
 
 /* =================== spara på datorn =================== */
-const isPath = k => /\.(jpe?g|png|webp|gif|svg|avif)$/i.test(k) && !/^(data:|blob:)/.test(k);
+const isPath = k => /\.(jpe?g|png|webp|gif|svg|avif|mp4|webm)$/i.test(k) && !/^(data:|blob:)/.test(k);
 async function toDataUrl(url) {
   const b = await (await fetch(url)).blob();
   return await new Promise((res, rej) => { const r = new FileReader(); r.onload = () => res(r.result); r.onerror = rej; r.readAsDataURL(b); });
@@ -481,6 +481,7 @@ sats: [["title", "Rubrik", "text"], ["items", "Högst 3 rader: rubrik | text", "
   cards: [['title', 'Rubrik', 'text'], ['text', 'Ingress', 'area'], ['items', 'Kort, ett per rad: rubrik | text', 'list'], ['image', 'Bild', 'image'], ['banner', 'Visa bilden som band överst', 'check'], ['flip', 'Bilden till vänster', 'check']],
   split: [['title', 'Rubrik', 'text'], ['text', 'Ingress', 'area'], ['bullets', 'Punkter', 'list'], ['image', 'Bild', 'image'], ['flip', 'Bilden till vänster', 'check']],
   image: [['image', 'Bild', 'image'], ['title', 'Rubrik', 'text'], ['caption', 'Bildtext', 'text']],
+  bildregi: [['image', 'Bild eller filmens första bildruta', 'image'], ['video', 'Film (sökväg till MP4 eller WebM)', 'text'], ['caption', 'Etikett', 'text'], ['title', 'Rubrik', 'text'], ['text', 'Text', 'area'], ['items', 'Detaljer: id | etikett | x | y | bredd | höjd | förklaring', 'list']],
   terminal: [['caption', 'Etikett', 'text'], ['title', 'Rubrik', 'text'], ['items', 'Terminalhändelser: roll | innehåll | annotation', 'list']],
   kodforklaring: [['caption', 'Etikett', 'text'], ['title', 'Rubrik', 'text'], ['text', 'Kodblock', 'area'], ['items', 'Fokus: radnummer | token | annotation | resultat', 'list']],
   kodskrivning: [['caption', 'Etikett', 'text'], ['title', 'Rubrik', 'text'], ['text', 'Koden som skrivs fram (utan tomma rader)', 'area'], ['items', 'Markeringar efter skrivningen: radnummer | uttryck | förklaring | resultat. Uttrycket gammalt -> nytt byter ut koden i det klicket. Lägg till - takt: rad för att skriva en rad per klick.', 'list']],
@@ -824,6 +825,11 @@ function renderInsp() {
     <div class="fld"><label for="f-bg">Bakgrund</label><select id="f-bg" data-f="bg" data-t="text">${opt(Scen.BACKGROUNDS, s.bg || 'none')}</select></div></div>
     <div class="row2"><div class="fld"><label for="f-ta">Rubrikens rörelse</label><select id="f-ta" data-f="ta" data-t="text">${opt(Scen.TITLE_ANIMS, s.ta || 'auto')}</select></div>
     <div class="fld"><label for="f-ba">Innehållets rörelse</label><select id="f-ba" data-f="ba" data-t="text">${opt(Scen.BODY_ANIMS, s.ba || 'auto')}</select></div></div>`;
+  if (L === 'bildregi') {
+    const d = Scen.normalizeImageDirection(s);
+    h += `<div class="fld"><label for="f-image-mode">Bildläge</label><select id="f-image-mode" data-t="image-mode">${opt({hero:'Helbild',detail:'Detaljresa',spotlight:'Spotlight',reveal:'Avslöja',live:'Levande bild'},d.mode)}</select><span class="hint">Levande bild: stillbild först, zoom på första klicket och film på nästa. Filmen stannar vid slutet.</span></div>`;
+    for (const [key,label] of [['start','Startutsnitt'],['end','Slututsnitt']]) h += `<div class="fld"><label for="f-image-${key}">${label} (x y skala)</label><input id="f-image-${key}" data-t="image-tuple" data-f="${key}" value="${esc(d[key].join(' '))}"><span class="hint">Bildens centrum i procent, följt av zoom. Exempel: 65 70 1.8.</span></div>`;
+  }
   if (STEPPED.includes(L)) h += `<label class="chk"><input type="checkbox" id="f-steps" data-f="steps" data-t="check"${s.steps !== false ? ' checked' : ''}> Visa rubriker och innehåll stegvis, på klick</label>
     <div class="fld"><label for="f-focus">Fokus på aktuellt steg</label><select id="f-focus" data-f="focus" data-t="text"${s.steps === false ? ' disabled' : ''}>${opt(Scen.FOCUS_STYLES,s.focus || (s.dim || (['bro','etapper','vagval','lager','resonemang','helhet','skiften','prisma','verkningar','belagg','sammanflode'].includes(L) && s.dim !== false) ? 'soft' : 'none'))}</select><span class="hint">Mjuk tonar ned tidigare steg. Spotlight ger starkare kontrast. Accentlinje och Inramning markerar det aktuella steget.</span></div>`;
   h += `<span class="hint">Automatisk övergång blir morph när två bilder i rad har samma rubrik eller bild.</span></div>
@@ -849,7 +855,9 @@ function tableEditor(s) {
 function onInspInput(e) {
   const el = e.target; const t = el.dataset.t; if (!t || !deck) return;
   const s = deck.slides[cur];
-  if (t === 'text') s[el.dataset.f] = el.value;
+  if (t === 'image-mode') (s.imageDirection ||= {}).mode = el.value;
+  else if (t === 'image-tuple') { const a = el.value.trim().split(/[\s,]+/).map(Number); if (a.length !== 3 || !a.every(Number.isFinite)) return; (s.imageDirection ||= {})[el.dataset.f] = a; }
+  else if (t === 'text') s[el.dataset.f] = el.value;
   else if (t === 'list') s[el.dataset.f] = s.layout === 'trad' ? el.value.split('\n').map(x => { const d = Math.floor(x.replace(/\t/g, '  ').match(/^\s*/)[0].length / 2); return '- '.repeat(d) + x.trim(); }) : el.value.split('\n');
   else if (t === 'check') { s[el.dataset.f] = el.checked; if (el.dataset.f === 'steps') { const d = $('#f-focus'); if (d) d.disabled = !el.checked; } }
   else if (t === 'layout') {

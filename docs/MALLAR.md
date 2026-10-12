@@ -29,7 +29,7 @@ Varje bild i ett manus börjar med mallens namn inom hakparentes. Samma katalog 
 | `[tidslinje]` | Listor och steg | Händelser i tidsordning, eller numrerade steg i en aktivitet. |
 | `[text-bild]` | Bild | Text och punkter bredvid en bild. Byt sida med bild-vänster. |
 | `[helbild]` | Bild | En bild som tar hela ytan, med kort rubrik och bildtext. |
-| `[bildregi]` | Bild | Regisserar en bild som cinematic hero, detaljresa, spotlight/annotation eller kontrollerad mask reveal. Samma bild och komposition bär hela klicksekvensen. |
+| `[bildregi]` | Bild | Regisserar en bild som cinematic hero, detaljresa, spotlight/annotation, kontrollerad mask reveal eller stillbild → zoom → film på klick. Samma bild och komposition bär hela klicksekvensen. |
 | `[terminal]` | Textregi | Regisserar en trovärdig terminalberättelse där kommando, output, fel, resultat och annotation har separata semantiska roller. Kommandon kan skrivas fram när skrivandet bär betydelse. |
 | `[kodförklaring]` | Textregi | Etablerar ett stabilt kodblock och flyttar sedan fokus mellan relevanta rader eller uttryck med annotation och resultat. |
 | `[kodskrivning]` | Textregi | Koden skrivs fram i ett terminalfönster, tecken för tecken och rad för rad, med en blinkande markör och färgade nyckelord. Ett klick under skrivningen visar hela koden direkt. Med takt: rad skriver varje klick en rad i stället. Därefter lyfter klicken fram rader och uttryck, övriga rader tonas ned och en förklaring kopplas till raden. Varje markering skrivs radnummer, uttryck, förklaring och ett valfritt resultat. Skriv gammalt -> nytt som uttryck för att byta ut det i det klicket, till exempel för att visa hur en variant skiljer sig. Det nya står kvar efteråt. |
@@ -606,7 +606,7 @@ etikett: Foto: exempel
 
 ### `[bildregi]` Bildregi
 
-Regisserar en bild som cinematic hero, detaljresa, spotlight/annotation eller kontrollerad mask reveal. Samma bild och komposition bär hela klicksekvensen.
+Regisserar en bild som cinematic hero, detaljresa, spotlight/annotation, kontrollerad mask reveal eller stillbild → zoom → film på klick. Samma bild och komposition bär hela klicksekvensen.
 
 **Undvik när:** Dekorativa zoomar utan kommunikativ funktion. Använd inte bild när typografi, diagram eller whitespace är tydligare.
 

@@ -87,17 +87,27 @@ miljö: bilder/ai-agenter-miljoer/korsning.jpg | 84
 
 ---
 
-[kärna]
+[bildregi]
 övergång: morph
 etikett: Tre egenskaper
 rubrik: Vad gör en agent till en agent?
-text: Agent
-slutsats: Målorientering bygger på de två första.
-miljö: bilder/ai-agenter-miljoer/korsning.jpg | 84
-- Autonomi | Kan fatta egna beslut utan direkt mänsklig styrning.
-- Perception | Samlar in data om sin omgivning genom sensorer eller annan inmatning.
-- Målorientering | Använder sin autonomi och perception för att fatta beslut och ta de bästa möjliga åtgärderna för att nå sitt mål.
+bild: bilder/ai-agenter-miljoer/korsning.jpg
+alt: Samma stadskorsning som tidigare. Bilen i mitten, trafiken framför den och vägen vidare lyfts fram i tur och ordning.
+bildläge: spotlight
+fokus: spotlight
+fokuspunkt: 59 59
+startutsnitt: 50 50 1
+slututsnitt: 50 50 1
+säker-yta: 3 4 56 32
+mörkning: 0 0 64 42 0.65
+- autonomi | Autonomi | 59 | 59 | 10 | 11 | Kan fatta egna beslut utan direkt mänsklig styrning.
+- perception | Perception | 72 | 71 | 26 | 20 | Samlar in data om sin omgivning genom sensorer eller annan inmatning.
+- malorientering | Målorientering | 70 | 86 | 18 | 18 | Använder sin autonomi och perception för att fatta beslut och ta de bästa möjliga åtgärderna för att nå sitt mål.
+- samspel | Agent | 59 | 59 | 10 | 11 | Målorientering bygger på de två första.
 > Målorientering bygger på de två första: agenten använder sin autonomi och perception för att nå målet.
+> Återvänd till samma bil som på bild 3 och anta återigen att den är självkörande. Här tillämpar vi egenskaperna på bilen; bild 2 visar det allmänna kretsloppet.
+> Klick 1: bilen fattar själv beslut om att sakta in eller köra vidare. Klick 2: området framför bilen innehåller trafikanter som dess sensorer behöver upptäcka. Markeringen illustrerar vad bilen behöver uppfatta, inte ett uppmätt synfält.
+> Klick 3: följ vägen vidare. Anta att bilens mål är att ta sig till sin destination; att köra fortast just nu behöver inte vara rätt handling. Klick 4: återvänd till bilen och knyt ihop egenskaperna. Sista klicket visar korsningen som helhet igen.
 
 ---
 

@@ -7,38 +7,31 @@ tema: natt
 [bildregi]
 rubrik: Minimax-algoritmen
 etikett: Presentation av David Hedengren
-bild: bilder/minimax/original/image1.png
-alt: Originalets schackbräde i turkost ljus.
+bild: bilder/minimax/minimax-ett-drag.png
+alt: Ett schackbräde till höger med två kungar i turkost och varmt ljus; en hand står inför ett drag.
 bildläge: hero
-säker-yta: 4 12 48 67
-mörkning: 0 0 61 100 0.75
+säker-yta: 4 18 41 62
+mörkning: 0 0 0 0 0
 startutsnitt: 50 50 1
 slututsnitt: 50 50 1
-> Bildförslag: prompt 1 i docs/minimax/REGI-OCH-BILDPROMPTER.md. Originalbilden används tills vidare.
+rörelse: ingen
+rubrikrörelse: tona
+> Den nya bilden ersätter titelmotivet. Originalmotivet finns bevarat i bilder/minimax/original/image1.png.
 > Källa: originalbild 1. Presentation av David Hedengren.
 > Originaltext: Minimax-algoritmen
 
 ---
 
-[text-bild]
+[egen: bild-och-forklaring]
 rubrik: Minimax-algoritmen
-text: En beslutsfattande algoritm som kan användas för att hitta den bästa strategin i ett spel med två spelare. (t.ex. 3-i-rad eller schack)
 bild: bilder/minimax/original/image2.png
-- Algoritmen utforskar alla möjliga drag och väljer det som maximerar vinsten och minimerar den största möjliga förlusten
-> Källa: originalbild 2. Presentation av David Hedengren.
-> Originaltext: Minimax-algoritmen
-> Originaltext: En beslutsfattande algoritm som kan användas för att hitta den bästa strategin i ett spel med två spelare. (t.ex. 3-i-rad eller schack)
-> Originaltext: Algoritmen utforskar alla möjliga drag och väljer det som maximerar vinsten och minimerar den största möjliga förlusten
-> Originaltext: Vi kallar spelarna Max och Min där Max försöker maximera sin vinst
-> Originaltext: Och Min försöker minimera Max’s vinst
-
----
-
-[motsats]
-rubrik: Max och Min
+alt: Minimax-algoritmen
+text: En beslutsfattande algoritm som kan användas för att hitta den bästa strategin i ett spel med två spelare. (t.ex. 3-i-rad eller schack)
+rörelse: tona
+fokus: ingen
+- Algoritmen | Algoritmen utforskar alla möjliga drag och väljer det som maximerar vinsten och minimerar den största möjliga förlusten
 - Max | Vi kallar spelarna Max och Min där Max försöker maximera sin vinst
 - Min | Och Min försöker minimera Max’s vinst
-> Be eleverna beskriva varför Min bedömer samma utfall annorlunda.
 > Källa: originalbild 2. Presentation av David Hedengren.
 > Originaltext: Minimax-algoritmen
 > Originaltext: En beslutsfattande algoritm som kan användas för att hitta den bästa strategin i ett spel med två spelare. (t.ex. 3-i-rad eller schack)
@@ -48,13 +41,16 @@ rubrik: Max och Min
 
 ---
 
-[omlopp]
+[egen: bild-och-forklaring]
 rubrik: Användningsområden
 bild: bilder/minimax/original/image3.png
+alt: Användningsområden
+text:
+rörelse: tona
+fokus: ingen
 - Spelutveckling | Minimax används för att skapa intelligenta motståndare i spel som schack, dam, tic-tac-toe och andra spel där miljön är fullt observerbar
 - Ekonomi | Minimax kan användas i ekonomiska modeller för att förutsäga resultatet av beslut och för att optimera investeringsstrategier
 - Robotik | Minimax kan användas för att styra robotar i komplexa miljöer, till exempel för att maximera effektivitet I rörelser och minska energiförbrukning
-> Sakgranskning föreslås i regidokumentet; originalets formuleringar är kvar.
 > Källa: originalbild 3. Presentation av David Hedengren.
 > Originaltext: Användningsområden
 > Originaltext: Spelutveckling
@@ -66,12 +62,16 @@ bild: bilder/minimax/original/image3.png
 
 ---
 
-[fokus]
+[egen: bild-och-forklaring]
 rubrik: Begränsningar
+bild: bilder/minimax/original/image3.png
+alt: Begränsningar
+text:
+rörelse: tona
+fokus: ingen
 - Beräkningskostnad | Kan bli mycket tidskrävande och kräva stora mängder beräkningsresurser, särskilt i spel med stora sökträd och många möjliga drag. Ett sökträd för ett helt parti schack har ca 35^{100} noder
 - Kan inte hantera osäkerhet | Minimax fungerar bäst i spel med perfekt information och kan inte hantera dolda eller osäkra faktorer (som i t.ex. poker)
 - Motståndarens strategi | Minimax-algoritmen fungerar mindre bra om  om motståndaren inte spelar optimalt.
-> Originalets nätverksbild har flyttats till föregående scen där den finns kvar. Se förslag på sakgranskning i regin.
 > Källa: originalbild 4. Presentation av David Hedengren.
 > Originaltext: Begränsningar
 > Originaltext: Beräkningskostnad
@@ -84,14 +84,17 @@ rubrik: Begränsningar
 
 ---
 
-[text-bild]
+[egen: bild-och-forklaring]
 rubrik: Minimax i 3-i-rad
 bild: bilder/minimax/original/image5.png
+alt: Minimax i 3-i-rad
 text: Vi använder ett beslutsträd för att strukturera och analysera spelet
-- Varje nod i trädet motsvarar en spelställning
-- Varje gren representerar ett möjligt speldrag
-- Max och Min turas om att göra sina drag
-> Originalets neonbräde är en symbolbild. De exakta spelställningarna visas i diagrammen.
+rörelse: tona
+fokus: ingen
+- Nod | Varje nod i trädet motsvarar en spelställning
+- Gren | Varje gren representerar ett möjligt speldrag
+- Max och Min | Max och Min turas om att göra sina drag
+- Poängfunktion | Varje lövnod utvärderas med en poängfunktion: Vinst för X = 1. Vinst för 0 = -1. Oavgjort = 0.
 > Källa: originalbild 5. Presentation av David Hedengren.
 > Originaltext: Minimax i 3-i-rad
 > Originaltext: Varje nod i trädet motsvarar en spelställning
@@ -105,48 +108,34 @@ text: Vi använder ett beslutsträd för att strukturera och analysera spelet
 
 ---
 
-[typografi]
-etikett: Varje lövnod utvärderas med en poängfunktion:
-- statement | Vinst för X = **1** | X
-- kontrast | Vinst för 0 = **-1** | 0
-- slutsats | Oavgjort = **0** | Oavgjort
-> Källa: originalbild 5. Presentation av David Hedengren.
-> Originaltext: Minimax i 3-i-rad
-> Originaltext: Varje nod i trädet motsvarar en spelställning
-> Originaltext: Varje gren representerar ett möjligt speldrag
-> Originaltext: Max och Min turas om att göra sina drag
-> Originaltext: Varje lövnod utvärderas med en poängfunktion:
-> Originaltext: Vinst för X = 1
-> Originaltext: Vinst för 0 = -1
-> Originaltext: Oavgjort = 0
-> Originaltext: Vi använder ett beslutsträd för att strukturera och analysera spelet
-
----
-
-[bildregi]
-rubrik:
-text: 
-bild: bilder/minimax/original-06.svg
-alt: Beslutsträd för 3-i-rad
-bildläge: spotlight
-beskärning: contain
-mörkning: 0 0 0 0 0
-säker-yta: 2 0 94 14
-övergång: morph
-- rot | Rotnod | 45 | 10 | 11 | 17 | Varje nod i trädet motsvarar en spelställning
-- drag | Möjliga drag | 6 | 44 | 91 | 18 | Varje gren representerar ett möjligt speldrag
-- vidare | Nästa drag | 0 | 61 | 100 | 32 | Max och Min turas om att göra sina drag
+[egen: resonemang-i-bild]
+rubrik: Beslutsträd för 3-i-rad
+bild: bilder/minimax/v2/speltrad-0.svg
+alt: Tre-i-rad: ett tomt bräde, nio möjliga första drag och nästa nivå av trädet.
+text: Varje nod är en spelställning. Varje gren är ett möjligt drag.
+fokus: ingen
+rörelse: ingen
+övergång: tona
+- Rotnod | bilder/minimax/v2/speltrad-1.svg | Varje nod motsvarar en spelställning.
+- Möjliga drag | bilder/minimax/v2/speltrad-2.svg | Varje gren representerar ett möjligt speldrag.
+- Fortsätt trädet | bilder/minimax/v2/speltrad-3.svg | Efter ett drag följer motståndarens möjliga svar.
 > Källa: originalbild 6. Presentation av David Hedengren.
 > Originaltext: Rotnod
 > Originaltext: Beslutsträd för 3-i-rad
 
 ---
 
-[citat]
-text: ”Jag baserar mitt drag nu på vad min motståndare kommer göra i nästa drag och för att göra det funderar jag över vad jag skulle göra efter det och så vidare”
-bild: bilder/minimax/original/image6.png
-etikett: Minimax
-> Formuleringen kommer från originalet; ingen extern tillskrivning.
+[egen: resonemang-i-bild]
+rubrik:
+bild: bilder/minimax/v2/spel-7-0.svg
+alt: O väljer mellan två fortsättningar med minimaxvärdena 1 och 0.
+text: O:s tur. Följ värdena från löven till roten.
+fokus: ingen
+rörelse: ingen
+övergång: tona
+- Lövnoderna | bilder/minimax/v2/spel-7-1.svg | Vinst för X = 1. Oavgjort = 0.
+- Max väljer | bilder/minimax/v2/spel-7-2.svg | Max-värde: 1 i den vänstra grenen, 0 i den högra.
+- Min väljer | bilder/minimax/v2/spel-7-3.svg | Min-värde: 0. O väljer utfallet som är sämst för X.
 > Källa: originalbild 7. Presentation av David Hedengren.
 > Originaltext: ”Jag baserar mitt drag nu på vad min motståndare kommer göra i nästa drag och för att göra det funderar jag över vad jag skulle göra efter det och så vidare”
 > Originaltext: Min-värde: 0
@@ -158,43 +147,19 @@ etikett: Minimax
 
 ---
 
-[bildregi]
+[egen: resonemang-i-bild]
 rubrik:
-text: 
-bild: bilder/minimax/spel-min.svg
-alt: O:s tur
-bildläge: spotlight
-beskärning: contain
-mörkning: 0 0 0 0 0
-säker-yta: 2 0 94 14
-övergång: morph
-- lov | Utfallen | 0 | 62 | 100 | 33 | Värde: 1 eller 0
-- max | Max väljer | 0 | 36 | 100 | 25 | Max-värde: 1 och Max-värde: 0
-- min | Min väljer | 37 | 0 | 44 | 32 | Min-värde: 0
-> Källa: originalbild 7. Presentation av David Hedengren.
-> Originaltext: ”Jag baserar mitt drag nu på vad min motståndare kommer göra i nästa drag och för att göra det funderar jag över vad jag skulle göra efter det och så vidare”
-> Originaltext: Min-värde: 0
-> Originaltext: Max-värde: 1
-> Originaltext: Max-värde: 0
-> Originaltext: Värde: 1
-> Originaltext: Värde: 0
-> Originaltext: O:s tur
-
----
-
-[bildregi]
-rubrik:
-text: 
-bild: bilder/minimax/original-08.svg
-alt: X:s tur
-bildläge: spotlight
-beskärning: contain
-mörkning: 0 0 0 0 0
-säker-yta: 2 0 94 14
-övergång: morph
-- utfall | Utfallen | 0 | 70 | 100 | 29 | Värde: 1, 0 eller -1
-- min | Motståndarens svar | 5 | 31 | 74 | 20 | Min väljer det lägre värdet.
-- rot | Beslutet | 39 | 0 | 60 | 45 | Max-värde: 1
+bild: bilder/minimax/v2/spel-8-0.svg
+alt: X har tre möjliga drag med minimaxvärdena 0, -1 och 1.
+text: X:s tur. Följ hur Max och Min värderar de möjliga utfallen.
+fokus: ingen
+rörelse: ingen
+övergång: tona
+- Vänstra grenens utfall | bilder/minimax/v2/spel-8-1.svg | De två utfallen är 1 och 0.
+- Min-värde: 0 | bilder/minimax/v2/spel-8-2.svg | Max väljer 1 respektive 0; Min väljer sedan 0.
+- Min-värde: -1 | bilder/minimax/v2/spel-8-3.svg | I mitten kan Min nå utfallet -1.
+- Värde: 1 | bilder/minimax/v2/spel-8-4.svg | Det högra draget ger en direkt vinst för X.
+- Max-värde: 1 | bilder/minimax/v2/spel-8-5.svg | Max väljer det största värdet: 1.
 > Källa: originalbild 8. Presentation av David Hedengren.
 > Originaltext: Värde: 1
 > Originaltext: Värde: 0
@@ -211,31 +176,16 @@ säker-yta: 2 0 94 14
 
 ---
 
-[etapper]
-rubrik: Spela tre-i-rad med grannen
-etikett: Aktivitet
-- Spela ett parti | Spela ett parti tre-i-rad med grannen. Notera varje drag och dess position på ett papper eller på datorn.
-- Välj en spelställning | Välj en specifik spelställning från partiet. Rita ett spelträd som visar alla möjliga drag från denna ställning.
-- Analysera | Använd Minimax-algoritmen för att analysera spelträdet. Arbeta bakåt från lövnoderna för att bestämma värdet av tidigare noder. Identifiera det optimala draget baserat på din analys
-> Öppna filen ”Lektionsaktivitet – Minimax i Tre-i-rad” från Teams och läs instruktionerna.
-> Källa: originalbild 9. Presentation av David Hedengren.
-> Originaltext: Aktivitet: Spela tre-i-rad med grannen
-> Originaltext: Spela ett parti tre-i-rad med grannen.
-> Originaltext: Notera varje drag och dess position på ett papper eller på datorn.
-> Originaltext: 2. Välj en specifik spelställning från partiet.
-> Originaltext: Rita ett spelträd som visar alla möjliga drag från denna ställning.
-> Originaltext: 3. Använd Minimax-algoritmen för att analysera spelträdet.
-> Originaltext: Arbeta bakåt från lövnoderna för att bestämma värdet av tidigare noder
-> Originaltext: Identifiera det optimala draget baserat på din analys
-> Originaltext: Öppna filen ”Lektionsaktivitet – Minimax i Tre-i-rad” från Teams och läs instruktionerna
-
----
-
-[text-bild]
-rubrik: Lektionsaktivitet – Minimax i Tre-i-rad
-text: Öppna filen ”Lektionsaktivitet – Minimax i Tre-i-rad” från Teams och läs instruktionerna
+[egen: bild-och-forklaring]
+rubrik: Aktivitet: Spela tre-i-rad med grannen
 bild: bilder/minimax/original/image7.png
-> Originalets spelbräde behålls här som illustration. Teams-filen har inte bifogats och är inte inbäddad.
+alt: Aktivitet: Spela tre-i-rad med grannen
+text: Öppna filen ”Lektionsaktivitet – Minimax i Tre-i-rad” från Teams och läs instruktionerna
+rörelse: tona
+fokus: ingen
+- 1. Spela | Spela ett parti tre-i-rad med grannen. Notera varje drag och dess position på ett papper eller på datorn.
+- 2. Välj en spelställning | Välj en specifik spelställning från partiet. Rita ett spelträd som visar alla möjliga drag från denna ställning.
+- 3. Analysera | Använd Minimax-algoritmen för att analysera spelträdet. Arbeta bakåt från lövnoderna för att bestämma värdet av tidigare noder. Identifiera det optimala draget baserat på din analys
 > Källa: originalbild 9. Presentation av David Hedengren.
 > Originaltext: Aktivitet: Spela tre-i-rad med grannen
 > Originaltext: Spela ett parti tre-i-rad med grannen.
@@ -249,19 +199,18 @@ bild: bilder/minimax/original/image7.png
 
 ---
 
-[bildregi]
+[egen: resonemang-i-bild]
 rubrik:
-text: 
-bild: bilder/minimax/original-10.svg
-alt: Spelträdet från originalet
-bildläge: spotlight
-beskärning: contain
-mörkning: 0 0 0 0 0
-säker-yta: 2 0 94 14
-övergång: morph
-- rot | X:s tur | 34 | 0 | 25 | 30 | = max (vinst = 1)
-- niva | O:s svar | 5 | 23 | 90 | 27 | = min (vinst = -1)
-- lov | Jämför utfallen | 0 | 49 | 100 | 47 | Följ värdena tillbaka till roten.
+bild: bilder/minimax/v2/spel-10-0.svg
+alt: Spelträdet för tre-i-rad med växling mellan Max och Min.
+text: Max: vinst = 1 · Min: vinst = -1 · X:s tur
+fokus: ingen
+rörelse: ingen
+övergång: tona
+- Lövnoder | bilder/minimax/v2/spel-10-1.svg | Börja med de färdiga spelens värden.
+- Max | bilder/minimax/v2/spel-10-2.svg | Välj det största värdet bland barnen.
+- Min | bilder/minimax/v2/spel-10-3.svg | Välj det minsta värdet bland barnen.
+- Roten | bilder/minimax/v2/spel-10-4.svg | Max-värde: 0. Bästa motspel leder till oavgjort.
 > Källa: originalbild 10. Presentation av David Hedengren.
 > Originaltext: = min (vinst = -1)
 > Originaltext: = max (vinst = 1)
@@ -285,14 +234,13 @@ säker-yta: 2 0 94 14
 
 [egen: resonemang-i-bild]
 rubrik: Generell version av minimax-algoritmen
-etikett: Från spelställningar till värden
-bild: bilder/minimax/max-0.svg
-alt: Generell version av minimax-algoritmen
-text: Vilket värde får rotnoden?
-övergång: morph
-rörelse: tona
+bild: bilder/minimax/v2/val-0.svg
+alt: Max väljer mellan värdena 4, 3 och 2.
+text: ▲ Max drag · ▼ Min drag
 fokus: ingen
-- MAX väljer | bilder/minimax/max-1.svg | 4 är störst av 4, 3 och 2.
+rörelse: ingen
+övergång: tona
+- Max drag | bilder/minimax/v2/val-1.svg | max(4, 3, 2) = 4
 > Källa: originalbild 11. Presentation av David Hedengren.
 > Originaltext: Generell version av minimax-algoritmen
 > Originaltext: Max drag
@@ -307,17 +255,16 @@ fokus: ingen
 
 [egen: resonemang-i-bild]
 rubrik: Generell version av minimax-algoritmen
-etikett: Ett värde per klick
-bild: bilder/minimax/minimax-0.svg
-alt: Generell version av minimax-algoritmen
-text: Räkna från löven uppåt. Stanna före varje klick och låt gruppen föreslå ett värde.
-övergång: morph
-rörelse: tona
+bild: bilder/minimax/v2/minimax-0.svg
+alt: Spelträd med tre grenar och bladvärdena 8, 5, 6; 9, 3, 7; 2, 4, 6.
+text: Alla lövvärden syns. Räkna från löven mot roten.
 fokus: ingen
-- MIN: gren 1 | bilder/minimax/minimax-1.svg | min(8, 5, 6) = 5
-- MIN: gren 2 | bilder/minimax/minimax-2.svg | min(9, 3, 7) = 3
-- MIN: gren 3 | bilder/minimax/minimax-3.svg | min(2, 4, 6) = 2
-- MAX: roten | bilder/minimax/minimax-4.svg | max(5, 3, 2) = 5
+rörelse: ingen
+övergång: tona
+- Vänster | bilder/minimax/v2/minimax-1.svg | min(8, 5, 6) = 5
+- Mitten | bilder/minimax/v2/minimax-2.svg | min(9, 3, 7) = 3
+- Höger | bilder/minimax/v2/minimax-3.svg | min(2, 4, 6) = 2
+- Roten | bilder/minimax/v2/minimax-4.svg | max(5, 3, 2) = 5
 > Källa: originalbild 12. Presentation av David Hedengren.
 > Originaltext: Generell version av minimax-algoritmen
 > Originaltext: 5
@@ -340,15 +287,17 @@ fokus: ingen
 ---
 
 [egen: resonemang-i-bild]
-rubrik: Vilket värde får rotnoden?
-etikett: Uppgift
-bild: bilder/minimax/uppgift-rot.svg
-alt: Vilket värde får rotnoden?
-text: Arbeta från lövnoderna mot roten.
-övergång: morph
-rörelse: tona
+rubrik: Uppgift – Vilket värde får rotnoden?
+bild: bilder/minimax/v2/rotnod-0.svg
+alt: Spelträd med MIN i roten; övning i att beräkna nodvärden.
+text: Låt eleverna räkna först. Klicka sedan fram en nivå i taget.
 fokus: ingen
-- Originalets facit | bilder/minimax/original-13.svg | Följ växlingen mellan MIN och MAX. Roten i detta träd är MIN.
+rörelse: ingen
+övergång: tona
+- Första nivån | bilder/minimax/v2/rotnod-1.svg | Jämför löven under varje MAX-nod.
+- Nästa nivå | bilder/minimax/v2/rotnod-2.svg | MIN väljer det minsta värdet i varje gren.
+- Nivån under roten | bilder/minimax/v2/rotnod-3.svg | MAX väljer det största barnvärdet.
+- Rotnoden | bilder/minimax/v2/rotnod-4.svg | Roten är MIN i detta träd. Värdet är 2.
 > Källa: originalbild 13. Presentation av David Hedengren.
 > Originaltext: Uppgift – Vilket värde får rotnoden?
 > Originaltext: 4
@@ -407,21 +356,15 @@ fokus: ingen
 
 [egen: resonemang-i-bild]
 rubrik: Alfa-beta-beskärning (pruning)
-etikett: Följ sökningen
-bild: bilder/minimax/beskar-0.svg
-alt: Alfa-beta-beskärning (pruning)
-text: Samma träd, nu undersökt från vänster till höger.
-övergång: morph
-rörelse: tona
+bild: bilder/minimax/v2/beskarning-0.svg
+alt: Samma spelträd där tre grenar kan beskäras.
+text: Vänstra grenen ger 5. Kan någon av de andra grenarna bli bättre för Max?
 fokus: ingen
-- Första lövet | bilder/minimax/beskar-1.svg | Värdet 8 är nu undersökt.
-- MIN uppdaterar | bilder/minimax/beskar-2.svg | Värdet 5 är lägre än 8.
-- Vänstra grenen | bilder/minimax/beskar-3.svg | min(8, 5, 6) = 5.
-- Ett säkrat alternativ | bilder/minimax/beskar-4.svg | MAX kan välja en gren med värdet 5.
-- Mittenvägen | bilder/minimax/beskar-5.svg | Först ser vi 9. Det räcker inte för att avgöra grenen.
-- Här beskär vi | bilder/minimax/beskar-6.svg | Kommer inte kunna vara högre än 3, Max kommer därför inte välja mittenvägen (eftersom 5>3)
-- Högra vägen | bilder/minimax/beskar-7.svg | De sista två grenarna kan också beskäras eftersom oavsett vad de har för värde kommer inte Max välja den högra vägen
-- Samma beslut | bilder/minimax/beskar-8.svg | Vi kan beskära (prune) trädet här och behöver inte utforska några grenar nedanför
+rörelse: ingen
+övergång: tona
+- Mittenvägen | bilder/minimax/v2/beskarning-1.svg | Kommer inte kunna vara högre än 3, Max kommer därför inte välja mittenvägen (eftersom 5>3)
+- Högra vägen | bilder/minimax/v2/beskarning-2.svg | De sista två grenarna kan också beskäras eftersom oavsett vad de har för värde kommer inte Max välja den högra vägen
+- Beskärning | bilder/minimax/v2/beskarning-3.svg | Vi kan beskära (prune) trädet här och behöver inte utforska några grenar nedanför
 > Källa: originalbild 14. Presentation av David Hedengren.
 > Originaltext: Alfa-beta-beskärning (pruning)
 > Originaltext: 5
@@ -449,8 +392,13 @@ fokus: ingen
 
 ---
 
-[fokus]
+[egen: bild-och-forklaring]
 rubrik: Varför beskärning?
+bild:
+alt: Varför beskärning?
+text:
+rörelse: tona
+fokus: ingen
 - Minskad beräkningskostnad | Alfa-beta beskärning reducerar antalet noder som måste utforskas i spelträdet genom att eliminera grenar som inte påverkar det slutliga resultatet. Detta gör Minimax betydligt snabbare och mer effektiv.
 - Djupare träd | Gör det möjligt att utforska djupare träd
 - Snabbare beslut | Genom att undvika utforskning av irrelevanta grenar, kan algoritmen fatta beslut snabbare. Detta är särskilt viktigt i komplexa spel som schack, där antalet möjliga drag kan bli astronomiskt stort.
@@ -465,28 +413,16 @@ rubrik: Varför beskärning?
 
 ---
 
-[fokus]
+[egen: bild-och-forklaring]
 rubrik: Alfa- och betavärden
-text: Algoritmen tilldelar varje nod ett alfavärde (α) och ett betavärde β och gör en Depth First Search i trädet.
-- Alfa: α | Alfavärdet (α) är det hittills bästa värde som Max kan garantera. Från början ges noden alfavärdet (α=−∞) och uppdateras vid maxnoder om ett högre värde hittats.
-- Beta: β | Betavärdet (β) är det hittills bästa värde som Min kan garantera. Betavärdet sätts från början till β=+∞ och uppdateras vid minnoder om ett lägre värde hittats.
-> Källa: originalbild 16. Presentation av David Hedengren.
-> Originaltext: Alfa- och betavärden
-> Originaltext: Algoritmen tilldelar varje nod ett alfavärde (𝛼) och ett betavärde 𝛽 och gör en Depth First Search i trädet.
-> Originaltext: Alfavärdet (𝛼) är det hittills bästa värde som Max kan garantera.
-> Originaltext: Från början ges noden alfavärdet (𝛼=−∞) och uppdateras vid maxnoder om ett högre värde hittats.
-> Originaltext: Betavärdet (𝛽) är det hittills bästa värde som Min kan garantera.
-> Originaltext: Betavärdet sätts från början till 𝛽=+∞ och uppdateras vid minnoder om ett lägre värde hittats.
-> Originaltext: Om 𝛼≥𝛽 behöver grenen inte utforskas mer och kan beskäras.
-
----
-
-[formel]
-rubrik: När kan vi beskära?
-formel: α ≥ β
-- α | Det hittills bästa värde som Max kan garantera.
-- β | Det hittills bästa värde som Min kan garantera.
-slutsats: Om α≥β behöver grenen inte utforskas mer och kan beskäras.
+bild:
+alt: Alfa- och betavärden
+text: Algoritmen tilldelar varje nod ett alfavärde (𝛼) och ett betavärde 𝛽 och gör en Depth First Search i trädet.
+rörelse: tona
+fokus: ingen
+- α · Alfavärdet | Alfavärdet (𝛼) är det hittills bästa värde som Max kan garantera. Från början ges noden alfavärdet (𝛼=−∞) och uppdateras vid maxnoder om ett högre värde hittats.
+- β · Betavärdet | Betavärdet (𝛽) är det hittills bästa värde som Min kan garantera. Betavärdet sätts från början till 𝛽=+∞ och uppdateras vid minnoder om ett lägre värde hittats.
+- α ≥ β · Beskärning | Om 𝛼≥𝛽 behöver grenen inte utforskas mer och kan beskäras.
 > Källa: originalbild 16. Presentation av David Hedengren.
 > Originaltext: Alfa- och betavärden
 > Originaltext: Algoritmen tilldelar varje nod ett alfavärde (𝛼) och ett betavärde 𝛽 och gör en Depth First Search i trädet.
@@ -499,17 +435,21 @@ slutsats: Om α≥β behöver grenen inte utforskas mer och kan beskäras.
 ---
 
 [egen: resonemang-i-bild]
-rubrik: Beta ≤ Alfa
-etikett: Koppla regeln till trädet
-bild: bilder/minimax/beskar-4.svg
-alt: Beta ≤ Alfa
-text: MAX har α = 5. Visa var stoppvillkoret blir sant.
-övergång: morph
-rörelse: tona
+rubrik: Alfa- och betavärden
+bild: bilder/minimax/v2/alpha-0.svg
+alt: Djupet först genom ett spelträd, med alfa och beta vid noderna.
+text: Djupet först, från vänster till höger. α och β visas vid noderna.
 fokus: ingen
-- Mitten: β = 3 | bilder/minimax/beskar-6.svg | Beta ≤ Alfa, Vi behöver inte fortsätta söka i grenen
-- Höger: β = 2 | bilder/minimax/beskar-7.svg | Beta ≤ Alfa, Vi behöver inte fortsätta söka i grenen
-- Rotens värde: 5 | bilder/minimax/beskar-8.svg | De beskurna grenarna behöver inte utvärderas.
+rörelse: ingen
+övergång: tona
+- β = 8 | bilder/minimax/v2/alpha-1.svg | Det första lövet ger MIN gränsen 8.
+- β = 5 | bilder/minimax/v2/alpha-2.svg | MIN uppdaterar när ett lägre värde hittas.
+- Min-värde: 5 | bilder/minimax/v2/alpha-3.svg | Det sista lövet ändrar inte grenens värde.
+- α = 5 | bilder/minimax/v2/alpha-4.svg | Max kan nu garantera 5. Gränsen följer med till nästa gren.
+- β = 9 | bilder/minimax/v2/alpha-5.svg | Mittenvägens första löv.
+- β ≤ α | bilder/minimax/v2/alpha-6.svg | 3 ≤ 5. Vi behöver inte fortsätta söka i grenen.
+- β ≤ α | bilder/minimax/v2/alpha-7.svg | 2 ≤ 5. Vi behöver inte fortsätta söka i grenen.
+- Samma beslut | bilder/minimax/v2/alpha-8.svg | Rotens värde är 5. Sex av nio löv behövde undersökas.
 > Källa: originalbild 17. Presentation av David Hedengren.
 > Originaltext: 𝛼=𝛽=
 > Originaltext: −∞+∞
@@ -555,14 +495,13 @@ fokus: ingen
 ---
 
 [egen: resonemang-i-bild]
-rubrik: Vilka grenar kan beskäras?
-etikett: Aktivitet
-bild: bilder/minimax/ovning-0.svg
-alt: Vilka grenar kan beskäras?
-text: Sök från vänster till höger. Markera det ni kan hoppa över och förklara varför.
-övergång: morph
-rörelse: tona
+rubrik: Aktivitet – Vilka grenar kan beskäras?
+bild: bilder/minimax/v2/ovning-0.svg
+alt: Fyra nivåer: MAX, MIN, MAX, MIN, och åtta bladvärden.
+text: Arbeta från vänster till höger. Markera vilka grenar som kan hoppas över.
 fokus: ingen
+rörelse: ingen
+övergång: tona
 > Källa: originalbild 18. Presentation av David Hedengren.
 > Originaltext: Aktivitet – Vilka grenar kan beskäras?
 > Originaltext: 2
@@ -577,21 +516,20 @@ fokus: ingen
 ---
 
 [egen: resonemang-i-bild]
-rubrik: Vilka grenar kan beskäras?
-etikett: Facit · ett steg per klick
-bild: bilder/minimax/ovning-0.svg
-alt: Vilka grenar kan beskäras?
-text: Återkoppla ett resonemang i taget.
-övergång: morph
-rörelse: tona
+rubrik: Aktivitet – Vilka grenar kan beskäras?
+bild: bilder/minimax/v2/ovning-0.svg
+alt: Stegvis facit till övningen med åtta bladvärden.
+text: Facit. Sök från vänster till höger och förklara varje värde.
 fokus: ingen
-- Vänstra MAX | bilder/minimax/ovning-1.svg | max(5, 3) = 5. MIN får β = 5.
-- Beskär ett löv | bilder/minimax/ovning-2.svg | 8 räcker för att avstå grenen. Lövet 2 behöver inte undersökas.
-- Vänstra MIN | bilder/minimax/ovning-3.svg | 5 blir ett säkrat alternativ för roten.
-- Högra sidan | bilder/minimax/ovning-4.svg | max(7, 1) = 7.
-- Sista MAX | bilder/minimax/ovning-5.svg | max(2, 3) = 3.
-- Högra MIN | bilder/minimax/ovning-6.svg | min(7, 3) = 3.
-- Roten | bilder/minimax/ovning-7.svg | max(5, 3) = 5.
+rörelse: ingen
+övergång: tona
+- Första MAX | bilder/minimax/v2/ovning-1.svg | max(5, 3) = 5. MIN får gränsen β = 5.
+- Beskär | bilder/minimax/v2/ovning-2.svg | 8 räcker. Lövet 2 i samma gren behöver inte undersökas.
+- Vänstra MIN | bilder/minimax/v2/ovning-3.svg | Värdet blir 5. Rotens α uppdateras till 5.
+- Högra sidan | bilder/minimax/v2/ovning-4.svg | max(7, 1) = 7.
+- Sista MAX | bilder/minimax/v2/ovning-5.svg | max(2, 3) = 3.
+- Högra MIN | bilder/minimax/v2/ovning-6.svg | min(7, 3) = 3.
+- Roten | bilder/minimax/v2/ovning-7.svg | max(5, 3) = 5.
 > Källa: originalbild 19. Presentation av David Hedengren.
 > Originaltext: Aktivitet – Vilka grenar kan beskäras?
 > Originaltext: 5
@@ -609,19 +547,18 @@ fokus: ingen
 > Originaltext: 8
 > Originaltext: 7
 > Originaltext: 1
-> Godkänd rättelse: originalbild 19 anger 2 i MAX-noden över löven 2 och 3 samt i MIN-noden ovanför. Båda är rättade till 3 efter användarens godkännande 2026-10-13. Roten är fortfarande 5.
+> Godkänd rättelse 2026-10-13: originalets 2 i MAX-noden över löven 2 och 3 samt i MIN-noden ovanför är rättade till 3. Roten är fortfarande 5.
 
 ---
 
 [egen: resonemang-i-bild]
-rubrik: Hur många noder behöver utforskas?
-etikett: Aktivitet
-bild: bilder/minimax/rakna-noder.svg
-alt: Hur många noder behöver utforskas?
-text: Räkna besökta noder inklusive roten. Följ grenarna från vänster till höger.
-övergång: morph
-rörelse: tona
+rubrik: Aktivitet – Hur många noder behöver utforskas?
+bild: bilder/minimax/v2/rakna-noder.svg
+alt: Oregelbundet minimax-träd med färdiga bladvärden och tomma interna noder.
+text: Hur många noder besöks med alfa-beta-beskärning? Sök från vänster till höger.
 fokus: ingen
+rörelse: ingen
+övergång: tona
 > Källa: originalbild 20. Presentation av David Hedengren.
 > Originaltext: Aktivitet – Hur många noder behöver utforskas?
 > Originaltext: 0
@@ -640,16 +577,18 @@ fokus: ingen
 
 ---
 
-[punkter]
-rubrik: Monte Carlo Tree Search (MCTS)
-etikett: Extrauppgift
+[egen: bild-och-forklaring]
+rubrik: Extrauppgift – Monte Carlo Tree Search (MCTS)
+bild:
+alt: Extrauppgift – Monte Carlo Tree Search (MCTS)
 text: Bekanta dig med sökalgoritmen MCTS genom att söka på internet och/eller titta på klippet nedan
-- Jämför MCTS och Minimax.
-- Vad finns det för likheter/skillnader?
-- Vad finns det för för- och nackdelar med respektive algoritm?
-@text 144 945 1600 60 storlek=24 färg=dampad | Monte Carlo Tree Search: https://www.youtube.com/watch?v=lhFXKNyA0QA
-> Originalets videolänk: https://www.youtube.com/watch?v=lhFXKNyA0QA
-> Klippet bäddas inte in; länken finns också i regidokumentet.
+rörelse: tona
+fokus: ingen
+- Jämför | Jämför MCTS och Minimax.
+- Likheter och skillnader | Vad finns det för likheter/skillnader?
+- För- och nackdelar | Vad finns det för för- och nackdelar med respektive algoritm?
+@text 126 936 1650 65 storlek=24 färg=dampad | Monte Carlo Tree Search: https://www.youtube.com/watch?v=lhFXKNyA0QA
+> Originalets videolänk är bevarad. Teams-övningsfilen är inte bifogad.
 > Källa: originalbild 21. Presentation av David Hedengren.
 > Originaltext: Extrauppgift – Monte Carlo Tree Search algoritmen (MCTS)
 > Originaltext: Bekanta dig med sökalgoritmen MCTS genom att söka på internet och/eller titta på klippet nedan

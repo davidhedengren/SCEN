@@ -7,126 +7,101 @@
   [
     2,
     2,
-    "[text-bild]"
+    "[egen: bild-och-forklaring]"
   ],
   [
     3,
-    2,
-    "[motsats]"
+    3,
+    "[egen: bild-och-forklaring]"
   ],
   [
     4,
-    3,
-    "[omlopp]"
+    4,
+    "[egen: bild-och-forklaring]"
   ],
   [
     5,
-    4,
-    "[fokus]"
+    5,
+    "[egen: bild-och-forklaring]"
   ],
   [
     6,
-    5,
-    "[text-bild]"
+    6,
+    "[egen: resonemang-i-bild]"
   ],
   [
     7,
-    5,
-    "[typografi]"
+    7,
+    "[egen: resonemang-i-bild]"
   ],
   [
     8,
-    6,
-    "[bildregi]"
+    8,
+    "[egen: resonemang-i-bild]"
   ],
   [
     9,
-    7,
-    "[citat]"
+    9,
+    "[egen: bild-och-forklaring]"
   ],
   [
     10,
-    7,
-    "[bildregi]"
+    10,
+    "[egen: resonemang-i-bild]"
   ],
   [
     11,
-    8,
-    "[bildregi]"
-  ],
-  [
-    12,
-    9,
-    "[etapper]"
-  ],
-  [
-    13,
-    9,
-    "[text-bild]"
-  ],
-  [
-    14,
-    10,
-    "[bildregi]"
-  ],
-  [
-    15,
     11,
     "[egen: resonemang-i-bild]"
   ],
   [
-    16,
+    12,
     12,
     "[egen: resonemang-i-bild]"
   ],
   [
-    17,
+    13,
     13,
     "[egen: resonemang-i-bild]"
   ],
   [
-    18,
+    14,
     14,
     "[egen: resonemang-i-bild]"
   ],
   [
-    19,
     15,
-    "[fokus]"
+    15,
+    "[egen: bild-och-forklaring]"
   ],
   [
-    20,
     16,
-    "[fokus]"
-  ],
-  [
-    21,
     16,
-    "[formel]"
+    "[egen: bild-och-forklaring]"
   ],
   [
-    22,
+    17,
     17,
     "[egen: resonemang-i-bild]"
   ],
   [
-    23,
+    18,
     18,
     "[egen: resonemang-i-bild]"
   ],
   [
-    24,
+    19,
     19,
     "[egen: resonemang-i-bild]"
   ],
   [
-    25,
+    20,
     20,
     "[egen: resonemang-i-bild]"
   ],
   [
-    26,
     21,
-    "[reflektion]"
+    21,
+    "[egen: bild-och-forklaring]"
   ]
 ]

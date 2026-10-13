@@ -30,3 +30,31 @@ assert.equal(Math.max(left,right), 5);
 const mapping = JSON.parse(read('docs/minimax/scenmappning.json'));
 assert.deepEqual([...new Set(mapping.map(x=>x[1]))].sort((a,b)=>a-b),Array.from({length:21},(_,i)=>i+1));
 console.log('OK: bildstegens resurser, manusrundtur, räkneexempel och täckning av samtliga originalbilder.');
+
+// The lesson follows the original again; overlays in slide coordinates are not used for diagrams.
+assert.equal(deck.slides.length,21);
+assert(mapping.every((row,i)=>row[0]===i+1&&row[1]===i+1));
+assert(!deck.slides.some(s=>s.imageDirection?.mode==='spotlight'));
+// A different caption must never change the diagram's coordinate system.
+const bounds = text => /viewBox="([^"]+)"/.exec(text)?.[1];
+for (const slide of templated) {
+  const refs=Scen.imagesOf(slide);
+  const base=read(refs[0]);
+  for (const ref of refs) {
+    const svg=read(ref);
+    assert.equal(bounds(svg),bounds(base),`Olika bildutsnitt i ${ref}`);
+    // Highlight rectangles surround the actual triangle in the SAME SVG, not a guessed viewport area.
+    const attr=(s,n)=>new RegExp(`\\b${n}="([^"]+)"`).exec(s)?.[1];
+    const polygons=new Map([...svg.matchAll(/<g\s+data-node="([^"]+)"[^>]*><polygon\s+points="([^"]+)"/g)].map(m=>[m[1],m[2].split(' ').map(p=>p.split(',').map(Number))]));
+    for (const match of svg.matchAll(/<rect\s+data-focus-node="([^"]+)"[^>]*>/g)) {
+      const points=polygons.get(match[1]);assert(points,`${ref}: fokus utan nod`);
+      const x=+attr(match[0],'x'),y=+attr(match[0],'y'),w=+attr(match[0],'width'),h=+attr(match[0],'height');
+      assert(points.every(([px,py])=>px>x&&px<x+w&&py>y&&py<y+h),`${ref}: rutan missar noden`);
+    }
+  }
+}
+const data=JSON.parse(read('docs/minimax/diagramdata-v2.json'));
+assert.equal(Object.keys(data.source20.nodes).length,22);
+assert.equal(data.source20.edges.length,21);
+assert.equal(data.source20.nodes[data.source20.root].role,'min');
+console.log('OK: originalets 21 scener, identiska bildutsnitt, exakt fokus runt trianglar och återställt övningsträd.');

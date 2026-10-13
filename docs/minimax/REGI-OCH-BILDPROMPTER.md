@@ -1,32 +1,47 @@
 # Minimax och beskärning i SCEN
 
-Första körbara versionen: 26 scener, byggda från originalets 21 bilder. Originalets exempel, övningar och symbolbilder finns kvar. Längre bilder har delats upp. Den återkommande sidfoten är flyttad till titel och talaranteckningar. Originaltexten finns också per scen i anteckningarna.
+Omarbetad föreläsningsversion: 21 scener i samma ordning som originalets 21 bilder. Exemplen och deras förklaringar är samlade som i originalet. Den återkommande sidfoten är flyttad till titel och talaranteckningar. Originaltexten finns också per scen i anteckningarna.
 
 [Manus](../../presentationer/minimax-och-beskarning.md) · [Original-PowerPoint](original.pptx) · [Originalets textutdrag](originaltext.json) · [Scenmappning](scenmappning.json)
 
 ## Regin
 
-1. **Ett beslut mot en motståndare.** Schackbilden introducerar ämnet. Max och Min får varsitt perspektiv.
-2. **Från spel till träd.** Tre-i-rad visas med samma spelställningar som i originalet. Highlight-rutor styr uppmärksamheten mellan rot, drag och utfall. Ingen kamerazoom.
-3. **Från löv till beslut.** I det generella trädet är bladvärdena synliga, men föräldravärdena dolda. Ett klick räknar en gren och markerar de värden som jämförs. Rotens värde avslöjas sist.
-4. **Från fullständig sökning till beskärning.** Samma träd får ligga kvar. Nu är framtida bladvärden dolda och sökningen går vänster till höger. Det syns exakt när det finns tillräckligt underlag för att avstå en gren. Beskurna löv markeras med streckad förbindelse och ordet ”Beskuren”; deras värden avslöjas inte.
-5. **Sätt namn på upptäckten.** Först intuitionen, sedan α, β och stoppvillkoret. En kort återkoppling på samma träd kopplar symbolerna till konkreta gränser.
-6. **Eleverna tar över.** Olöst träd först, facit i följande scen. Ett resonemang per klick, med highlight på berörd nod. Därefter nodräkningsövningen och MCTS.
+Den omarbetade versionen har **21 scener i originalets ordning**, en per originalbild. Spelställningar, argument, uppgifter och deras kopplingar är åter samlade. Den nya genererade schackbilden används på titeln; övriga symbolbilder är originalets.
 
-Stanna före svarsklicken. Be om både värde och motivering: ”Vem väljer här?” och ”Vad vet vi redan som gör resten ointressant?” Undvik en automatisk genomspelning av algoritmen; eleverna ska hinna förutsäga nästa steg.
+- **Scen 2–5:** originalets bild och namngivna förklaringar bredvid varandra. Ett klick visar och framhäver nästa förklaring. Tidigare förklaringar fortsätter vara läsbara. Ingen cirkulerande text.
+- **Scen 6–10:** spelbräden och förgreningar kommer direkt från originalets vektorformer. I scen 7 ligger robotbilden, citatet och det konkreta spelträdet åter på samma bild. Utfall och nodvärden avslöjas från löven uppåt.
+- **Scen 11–14:** stora trianglar i originalets riktning: uppåt för MAX, nedåt för MIN. I minimax räknas en gren per klick. I introduktionen till beskärning syns originalets lövvärden; röda kryss markerar exakt vilka grenar som kan lämnas outforskade.
+- **Scen 16–17:** definitionerna av alfa och beta följs av ett eget konkret förlopp. α och β står vid noderna och uppdateras vid varje söksteg. Framtida värden är dolda i denna förloppsvisning.
+- **Scen 18–19:** olöst övning följd av stegvis facit med samma diagrampositioner. Den tidigare godkända rättelsen till värdet 3 är kvar.
+- **Scen 20:** samtliga 22 noder och 21 förbindelser är återgivna. Roten är MIN, precis som i originalet. Grenarna har spridits ut för att göra de små noderna lättare att läsa.
 
-## Den nya mallen: Resonemang i bild
+Stanna före svarsklicken. Be om både värde och motivering: ”Vem väljer här?” och ”Vad vet vi redan som gör resten ointressant?” Alla scener har kvar originalets text i talaranteckningarna som stöd.
 
-Implementerad som `[egen: resonemang-i-bild]` i bibliotekets mallar.
+## Mallarna i denna version
 
-- **Syfte:** följa en visuell förklaring utan att byta koordinatsystem.
-- **När:** en uträkning, undersökning eller bild förändras mellan tydliga tillstånd.
-- **Skillnad:** Bildregi pekar på delar av en befintlig bild. Denna mall byter även bildens innehåll, exempelvis från okänt nodvärde till beräknat värde.
-- **Fokus:** grundbild → ett tillstånd per klick, med highlight i diagrammet och en kort förklaring under. Bakåt återställer föregående tillstånd. Utan klicksteg visas slutläget.
-- **Innehåll:** en grundbild, valfri rubrik och etikett, sedan `etikett | bildsökväg | förklaring` per steg. Bilderna ska ha identiska mått och stabila positioner.
-- **Återanvändning:** matematiska lösningar, fysikexperiment, historiska kartor, textrevision, kodspårning och medicinska förlopp.
+### Resonemang i bild
 
-Mallen beräknar inte algoritmer. Diagramtillstånden i denna presentation är förberedda SVG-bilder. Värdena är granskade mot träden. En framtida trädmodell bör göra beräkningen automatiskt när läraren ändrar lövvärdena.
+`[egen: resonemang-i-bild]` används för spelträd och andra bildförlopp.
+
+1. **Syfte:** följa en visuell beräkning i ett stabilt koordinatsystem.
+2. **När:** en lösning, undersökning eller bild förändras mellan tydliga tillstånd.
+3. **Skillnad mot Bildregi:** diagraminnehållet kan ändras, till exempel när ett värde blir känt. Markeringarna finns i själva SVG-bilden; de placeras inte utifrån visningsytans procentkoordinater.
+4. **Fokus:** grundbild → ett tillstånd per klick, med markerad nod eller värde och en kort förklaring nedanför. Bakåt återställer föregående tillstånd. Utan klicksteg visas slutläget.
+5. **Innehåll:** en grundbild, valfri rubrik och etikett, sedan `etikett | bildsökväg | förklaring` per steg. Alla tillstånd har samma bildutsnitt. En fast yta för bildtext gör att en längre förklaring inte krymper diagrammet.
+6. **Återanvändning:** matematiska lösningar, fysikexperiment, historiska kartor, textrevision, kodspårning och medicinska förlopp.
+
+Mallen beräknar inte algoritmer. Diagramtillstånden är förberedda SVG-bilder. En framtida trädmodell bör göra beräkningen automatiskt när läraren ändrar lövvärdena.
+
+### Bild och förklaring
+
+`[egen: bild-och-forklaring]` används för definitioner, tillämpningar, begränsningar och instruktioner.
+
+1. **Syfte:** förena originalets illustration med dess förklarande text.
+2. **När:** 2–4 namngivna förklaringar hör till ett stabilt motiv.
+3. **Skillnad mot Text och bild:** alla delrubriker finns från början, medan klick visar förklaringarna och framhäver aktuell rad. Mallen hanterar längre originalformuleringar och en gemensam slutvy.
+4. **Fokus:** nästa rad markeras med en accentlinje; redan visade förklaringar ligger kvar med hög läsbarhet. Sista klicket återger helheten.
+5. **Innehåll:** valfri bild, rubrik och ingress; `rubrik | förklaring` per punkt. Utan bild får förklaringen hela bredden.
+6. **Återanvändning:** begrepp, historiska dokument, litterär analys, fysikens villkor, användningsområden och praktiska instruktioner.
 
 ## Tre förslag till nästa mallar
 
@@ -50,7 +65,7 @@ Passar minimax/alfa-beta, sorteringsalgoritmer, produktionsflöden, experimentel
 
 ## Bildprompter
 
-Inga nya bilder behövs för att använda versionen. Originalets bilder är inlagda. Börja gärna med **bild 1**; övriga två är valfria. Låt AI skapa stämningsbilder, inte algoritmdiagram: text, siffror, grenar och exakta bräden lägger vi i SCEN.
+Den genererade bilden enligt **prompt 1** är nu inlagd på titeln. Övriga två bilder är valfria; originalets bilder används på övriga bildscener. Låt AI skapa stämningsbilder, inte algoritmdiagram: text, siffror, grenar och exakta bräden lägger vi i SCEN.
 
 Använd samma färgvärld genom serien: mörk blåsvart bakgrund, mjukt turkost ljus, en liten varm bärnstensfärgad kontrast. 16:9, minst 1920 × 1080. Inga texter, logotyper, vattenstämplar eller inritade highlight-rutor. Använd gärna första bilden som stilreferens för de andra.
 
@@ -92,8 +107,8 @@ Endast den uttryckligen godkända rättelsen nedan är genomförd. Övriga formu
 ## Bevarat material och externa beroenden
 
 - Alla 21 originalbilder finns i den oförändrade bifogade PowerPoint-filen. Alla 27 mediafiler finns i `bilder/minimax/original/`; flera små bilder är PowerPoints automatiska reservbilder för formler, inte separata illustrationer.
-- Originalets symbolbilder 1, 2, 3, 5, 6 och 7 används i den nya presentationen. Nätverksbilden behöver inte visas två gånger i följd.
-- Spelställningarna och det stora nodräkningsträdet är vektoriserade från originalets former. Anpassad färg och beskärning ger ett enhetligt uttryck. Original-PowerPoint är facit för formatering och ursprunglig animation; de nya SVG-filerna återger inte PowerPoints animationstider.
+- Originalets symbolbilder 2, 3, 5, 6 och 7 används i presentationen. Titelbild 1 är ersatt av den genererade schackbilden och finns bevarad i originalmappen. Nätverksbilden används på samma två bilder som i originalet.
+- Spelställningarna och förbindelserna hämtas från originalets former. Spelbrädenas positioner, kryss och ringar bevaras. Numeriska träd har ritats större med samma struktur, lövvärden och nodtyper. Fokusmarkeringar och beskärningskryss ligger i diagrammets egen SVG. Original-PowerPoint är underlag för innehåll och ursprunglig animation.
 - SCEN-versionen är en redigerad föreläsningsversion, inte en pixelidentisk import. Varje scen har hänvisning till originalbild och dess text i anteckningarna. Dubbletter som användes för PowerPoint-animationer är inte separata innehållspunkter i SCEN.
 - Teams-övningsfilen har inte bifogats. Instruktionen att öppna den finns kvar.
 - [Originalets MCTS-klipp på YouTube](https://www.youtube.com/watch?v=lhFXKNyA0QA) är bevarat som länk, inte nedladdat eller inbäddat.
@@ -101,6 +116,10 @@ Endast den uttryckligen godkända rättelsen nedan är genomförd. Övriga formu
 ## Verifiering av första versionen
 
 - Manusvalidering, bygg och fristående export genomförda.
-- Alla 26 scener öppnade i Natt och Klassrum. Diagramsteg testade framåt och bakåt; exakt ett bildtillstånd syns åt gången.
+- Alla 21 scener öppnade i Natt och Klassrum. Diagramsteg testade framåt och bakåt; exakt ett bildtillstånd syns åt gången.
 - Visning utan klicksteg visar slutläget. Exporten har testats med externa nätverksanrop blockerade.
-- `test:bildsteg`, `test:berattande`, `test:film` och `test:inlasning` godkända. Hela projektets testsvit är inte grön sedan tidigare: det befintliga editorial-testet för Etapper förväntar tre steg där mallen har fyra inklusive återställning. Det felet är separat från denna konvertering.
+- `test:bildsteg`, `test:berattande`, `test:film` och `test:inlasning` godkända. Bildstegstestet kontrollerar också identiska bildutsnitt och att varje nodmarkering verkligen omsluter rätt triangel. Hela projektets testsvit är inte grön sedan tidigare: det befintliga editorial-testet för Etapper förväntar tre steg där mallen har fyra inklusive återställning. Det felet är separat från denna konvertering.
+
+## Återskapa diagrammen
+
+`python scripts/build-minimax-visuals.py` läser den bevarade PowerPoint-filen och skriver SVG-tillstånden i `bilder/minimax/v2/`. För detta författarverktyg behövs `python-pptx`; presentationen och SCEN har ingen sådan beroende vid visning. Underlaget för nodräkningsövningens noder och förbindelser sparas i [diagramdata-v2.json](diagramdata-v2.json).

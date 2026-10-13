@@ -2430,6 +2430,10 @@ function renderSlide(sl, i, deck, img) {
         bild: esc(sl.image ? img(sl.image) : ''),
         bildid: sl.image ? `i-${hash(sl.image)}` : '', alt: esc(sl.alt || plain(title) || 'Bild'),
         punkter: uses('punkter') ? its.map(t => `<li${steps ? st(bodyA) : ''}>${item(t)}</li>`).join('') : '',
+        bildsteg: uses('bildsteg') ? its.map(t => {
+          const p = t.split('|').map(x => x.trim());
+          return `<figure class="image-step"${steps ? st('none') : ''}><img src="${esc(img(p[1] || ''))}" alt="${esc(plain(p[0] || ''))}"><figcaption><b>${fmt(p[0] || '')}</b><span>${fmt(p.slice(2).join(' | '))}</span></figcaption></figure>`;
+        }).join('') : '',
         prövningar: uses('prövningar') ? its.map(t => {
           const p = t.split('|').map(x => x.trim());
           const condition = steps ? st('none') : '', answer = steps ? st('none') : '';

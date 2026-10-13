@@ -1,0 +1,404 @@
+[
+  {
+    "slide": 1,
+    "paragraphs": [
+      "Minimax-algoritmen",
+      "Presentation av David Hedengren"
+    ]
+  },
+  {
+    "slide": 2,
+    "paragraphs": [
+      "Minimax-algoritmen",
+      "En beslutsfattande algoritm som kan användas för att hitta den bästa strategin i ett spel med två spelare. (t.ex. 3-i-rad eller schack)",
+      "Algoritmen utforskar alla möjliga drag och väljer det som maximerar vinsten och minimerar den största möjliga förlusten",
+      "Vi kallar spelarna Max och Min där Max försöker maximera sin vinst",
+      "Och Min försöker minimera Max’s vinst",
+      "Presentation av David Hedengren"
+    ]
+  },
+  {
+    "slide": 3,
+    "paragraphs": [
+      "Användningsområden",
+      "Spelutveckling",
+      "Minimax används för att skapa intelligenta motståndare i spel som schack, dam, tic-tac-toe och andra spel där miljön är fullt observerbar",
+      "Ekonomi",
+      "Minimax kan användas i ekonomiska modeller för att förutsäga resultatet av beslut och för att optimera investeringsstrategier",
+      "Robotik",
+      "Minimax kan användas för att styra robotar i komplexa miljöer, till exempel för att maximera effektivitet I rörelser och minska energiförbrukning",
+      "Presentation av David Hedengren"
+    ]
+  },
+  {
+    "slide": 4,
+    "paragraphs": [
+      "Begränsningar",
+      "Beräkningskostnad",
+      "Kan bli mycket tidskrävande och kräva stora mängder beräkningsresurser, särskilt i spel med stora sökträd och många möjliga drag.",
+      "Ett sökträd för ett helt parti schack har ca 35100 noder",
+      "Kan inte hantera osäkerhet",
+      "Minimax fungerar bäst i spel med perfekt information och kan inte hantera dolda eller osäkra faktorer (som i t.ex. poker)",
+      "Motståndarens strategi",
+      "Minimax-algoritmen fungerar mindre bra om  om motståndaren inte spelar optimalt.",
+      "Presentation av David Hedengren"
+    ]
+  },
+  {
+    "slide": 5,
+    "paragraphs": [
+      "Minimax i 3-i-rad",
+      "Varje nod i trädet motsvarar en spelställning",
+      "Varje gren representerar ett möjligt speldrag",
+      "Max och Min turas om att göra sina drag",
+      "Varje lövnod utvärderas med en poängfunktion:",
+      "Vinst för X = 1",
+      "Vinst för 0 = -1",
+      "Oavgjort = 0",
+      "Vi använder ett beslutsträd för att strukturera och analysera spelet",
+      "Presentation av David Hedengren"
+    ]
+  },
+  {
+    "slide": 6,
+    "paragraphs": [
+      "Rotnod",
+      "Beslutsträd för 3-i-rad",
+      "Presentation av David Hedengren"
+    ]
+  },
+  {
+    "slide": 7,
+    "paragraphs": [
+      "”Jag baserar mitt drag nu på vad min motståndare kommer göra i nästa drag och för att göra det funderar jag över vad jag skulle göra efter det och så vidare”",
+      "Min-värde: 0",
+      "Max-värde: 1",
+      "Max-värde: 0",
+      "Värde: 1",
+      "Värde: 0",
+      "O:s tur",
+      "Presentation av David Hedengren"
+    ]
+  },
+  {
+    "slide": 8,
+    "paragraphs": [
+      "Värde: 1",
+      "Värde: 0",
+      "Värde: 1",
+      "Värde: 0",
+      "Värde: -1",
+      "Max-värde: 1",
+      "Max-värde: 0",
+      "Min-värde: 0",
+      "Max-värde: 0",
+      "Min-värde: -1",
+      "Max-värde: 1",
+      "X:s tur",
+      "Presentation av David Hedengren"
+    ]
+  },
+  {
+    "slide": 9,
+    "paragraphs": [
+      "Aktivitet: Spela tre-i-rad med grannen",
+      "Spela ett parti tre-i-rad med grannen.",
+      "Notera varje drag och dess position på ett papper eller på datorn.",
+      "2. Välj en specifik spelställning från partiet.",
+      "Rita ett spelträd som visar alla möjliga drag från denna ställning.",
+      "3. Använd Minimax-algoritmen för att analysera spelträdet.",
+      "Arbeta bakåt från lövnoderna för att bestämma värdet av tidigare noder",
+      "Identifiera det optimala draget baserat på din analys",
+      "Öppna filen ”Lektionsaktivitet – Minimax i Tre-i-rad” från Teams och läs instruktionerna",
+      "Presentation av David Hedengren"
+    ]
+  },
+  {
+    "slide": 10,
+    "paragraphs": [
+      "= min (vinst = -1)",
+      "= max (vinst = 1)",
+      "1",
+      "1",
+      "0",
+      "0",
+      "-1",
+      "-1",
+      "0",
+      "1",
+      "1",
+      "0",
+      "0",
+      "-1",
+      "0",
+      "0",
+      "(X:s tur)",
+      "Presentation av David Hedengren"
+    ]
+  },
+  {
+    "slide": 11,
+    "paragraphs": [
+      "Generell version av minimax-algoritmen",
+      "Max drag",
+      "Min drag",
+      "4",
+      "3",
+      "2",
+      "4",
+      "4",
+      "Presentation av David Hedengren"
+    ]
+  },
+  {
+    "slide": 12,
+    "paragraphs": [
+      "Generell version av minimax-algoritmen",
+      "5",
+      "5",
+      "3",
+      "2",
+      "8",
+      "5",
+      "6",
+      "9",
+      "3",
+      "7",
+      "2",
+      "4",
+      "6",
+      "5",
+      "3",
+      "2",
+      "Presentation av David Hedengren"
+    ]
+  },
+  {
+    "slide": 13,
+    "paragraphs": [
+      "Uppgift – Vilket värde får rotnoden?",
+      "4",
+      "3",
+      "2",
+      "6",
+      "6",
+      "1",
+      "5",
+      "2",
+      "2",
+      "3",
+      "6",
+      "9",
+      "9",
+      "2",
+      "2",
+      "1",
+      "0",
+      "4",
+      "8",
+      "8",
+      "6",
+      "4",
+      "2",
+      "1",
+      "1",
+      "1",
+      "4",
+      "3",
+      "2",
+      "6",
+      "1",
+      "5",
+      "2",
+      "2",
+      "3",
+      "6",
+      "9",
+      "2",
+      "1",
+      "2",
+      "4",
+      "8",
+      "6",
+      "3",
+      "1",
+      "4",
+      "3",
+      "2",
+      "4",
+      "2",
+      "2",
+      "Presentation av David Hedengren"
+    ]
+  },
+  {
+    "slide": 14,
+    "paragraphs": [
+      "Alfa-beta-beskärning (pruning)",
+      "5",
+      "5",
+      "≤3",
+      "≤2",
+      "8",
+      "5",
+      "6",
+      "9",
+      "3",
+      "7",
+      "2",
+      "4",
+      "6",
+      "5",
+      "3",
+      "2",
+      "Kommer inte kunna vara högre än 3, Max kommer därför inte välja mittenvägen (eftersom 5>3)",
+      "X",
+      "Vi kan beskära (prune) trädet här och behöver inte utforska några grenar nedanför",
+      "X",
+      "X",
+      "De sista två grenarna kan också beskäras eftersom oavsett vad de har för värde kommer inte Max välja den högra vägen",
+      "Presentation av David Hedengren"
+    ]
+  },
+  {
+    "slide": 15,
+    "paragraphs": [
+      "Varför beskärning?",
+      "Minskad beräkningskostnad",
+      "Alfa-beta beskärning reducerar antalet noder som måste utforskas i spelträdet genom att eliminera grenar som inte påverkar det slutliga resultatet. Detta gör Minimax betydligt snabbare och mer effektiv.",
+      "Djupare träd",
+      "Gör det möjligt att utforska djupare träd",
+      "Snabbare beslut",
+      "Genom att undvika utforskning av irrelevanta grenar, kan algoritmen fatta beslut snabbare. Detta är särskilt viktigt i komplexa spel som schack, där antalet möjliga drag kan bli astronomiskt stort.",
+      "Presentation av David Hedengren"
+    ]
+  },
+  {
+    "slide": 16,
+    "paragraphs": [
+      "Alfa- och betavärden",
+      "Algoritmen tilldelar varje nod ett alfavärde (𝛼) och ett betavärde 𝛽 och gör en Depth First Search i trädet.",
+      "Alfavärdet (𝛼) är det hittills bästa värde som Max kan garantera.",
+      "Från början ges noden alfavärdet (𝛼=−∞) och uppdateras vid maxnoder om ett högre värde hittats.",
+      "Betavärdet (𝛽) är det hittills bästa värde som Min kan garantera.",
+      "Betavärdet sätts från början till 𝛽=+∞ och uppdateras vid minnoder om ett lägre värde hittats.",
+      "Om 𝛼≥𝛽 behöver grenen inte utforskas mer och kan beskäras.",
+      "Presentation av David Hedengren"
+    ]
+  },
+  {
+    "slide": 17,
+    "paragraphs": [
+      "𝛼=𝛽=",
+      "−∞+∞",
+      "8",
+      "5",
+      "6",
+      "9",
+      "3",
+      "7",
+      "2",
+      "4",
+      "6",
+      "5",
+      "3",
+      "2",
+      "X",
+      "X",
+      "X",
+      "𝛼=𝛽=",
+      "5",
+      "+∞",
+      "8",
+      "−∞8",
+      "−∞5",
+      "5",
+      "5",
+      "𝛼=𝛽=",
+      "−∞+∞",
+      "5+∞",
+      "5",
+      "9",
+      "5",
+      "3",
+      "9",
+      "3",
+      "Beta≤ Alfa , Vi behöver inte fortsätta söka i grenen",
+      "𝛼=𝛽=",
+      "5+∞",
+      "2",
+      "52",
+      "Beta≤ Alfa , Vi behöver inte fortsätta söka i grenen",
+      "Presentation av David Hedengren"
+    ]
+  },
+  {
+    "slide": 18,
+    "paragraphs": [
+      "Aktivitet – Vilka grenar kan beskäras?",
+      "2",
+      "2",
+      "3",
+      "3",
+      "5",
+      "8",
+      "7",
+      "1",
+      "Presentation av David Hedengren"
+    ]
+  },
+  {
+    "slide": 19,
+    "paragraphs": [
+      "Aktivitet – Vilka grenar kan beskäras?",
+      "5",
+      "5",
+      "5",
+      "8",
+      "7",
+      "2",
+      "2",
+      "2",
+      "2",
+      "3",
+      "3",
+      "5",
+      "8",
+      "7",
+      "1",
+      "Presentation av David Hedengren"
+    ]
+  },
+  {
+    "slide": 20,
+    "paragraphs": [
+      "Aktivitet – Hur många noder behöver utforskas?",
+      "0",
+      "1",
+      "3",
+      "4",
+      "1",
+      "3",
+      "1",
+      "5",
+      "3",
+      "5",
+      "1",
+      "2",
+      "5",
+      "Presentation av David Hedengren"
+    ]
+  },
+  {
+    "slide": 21,
+    "paragraphs": [
+      "Extrauppgift – Monte Carlo Tree Search algoritmen (MCTS)",
+      "Bekanta dig med sökalgoritmen MCTS genom att söka på internet och/eller titta på klippet nedan",
+      "Jämför MCTS och Minimax.",
+      "Vad finns det för likheter/skillnader?",
+      "Vad finns det för för- och nackdelar med respektive algoritm?",
+      "Monte Carlo Tree Search",
+      "Presentation av David Hedengren"
+    ]
+  }
+]

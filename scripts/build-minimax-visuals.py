@@ -45,9 +45,9 @@ def source_render(n,visible=None,active=(),shade_ids=(),omit=(),box=(0,0,1920,10
   alpha='.65' if d['id'] in shade_ids else '1';s=''
   if d['type']=='picture':s=f'<image x="{x}" y="{y}" width="{w}" height="{h}" href="{d["image"]}"/>'
   elif d['type']=='line':
-   color='#f6c27c' if par and par['w']<80 and par['h']<80 else LINE
+   color=MAX if par and par['w']<80 and par['h']<80 else LINE
    s=f'<line x1="{x+w if d["fh"] else x}" y1="{y+h if d["fv"] else y}" x2="{x if d["fh"] else x+w}" y2="{y if d["fv"] else y+h}" stroke="{color}" stroke-width="3" stroke-linecap="round"/>'
-  elif g=='ellipse':s=f'<ellipse cx="{x+w/2}" cy="{y+h/2}" rx="{w/2}" ry="{h/2}" fill="none" stroke="{MAX}" stroke-width="3.5"/>'
+  elif g=='ellipse':s=f'<ellipse cx="{x+w/2}" cy="{y+h/2}" rx="{w/2}" ry="{h/2}" fill="none" stroke="{MIN if w<140 and h<140 else MAX}" stroke-width="3.5"/>'
   elif g=='triangle':
    inv=abs(d['rot']%360-180)<1;color=MIN if inv else MAX;pts=f'{x},{y} {x+w},{y} {x+w/2},{y+h}' if inv else f'{x+w/2},{y} {x+w},{y+h} {x},{y+h}'
    s=f'<polygon points="{pts}" fill="{color}" fill-opacity=".14" stroke="{color}" stroke-width="3"/>'

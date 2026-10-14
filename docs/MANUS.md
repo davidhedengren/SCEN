@@ -191,6 +191,8 @@ I `[fyrfält]` skrivs vilken fyrdel saken ligger i ut automatiskt, till exempel 
 
 En del i `[omlopp]` kan få en bild som tredje fält: `- Avlaten | Syndernas förlåtelse går inte att köpa | bilder/x.jpg`. Med `bild:` får kärnan en grundbild. När en del har fokus visas dess bild i kärnan.
 
+En rad i `[fokus]` kan också få en bild som tredje fält: `- Sökträd | Organiserar data så att den går snabbt att söka i. | bilder/x/soktrad.svg`. Bilden visas stort under rubriken när raden har fokus och byts när nästa rad tänds. Utan klicksteg står bilderna bredvid varandra.
+
 ### Kodskrivning
 
 ```text

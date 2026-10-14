@@ -781,6 +781,15 @@
 .scen .fk-i.in:not(:has(~ .fk-i.in)) b,.scen.static .fk-i:last-child b,.scen .lj-fk.nosteps .fk-i b{color:var(--ink);filter:none;background:linear-gradient(95deg,var(--ink) 30%,var(--accent) 110%);-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent}
 .scen .fk-i.in:not(:has(~ .fk-i.in)) .fk-d,.scen.static .fk-i:last-child .fk-d,.scen .lj-fk.nosteps .fk-d{grid-template-rows:1fr;opacity:1}
 .scen .lj-fk.nosteps .fk-i b{font-size:60px}
+/* Bild per rad: den rad som är tänd utan att nästa rad är tänd har fokus, och då visas dess bild. */
+.scen .lj-fk.pics,.scen .lj-fk.many.pics{grid-template-columns:820px 1fr;gap:90px}
+.scen .lj-fk.pics .fk-side{gap:22px}
+.scen .lj-fk.pics .fk-d>p{text-wrap:pretty}
+.scen .fk-stage{display:grid;height:540px;margin-top:6px}
+.scen .fk-fig{grid-area:1/1;width:100%;height:100%;object-fit:contain;object-position:left center;opacity:0;transform:translateY(16px);transition:opacity .7s,transform .9s cubic-bezier(.2,.8,.2,1)}
+.scen .lj-fk:has(.fk-i:nth-child(1).in + .fk-i:not(.in)) .fk-fig:nth-child(1),.scen .lj-fk:has(.fk-i:nth-child(1):last-child.in) .fk-fig:nth-child(1),.scen .lj-fk:has(.fk-i:nth-child(2).in + .fk-i:not(.in)) .fk-fig:nth-child(2),.scen .lj-fk:has(.fk-i:nth-child(2):last-child.in) .fk-fig:nth-child(2),.scen .lj-fk:has(.fk-i:nth-child(3).in + .fk-i:not(.in)) .fk-fig:nth-child(3),.scen .lj-fk:has(.fk-i:nth-child(3):last-child.in) .fk-fig:nth-child(3),.scen .lj-fk:has(.fk-i:nth-child(4).in + .fk-i:not(.in)) .fk-fig:nth-child(4),.scen .lj-fk:has(.fk-i:nth-child(4):last-child.in) .fk-fig:nth-child(4),.scen .lj-fk:has(.fk-i:nth-child(5).in + .fk-i:not(.in)) .fk-fig:nth-child(5),.scen .lj-fk:has(.fk-i:nth-child(5):last-child.in) .fk-fig:nth-child(5),.scen .lj-fk:has(.fk-i:nth-child(6).in + .fk-i:not(.in)) .fk-fig:nth-child(6),.scen .lj-fk:has(.fk-i:nth-child(6):last-child.in) .fk-fig:nth-child(6),.scen .lj-fk:has(.fk-i:nth-child(7).in + .fk-i:not(.in)) .fk-fig:nth-child(7),.scen .lj-fk:has(.fk-i:nth-child(7):last-child.in) .fk-fig:nth-child(7),.scen.static .fk-fig:last-child{opacity:1;transform:none}
+.scen .lj-fk.nosteps .fk-stage{grid-auto-flow:column;grid-auto-columns:1fr;gap:18px;height:240px}
+.scen .lj-fk.nosteps .fk-fig{grid-area:auto;opacity:1;transform:none;object-position:center}
 
 /* Ordbild */
 .scen .lj-ob{align-content:center;justify-items:center;text-align:center;gap:40px;overflow:hidden}
@@ -864,7 +873,7 @@
 .scen[data-theme-id="reportage"] [data-layout="statement"] .lead{order:-1;font-size:46px;max-width:30ch}
 .scen[data-theme-id="reportage"] [data-layout="statement"] h2{font-size:150px;max-width:1250px}
 .scen[data-theme-id="reportage"] [data-layout="statement"] h2.long{font-size:112px;max-width:1500px}
-@media (prefers-reduced-motion:reduce){.scen .slide .rd-img img,.scen .slide .bf-img img,.scen .slide .ob-word.filled{animation:none!important}.scen .sp-p,.scen .fk-i b,.scen .fk-d{transition:none}}
+@media (prefers-reduced-motion:reduce){.scen .slide .rd-img img,.scen .slide .bf-img img,.scen .slide .ob-word.filled{animation:none!important}.scen .sp-p,.scen .fk-i b,.scen .fk-d,.scen .fk-fig{transition:none}}
 .scen[data-look="light"] .dl-f.b{color:#fff}.scen[data-look="light"] .dl-f.b p{color:rgba(255,255,255,.88)}.scen[data-look="light"] .dl-f.b mark{background:rgba(255,255,255,.2)}
 
 /* Signaturmallar: egna kompositioner, gemensamma temafärger. */

@@ -1426,9 +1426,12 @@ function renderSlide(sl, i, deck, img) {
       break;
     }
     case 'fokus': {
-      const its = lines(sl.items).slice(0, 7).map(t => { const p = t.split('|'); return { h: p[0].trim(), t: p.slice(1).join('|').trim() }; });
-      cls = 'lj-fk' + (its.length > 4 || Math.max(0, ...its.map(o => plain(o.h).length)) > 16 ? ' many' : '') + (steps ? '' : ' nosteps');
-      body = `<div class="fk-side">${sl.caption ? `<p class="lj-kick"${A('fade')}>${fmt(sl.caption)}</p>` : ''}${H2('', 'words')}${sl.text ? `<p class="lead"${A('fade', 500)}>${fmt(sl.text)}</p>` : ''}</div>` +
+      const its = lines(sl.items).slice(0, 7).map(t => { const p = t.split('|'), last = (p[p.length - 1] || '').trim(), pic = p.length > 2 && IMG_REF.test(last) ? (p.pop(), last) : ''; return { h: p[0].trim(), t: p.slice(1).join('|').trim(), pic }; });
+      /* En bild som tredje fält visas under rubriken när raden har fokus. Bilderna ligger staplade, en per rad. */
+      const pics = its.some(o => o.pic);
+      cls = 'lj-fk' + (its.length > 4 || Math.max(0, ...its.map(o => plain(o.h).length)) > 16 ? ' many' : '') + (steps ? '' : ' nosteps') + (pics ? ' pics' : '');
+      const stage = pics ? `<div class="fk-stage"${steps ? '' : A('fade', 700)}>${its.map(o => o.pic ? `<img class="fk-fig" src="${esc(img(o.pic))}" alt="${esc(plain(o.h))}">` : '<span class="fk-fig"></span>').join('')}</div>` : '';
+      body = `<div class="fk-side">${sl.caption ? `<p class="lj-kick"${A('fade')}>${fmt(sl.caption)}</p>` : ''}${H2('', 'words')}${sl.text ? `<p class="lead"${A('fade', 500)}>${fmt(sl.text)}</p>` : ''}${stage}</div>` +
         `<ol class="fk-list"${steps ? '' : A('rise', 400, ' data-stagger="120"')}>${its.map(o => `<li class="fk-i"${steps ? st('hold') : ''}><b>${fmt(o.h)}</b>${o.t ? `<div class="fk-d"><p>${fmt(o.t)}</p></div>` : ''}</li>`).join('')}</ol>`;
       break;
     }

@@ -152,9 +152,12 @@ svar: Fyra. I exemplet är det noderna 4, 5, 6 och 7.
 etikett: Träd i AI
 rubrik: Tre sorters träd
 miljö: bilder/grafer-och-trad/speltrad.jpg | 80
-- Sökträd | Organiserar data så att den går snabbt att söka i.
-- Beslutsträd | Visualiserar och strukturerar beslutsprocesser.
-- Spelträd | Simulerar möjliga drag för att hitta den bästa strategin.
+- Sökträd | Organiserar data så att den går snabbt att söka i. | bilder/grafer-och-trad/trad-sok.svg
+- Beslutsträd | Visualiserar och strukturerar beslutsprocesser. | bilder/grafer-och-trad/trad-beslut.svg
+- Spelträd | Simulerar möjliga drag för att hitta den bästa strategin. | bilder/grafer-och-trad/trad-spel.svg
+> Sökträdet: att hitta 6 tar tre steg. Mindre tal ligger till vänster, större till höger.
+> Beslutsträdet: frågor i noderna, svar på grenarna och resultat i löven. Den markerade vägen är ett fall: det regnar inte men är mulet.
+> Spelträdet: luffarschack där X ska dra. Två av dragen låter O vinna direkt. Det tredje blockerar, så det är det bästa draget.
 
 ---
 

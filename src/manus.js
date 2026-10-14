@@ -432,7 +432,7 @@ const Manus = (() => {
       ex: '[ridå]\netikett: Fysik 1\nrubrik: Kaströrelse\ntext: Två rörelser på en gång.' },
     { l: 'strålkastare', cat: 'Ljus', syfte: 'En mening i riktigt stor text där strålkastaren tänder en fras i taget. Hela meningen syns svagt från början, så publiken ser vart du är på väg. Skriv en fras per rad.', undvik: 'Mer än två meningar. Då blir texten för liten.',
       ex: '[strålkastare]\netikett: Vad är en AI-agent?\n- Ett system som\n- uppfattar sin omgivning,\n- fattar beslut\n- och vidtar åtgärder.' },
-    { l: 'fokus', cat: 'Ljus', syfte: 'En lista i stor text där bara den aktiva raden är skarp och förklaringen fälls ut under den. De andra ligger kvar suddiga i bakgrunden.', undvik: 'Fler än sju rader, eller långa namn.',
+    { l: 'fokus', cat: 'Ljus', syfte: 'En lista i stor text där bara den aktiva raden är skarp och förklaringen fälls ut under den. De andra ligger kvar suddiga i bakgrunden. En bild som tredje fält visas stort under rubriken när raden har fokus, till exempel ett diagram eller ett exempel per begrepp.', undvik: 'Fler än sju rader, eller långa namn.',
       ex: '[fokus]\netikett: Tre egenskaper\nrubrik: Vad gör en agent till en agent?\n- Autonomi | Kan fatta egna beslut utan direkt mänsklig styrning.\n- Perception | Samlar in data om sin omgivning.\n- Målorientering | Väljer det som bäst når målet.' },
     { l: 'ordbild', cat: 'Ljus', syfte: 'Ett enda ord i jättestor text som är fyllt med en bild som sakta panorerar. Bilden lyser också svagt i bakgrunden. Bra som avsnittsstart.', undvik: 'Långa rubriker och bilder utan kontrast.',
       ex: '[ordbild]\netikett: Del 2\nrubrik: Miljön\ntext: Sex sätt att beskriva världen som agenten lever i.' },

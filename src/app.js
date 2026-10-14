@@ -539,7 +539,7 @@ sats: [["title", "Rubrik", "text"], ["items", "Högst 3 rader: rubrik | text", "
   'mätare': [['caption', 'Etikett', 'text'], ['title', 'Rubrik', 'text'], ['number', 'Tal, t.ex. 73 % eller 4 av 8', 'text'], ['max', 'Maxvärde om talet inte är en andel', 'text'], ['text', 'Förklaring', 'area']],
   'ridå': [['caption', 'Etikett', 'text'], ['title', 'Rubrik', 'area'], ['text', 'Kort text', 'area'], ['image', 'Bild i helformat', 'image']],
   'strålkastare': [['caption', 'Etikett', 'text'], ['items', 'Meningen i delar, en fras per rad', 'list'], ['text', 'Efterord, visas sist', 'area']],
-  fokus: [['caption', 'Etikett', 'text'], ['title', 'Rubrik', 'text'], ['text', 'Ingress', 'area'], ['items', 'Rader, en per rad: namn | förklaring', 'list']],
+  fokus: [['caption', 'Etikett', 'text'], ['title', 'Rubrik', 'text'], ['text', 'Ingress', 'area'], ['items', 'Rader, en per rad: namn | förklaring | bild (valfri)', 'list']],
   ordbild: [['caption', 'Etikett', 'text'], ['title', 'Ordet', 'text'], ['text', 'Kort text', 'area'], ['image', 'Bild som fyller ordet', 'image']],
   'bildfält': [['caption', 'Etikett', 'text'], ['title', 'Rubrik', 'text'], ['text', 'Ingress', 'area'], ['bullets', 'Punkter', 'list'], ['image', 'Bild', 'image'], ['flip', 'Bilden till vänster', 'check']],
   delning: [['caption', 'Etikett', 'text'], ['title', 'Rubrik', 'text'], ['items', 'Två eller tre rader: vänster | text, höger | text, exempel | text', 'list']],

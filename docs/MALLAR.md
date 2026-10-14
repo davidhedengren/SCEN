@@ -85,7 +85,7 @@ Varje bild i ett manus börjar med mallens namn inom hakparentes. Samma katalog 
 | `[mätare]` | Banor | Ett tal som andel av något, som en mätare som fylls medan talet räknas upp. Skriv 73 %, 4 av 8 eller ett tal med max. |
 | `[ridå]` | Ljus | Öppning eller avslutning. En ridå i bakgrundens färg glider isär med en glödande kant och visar en bild i helformat som sakta zoomar. Rubriken är stor och sitter nere till vänster. |
 | `[strålkastare]` | Ljus | En mening i riktigt stor text där strålkastaren tänder en fras i taget. Hela meningen syns svagt från början, så publiken ser vart du är på väg. Skriv en fras per rad. |
-| `[fokus]` | Ljus | En lista i stor text där bara den aktiva raden är skarp och förklaringen fälls ut under den. De andra ligger kvar suddiga i bakgrunden. |
+| `[fokus]` | Ljus | En lista i stor text där bara den aktiva raden är skarp och förklaringen fälls ut under den. De andra ligger kvar suddiga i bakgrunden. En bild som tredje fält visas stort under rubriken när raden har fokus, till exempel ett diagram eller ett exempel per begrepp. |
 | `[ordbild]` | Ljus | Ett enda ord i jättestor text som är fyllt med en bild som sakta panorerar. Bilden lyser också svagt i bakgrunden. Bra som avsnittsstart. |
 | `[bildfält]` | Ljus | En bild som fyller två tredjedelar av ytan och tonar mjukt in i mörkret, utan kant eller ram. Text och punkter på den mörka sidan. |
 | `[delning]` | Ljus | Två motsatser som två stora färgfält, ett mörkt och ett i accentfärg som sveper in. En tredje rad blir ett exempel uppe till höger. |
@@ -1464,7 +1464,7 @@ etikett: Vad är en AI-agent?
 
 ### `[fokus]` Fokus
 
-En lista i stor text där bara den aktiva raden är skarp och förklaringen fälls ut under den. De andra ligger kvar suddiga i bakgrunden.
+En lista i stor text där bara den aktiva raden är skarp och förklaringen fälls ut under den. De andra ligger kvar suddiga i bakgrunden. En bild som tredje fält visas stort under rubriken när raden har fokus, till exempel ett diagram eller ett exempel per begrepp.
 
 **Undvik när:** Fler än sju rader, eller långa namn.
 
@@ -1537,10 +1537,12 @@ text: Poker, trafik, robotdammsugare och diagnos.
 ## Egna mallar i repot
 
 - `[egen: aterkomst]` **Återkomst**. Återvänder till ett tidigare motiv med två till fyra nya insikter. Ett samband lyfts i taget; till sist syns allt och slutsatsen. Återanvänd samma bild som i öppningen. Passar syntes, återkoppling till en inledande fråga och sammanfattning efter analys.
+- `[egen: bild-och-forklaring]` **Bild och förklaring**. En stabil bild bredvid 2–4 namngivna förklaringar. Alla rubriker syns från start; ett klick visar en förklaring och markerar dess rad. Tidigare förklaringar finns kvar läsbara. Sista klicket visar helheten. För begrepp, instruktioner, användningsområden, förutsättningar och konsekvenser. Rubrik, bild och ingress är valfria. Lista: rubrik | förklaring.
 - `[egen: byt-antagande]` **Byt antagande**. Samma fall ligger kvar medan en förutsättning ändras. Varje antagande följs av ett eget klick för bedömning och motivering. Slutet jämför alla. Använd 2–3 poster: antagande | bedömning | motivering. Valfri gemensam bild och rubrik. För villkor, modeller och alternativa tolkningar. Valfritt fjärde fält: vy: x y bredd höjd i procent, som döljer bilden utanför synfältet.
 - `[egen: genomlysning]` **Genomlysning**. Lägger två till fyra begreppsliga informationslager över samma motiv. Ett lager får fokus per klick, sedan visas helheten. Listan skrivs lager | förklaring. Passar när samband under ytan ska förklaras; lagren är en schematisk modell, inte uppmätta sensordata.
 - `[egen: numrerade-kort]` **Numrerade kort**. Tre till fyra steg eller principer med stora siffror.
 - `[egen: omformning]` **Omformning**. Två till fyra observationer flyttar till en gemensam modell. Samma textobjekt behåller sin identitet genom rörelsen. Skriv observation | begrepp. Använd för konkret → abstrakt, exempel → kategori eller iakttagelse → slutsats.
+- `[egen: resonemang-i-bild]` **Resonemang i bild**. Ett diagram eller en bildserie med stabil komposition. Grundbilden syns från start; varje klick byter till nästa tillstånd med etikett och förklaring. Skriv etikett | bildsökväg | förklaring. Använd för beräkningar, experiment, kartförändringar, textrevision och kodspårning. Håll samma bildutsnitt i alla steg. Utan klicksteg visas slutläget. Diagrammet får hela den återstående ytan. Rubrik är valfri. Markeringar ska finnas i bildens egna koordinater och inte läggas ovanpå som separata procentrutor.
 - `[egen: tva-forlopp]` **Två förlopp**. Två händelsekedjor börjar i samma situation. Fyra listpunkter: först val och följd i det övre förloppet, sedan val och följd i det undre. Klicka genom ett förlopp i taget och jämför till sist. Text är utgångsläget; svar är slutsatsen. Innehållet ska vara uttryckligen beskrivet, inte automatiskt förutsagt.
 
 ## Teman

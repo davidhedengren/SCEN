@@ -192,6 +192,7 @@ slutsats: Trädet ställer frågorna i tur och ordning tills det når ett löv.
 [sats]
 rubrik: Tre strukturer med samma syfte
 text: Verktyg för att representera data, fatta beslut och göra förutsägelser.
+miljö: bilder/grafer-och-trad/beslutstrad.jpg | 82
 - Grafer | Nätverk av noder: rutter, flöden och relationer.
 - Träd | Hierarkier: effektiv sökning och sortering.
 - Beslutsträd | Alternativ och utfall i en grenad struktur.

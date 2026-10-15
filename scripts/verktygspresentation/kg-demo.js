@@ -3,8 +3,8 @@ async () => {
   const groups=[{id:11,namn:'Fysik · NA26a',kurs:'fy1',kod:'DEMO26',elever:24,aktiva:21,larare:['Alex Lind'],synlig:true},
     {id:12,namn:'Fysik · TE26a',kurs:'fy1',kod:'DEMO27',elever:22,aktiva:19,larare:['Alex Lind'],synlig:true}];
   const areas=['arbete','rorelseenergi','effekt'];
-  const pass={id:91,titel:'Energi i vardagen',kurs:'fy1',aktiv:true,grupper:[groups[0]],antal:15,kod:'FY1-ENERGI',
-    omraden:areas,nivaer:['E','C','A'],spar:null,datum:'2026-10-23',tranat:21,alla:false,klara:0};
+  const pass={id:91,titel:'Inför Prov v.48',kurs:'fy1',aktiv:true,grupper:[groups[0]],antal:15,kod:'PROV48',
+    omraden:areas,nivaer:['E','C','A'],spar:null,datum:'2026-11-27',tranat:21,alla:false,klara:0};
   const names=['Alva Berg','Amir Dahlin','Elin Ek','Elliot Falk','Freja Holm','Hugo Järv','Ida Lind','Isak Lund','Julia Moss','Leo Nord','Livia Sand','Malte Vik',
     'Maja Alm','Milo Bo','Mira Ed','Noah Flor','Nora Hall','Olivia Hav','Omar Lid','Sara Löv','Thea Nor','Vera Ryd','Viggo Sjö','Zoe Ås'];
   const students=names.map((namn,i)=>({id:'demo-'+i,namn,epost:'',vecka:i<21?12+i:0,vecka_ratt:i<21?9+Math.floor(i*.7):0,

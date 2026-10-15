@@ -1,265 +1,433 @@
 ---
-titel: Från uppgift till nästa steg
+titel: Så använder du Kunskapsgymmet och Uppgiftslabbet
 kurs: Kollegial utveckling
 tema: djup
 ---
 
-[fri]
-rubrik: Från uppgift till nästa steg
+[bildregi]
+etikett: KUNSKAPSGYMMET
+rubrik: Så använder du Kunskapsgymmet
+text: Vi börjar som elev. Sedan skapar vi ett pass och ett övningsblad.
+bild: bilder/verktygspresentation/vandring/kg-start.png
+alt: Hela webbläsarvyn: Så använder du Kunskapsgymmet.
+bildläge: vandring
+beskärning: cover
 övergång: tona
-@text 100 85 1600 42 storlek=24 färg=accent | KUNSKAPSGYMMET + UPPGIFTSLABBET
-@text 100 205 950 280 storlek=112 typsnitt=rubrik | Från uppgift\ntill nästa steg.
-@text 108 535 760 140 storlek=36 färg=dampad | Förbered med omtanke.\nGe eleverna träning som leder vidare.
-@ruta 1080 190 720 430 färg=yta bakgrund=yta linje=1
-@bild 1100 210 680 390 passning=hela | bilder/verktygspresentation/kg-uppgift-detalj.png
-@ruta 1160 650 640 310 färg=yta bakgrund=yta linje=1
-@bild 1180 670 600 270 passning=hela | bilder/verktygspresentation/ul-layout-detalj.png
-@text 108 885 870 48 storlek=27 färg=accent2 | En introduktion för lärarkollegor · 10–15 minuter
-@text 108 953 940 45 storlek=22 färg=dampad | Riktiga gränssnitt. Fiktiva konton och exempelresultat.
-> 35 sekunder. Öppna med en situation kollegorna känner igen: vi har valt bra uppgifter, men vill också veta hur eleverna kommer vidare. Här visar vi två verktyg som stödjer olika delar av samma undervisningsarbete.
-> Skärmbilderna kommer från de verkliga apparnas lokala kopior. Konton, skolnamn, pass och resultat är demonstrationsdata. Inga riktiga elevuppgifter visas. Funktionernas gränssnitt demonstreras; detta är ingen effektstudie eller utvärdering av läranderesultat.
-> Högerpil går framåt ett klick i taget. Vänsterpil går tillbaka. N visar anteckningar och P öppnar talarvyn.
-
----
-
-[fri]
-rubrik: Två verktyg med olika uppgifter
-@text 100 70 1600 38 storlek=23 färg=accent | SAMMA UNDERVISNING · TVÅ INGÅNGAR
-@text 100 145 1720 100 storlek=70 typsnitt=rubrik | Du planerar. Eleven tränar. Du följer upp.
-@ruta 100 310 820 580 färg=yta bakgrund=yta linje=1
-@ruta 1000 310 820 580 färg=yta bakgrund=yta linje=1
-@text 145 365 730 70 storlek=54 typsnitt=rubrik färg=accent2 | Uppgiftslabbet
-@text 145 475 700 90 storlek=38 | Bygg material för din undervisning.
-@text 145 615 690 180 storlek=31 färg=dampad | Sök och välj uppgifter.\nForma övningsblad och prov.\nDela arbetet med kollegor.
-@text 1045 365 730 70 storlek=54 typsnitt=rubrik färg=accent | Kunskapsgymmet
-@text 1045 475 700 90 storlek=38 | Ge träningen en riktning.
-@text 1045 615 690 180 storlek=31 färg=dampad | Dela träningspass med eleverna.\nGe återkoppling under arbetet.\nFölj resultat per område och elev.
-@text 108 950 1690 54 storlek=28 färg=dampad | Vi följer ett exempel: Energi i vardagen · Fysik nivå 1
-> 45 sekunder. Uppgiftslabbet är lärarens arbetsyta för uppgiftsmaterial. Kunskapsgymmet är platsen där eleven tränar och läraren följer träningen. De delar uppgiftsbanker för matematik och fysik, men ett sparat övningsblad överförs inte automatiskt till ett träningspass.
-> Vi använder energi som exempel genom hela presentationen. Motsvarande arbetssätt kan användas i andra tillgängliga kurser.
-
----
-
-[egen: resonemang-i-bild]
-etikett: ELEVEN · 01
-rubrik: Ett tydligt ställe att börja
-bild: bilder/verktygspresentation/kg-09-elevens-pass.png
-alt: Elevens startsida i Kunskapsgymmet med passet Energi i vardagen och kursval för egen träning.
-text: Lärarens pass ligger på startsidan. Egen träning finns också nära till hands.
-- Dagens pass | bilder/verktygspresentation/kg-elevpass-detalj.png | Eleven ser uppdraget och börjar här.
-märke: Exempeldata
-> 40 sekunder. Visa startsidan först. Klicka sedan fram själva passkortet. Eleven får ett konkret uppdrag med namn och omfattning. Det minskar antalet val innan arbetet kan börja.
-> Passet visas för eleverna i de grupper läraren valt. Det finns även möjlighet att gå med med kod. Kurserna nedanför används för egen träning.
-
----
-
-[egen: resonemang-i-bild]
-etikett: ELEVEN · 02
-rubrik: Försök. Få stöd. Kom vidare.
-bild: bilder/verktygspresentation/kg-uppgift-detalj.png
-alt: En fysikuppgift om arbete, med svarsfält, kontrollknapp, ledtråd och miniräknare.
-text: Eleven arbetar med papper och penna och skriver sedan sitt svar.
-- Stöd vid behov | bilder/verktygspresentation/kg-ledtrad-detalj.png | En ledtråd hjälper eleven att hitta nästa steg.
-- Direkt återkoppling | bilder/verktygspresentation/kg-svar-detalj.png | Svaret kontrolleras. Eleven kan gå vidare till nästa uppgift.
-märke: Lokal demonstration
-> 65 sekunder. Låt publiken hinna läsa den korta uppgiften innan första klicket. Här är arbetet 165 gånger 2,80 = 462 joule. Eleven skriver 462; den fullständiga lösningen görs med papper och penna.
-> Klick 1 visar en verklig ledtråd. Klick 2 visar svaret efter att det kontrollerats av appens riktiga självrättning. Ledtråden halverar XP för just denna uppgift, vilket också syns i bilden.
-> Kunskapsgymmet anpassar urval och träningsnivå efter elevens tidigare träning inom passets ramar. Självrättningen beror på uppgiftens svarsformat; alla resonemang kan inte bedömas automatiskt.
-
----
-
-[fri]
-rubrik: Svaret är början på återkopplingen
-@text 100 75 1600 40 storlek=23 färg=accent | ELEVEN · 03
-@text 100 155 1700 95 storlek=67 typsnitt=rubrik | Svaret är början på återkopplingen.
-@bild 100 300 1170 570 passning=hela | bilder/verktygspresentation/kg-losning-detalj.png
-@text 1360 345 450 90 storlek=38 typsnitt=rubrik färg=accent2 | Se hur det hänger ihop.
-@text 1360 500 450 180 storlek=30 | Läs lösningen.\nJämför med din metod.\nGå tillbaka vid behov.
-@text 100 950 1650 55 storlek=27 färg=dampad | Uppgift → eget försök → återkoppling → fortsatt träning
-> 35 sekunder. Visa att återkoppling kan vara mer än ett grönt rätt-tecken. Lösningen gör metoden synlig. Eleven kan jämföra med sin egen uträkning och återbesöka tidigare uppgifter i passet.
-> Detta är uppgift 5.523a från den befintliga banken. Skärmbilden är appens egen lösningsvisning. Att öppna lösningen påverkar XP enligt appens regler; presentationen lovar ingen poängbelöning för att läsa facit.
-
----
-
-[egen: resonemang-i-bild]
-etikett: LÄRAREN · 01
-rubrik: Samla undervisningen kring dina grupper
-bild: bilder/verktygspresentation/kg-01-min-undervisning.png
-alt: Lärarens grupper Fysik NA26a och Fysik TE26a i Min undervisning.
-text: Börja i Min undervisning. Grupperna ger arbetet en tydlig struktur.
-- En grupp i fokus | bilder/verktygspresentation/kg-02-gruppoversikt.png | Här finns aktuella pass, elevlistan och vägen till resultaten.
-märke: Exempeldata
-> 40 sekunder. Växla från elevperspektiv till lärarperspektiv. Läraren har sina grupper samlade och kan även växla till Träna själv för att uppleva elevflödet.
-> Gruppen i exemplet har 24 fiktiva elever. Skolklass och undervisningsgrupp är skilda begrepp: elever kan ingå i flera undervisningsgrupper. Gruppens översikt visar aktivitet i alla kurser; områdesvyn avgränsar till en kurs.
-
----
-
-[egen: resonemang-i-bild]
-etikett: LÄRAREN · 02
-rubrik: Du sätter ramarna för träningen
-bild: bilder/verktygspresentation/kg-formular-detalj.png
-alt: Formuläret Nytt träningspass med namn, kurs, slutdatum, mottagargrupper, nivåer och omfattning.
-text: Namnge passet. Välj grupp, nivåer och hur omfattande det ska vara.
-- Välj innehåll | bilder/verktygspresentation/kg-innehall-detalj.png | Här väljer vi arbete, rörelseenergi samt effekt och verkningsgrad.
-märke: Exempeldata
-> 55 sekunder. Visa ordningen: namn, kurs, grupper, nivåer och omfattning. Slutdatum är valfritt. Här väljer vi ett kort pass på ungefär 15 uppgifter med nivåerna E, C och A tillgängliga.
-> Klicka fram innehållsvalet. Läraren väljer områden; Kunskapsgymmet gör elevens urval inom dessa ramar. Alla elever behöver därför inte få samma uppgifter i samma ordning. Alternativet Alla har ett annat beteende: varje elev får samtliga valda uppgifter i blandad ordning.
-> Vi demonstrerar ett lokalt skapat pass. Inga riktiga elever får en tilldelning.
-
----
-
-[fri]
-rubrik: Passet når eleverna
-@text 100 75 1600 40 storlek=23 färg=accent | LÄRAREN · 03
-@text 100 155 1700 100 storlek=70 typsnitt=rubrik | Skapa passet. Eleverna hittar det.
-@bild 100 320 1720 470 passning=hela | bilder/verktygspresentation/kg-delat-detalj.png
-@text 110 840 790 90 storlek=32 färg=accent2 | I valda grupper: direkt på startsidan.
-@text 1010 840 780 90 storlek=32 | Alternativt: dela kod eller länk.
-@text 110 980 1600 35 storlek=22 färg=dampad | Exempelkoden i bilden hör till demonstrationen.
-> 30 sekunder. När passet skapas visas det på startsidan för eleverna i de valda grupperna. Koden eller länken kan också delas i exempelvis Teams eller Classroom. Det innebär att man kan ge samma ingång på det sätt gruppen redan arbetar.
-> Länken i skärmbilden är en lokalt genererad exempellänk. Uppmana inte publiken att använda just den koden.
-
----
-
-[egen: resonemang-i-bild]
-etikett: LÄRAREN · 04
-rubrik: Se vad passet faktiskt visar
-bild: bilder/verktygspresentation/kg-resultat-detalj.png
-alt: Resultat för Energi i vardagen. 21 av 24 elever har tränat. Staplar visar 83, 70 och 47 procent rätt per område.
-text: Per område: vilka delar av innehållet behöver vi återvända till?
-- Per elev | bilder/verktygspresentation/kg-pass-elever-detalj.png | Se hur långt eleverna kommit och deras andel rätt i passet.
-märke: Fiktiva resultat
-> 65 sekunder. Börja med andelen som har tränat: 21 av 24. Titta sedan på skillnaden mellan områdena. I just dessa exempeldata är andelen rätt lägre för effekt och verkningsgrad än för arbete.
-> Klicka fram elevvyn. Stapeln visar genomförda uppgifter av passets omfattning; procentsatsen intill gäller andel rätt. Genomfört pass och säkra kunskaper är två olika saker. Det här är underlag för frågor och fortsatt undervisning, inte ett färdigt betygsunderlag.
-> Alla namn och siffror är fiktiva. Exemplet illustrerar hur resultatvyn fungerar och gör inga anspråk på uppmätta effekter.
-
----
-
-[egen: resonemang-i-bild]
-etikett: LÄRAREN · 05
-rubrik: Låt nästa pass börja i ett behov
-bild: bilder/verktygspresentation/kg-omraden-detalj.png
-alt: Gruppens statistik per område, svagast först, med knapp för att skapa ett pass med de svagaste områdena.
-text: Områdesöversikten visar uppskattad behärskning och en väg till ny träning.
-märke: Fiktiva resultat
-> 45 sekunder. Detta är en annan vy än passets resultat. Här visas gruppens genomsnittliga uppskattade behärskning per område, baserad på elevernas träningsdata. Den ska inte läsas som samma mått som andel rätt i det nyss visade passet.
-> Peka på knappen under staplarna. Läraren kan utgå från svagare områden när ett nytt träningspass skapas. Man kan sedan granska och ändra urvalet. Kombinera statistiken med samtal, genomgångar och elevernas lösningar.
-
----
-
-[påstående]
-etikett: FRÅN RESULTAT TILL UNDERVISNING
-rubrik: Vad behöver vi göra tillsammans nästa lektion?
-text: En genomgång. Ett samtal. Några väl valda uppgifter.
-> 20 sekunder. Låt frågan stå en stund. Nu har vi följt elevens träning och lärarens uppföljning. Nästa steg kan vara ett övningsblad, gemensamt resonemang eller ett prov. Där kommer Uppgiftslabbet in.
+rubrikrörelse: ingen
+- steg1 | Öppna lärarens pass | 50.0 | 40.64 | 73.5 | 13.56 | Uppdraget finns på startsidan. Här heter det Energi i vardagen.
+- steg2 | Eller välj egen träning | 50 | 70 | 74 | 28 | Kurserna ligger längre ned på samma sida.
+> 35 sekunder. Visa hela startsidan innan du klickar. Vi följer ett exempel i fysik, men visar också de andra kurserna. Allt är verkliga gränssnitt från lokala kopior med fiktiva konton och resultat. Filmerna visar riktiga musklick och drag i dessa kopior. Högerpil flyttar kameran; sista klicket återgår till helheten. N visar anteckningar. P öppnar talarvyn.
 
 ---
 
 [bildregi]
-bild: bilder/verktygspresentation/ul-02-uppgiftsbank.png
-alt: Uppgiftslabbets arbetsyta med valda energiområden till vänster, uppgiftsbanken i mitten och det tomma övningsbladet till höger.
-bildläge: detail
-beskärning: contain
-säker-yta: 2 2 1 1
-mörkning: 0 0 1 1 0
-- urval | 1 · Välj innehållet | 10 | 80 | 17 | 22 | Markera de områden du vill arbeta med.
-- uppgift | 2 · Granska uppgiften | 46 | 55 | 46 | 54 | Läs text, figur och facit innan du väljer.
-- blad | 3 · Bygg ditt blad | 86 | 44 | 24 | 52 | Valda uppgifter samlas på arbetsytan till höger.
-> 60 sekunder. Introducera Uppgiftslabbets tre delar i helbild. Klicka sedan fram ett område i taget. Filterpanelen kan också användas för nivå, förmåga, hjälpmedel och sökning; i detta utsnitt är den rullad till energiområdena.
-> Det finns 331 uppgifter i det här urvalet vid inspelningstillfället. Antalet är ingen beständig marknadsföringssiffra. Låt publiken fokusera på arbetsflödet. Ett sista klick återställer helheten.
-
----
-
-[egen: resonemang-i-bild]
-etikett: UPPGIFTSLABBET · 02
-rubrik: Från uppgiftsbank till eget material
-bild: bilder/verktygspresentation/ul-03-ovningsblad.png
-alt: Tre valda energiuppgifter samlade i övningsbladet Energi i vardagen.
-text: Klicka eller dra uppgifter till bladet. Välj det som passar lektionen.
-- Förhandsvisa dokumentet | bilder/verktygspresentation/ul-layout-detalj.png | Samma urval blir ett sammanhängande övningsblad med figurer och uppgiftsordning.
-> 45 sekunder. I exemplet har vi valt tre befintliga uppgifter om en vagn på en ramp, en pendel och en hiss. Det är ett nytt urval för gemensamt arbete; det är inte en automatisk export av Kunskapsgymmets pass.
-> Ett klick visar dokumentredigeraren. Övningsblad och prov är olika dokumenttyper i Uppgiftslabbet. Läraren väljer form efter syftet.
+etikett: KUNSKAPSGYMMET
+rubrik: Välj den kurs eleven läser
+text: Matematikens kurser och spår finns samlade på startsidan.
+bild: bilder/verktygspresentation/vandring/kg-kurser.png
+alt: Hela webbläsarvyn: Välj den kurs eleven läser.
+bildläge: vandring
+beskärning: cover
+övergång: tona
+rubrikrörelse: ingen
+- steg1 | Nivå 1, nivå 2 och fortsättning | 50 | 24 | 74 | 20 | Öppna rätt kurs. Spåren framgår på kurskortet.
+- steg2 | Fortsättning och fördjupning | 50 | 42 | 74 | 18 | Fler kurser finns på samma sida.
+> 25 sekunder. Peka på de verkliga kursnamnen. Nivåerna i kursnamnen ska inte blandas ihop med träningsnivån inne i en uppgift. Vi scrollar sedan längre ned på startsidan.
 
 ---
 
 [bildregi]
-bild: bilder/verktygspresentation/ul-04-redigera-dokument.png
-alt: Redigera dokument med avståndsreglage, facitval, PDF, Word och förhandsvisning av övningsbladet.
-bildläge: detail
-beskärning: contain
-mörkning: 0 0 1 1 0
-- form | 1 · Ge arbetet utrymme | 54 | 6 | 25 | 8 | Justera avståndet. Skrivutrymme och ordning kan också ändras i dokumentet.
-- huvud | 2 · Gör det till ditt dokument | 48 | 25 | 48 | 16 | Rubrik, klass och datum går att redigera direkt i förhandsvisningen.
-- export | 3 · Välj hur du vill dela ut | 81 | 6 | 19 | 8 | Välj facit och exportera till PDF eller Word.
-> 60 sekunder. Det här är menyn Redigera dokument. Klicka fram verktygsraden, dokumenthuvudet och exportknapparna. Visa hur layoutarbete och innehåll hör ihop: lagom skrivutrymme, tydlig rubrik och en ordning som passar undervisningen.
-> Facitvalet styr om facit ska följa med i exporten. Det betyder inte att svaren visas mitt i uppgifterna i denna förhandsvisning. PDF och Word är befintliga exportfunktioner. Den här presentationen demonstrerar knapparna, inte ett genomfört exporttest av båda filformaten.
+etikett: KUNSKAPSGYMMET
+rubrik: Här finns också fysik
+text: Vi öppnar Fysik nivå 1 i demonstrationen.
+bild: bilder/verktygspresentation/vandring/kg-kurser-fysik.png
+alt: Hela webbläsarvyn: Här finns också fysik.
+bildläge: vandring
+beskärning: cover
+övergång: tona
+rubrikrörelse: ingen
+- steg1 | Fysik nivå 1 och nivå 2 | 50.0 | 62.16 | 73.5 | 23.45 | Välj kurskortet för att komma till kursens träningssida.
+> 20 sekunder. Visa fysikkorten. Historiekortet längre ned är märkt under uppbyggnad och presenteras inte som en färdig kurs.
 
 ---
 
-[egen: resonemang-i-bild]
-etikett: UPPGIFTSLABBET · 04
-rubrik: Anpassa en uppgift till din lektion
-bild: bilder/verktygspresentation/ul-uppgift-detalj.png
-alt: Redigera uppgift med textfält, matematisk förhandsvisning, figur, bildstorlek och hopfällt facit.
-text: Redigera text, figur och facit i bladets egen kopia.
-> 45 sekunder. Skilj denna vy från dokumentredigeraren: här redigeras en enskild uppgift. Man ser texten och förhandsvisningen samtidigt och kan arbeta med figur och bildstorlek.
-> En lokal kopia ger flexibilitet. Ändrar man uppgiftens givna värden eller matematiska innehåll behöver facit och eventuella deluppgifter kontrolleras samtidigt. Originalet i den gemensamma banken ändras inte av att kopian i bladet redigeras.
+[bildregi]
+etikett: KUNSKAPSGYMMET
+rubrik: Orientera dig på kurssidan
+text: Härifrån kan eleven starta träning eller öppna uppdragsboken.
+bild: bilder/verktygspresentation/vandring/kg-kurs.png
+alt: Hela webbläsarvyn: Orientera dig på kurssidan.
+bildläge: vandring
+beskärning: cover
+övergång: tona
+rubrikrörelse: ingen
+- steg1 | Välj hur du vill träna | 40.31 | 53.44 | 54.12 | 37.11 | Kursens träningsdel samlar inställningar och startknapp.
+- steg2 | Öppna uppdragsboken | 63.5 | 42.8 | 9 | 20 | Boken leder till dagens uppdrag i den valda kursen.
+> 30 sekunder. Börja med hela sidan så att placeringen blir tydlig. Flytta sedan från träningsdelen till bokomslaget. Uppdragsboken och lärarens träningspass är två olika ingångar till träningen.
 
 ---
 
-[fri]
-rubrik: Gör bra material till ett gemensamt arbete
-@text 100 75 1600 40 storlek=23 färg=accent2 | UPPGIFTSLABBET · 05
-@text 100 155 1700 100 storlek=66 typsnitt=rubrik | Gör bra material till ett gemensamt arbete.
-@bild 100 300 840 680 passning=hela | bilder/verktygspresentation/ul-dela-detalj.png
-@text 1060 345 720 85 storlek=40 typsnitt=rubrik färg=accent2 | Bjud in en kollega.
-@text 1060 435 700 100 storlek=30 | Välj bland skolans lärare eller skapa en inbjudningslänk.
-@text 1060 595 720 85 storlek=40 typsnitt=rubrik färg=accent | Arbeta i samma dokument.
-@text 1060 685 700 120 storlek=30 | Se medlemmar, synkstatus och tidigare versioner.
-@text 1060 885 700 70 storlek=24 färg=dampad | Delning kräver ett godkänt lärarkonto i Uppgiftslabbet.
-> 55 sekunder. Detta visar riktig delningsdialog med fiktiva kollegor. Sara har redan tillgång; Johan kan bjudas in. Medlemmarna arbetar i samma dokument och ändringar synkas. Länkdelning finns som alternativ.
-> Förklara skillnaden mot att skicka runt separata filer: här finns ett gemensamt dokument och en versionshistorik. Separat finns även Dela med alla för skolans bank, där andra lärare kan skapa egna kopior. Den knappen har en annan innebörd än gemensam redigering.
+[bildregi]
+etikett: KUNSKAPSGYMMET
+rubrik: Titta i uppdragsboken
+text: Dagens uppdrag, framsteg och XP-belöningar syns på uppslaget.
+bild: bilder/verktygspresentation/vandring/kg-uppdragsbok.png
+alt: Hela webbläsarvyn: Titta i uppdragsboken.
+bildläge: vandring
+beskärning: cover
+övergång: tona
+rubrikrörelse: ingen
+- steg1 | Börja med huvuduppdraget | 35.31 | 46.78 | 26.38 | 18.59 | Här ska eleven klara fem uppgifter. Börja-knappen startar träningen.
+- steg2 | Följ de andra uppdragen | 65 | 50 | 29 | 58 | Varje uppdrag visar vad som ska göras, framsteg och belöning.
+> 40 sekunder. Låt bokuppslaget vara synligt några sekunder. Visa sedan huvuduppdraget och de tre andra uppdragen. I exemplet är inget färdigt ännu. Förklara att uppdrag och belöningar kan variera. Datum och bläddring finns under boken.
 
 ---
 
-[egen: resonemang-i-bild]
-etikett: UPPGIFTSLABBET · 06
-rubrik: Hitta tillbaka. Bygg vidare.
-bild: bilder/verktygspresentation/ul-bibliotek-detalj.png
-alt: Mina prov och övningsblad med ett eget energiblad och ett geometriprov delat av en kollega.
-text: Samla egna och mottagna dokument. Sök, filtrera och återanvänd.
-märke: Exempeldokument
-> 30 sekunder. Det färdiga materialet blir början på nästa arbetsomgång. Här finns både egna dokument och material som kollegor delat. Kursfilter, sökning och sortering gör det lättare att hitta tillbaka.
-> Att spara på konto och komma åt dokument på andra datorer förutsätter inloggning. Lokala utkast och kontosparade dokument har olika lagring.
+[bildregi]
+etikett: KUNSKAPSGYMMET
+rubrik: Så arbetar eleven med en uppgift
+text: Läs, lös på papper och skriv sedan svaret.
+bild: bilder/verktygspresentation/vandring/kg-uppgift.png
+alt: Hela webbläsarvyn: Så arbetar eleven med en uppgift.
+bildläge: vandring
+beskärning: cover
+övergång: tona
+rubrikrörelse: ingen
+- steg1 | Läs frågan | 50 | 31 | 55 | 28 | Här beräknas arbetet: 165 N gånger 2,80 m.
+- steg2 | Skriv svaret och välj stöd vid behov | 50 | 60 | 55 | 24 | Här finns Kontrollera, Visa ledtråd, Visa lösning och Miniräknare.
+> 35 sekunder. Ge publiken en kort stund att orientera sig. Svaret är 462 J. Stödet finns kvar runt samma uppgift; eleven behöver inte lämna sidan. Nästa scen visar själva svarskontrollen i rörelse.
 
 ---
 
-[bro]
-etikett: EN UNDERVISNINGSCYKEL
-rubrik: Från förberedelse till nästa kloka val
-vänster: Det eleverna behöver lära sig
-höger: Det vi gör härnäst
-retur: Erfarenheter och resultat formar nästa lektion
-- Förbered | Välj och anpassa material i Uppgiftslabbet.
-- Träna | Ge riktning och återkoppling i Kunskapsgymmet.
-- Följ upp | Läs resultaten och prata om lösningarna.
-text: Du håller ihop undervisningen. Verktygen hjälper arbetet framåt.
-> 45 sekunder. Knyt ihop berättelsen. Det är läraren som gör de didaktiska valen. Uppgiftslabbet och Kunskapsgymmet stödjer olika delar av cykeln. Pilarna visar ett arbetssätt, inte automatisk dataöverföring mellan apparna.
-> Följ klicken genom förberedelse, träning, uppföljning och återkoppling till nästa lektion. Återställ sedan helheten. Kollegial delning gör att bra material kan leva vidare mellan lektioner och lärare.
+[bildregi]
+etikett: KUNSKAPSGYMMET
+rubrik: Kontrollera svaret – se vad som händer
+text: Nästa klick spelar en kort inspelning från uppgiften.
+bild: bilder/verktygspresentation/vandring/kg-svara-xp.png
+alt: Hela webbläsarvyn: Kontrollera svaret – se vad som händer.
+bildläge: vandring
+beskärning: cover
+övergång: tona
+rubrikrörelse: ingen
+film: bilder/verktygspresentation/vandring/kg-svara-xp.mp4
+filmsteg: spela
+- spela | Klicka på Kontrollera | 50 | 42 | 65 | 84 | Svaret blir grönt och XP-mätaren ökar.
+> 20 sekunder. Klicka och låt filmen spela färdigt, ungefär fem sekunder. Eleven har skrivit 462 och klickar på Kontrollera. Inspelningen visar den faktiska svarskontrollen och XP-animationen. Nästa scen stannar vid resultatet.
 
 ---
 
-[fri]
-rubrik: Börja med nästa lektion
-@text 100 90 1600 40 storlek=24 färg=accent | PROVA I LITEN SKALA
-@text 100 205 1620 160 storlek=100 typsnitt=rubrik | Börja med nästa lektion.
-@text 110 425 1620 140 storlek=42 | Ett område. Ett kort pass. Ett genomtänkt blad.
-@ruta 100 625 820 225 färg=yta bakgrund=yta linje=1
-@ruta 1000 625 820 225 färg=yta bakgrund=yta linje=1
-@text 140 670 740 70 storlek=47 typsnitt=rubrik färg=accent | kunskapsgymmet.se
-@text 140 765 740 55 storlek=27 färg=dampad | Prova elevens träning och skapa ett lärarpass.
-@text 1040 670 740 70 storlek=47 typsnitt=rubrik färg=accent2 | uppgiftslabbet.se
-@text 1040 765 740 55 storlek=27 färg=dampad | Bygg ett blad och bjud in en kollega.
-@text 110 950 1620 55 storlek=31 | Vilken del skulle göra störst skillnad i din undervisning?
-> 35 sekunder, följt av frågor. Föreslå ett konkret första försök: välj ett innehåll ni snart ska arbeta med, prova några uppgifter som elev, gör ett kort träningspass och skapa ett blad för gemensam uppföljning.
-> Låt gärna kollegorna välja vilken del de vill börja med. Lärarfunktioner kräver rätt konto och behörighet i respektive verktyg. Avsluta med en fråga om deras vardag snarare än fler funktioner.
+[bildregi]
+etikett: KUNSKAPSGYMMET
+rubrik: Stanna vid återkopplingen
+text: Rätt svar ger XP. Här visas både resultatet och mätaren.
+bild: bilder/verktygspresentation/vandring/kg-ratt.png
+alt: Hela webbläsarvyn: Stanna vid återkopplingen.
+bildläge: vandring
+beskärning: cover
+övergång: tona
+rubrikrörelse: ingen
+- steg1 | Rätt! +6 XP | 50.0 | 74.45 | 53.37 | 9.11 | Belöningen för just detta svar visas bredvid återkopplingen.
+- steg2 | Mätaren går framåt | 39.6 | 4.4 | 26 | 7.5 | I exemplet ökar den från 135 till 141 av 185 XP mot nästa nivå.
+> 30 sekunder. Flytta först fokus till rättmarkeringen, sedan hela vägen upp till XP-mätaren. Det är denna förflyttning som hjälper publiken att förstå var olika saker händer. XP-beloppet varierar mellan uppgifter och situationer; sex är just detta exempel. XP är inte ett betyg.
+
+---
+
+[bildregi]
+etikett: KUNSKAPSGYMMET
+rubrik: Gå igenom lösningen vid behov
+text: Visa lösning ligger vid samma uppgift.
+bild: bilder/verktygspresentation/vandring/kg-losning.png
+alt: Hela webbläsarvyn: Gå igenom lösningen vid behov.
+bildläge: vandring
+beskärning: cover
+övergång: tona
+rubrikrörelse: ingen
+- steg1 | Jämför med din egen lösning | 50.0 | 87.59 | 53.37 | 18.06 | Använd resonemanget för att se hur svaret räknas fram.
+> 20 sekunder. Vi visar lösningen efter elevens försök. Be eleven jämföra med sina mellanled på papper, inte bara läsa slutsvaret.
+
+---
+
+[bildregi]
+etikett: KUNSKAPSGYMMET
+rubrik: Öppna topplistan
+text: Välj tidsperiod och se XP och genomförda uppgifter.
+bild: bilder/verktygspresentation/vandring/kg-topplista.png
+alt: Hela webbläsarvyn: Öppna topplistan.
+bildläge: vandring
+beskärning: cover
+övergång: tona
+rubrikrörelse: ingen
+- steg1 | Byt tidsperiod | 50.0 | 44.67 | 73.5 | 5.56 | Idag, vecka, månad eller all tid.
+- steg2 | Läs listan | 50.0 | 67.5 | 70.62 | 35.44 | Här visas användarnamn, nivå, medaljer, uppgifter och XP.
+- steg3 | Eleven väljer sin synlighet | 50.0 | 27.56 | 73.5 | 8.89 | Dölj mig tar bort eleven från den synliga listan.
+> 35 sekunder. Alla namn och placeringar är fiktiva. Topplistan är en motivationsfunktion; XP ska inte läsas som kunskapsbetyg. Perioderna gäller XP och aktivitet under den valda perioden, medan nivå bygger på total XP.
+
+---
+
+[bildregi]
+etikett: KUNSKAPSGYMMET
+rubrik: Växla till Klasser
+text: Samma topplista kan visa klassernas samlade aktivitet.
+bild: bilder/verktygspresentation/vandring/kg-klasstopp.png
+alt: Hela webbläsarvyn: Växla till Klasser.
+bildläge: vandring
+beskärning: cover
+övergång: tona
+rubrikrörelse: ingen
+- steg1 | Se klassernas samlade XP | 50.0 | 60.94 | 70.62 | 21.89 | Här syns också hur många elever som har tränat.
+> 20 sekunder. Peka på antal aktiva elever. Poängen beräknas enligt reglerna under listan, inklusive taket per elev och period. Detta är demonstrationsvärden.
+
+---
+
+[fråga]
+etikett: KORT STOPP
+rubrik: Var skulle du låta en elev börja?
+svar: Med ett avgränsat lärarpass – eller med egen träning i rätt kurs.
+> 15 sekunder. Ta ett eller två korta svar. Nu byter vi till lärarens vy och skapar ett sådant pass.
+
+---
+
+[bildregi]
+etikett: LÄRARE
+rubrik: Byt till Min undervisning
+text: Lärarens grupper finns samlade här.
+bild: bilder/verktygspresentation/vandring/kg-larare.png
+alt: Hela webbläsarvyn: Byt till Min undervisning.
+bildläge: vandring
+beskärning: cover
+övergång: tona
+rubrikrörelse: ingen
+- steg1 | Öppna undervisningsgruppen | 50.0 | 49.32 | 73.5 | 14.78 | Vi väljer Fysik · NA26a.
+> 20 sekunder. Visa att lärarvyn har en egen ingång och att grupperna är kopplade till en kurs.
+
+---
+
+[bildregi]
+etikett: LÄRARE
+rubrik: Skapa ett träningspass till gruppen
+text: Utgå från gruppens sida.
+bild: bilder/verktygspresentation/vandring/kg-grupp.png
+alt: Hela webbläsarvyn: Skapa ett träningspass till gruppen.
+bildläge: vandring
+beskärning: cover
+övergång: tona
+rubrikrörelse: ingen
+- steg1 | Välj Skapa träningspass | 18.2 | 52.26 | 9.9 | 5.33 | Du kommer till formuläret där innehåll och omfattning väljs.
+> 20 sekunder. Gruppen är redan vald när vi startar här. Namn och elevantal är demonstrationsdata.
+
+---
+
+[bildregi]
+etikett: LÄRARE
+rubrik: Ge passet namn och omfattning
+text: Exemplet innehåller 15 uppgifter om energi.
+bild: bilder/verktygspresentation/vandring/kg-skapa.png
+alt: Hela webbläsarvyn: Ge passet namn och omfattning.
+bildläge: vandring
+beskärning: cover
+övergång: tona
+rubrikrörelse: ingen
+- steg1 | Skriv ett namn eleverna känner igen | 50.0 | 40.43 | 73.5 | 5.78 | Här: Energi i vardagen.
+- steg2 | Välj omfattning och inställningar | 50 | 64 | 74 | 34 | Anpassa antal uppgifter, datum och nivåer till gruppen.
+> 35 sekunder. Visa namnfältet och sedan inställningarna. Vi scrollar ned i samma formulär för att välja områden. Lärarens nivåval och elevens användarnivå i XP-systemet är olika saker.
+
+---
+
+[bildregi]
+etikett: LÄRARE
+rubrik: Välj vad eleverna ska träna på
+text: Områdena väljs i samma formulär.
+bild: bilder/verktygspresentation/vandring/kg-innehall.png
+alt: Hela webbläsarvyn: Välj vad eleverna ska träna på.
+bildläge: vandring
+beskärning: cover
+övergång: tona
+rubrikrörelse: ingen
+- steg1 | Markera områdena | 50.0 | 49.95 | 73.5 | 18.44 | Här väljs arbete, rörelseenergi samt effekt och verkningsgrad.
+> 25 sekunder. Visa kryssrutorna och att de ligger under det aktuella kapitlet. Välj sedan Skapa träningspass. I demonstrationen hanteras skapandet lokalt utan att något publiceras till riktiga elever.
+
+---
+
+[bildregi]
+etikett: LÄRARE
+rubrik: Ge eleverna vägen till passet
+text: Efter skapandet visas passets kod och länk.
+bild: bilder/verktygspresentation/vandring/kg-dela-pass.png
+alt: Hela webbläsarvyn: Ge eleverna vägen till passet.
+bildläge: vandring
+beskärning: cover
+övergång: tona
+rubrikrörelse: ingen
+- steg1 | Kopiera kod eller länk | 50.0 | 41.1 | 73.5 | 20.44 | Elever i den valda gruppen ser också passet på sin startsida.
+> 25 sekunder. Knyt tillbaka till den första elevbilden. Detta är vägen från lärarens val till elevens uppdrag. Koden i demonstrationen är fiktiv.
+
+---
+
+[bildregi]
+etikett: UPPFÖLJNING
+rubrik: Följ upp träningspasset
+text: Öppna passet för att se sammanställningen.
+bild: bilder/verktygspresentation/vandring/kg-passstatistik.png
+alt: Hela webbläsarvyn: Följ upp träningspasset.
+bildläge: vandring
+beskärning: cover
+övergång: tona
+rubrikrörelse: ingen
+- steg1 | Hur många har tränat? | 50.0 | 58.26 | 71.62 | 3.78 | Börja med omfattningen innan du tolkar resultaten.
+- steg2 | Jämför innehållsområdena | 50.0 | 68.87 | 71.62 | 13.67 | Här syns försök och andel rätt i just detta pass.
+> 35 sekunder. Alla resultat är exempeldata. Tolka andel rätt i relation till antal försök och användningen av stöd. Fråga gärna kollegorna vilket område de skulle vilja följa upp.
+
+---
+
+[bildregi]
+etikett: UPPFÖLJNING
+rubrik: Se hur det går för enskilda elever
+text: Fäll ut elevlistan i passets resultat.
+bild: bilder/verktygspresentation/vandring/kg-elevstatistik.png
+alt: Hela webbläsarvyn: Se hur det går för enskilda elever.
+bildläge: vandring
+beskärning: cover
+övergång: tona
+rubrikrörelse: ingen
+- steg1 | Läs genomförande och rätta svar | 50 | 39 | 72 | 62 | Listan visar vilka som kommit igång och hur långt de har kommit.
+> 25 sekunder. Peka på att genomförda och rätta uppgifter är separata kolumner. Listan är underlag för uppföljning och samtal, inte en färdig betygsbedömning.
+
+---
+
+[bildregi]
+etikett: UPPFÖLJNING
+rubrik: Välj nästa sak att arbeta med
+text: Gruppens områdesstatistik finns på en egen flik.
+bild: bilder/verktygspresentation/vandring/kg-omradesstatistik.png
+alt: Hela webbläsarvyn: Välj nästa sak att arbeta med.
+bildläge: vandring
+beskärning: cover
+övergång: tona
+rubrikrörelse: ingen
+- steg1 | Jämför uppskattad behärskning | 50 | 82 | 74 | 16 | Effekt och verkningsgrad ligger lägst i detta exempel.
+- steg2 | Skapa ett nytt pass härifrån | 77 | 94 | 22 | 6 | Knappen utgår från de svagaste områdena.
+> 35 sekunder. Skilj på staplarnas uppskattade behärskning och andelen rätt i den mindre texten. Det är olika mått. Försök och antal elever hjälper oss att bedöma underlaget. Nu går vi vidare till att skapa material i Uppgiftslabbet.
+
+---
+
+[bildregi]
+etikett: UPPGIFTSLABBET
+rubrik: Bygg ett övningsblad i Uppgiftslabbet
+text: Välj kurs och område. Banken ligger i mitten, bladet till höger.
+bild: bilder/verktygspresentation/vandring/ul-bank.png
+alt: Hela webbläsarvyn: Bygg ett övningsblad i Uppgiftslabbet.
+bildläge: vandring
+beskärning: cover
+övergång: tona
+rubrikrörelse: ingen
+- steg1 | 1 · Välj område | 8.5 | 79.5 | 16 | 9 | Vi har valt Arbete och lägesenergi.
+- steg2 | 2 · Läs uppgifterna i banken | 46 | 46 | 55 | 58 | Här kan du granska innehållet och visa facit.
+- steg3 | 3 · Samla uppgifter till höger | 87.16 | 66.98 | 25.69 | 39.81 | Dra från banken och släpp i övningsbladet.
+> 35 sekunder. Förklara först de tre delarna av sidan. Alla delar hör till samma fullständiga webbläsarvy. Nästa scen visar fyra verkliga drag.
+
+---
+
+[bildregi]
+etikett: UPPGIFTSLABBET
+rubrik: Dra fyra uppgifter till övningsbladet
+text: Nästa klick visar hela arbetsmomentet.
+bild: bilder/verktygspresentation/vandring/ul-dra-fyra.png
+alt: Hela webbläsarvyn: Dra fyra uppgifter till övningsbladet.
+bildläge: vandring
+beskärning: cover
+övergång: tona
+rubrikrörelse: ingen
+film: bilder/verktygspresentation/vandring/ul-dra-fyra.mp4
+filmsteg: spela
+- spela | Dra från mitten till höger | 59 | 48 | 82 | 78 | Släpp i den tomma ytan för att lägga till som en ny uppgift.
+> 30 sekunder. Klicka och låt den ungefär tolv sekunder långa filmen spela färdigt. Fyra separata drag bygger upp listan. Markören visar rörelsen och bladets antal förändras. Att släppa på en befintlig uppgift kan i stället gruppera deluppgifter; här släpper vi i den tomma ytan.
+
+---
+
+[bildregi]
+etikett: UPPGIFTSLABBET
+rubrik: Klicka på Redigera för att förhandsvisa
+text: Fyra uppgifter finns nu i bladet till höger.
+bild: bilder/verktygspresentation/vandring/ul-forhandsvisa.png
+alt: Hela webbläsarvyn: Klicka på Redigera för att förhandsvisa.
+bildläge: vandring
+beskärning: cover
+övergång: tona
+rubrikrörelse: ingen
+film: bilder/verktygspresentation/vandring/ul-forhandsvisa.mp4
+filmsteg: spela
+- spela | Öppna dokumentet | 50 | 47 | 100 | 88 | Redigera visar bladets utseende och layoutverktyg.
+> 20 sekunder. Nästa klick visar den verkliga knappen och övergången till förhandsvisningen. Vänta tills dokumentet har öppnats. Vi stannar vid verktygen på nästa scen.
+
+---
+
+[bildregi]
+etikett: UPPGIFTSLABBET
+rubrik: Anpassa dokumentet i förhandsvisningen
+text: Sidan ligger kvar medan vi går mellan de viktigaste verktygen.
+bild: bilder/verktygspresentation/vandring/ul-redigera.png
+alt: Hela webbläsarvyn: Anpassa dokumentet i förhandsvisningen.
+bildläge: vandring
+beskärning: cover
+övergång: tona
+rubrikrörelse: ingen
+- steg1 | Ändra rubrik, klass och datum | 50 | 25 | 44 | 12 | Fälten går att redigera direkt på dokumentet.
+- steg2 | Justera avståndet | 54 | 6.5 | 25 | 7 | Avståndsreglaget påverkar utrymmet mellan uppgifterna.
+- steg3 | Välj facit och exportformat | 75 | 6.5 | 17 | 7 | Här finns Facit, PDF och Word.
+> 40 sekunder. Visa först hela förhandsvisningen. Förklara skillnaden mellan att redigera dokumentets layout här och att redigera själva uppgiftstexten. Exportknapparna visas; vi genomför ingen export under presentationen.
+
+---
+
+[bildregi]
+etikett: UPPGIFTSLABBET
+rubrik: Redigera en uppgift vid behov
+text: Uppgiftens redigering öppnas ovanpå arbetsytan.
+bild: bilder/verktygspresentation/vandring/ul-uppgiftsredigering.png
+alt: Hela webbläsarvyn: Redigera en uppgift vid behov.
+bildläge: vandring
+beskärning: cover
+övergång: tona
+rubrikrörelse: ingen
+- steg1 | Anpassa formuleringen | 38.5 | 36 | 30 | 28 | Redigera uppgiftens innehåll för ditt material.
+- steg2 | Anpassa figuren | 65 | 39 | 23 | 44 | Här finns bildval, förhandsvisning och bildstorlek.
+> 30 sekunder. Detta är redigeringsdialogen, inte dokumentets layoutvy. Vi avbryter i demonstrationen, så ingen uppgift i banken ändras.
+
+---
+
+[bildregi]
+etikett: UPPGIFTSLABBET
+rubrik: Dela dokumentet med kollegor
+text: Välj Dela vid ditt dokument för att öppna denna dialog.
+bild: bilder/verktygspresentation/vandring/ul-dela.png
+alt: Hela webbläsarvyn: Dela dokumentet med kollegor.
+bildläge: vandring
+beskärning: cover
+övergång: tona
+rubrikrörelse: ingen
+- steg1 | Välj en kollega | 50 | 45 | 36 | 20 | Kollegor på samma skola listas här.
+- steg2 | Se vilka som redan har tillgång | 50 | 71 | 36 | 25 | Dokumentet kan ha flera medarbetare.
+> 30 sekunder. Delningsvyn kräver godkända lärarkonton. I exemplet är Alex och Sara fiktiva användare. Inga verkliga inbjudningar skickas. Visa precis var man ser redan tillagda kollegor.
+
+---
+
+[bildregi]
+etikett: UPPGIFTSLABBET
+rubrik: Hitta tillbaka till sparat material
+text: Mina prov och övningsblad samlar dokumenten.
+bild: bilder/verktygspresentation/vandring/ul-bibliotek.png
+alt: Hela webbläsarvyn: Hitta tillbaka till sparat material.
+bildläge: vandring
+beskärning: cover
+övergång: tona
+rubrikrörelse: ingen
+- steg1 | Öppna eget eller delat material | 50 | 48 | 59 | 34 | Dokumentraderna visar kurs och information om delning.
+> 25 sekunder. Visa att materialet finns kvar att arbeta vidare med och att även kollegors delade dokument går att hitta här.
+
+---
+
+[fråga]
+etikett: PROVA SJÄLV
+rubrik: Vilket arbetsmoment vill du prova först?
+svar: Skapa ett kort träningspass – eller dra ihop ett övningsblad med fyra uppgifter.
+text: kunskapsgymmet.se · uppgiftslabbet.se
+> 30 sekunder. Låt kollegorna välja en konkret sak att prova. Avsluta här, eller använd återstående tid till frågor. Verktygen har separata arbetsflöden; ett uppgiftsblad blir inte automatiskt ett träningspass.

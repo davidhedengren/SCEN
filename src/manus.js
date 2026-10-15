@@ -88,7 +88,7 @@ const Manus = (() => {
         const field = IMAGE_DIRECTION_KEYS[label], v = kv[2].trim();
         const target = s.imageDirection = s.imageDirection || {};
         if (['focus','start','end','safe','shade'].includes(field)) target[field] = v.split(/[\s,]+/).map(Number).filter(Number.isFinite);
-        else if (field === 'mode') target.mode = ({ hero:'hero',cinematic:'hero',detalj:'detail',detail:'detail',spotlight:'spotlight',annotation:'spotlight',reveal:'reveal',mask:'reveal',levande:'live',live:'live' })[v.toLowerCase()] || 'hero';
+        else if (field === 'mode') target.mode = ({ hero:'hero',cinematic:'hero',detalj:'detail',detail:'detail',vandring:'guided',guided:'guided',spotlight:'spotlight',annotation:'spotlight',reveal:'reveal',mask:'reveal',levande:'live',live:'live' })[v.toLowerCase()] || 'hero';
         else if (field === 'direction') target.direction = ({ höger:'right',hoger:'right',right:'right',vänster:'left',vanster:'left',left:'left',upp:'up',up:'up',ned:'down',down:'down',stilla:'none',none:'none' })[v.toLowerCase()] || 'none';
         else if (field === 'speed') target.speed = ({ långsam:'slow',langsamt:'slow',slow:'slow',normal:'medium',medium:'medium',snabb:'fast',fast:'fast' })[v.toLowerCase()] || 'slow';
         else target[field] = v === 'contain' ? 'contain' : 'cover';
@@ -314,7 +314,7 @@ const Manus = (() => {
       ex: '[text-bild]\nrubrik: Kaströrelse\n- I x-led är farten konstant\n- I y-led verkar g nedåt\n- Banan blir en **parabel**' },
     { l: 'image', cat: 'Bild', syfte: 'En bild som tar hela ytan, med kort rubrik och bildtext.', undvik: 'Bilder med liten upplösning.',
       ex: '[helbild]\nrubrik: Solvarv i Mojaveöknen\netikett: Foto: exempel' },
-    { l: 'bildregi', cat: 'Bild', syfte: 'Regisserar en bild som cinematic hero, detaljresa, spotlight/annotation, kontrollerad mask reveal eller stillbild → zoom → film på klick. Samma bild och komposition bär hela klicksekvensen.', undvik: 'Dekorativa zoomar utan kommunikativ funktion. Använd inte bild när typografi, diagram eller whitespace är tydligare.',
+    { l: 'bildregi', cat: 'Bild', syfte: 'Regisserar en bild som cinematic hero, detaljresa, vandring med zoom/ram/nedtoning, spotlight/annotation, kontrollerad mask reveal eller stillbild → zoom → film på klick. Samma bild och komposition bär hela klicksekvensen.', undvik: 'Dekorativa zoomar utan kommunikativ funktion. Använd inte bild när typografi, diagram eller whitespace är tydligare.',
       ex: '[bildregi]\nrubrik: Från helhet till avgörande detalj\nbild: bilder/ai-agenter/ai10.jpg\nbildläge: detalj\nstartutsnitt: 50 50 1\nslututsnitt: 58 46 1.08\nsäker-yta: 5 12 38 72\n- robot | Rörelsen | 67 | 34 | 16 | 34 | Figuren bär scenens handling.' },
     { l: 'terminal', cat: 'Textregi', syfte: 'Regisserar en trovärdig terminalberättelse där kommando, output, fel, resultat och annotation har separata semantiska roller. Kommandon kan skrivas fram när skrivandet bär betydelse.', undvik: 'Hackerestetik, dekorativ skrivmaskinseffekt eller fler än sex terminalhändelser på samma scen.',
       ex: '[terminal]\netikett: RELEASE / 02\nrubrik: Från kommando till bevis\n- kommando | npm run bygg | Någon skriver faktiskt kommandot.\n- output | dist/scen.html 426 kB | Artefakten har skapats.\n- success | ✓ Bygg klar | Resultatet får fokus.\n- kommando | git status --short | Nästa fråga är om arbetsytan är ren.\n- output | (ingen output) | Tystnaden är själva resultatet.' },

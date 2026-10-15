@@ -8,17 +8,51 @@ Grundprincipen är:
 
 Principen används efter scenens kommunikativa behov. Cinematic hero har exempelvis en lugn kamerarörelse utan en påtvingad focus/fade-sekvens. Crop/mask reveal använder progressivt avslöjande eftersom ny information är själva poängen.
 
-## Fem lägen
+## Sex lägen
 
 | `bildläge` | Dramaturgi |
 |---|---|
 | `hero` | Helbild med långsam kamerarörelse mellan start- och slututsnitt. |
 | `detail` | Helhet → en eller flera betydelsefulla detaljer → eget restore-klick. |
+| `vandring` / `guided` | Helbild → kamera, inramning och nedtoning kring varje detalj → helbild. |
 | `spotlight` | Helheten ligger kvar; ett område får fokus och en annotation. Avslutas med restore. |
 | `reveal` | Definierade bildområden avslöjas i ordning. Ingen artificiell restore krävs. |
 | `levande` | Stillbild → zoom på första klicket → film på nästa. Filmen spelar en gång och stannar på sista rutan. |
 
 ## Levande bild
+
+### Vandring över en sida
+
+`bildläge: vandring` kombinerar en mjuk kamera med en rektangulär fokusram.
+Bilden är kvar i sin helhet; området utanför ramen tonas ned. Varje detaljrad
+flyttar kameran och ramen tillsammans. Ett sista klick återställer helbilden.
+Förklaringen ligger i ett separat band och flyttas upp när fokus ligger längst ned.
+
+Det är samma återanvändbara Bildregi-layout, med ett nytt kameraläge. Det passar
+webbgränssnitt, kartor, diagram, dokument, konstbilder och andra bilder där
+publiken behöver förstå detaljernas placering. Till skillnad från `detail`
+markeras målområdet och omgivningen tonas ned; till skillnad från `spotlight`
+rör sig även kameran. Använd hela skärmbilder i 16:9 för exakt överensstämmelse
+mellan originalets procentkoordinater och presentationsytan.
+
+```text
+[bildregi]
+rubrik: Hitta rätt på sidan
+text: Börja med helheten. Flytta sedan fokus med högerpil.
+bild: bilder/kurs/hela-sidan.png
+bildläge: vandring
+- meny | Välj område | 12 | 40 | 20 | 30 | Sidans innehåll väljs här.
+- arbete | Arbeta i mitten | 52 | 45 | 40 | 45 | Här visas ditt urval.
+```
+
+Koordinaterna är centrum X/Y samt bredd/höjd i procent av den visade bildytan.
+Kameran begränsas till bildens kanter och högst 2,2 gångers zoom.
+En film med samma format kan startas på ett visst fokussteg med `film:` och
+`filmsteg:` precis som i Spotlight. Använd filmens första ruta som grundbild.
+Bakåtsteg, omstart, statiska miniatyrer och reducerad rörelse använder samma
+regler som övrig Bildregi; filmer börjar bara på sitt angivna steg.
+
+### Film på klick
 
 Film kan också kopplas till en befintlig Spotlight-ruta utan zoom. Behåll `bildläge: spotlight`, lägg till `film:` och ange detaljens id i `filmsteg:`, exempelvis `filmsteg: dyn`. Filmen startar på samma klick som markerar området och återställs till stillbilden när fokus flyttas. Alla vanliga detaljmarkeringar och klicksteg finns kvar. Använd filmens första bildruta som stillbild så att bytet till rörelse blir mjukt.
 

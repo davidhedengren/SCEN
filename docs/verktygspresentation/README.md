@@ -1,75 +1,84 @@
-# Från uppgift till nästa steg
+# Så använder du Kunskapsgymmet och Uppgiftslabbet
 
-En presentation av **Kunskapsgymmet och Uppgiftslabbet** för lärarkollegor. 19 scener, 39 visningslägen och talaranteckningar för cirka **14 minuter**. Exemplet *Energi i vardagen* binder ihop elevens träning, lärarens uppföljning och arbetet med uppgiftsmaterial.
+En praktisk rundtur för lärarkollegor: **28 scener, 99 visningslägen och cirka 13 minuter**, plus frågor. Presentationen börjar med hela webbläsarvyer. Kameran zoomar sedan mot en inramad del medan resten tonas ned. Sista klicket i varje vandringsscen återställer helheten.
 
 ## Visa eller redigera
 
-- [Fristående HTML](../../dist/kunskapsgymmet-och-uppgiftslabbet.html): ladda ned och öppna i en modern webbläsare. Bilder, typsnitt, mallar och spelare är inbäddade.
-- [SCEN-manus](../../presentationer/kunskapsgymmet-och-uppgiftslabbet.md): redigera innehåll och talaranteckningar här.
-- I SCEN:s vanliga `index.html` finns presentationen under **Kollegial utveckling**. Välj **Spela**, eller **Gör en egen kopia** för att redigera i SCEN.
+- [Fristående HTML](../../dist/kunskapsgymmet-och-uppgiftslabbet.html): cirka 16 MB, med inbäddade bilder, tre filmer, spelare och typsnitt.
+- [SCEN-manus](../../presentationer/kunskapsgymmet-och-uppgiftslabbet.md): innehåll, fokusområden och talaranteckningar.
+- I SCEN-biblioteket: **Kollegial utveckling → Så använder du Kunskapsgymmet och Uppgiftslabbet**.
+- Både den vanliga webbappen och den inbakade appen `scen.html` är uppdaterade.
 
-Högerpil går framåt ett klick i taget; vänsterpil går tillbaka. **N** visar anteckningar, **P** öppnar talarvyn och **F** växlar helskärm. På scenerna med inzoomning går sista klicket tillbaka till översikten. Repetera gärna med projektorn före visningen.
+Högerpil går framåt ett klick i taget. Vänsterpil går tillbaka. **N** visar anteckningar, **P** öppnar talarvyn och **F** växlar helskärm. Låt filmerna spela klart innan nästa klick; de stannar på sista rutan. Vid bakåtsteg återställs filmen så att den kan visas igen.
 
-Den separata, sedan tidigare inbakade appfilen `scen.html` har inte byggts om. Använd den nya exporten eller biblioteket i `index.html` för denna presentation.
+## Arbetsmoment
 
-## Berättelsen
+| Scener | Visar |
+| --- | --- |
+| 1–5 | Elevens startsida, matematik- och fysikkurser, kurssida och uppdragsbok |
+| 6–9 | Uppgift, svarskontroll i rörelse, XP-ökning och lösning |
+| 10–12 | Elevtopplista, klasstopplista och en kort publikfråga |
+| 13–17 | Min undervisning, grupp, passinställningar, områden, kod och länk |
+| 18–20 | Resultat per område och elev, behärskning och nästa träningspass |
+| 21–24 | Banken, fyra riktiga drag till bladet, Redigera och dokumentlayout |
+| 25–28 | Uppgiftsredigering, delning med kollegor, sparat material och avslutande fråga |
 
-| Scener | Innehåll | Ungefärlig tid |
-| --- | --- | --- |
-| 1–2 | Verktygens roller och det gemensamma undervisningsexemplet | 1:20 |
-| 3–5 | Elevens pass, uppgift, ledtråd, återkoppling och lösning | 2:20 |
-| 6–10 | Grupper, skapa och dela pass, resultat per område och elev | 4:00 |
-| 11–15 | Välj uppgifter, bygg uppgiftsblad, redigera dokument och uppgifter | 4:00 |
-| 16–19 | Dela med kollegor, sparade dokument, undervisningscykel och nästa steg | 2:30 |
+De tre inspelningarna visar faktisk svarskontroll med XP-animation (cirka fem sekunder), fyra separata drag till ett övningsblad (cirka tolv sekunder) och knappen Redigera som öppnar dokumentet (cirka tre sekunder). De är ljudlösa och startar på presentatörens klick.
 
-Tidsangivelserna i manusets talaranteckningar är vägledande. Ge kollegorna tid att läsa skärmbilderna och stanna gärna vid en funktion som väcker frågor.
+## Bilder och demonstrationsdata
 
-## Skärmbilder och exempeldata
+Underlaget är hela 16:9-webbläsarvyer, fotograferade vid 1600 × 900 med dubbel pixeltäthet. Inga urklippta detaljbilder används i den ombyggda presentationen. Kameran, ramen och nedtoningen utförs av SCEN under visningen. På långa sidor finns olika scrollpositioner; sidornas verkliga menyer och omgivning finns kvar. Inspelningarnas första rutor används som deras grundbilder.
 
-Skärmbilderna är tagna i Chromium från apparnas verkliga lokala gränssnitt den 15 oktober 2026. De är inte tecknade imitationer. Namn, konton, grupper, träningspass och resultat är fiktiva demonstrationer som injiceras i den isolerade webbläsaren. Uppgifterna och deras illustrationer kommer från de befintliga uppgiftsbankerna.
+Källor den 15 oktober 2026:
 
-Bildskripten fångar nätverksanrop: apparnas publika adresser serveras från de lokala kopiorna, Supabase blockeras och tjänsteanrop för grupper, resultat och delning ersätts med lokala demonstrationssvar. Inga riktiga elevuppgifter hämtas och inga produktionsdata ändras. Delningsbilderna visar gränssnittet för godkända lärarkonton; ingen inbjudan skickas till någon kollega.
-
-Källversioner vid fotograferingen:
-
-| Repository | Git HEAD |
+| Repository | Git HEAD vid fotograferingen |
 | --- | --- |
 | Kunskapsgymmet | `6f702503637fc3af68d24ff6b1e350eb6f2a6dbb` |
 | Uppgiftslabbet | `859b53892c5bb0cd5e94418701be38aa247ea85a` |
-| SCEN | `073b7fc5ed57190096324662c0f380307436915b` |
 
-Presentationen skiljer mellan genomförda uppgifter, andel rätt och uppskattad behärskning. Den utlovar ingen automatisk överföring från uppgiftsblad till träningspass. PDF- och Word-knapparna visas, men dessa exportfunktioner har inte funktionstestats i detta presentationsarbete.
+Gränssnitten är verkliga lokala kopior. Konton, grupper, pass, topplistor och resultat är fiktiva demonstrationer. Inga riktiga elevuppgifter hämtas och inga inbjudningar skickas. Skärmbildsskripten serverar apparnas publika adresser från lokala kopior, blockerar Supabase och ersätter tjänsteanrop med lokala svar. Svarskontroll, XP-animation, dragning och öppning av dokumentet körs däremot av apparnas egna funktioner. Pekarmarkören i filmerna är ett presentationshjälpmedel ovanpå den verkliga pekarrörelsen.
 
-## Bygg om presentationen
+Uppskattad behärskning, andel rätt, genomförande och XP förklaras som olika mått. Historiekortet är märkt under uppbyggnad. Delning visas för ett fiktivt godkänt lärarkonto. PDF- och Word-knapparna visas, men exportfunktionerna har inte testats i detta presentationsarbete.
 
-Kör från SCEN-repot:
+## Kamera och manus
+
+Det nya återanvändbara läget är **Bildregi → Vandring: zoom och markering** (`bildläge: vandring`). Se [BILDREGI.md](../BILDREGI.md). Det fungerar även för kartor, diagram, dokument och andra bildmotiv. Målområdenas koordinater står i manuset och kan ändras oberoende av motor och bildfiler.
+
+## Bygg om
+
+Från SCEN-repot:
 
 ```sh
-node scripts/scen.mjs index
 node scripts/scen.mjs kolla
+node scripts/scen.mjs bygg
 node scripts/scen.mjs exportera presentationer/kunskapsgymmet-och-uppgiftslabbet.md
 PYTHONDONTWRITEBYTECODE=1 python3 scripts/verktygspresentation/package.py
 ```
 
-Det sista steget bäddar in typsnitten **Familjen Grotesk** och **Hanken Grotesk** samt deras OFL-licenser. Utan det steget använder standardexporten externa webbtypsnitt. Licenstexterna finns även i denna mapp. Fontsource-versionen är låst till 5.3.0.
+Paketeringen bäddar in Familjen Grotesk och Hanken Grotesk från Fontsource 5.3.0, inklusive OFL-licenserna i denna mapp. Det steget behövs efter varje ny standardexport för att bevara externa typsnitt som inbäddade data.
 
-För nya skärmbilder behövs Python Playwright, Chromium-wrappern `/workspace/.onboarding/bin/chromium-cloud` och lokala HTTP-servrar: SCEN på 5173, Uppgiftslabbet på 8082 och Kunskapsgymmet på 8083. Miljöns sparade startinstruktioner beskriver dessa. Kör sedan:
+För nya bilder och filmer behövs Python Playwright, Chromium-wrappern `/workspace/.onboarding/bin/chromium-cloud`, systemets FFmpeg samt lokala HTTP-servrar: SCEN på 5173, Uppgiftslabbet på 8082 och Kunskapsgymmet på 8083. I denna miljö används systemets FFmpeg även av Playwright:
 
 ```sh
-PYTHONDONTWRITEBYTECODE=1 python3 scripts/verktygspresentation/capture.py
-PYTHONDONTWRITEBYTECODE=1 python3 scripts/verktygspresentation/capture-ul.py
+mkdir -p /workspace/.onboarding/playwright/ffmpeg-1011
+ln -sf /usr/bin/ffmpeg /workspace/.onboarding/playwright/ffmpeg-1011/ffmpeg-linux
+PLAYWRIGHT_BROWSERS_PATH=/workspace/.onboarding/playwright PYTHONDONTWRITEBYTECODE=1 python3 scripts/verktygspresentation/capture-tour.py
 ```
 
-Skripten skriver över skärmbilderna i `bilder/verktygspresentation/`. De behöver `cdn.jsdelivr.net` vid första körningen för appbibliotek och typsnitt; hämtningarna cachas under `/workspace/.onboarding/cache`. De är anpassade för denna molnmiljös sökvägar. Bygg om exporten efter bildändringar.
+Det skriver över underlaget i `bilder/verktygspresentation/vandring/`. `regions.json` innehåller uppmätta komponentpositioner som stöd för redigering av manuset. Uppdatera manusets målområden om appens layout ändras. Skriptet är anpassat för denna molnmiljös sökvägar och Playwright-version. Bibliotek och typsnitt hämtas från `cdn.jsdelivr.net` och cachas under `/workspace/.onboarding/cache`.
 
-## Kontroller
+## Verifiering
 
-Presentationens samtliga 19 scener och 39 visningslägen har körts i den faktiska SCEN-spelaren vid 1920 × 1080. Alla bilder laddas, fria textlager ryms och inga JavaScript-fel eller externa nätverksanrop registreras. Skärmbilder har även granskats visuellt. Kontrollen kan upprepas med:
+Samtliga 28 scener och 99 visningslägen kontrolleras i SCEN vid 1920 × 1080: bilder laddas, filmer spelas till slutet, ramar håller sig på skärmen, återställning fungerar och inga JavaScript-fel eller externa nätverksanrop registreras. Dessutom kontrolleras kamera och filmer i Djup och Klassrum vid 1280 × 720, med reducerad rörelse, bakåtsteg, statiskt läge och byte av scen.
 
 ```sh
 PYTHONDONTWRITEBYTECODE=1 python3 scripts/verktygspresentation/review.py
+PYTHONDONTWRITEBYTECODE=1 python3 scripts/verktygspresentation/check-camera.py
+npm run kolla
+npm run test:inlasning
+npm run test:bildregi
+npm run test:film
+npm run test:bildsteg
 ```
 
-Rapport och granskningsbilder skrivs till `/workspace/.onboarding/presentation-review/` utanför repot. Presentationen har också öppnats via SCEN-biblioteket. Tangentnavigation och anteckningar kontrolleras separat vid 1280 × 720 med nätverket avstängt efter lokal inläsning. Direkt öppning av `file://` blockeras av molnwebbläsarens administratörspolicy; just det öppningssättet kunde därför inte verifieras här.
-
-SCEN:s manuskontroll och test av mallinläsning är godkända, liksom Uppgiftslabbets 18 tester för uppgiftsgranskning. Hela SCEN:s `npm test` är **inte** grön: den stannar på det befintliga felet i `scripts/check-editorial.cjs:9` (4 steg i stället för förväntade 3), som redan beskrivs i `docs/BILDREGI.md`. Applikationskod, uppgiftsbanker och befintliga tester har inte ändrats för presentationen.
+Granskningsbilder och rapport finns under `/workspace/.onboarding/presentation-review/` utanför repot. Relevant automatisk verifiering kompletteras med visuell granskning av målområdena. Hela SCEN:s `npm test` har sedan tidigare ett känt fel i `scripts/check-editorial.cjs:9` (4 steg jämfört med förväntade 3), även beskrivet i `docs/BILDREGI.md`. Det felet har inte ändrats för detta arbete.

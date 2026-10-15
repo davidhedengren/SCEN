@@ -59,7 +59,7 @@ Första raden är mallen inom hakparentes, t.ex. `[kort]`. Alla mallar finns i [
 | `syntes` | Den nya slutsats som växer fram i `[sammanflöde]` |
 | `bild` | Sökväg till en bild, t.ex. `bilder/kurs/foto.jpg` |
 | `film` | `[bildregi]` med `bildläge: levande`: MP4 eller WebM som startar på andra klicket, efter inzoomningen. Använd första bildrutan i `bild:`. |
-| `filmsteg` | `[bildregi]` med `bildläge: spotlight`: detaljens id som startar filmen, t.ex. `dyn`. Filmen spelar medan området har fokus. |
+| `filmsteg` | `[bildregi]` med `bildläge: spotlight` eller `vandring`: detaljens id som startar filmen, t.ex. `dyn`. Filmen spelar medan området har fokus. |
 | `alt` | Bildbeskrivning för skärmläsare |
 | `bildläge` | `[bildregi]`: `hero`, `detail`, `spotlight`, `reveal` eller `levande` |
 | `fokuspunkt` | `[bildregi]`: bildens semantiska fokuspunkt som `x y` i procent |

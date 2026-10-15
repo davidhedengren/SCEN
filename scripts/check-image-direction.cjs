@@ -72,6 +72,7 @@ const cases={
  hero:make('hero'),
  detail:make('detail',['a | Första detaljen | 28 | 38 | 18 | 24 | Förklaring A','b | Andra detaljen | 69 | 35 | 16 | 28 | Förklaring B']),
  spotlight:make('spotlight',['a | Nod A | 30 | 44 | 14 | 20 | Annotation A','b | Nod B | 72 | 40 | 16 | 24 | Annotation B']),
+ guided:make('guided',['a | Välj kurs | 25 | 35 | 30 | 20 | Välj i översikten.','b | Svara | 70 | 60 | 22 | 30 | Skriv svaret här.']),
  reveal:make('reveal',['a | Vänster | 0 | 0 | 34 | 100 | Första ledtråden','b | Mitten | 33 | 0 | 34 | 100 | Sambandet','c | Höger | 66 | 0 | 34 | 100 | Helheten'])
 };
 for(const [mode,slide] of Object.entries(cases)){
@@ -82,7 +83,15 @@ for(const [mode,slide] of Object.entries(cases)){
  assert(html.includes('--image-start-scale:'));
  if(mode==='hero') assert(!html.includes('data-dramaturgy-item'),'Hero ska använda kamerarörelse utan påtvingad focus/fade-sekvens.');
  else assert.equal((html.match(/data-dramaturgy-item/g)||[]).length,slide.items.length);
- if(mode==='detail'||mode==='spotlight') assert(html.includes('data-dramaturgy-restore'),'Detalj och spotlight ska återvända till helheten med eget klick.');
+ if(['detail','spotlight','guided'].includes(mode)) assert(html.includes('data-dramaturgy-restore'),'Fokuslägen ska återvända till helheten med eget klick.');
  if(mode==='reveal') assert(!html.includes('data-dramaturgy-restore'),'Reveal ska landa i fullt avslöjad bild utan artificiellt restore-klick.');
 }
-console.log('OK: Bildregi-metadata, Image Brief, manus-roundtrip och fyra dramaturgier är definierade.');
+const guided=Manus.parse('[bildregi]\nbild: test.png\nbildläge: vandring\nfilm: handling.mp4\nfilmsteg: gor\n- gor | Gör så här | 50 | 40 | 60 | 50 | Se vad som händer.').slides[0];
+assert.equal(guided.imageDirection.mode,'guided');
+assert.equal(Manus.parse(Manus.stringify({title:'Vandring',slides:[guided]})).slides[0].imageDirection.mode,'guided');
+const tourHtml=Scen.renderSlide(guided,0,deck,x=>x);
+assert(tourHtml.includes('ir-guided-frame'),'Vandring behöver en ram i kamerans koordinater.');
+assert(tourHtml.includes('data-film-focus="gor"'),'Film ska följa det valda fokussteget.');
+assert.equal((tourHtml.match(/data-step="/g)||[]).length,2,'Ett fokussteg och en återgång till helheten.');
+assert.equal((Scen.renderSlide({...guided,steps:false},0,deck,x=>x).match(/data-step="/g)||[]).length,0);
+console.log('OK: Bildregi-metadata, Image Brief, manus-roundtrip, vandring med film och fem dramaturgier.');

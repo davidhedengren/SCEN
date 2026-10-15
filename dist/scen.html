@@ -475,6 +475,26 @@ textarea.code{width:100%;border:1px solid var(--line-2);border-radius:8px;backgr
 .scen [data-layout="bildregi"][data-image-mode="detail"] .ir-detail>i{display:none}
 .scen [data-layout="bildregi"][data-image-mode="detail"] .ir-detail>div{position:relative;inset:auto;width:auto;transform:none;padding:28px 32px}
 .scen [data-layout="bildregi"][data-image-mode="detail"] .ir-detail>div::before{display:none}
+/* Vandra över samma helbild. Ramen och skuggan följer kamerans koordinater. */
+.scen [data-image-mode="guided"] .ir-camera{inset:0;transform-origin:50% 50%;transition:transform 1.15s var(--dramaturgy-ease)}
+.scen [data-image-mode="guided"][data-dramaturgy-state="focus"] .ir-camera{transform:var(--guided-camera)}
+.scen .ir-guided-frame{position:absolute;z-index:2;left:var(--guided-x,50%);top:var(--guided-y,50%);width:var(--guided-w,100%);height:var(--guided-h,100%);transform:translate(-50%,-50%);box-sizing:border-box;border:var(--guided-border,3px) solid var(--accent-2,var(--accent));border-radius:10px;box-shadow:0 0 0 5000px rgba(4,9,16,.66);opacity:0;pointer-events:none;transition:left 1.15s var(--dramaturgy-ease),top 1.15s var(--dramaturgy-ease),width 1.15s var(--dramaturgy-ease),height 1.15s var(--dramaturgy-ease),opacity .5s ease}
+.scen [data-image-mode="guided"][data-dramaturgy-state="focus"] .ir-guided-frame{opacity:1}
+.scen [data-image-mode="guided"] :is(.ir-shade,.ir-spotlight,.ir-safe){display:none}
+.scen [data-image-mode="guided"] .ir-copy{left:40px;top:auto;bottom:24px;width:1840px;height:auto;min-height:90px;display:flex;align-items:center;gap:32px;padding:20px 28px;border:1px solid var(--line);border-radius:16px;background:var(--bg);color:var(--ink);text-shadow:none}
+.scen [data-image-mode="guided"] .ir-copy h2,.scen [data-image-mode="guided"] .ir-copy h2.long{font-size:36px;line-height:1.1;flex:none;max-width:56%}
+.scen [data-image-mode="guided"] .ir-copy>p:not(.ir-kicker){font-size:26px;line-height:1.25;max-width:none;color:var(--muted)}
+.scen [data-image-mode="guided"] .ir-kicker{font:18px var(--mono);color:var(--accent-2);max-width:150px}
+.scen [data-image-mode="guided"][data-dramaturgy-state="focus"] .ir-copy{opacity:0}
+.scen [data-image-mode="guided"] .ir-detail{left:40px;right:40px;top:auto;bottom:24px;width:auto;height:auto;transform:none;opacity:0!important}
+.scen [data-image-mode="guided"] .ir-detail.dramaturgy-current{opacity:1!important}
+.scen [data-image-mode="guided"] .ir-detail>i,.scen [data-image-mode="guided"] .ir-detail>div::before{display:none}
+.scen [data-image-mode="guided"] .ir-detail>div{position:relative;inset:auto;transform:none;width:auto;display:flex;align-items:center;gap:30px;padding:22px 28px;min-height:90px;box-sizing:border-box;border:1px solid var(--line);border-left:5px solid var(--accent-2);border-radius:16px;background:var(--bg);color:var(--ink);box-shadow:0 8px 30px #0003}
+.scen [data-image-mode="guided"] .ir-detail b{color:var(--accent-2);font-size:30px;flex:none;max-width:45%;line-height:1.15}
+.scen [data-image-mode="guided"] .ir-detail p{color:var(--ink);font-size:27px;line-height:1.3;margin:0}
+.scen [data-image-mode="guided"][data-guided-caption="top"] .ir-detail{top:68px;bottom:auto}
+.scen [data-body-motion="none"] .ir-guided-frame,.scen.static .ir-guided-frame{transition:none!important}
+@media(prefers-reduced-motion:reduce){.scen .ir-guided-frame{transition:none!important}}
 .scen [data-layout="bildregi"][data-image-mode="reveal"] .ir-detail{z-index:4;transform:none;background-color:#0d1118;background-image:linear-gradient(135deg,rgba(255,255,255,.035),transparent 52%),linear-gradient(90deg,transparent 0 92%,rgba(255,255,255,.045));border-right:1px solid rgba(255,255,255,.12);opacity:1!important}
 .scen [data-layout="bildregi"][data-image-mode="reveal"] .ir-detail::after{content:"0" attr(data-dramaturgy-focus);position:absolute;right:9%;top:7%;font:500 72px/1 var(--font-display,var(--font));letter-spacing:-.05em;color:rgba(255,255,255,.09)}
 .scen [data-layout="bildregi"][data-image-mode="reveal"] .ir-detail[data-step]:not(.in){opacity:1!important}
@@ -2544,7 +2564,7 @@ function numericTuple(value, fallback, length) {
 function normalizeImageDirection(sl) {
   sl = sl || {};
   const raw = sl.imageDirection || {};
-  const modeMap = { cinematic: 'hero', hero: 'hero', detalj: 'detail', detail: 'detail', spotlight: 'spotlight', annotation: 'spotlight', reveal: 'reveal', mask: 'reveal', levande: 'live', live: 'live' };
+  const modeMap = { cinematic: 'hero', hero: 'hero', detalj: 'detail', detail: 'detail', vandring: 'guided', guided: 'guided', spotlight: 'spotlight', annotation: 'spotlight', reveal: 'reveal', mask: 'reveal', levande: 'live', live: 'live' };
   const dirMap = { höger: 'right', hoger: 'right', right: 'right', vänster: 'left', vanster: 'left', left: 'left', upp: 'up', up: 'up', ned: 'down', down: 'down', stilla: 'none', none: 'none' };
   const speedMap = { långsam: 'slow', langsamt: 'slow', slow: 'slow', normal: 'medium', medium: 'medium', snabb: 'fast', fast: 'fast' };
   const mode = modeMap[String(raw.mode || (sl.video ? 'live' : 'hero')).toLowerCase()] || 'hero';
@@ -2908,6 +2928,17 @@ function applyDramaturgy(sec, step, final) {
     sec.style.setProperty('--image-active-x', `${current.dataset.imageX}%`);
     sec.style.setProperty('--image-active-y', `${current.dataset.imageY}%`);
     sec.style.setProperty('--image-active-scale', current.dataset.imageScale || '1.35');
+    if (sec.dataset.imageMode === 'guided') {
+      const x = +current.dataset.imageX, y = +current.dataset.imageY;
+      const w = +current.dataset.imageW, h = +current.dataset.imageH;
+      const z = Math.max(1, Math.min(2.2, 82 / Math.max(w, 1), 70 / Math.max(h, 1)));
+      const shift = (at, target) => Math.max(50 * (1 - z), Math.min(50 * (z - 1), target - at * z + 50 * (z - 1)));
+      sec.style.setProperty('--guided-camera', `translate(${shift(x, 50)}%,${shift(y, 44)}%) scale(${z})`);
+      const bottom = 50 + z * (y + h / 2 - 50) + shift(y, 44);
+      sec.dataset.guidedCaption = bottom > 86 ? 'top' : 'bottom';
+      sec.style.setProperty('--guided-border', `${3 / z}px`);
+      for (const [key, value] of Object.entries({x,y,w,h})) sec.style.setProperty(`--guided-${key}`, `${value}%`);
+    }
   }
   return phase;
 }
@@ -3011,15 +3042,16 @@ function renderSlide(sl, i, deck, img) {
       }
       const detailNodes = d.details.map((o, index) => {
         const scale = Math.max(1.16, Math.min(2.1, 72 / Math.max(o.w, o.h, 12)));
-        return `<div class="ir-detail${o.x > 58 ? ' ir-detail-left' : ''}${o.y > 64 ? ' ir-detail-up' : ''}${o.y < 42 ? ' ir-detail-down' : ''}" data-image-detail-id="${esc(o.id)}" data-dramaturgy-item data-dramaturgy-focus="${index + 1}" data-image-x="${o.x}" data-image-y="${o.y}" data-image-scale="${scale.toFixed(3)}" style="--detail-x:${o.x}%;--detail-y:${o.y}%;--detail-w:${o.w}%;--detail-h:${o.h}%"${steps ? st('none') : ''}><i aria-hidden="true"></i><div><b>${fmt(o.label)}</b>${o.note ? `<p>${fmt(o.note)}</p>` : ''}</div></div>`;
+        return `<div class="ir-detail${o.x > 58 ? ' ir-detail-left' : ''}${o.y > 64 ? ' ir-detail-up' : ''}${o.y < 42 ? ' ir-detail-down' : ''}" data-image-detail-id="${esc(o.id)}" data-dramaturgy-item data-dramaturgy-focus="${index + 1}" data-image-x="${o.x}" data-image-y="${o.y}" data-image-w="${o.w}" data-image-h="${o.h}" data-image-scale="${scale.toFixed(3)}" style="--detail-x:${o.x}%;--detail-y:${o.y}%;--detail-w:${o.w}%;--detail-h:${o.h}%"${steps ? st('none') : ''}><i aria-hidden="true"></i><div><b>${fmt(o.label)}</b>${o.note ? `<p>${fmt(o.note)}</p>` : ''}</div></div>`;
       }).join('');
       let semantic = '', restore = '';
-      if (d.mode === 'detail' || d.mode === 'spotlight') {
+      if (d.mode === 'detail' || d.mode === 'spotlight' || d.mode === 'guided') {
         semantic = detailNodes;
         restore = steps ? `<span data-dramaturgy-restore${st('none')} aria-hidden="true"></span>` : '';
       } else if (d.mode === 'reveal') semantic = detailNodes;
-      const focusFilm = sl.video && sl.videoFocus && d.mode === 'spotlight' ? `<video class="ir-live-video" data-film-src="${esc(img(sl.video))}" data-film-focus="${esc(sl.videoFocus)}" muted playsinline preload="none" aria-label="${esc(sl.alt || plain(title) || 'Film')}"></video>` : '';
-      body = `<div class="ir-stage" data-image-stage data-image-mode="${d.mode}" data-image-crop="${d.crop}" data-image-direction="${d.direction}" style="${vars}"><div class="ir-camera">${image}${focusFilm}</div><div class="ir-shade" aria-hidden="true"></div><div class="ir-spotlight" aria-hidden="true"></div><div class="ir-safe" data-safe-area aria-hidden="true"></div>${semantic}${copy}${restore}</div>`;
+      const focusFilm = sl.video && sl.videoFocus && ['spotlight','guided'].includes(d.mode) ? `<video class="ir-live-video" data-film-src="${esc(img(sl.video))}" data-film-focus="${esc(sl.videoFocus)}" muted playsinline preload="none" aria-label="${esc(sl.alt || plain(title) || 'Film')}"></video>` : '';
+      const guidedFrame = d.mode === 'guided' ? '<div class="ir-guided-frame" aria-hidden="true"></div>' : '';
+      body = `<div class="ir-stage" data-image-stage data-image-mode="${d.mode}" data-image-crop="${d.crop}" data-image-direction="${d.direction}" style="${vars}"><div class="ir-camera">${image}${focusFilm}${guidedFrame}</div><div class="ir-shade" aria-hidden="true"></div><div class="ir-spotlight" aria-hidden="true"></div><div class="ir-safe" data-safe-area aria-hidden="true"></div>${semantic}${copy}${restore}</div>`;
       attrs += ` data-dramaturgy="image-direction" data-dramaturgy-state="${steps && d.mode !== 'hero' ? 'overview' : 'restored'}"${steps && d.mode !== 'hero' ? '' : ' data-dramaturgy-static="true"'} data-image-mode="${d.mode}"`;
       break;
     }
@@ -6386,7 +6418,7 @@ const Manus = (() => {
         const field = IMAGE_DIRECTION_KEYS[label], v = kv[2].trim();
         const target = s.imageDirection = s.imageDirection || {};
         if (['focus','start','end','safe','shade'].includes(field)) target[field] = v.split(/[\s,]+/).map(Number).filter(Number.isFinite);
-        else if (field === 'mode') target.mode = ({ hero:'hero',cinematic:'hero',detalj:'detail',detail:'detail',spotlight:'spotlight',annotation:'spotlight',reveal:'reveal',mask:'reveal',levande:'live',live:'live' })[v.toLowerCase()] || 'hero';
+        else if (field === 'mode') target.mode = ({ hero:'hero',cinematic:'hero',detalj:'detail',detail:'detail',vandring:'guided',guided:'guided',spotlight:'spotlight',annotation:'spotlight',reveal:'reveal',mask:'reveal',levande:'live',live:'live' })[v.toLowerCase()] || 'hero';
         else if (field === 'direction') target.direction = ({ höger:'right',hoger:'right',right:'right',vänster:'left',vanster:'left',left:'left',upp:'up',up:'up',ned:'down',down:'down',stilla:'none',none:'none' })[v.toLowerCase()] || 'none';
         else if (field === 'speed') target.speed = ({ långsam:'slow',langsamt:'slow',slow:'slow',normal:'medium',medium:'medium',snabb:'fast',fast:'fast' })[v.toLowerCase()] || 'slow';
         else target[field] = v === 'contain' ? 'contain' : 'cover';
@@ -6612,7 +6644,7 @@ const Manus = (() => {
       ex: '[text-bild]\nrubrik: Kaströrelse\n- I x-led är farten konstant\n- I y-led verkar g nedåt\n- Banan blir en **parabel**' },
     { l: 'image', cat: 'Bild', syfte: 'En bild som tar hela ytan, med kort rubrik och bildtext.', undvik: 'Bilder med liten upplösning.',
       ex: '[helbild]\nrubrik: Solvarv i Mojaveöknen\netikett: Foto: exempel' },
-    { l: 'bildregi', cat: 'Bild', syfte: 'Regisserar en bild som cinematic hero, detaljresa, spotlight/annotation, kontrollerad mask reveal eller stillbild → zoom → film på klick. Samma bild och komposition bär hela klicksekvensen.', undvik: 'Dekorativa zoomar utan kommunikativ funktion. Använd inte bild när typografi, diagram eller whitespace är tydligare.',
+    { l: 'bildregi', cat: 'Bild', syfte: 'Regisserar en bild som cinematic hero, detaljresa, vandring med zoom/ram/nedtoning, spotlight/annotation, kontrollerad mask reveal eller stillbild → zoom → film på klick. Samma bild och komposition bär hela klicksekvensen.', undvik: 'Dekorativa zoomar utan kommunikativ funktion. Använd inte bild när typografi, diagram eller whitespace är tydligare.',
       ex: '[bildregi]\nrubrik: Från helhet till avgörande detalj\nbild: bilder/ai-agenter/ai10.jpg\nbildläge: detalj\nstartutsnitt: 50 50 1\nslututsnitt: 58 46 1.08\nsäker-yta: 5 12 38 72\n- robot | Rörelsen | 67 | 34 | 16 | 34 | Figuren bär scenens handling.' },
     { l: 'terminal', cat: 'Textregi', syfte: 'Regisserar en trovärdig terminalberättelse där kommando, output, fel, resultat och annotation har separata semantiska roller. Kommandon kan skrivas fram när skrivandet bär betydelse.', undvik: 'Hackerestetik, dekorativ skrivmaskinseffekt eller fler än sex terminalhändelser på samma scen.',
       ex: '[terminal]\netikett: RELEASE / 02\nrubrik: Från kommando till bevis\n- kommando | npm run bygg | Någon skriver faktiskt kommandot.\n- output | dist/scen.html 426 kB | Artefakten har skapats.\n- success | ✓ Bygg klar | Resultatet får fokus.\n- kommando | git status --short | Nästa fråga är om arbetsytan är ren.\n- output | (ingen output) | Tystnaden är själva resultatet.' },
@@ -7252,7 +7284,7 @@ sats: [["title", "Rubrik", "text"], ["items", "Högst 3 rader: rubrik | text", "
   cards: [['title', 'Rubrik', 'text'], ['text', 'Ingress', 'area'], ['items', 'Kort, ett per rad: rubrik | text', 'list'], ['image', 'Bild', 'image'], ['banner', 'Visa bilden som band överst', 'check'], ['flip', 'Bilden till vänster', 'check']],
   split: [['title', 'Rubrik', 'text'], ['text', 'Ingress', 'area'], ['bullets', 'Punkter', 'list'], ['image', 'Bild', 'image'], ['flip', 'Bilden till vänster', 'check']],
   image: [['image', 'Bild', 'image'], ['title', 'Rubrik', 'text'], ['caption', 'Bildtext', 'text']],
-  bildregi: [['image', 'Bild eller filmens första bildruta', 'image'], ['video', 'Film (sökväg till MP4 eller WebM)', 'text'], ['videoFocus', 'Starta filmen vid detaljens id (Spotlight)', 'text'], ['caption', 'Etikett', 'text'], ['title', 'Rubrik', 'text'], ['text', 'Text', 'area'], ['items', 'Detaljer: id | etikett | x | y | bredd | höjd | förklaring', 'list']],
+  bildregi: [['image', 'Bild eller filmens första bildruta', 'image'], ['video', 'Film (sökväg till MP4 eller WebM)', 'text'], ['videoFocus', 'Starta filmen vid detaljens id (Spotlight eller Vandring)', 'text'], ['caption', 'Etikett', 'text'], ['title', 'Rubrik', 'text'], ['text', 'Text', 'area'], ['items', 'Detaljer: id | etikett | x | y | bredd | höjd | förklaring', 'list']],
   terminal: [['caption', 'Etikett', 'text'], ['title', 'Rubrik', 'text'], ['items', 'Terminalhändelser: roll | innehåll | annotation', 'list']],
   kodforklaring: [['caption', 'Etikett', 'text'], ['title', 'Rubrik', 'text'], ['text', 'Kodblock', 'area'], ['items', 'Fokus: radnummer | token | annotation | resultat', 'list']],
   kodskrivning: [['caption', 'Etikett', 'text'], ['title', 'Rubrik', 'text'], ['text', 'Koden som skrivs fram (utan tomma rader)', 'area'], ['items', 'Markeringar efter skrivningen: radnummer | uttryck | förklaring | resultat. Uttrycket gammalt -> nytt byter ut koden i det klicket. Lägg till - takt: rad för att skriva en rad per klick.', 'list']],
@@ -7598,7 +7630,7 @@ function renderInsp() {
     <div class="fld"><label for="f-ba">Innehållets rörelse</label><select id="f-ba" data-f="ba" data-t="text">${opt(Scen.BODY_ANIMS, s.ba || 'auto')}</select></div></div>`;
   if (L === 'bildregi') {
     const d = Scen.normalizeImageDirection(s);
-    h += `<div class="fld"><label for="f-image-mode">Bildläge</label><select id="f-image-mode" data-t="image-mode">${opt({hero:'Helbild',detail:'Detaljresa',spotlight:'Spotlight',reveal:'Avslöja',live:'Levande bild'},d.mode)}</select><span class="hint">Levande bild: stillbild först, zoom på första klicket och film på nästa. Filmen stannar vid slutet.</span></div>`;
+    h += `<div class="fld"><label for="f-image-mode">Bildläge</label><select id="f-image-mode" data-t="image-mode">${opt({hero:'Helbild',detail:'Detaljresa',guided:'Vandring: zoom och markering',spotlight:'Spotlight',reveal:'Avslöja',live:'Levande bild'},d.mode)}</select><span class="hint">Levande bild: stillbild först, zoom på första klicket och film på nästa. Filmen stannar vid slutet.</span></div>`;
     for (const [key,label] of [['start','Startutsnitt'],['end','Slututsnitt']]) h += `<div class="fld"><label for="f-image-${key}">${label} (x y skala)</label><input id="f-image-${key}" data-t="image-tuple" data-f="${key}" value="${esc(d[key].join(' '))}"><span class="hint">Bildens centrum i procent, följt av zoom. Exempel: 65 70 1.8.</span></div>`;
   }
   if (STEPPED.includes(L)) h += `<label class="chk"><input type="checkbox" id="f-steps" data-f="steps" data-t="check"${s.steps !== false ? ' checked' : ''}> Visa rubriker och innehåll stegvis, på klick</label>

@@ -66,7 +66,7 @@ function numericTuple(value, fallback, length) {
 function normalizeImageDirection(sl) {
   sl = sl || {};
   const raw = sl.imageDirection || {};
-  const modeMap = { cinematic: 'hero', hero: 'hero', detalj: 'detail', detail: 'detail', spotlight: 'spotlight', annotation: 'spotlight', reveal: 'reveal', mask: 'reveal', levande: 'live', live: 'live' };
+  const modeMap = { cinematic: 'hero', hero: 'hero', detalj: 'detail', detail: 'detail', vandring: 'guided', guided: 'guided', spotlight: 'spotlight', annotation: 'spotlight', reveal: 'reveal', mask: 'reveal', levande: 'live', live: 'live' };
   const dirMap = { höger: 'right', hoger: 'right', right: 'right', vänster: 'left', vanster: 'left', left: 'left', upp: 'up', up: 'up', ned: 'down', down: 'down', stilla: 'none', none: 'none' };
   const speedMap = { långsam: 'slow', langsamt: 'slow', slow: 'slow', normal: 'medium', medium: 'medium', snabb: 'fast', fast: 'fast' };
   const mode = modeMap[String(raw.mode || (sl.video ? 'live' : 'hero')).toLowerCase()] || 'hero';
@@ -430,6 +430,17 @@ function applyDramaturgy(sec, step, final) {
     sec.style.setProperty('--image-active-x', `${current.dataset.imageX}%`);
     sec.style.setProperty('--image-active-y', `${current.dataset.imageY}%`);
     sec.style.setProperty('--image-active-scale', current.dataset.imageScale || '1.35');
+    if (sec.dataset.imageMode === 'guided') {
+      const x = +current.dataset.imageX, y = +current.dataset.imageY;
+      const w = +current.dataset.imageW, h = +current.dataset.imageH;
+      const z = Math.max(1, Math.min(2.2, 82 / Math.max(w, 1), 70 / Math.max(h, 1)));
+      const shift = (at, target) => Math.max(50 * (1 - z), Math.min(50 * (z - 1), target - at * z + 50 * (z - 1)));
+      sec.style.setProperty('--guided-camera', `translate(${shift(x, 50)}%,${shift(y, 44)}%) scale(${z})`);
+      const bottom = 50 + z * (y + h / 2 - 50) + shift(y, 44);
+      sec.dataset.guidedCaption = bottom > 86 ? 'top' : 'bottom';
+      sec.style.setProperty('--guided-border', `${3 / z}px`);
+      for (const [key, value] of Object.entries({x,y,w,h})) sec.style.setProperty(`--guided-${key}`, `${value}%`);
+    }
   }
   return phase;
 }
@@ -533,15 +544,16 @@ function renderSlide(sl, i, deck, img) {
       }
       const detailNodes = d.details.map((o, index) => {
         const scale = Math.max(1.16, Math.min(2.1, 72 / Math.max(o.w, o.h, 12)));
-        return `<div class="ir-detail${o.x > 58 ? ' ir-detail-left' : ''}${o.y > 64 ? ' ir-detail-up' : ''}${o.y < 42 ? ' ir-detail-down' : ''}" data-image-detail-id="${esc(o.id)}" data-dramaturgy-item data-dramaturgy-focus="${index + 1}" data-image-x="${o.x}" data-image-y="${o.y}" data-image-scale="${scale.toFixed(3)}" style="--detail-x:${o.x}%;--detail-y:${o.y}%;--detail-w:${o.w}%;--detail-h:${o.h}%"${steps ? st('none') : ''}><i aria-hidden="true"></i><div><b>${fmt(o.label)}</b>${o.note ? `<p>${fmt(o.note)}</p>` : ''}</div></div>`;
+        return `<div class="ir-detail${o.x > 58 ? ' ir-detail-left' : ''}${o.y > 64 ? ' ir-detail-up' : ''}${o.y < 42 ? ' ir-detail-down' : ''}" data-image-detail-id="${esc(o.id)}" data-dramaturgy-item data-dramaturgy-focus="${index + 1}" data-image-x="${o.x}" data-image-y="${o.y}" data-image-w="${o.w}" data-image-h="${o.h}" data-image-scale="${scale.toFixed(3)}" style="--detail-x:${o.x}%;--detail-y:${o.y}%;--detail-w:${o.w}%;--detail-h:${o.h}%"${steps ? st('none') : ''}><i aria-hidden="true"></i><div><b>${fmt(o.label)}</b>${o.note ? `<p>${fmt(o.note)}</p>` : ''}</div></div>`;
       }).join('');
       let semantic = '', restore = '';
-      if (d.mode === 'detail' || d.mode === 'spotlight') {
+      if (d.mode === 'detail' || d.mode === 'spotlight' || d.mode === 'guided') {
         semantic = detailNodes;
         restore = steps ? `<span data-dramaturgy-restore${st('none')} aria-hidden="true"></span>` : '';
       } else if (d.mode === 'reveal') semantic = detailNodes;
-      const focusFilm = sl.video && sl.videoFocus && d.mode === 'spotlight' ? `<video class="ir-live-video" data-film-src="${esc(img(sl.video))}" data-film-focus="${esc(sl.videoFocus)}" muted playsinline preload="none" aria-label="${esc(sl.alt || plain(title) || 'Film')}"></video>` : '';
-      body = `<div class="ir-stage" data-image-stage data-image-mode="${d.mode}" data-image-crop="${d.crop}" data-image-direction="${d.direction}" style="${vars}"><div class="ir-camera">${image}${focusFilm}</div><div class="ir-shade" aria-hidden="true"></div><div class="ir-spotlight" aria-hidden="true"></div><div class="ir-safe" data-safe-area aria-hidden="true"></div>${semantic}${copy}${restore}</div>`;
+      const focusFilm = sl.video && sl.videoFocus && ['spotlight','guided'].includes(d.mode) ? `<video class="ir-live-video" data-film-src="${esc(img(sl.video))}" data-film-focus="${esc(sl.videoFocus)}" muted playsinline preload="none" aria-label="${esc(sl.alt || plain(title) || 'Film')}"></video>` : '';
+      const guidedFrame = d.mode === 'guided' ? '<div class="ir-guided-frame" aria-hidden="true"></div>' : '';
+      body = `<div class="ir-stage" data-image-stage data-image-mode="${d.mode}" data-image-crop="${d.crop}" data-image-direction="${d.direction}" style="${vars}"><div class="ir-camera">${image}${focusFilm}${guidedFrame}</div><div class="ir-shade" aria-hidden="true"></div><div class="ir-spotlight" aria-hidden="true"></div><div class="ir-safe" data-safe-area aria-hidden="true"></div>${semantic}${copy}${restore}</div>`;
       attrs += ` data-dramaturgy="image-direction" data-dramaturgy-state="${steps && d.mode !== 'hero' ? 'overview' : 'restored'}"${steps && d.mode !== 'hero' ? '' : ' data-dramaturgy-static="true"'} data-image-mode="${d.mode}"`;
       break;
     }

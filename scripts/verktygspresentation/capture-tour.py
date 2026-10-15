@@ -9,9 +9,12 @@ OUT=ROOT/'bilder/verktygspresentation/vandring'
 OUT.mkdir(parents=True,exist_ok=True)
 TMP=Path('/workspace/.onboarding/tour-video');TMP.mkdir(exist_ok=True)
 W,H=1600,900
+TASK_ONLY='task-only' in sys.argv
 metadata=json.loads((OUT/'regions.json').read_text()) if (OUT/'regions.json').exists() else {}
 
 def shot(page,name,selectors):
+    if TASK_ONLY and name!='kg-uppgift':return
+    assert not page.locator('#cheer.show').count(), f'Celebration obscures {name}'
     page.evaluate('document.fonts.ready');page.wait_for_timeout(500)
     page.screenshot(path=str(OUT/(name+'.png')),animations='disabled')
     regions={}
@@ -78,7 +81,15 @@ def kg(browser,css):
     page.locator('.brand').click();page.wait_for_selector('.provkort')
     shot(page,'kg-starta-pass',{'start':'.provkort .primary'})
     page.locator('.provkort .primary').first.click();page.wait_for_selector('#kollaknapp');page.evaluate('window.scrollTo(0,0)')
+    # Close the app's level celebration before photographing the actual question.
+    page.wait_for_timeout(100)
+    if page.locator('#cheer.show').count():
+        page.locator('#cheer.show button').click()
+        page.wait_for_function('document.getElementById("cheer").innerHTML === ""')
     shot(page,'kg-uppgift',{'uppgift':'article.task','svar':'#ans-0','verktyg':'#ledtradknapp','ledtrad':'#ledtradknapp','xp':'.xpmeter'})
+    if TASK_ONLY:
+        assert not errors,errors
+        c.close();return
     page.locator('#ledtradknapp').click();page.wait_for_timeout(1800)
     shot(page,'kg-ledtrad',{'ledtrad':'#ledtrad-holder','svar':'#ans-0','kontrollera':'#kollaknapp'})
     cursor(page);page.locator('#ans-0').fill('32200')
@@ -218,6 +229,6 @@ def ul(browser,css):
 
 with sync_playwright() as p:
     browser=launch(p);css=fonts_css()
-    if len(sys.argv)==1 or 'kg' in sys.argv:kg(browser,css)
+    if len(sys.argv)==1 or 'kg' in sys.argv or TASK_ONLY:kg(browser,css)
     if len(sys.argv)==1 or 'ul' in sys.argv:ul(browser,css)
     browser.close()

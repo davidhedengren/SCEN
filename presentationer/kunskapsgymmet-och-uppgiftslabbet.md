@@ -88,7 +88,6 @@ rubrikrörelse: ingen
 [bildregi]
 etikett: KUNSKAPSGYMMET
 rubrik: Från tränaren till uppdragsboken
-text: Se var du klickar innan nästa vy öppnas.
 bild: bilder/verktygspresentation/vandring/kg-tranare-bok.png
 alt: Hela webbläsarvyn: Från tränaren till uppdragsboken.
 bildläge: vandring
@@ -120,7 +119,6 @@ rubrikrörelse: ingen
 [bildregi]
 etikett: KUNSKAPSGYMMET
 rubrik: Tillbaka till startsidan
-text: Se var du klickar innan nästa vy öppnas.
 bild: bilder/verktygspresentation/vandring/kg-till-start.png
 alt: Hela webbläsarvyn: Tillbaka till startsidan.
 bildläge: vandring
@@ -135,7 +133,6 @@ rubrikrörelse: ingen
 [bildregi]
 etikett: KUNSKAPSGYMMET
 rubrik: Starta Inför Prov v.48
-text: Se var du klickar innan nästa vy öppnas.
 bild: bilder/verktygspresentation/vandring/kg-starta-pass.png
 alt: Hela webbläsarvyn: Starta Inför Prov v.48.
 bildläge: vandring
@@ -232,7 +229,6 @@ rubrikrörelse: ingen
 [bildregi]
 etikett: KUNSKAPSGYMMET
 rubrik: Lämna uppgiften och gå till kursen
-text: Se var du klickar innan nästa vy öppnas.
 bild: bilder/verktygspresentation/vandring/kg-avsluta.png
 alt: Hela webbläsarvyn: Lämna uppgiften och gå till kursen.
 bildläge: vandring
@@ -247,7 +243,6 @@ rubrikrörelse: ingen
 [bildregi]
 etikett: KUNSKAPSGYMMET
 rubrik: Hitta topplistan i sidhuvudet
-text: Se var du klickar innan nästa vy öppnas.
 bild: bilder/verktygspresentation/vandring/kg-till-topplista.png
 alt: Hela webbläsarvyn: Hitta topplistan i sidhuvudet.
 bildläge: vandring
@@ -303,7 +298,6 @@ svar: Med ett avgränsat lärarpass – eller med egen träning i rätt kurs.
 [bildregi]
 etikett: LÄRARE
 rubrik: Nu är vi inloggade som lärare
-text: Se var du klickar innan nästa vy öppnas.
 bild: bilder/verktygspresentation/vandring/kg-min-undervisning.png
 alt: Hela webbläsarvyn: Nu är vi inloggade som lärare.
 bildläge: vandring
@@ -379,7 +373,6 @@ rubrikrörelse: ingen
 [bildregi]
 etikett: LÄRARE
 rubrik: Skapa det färdiga passet
-text: Se var du klickar innan nästa vy öppnas.
 bild: bilder/verktygspresentation/vandring/kg-skapa-knapp.png
 alt: Hela webbläsarvyn: Skapa det färdiga passet.
 bildläge: vandring
@@ -410,7 +403,6 @@ rubrikrörelse: ingen
 [bildregi]
 etikett: UPPFÖLJNING
 rubrik: Öppna passets resultat
-text: Se var du klickar innan nästa vy öppnas.
 bild: bilder/verktygspresentation/vandring/kg-resultat-knapp.png
 alt: Hela webbläsarvyn: Öppna passets resultat.
 bildläge: vandring
@@ -441,7 +433,6 @@ rubrikrörelse: ingen
 [bildregi]
 etikett: UPPFÖLJNING
 rubrik: Hitta resultaten per elev
-text: Se var du klickar innan nästa vy öppnas.
 bild: bilder/verktygspresentation/vandring/kg-elever-knapp.png
 alt: Hela webbläsarvyn: Hitta resultaten per elev.
 bildläge: vandring
@@ -471,7 +462,6 @@ rubrikrörelse: ingen
 [bildregi]
 etikett: UPPFÖLJNING
 rubrik: Tillbaka till undervisningsgrupperna
-text: Se var du klickar innan nästa vy öppnas.
 bild: bilder/verktygspresentation/vandring/kg-till-grupper.png
 alt: Hela webbläsarvyn: Tillbaka till undervisningsgrupperna.
 bildläge: vandring
@@ -486,7 +476,6 @@ rubrikrörelse: ingen
 [bildregi]
 etikett: UPPFÖLJNING
 rubrik: Öppna samma undervisningsgrupp igen
-text: Se var du klickar innan nästa vy öppnas.
 bild: bilder/verktygspresentation/vandring/kg-larare.png
 alt: Hela webbläsarvyn: Öppna samma undervisningsgrupp igen.
 bildläge: vandring
@@ -501,7 +490,6 @@ rubrikrörelse: ingen
 [bildregi]
 etikett: UPPFÖLJNING
 rubrik: Byt till gruppens områdesstatistik
-text: Se var du klickar innan nästa vy öppnas.
 bild: bilder/verktygspresentation/vandring/kg-omraden-knapp.png
 alt: Hela webbläsarvyn: Byt till gruppens områdesstatistik.
 bildläge: vandring
@@ -547,7 +535,6 @@ rubrikrörelse: ingen
 [bildregi]
 etikett: UPPGIFTSLABBET
 rubrik: Välj uppgifter om arbete
-text: Se var du klickar innan nästa vy öppnas.
 bild: bilder/verktygspresentation/vandring/ul-valj-omrade.png
 alt: Hela webbläsarvyn: Välj uppgifter om arbete.
 bildläge: vandring
@@ -596,7 +583,6 @@ filmsteg: spela
 [bildregi]
 etikett: UPPGIFTSLABBET
 rubrik: Fyra uppgifter ligger i bladet
-text: Se var du klickar innan nästa vy öppnas.
 bild: bilder/verktygspresentation/vandring/ul-fyra.png
 alt: Hela webbläsarvyn: Fyra uppgifter ligger i bladet.
 bildläge: vandring
@@ -646,7 +632,6 @@ rubrikrörelse: ingen
 [bildregi]
 etikett: UPPGIFTSLABBET
 rubrik: Öppna uppgiftens egen redigering
-text: Se var du klickar innan nästa vy öppnas.
 bild: bilder/verktygspresentation/vandring/ul-penna.png
 alt: Hela webbläsarvyn: Öppna uppgiftens egen redigering.
 bildläge: vandring
@@ -678,7 +663,6 @@ rubrikrörelse: ingen
 [bildregi]
 etikett: UPPGIFTSLABBET
 rubrik: Öppna delningen från arbetsytan
-text: Se var du klickar innan nästa vy öppnas.
 bild: bilder/verktygspresentation/vandring/ul-dela-knapp.png
 alt: Hela webbläsarvyn: Öppna delningen från arbetsytan.
 bildläge: vandring
@@ -710,7 +694,6 @@ rubrikrörelse: ingen
 [bildregi]
 etikett: UPPGIFTSLABBET
 rubrik: Hitta ditt sparade material
-text: Se var du klickar innan nästa vy öppnas.
 bild: bilder/verktygspresentation/vandring/ul-mina-knapp.png
 alt: Hela webbläsarvyn: Hitta ditt sparade material.
 bildläge: vandring

@@ -829,6 +829,7 @@ function renderInsp() {
     const d = Scen.normalizeImageDirection(s);
     h += `<div class="fld"><label for="f-image-mode">Bildläge</label><select id="f-image-mode" data-t="image-mode">${opt({hero:'Helbild',detail:'Detaljresa',guided:'Vandring: zoom och markering',spotlight:'Spotlight',reveal:'Avslöja',live:'Levande bild'},d.mode)}</select><span class="hint">Levande bild: stillbild först, zoom på första klicket och film på nästa. Filmen stannar vid slutet.</span></div>`;
     if (['detail','guided','spotlight'].includes(d.mode)) h += `<label class="chk"><input type="checkbox" data-t="image-restore"${d.restore ? ' checked' : ''}> Återgå till helbild efter sista fokussteget</label>`;
+    if (d.mode === 'guided') h += `<div class="row2"><div class="fld"><label for="f-guided-copy">Textband</label><select id="f-guided-copy" data-t="image-copy">${opt({normal:'Normal',compact:'Kompakt'},d.copy)}</select></div><div class="fld"><label for="f-guided-zoom">Maximal zoom</label><input id="f-guided-zoom" type="number" min="1" max="3" step="0.05" data-t="image-maxzoom" value="${d.maxZoom}"></div></div>`;
     for (const [key,label] of [['start','Startutsnitt'],['end','Slututsnitt']]) h += `<div class="fld"><label for="f-image-${key}">${label} (x y skala)</label><input id="f-image-${key}" data-t="image-tuple" data-f="${key}" value="${esc(d[key].join(' '))}"><span class="hint">Bildens centrum i procent, följt av zoom. Exempel: 65 70 1.8.</span></div>`;
   }
   if (STEPPED.includes(L)) h += `<label class="chk"><input type="checkbox" id="f-steps" data-f="steps" data-t="check"${s.steps !== false ? ' checked' : ''}> Visa rubriker och innehåll stegvis, på klick</label>
@@ -858,6 +859,8 @@ function onInspInput(e) {
   const s = deck.slides[cur];
   if (t === 'image-mode') (s.imageDirection ||= {}).mode = el.value;
   else if (t === 'image-restore') (s.imageDirection ||= {}).restore = el.checked;
+  else if (t === 'image-copy') (s.imageDirection ||= {}).copy = el.value;
+  else if (t === 'image-maxzoom') { const z=Number(el.value); if(!Number.isFinite(z)||z<1||z>3)return; (s.imageDirection ||= {}).maxZoom=z; }
   else if (t === 'image-tuple') { const a = el.value.trim().split(/[\s,]+/).map(Number); if (a.length !== 3 || !a.every(Number.isFinite)) return; (s.imageDirection ||= {})[el.dataset.f] = a; }
   else if (t === 'text') s[el.dataset.f] = el.value;
   else if (t === 'list') s[el.dataset.f] = s.layout === 'trad' ? el.value.split('\n').map(x => { const d = Math.floor(x.replace(/\t/g, '  ').match(/^\s*/)[0].length / 2); return '- '.repeat(d) + x.trim(); }) : el.value.split('\n');

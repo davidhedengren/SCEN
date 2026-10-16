@@ -68,7 +68,7 @@ with sync_playwright() as p:
     page.locator('#larkurs-0').scroll_into_view_if_needed()
     shot(page,'kg-individ',{'aktivitet':'.laraktivitet','svagt':'.larkolumner>div:first-child','starkt':'.larkolumner>div:last-child','alla':'.laralla summary','statistik':'.larstat'})
     page.locator('.laralla summary').click();page.evaluate("document.querySelector('.laralla').scrollIntoView({block:'center',behavior:'instant'})")
-    shot(page,'kg-individ-alla',{'omraden':'.laralla','forklaring':'#larkurs-0 > div > p','tillbaka':'.larbak'})
+    shot(page,'kg-individ-alla',{'omraden':'.laralla','forklaring':'#larkurs-0 > div > p','tillbaka':'.larbak','riktat':'.lar-elevpass'})
     page.locator('.larbak').scroll_into_view_if_needed()
     shot(page,'kg-individ-tillbaka',{'knapp':'.larbak'})
     page.locator('.larbak').click();page.wait_for_selector('.lartabell')

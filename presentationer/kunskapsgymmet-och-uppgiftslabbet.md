@@ -5,231 +5,105 @@ tema: djup
 ---
 
 [bildregi]
-etikett: KUNSKAPSGYMMET
-rubrik: Så använder du Kunskapsgymmet
-text: Vi börjar som elev. Sedan skapar vi ett pass och ett övningsblad.
-bild: bilder/verktygspresentation/vandring/kg-start.png
-alt: Hela webbläsarvyn: Så använder du Kunskapsgymmet.
-bildläge: vandring
-återställ: nej
-beskärning: cover
-övergång: tona
-rubrikrörelse: ingen
-- steg1 | Lärarens pass ligger på startsidan | 50.0 | 40.64 | 73.5 | 13.56 | Uppdraget finns på startsidan. Här heter det Inför Prov v.48.
-- steg2 | Eller välj egen träning | 50 | 70 | 74 | 28 | Kurserna ligger längre ned på samma sida.
-> 15 sekunder. Visa hela startsidan innan du klickar. Vi följer ett exempel i fysik, men visar också de andra kurserna. Allt är verkliga gränssnitt från lokala kopior med fiktiva konton och resultat. Filmerna visar riktiga musklick och drag i dessa kopior. Högerpil flyttar kameran. Efter sista markeringen går nästa klick direkt till den nya vyn. N visar anteckningar. P öppnar talarvyn.
-
----
-
-[bildregi]
-etikett: KUNSKAPSGYMMET
-rubrik: Välj den kurs eleven läser
-text: Matematikens kurser och spår finns samlade på startsidan.
-bild: bilder/verktygspresentation/vandring/kg-kurser.png
-alt: Hela webbläsarvyn: Välj den kurs eleven läser.
-bildläge: vandring
-återställ: nej
-beskärning: cover
-övergång: tona
-rubrikrörelse: ingen
-- steg1 | Nivå 1, nivå 2 och fortsättning | 50 | 24 | 74 | 20 | Öppna rätt kurs. Spåren framgår på kurskortet.
-- steg2 | Fortsättning och fördjupning | 50 | 42 | 74 | 18 | Fler kurser finns på samma sida.
-> 10 sekunder. Peka på de verkliga kursnamnen. Nivåerna i kursnamnen ska inte blandas ihop med träningsnivån inne i en uppgift. Vi scrollar sedan längre ned på startsidan.
-
----
-
-[bildregi]
-etikett: KUNSKAPSGYMMET
-rubrik: Här finns också fysik
-text: Vi öppnar Fysik nivå 1 i demonstrationen.
-bild: bilder/verktygspresentation/vandring/kg-kurser-fysik.png
-alt: Hela webbläsarvyn: Här finns också fysik.
-bildläge: vandring
-återställ: nej
-beskärning: cover
-övergång: tona
-rubrikrörelse: ingen
-- steg1 | Fysik nivå 1 och nivå 2 | 50.0 | 62.16 | 73.5 | 23.45 | Kurserna ligger på samma startsida.
-- steg2 | Klicka på Fysik nivå 1 | 31.62 | 64.44 | 33.88 | 14.22 | Kurskortet öppnar träningssidan.
-> 5 sekunder. Visa fysikkorten. Historiekortet längre ned är märkt under uppbyggnad och presenteras inte som en färdig kurs.
-
----
-
-[bildregi]
-etikett: KUNSKAPSGYMMET
-rubrik: Din personliga tränare föreslår ett pass
-text: Eleven får hjälp att välja vad och hur den ska träna.
-bild: bilder/verktygspresentation/vandring/kg-kurs.png
-alt: Hela webbläsarvyn: Din personliga tränare föreslår ett pass.
-bildläge: vandring
-återställ: nej
-beskärning: cover
-övergång: tona
-rubrikrörelse: ingen
-- steg1 | Ett förslag att börja med | 42.31 | 52.78 | 47.25 | 8.89 | Nya elever börjar med Grundpass. Senare används träningshistoriken.
-- steg2 | Se vilka kapitel du jobbar med | 40.31 | 66.67 | 51.25 | 6.0 | Ändra låter eleven välja kapitel. Starta passet sätter igång träningen.
-- steg3 | Klicka på Byt pass | 27.51 | 60.33 | 6.61 | 6.22 | Öppna alternativen om du vill träna på ett annat sätt.
-> 25 sekunder. Tränaren föreslår ett pass utifrån tidigare träning och valda kapitel. Grundpass är starten för nya elever. Teknikpass riktas mot svagare områden, tungt pass mot starkare och repetition mot sådant eleven inte tränat på ett tag. När eleven fastnar kan tränaren föreslå en genomgång. Lärarens namngivna pass är en separat ingång.
-
----
-
-[bildregi]
-etikett: KUNSKAPSGYMMET
-rubrik: Välj träning efter behov
-text: Här syns de olika passen i den personliga tränaren.
-bild: bilder/verktygspresentation/vandring/kg-tranare-val.png
-alt: Hela webbläsarvyn: Välj träning efter behov.
-bildläge: vandring
-återställ: nej
-beskärning: cover
-övergång: tona
-rubrikrörelse: ingen
-- steg1 | Teknik, mängd, tyngre träning eller repetition | 40.31 | 78.0 | 51.25 | 16.67 | Beskrivningen på varje knapp visar vad passet fokuserar på.
-- steg2 | Klicka på Grundpass | 23.4 | 75.39 | 17.42 | 7.89 | Vi behåller grundpasset och återgår till tränarens översikt.
-> 15 sekunder. Detta är passvalen som öppnades med Byt pass. Repetera dina fel kan också visas när eleven har fel att träna på. Antalet uppgifter och nivåerna varierar mellan passen.
-
----
-
-[bildregi]
-etikett: KUNSKAPSGYMMET
-rubrik: Från tränaren till uppdragsboken
+etikett: ELEV
+rubrik: Välj kurs och börja träna
 text:
-bild: bilder/verktygspresentation/vandring/kg-tranare-bok.png
-alt: Hela webbläsarvyn: Från tränaren till uppdragsboken.
+bild: bilder/verktygspresentation/vandring/kg-bas-start.png
+alt: Hela webbläsarvyn: Välj kurs och börja träna.
 bildläge: vandring
 återställ: nej
+textband: kompakt
+maxzoom: 1.65
 beskärning: cover
 övergång: tona
 rubrikrörelse: ingen
-- steg1 | Klicka på bokomslaget | 63.44 | 42.78 | 5.5 | 13.78 | Öppna uppdragsboken visar dagens uppdrag.
-> 5 sekunder. Markera knappen och låt publiken hitta den i hela sidvyn. Nästa scen visar resultatet av klicket.
+- steg1 | Kurserna finns på startsidan | 50.0 | 64.32 | 73.5 | 71.36 | Välj den kurs du läser. Vi visar ett exempel i fysik.
+> 15 sekunder. Börja med elevens enklaste väg: gå in, välj kurs, välj område och träna. Kontot i detta exempel har inget tilldelat lärarpass. Personlig tränare, genomgångar, andra hjälpmedel och lärarpass kommer senare. Alla konton och resultat är fiktiva. Högerpil flyttar fokus, N visar anteckningar.
 
 ---
 
 [bildregi]
-etikett: KUNSKAPSGYMMET
-rubrik: Titta i uppdragsboken
-text: Dagens uppdrag, framsteg och XP-belöningar syns på uppslaget.
-bild: bilder/verktygspresentation/vandring/kg-uppdragsbok.png
-alt: Hela webbläsarvyn: Titta i uppdragsboken.
-bildläge: vandring
-återställ: nej
-beskärning: cover
-övergång: tona
-rubrikrörelse: ingen
-- steg1 | Börja med huvuduppdraget | 35.31 | 46.78 | 26.38 | 18.59 | Här ska eleven klara fem uppgifter. Börja-knappen startar träningen.
-- steg2 | Följ de andra uppdragen | 65 | 50 | 29 | 58 | Varje uppdrag visar vad som ska göras, framsteg och belöning.
-> 25 sekunder. Låt bokuppslaget vara synligt några sekunder. Visa sedan huvuduppdraget och de tre andra uppdragen. I exemplet är inget färdigt ännu. Förklara att uppdrag och belöningar kan variera. Datum och bläddring finns under boken.
-
----
-
-[bildregi]
-etikett: KUNSKAPSGYMMET
-rubrik: Öppna kapitlet Rörelse
+etikett: ELEV
+rubrik: Välj Fysik nivå 1
 text:
-bild: bilder/verktygspresentation/vandring/kg-st-kapitel.png
-alt: Hela webbläsarvyn: Öppna kapitlet Rörelse.
+bild: bilder/verktygspresentation/vandring/kg-bas-kursval.png
+alt: Hela webbläsarvyn: Välj Fysik nivå 1.
 bildläge: vandring
 återställ: nej
+textband: kompakt
+maxzoom: 1.65
 beskärning: cover
 övergång: tona
 rubrikrörelse: ingen
-- steg1 | Klicka på Rörelse | 40.31 | 50.0 | 54.12 | 7.1 | Här finns området s–t-diagram och kapitlets genomgångar.
-> 5 sekunder. Markera knappen. Nästa klick går direkt till resultatet av klicket.
+- steg1 | Klicka på Fysik nivå 1 | 31.62 | 58.55 | 36.75 | 18.89 | Samma start fungerar i de andra kurserna.
+> 5 sekunder. Visa knappen i helbilden. Efter markeringen går nästa klick direkt till den nya vyn.
 
 ---
 
 [bildregi]
-etikett: KUNSKAPSGYMMET
-rubrik: Hitta genomgångarna i Rörelse
+etikett: ELEV
+rubrik: Öppna ett kapitel
 text:
-bild: bilder/verktygspresentation/vandring/kg-st-genomgang-knapp.png
-alt: Hela webbläsarvyn: Hitta genomgångarna i Rörelse.
+bild: bilder/verktygspresentation/vandring/kg-bas-kapitel.png
+alt: Hela webbläsarvyn: Öppna ett kapitel.
 bildläge: vandring
 återställ: nej
+textband: kompakt
+maxzoom: 1.65
 beskärning: cover
 övergång: tona
 rubrikrörelse: ingen
-- steg1 | Klicka på Det här behöver du kunna | 54.57 | 50.0 | 14.66 | 5.11 | Genomgångarna ligger vid kapitlets rubrik.
-> 5 sekunder. Markera knappen. Nästa klick går direkt till resultatet av klicket.
+- steg1 | Klicka på Rörelse | 40.31 | 50.0 | 54.12 | 7.1 | Kapitlet innehåller olika områden att träna på.
+> 5 sekunder. Visa knappen i helbilden. Efter markeringen går nästa klick direkt till den nya vyn.
 
 ---
 
 [bildregi]
-etikett: KUNSKAPSGYMMET
-rubrik: Välj genomgången om s–t-diagram
+etikett: ELEV
+rubrik: Välj området du vill träna på
 text:
-bild: bilder/verktygspresentation/vandring/kg-st-bladdra.png
-alt: Hela webbläsarvyn: Välj genomgången om s–t-diagram.
+bild: bilder/verktygspresentation/vandring/kg-bas-omrade.png
+alt: Hela webbläsarvyn: Välj området du vill träna på.
 bildläge: vandring
 återställ: nej
+textband: kompakt
+maxzoom: 1.65
 beskärning: cover
 övergång: tona
 rubrikrörelse: ingen
-- steg1 | Bläddra med pilen till s–t-diagram | 68.56 | 17.67 | 3.25 | 5.78 | Vi går till Läs ett läge–tid-diagram, nummer 5 av 6.
-> 5 sekunder. Vi har öppnat Rörelse från kurssidan. Pilen Nästa genomgång används fyra gånger för att nå den femte genomgången. Nästa scen visar den genomgången, utan någon återgång till kurssidan.
+- steg1 | Klicka på s–t-diagram | 38.98 | 48.11 | 13.86 | 6.5 | Områdeskortet startar träningen direkt.
+> 5 sekunder. Visa knappen i helbilden. Efter markeringen går nästa klick direkt till den nya vyn.
 
 ---
 
 [bildregi]
-etikett: KUNSKAPSGYMMET
-rubrik: Lär dig läsa ett s–t-diagram
-text: Genomgången visar sambandet mellan grafens lutning och hastigheten.
-bild: bilder/verktygspresentation/vandring/kg-st-genomgang.png
-alt: Hela webbläsarvyn: Lär dig läsa ett s–t-diagram.
-bildläge: vandring
-återställ: nej
-beskärning: cover
-övergång: tona
-rubrikrörelse: ingen
-- steg1 | Lutningen visar hastigheten | 50.0 | 31.23 | 40.38 | 6.91 | Läget visar var föremålet är. Lutningen visar hur snabbt läget ändras.
-- steg2 | Läs av två punkter på linjen | 50.0 | 63.39 | 40.38 | 39.84 | Vagnen går från 0 till 8 meter på 4 sekunder.
-> 25 sekunder. Den befintliga genomgången heter Läs ett läge–tid-diagram. I dess typuppgift är hastigheten (8−0)/(4−0)=2 m/s. Visa först hela dialogen, sedan principen och diagrammet. Vi scrollar därefter ned i samma dialog för att läsa lösningen.
-
----
-
-[bildregi]
-etikett: KUNSKAPSGYMMET
-rubrik: Från genomgång till egen träning
-text: Förklaringen och beräkningen finns i samma genomgång.
-bild: bilder/verktygspresentation/vandring/kg-st-genomgang-losning.png
-alt: Hela webbläsarvyn: Från genomgång till egen träning.
-bildläge: vandring
-återställ: nej
-beskärning: cover
-övergång: tona
-rubrikrörelse: ingen
-- steg1 | Följ beräkningen steg för steg | 50.0 | 56.39 | 38.38 | 23.48 | Lägesändring delad med tid ger 8 / 4 = 2 m/s.
-- steg2 | Ta med dig hur grafen ska tolkas | 50.0 | 79.54 | 40.38 | 9.84 | En vågrät linje betyder att föremålet står stilla.
-- steg3 | Klicka på Träna det här | 65.9 | 88.01 | 8.57 | 6.22 | Öppna en uppgift som tränar samma metod direkt från genomgången.
-> 25 sekunder. Knappen Träna det här startar träning i familjen Hastighet ur s-t-diagram. Nu får eleven använda samma metod på en annan graf. Vår riktiga bankuppgift har ett startläge som inte är noll. Vi tränar här direkt från genomgången; senare skapar läraren det separata passet Inför Prov v.48.
-
----
-
-[bildregi]
-etikett: KUNSKAPSGYMMET
-rubrik: Använd metoden på en ny graf
-text: Läs diagrammet och bestäm hastigheten i m/s.
+etikett: ELEV
+rubrik: Eleven tränar i det valda området
+text:
 bild: bilder/verktygspresentation/vandring/kg-st-uppgift.png
-alt: Hela webbläsarvyn: Använd metoden på en ny graf.
+alt: Hela webbläsarvyn: Eleven tränar i det valda området.
 bildläge: vandring
 återställ: nej
+textband: kompakt
+maxzoom: 1.65
 beskärning: cover
 övergång: tona
 rubrikrörelse: ingen
 - steg1 | Läget börjar vid 4 meter | 50.0 | 48.25 | 30.38 | 31.78 | Linjen slutar vid 25 meter efter 6 sekunder.
-> 20 sekunder. Visa den faktiska uppgiften 3.242. Grafens vertikala axel kallar läget x. Det är samma typ av läge–tid-diagram som i genomgången. Ge publiken en kort stund att läsa av axlarna. Vi löser på papper och skriver sedan endast svaret i appen.
+> 20 sekunder. Detta är den faktiska uppgiften 3.242 från området s–t-diagram. Grafens vertikala axel kallar läget x. Eleven behöver inte välja ett särskilt pass för att börja. Ge publiken en kort stund att läsa av axlarna. Vi löser på papper och skriver sedan endast svaret i appen.
 
 ---
 
 [bildregi]
-etikett: KUNSKAPSGYMMET
+etikett: ELEV
 rubrik: Ta stöd när du behöver komma vidare
 text:
 bild: bilder/verktygspresentation/vandring/kg-st-ledtrad-knapp.png
 alt: Hela webbläsarvyn: Ta stöd när du behöver komma vidare.
 bildläge: vandring
 återställ: nej
+textband: kompakt
+maxzoom: 1.65
 beskärning: cover
 övergång: tona
 rubrikrörelse: ingen
@@ -239,31 +113,35 @@ rubrikrörelse: ingen
 ---
 
 [bildregi]
-etikett: KUNSKAPSGYMMET
+etikett: ELEV
 rubrik: En ledtråd som pekar ut det viktiga
-text: Startläget är inte noll – räkna med förändringen i läge.
+text:
 bild: bilder/verktygspresentation/vandring/kg-st-ledtrad.png
 alt: Hela webbläsarvyn: En ledtråd som pekar ut det viktiga.
 bildläge: vandring
 återställ: nej
+textband: kompakt
+maxzoom: 1.65
 beskärning: cover
 övergång: tona
 rubrikrörelse: ingen
 - steg1 | Räkna bort startläget | 50.0 | 79.81 | 53.37 | 12.05 | Beräkna hur många meter läget har ändrats under tidsintervallet.
 - steg2 | Skriv hastigheten i m/s | 50.0 | 65.28 | 53.37 | 7.22 | Här blir lägesändringen 25 − 4 = 21 meter på 6 sekunder.
 - steg3 | Klicka på Kontrollera | 27.19 | 88.72 | 7.76 | 6.22 | Vi prövar svaret 3,5 m/s.
-> 25 sekunder. Appens befintliga ledtråd säger att startläget inte är noll och att förändringen i läge ska användas. Knyt det till genomgångens lutning: v=Δx/Δt=(25−4)/(6−0). Ledtråden ger en väg framåt utan att visa slutsvaret. Eleven räknar och skriver 3,5 i svarsfältet.
+> 25 sekunder. Appens befintliga ledtråd säger att startläget inte är noll och att förändringen i läge ska användas. Förklara metoden vid behov: v=Δx/Δt=(25−4)/(6−0). Ledtråden ger en väg framåt utan att visa slutsvaret. Eleven räknar och skriver 3,5 i svarsfältet.
 
 ---
 
 [bildregi]
-etikett: KUNSKAPSGYMMET
+etikett: ELEV
 rubrik: Kontrollera hastigheten och få återkoppling
-text: Nästa klick visar den faktiska svarskontrollen.
+text:
 bild: bilder/verktygspresentation/vandring/kg-st-svara-xp.png
 alt: Hela webbläsarvyn: Kontrollera hastigheten och få återkoppling.
 bildläge: vandring
 återställ: nej
+textband: kompakt
+maxzoom: 1.65
 beskärning: cover
 övergång: tona
 rubrikrörelse: ingen
@@ -275,47 +153,53 @@ filmsteg: spela
 ---
 
 [bildregi]
-etikett: KUNSKAPSGYMMET
+etikett: ELEV
 rubrik: Stanna vid återkopplingen
-text: Rätt svar ger XP även när eleven har använt en ledtråd.
+text:
 bild: bilder/verktygspresentation/vandring/kg-st-ratt.png
 alt: Hela webbläsarvyn: Stanna vid återkopplingen.
 bildläge: vandring
 återställ: nej
+textband: kompakt
+maxzoom: 1.65
 beskärning: cover
 övergång: tona
 rubrikrörelse: ingen
 - steg1 | Rätt svar ger +4 XP i exemplet | 50.0 | 87.28 | 53.37 | 9.11 | Här syns både rättmarkeringen och belöningen.
-- steg2 | XP-mätaren går framåt | 42.33 | 4.28 | 31.25 | 7.22 | Elevens totala XP ökar från 560 till 564.
+- steg2 | XP-mätaren går framåt | 44.33 | 4.28 | 35.24 | 7.22 | Elevens totala XP ökar från 560 till 564.
 - steg3 | Klicka på Visa lösning | 36.75 | 79.83 | 8.14 | 6.22 | Jämför sedan beräkningen med den fullständiga lösningen.
 > 15 sekunder. Flytta fokus från återkopplingen till mätaren och därefter tillbaka till knappen Visa lösning. Belöningen varierar med uppgiften och användningen av stöd. XP är inte ett betyg.
 
 ---
 
 [bildregi]
-etikett: KUNSKAPSGYMMET
+etikett: ELEV
 rubrik: Jämför med hela lösningen
-text: Lösningen visar varför startläget ska räknas bort.
+text:
 bild: bilder/verktygspresentation/vandring/kg-st-losning.png
 alt: Hela webbläsarvyn: Jämför med hela lösningen.
 bildläge: vandring
 återställ: nej
+textband: kompakt
+maxzoom: 1.65
 beskärning: cover
 övergång: tona
 rubrikrörelse: ingen
 - steg1 | Räkna förändring i läge per sekund | 50.0 | 76.33 | 53.37 | 31.0 | (25 − 4) / (6 − 0) = 3,5 m/s.
-> 20 sekunder. Lösningen är bankens befintliga fullständiga lösning. Föremålet börjar vid 4 m och slutar vid 25 m. Förflyttningen är därför 21 m, inte 25 m. Under 6 s ger det v=21/6=3,5 m/s. Den sista förklaringen visar varför 25/6 blir fel: startläget räknas då som en förflyttning. Knyt tillbaka till genomgången: samma lutningsmetod, men en ny graf.
+> 20 sekunder. Lösningen är bankens befintliga fullständiga lösning. Föremålet börjar vid 4 m och slutar vid 25 m. Förflyttningen är därför 21 m, inte 25 m. Under 6 s ger det v=21/6=3,5 m/s. Den sista förklaringen visar varför 25/6 blir fel: startläget räknas då som en förflyttning. Nästa del visar att genomgångar kan användas när eleven vill repetera metoden.
 
 ---
 
 [bildregi]
-etikett: KUNSKAPSGYMMET
+etikett: ELEV
 rubrik: Lämna uppgiften och gå till kursen
 text:
 bild: bilder/verktygspresentation/vandring/kg-st-avsluta.png
 alt: Hela webbläsarvyn: Lämna uppgiften och gå till kursen.
 bildläge: vandring
 återställ: nej
+textband: kompakt
+maxzoom: 1.65
 beskärning: cover
 övergång: tona
 rubrikrörelse: ingen
@@ -324,14 +208,214 @@ rubrikrörelse: ingen
 
 ---
 
+[etapper]
+etikett: ELEV · NÄSTA STEG
+rubrik: När eleven vill ha mer stöd
+steg: nej
+- Genomgångar | Repetera en metod med ett löst exempel.
+- Personlig tränare | Få förslag på vad du kan träna vidare på.
+- Hjälpmedel | Öppna miniräknare och formelblad vid behov.
+> 10 sekunder. Eleven har nu valt område och genomfört en uppgift. Resten av elevdelen visar fler möjligheter, en i taget.
+
+---
+
 [bildregi]
-etikett: KUNSKAPSGYMMET
+etikett: ELEV
+rubrik: Hitta genomgångarna i Rörelse
+text:
+bild: bilder/verktygspresentation/vandring/kg-st-genomgang-knapp.png
+alt: Hela webbläsarvyn: Hitta genomgångarna i Rörelse.
+bildläge: vandring
+återställ: nej
+textband: kompakt
+maxzoom: 1.65
+beskärning: cover
+övergång: tona
+rubrikrörelse: ingen
+- steg1 | Klicka på Det här behöver du kunna | 54.57 | 50.0 | 14.66 | 5.11 | Genomgångarna ligger vid kapitlets rubrik.
+> 5 sekunder. Markera knappen. Nästa klick går direkt till resultatet av klicket.
+
+---
+
+[bildregi]
+etikett: ELEV
+rubrik: Välj genomgången om s–t-diagram
+text:
+bild: bilder/verktygspresentation/vandring/kg-st-bladdra.png
+alt: Hela webbläsarvyn: Välj genomgången om s–t-diagram.
+bildläge: vandring
+återställ: nej
+textband: kompakt
+maxzoom: 1.65
+beskärning: cover
+övergång: tona
+rubrikrörelse: ingen
+- steg1 | Bläddra med pilen till s–t-diagram | 68.56 | 17.67 | 3.25 | 5.78 | Vi går till Läs ett läge–tid-diagram, nummer 5 av 6.
+> 5 sekunder. Vi har öppnat Rörelse från kurssidan. Pilen Nästa genomgång används fyra gånger för att nå den femte genomgången. Nästa scen visar den genomgången, utan någon återgång till kurssidan.
+
+---
+
+[bildregi]
+etikett: ELEV
+rubrik: Repetera metoden i en genomgång
+text:
+bild: bilder/verktygspresentation/vandring/kg-st-genomgang.png
+alt: Hela webbläsarvyn: Repetera metoden i en genomgång.
+bildläge: vandring
+återställ: nej
+textband: kompakt
+maxzoom: 1.65
+beskärning: cover
+övergång: tona
+rubrikrörelse: ingen
+- steg1 | Lutningen visar hastigheten | 50.0 | 31.23 | 40.38 | 6.91 | Läget visar var föremålet är. Lutningen visar hur snabbt läget ändras.
+- steg2 | Läs av två punkter på linjen | 50.0 | 63.39 | 40.38 | 39.84 | Vagnen går från 0 till 8 meter på 4 sekunder.
+> 25 sekunder. Den befintliga genomgången heter Läs ett läge–tid-diagram. I dess typuppgift är hastigheten (8−0)/(4−0)=2 m/s. Visa först hela dialogen, sedan principen och diagrammet. Vi scrollar därefter ned i samma dialog för att läsa lösningen.
+
+---
+
+[bildregi]
+etikett: ELEV
+rubrik: Ett löst exempel att följa
+text:
+bild: bilder/verktygspresentation/vandring/kg-st-genomgang-losning.png
+alt: Hela webbläsarvyn: Ett löst exempel att följa.
+bildläge: vandring
+återställ: nej
+textband: kompakt
+maxzoom: 1.65
+beskärning: cover
+övergång: tona
+rubrikrörelse: ingen
+- steg1 | Följ beräkningen steg för steg | 50.0 | 56.39 | 38.38 | 23.48 | Lägesändring delad med tid ger 8 / 4 = 2 m/s.
+- steg2 | Ta med dig hur grafen ska tolkas | 50.0 | 79.54 | 40.38 | 9.84 | En vågrät linje betyder att föremålet står stilla.
+- steg3 | Träna samma metod härifrån | 65.9 | 88.01 | 8.57 | 6.22 | Träna det här öppnar fler uppgifter inom samma metod.
+> 20 sekunder. Genomgångens exempel ger 8/4=2 m/s. Det är samma princip som i uppgiften eleven nyss löste, men andra tal. Knappen Träna det här kan användas för att fortsätta öva på metoden. Vi stänger i denna demonstration genomgången och visar nästa möjlighet på kurssidan.
+
+---
+
+[bildregi]
+etikett: ELEV
+rubrik: Tillbaka till kursens översikt
+text:
+bild: bilder/verktygspresentation/vandring/kg-bas-stang-genomgang.png
+alt: Hela webbläsarvyn: Tillbaka till kursens översikt.
+bildläge: vandring
+återställ: nej
+textband: kompakt
+maxzoom: 1.65
+beskärning: cover
+övergång: tona
+rubrikrörelse: ingen
+- steg1 | Stäng genomgången | 68.5 | 11.89 | 3.38 | 6.0 | Nu visar vi den personliga tränaren.
+> 5 sekunder. Visa knappen i helbilden. Efter markeringen går nästa klick direkt till den nya vyn.
+
+---
+
+[bildregi]
+etikett: ELEV
+rubrik: Öppna den personliga tränaren
+text:
+bild: bilder/verktygspresentation/vandring/kg-bas-tranare-knapp.png
+alt: Hela webbläsarvyn: Öppna den personliga tränaren.
+bildläge: vandring
+återställ: nej
+textband: kompakt
+maxzoom: 1.65
+beskärning: cover
+övergång: tona
+rubrikrörelse: ingen
+- steg1 | Klicka på Visa passet | 59.36 | 26.11 | 6.16 | 4.56 | Tränaren hjälper eleven att välja fortsatt träning.
+> 5 sekunder. Visa knappen i helbilden. Efter markeringen går nästa klick direkt till den nya vyn.
+
+---
+
+[bildregi]
+etikett: ELEV
+rubrik: Din personliga tränare föreslår ett pass
+text:
+bild: bilder/verktygspresentation/vandring/kg-kurs.png
+alt: Hela webbläsarvyn: Din personliga tränare föreslår ett pass.
+bildläge: vandring
+återställ: nej
+textband: kompakt
+maxzoom: 1.65
+beskärning: cover
+övergång: tona
+rubrikrörelse: ingen
+- steg1 | Ett förslag att börja med | 42.31 | 38.11 | 47.25 | 8.89 | Nya elever börjar med Grundpass. Senare används träningshistoriken.
+- steg2 | Se vilka kapitel du jobbar med | 40.31 | 52.0 | 51.25 | 6.0 | Ändra låter eleven välja kapitel. Starta passet sätter igång träningen.
+- steg3 | Klicka på Byt pass | 28.28 | 45.67 | 6.61 | 6.22 | Öppna alternativen om du vill träna på ett annat sätt.
+> 25 sekunder. Tränaren föreslår ett pass utifrån tidigare träning och valda kapitel. Grundpass är starten för nya elever. Teknikpass riktas mot svagare områden, tungt pass mot starkare och repetition mot sådant eleven inte tränat på ett tag. När eleven fastnar kan tränaren föreslå en genomgång. Lärarens namngivna pass är en separat ingång.
+
+---
+
+[bildregi]
+etikett: ELEV
+rubrik: Välj träning efter behov
+text:
+bild: bilder/verktygspresentation/vandring/kg-tranare-val.png
+alt: Hela webbläsarvyn: Välj träning efter behov.
+bildläge: vandring
+återställ: nej
+textband: kompakt
+maxzoom: 1.65
+beskärning: cover
+övergång: tona
+rubrikrörelse: ingen
+- steg1 | Teknik, mängd, tyngre träning eller repetition | 40.31 | 63.33 | 51.25 | 16.67 | Beskrivningen på varje knapp visar vad passet fokuserar på.
+- steg2 | Klicka på Grundpass | 23.4 | 60.72 | 17.42 | 7.89 | Vi behåller grundpasset och återgår till tränarens översikt.
+> 15 sekunder. Detta är passvalen som öppnades med Byt pass. Repetera dina fel kan också visas när eleven har fel att träna på. Antalet uppgifter och nivåerna varierar mellan passen.
+
+---
+
+[bildregi]
+etikett: ELEV
+rubrik: Från tränaren till uppdragsboken
+text:
+bild: bilder/verktygspresentation/vandring/kg-tranare-bok.png
+alt: Hela webbläsarvyn: Från tränaren till uppdragsboken.
+bildläge: vandring
+återställ: nej
+textband: kompakt
+maxzoom: 1.65
+beskärning: cover
+övergång: tona
+rubrikrörelse: ingen
+- steg1 | Klicka på bokomslaget | 63.44 | 28.11 | 5.5 | 13.78 | Öppna uppdragsboken visar dagens uppdrag.
+> 5 sekunder. Markera knappen och låt publiken hitta den i hela sidvyn. Nästa scen visar resultatet av klicket.
+
+---
+
+[bildregi]
+etikett: ELEV
+rubrik: Titta i uppdragsboken
+text:
+bild: bilder/verktygspresentation/vandring/kg-uppdragsbok.png
+alt: Hela webbläsarvyn: Titta i uppdragsboken.
+bildläge: vandring
+återställ: nej
+textband: kompakt
+maxzoom: 1.65
+beskärning: cover
+övergång: tona
+rubrikrörelse: ingen
+- steg1 | Börja med huvuduppdraget | 35.31 | 46.78 | 26.38 | 18.59 | Här ska eleven klara fem uppgifter. Börja-knappen startar träningen.
+- steg2 | Följ de andra uppdragen | 65 | 50 | 29 | 58 | Varje uppdrag visar vad som ska göras, framsteg och belöning.
+> 25 sekunder. Låt bokuppslaget vara synligt några sekunder. Visa sedan huvuduppdraget och de tre andra uppdragen. I exemplet är inget färdigt ännu. Förklara att uppdrag och belöningar kan variera. Datum och bläddring finns under boken.
+
+---
+
+[bildregi]
+etikett: ELEV
 rubrik: Hitta topplistan i sidhuvudet
 text:
 bild: bilder/verktygspresentation/vandring/kg-st-till-topplista.png
 alt: Hela webbläsarvyn: Hitta topplistan i sidhuvudet.
 bildläge: vandring
 återställ: nej
+textband: kompakt
+maxzoom: 1.65
 beskärning: cover
 övergång: tona
 rubrikrörelse: ingen
@@ -341,13 +425,15 @@ rubrikrörelse: ingen
 ---
 
 [bildregi]
-etikett: KUNSKAPSGYMMET
+etikett: ELEV
 rubrik: Öppna topplistan
-text: Välj tidsperiod och se XP och genomförda uppgifter.
+text:
 bild: bilder/verktygspresentation/vandring/kg-topplista.png
 alt: Hela webbläsarvyn: Öppna topplistan.
 bildläge: vandring
 återställ: nej
+textband: kompakt
+maxzoom: 1.65
 beskärning: cover
 övergång: tona
 rubrikrörelse: ingen
@@ -360,13 +446,15 @@ rubrikrörelse: ingen
 ---
 
 [bildregi]
-etikett: KUNSKAPSGYMMET
+etikett: ELEV
 rubrik: Växla till Klasser
-text: Samma topplista kan visa klassernas samlade aktivitet.
+text:
 bild: bilder/verktygspresentation/vandring/kg-klasstopp.png
 alt: Hela webbläsarvyn: Växla till Klasser.
 bildläge: vandring
 återställ: nej
+textband: kompakt
+maxzoom: 1.65
 beskärning: cover
 övergång: tona
 rubrikrörelse: ingen
@@ -377,13 +465,15 @@ rubrikrörelse: ingen
 ---
 
 [bildregi]
-etikett: KUNSKAPSGYMMET
+etikett: ELEV
 rubrik: Välj en matematikkurs
 text:
 bild: bilder/verktygspresentation/vandring/kg-matte-val.png
 alt: Hela webbläsarvyn: Välj en matematikkurs.
 bildläge: vandring
 återställ: nej
+textband: kompakt
+maxzoom: 1.65
 beskärning: cover
 övergång: tona
 rubrikrörelse: ingen
@@ -393,13 +483,15 @@ rubrikrörelse: ingen
 ---
 
 [bildregi]
-etikett: KUNSKAPSGYMMET
+etikett: ELEV
 rubrik: Starta ett matematikpass
 text:
 bild: bilder/verktygspresentation/vandring/kg-matte-kurs.png
 alt: Hela webbläsarvyn: Starta ett matematikpass.
 bildläge: vandring
 återställ: nej
+textband: kompakt
+maxzoom: 1.65
 beskärning: cover
 övergång: tona
 rubrikrörelse: ingen
@@ -409,13 +501,15 @@ rubrikrörelse: ingen
 ---
 
 [bildregi]
-etikett: KUNSKAPSGYMMET
+etikett: ELEV
 rubrik: Öppna miniräknaren vid uppgiften
 text:
 bild: bilder/verktygspresentation/vandring/kg-hjalpmedel.png
 alt: Hela webbläsarvyn: Öppna miniräknaren vid uppgiften.
 bildläge: vandring
 återställ: nej
+textband: kompakt
+maxzoom: 1.65
 beskärning: cover
 övergång: tona
 rubrikrörelse: ingen
@@ -425,13 +519,15 @@ rubrikrörelse: ingen
 ---
 
 [bildregi]
-etikett: KUNSKAPSGYMMET
+etikett: ELEV
 rubrik: Räkna med uppgiften kvar på sidan
-text: Miniräknaren öppnas bredvid uppgiften.
+text:
 bild: bilder/verktygspresentation/vandring/kg-miniraknare.png
 alt: Hela webbläsarvyn: Räkna med uppgiften kvar på sidan.
 bildläge: vandring
 återställ: nej
+textband: kompakt
+maxzoom: 1.65
 beskärning: cover
 övergång: tona
 rubrikrörelse: ingen
@@ -442,13 +538,15 @@ rubrikrörelse: ingen
 ---
 
 [bildregi]
-etikett: KUNSKAPSGYMMET
+etikett: ELEV
 rubrik: Hitta kursens formelblad
 text:
 bild: bilder/verktygspresentation/vandring/kg-formel-knapp.png
 alt: Hela webbläsarvyn: Hitta kursens formelblad.
 bildläge: vandring
 återställ: nej
+textband: kompakt
+maxzoom: 1.65
 beskärning: cover
 övergång: tona
 rubrikrörelse: ingen
@@ -458,19 +556,40 @@ rubrikrörelse: ingen
 ---
 
 [bildregi]
-etikett: KUNSKAPSGYMMET
+etikett: ELEV
 rubrik: Ha formlerna bredvid uppgiften
-text: Kursens formelblad öppnas på samma sida.
+text:
 bild: bilder/verktygspresentation/vandring/kg-formelblad.png
 alt: Hela webbläsarvyn: Ha formlerna bredvid uppgiften.
 bildläge: vandring
 återställ: nej
+textband: kompakt
+maxzoom: 1.65
 beskärning: cover
 övergång: tona
 rubrikrörelse: ingen
 - steg1 | Läs formelbladet medan du arbetar | 83.75 | 50.0 | 32.0 | 99.11 | Bläddra i bladet utan att lämna uppgiften.
 - steg2 | Zooma eller öppna som PDF | 83.75 | 4.44 | 31.87 | 7.78 | Reglagen sitter högst upp i formelbladets fönster.
 > 15 sekunder. Detta är det verkliga formelbladet för Matematik nivå 2, visat med appens PDF-läsare. Formelbladsknappen finns i matematikkurserna. Fönstret kan flyttas och ändra storlek. Vi byter sedan till lärarkontot för att visa hur träningen följs upp.
+
+---
+
+[bildregi]
+etikett: ELEV
+rubrik: Eleven kan också få ett pass av sin lärare
+text:
+bild: bilder/verktygspresentation/vandring/kg-bas-tilldelat.png
+alt: Hela webbläsarvyn: Eleven kan också få ett pass av sin lärare.
+bildläge: vandring
+återställ: nej
+textband: kompakt
+maxzoom: 1.65
+beskärning: cover
+övergång: tona
+rubrikrörelse: ingen
+- steg1 | Lärarens pass visas på startsidan | 50.0 | 40.64 | 73.5 | 13.56 | Exemplet heter Inför Prov v.48.
+- steg2 | Här startar eleven det tilldelade passet | 82.23 | 42.31 | 6.67 | 6.22 | Läraren har valt områden och omfattning i förväg.
+> 20 sekunder. Nu visar vi en annan situation: eleven har fått ett pass från sin lärare. Det skiljer sig från att själv välja område eller använda den personliga tränaren. Vi visar strax hur läraren skapar passet. På denna scen startar vi inte en ny uppgift.
 
 ---
 
@@ -482,6 +601,17 @@ svar: Med ett avgränsat lärarpass – eller med egen träning i rätt kurs.
 
 ---
 
+[etapper]
+etikett: KUNSKAPSGYMMET · LÄRARVYN
+rubrik: Nu arbetar vi som lärare
+steg: nej
+- Ge träning | Välj innehåll till en elev, flera elever eller hela gruppen.
+- Följ upp | Se aktivitet, genomförande och resultat.
+- Anpassa nästa steg | Utgå från elevens eller gruppens svårigheter.
+> 10 sekunder. Byt perspektiv tydligt. Vi lämnar elevens egen träning och visar hur läraren organiserar undervisningen och följer upp eleverna.
+
+---
+
 [bildregi]
 etikett: LÄRARE
 rubrik: Nu är vi inloggade som lärare
@@ -490,6 +620,8 @@ bild: bilder/verktygspresentation/vandring/kg-min-undervisning.png
 alt: Hela webbläsarvyn: Nu är vi inloggade som lärare.
 bildläge: vandring
 återställ: nej
+textband: kompakt
+maxzoom: 1.65
 beskärning: cover
 övergång: tona
 rubrikrörelse: ingen
@@ -501,11 +633,13 @@ rubrikrörelse: ingen
 [bildregi]
 etikett: LÄRARE
 rubrik: Byt till Min undervisning
-text: Lärarens grupper finns samlade här.
+text:
 bild: bilder/verktygspresentation/vandring/kg-larare.png
 alt: Hela webbläsarvyn: Byt till Min undervisning.
 bildläge: vandring
 återställ: nej
+textband: kompakt
+maxzoom: 1.65
 beskärning: cover
 övergång: tona
 rubrikrörelse: ingen
@@ -517,11 +651,13 @@ rubrikrörelse: ingen
 [bildregi]
 etikett: LÄRARE
 rubrik: Skapa ett träningspass till gruppen
-text: Utgå från gruppens sida.
+text:
 bild: bilder/verktygspresentation/vandring/kg-grupp.png
 alt: Hela webbläsarvyn: Skapa ett träningspass till gruppen.
 bildläge: vandring
 återställ: nej
+textband: kompakt
+maxzoom: 1.65
 beskärning: cover
 övergång: tona
 rubrikrörelse: ingen
@@ -533,11 +669,13 @@ rubrikrörelse: ingen
 [bildregi]
 etikett: LÄRARE
 rubrik: Ge passet ett tydligt namn
-text: Exemplet heter Inför Prov v.48.
+text:
 bild: bilder/verktygspresentation/vandring/kg-skapa.png
 alt: Hela webbläsarvyn: Ge passet ett tydligt namn.
 bildläge: vandring
 återställ: nej
+textband: kompakt
+maxzoom: 1.65
 beskärning: cover
 övergång: tona
 rubrikrörelse: ingen
@@ -555,6 +693,8 @@ bild: bilder/verktygspresentation/vandring/kg-elevval-knapp.png
 alt: Hela webbläsarvyn: Öppna elevvalet.
 bildläge: vandring
 återställ: nej
+textband: kompakt
+maxzoom: 1.65
 beskärning: cover
 övergång: tona
 rubrikrörelse: ingen
@@ -566,11 +706,13 @@ rubrikrörelse: ingen
 [bildregi]
 etikett: LÄRARE
 rubrik: Ge en elev ett eget träningspass
-text: Här är bara Alva Berg markerad.
+text:
 bild: bilder/verktygspresentation/vandring/kg-elevval-en.png
 alt: Hela webbläsarvyn: Ge en elev ett eget träningspass.
 bildläge: vandring
 återställ: nej
+textband: kompakt
+maxzoom: 1.65
 beskärning: cover
 övergång: tona
 rubrikrörelse: ingen
@@ -584,11 +726,13 @@ rubrikrörelse: ingen
 [bildregi]
 etikett: LÄRARE
 rubrik: Välj flera elever – eller hela gruppen
-text: Nu är både Alva och Amir valda.
+text:
 bild: bilder/verktygspresentation/vandring/kg-elevval-flera.png
 alt: Hela webbläsarvyn: Välj flera elever – eller hela gruppen.
 bildläge: vandring
 återställ: nej
+textband: kompakt
+maxzoom: 1.65
 beskärning: cover
 övergång: tona
 rubrikrörelse: ingen
@@ -601,11 +745,13 @@ rubrikrörelse: ingen
 [bildregi]
 etikett: LÄRARE
 rubrik: Kontrollera vilka som får passet
-text: Hela gruppen är nu vald.
+text:
 bild: bilder/verktygspresentation/vandring/kg-elevval-hela.png
 alt: Hela webbläsarvyn: Kontrollera vilka som får passet.
 bildläge: vandring
 återställ: nej
+textband: kompakt
+maxzoom: 1.65
 beskärning: cover
 övergång: tona
 rubrikrörelse: ingen
@@ -617,11 +763,13 @@ rubrikrörelse: ingen
 [bildregi]
 etikett: LÄRARE
 rubrik: Välj hur mycket eleverna ska träna
-text: Vi scrollar vidare i samma formulär.
+text:
 bild: bilder/verktygspresentation/vandring/kg-omfattning.png
 alt: Hela webbläsarvyn: Välj hur mycket eleverna ska träna.
 bildläge: vandring
 återställ: nej
+textband: kompakt
+maxzoom: 1.65
 beskärning: cover
 övergång: tona
 rubrikrörelse: ingen
@@ -634,11 +782,13 @@ rubrikrörelse: ingen
 [bildregi]
 etikett: LÄRARE
 rubrik: Välj vad eleverna ska träna på
-text: Områdena väljs i samma formulär.
+text:
 bild: bilder/verktygspresentation/vandring/kg-innehall.png
 alt: Hela webbläsarvyn: Välj vad eleverna ska träna på.
 bildläge: vandring
 återställ: nej
+textband: kompakt
+maxzoom: 1.65
 beskärning: cover
 övergång: tona
 rubrikrörelse: ingen
@@ -655,6 +805,8 @@ bild: bilder/verktygspresentation/vandring/kg-skapa-knapp.png
 alt: Hela webbläsarvyn: Skapa det färdiga passet.
 bildläge: vandring
 återställ: nej
+textband: kompakt
+maxzoom: 1.65
 beskärning: cover
 övergång: tona
 rubrikrörelse: ingen
@@ -666,11 +818,13 @@ rubrikrörelse: ingen
 [bildregi]
 etikett: LÄRARE
 rubrik: Ge eleverna vägen till passet
-text: Efter skapandet visas passets kod och länk.
+text:
 bild: bilder/verktygspresentation/vandring/kg-dela-pass.png
 alt: Hela webbläsarvyn: Ge eleverna vägen till passet.
 bildläge: vandring
 återställ: nej
+textband: kompakt
+maxzoom: 1.65
 beskärning: cover
 övergång: tona
 rubrikrörelse: ingen
@@ -688,6 +842,8 @@ bild: bilder/verktygspresentation/vandring/kg-resultat-knapp.png
 alt: Hela webbläsarvyn: Öppna passets resultat.
 bildläge: vandring
 återställ: nej
+textband: kompakt
+maxzoom: 1.65
 beskärning: cover
 övergång: tona
 rubrikrörelse: ingen
@@ -699,11 +855,13 @@ rubrikrörelse: ingen
 [bildregi]
 etikett: UPPFÖLJNING
 rubrik: Följ upp träningspasset
-text: Öppna passet för att se sammanställningen.
+text:
 bild: bilder/verktygspresentation/vandring/kg-passstatistik.png
 alt: Hela webbläsarvyn: Följ upp träningspasset.
 bildläge: vandring
 återställ: nej
+textband: kompakt
+maxzoom: 1.65
 beskärning: cover
 övergång: tona
 rubrikrörelse: ingen
@@ -721,6 +879,8 @@ bild: bilder/verktygspresentation/vandring/kg-elever-knapp.png
 alt: Hela webbläsarvyn: Hitta resultaten per elev.
 bildläge: vandring
 återställ: nej
+textband: kompakt
+maxzoom: 1.65
 beskärning: cover
 övergång: tona
 rubrikrörelse: ingen
@@ -732,11 +892,13 @@ rubrikrörelse: ingen
 [bildregi]
 etikett: UPPFÖLJNING
 rubrik: Se hur det går för enskilda elever
-text: Fäll ut elevlistan i passets resultat.
+text:
 bild: bilder/verktygspresentation/vandring/kg-elevstatistik.png
 alt: Hela webbläsarvyn: Se hur det går för enskilda elever.
 bildläge: vandring
 återställ: nej
+textband: kompakt
+maxzoom: 1.65
 beskärning: cover
 övergång: tona
 rubrikrörelse: ingen
@@ -753,6 +915,8 @@ bild: bilder/verktygspresentation/vandring/kg-till-grupper.png
 alt: Hela webbläsarvyn: Tillbaka till undervisningsgrupperna.
 bildläge: vandring
 återställ: nej
+textband: kompakt
+maxzoom: 1.65
 beskärning: cover
 övergång: tona
 rubrikrörelse: ingen
@@ -769,6 +933,8 @@ bild: bilder/verktygspresentation/vandring/kg-larare.png
 alt: Hela webbläsarvyn: Öppna samma undervisningsgrupp igen.
 bildläge: vandring
 återställ: nej
+textband: kompakt
+maxzoom: 1.65
 beskärning: cover
 övergång: tona
 rubrikrörelse: ingen
@@ -785,6 +951,8 @@ bild: bilder/verktygspresentation/vandring/kg-elever-flik.png
 alt: Hela webbläsarvyn: Öppna gruppens elevlista.
 bildläge: vandring
 återställ: nej
+textband: kompakt
+maxzoom: 1.65
 beskärning: cover
 övergång: tona
 rubrikrörelse: ingen
@@ -801,6 +969,8 @@ bild: bilder/verktygspresentation/vandring/kg-valj-elev.png
 alt: Hela webbläsarvyn: Öppna en enskild elev.
 bildläge: vandring
 återställ: nej
+textband: kompakt
+maxzoom: 1.65
 beskärning: cover
 övergång: tona
 rubrikrörelse: ingen
@@ -812,18 +982,20 @@ rubrikrörelse: ingen
 [bildregi]
 etikett: UPPFÖLJNING
 rubrik: Se vad just den här eleven behöver
-text: Elevöversikten samlar aktivitet och resultat per område.
+text:
 bild: bilder/verktygspresentation/vandring/kg-individ.png
 alt: Hela webbläsarvyn: Se vad just den här eleven behöver.
 bildläge: vandring
 återställ: nej
+textband: kompakt
+maxzoom: 1.65
 beskärning: cover
 övergång: tona
 rubrikrörelse: ingen
-- steg1 | Börja med aktivitet och antal försök | 50.0 | 44.93 | 73.5 | 11.22 | Alva har gjort 80 uppgifter totalt och 12 den senaste veckan.
-- steg2 | Behöver träna mer på | 32.19 | 79.81 | 35.5 | 16.22 | Effekt och verkningsgrad samt rörelseenergi är svagast i exemplet.
-- steg3 | Starkast i | 67.81 | 79.81 | 35.5 | 16.22 | Enheter samt arbete och lägesenergi är säkrare områden.
-- steg4 | Klicka på Alla 5 områden eleven har tränat | 50.0 | 88.59 | 71.12 | 3.56 | Fäll ut underlaget för en mer detaljerad jämförelse.
+- steg1 | Börja med aktivitet och antal försök | 50.0 | 43.93 | 73.5 | 11.22 | Alva har gjort 80 uppgifter totalt och 12 den senaste veckan.
+- steg2 | Behöver träna mer på | 32.19 | 78.81 | 35.5 | 16.22 | Effekt och verkningsgrad samt rörelseenergi är svagast i exemplet.
+- steg3 | Starkast i | 67.81 | 78.81 | 35.5 | 16.22 | Enheter samt arbete och lägesenergi är säkrare områden.
+- steg4 | Klicka på Alla 5 områden eleven har tränat | 50.0 | 87.59 | 71.12 | 3.56 | Fäll ut underlaget för en mer detaljerad jämförelse.
 > 25 sekunder. Allt är fiktiva elevdata. Staplarna visar uppskattad behärskning, medan texten under varje område visar antal försök och andel rätt i senaste försöken. Till exempel är effekt 39 procent uppskattad behärskning och 40 procent rätt i tio försök. Använd skillnaderna för ett samtal och ett riktat träningspass, inte som ett färdigt betyg.
 
 ---
@@ -831,16 +1003,19 @@ rubrikrörelse: ingen
 [bildregi]
 etikett: UPPFÖLJNING
 rubrik: Jämför elevens samtliga tränade områden
-text: Den utfällda listan ger ett bredare underlag för uppföljning.
+text:
 bild: bilder/verktygspresentation/vandring/kg-individ-alla.png
 alt: Hela webbläsarvyn: Jämför elevens samtliga tränade områden.
 bildläge: vandring
 återställ: nej
+textband: kompakt
+maxzoom: 1.65
 beskärning: cover
 övergång: tona
 rubrikrörelse: ingen
-- steg1 | Läs resultatet tillsammans med antalet försök | 50.0 | 59.42 | 71.12 | 24.78 | Ett område med få försök behöver tolkas försiktigt.
-> 10 sekunder. Här visas alla fem områden som vår fiktiva elev har tränat. Överväg en kort genomgång eller ett avgränsat pass för det eleven har svårt för. Under listan förklaras vad behärskningsprocenten betyder.
+- steg1 | Läs resultatet tillsammans med antalet försök | 50.0 | 52.86 | 71.12 | 24.78 | Ett område med få försök behöver tolkas försiktigt.
+- steg2 | Förslag till ett individuellt pass | 50.0 | 69.81 | 71.12 | 8.38 | Knappen kan förvälja eleven och upp till fem av elevens svagaste områden.
+> 10 sekunder. Här visas alla fem områden som vår fiktiva elev har tränat. Överväg en kort genomgång eller ett avgränsat pass för det eleven har svårt för. Under listan förklaras vad behärskningsprocenten betyder. Den nya knappen kan öppna ett individuellt pass med dessa val förifyllda. Här visar vi möjligheten och går sedan tillbaka till gruppen.
 
 ---
 
@@ -852,6 +1027,8 @@ bild: bilder/verktygspresentation/vandring/kg-individ-tillbaka.png
 alt: Hela webbläsarvyn: Tillbaka till elevens grupp.
 bildläge: vandring
 återställ: nej
+textband: kompakt
+maxzoom: 1.65
 beskärning: cover
 övergång: tona
 rubrikrörelse: ingen
@@ -868,6 +1045,8 @@ bild: bilder/verktygspresentation/vandring/kg-omraden-fran-elev.png
 alt: Hela webbläsarvyn: Byt till gruppens områdesstatistik.
 bildläge: vandring
 återställ: nej
+textband: kompakt
+maxzoom: 1.65
 beskärning: cover
 övergång: tona
 rubrikrörelse: ingen
@@ -879,11 +1058,13 @@ rubrikrörelse: ingen
 [bildregi]
 etikett: UPPFÖLJNING
 rubrik: Välj nästa sak att arbeta med
-text: Gruppens områdesstatistik finns på en egen flik.
+text:
 bild: bilder/verktygspresentation/vandring/kg-omradesstatistik.png
 alt: Hela webbläsarvyn: Välj nästa sak att arbeta med.
 bildläge: vandring
 återställ: nej
+textband: kompakt
+maxzoom: 1.65
 beskärning: cover
 övergång: tona
 rubrikrörelse: ingen
@@ -893,14 +1074,27 @@ rubrikrörelse: ingen
 
 ---
 
+[etapper]
+etikett: FÖR LÄRARE · MED KOLLEGOR
+rubrik: Uppgiftslabbet: lärarens material och samarbete
+steg: nej
+- Bygg ett övningsblad | Dra uppgifter från banken till ditt dokument.
+- Anpassa materialet | Redigera uppgifter, layout och facit.
+- Dela med kollegor | Hitta och bearbeta material tillsammans.
+> 10 sekunder. Här byter vi verktyg. Kunskapsgymmet används för elevernas träning och lärarens uppföljning. Uppgiftslabbet är här lärarens arbetsyta för undervisningsmaterial och samarbete mellan kollegor. Vi följer hela vägen från uppgiftsbank till delat dokument.
+
+---
+
 [bildregi]
 etikett: UPPGIFTSLABBET
 rubrik: Öppna uppgiftslabbet.se och välj kurs
-text: Vi byter verktyg för att skapa ett övningsblad.
+text:
 bild: bilder/verktygspresentation/vandring/ul-kurser.png
 alt: Hela webbläsarvyn: Öppna uppgiftslabbet.se och välj kurs.
 bildläge: vandring
 återställ: nej
+textband: kompakt
+maxzoom: 1.65
 beskärning: cover
 övergång: tona
 rubrikrörelse: ingen
@@ -917,6 +1111,8 @@ bild: bilder/verktygspresentation/vandring/ul-valj-omrade.png
 alt: Hela webbläsarvyn: Välj uppgifter om arbete.
 bildläge: vandring
 återställ: nej
+textband: kompakt
+maxzoom: 1.65
 beskärning: cover
 övergång: tona
 rubrikrörelse: ingen
@@ -928,11 +1124,13 @@ rubrikrörelse: ingen
 [bildregi]
 etikett: UPPGIFTSLABBET
 rubrik: Bygg ett övningsblad i Uppgiftslabbet
-text: Välj kurs och område. Banken ligger i mitten, bladet till höger.
+text:
 bild: bilder/verktygspresentation/vandring/ul-bank.png
 alt: Hela webbläsarvyn: Bygg ett övningsblad i Uppgiftslabbet.
 bildläge: vandring
 återställ: nej
+textband: kompakt
+maxzoom: 1.65
 beskärning: cover
 övergång: tona
 rubrikrörelse: ingen
@@ -946,11 +1144,13 @@ rubrikrörelse: ingen
 [bildregi]
 etikett: UPPGIFTSLABBET
 rubrik: Dra fyra uppgifter till övningsbladet
-text: Nästa klick visar hela arbetsmomentet.
+text:
 bild: bilder/verktygspresentation/vandring/ul-dra-fyra.png
 alt: Hela webbläsarvyn: Dra fyra uppgifter till övningsbladet.
 bildläge: vandring
 återställ: nej
+textband: kompakt
+maxzoom: 1.65
 beskärning: cover
 övergång: tona
 rubrikrörelse: ingen
@@ -969,6 +1169,8 @@ bild: bilder/verktygspresentation/vandring/ul-fyra.png
 alt: Hela webbläsarvyn: Fyra uppgifter ligger i bladet.
 bildläge: vandring
 återställ: nej
+textband: kompakt
+maxzoom: 1.65
 beskärning: cover
 övergång: tona
 rubrikrörelse: ingen
@@ -980,11 +1182,13 @@ rubrikrörelse: ingen
 [bildregi]
 etikett: UPPGIFTSLABBET
 rubrik: Klicka på Redigera för att förhandsvisa
-text: Fyra uppgifter finns nu i bladet till höger.
+text:
 bild: bilder/verktygspresentation/vandring/ul-forhandsvisa.png
 alt: Hela webbläsarvyn: Klicka på Redigera för att förhandsvisa.
 bildläge: vandring
 återställ: nej
+textband: kompakt
+maxzoom: 1.65
 beskärning: cover
 övergång: tona
 rubrikrörelse: ingen
@@ -998,11 +1202,13 @@ filmsteg: spela
 [bildregi]
 etikett: UPPGIFTSLABBET
 rubrik: Anpassa dokumentet i förhandsvisningen
-text: Sidan ligger kvar medan vi går mellan de viktigaste verktygen.
+text:
 bild: bilder/verktygspresentation/vandring/ul-redigera.png
 alt: Hela webbläsarvyn: Anpassa dokumentet i förhandsvisningen.
 bildläge: vandring
 återställ: nej
+textband: kompakt
+maxzoom: 1.65
 beskärning: cover
 övergång: tona
 rubrikrörelse: ingen
@@ -1022,6 +1228,8 @@ bild: bilder/verktygspresentation/vandring/ul-penna.png
 alt: Hela webbläsarvyn: Öppna uppgiftens egen redigering.
 bildläge: vandring
 återställ: nej
+textband: kompakt
+maxzoom: 1.65
 beskärning: cover
 övergång: tona
 rubrikrörelse: ingen
@@ -1033,11 +1241,13 @@ rubrikrörelse: ingen
 [bildregi]
 etikett: UPPGIFTSLABBET
 rubrik: Redigera en uppgift vid behov
-text: Uppgiftens redigering öppnas ovanpå arbetsytan.
+text:
 bild: bilder/verktygspresentation/vandring/ul-uppgiftsredigering.png
 alt: Hela webbläsarvyn: Redigera en uppgift vid behov.
 bildläge: vandring
 återställ: nej
+textband: kompakt
+maxzoom: 1.65
 beskärning: cover
 övergång: tona
 rubrikrörelse: ingen
@@ -1056,6 +1266,8 @@ bild: bilder/verktygspresentation/vandring/ul-dela-knapp.png
 alt: Hela webbläsarvyn: Öppna delningen från arbetsytan.
 bildläge: vandring
 återställ: nej
+textband: kompakt
+maxzoom: 1.65
 beskärning: cover
 övergång: tona
 rubrikrörelse: ingen
@@ -1067,11 +1279,13 @@ rubrikrörelse: ingen
 [bildregi]
 etikett: UPPGIFTSLABBET
 rubrik: Dela dokumentet med kollegor
-text: Välj Dela vid ditt dokument för att öppna denna dialog.
+text:
 bild: bilder/verktygspresentation/vandring/ul-dela.png
 alt: Hela webbläsarvyn: Dela dokumentet med kollegor.
 bildläge: vandring
 återställ: nej
+textband: kompakt
+maxzoom: 1.65
 beskärning: cover
 övergång: tona
 rubrikrörelse: ingen
@@ -1090,6 +1304,8 @@ bild: bilder/verktygspresentation/vandring/ul-mina-knapp.png
 alt: Hela webbläsarvyn: Hitta ditt sparade material.
 bildläge: vandring
 återställ: nej
+textband: kompakt
+maxzoom: 1.65
 beskärning: cover
 övergång: tona
 rubrikrörelse: ingen
@@ -1101,11 +1317,13 @@ rubrikrörelse: ingen
 [bildregi]
 etikett: UPPGIFTSLABBET
 rubrik: Hitta tillbaka till sparat material
-text: Mina prov och övningsblad samlar dokumenten.
+text:
 bild: bilder/verktygspresentation/vandring/ul-bibliotek.png
 alt: Hela webbläsarvyn: Hitta tillbaka till sparat material.
 bildläge: vandring
 återställ: nej
+textband: kompakt
+maxzoom: 1.65
 beskärning: cover
 övergång: tona
 rubrikrörelse: ingen

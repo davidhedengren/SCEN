@@ -9,7 +9,7 @@ async () => {
     'Maja Alm','Milo Bo','Mira Ed','Noah Flor','Nora Hall','Olivia Hav','Omar Lid','Sara Löv','Thea Nor','Vera Ryd','Viggo Sjö','Zoe Ås'];
   const students=names.map((namn,i)=>({id:'demo-'+i,namn,epost:'',vecka:i<21?12+i:0,vecka_ratt:i<21?9+Math.floor(i*.7):0,
     senaste:40,senaste_ratt:24+i%14,uppgifter:80+i*11,senast:i<21?new Date().toISOString():null,klass:{id:41,namn:'NA26a'}}));
-  window.demo={groups,pass,students,calls:[]};
+  window.demo={groups,pass,students,calls:[],assigned:true};
   klassRpc=async(name,args={})=>{
     demo.calls.push({name,args});
     if(name==='kg_lar_grupper')return{ok:true,kursstod:true,grupper:groups};
@@ -23,7 +23,7 @@ async () => {
         {omr:'arbete',m:.79,f:10,r:8},{omr:'enheter',m:.82,f:6,r:5},{omr:'densitet',m:.58,f:6,r:3}]}],
       pass:[{titel:pass.titel,antal:15,klara:15,ratt:15,aktiv:true}]};
     if(name==='kg_prov_mina')return{ok:true,prov:[pass]};
-    if(name==='kg_prov_for_mig')return[pass];
+    if(name==='kg_prov_for_mig')return demo.assigned?[pass]:[];
     if(name==='kg_lar_grupp_omraden')return{ok:true,omraden:{arbete:{m:.78,elever:21,forsok:105,ratt:87},rorelseenergi:{m:.63,elever:19,forsok:95,ratt:67},effekt:{m:.42,elever:18,forsok:90,ratt:43}}};
     if(name==='kg_prov_sammanstallning')return{ok:true,prov:pass,elever:24,tranat:21,uppgifter:258,
       elevlista:students.map((e,i)=>({namn:e.namn,klara:[15,15,15,15,15,15,15,15,15,15,15,15,12,11,10,10,9,8,7,6,5,0,0,0][i],

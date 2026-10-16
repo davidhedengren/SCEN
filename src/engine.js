@@ -80,7 +80,7 @@ function normalizeImageDirection(sl) {
     const x = Number(p[2]), y = Number(p[3]), w = Number(p[4]), h = Number(p[5]);
     return { id: p[0] || `detail-${index + 1}`, label: p[1] || `Detalj ${index + 1}`, x: Number.isFinite(x) ? x : 50, y: Number.isFinite(y) ? y : 50, w: Number.isFinite(w) ? w : 16, h: Number.isFinite(h) ? h : 20, note: p.slice(6).join(' | ') };
   });
-  return { mode, restore: raw.restore !== false && !['nej','false','none'].includes(String(raw.restore).toLowerCase()), crop: raw.crop === 'contain' ? 'contain' : 'cover', focus, start, end, safe, shade, direction: dirMap[String(raw.direction || 'none').toLowerCase()] || 'none', speed: speedMap[String(raw.speed || 'slow').toLowerCase()] || 'slow', details };
+  return { mode, copy: raw.copy === 'compact' ? 'compact' : 'normal', maxZoom: raw.maxZoom != null && raw.maxZoom !== '' && Number.isFinite(Number(raw.maxZoom)) ? Math.max(1,Math.min(3,Number(raw.maxZoom))) : 2.2, restore: raw.restore !== false && !['nej','false','none'].includes(String(raw.restore).toLowerCase()), crop: raw.crop === 'contain' ? 'contain' : 'cover', focus, start, end, safe, shade, direction: dirMap[String(raw.direction || 'none').toLowerCase()] || 'none', speed: speedMap[String(raw.speed || 'slow').toLowerCase()] || 'slow', details };
 }
 function imageBrief(sl, defaults) {
   if (!sl || (!sl.image && !sl.imageDirection && !sl.imageBrief)) return null;
@@ -433,7 +433,7 @@ function applyDramaturgy(sec, step, final) {
     if (sec.dataset.imageMode === 'guided') {
       const x = +current.dataset.imageX, y = +current.dataset.imageY;
       const w = +current.dataset.imageW, h = +current.dataset.imageH;
-      const z = Math.max(1, Math.min(2.2, 82 / Math.max(w, 1), 70 / Math.max(h, 1)));
+      const z = Math.max(1, Math.min(Number(sec.dataset.guidedMaxzoom)||2.2, 82 / Math.max(w, 1), 70 / Math.max(h, 1)));
       const shift = (at, target) => Math.max(50 * (1 - z), Math.min(50 * (z - 1), target - at * z + 50 * (z - 1)));
       sec.style.setProperty('--guided-camera', `translate(${shift(x, 50)}%,${shift(y, 44)}%) scale(${z})`);
       const bottom = 50 + z * (y + h / 2 - 50) + shift(y, 44);
@@ -525,6 +525,7 @@ function renderSlide(sl, i, deck, img) {
       break;
     case 'bildregi': {
       const d = normalizeImageDirection(sl), src = sl.image ? img(sl.image) : '';
+      if(d.mode === 'guided') attrs += ` data-guided-copy="${d.copy}" data-guided-maxzoom="${d.maxZoom}"`;
       const duration = d.speed === 'fast' ? '8s' : d.speed === 'medium' ? '14s' : '22s';
       const vars = [`--image-start-x:${d.start[0]}%`,`--image-start-y:${d.start[1]}%`,`--image-start-scale:${Math.max(1,d.start[2])}`,`--image-end-x:${d.end[0]}%`,`--image-end-y:${d.end[1]}%`,`--image-end-scale:${Math.max(1,d.end[2])}`,`--image-safe-x:${d.safe[0]}%`,`--image-safe-y:${d.safe[1]}%`,`--image-safe-w:${d.safe[2]}%`,`--image-safe-h:${d.safe[3]}%`,`--image-shade-x:${d.shade[0]}%`,`--image-shade-y:${d.shade[1]}%`,`--image-shade-w:${d.shade[2]}%`,`--image-shade-h:${d.shade[3]}%`,`--image-shade-opacity:${Math.max(0,Math.min(1,d.shade[4]))}`,`--image-duration:${duration}`].join(';');
       const image = src ? `<img src="${esc(src)}" alt="${esc(sl.alt || plain(title) || 'Bild')}" data-id="i-${hash(sl.image)}">` : `<div class="ph">Ingen bild vald</div>`;

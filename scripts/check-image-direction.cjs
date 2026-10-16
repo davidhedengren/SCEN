@@ -105,3 +105,16 @@ assert(!directHtml.includes('data-dramaturgy-restore'),'Direkt flöde får inte 
 assert.equal((directHtml.match(/data-step="/g)||[]).length,1,'Sista fokussteget följs av nästa scen.');
 assert.equal(Scen.normalizeImageDirection({}).restore,true,'Befintliga presentationer behåller återgång som standard.');
 console.log('OK: valfri återgång till helbild, manus-roundtrip och bevarat standardbeteende.');
+
+const compact=Manus.parse('[bildregi]\nbild: test.png\nbildläge: vandring\ntextband: kompakt\nmaxzoom: 1,65\n- a | Område | 50 | 50 | 10 | 10 | Förklaring').slides[0];
+assert.equal(compact.imageDirection.copy,'compact');
+assert.equal(compact.imageDirection.maxZoom,1.65);
+const compactRound=Manus.parse(Manus.stringify({title:'Test',slides:[compact]})).slides[0];
+assert.equal(compactRound.imageDirection.copy,'compact');
+assert.equal(compactRound.imageDirection.maxZoom,1.65);
+assert.match(Scen.renderSlide(compact,0,deck),/data-guided-copy="compact" data-guided-maxzoom="1.65"/);
+assert.equal(Scen.normalizeImageDirection({}).copy,'normal');
+assert.equal(Scen.normalizeImageDirection({}).maxZoom,2.2);
+assert.equal(Scen.normalizeImageDirection({imageDirection:{maxZoom:100}}).maxZoom,3);
+assert.equal(Scen.normalizeImageDirection({imageDirection:{maxZoom:-1}}).maxZoom,1);
+console.log('OK: kompakt textband, maxzoom, manus-roundtrip och bevarade standardvärden.');

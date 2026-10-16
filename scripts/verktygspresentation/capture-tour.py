@@ -41,7 +41,7 @@ def cursor(page):
 def encode(video,clips):
     for name,start,end in clips:
         dest=OUT/(name+'.mp4')
-        subprocess.run(['ffmpeg','-y','-loglevel','error','-ss',str(max(0,start)), '-i',str(video),'-t',str(end-start),'-an','-c:v','libx264','-preset','fast','-crf','20','-pix_fmt','yuv420p','-movflags','+faststart',str(dest)],check=True)
+        subprocess.run(['ffmpeg','-y','-loglevel','error','-ss',str(max(0,start)), '-i',str(video),'-t',str(end-start),'-an','-vf','setpts=PTS-STARTPTS','-c:v','libx264','-preset','fast','-crf','20','-pix_fmt','yuv420p','-movflags','+faststart',str(dest)],check=True)
         subprocess.run(['ffmpeg','-y','-loglevel','error','-i',str(dest),'-frames:v','1',str(OUT/(name+'.png'))],check=True)
         print('FILM',name,round(end-start,1),flush=True)
 

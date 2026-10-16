@@ -15,9 +15,9 @@ const Manus = (() => {
     'övergång': 'transition', bakgrund: 'bg', 'miljö': 'env', 'märke': 'badge', 'källrad': 'credit', rubrikrörelse: 'ta', 'rörelse': 'ba', visa: 'reveal', rubrikrad: 'header', mall: 'tpl', aktiv: 'active', siffra: 'number', slutsats: 'text', max: 'max', mitten: 'text'
   };
   const OUT_KEY = { video: 'film', videoFocus: 'filmsteg', scale: 'skala', conclusion: 'slutsats', max: 'max', active: 'aktiv', title: 'rubrik', text: 'text', caption: 'etikett', answer: 'svar', example: 'exempel', number: 'tal', minutes: 'tid', image: 'bild', alt: 'alt', lt: 'vänster', rt: 'höger', ret: 'retur', start: 'start', end: 'slut', question: 'fråga', cause: 'orsak', effect: 'konsekvens', condition: 'villkor', alternative: 'alternativ', source: 'källa', whole: 'helhet', reservation: 'reservation', common: 'gemensamt', tension: 'spänning', synthesis: 'syntes', transition: 'övergång', bg: 'bakgrund', ta: 'rubrikrörelse', ba: 'rörelse', tpl: 'mall' };
-  const IMAGE_DIRECTION_KEYS = { 'bildläge':'mode', 'återställ':'restore', fokuspunkt:'focus', 'beskärning':'crop', startutsnitt:'start', slututsnitt:'end', 'säker-yta':'safe', 'mörkning':'shade', riktning:'direction', hastighet:'speed' };
+  const IMAGE_DIRECTION_KEYS = { 'bildläge':'mode', 'återställ':'restore', textband:'copy', maxzoom:'maxZoom', fokuspunkt:'focus', 'beskärning':'crop', startutsnitt:'start', slututsnitt:'end', 'säker-yta':'safe', 'mörkning':'shade', riktning:'direction', hastighet:'speed' };
   const IMAGE_BRIEF_KEYS = { 'bild-id':'id', filnamn:'filename', scen:'scene', syfte:'purpose', motiv:'subject', komposition:'composition', motivplacering:'placement', format:'aspectRatio', undvik:'avoid', prompt:'prompt' };
-  const IMAGE_DIRECTION_OUT = { mode:'bildläge', restore:'återställ', focus:'fokuspunkt', crop:'beskärning', start:'startutsnitt', end:'slututsnitt', safe:'säker-yta', shade:'mörkning', direction:'riktning', speed:'hastighet' };
+  const IMAGE_DIRECTION_OUT = { mode:'bildläge', restore:'återställ', copy:'textband', maxZoom:'maxzoom', focus:'fokuspunkt', crop:'beskärning', start:'startutsnitt', end:'slututsnitt', safe:'säker-yta', shade:'mörkning', direction:'riktning', speed:'hastighet' };
   const IMAGE_BRIEF_OUT = { id:'bild-id', filename:'filnamn', scene:'scen', purpose:'syfte', subject:'motiv', composition:'komposition', placement:'motivplacering', aspectRatio:'format', avoid:'undvik', prompt:'prompt' };
   const REVEAL = { allt: 'none', rader: 'rows', facit: 'answers', 'facit-rader': 'rest', fall: 'cases' };
   const REVEAL_OUT = { none: 'allt', rows: 'rader', answers: 'facit', rest: 'facit-rader', cases: 'fall' };
@@ -88,6 +88,8 @@ const Manus = (() => {
         const field = IMAGE_DIRECTION_KEYS[label], v = kv[2].trim();
         const target = s.imageDirection = s.imageDirection || {};
         if (['focus','start','end','safe','shade'].includes(field)) target[field] = v.split(/[\s,]+/).map(Number).filter(Number.isFinite);
+        else if (field === 'maxZoom') target.maxZoom = Number(v.replace(',', '.'));
+        else if (field === 'copy') target.copy = ['kompakt','compact'].includes(v.toLowerCase()) ? 'compact' : 'normal';
         else if (field === 'restore') target.restore = !['nej','false','none'].includes(v.toLowerCase());
         else if (field === 'mode') target.mode = ({ hero:'hero',cinematic:'hero',detalj:'detail',detail:'detail',vandring:'guided',guided:'guided',spotlight:'spotlight',annotation:'spotlight',reveal:'reveal',mask:'reveal',levande:'live',live:'live' })[v.toLowerCase()] || 'hero';
         else if (field === 'direction') target.direction = ({ höger:'right',hoger:'right',right:'right',vänster:'left',vanster:'left',left:'left',upp:'up',up:'up',ned:'down',down:'down',stilla:'none',none:'none' })[v.toLowerCase()] || 'none';
@@ -216,7 +218,7 @@ const Manus = (() => {
     put('videoFocus', s.videoFocus);
     if ((s.image || s.video) && s.alt) put('alt', s.alt);
     if (L === 'bildregi' && s.imageDirection) Object.entries(IMAGE_DIRECTION_OUT).forEach(([field,label]) => {
-      const v=s.imageDirection[field]; if(v==null||v==='') return; out.push(`${label}: ${field==='restore'?(v?'ja':'nej'):Array.isArray(v)?v.join(' '):v}`);
+      const v=s.imageDirection[field]; if(v==null||v==='') return; out.push(`${label}: ${field==='restore'?(v?'ja':'nej'):field==='copy'?(v==='compact'?'kompakt':'normal'):Array.isArray(v)?v.join(' '):v}`);
     });
     if ((L === 'ordbild' || L === 'bildfält') && s.imageDirection && Array.isArray(s.imageDirection.focus) && s.imageDirection.focus.length) out.push(`fokuspunkt: ${s.imageDirection.focus.join(' ')}`);
     if (L === 'bildregi' && s.imageBrief) Object.entries(IMAGE_BRIEF_OUT).forEach(([field,label]) => {

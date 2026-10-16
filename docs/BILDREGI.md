@@ -51,7 +51,12 @@ bildläge: vandring
 ```
 
 Koordinaterna är centrum X/Y samt bredd/höjd i procent av den visade bildytan.
-Kameran begränsas till bildens kanter och högst 2,2 gångers zoom.
+Kameran begränsas till bildens kanter och som standard högst 2,2 gångers zoom.
+Med `maxzoom: 1.65` behålls mer av omgivningen vid varje markering (tillåtet
+intervall 1–3). `textband: kompakt` ger en mindre rubriketikett och smalare
+fokusband, så att bilden får mer plats. Båda inställningarna finns i
+redigeraren för Vandring. Utelämnade värden behåller det tidigare utseendet
+och zoomtaket. Bildens helhetsläge visar fortfarande hela 16:9-bilden.
 En film med samma format kan startas på ett visst fokussteg med `film:` och
 `filmsteg:` precis som i Spotlight. Använd filmens första ruta som grundbild.
 Bakåtsteg, omstart, statiska miniatyrer och reducerad rörelse använder samma

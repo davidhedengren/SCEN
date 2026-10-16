@@ -36,10 +36,21 @@ with sync_playwright() as p:
         page.evaluate('pv.next()');page.wait_for_timeout(1500)
         assert v.evaluate('(v)=>!v.paused&&v.currentTime>0&&v.videoWidth>0')
         page.evaluate('pv.prev()');page.wait_for_timeout(100)
-        assert v.evaluate('(v)=>v.paused&&v.currentTime===0')
+        assert v.evaluate('(v)=>v.paused&&v.currentTime===0'),v.evaluate('(v)=>({paused:v.paused,time:v.currentTime,wanted:v._wanted,ready:v.readyState})')
         page.evaluate('pv.next()');page.wait_for_timeout(500);page.evaluate('pv.go(0)')
         assert v.evaluate('(v)=>v.paused')
         assert not errors,errors
         print('PASS',theme,motion,'corners, frame, restore, backwards, static, film start/reset/exit',flush=True)
+        page.evaluate("""()=>{const s={...tour,title:'En diskret rubrik',text:'',caption:'ELEV',imageDirection:{...tour.imageDirection,copy:'compact',maxZoom:1.65},items:['a | En knapp | 50 | 50 | 10 | 10 | Det här området ska synas med sin omgivning.']};
+          window.pv=Scen.player(document.getElementById('scen-root'),{...d,slides:[s]},{mode:'present',images:d.images,hint:false});}""")
+        page.wait_for_timeout(100)
+        compact=page.locator('.sc-deck > .slide').first
+        copy=compact.locator('.ir-copy').bounding_box()
+        assert copy['height']<55 and copy['width']<1000,copy
+        page.evaluate('pv.next()');page.wait_for_timeout(1300 if motion=='no-preference' else 100)
+        scale=compact.locator('.ir-camera').evaluate('(el)=>new DOMMatrixReadOnly(getComputedStyle(el).transform).a')
+        assert abs(scale-1.65)<.01,scale
+        assert compact.locator('.ir-detail.dramaturgy-current > div').evaluate('(el)=>el.scrollWidth<=el.clientWidth+2&&el.scrollHeight<=el.clientHeight+2')
+        print('PASS',theme,motion,'compact caption and restrained camera zoom',flush=True)
         c.close()
     browser.close()

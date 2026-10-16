@@ -308,6 +308,10 @@ Stegen sitter på en ring, högst sex. Varje klick flyttar en ljusring till näs
 
 I `[träd]` visar `- fokus: ordning | rubrik | text` i vilken ordning noderna gås igenom: en ring glider från nod till nod, varje nod tänds och får sitt nummer, och ett spår ritas mellan noderna. `ordning` och `ordning bfs` går nivå för nivå från vänster till höger, `ordning dfs` går djupet först med vänster gren först, och `ordning A C G O` följer de noder du skriver. Lägg till `utan linje`, till exempel `ordning bfs utan linje`, om du inte vill ha spåret mellan noderna. Numren står kvar när slutsatsen visas.
 
+### Ett fall som vandrar genom trädet
+
+En väg i `[träd]` kan få en bild som sista fält: `- fokus: väg Nej > Ja | Apa 26 | Bits inte. | bilder/kurs/apa-26.png`. Bilden visas stort i sidokolumnen och som en liten bricka som vandrar ner längs vägen medan den ritas. Frågorna tänds när brickan passerar, och lövet och texten visas när den kommer fram. Passar beslutsträd där publiken ska följa ett exempel i taget, till exempel testdata, diagnoser eller vardagsval.
+
 ### Ordbild och bildfält med fokuspunkt
 
 I `[ordbild]` och `[bildfält]` väljer `fokuspunkt: x y` (procent) vilken del av bilden som syns, till exempel `fokuspunkt: 85 30` för ett motiv uppe till höger. I ordbild är det den del som fyller ordet. Utan fokuspunkt används bildens mitt.

@@ -24,17 +24,18 @@ etikett: Uppdraget
 
 ---
 
-[lins]
+[bildregi]
 etikett: Exempel
 rubrik: Åtta ormar där vi vet svaret
-tal: 170
 bild: bilder/beslutstrad-apor/ormar-traning.svg
 alt: Fyra giftiga och fyra ofarliga tecknade ormar. De giftiga har triangulärt huvud och smala pupiller.
-källrad: Ormar: ai-aktiviteter.se/beslutstrad
-- 19 31 | Giftiga | Orm 01 har triangulärt huvud och smala pupiller. Det har alla fyra giftiga.
-- 64 31 | Triangulärt huvud räcker inte | Orm 05 har triangulärt huvud men runda pupiller. Den är ofarlig.
-- 64 68 | Smala pupiller räcker inte | Orm 07 har smala pupiller men runt huvud. Den är också ofarlig.
-- 81 79 | Färgen avslöjar inget | Det finns röda ormar i båda grupperna.
+bildläge: guided
+textband: kompakt
+maxzoom: 1.65
+- giftiga | Giftiga | 27.6 | 47.4 | 34 | 74 | Alla fyra har triangulärt huvud och smala pupiller.
+- huvud | Triangulärt huvud räcker inte | 64.1 | 29.4 | 17 | 36 | Orm 05 har triangulärt huvud men runda pupiller. Den är ofarlig.
+- pupill | Smala pupiller räcker inte | 64.1 | 65.5 | 17 | 36 | Orm 07 har smala pupiller men runt huvud. Den är också ofarlig.
+- färg | Färgen avslöjar inget | 50 | 47 | 96 | 86 | Det finns röda ormar i båda grupperna.
 > Fråga klassen innan första klicket: vad har de giftiga ormarna gemensamt som de ofarliga saknar?
 > Ormarna är ett urval ur aktiviteten på ai-aktiviteter.se/beslutstrad, där hela träningsdatan har 20 ormar.
 
@@ -44,16 +45,32 @@ källrad: Ormar: ai-aktiviteter.se/beslutstrad
 etikett: Exempel
 rubrik: Är ormen giftig?
 text: Två frågor räcker för att sortera alla åtta ormarna rätt.
+slutsats: Varje fråga handlar om något man kan se.
+- Huvudform?
+  - Runt: Ofarlig
+  - Triangulärt: Pupiller?
+    - Runda: Ofarlig
+    - Smala: Giftig
+- fokus: väg Runt | Första frågan | Runt huvud: 07 och 08. Båda är ofarliga.
+- fokus: väg Triangulärt > Runda | Andra frågan | Triangulärt huvud men runda pupiller: 05 och 06 är ofarliga.
+- fokus: väg Triangulärt > Smala | Giftiga | Triangulärt huvud och smala pupiller: 01–04.
+@bild 144 640 540 310 passning=hela | bilder/beslutstrad-apor/ormar-mini.svg
+> Miniatyrerna är de åtta ormarna från förra bilden. Följ varje orm genom trädet tillsammans med klassen.
+
+---
+
+[träd]
+etikett: Testdata
+rubrik: Är ormen giftig?
+text: En orm som trädet aldrig har sett.
 slutsats: Nu gör ni samma sak, fast med apor och utan facit.
 - Huvudform?
   - Runt: Ofarlig
   - Triangulärt: Pupiller?
     - Runda: Ofarlig
     - Smala: Giftig
-- fokus: rot | Första frågan | Huvudformen delar ormarna. Alla med runt huvud är ofarliga.
-- fokus: väg Triangulärt > Runda | Andra frågan | Bland de triangulära skiljer pupillerna. Runda pupiller: ofarlig.
-- fokus: väg Triangulärt > Smala | En ny orm | Triangulärt huvud och smala pupiller. Trädet svarar giftig, utan att någon behöver komma nära.
-> Poängen: varje fråga handlar om något man kan se. Trädet går att följa för någon som aldrig har sett träningsdatan.
+- fokus: väg Triangulärt > Smala | En ny orm | Triangulärt huvud och smala pupiller. Trädet svarar giftig. | bilder/beslutstrad-apor/orm-ny.svg
+> Fråga klassen innan klicket: vad svarar trädet? Ormen kommer från testdatan i ai-aktiviteter.se/beslutstrad och är giftig.
 
 ---
 
@@ -68,29 +85,51 @@ rubrik: Från apkort till ett prövat träd
 
 ---
 
-[lins]
+[bildregi]
 etikett: Träningsdata
-rubrik: 27 apor där vi vet svaret
-tal: 150
+rubrik: Vad ska ni titta på?
+text: 27 apor där vi vet svaret: 13 bits och 14 bits inte.
 bild: bilder/beslutstrad-apor/traningsdata.png
 alt: Tretton apor som bits till vänster och fjorton apor som inte bits till höger.
-källrad: Apkort: Annabel Lindner och Stefan Seegerer, CC BY-NC
-- 11 37 | Munnen | Visar tänderna, ler, är sur, är öppen eller räcker ut tungan.
-- 32 50 | Ögonen | Båda öppna, en blinkar, stängda eller kryss.
-- 89 50 | Saker och detaljer | Glasögon, rosett, mask, plåster eller rufsigt hår.
+bildläge: guided
+textband: kompakt
+maxzoom: 3
+- m1 | Munnen | 11.04 | 23.3 | 9 | 8 | Visar tänderna (apa 01).
+- m2 | Munnen | 32.29 | 23.3 | 9 | 8 | Ler (apa 05).
+- m3 | Munnen | 42.92 | 23.3 | 9 | 8 | Sur (apa 09).
+- m4 | Munnen | 21.67 | 42.2 | 9 | 8 | Öppen (apa 14).
+- m5 | Munnen | 11.04 | 62.5 | 9 | 10 | Tungan ute (apa 17).
+- o1 | Ögonen | 11.04 | 18.1 | 9 | 6 | Båda öppna (apa 01).
+- o2 | Ögonen | 11.04 | 36.9 | 9 | 6 | Ett öga blinkar (apa 10).
+- o3 | Ögonen | 57.08 | 18.1 | 9 | 6 | Stängda (apa 04).
+- o4 | Ögonen | 67.71 | 18.1 | 9 | 6 | Kryss (apa 07).
+- s1 | Saker och detaljer | 88.96 | 38.7 | 10.5 | 18.5 | Glasögon (apa 25).
+- s2 | Saker och detaljer | 57.08 | 57.6 | 10.5 | 18.5 | Rosett (apa 30).
+- s3 | Saker och detaljer | 78.33 | 57.6 | 10.5 | 18.5 | Mask (apa 37).
+- s4 | Saker och detaljer | 57.08 | 76.5 | 10.5 | 18.5 | Plåster (apa 39).
+- s5 | Saker och detaljer | 78.33 | 38.7 | 10.5 | 18.5 | Rufsigt hår (apa 24).
 > Visa vad man kan titta på, men inte vilka egenskaper som spelar roll. Det ska eleverna komma fram till själva.
+> Sista klicket visar alla apor i färg igen. Diskutera egenskaperna innan ni går vidare.
 > Eleverna har samma apor som kort. Testaporna delas inte ut än.
 
 ---
 
-[reflektion]
+[bildregi]
 etikett: I par
 rubrik: Bygg ett beslutsträd som avgör om en apa bits
-tid: 15
-- Sortera korten i bits och bits inte
-- Leta efter frågor som skiljer grupperna åt
-- Rita trädet så att en annan grupp kan följa det
-> Tips till par som fastnar: vilken enda fråga delar korten så rent som möjligt? Börja där.
+text: Rita trädet så att en annan grupp kan följa det.
+bild: bilder/beslutstrad-apor/traningsdata.png
+alt: Tretton apor som bits till vänster och fjorton apor som inte bits till höger.
+bildläge: guided
+textband: kompakt
+maxzoom: 1.4
+- l1 | Ledtråd 1 | 27 | 48.1 | 43 | 76 | Finns det någon egenskap som bara finns hos apor som bits?
+- l2 | Ledtråd 2 | 27 | 57.6 | 43 | 57 | Titta på munnen. Vilken sorts mun finns bara bland apor som bits?
+- l3 | Ledtråd 3 | 73 | 57.6 | 43 | 57 | Titta på aporna som inte bits. Vad har många av dem på sig?
+- l4 | Ledtråd 4 | 50 | 19.8 | 92 | 20 | Jämför ögonen i översta raden. Vad skiljer apor som bits från apor som inte bits?
+- l5 | Ledtråd 5 | 50 | 47 | 96 | 86 | Spelar tungan eller håret någon roll? Leta efter dem i båda grupperna.
+> Låt den här bilden stå kvar medan paren bygger. Klicka fram en ledtråd i taget när många har fastnat.
+> Ledtråd 2: alla sex träningsapor med öppen mun bits. Ledtråd 3: glasögon, rosett, mask och plåster. Ledtråd 4: översta raden till vänster har öppna ögon, till höger stängda eller kryss.
 > Ett träd behöver inte vara perfekt på träningsdatan. Låt eleverna själva upptäcka hur svårt det är att få med alla.
 
 ---
@@ -128,7 +167,7 @@ rubrik: Hur många av de 13 testaporna fick trädet ni använde rätt?
 [träd]
 etikett: Ett möjligt träd
 rubrik: Ett träd som klarar alla apor
-text: Tre frågor räcker för både träningsdatan och testdatan.
+text: Tre frågor räcker för både träningsdatan och testdatan. Vi skickar några testapor genom trädet.
 slutsats: 27 av 27 träningsapor och 13 av 13 testapor. Men det finns fler träd som fungerar.
 - Öppen mun?
   - Ja: Bits
@@ -137,10 +176,13 @@ slutsats: 27 av 27 träningsapor och 13 av 13 testapor. Men det finns fler träd
     - Nej: Något öga öppet?
       - Ja: Bits
       - Nej: Bits inte
-- fokus: väg Ja | Öppen mun | Alla apor med öppen mun bits, vad de än har på sig.
-- fokus: väg Nej > Ja | Bär den något? | Glasögon, mask, rosett eller plåster. Då bits den inte.
-- fokus: väg Nej > Nej > Ja | Ögonen avgör | Minst ett öppet öga: bits. Stängda ögon eller kryss: bits inte.
-> Visa först efter facit, annars avslöjar trädet svaret.
+- fokus: väg Ja | Apa 13 | Öppen mun. Den bits. | bilder/beslutstrad-apor/kort-13.png
+- fokus: väg Nej > Ja | Apa 29 | Ingen öppen mun, men en mask. Den bits inte. | bilder/beslutstrad-apor/kort-29.png
+- fokus: väg Nej > Nej > Ja | Apa 06 | Inget på sig och ett öppet öga. Den bits. | bilder/beslutstrad-apor/kort-06.png
+- fokus: väg Nej > Nej > Nej | Apa 08 | Inget på sig och stängda ögon. Den bits inte. | bilder/beslutstrad-apor/kort-08.png
+- fokus: väg Nej > Ja | Apa 26 | Plåstret räknas som en sak. Den bits inte. | bilder/beslutstrad-apor/kort-26.png
+> Visa först efter att eleverna har testat sina egna träd och sett facit.
+> Fråga klassen före varje klick: vart går apan i trädet?
 > Trädet är samma som i AI Unplugged (Open mouth? Accessory? At least one eye open?). Plåstret räknas som en sak. Annars blir apa 26 fel.
 > Rufsigt hår och tungan spelar ingen roll. Den som byggde regler på dem har hittat mönster som bara råkar finnas i träningsdatan.
 

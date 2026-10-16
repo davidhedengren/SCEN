@@ -119,13 +119,16 @@ function normalizeTextDirection(sl) {
    varje fokusrad lyfter fram noder, kanter eller en väg, resten ligger kvar nedtonat.
    Rader i listan: "fokus: mål | rubrik | text". Geometrin ändras aldrig mellan klick. */
 const GT_MAX_FOCUS = 12;
+const GT_PIC = /\.(png|jpe?g|gif|webp|avif|svg)(\?\S*)?$/i;
 function gtFocusLines(items) {
   const out = [];
   lines(items).forEach(raw => {
     const m = String(raw).replace(/^(- )+/, '').match(/^fokus\s*:\s*(.*)$/i);
     if (!m || out.length >= GT_MAX_FOCUS) return;
     const p = m[1].split('|').map(x => x.trim());
-    out.push({ target: p[0] || '', head: p[1] || '', text: p.slice(2).join(' | ') });
+    /* Ett sista fält som är en bildfil blir fallets bild, t.ex. ett exempel som går genom ett beslutsträd. */
+    const pic = p.length > 2 && GT_PIC.test(p[p.length - 1]) ? p.pop() : '';
+    out.push({ target: p[0] || '', head: p[1] || '', text: p.slice(2).join(' | '), img: pic });
   });
   return out;
 }
@@ -178,9 +181,10 @@ function allocate(weights, total) {
   return base;
 }
 function gtAdd(map, id, j) { (map[id] = map[id] || new Set()).add(j); }
-function gtPanel(intro, focus, end, extra, x, y, w) {
-  const notes = focus.map((f, j) => `<div class="gt-note" data-dramaturgy-in="${j}">` +
-    (f.head ? `<p class="gt-head">${fmt(f.head)}</p>` : '') + (f.text ? `<p class="gt-text">${fmt(f.text)}</p>` : '') + (extra[j] || '') + `</div>`).join('');
+function gtPanel(intro, focus, end, extra, x, y, w, pics) {
+  pics = pics || {};
+  const notes = focus.map((f, j) => `<div class="gt-note${pics[j] ? ' gt-hascase' : ''}" data-dramaturgy-in="${j}"${pics[j] ? pics[j].attr : ''}>` +
+    (f.head ? `<p class="gt-head">${fmt(f.head)}</p>` : '') + (pics[j] ? pics[j].html : '') + (f.text ? `<p class="gt-text">${fmt(f.text)}</p>` : '') + (extra[j] || '') + `</div>`).join('');
   return `<div class="gt-pan" style="left:${x}px;top:${y}px;width:${w}px">` +
     (intro ? `<div class="gt-note gt-intro"><p class="gt-text">${fmt(intro)}</p></div>` : '') + notes +
     (end ? `<div class="gt-note gt-end"><p class="gt-text">${fmt(end)}</p></div>` : '') + `</div>`;
@@ -979,7 +983,7 @@ function renderSlide(sl, i, deck, img) {
           });
           way.forEach(n => gtAdd(inN, n.i, j));
           way.slice(1).forEach(n => gtAdd(inE, n.i, j));
-          if (way.length > 1) routes.push({ j, way });
+          if (way.length > 1) routes.push({ j, way, img: f.img });
         } else byLabel(t).forEach(n => { gtAdd(inN, n.i, j); if (n.parent) gtAdd(inE, n.i, j); });
       });
       const seg = n => { const [x1, y1] = P(n.parent), [x2, y2] = P(n), a = y1 + hb, b = y2 - hb, mid = (a + b) / 2; return { d: `M${x1.toFixed(1)} ${a.toFixed(1)} C${x1.toFixed(1)} ${mid.toFixed(1)} ${x2.toFixed(1)} ${mid.toFixed(1)} ${x2.toFixed(1)} ${b.toFixed(1)}`, m: [(x1 + x2) / 2, mid], len: Math.hypot(x2 - x1, b - a) }; };
@@ -994,13 +998,44 @@ function renderSlide(sl, i, deck, img) {
         r.way.slice(1).forEach((n, q) => { const s = seg(n); d += (q ? ' ' : '') + s.d; len += s.len; });
         return `<path class="gt-route" data-dramaturgy-in="${r.j}" d="${d}" pathLength="1" style="--dur:${Math.round(Math.max(900, Math.min(2800, 500 + len * 1.5)))}ms"/>`;
       }).join('');
+      /* Ett fall med bild vandrar längs vägen i takt med att linjen ritas: frågorna tänds när fallet
+         passerar, och lövet och svaret i sidokolumnen när det kommer fram. Fallet stannar strax ovanför lövet. */
+      const uid = 'u' + hash((sl.id || '') + i + L);
+      const pics = {};
+      let caseCss = '', caseHtml = '';
+      const easeInv = f => { let lo = 0, hi = 1; for (let q = 0; q < 30; q++) { const u = (lo + hi) / 2; (3 * u * u - 2 * u * u * u < f ? lo = u : hi = u); } const u = (lo + hi) / 2; return 3 * (1 - u) * (1 - u) * u * .45 + 3 * (1 - u) * u * u * .2 + u * u * u; };
+      routes.filter(r => r.img).forEach(r => {
+        const R = 46, segs = r.way.slice(1).map(n => { const [x1, y1] = P(n.parent), [x2, y2] = P(n), a = y1 + hb, b = y2 - hb, mid = (a + b) / 2;
+          const pts = []; for (let q = 0; q <= 16; q++) { const u = q / 16, w = 1 - u; pts.push([x1 * (w * w * w + 3 * w * w * u) + x2 * (3 * w * u * u + u * u * u), a * w * w * w + 3 * mid * w * w * u + 3 * mid * w * u * u + b * u * u * u]); }
+          return { n, pts }; });
+        let tot = 0; segs.forEach(sg => { sg.len = 0; sg.pts.slice(1).forEach((pt, q) => { sg.len += Math.hypot(pt[0] - sg.pts[q][0], pt[1] - sg.pts[q][1]); }); tot += sg.len; });
+        const dur = Math.round(Math.max(900, Math.min(2800, 500 + tot * 1.5))), stop = Math.max(0, tot - R - 12), keys = [], arrive = {};
+        let acc = 0;
+        segs.forEach((sg, q) => {
+          sg.pts.forEach((pt, k) => {
+            const sAt = acc + (k ? sg.pts.slice(1, k + 1).reduce((m, p2, z) => m + Math.hypot(p2[0] - sg.pts[z][0], p2[1] - sg.pts[z][1]), 0) : 0);
+            if (sAt <= stop || !keys.length) keys.push([pt[0], pt[1], easeInv(Math.min(1, sAt / (tot || 1)))]);
+          });
+          acc += sg.len;
+          if (q < segs.length - 1) arrive[sg.n.i] = Math.round(easeInv(Math.min(1, acc / (tot || 1))) * dur) + 150;
+        });
+        const last = keys[keys.length - 1], T = Math.max(1, Math.round(last[2] * dur)), leaf = r.way[r.way.length - 1];
+        arrive[leaf.i] = T + 150;
+        const kf = keys.map(([x, y, t], q) => `${Math.min(100, t * dur / T * 100 + q * .001).toFixed(3)}%{left:${Math.round(x)}px;top:${Math.round(y)}px}`).join('');
+        const pre = `.scen .slide.${uid}[data-dramaturgy-state="focus"][data-dramaturgy-focus="${r.j}"]`;
+        caseCss += `@keyframes cs${uid}${r.j}{${kf}}${pre} .tr-case.c${r.j}{opacity:1;animation:cs${uid}${r.j} ${T}ms linear 150ms both}` +
+          `${pre} .tr-node.n${r.way[0].i}{animation:tr-visit .35s ease 150ms both}` +
+          r.way.slice(1, -1).map(n => `${pre} .tr-node.n${n.i}{animation:tr-visit .35s ease ${arrive[n.i]}ms both}`).join('') +
+          `${pre} .tr-node.n${leaf.i}{animation:tr-arrive .6s ease ${arrive[leaf.i]}ms both}`;
+        caseHtml += `<img class="tr-case c${r.j}" src="${esc(img(r.img))}" alt="" aria-hidden="true" style="left:${Math.round(keys[0][0])}px;top:${Math.round(keys[0][1])}px">`;
+        pics[r.j] = { html: `<img class="gt-case" src="${esc(img(r.img))}" alt="">`, attr: ` style="--arr:${arrive[leaf.i]}ms"` };
+      });
       const nodes = T2.all.map(n => {
         const [x, y] = P(n), kind = n.kids.length ? (n.parent ? 'tr-inner' : 'tr-root') : 'tr-leaf';
         return `<span class="tr-node ${kind}${round ? ' tr-round' : ''} n${n.i}"${gtIn(inN[n.i])} style="left:${Math.round(x)}px;top:${Math.round(y)}px;--ts:${fs}px;max-width:${Math.round(Math.max(120, slotW - 18))}px">${fmt(n.label)}</span>`;
       }).join('');
       /* Ordningen visas i bild: en ring glider från nod till nod, och varje nod tänds när ringen kommer
          och får sitt nummer. Numren står kvar när helheten visas. */
-      const uid = 'u' + hash((sl.id || '') + i + L);
       let ordCss = '', ordSvg = '', ordHtml = '';
       orders.forEach(({ j, seq, noLine }) => {
         const hop = seq.length > 10 ? 360 : 460, pts = seq.map(P), dur = Math.max(1, seq.length - 1) * hop, rr = hb + 6, pre = `.${uid}[data-dramaturgy-focus="${j}"]`;
@@ -1022,10 +1057,10 @@ function renderSlide(sl, i, deck, img) {
         focus.forEach((f, j) => { const s = st('none'); cues += `<span data-dramaturgy-cue data-dramaturgy-focus="${k}" data-dramaturgy-target="${j}"${s} aria-hidden="true"></span>`; });
         cues += `<span data-dramaturgy-restore${st('none')} aria-hidden="true"></span>`;
       }
-      body = (ordCss ? `<style>${ordCss}</style>` : '') + (sl.caption ? `<p class="kicker"${A('fade')}>${fmt(sl.caption)}</p>` : '') + H2('', 'mask') +
-        `<div class="gt-stage"${A(anim(ba, 'fade'), 150)}><svg class="gt-svg" viewBox="0 0 1920 1080" aria-hidden="true">${edges}${route}</svg>${elabs}${nodes}${ordHtml}</div>` +
-        (hasPan ? gtPanel(sl.text, focus, sl.conclusion, extra, 144, 320, 540) : '') + cues;
-      cls = (orders.length ? uid : '') + (plain(title).length > 44 ? ' gt-long' : '');
+      body = (ordCss || caseCss ? `<style>${ordCss}${caseCss}</style>` : '') + (sl.caption ? `<p class="kicker"${A('fade')}>${fmt(sl.caption)}</p>` : '') + H2('', 'mask') +
+        `<div class="gt-stage"${A(anim(ba, 'fade'), 150)}><svg class="gt-svg" viewBox="0 0 1920 1080" aria-hidden="true">${edges}${route}</svg>${caseHtml}${elabs}${nodes}${ordHtml}</div>` +
+        (hasPan ? gtPanel(sl.text, focus, sl.conclusion, extra, 144, 320, 540, pics) : '') + cues;
+      cls = (orders.length || caseCss ? uid : '') + (plain(title).length > 44 ? ' gt-long' : '');
       attrs += ` data-dramaturgy="focus-restore" data-dramaturgy-state="${steps ? 'overview' : 'restored'}"${steps ? '' : ' data-dramaturgy-static="true"'}`;
       break;
     }

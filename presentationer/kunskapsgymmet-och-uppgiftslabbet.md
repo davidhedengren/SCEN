@@ -15,7 +15,7 @@ bildläge: vandring
 beskärning: cover
 övergång: tona
 rubrikrörelse: ingen
-- steg1 | Öppna lärarens pass | 50.0 | 40.64 | 73.5 | 13.56 | Uppdraget finns på startsidan. Här heter det Inför Prov v.48.
+- steg1 | Lärarens pass ligger på startsidan | 50.0 | 40.64 | 73.5 | 13.56 | Uppdraget finns på startsidan. Här heter det Inför Prov v.48.
 - steg2 | Eller välj egen träning | 50 | 70 | 74 | 28 | Kurserna ligger längre ned på samma sida.
 > 15 sekunder. Visa hela startsidan innan du klickar. Vi följer ett exempel i fysik, men visar också de andra kurserna. Allt är verkliga gränssnitt från lokala kopior med fiktiva konton och resultat. Filmerna visar riktiga musklick och drag i dessa kopior. Högerpil flyttar kameran. Efter sista markeringen går nästa klick direkt till den nya vyn. N visar anteckningar. P öppnar talarvyn.
 
@@ -125,154 +125,186 @@ rubrikrörelse: ingen
 
 [bildregi]
 etikett: KUNSKAPSGYMMET
-rubrik: Hitta genomgångarna på kurssidan
+rubrik: Öppna kapitlet Rörelse
 text:
-bild: bilder/verktygspresentation/vandring/kg-genomgang-knapp.png
-alt: Hela webbläsarvyn: Hitta genomgångarna på kurssidan.
+bild: bilder/verktygspresentation/vandring/kg-st-kapitel.png
+alt: Hela webbläsarvyn: Öppna kapitlet Rörelse.
 bildläge: vandring
 återställ: nej
 beskärning: cover
 övergång: tona
 rubrikrörelse: ingen
-- steg1 | Klicka på Det här behöver du kunna | 54.37 | 76.89 | 15.06 | 5.11 | Under det öppna kapitlet finns korta genomgångar av metoderna.
-> 5 sekunder. Markera knappen och låt publiken hitta den i hela sidvyn. Nästa scen visar resultatet av klicket.
+- steg1 | Klicka på Rörelse | 40.31 | 50.0 | 54.12 | 7.1 | Här finns området s–t-diagram och kapitlets genomgångar.
+> 5 sekunder. Markera knappen. Nästa klick går direkt till resultatet av klicket.
 
 ---
 
 [bildregi]
 etikett: KUNSKAPSGYMMET
-rubrik: Läs en genomgång innan du tränar
-text: Varje genomgång visar en typuppgift och hur den löses.
-bild: bilder/verktygspresentation/vandring/kg-genomgang.png
-alt: Hela webbläsarvyn: Läs en genomgång innan du tränar.
-bildläge: vandring
-återställ: nej
-beskärning: cover
-övergång: tona
-rubrikrörelse: ingen
-- steg1 | Börja med typuppgiften | 50 | 39 | 40 | 24 | Här ska 72 km/h omvandlas till m/s.
-- steg2 | Följ lösningen steg för steg | 50 | 66 | 40 | 43 | Förklaringar, beräkningar och slutsvar finns samlade.
-- steg3 | Återgå till kurssidan | 68.5 | 11.89 | 3.38 | 6.0 | Stäng genomgången när du vill fortsätta träna.
-> 15 sekunder. Knappen Det här behöver du kunna finns vid kapitlet på kurssidan. Här visas den första genomgången i Fysikens grunder. Pilarna i dialogen bläddrar mellan metoderna. Eleven kan läsa före träningen eller återvända när något är svårt.
-
----
-
-[bildregi]
-etikett: KUNSKAPSGYMMET
-rubrik: Tillbaka till startsidan
+rubrik: Hitta genomgångarna i Rörelse
 text:
-bild: bilder/verktygspresentation/vandring/kg-till-start.png
-alt: Hela webbläsarvyn: Tillbaka till startsidan.
+bild: bilder/verktygspresentation/vandring/kg-st-genomgang-knapp.png
+alt: Hela webbläsarvyn: Hitta genomgångarna i Rörelse.
 bildläge: vandring
 återställ: nej
 beskärning: cover
 övergång: tona
 rubrikrörelse: ingen
-- steg1 | Klicka på Kunskapsgymmet | 19.31 | 3.78 | 12.12 | 5.11 | Logotypen tar dig till startsidan.
-> 5 sekunder. Markera knappen och låt publiken hitta den i hela sidvyn. Nästa scen visar resultatet av klicket.
+- steg1 | Klicka på Det här behöver du kunna | 54.57 | 50.0 | 14.66 | 5.11 | Genomgångarna ligger vid kapitlets rubrik.
+> 5 sekunder. Markera knappen. Nästa klick går direkt till resultatet av klicket.
 
 ---
 
 [bildregi]
 etikett: KUNSKAPSGYMMET
-rubrik: Starta Inför Prov v.48
+rubrik: Välj genomgången om s–t-diagram
 text:
-bild: bilder/verktygspresentation/vandring/kg-starta-pass.png
-alt: Hela webbläsarvyn: Starta Inför Prov v.48.
+bild: bilder/verktygspresentation/vandring/kg-st-bladdra.png
+alt: Hela webbläsarvyn: Välj genomgången om s–t-diagram.
 bildläge: vandring
 återställ: nej
 beskärning: cover
 övergång: tona
 rubrikrörelse: ingen
-- steg1 | Klicka på Börja | 82.23 | 42.31 | 6.67 | 6.22 | Lärarens pass tränar de områden som är valda inför provet.
-> 5 sekunder. Markera knappen och låt publiken hitta den i hela sidvyn. Nästa scen visar resultatet av klicket.
+- steg1 | Bläddra med pilen till s–t-diagram | 68.56 | 17.67 | 3.25 | 5.78 | Vi går till Läs ett läge–tid-diagram, nummer 5 av 6.
+> 5 sekunder. Vi har öppnat Rörelse från kurssidan. Pilen Nästa genomgång används fyra gånger för att nå den femte genomgången. Nästa scen visar den genomgången, utan någon återgång till kurssidan.
 
 ---
 
 [bildregi]
 etikett: KUNSKAPSGYMMET
-rubrik: Så arbetar eleven med en uppgift
-text: Läs, lös på papper och skriv sedan svaret.
-bild: bilder/verktygspresentation/vandring/kg-uppgift.png
-alt: Hela webbläsarvyn: Så arbetar eleven med en uppgift.
+rubrik: Lär dig läsa ett s–t-diagram
+text: Genomgången visar sambandet mellan grafens lutning och hastigheten.
+bild: bilder/verktygspresentation/vandring/kg-st-genomgang.png
+alt: Hela webbläsarvyn: Lär dig läsa ett s–t-diagram.
 bildläge: vandring
 återställ: nej
 beskärning: cover
 övergång: tona
 rubrikrörelse: ingen
-- steg1 | Läs frågan | 50.0 | 47.42 | 56.0 | 63.5 | En person landar efter ett fall. Hur stor kraft utövar golvet?
-- steg2 | Klicka på Visa ledtråd | 34.63 | 73.72 | 8.1 | 6.22 | Ta hjälp med hur du kan börja, innan du tittar på lösningen.
-> 20 sekunder. Ge publiken en kort stund att orientera sig. Svaret är cirka 32 200 N. Stödet finns kvar runt samma uppgift; eleven behöver inte lämna sidan. Vi visar först ledtråden och därefter svarskontrollen.
+- steg1 | Lutningen visar hastigheten | 50.0 | 31.23 | 40.38 | 6.91 | Läget visar var föremålet är. Lutningen visar hur snabbt läget ändras.
+- steg2 | Läs av två punkter på linjen | 50.0 | 63.39 | 40.38 | 39.84 | Vagnen går från 0 till 8 meter på 4 sekunder.
+> 25 sekunder. Den befintliga genomgången heter Läs ett läge–tid-diagram. I dess typuppgift är hastigheten (8−0)/(4−0)=2 m/s. Visa först hela dialogen, sedan principen och diagrammet. Vi scrollar därefter ned i samma dialog för att läsa lösningen.
 
 ---
 
 [bildregi]
 etikett: KUNSKAPSGYMMET
-rubrik: En ledtråd som hjälper eleven vidare
-text: Stödet öppnas vid uppgiften, på samma sida.
-bild: bilder/verktygspresentation/vandring/kg-ledtrad.png
-alt: Hela webbläsarvyn: En ledtråd som hjälper eleven vidare.
+rubrik: Från genomgång till egen träning
+text: Förklaringen och beräkningen finns i samma genomgång.
+bild: bilder/verktygspresentation/vandring/kg-st-genomgang-losning.png
+alt: Hela webbläsarvyn: Från genomgång till egen träning.
 bildläge: vandring
 återställ: nej
 beskärning: cover
 övergång: tona
 rubrikrörelse: ingen
-- steg1 | Dela upp problemet i tre steg | 50.0 | 76.64 | 53.37 | 12.05 | Beräkna farten före kontakten, sedan retardationen och till sist kraften.
-- steg2 | Räkna och skriv ditt svar i N | 50.0 | 62.11 | 53.37 | 7.22 | Omvandla fallhöjden och stoppsträckan till meter.
-- steg3 | Klicka på Kontrollera | 27.19 | 85.55 | 7.76 | 6.22 | Nu prövar vi svaret 32200.
-> 20 sekunder. Ledtråden ger en arbetsordning: fart före kontakten, retardation under stoppet och kontaktkraften m(g + b). Eleven får själv omvandla längderna och genomföra beräkningarna. Ledtråden visas med appens riktiga knapp.
+- steg1 | Följ beräkningen steg för steg | 50.0 | 56.39 | 38.38 | 23.48 | Lägesändring delad med tid ger 8 / 4 = 2 m/s.
+- steg2 | Ta med dig hur grafen ska tolkas | 50.0 | 79.54 | 40.38 | 9.84 | En vågrät linje betyder att föremålet står stilla.
+- steg3 | Klicka på Träna det här | 65.9 | 88.01 | 8.57 | 6.22 | Öppna en uppgift som tränar samma metod direkt från genomgången.
+> 25 sekunder. Knappen Träna det här startar träning i familjen Hastighet ur s-t-diagram. Nu får eleven använda samma metod på en annan graf. Vår riktiga bankuppgift har ett startläge som inte är noll. Vi tränar här direkt från genomgången; senare skapar läraren det separata passet Inför Prov v.48.
 
 ---
 
 [bildregi]
 etikett: KUNSKAPSGYMMET
-rubrik: Kontrollera svaret – se vad som händer
-text: Nästa klick spelar en kort inspelning från uppgiften.
-bild: bilder/verktygspresentation/vandring/kg-svara-xp.png
-alt: Hela webbläsarvyn: Kontrollera svaret – se vad som händer.
+rubrik: Använd metoden på en ny graf
+text: Läs diagrammet och bestäm hastigheten i m/s.
+bild: bilder/verktygspresentation/vandring/kg-st-uppgift.png
+alt: Hela webbläsarvyn: Använd metoden på en ny graf.
 bildläge: vandring
 återställ: nej
 beskärning: cover
 övergång: tona
 rubrikrörelse: ingen
-film: bilder/verktygspresentation/vandring/kg-svara-xp.mp4
+- steg1 | Läget börjar vid 4 meter | 50.0 | 48.25 | 30.38 | 31.78 | Linjen slutar vid 25 meter efter 6 sekunder.
+> 20 sekunder. Visa den faktiska uppgiften 3.242. Grafens vertikala axel kallar läget x. Det är samma typ av läge–tid-diagram som i genomgången. Ge publiken en kort stund att läsa av axlarna. Vi löser på papper och skriver sedan endast svaret i appen.
+
+---
+
+[bildregi]
+etikett: KUNSKAPSGYMMET
+rubrik: Ta stöd när du behöver komma vidare
+text:
+bild: bilder/verktygspresentation/vandring/kg-st-ledtrad-knapp.png
+alt: Hela webbläsarvyn: Ta stöd när du behöver komma vidare.
+bildläge: vandring
+återställ: nej
+beskärning: cover
+övergång: tona
+rubrikrörelse: ingen
+- steg1 | Klicka på Visa ledtråd | 34.63 | 88.78 | 8.1 | 6.22 | Stödet öppnas vid samma uppgift, efter en liten scroll.
+> 5 sekunder. Markera knappen. Nästa klick går direkt till resultatet av klicket.
+
+---
+
+[bildregi]
+etikett: KUNSKAPSGYMMET
+rubrik: En ledtråd som pekar ut det viktiga
+text: Startläget är inte noll – räkna med förändringen i läge.
+bild: bilder/verktygspresentation/vandring/kg-st-ledtrad.png
+alt: Hela webbläsarvyn: En ledtråd som pekar ut det viktiga.
+bildläge: vandring
+återställ: nej
+beskärning: cover
+övergång: tona
+rubrikrörelse: ingen
+- steg1 | Räkna bort startläget | 50.0 | 79.81 | 53.37 | 12.05 | Beräkna hur många meter läget har ändrats under tidsintervallet.
+- steg2 | Skriv hastigheten i m/s | 50.0 | 65.28 | 53.37 | 7.22 | Här blir lägesändringen 25 − 4 = 21 meter på 6 sekunder.
+- steg3 | Klicka på Kontrollera | 27.19 | 88.72 | 7.76 | 6.22 | Vi prövar svaret 3,5 m/s.
+> 25 sekunder. Appens befintliga ledtråd säger att startläget inte är noll och att förändringen i läge ska användas. Knyt det till genomgångens lutning: v=Δx/Δt=(25−4)/(6−0). Ledtråden ger en väg framåt utan att visa slutsvaret. Eleven räknar och skriver 3,5 i svarsfältet.
+
+---
+
+[bildregi]
+etikett: KUNSKAPSGYMMET
+rubrik: Kontrollera hastigheten och få återkoppling
+text: Nästa klick visar den faktiska svarskontrollen.
+bild: bilder/verktygspresentation/vandring/kg-st-svara-xp.png
+alt: Hela webbläsarvyn: Kontrollera hastigheten och få återkoppling.
+bildläge: vandring
+återställ: nej
+beskärning: cover
+övergång: tona
+rubrikrörelse: ingen
+film: bilder/verktygspresentation/vandring/kg-st-svara-xp.mp4
 filmsteg: spela
-- spela | Klicka på Kontrollera | 50 | 42 | 65 | 84 | Svaret blir grönt och XP-mätaren ökar.
-> 10 sekunder. Klicka och låt filmen spela färdigt, ungefär fem sekunder. Eleven har skrivit 32200 och klickar på Kontrollera. Inspelningen visar den faktiska svarskontrollen och XP-animationen. Nästa scen stannar vid resultatet.
+- spela | Klicka på Kontrollera | 50 | 50 | 76 | 90 | Svaret blir grönt och eleven får XP.
+> 10 sekunder. Låt den ungefär fyra sekunder långa filmen spela klart. Eleven har skrivit 3,5. Inspelningen visar appens riktiga kontroll av uppgiften och XP-animationen; ingen återkoppling är ditlagd i bilden. Eleven använde ledtråden och får i detta exempel 4 XP.
 
 ---
 
 [bildregi]
 etikett: KUNSKAPSGYMMET
 rubrik: Stanna vid återkopplingen
-text: Rätt svar ger XP. Här visas både resultatet och mätaren.
-bild: bilder/verktygspresentation/vandring/kg-ratt.png
+text: Rätt svar ger XP även när eleven har använt en ledtråd.
+bild: bilder/verktygspresentation/vandring/kg-st-ratt.png
 alt: Hela webbläsarvyn: Stanna vid återkopplingen.
 bildläge: vandring
 återställ: nej
 beskärning: cover
 övergång: tona
 rubrikrörelse: ingen
-- steg1 | Rätt svar ger XP | 50.0 | 93.0 | 53.37 | 9.11 | Belöningen för just detta svar visas bredvid återkopplingen.
-- steg2 | Mätaren går framåt | 39.6 | 4.4 | 26 | 7.5 | XP ökar även när eleven har använt en ledtråd.
-- steg3 | Klicka på Visa lösning | 36.75 | 85.55 | 8.14 | 6.22 | Efter försöket jämför eleven med den fullständiga lösningen.
-> 15 sekunder. Flytta först fokus till rättmarkeringen, sedan hela vägen upp till XP-mätaren. Det är denna förflyttning som hjälper publiken att förstå var olika saker händer. XP-beloppet varierar mellan uppgifter och situationer; här användes en ledtråd före svaret. XP är inte ett betyg.
+- steg1 | Rätt svar ger +4 XP i exemplet | 50.0 | 87.28 | 53.37 | 9.11 | Här syns både rättmarkeringen och belöningen.
+- steg2 | XP-mätaren går framåt | 42.33 | 4.28 | 31.25 | 7.22 | Elevens totala XP ökar från 560 till 564.
+- steg3 | Klicka på Visa lösning | 36.75 | 79.83 | 8.14 | 6.22 | Jämför sedan beräkningen med den fullständiga lösningen.
+> 15 sekunder. Flytta fokus från återkopplingen till mätaren och därefter tillbaka till knappen Visa lösning. Belöningen varierar med uppgiften och användningen av stöd. XP är inte ett betyg.
 
 ---
 
 [bildregi]
 etikett: KUNSKAPSGYMMET
-rubrik: Gå igenom lösningen vid behov
-text: Visa lösning ligger vid samma uppgift.
-bild: bilder/verktygspresentation/vandring/kg-losning.png
-alt: Hela webbläsarvyn: Gå igenom lösningen vid behov.
+rubrik: Jämför med hela lösningen
+text: Lösningen visar varför startläget ska räknas bort.
+bild: bilder/verktygspresentation/vandring/kg-st-losning.png
+alt: Hela webbläsarvyn: Jämför med hela lösningen.
 bildläge: vandring
 återställ: nej
 beskärning: cover
 övergång: tona
 rubrikrörelse: ingen
-- steg1 | Följ hela beräkningen | 50.0 | 84.11 | 53.37 | 31.78 | Omvandla längderna, räkna på fallet och stoppet, och använd F − mg = mb.
-> 10 sekunder. Vi visar lösningen efter elevens försök. Lösningen omvandlar 60,0 cm till 0,600 m och 1,5 cm till 0,015 m. Sedan beräknas v² = 2gh och retardationen b = v²/(2s). Golvets kraft måste både motverka tyngdkraften och bromsa personen: F − mg = mb. Slutligen blir F = 80,0(9,82 + 392,8) ≈ 32 200 N med tre värdesiffror. Jämför alla led med elevens egen lösning.
+- steg1 | Räkna förändring i läge per sekund | 50.0 | 76.33 | 53.37 | 31.0 | (25 − 4) / (6 − 0) = 3,5 m/s.
+> 20 sekunder. Lösningen är bankens befintliga fullständiga lösning. Föremålet börjar vid 4 m och slutar vid 25 m. Förflyttningen är därför 21 m, inte 25 m. Under 6 s ger det v=21/6=3,5 m/s. Den sista förklaringen visar varför 25/6 blir fel: startläget räknas då som en förflyttning. Knyt tillbaka till genomgången: samma lutningsmetod, men en ny graf.
 
 ---
 
@@ -280,7 +312,7 @@ rubrikrörelse: ingen
 etikett: KUNSKAPSGYMMET
 rubrik: Lämna uppgiften och gå till kursen
 text:
-bild: bilder/verktygspresentation/vandring/kg-avsluta.png
+bild: bilder/verktygspresentation/vandring/kg-st-avsluta.png
 alt: Hela webbläsarvyn: Lämna uppgiften och gå till kursen.
 bildläge: vandring
 återställ: nej
@@ -288,7 +320,7 @@ beskärning: cover
 övergång: tona
 rubrikrörelse: ingen
 - steg1 | Klicka på Avsluta | 24.48 | 4.28 | 4.96 | 4.89 | Du återgår till kurssidan, där sidhuvudets meny finns.
-> 5 sekunder. Markera knappen och låt publiken hitta den i hela sidvyn. Nästa scen visar resultatet av klicket.
+> 5 sekunder. Markera knappen. Nästa klick går direkt till resultatet av klicket.
 
 ---
 
@@ -296,7 +328,7 @@ rubrikrörelse: ingen
 etikett: KUNSKAPSGYMMET
 rubrik: Hitta topplistan i sidhuvudet
 text:
-bild: bilder/verktygspresentation/vandring/kg-till-topplista.png
+bild: bilder/verktygspresentation/vandring/kg-st-till-topplista.png
 alt: Hela webbläsarvyn: Hitta topplistan i sidhuvudet.
 bildläge: vandring
 återställ: nej
@@ -304,7 +336,7 @@ beskärning: cover
 övergång: tona
 rubrikrörelse: ingen
 - steg1 | Klicka på Topplistan | 77.14 | 3.78 | 7.96 | 5.11 | Knappen finns högst upp på sidan.
-> 5 sekunder. Markera knappen och låt publiken hitta den i hela sidvyn. Nästa scen visar resultatet av klicket.
+> 5 sekunder. Markera knappen. Nästa klick går direkt till resultatet av klicket.
 
 ---
 

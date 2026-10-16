@@ -1,10 +1,10 @@
 # Så använder du Kunskapsgymmet och Uppgiftslabbet
 
-En praktisk rundtur för lärarkollegor: **66 scener, 172 visningslägen och cirka 12–15 minuter**, plus frågor. Presentationen börjar med hela webbläsarvyer. Kameran zoomar sedan mot en inramad del medan resten tonas ned. Efter sista fokussteget går nästa klick direkt till nästa vy, utan en extra återgång till helbild.
+En praktisk rundtur för lärarkollegor: **68 scener, 176 visningslägen och cirka 12–15 minuter**, plus frågor. Presentationen börjar med hela webbläsarvyer. Kameran zoomar sedan mot en inramad del medan resten tonas ned. Efter sista fokussteget går nästa klick direkt till nästa vy, utan en extra återgång till helbild.
 
 ## Visa eller redigera
 
-- [Fristående HTML](../../dist/kunskapsgymmet-och-uppgiftslabbet.html): cirka 37 MiB, med inbäddade bilder, tre filmer, spelare och typsnitt.
+- [Fristående HTML](../../dist/kunskapsgymmet-och-uppgiftslabbet.html): cirka 36,5 MiB, med inbäddade bilder, tre filmer, spelare och typsnitt.
 - [SCEN-manus](../../presentationer/kunskapsgymmet-och-uppgiftslabbet.md): innehåll, fokusområden och talaranteckningar.
 - I SCEN-biblioteket: **Kollegial utveckling → Så använder du Kunskapsgymmet och Uppgiftslabbet**.
 - Både den vanliga webbappen och den inbakade appen `scen.html` är uppdaterade.
@@ -15,21 +15,25 @@ Högerpil går framåt ett klick i taget. Vänsterpil går tillbaka. **N** visar
 
 | Scener | Visar |
 | --- | --- |
-| 1–11 | Kurser, tränarens fullständiga text, passval, uppdragsbok, genomgångar och start av lärarpass |
-| 12–20 | Uppgift, ledtråd, svarskontroll, XP, fullständig lösning samt elev- och klasstopplista |
-| 21–27 | Matematikpass, miniräknare, riktigt formelblad och en kort publikfråga |
-| 28–40 | Min undervisning, Inför Prov v.48, val av en/flera/hela gruppen, omfattning, innehåll och delning |
-| 41–52 | Passresultat, individuell elevstatistik med svagare/starkare områden och gruppens områdesstatistik |
-| 53–59 | Uppgiftslabbet: kurs och område, fyra drag, Redigera och dokumentlayout |
-| 60–66 | Uppgiftsredigering, delning, biblioteket och avslutning |
+| 1–12 | Kurser, tränarens hela text, uppdragsbok och genomgången om s–t-diagram, med direkt väg till träning |
+| 13–22 | Ny graf, ledtråd om startläge, svarskontroll, XP, fullständig lösning samt elev- och klasstopplista |
+| 23–29 | Matematikpass, miniräknare, riktigt formelblad och en kort publikfråga |
+| 30–42 | Min undervisning, Inför Prov v.48, val av en/flera/hela gruppen, omfattning, innehåll och delning |
+| 43–54 | Passresultat, individuell elevstatistik med svagare/starkare områden och gruppens områdesstatistik |
+| 55–61 | Uppgiftslabbet: kurs och område, fyra drag, Redigera och dokumentlayout |
+| 62–68 | Uppgiftsredigering, delning, biblioteket och avslutning |
 
-De tre inspelningarna visar faktisk svarskontroll med XP-animation (cirka fem sekunder), fyra separata drag till ett övningsblad (cirka tolv sekunder) och knappen Redigera som öppnar dokumentet (cirka tre sekunder). De är ljudlösa och startar på presentatörens klick.
+De tre inspelningarna visar faktisk svarskontroll med XP-animation (cirka fyra sekunder), fyra separata drag till ett övningsblad (cirka tolv sekunder) och knappen Redigera som öppnar dokumentet (cirka tre sekunder). De är ljudlösa och startar på presentatörens klick.
 
 Varje byte av meny eller vy föregås av en markering av knappen i den föregående sidan. Även återvägar som Klar och Avbryt visas. Uppdragsbokens stängningssteg är borttaget enligt önskemål. Byte från elev till lärarkonto och från Kunskapsgymmet till Uppgiftslabbet anges uttryckligen.
 
 Lärarpasset heter **Inför Prov v.48** och har datum 27 november 2026. Övningsbladet i Uppgiftslabbet heter fortfarande **Energi i vardagen**. Den personliga tränaren förklaras på scenerna och i talaranteckningarna: rekommenderat pass, valda kapitel och alternativen i Byt pass.
 
-Elevexemplet är den befintliga uppgiften **5.488b**. Ledtråden ger arbetsordningen fart före kontakten → retardation → kontaktkraft. Lösningen visar omvandling från centimeter till meter, beräkningarna och kraftbalansen, med slutsvaret cirka 32 200 N. Uppgiftsbanken ändras inte. Eleven använder ledtråden före svarskontrollen; inspelningen visar appens faktiska belöning **+12 XP** (halverat för ledtråd, med arbetsinsats inräknad).
+Elevexemplet är den befintliga uppgiften **3.242**, ett s–t-diagram där läget ökar från 4 m till 25 m under 6 s. Hastigheten är `(25 − 4) / (6 − 0) = 3,5 m/s`. Den befintliga ledtråden uppmärksammar att startläget inte är noll. Den fullständiga lösningen visar beräkningen och förklarar varför slutläget 25 m inte ska delas direkt med tiden.
+
+Genomgången är **Läs ett läge–tid-diagram**, den femte av sex genomgångar i Rörelse (`fy1-grund-3-07`). Kameran följer knapparna Rörelse → Det här behöver du kunna → Nästa genomgång, sedan typuppgift, stegvis lösning och **Träna det här**. Den riktiga knappen startar övning inom samma träningsfamilj, och uppgift 3.242 väljs deterministiskt i demonstrationen. Därmed hänger genomgång, uppgift, ledtråd och lösning ihop. Lärarens separat skapade pass Inför Prov v.48 visas senare i presentationen.
+
+Inget uppgifts- eller genomgångsinnehåll ersätts i appen. Fångsten använder bankens befintliga text, diagram, ledtråd och lösning. Eleven använder ledtråden före kontrollen; inspelningen visar appens faktiska belöning **+4 XP**, med total XP från 560 till 564. Topplistebilderna har tagits om med samma XP-läge.
 
 ## Bilder och demonstrationsdata
 
@@ -39,7 +43,7 @@ Källor den 15–16 oktober 2026:
 
 | Repository | Git HEAD vid fotograferingen |
 | --- | --- |
-| Kunskapsgymmet | `6f702503637fc3af68d24ff6b1e350eb6f2a6dbb` samt den lokala ändringen för träningspassens elevval |
+| Kunskapsgymmet | `6f702503637fc3af68d24ff6b1e350eb6f2a6dbb` samt den lokala ändringen för träningspassens elevval; s–t-momentet fotograferat från `59194db` |
 | Uppgiftslabbet | `859b53892c5bb0cd5e94418701be38aa247ea85a` |
 
 Gränssnitten är verkliga lokala kopior. Konton, grupper, pass, topplistor och resultat är fiktiva demonstrationer. Inga riktiga elevuppgifter hämtas och inga inbjudningar skickas. Skärmbildsskripten serverar apparnas publika adresser från lokala kopior, blockerar Supabase och ersätter tjänsteanrop med lokala svar. Svarskontroll, XP-animation, dragning och öppning av dokumentet körs däremot av apparnas egna funktioner. Pekarmarkören i filmerna är ett presentationshjälpmedel ovanpå den verkliga pekarrörelsen.
@@ -73,13 +77,14 @@ ln -sf /usr/bin/ffmpeg /workspace/.onboarding/playwright/ffmpeg-1011/ffmpeg-linu
 PLAYWRIGHT_BROWSERS_PATH=/workspace/.onboarding/playwright PYTHONDONTWRITEBYTECODE=1 python3 scripts/verktygspresentation/capture-tour.py
 PYTHONDONTWRITEBYTECODE=1 python3 scripts/verktygspresentation/capture-support.py
 PYTHONDONTWRITEBYTECODE=1 python3 scripts/verktygspresentation/capture-recipients.py
+PLAYWRIGHT_BROWSERS_PATH=/workspace/.onboarding/playwright PYTHONDONTWRITEBYTECODE=1 python3 scripts/verktygspresentation/capture-st-example.py
 ```
 
 Det skriver över underlaget i `bilder/verktygspresentation/vandring/`. `regions.json` innehåller uppmätta komponentpositioner som stöd för redigering av manuset. Uppdatera manusets målområden om appens layout ändras. Skriptet är anpassat för denna molnmiljös sökvägar och Playwright-version. Bibliotek och typsnitt hämtas från `cdn.jsdelivr.net` och cachas under `/workspace/.onboarding/cache`.
 
 ## Verifiering
 
-Samtliga 66 scener och 172 visningslägen är kontrollerade i SCEN vid 1920 × 1080: bilder laddas, filmer spelas till slutet, ramar håller sig på skärmen, direktövergången från sista fokus till nästa vy fungerar och inga JavaScript-fel eller externa nätverksanrop registreras. Dessutom kontrolleras kamera och filmer i Djup och Klassrum vid 1280 × 720, med reducerad rörelse, bakåtsteg, statiskt läge och byte av scen.
+Samtliga 68 scener och 176 visningslägen är kontrollerade i SCEN vid 1920 × 1080: bilder laddas, filmer spelas till slutet, ramar håller sig på skärmen, direktövergången från sista fokus till nästa vy fungerar och inga JavaScript-fel eller externa nätverksanrop registreras. Dessutom kontrolleras kamera och filmer i Djup och Klassrum vid 1280 × 720, med reducerad rörelse, bakåtsteg, statiskt läge och byte av scen.
 
 ```sh
 PYTHONDONTWRITEBYTECODE=1 python3 scripts/verktygspresentation/review.py

@@ -25,7 +25,12 @@ Principen används efter scenens kommunikativa behov. Cinematic hero har exempel
 
 `bildläge: vandring` kombinerar en mjuk kamera med en rektangulär fokusram.
 Bilden är kvar i sin helhet; området utanför ramen tonas ned. Varje detaljrad
-flyttar kameran och ramen tillsammans. Ett sista klick återställer helbilden.
+flyttar kameran och ramen tillsammans. Som standard återställer ett sista klick helbilden.
+Med `återställ: nej` följs sista detaljen direkt av nästa scen. Det passar till
+exempel när en markerad knapp ska följas av den meny som knappen öppnar.
+Bakåt från nästa scen återvänder då till den sista markerade detaljen.
+Inställningen finns även som kryssruta i redigeraren och gäller också detaljresa
+och spotlight. Utelämnad inställning eller `återställ: ja` behåller återgången.
 Förklaringen ligger i ett separat band och flyttas upp när fokus ligger längst ned.
 
 Det är samma återanvändbara Bildregi-layout, med ett nytt kameraläge. Det passar

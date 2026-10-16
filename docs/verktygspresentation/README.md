@@ -1,10 +1,10 @@
 # Så använder du Kunskapsgymmet och Uppgiftslabbet
 
-En praktisk rundtur för lärarkollegor: **48 scener, 171 visningslägen och cirka 15 minuter**, plus frågor. Presentationen börjar med hela webbläsarvyer. Kameran zoomar sedan mot en inramad del medan resten tonas ned. Sista klicket i varje vandringsscen återställer helheten.
+En praktisk rundtur för lärarkollegor: **66 scener, 172 visningslägen och cirka 12–15 minuter**, plus frågor. Presentationen börjar med hela webbläsarvyer. Kameran zoomar sedan mot en inramad del medan resten tonas ned. Efter sista fokussteget går nästa klick direkt till nästa vy, utan en extra återgång till helbild.
 
 ## Visa eller redigera
 
-- [Fristående HTML](../../dist/kunskapsgymmet-och-uppgiftslabbet.html): cirka 30 MB, med inbäddade bilder, tre filmer, spelare och typsnitt.
+- [Fristående HTML](../../dist/kunskapsgymmet-och-uppgiftslabbet.html): cirka 37 MiB, med inbäddade bilder, tre filmer, spelare och typsnitt.
 - [SCEN-manus](../../presentationer/kunskapsgymmet-och-uppgiftslabbet.md): innehåll, fokusområden och talaranteckningar.
 - I SCEN-biblioteket: **Kollegial utveckling → Så använder du Kunskapsgymmet och Uppgiftslabbet**.
 - Både den vanliga webbappen och den inbakade appen `scen.html` är uppdaterade.
@@ -15,17 +15,17 @@ Högerpil går framåt ett klick i taget. Vänsterpil går tillbaka. **N** visar
 
 | Scener | Visar |
 | --- | --- |
-| 1–9 | Startsida, kurser, personlig tränare, passval, uppdragsbok och start av lärarpass |
-| 10–16 | Uppgift, ledtråd, svarskontroll, XP, fullständig lösning och vägen till topplistan |
-| 17–19 | Elevtopplista, klasstopplista och en kort publikfråga |
-| 20–27 | Ingången till Min undervisning, grupp, skapande av Inför Prov v.48 och resultatknapp |
-| 28–34 | Passresultat, elevlista och klickvägen till gruppens områdesstatistik |
-| 35–41 | Kurs- och områdesval, fyra drag till bladet, Redigera och dokumentlayout |
-| 42–48 | Pennan, uppgiftsredigering, Dela, Mina prov och övningsblad samt avslutning |
+| 1–11 | Kurser, tränarens fullständiga text, passval, uppdragsbok, genomgångar och start av lärarpass |
+| 12–20 | Uppgift, ledtråd, svarskontroll, XP, fullständig lösning samt elev- och klasstopplista |
+| 21–27 | Matematikpass, miniräknare, riktigt formelblad och en kort publikfråga |
+| 28–40 | Min undervisning, Inför Prov v.48, val av en/flera/hela gruppen, omfattning, innehåll och delning |
+| 41–52 | Passresultat, individuell elevstatistik med svagare/starkare områden och gruppens områdesstatistik |
+| 53–59 | Uppgiftslabbet: kurs och område, fyra drag, Redigera och dokumentlayout |
+| 60–66 | Uppgiftsredigering, delning, biblioteket och avslutning |
 
 De tre inspelningarna visar faktisk svarskontroll med XP-animation (cirka fem sekunder), fyra separata drag till ett övningsblad (cirka tolv sekunder) och knappen Redigera som öppnar dokumentet (cirka tre sekunder). De är ljudlösa och startar på presentatörens klick.
 
-Varje byte av meny eller vy föregås av en markering av knappen i den föregående sidan. Även återvägar som Klar, Avbryt och dialogens kryss visas. Byte från elev till lärarkonto och från Kunskapsgymmet till Uppgiftslabbet anges uttryckligen.
+Varje byte av meny eller vy föregås av en markering av knappen i den föregående sidan. Även återvägar som Klar och Avbryt visas. Uppdragsbokens stängningssteg är borttaget enligt önskemål. Byte från elev till lärarkonto och från Kunskapsgymmet till Uppgiftslabbet anges uttryckligen.
 
 Lärarpasset heter **Inför Prov v.48** och har datum 27 november 2026. Övningsbladet i Uppgiftslabbet heter fortfarande **Energi i vardagen**. Den personliga tränaren förklaras på scenerna och i talaranteckningarna: rekommenderat pass, valda kapitel och alternativen i Byt pass.
 
@@ -35,16 +35,18 @@ Elevexemplet är den befintliga uppgiften **5.488b**. Ledtråden ger arbetsordni
 
 Underlaget är hela 16:9-webbläsarvyer, fotograferade vid 1600 × 900 med dubbel pixeltäthet. Inga urklippta detaljbilder används i den ombyggda presentationen. Kameran, ramen och nedtoningen utförs av SCEN under visningen. På långa sidor finns olika scrollpositioner; sidornas verkliga menyer och omgivning finns kvar. Inspelningarnas första rutor används som deras grundbilder.
 
-Källor den 15 oktober 2026:
+Källor den 15–16 oktober 2026:
 
 | Repository | Git HEAD vid fotograferingen |
 | --- | --- |
-| Kunskapsgymmet | `6f702503637fc3af68d24ff6b1e350eb6f2a6dbb` |
+| Kunskapsgymmet | `6f702503637fc3af68d24ff6b1e350eb6f2a6dbb` samt den lokala ändringen för träningspassens elevval |
 | Uppgiftslabbet | `859b53892c5bb0cd5e94418701be38aa247ea85a` |
 
 Gränssnitten är verkliga lokala kopior. Konton, grupper, pass, topplistor och resultat är fiktiva demonstrationer. Inga riktiga elevuppgifter hämtas och inga inbjudningar skickas. Skärmbildsskripten serverar apparnas publika adresser från lokala kopior, blockerar Supabase och ersätter tjänsteanrop med lokala svar. Svarskontroll, XP-animation, dragning och öppning av dokumentet körs däremot av apparnas egna funktioner. Pekarmarkören i filmerna är ett presentationshjälpmedel ovanpå den verkliga pekarrörelsen.
 
 Uppskattad behärskning, andel rätt, genomförande och XP förklaras som olika mått. Historiekortet är märkt under uppbyggnad. Delning visas för ett fiktivt godkänt lärarkonto. PDF- och Word-knapparna visas, men exportfunktionerna har inte testats i detta presentationsarbete.
+
+Elevvalet är implementerat i Kunskapsgymmets riktiga formulär, medan databassvaren i fotograferingen är lokala fixtures. Produktionsaktivering kräver Kunskapsgymmets `sql/2026-10-16-traningspass-elevval.sql`; se dess `docs/traningspass-elevval.md`. En Git-publicering av presentationen aktiverar inte databasfunktionen.
 
 ## Kamera och manus
 
@@ -69,13 +71,15 @@ För nya bilder och filmer behövs Python Playwright, Chromium-wrappern `/worksp
 mkdir -p /workspace/.onboarding/playwright/ffmpeg-1011
 ln -sf /usr/bin/ffmpeg /workspace/.onboarding/playwright/ffmpeg-1011/ffmpeg-linux
 PLAYWRIGHT_BROWSERS_PATH=/workspace/.onboarding/playwright PYTHONDONTWRITEBYTECODE=1 python3 scripts/verktygspresentation/capture-tour.py
+PYTHONDONTWRITEBYTECODE=1 python3 scripts/verktygspresentation/capture-support.py
+PYTHONDONTWRITEBYTECODE=1 python3 scripts/verktygspresentation/capture-recipients.py
 ```
 
 Det skriver över underlaget i `bilder/verktygspresentation/vandring/`. `regions.json` innehåller uppmätta komponentpositioner som stöd för redigering av manuset. Uppdatera manusets målområden om appens layout ändras. Skriptet är anpassat för denna molnmiljös sökvägar och Playwright-version. Bibliotek och typsnitt hämtas från `cdn.jsdelivr.net` och cachas under `/workspace/.onboarding/cache`.
 
 ## Verifiering
 
-Samtliga 48 scener och 171 visningslägen kontrolleras i SCEN vid 1920 × 1080: bilder laddas, filmer spelas till slutet, ramar håller sig på skärmen, återställning fungerar och inga JavaScript-fel eller externa nätverksanrop registreras. Dessutom kontrolleras kamera och filmer i Djup och Klassrum vid 1280 × 720, med reducerad rörelse, bakåtsteg, statiskt läge och byte av scen.
+Samtliga 66 scener och 172 visningslägen är kontrollerade i SCEN vid 1920 × 1080: bilder laddas, filmer spelas till slutet, ramar håller sig på skärmen, direktövergången från sista fokus till nästa vy fungerar och inga JavaScript-fel eller externa nätverksanrop registreras. Dessutom kontrolleras kamera och filmer i Djup och Klassrum vid 1280 × 720, med reducerad rörelse, bakåtsteg, statiskt läge och byte av scen.
 
 ```sh
 PYTHONDONTWRITEBYTECODE=1 python3 scripts/verktygspresentation/review.py

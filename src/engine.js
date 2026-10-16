@@ -80,7 +80,7 @@ function normalizeImageDirection(sl) {
     const x = Number(p[2]), y = Number(p[3]), w = Number(p[4]), h = Number(p[5]);
     return { id: p[0] || `detail-${index + 1}`, label: p[1] || `Detalj ${index + 1}`, x: Number.isFinite(x) ? x : 50, y: Number.isFinite(y) ? y : 50, w: Number.isFinite(w) ? w : 16, h: Number.isFinite(h) ? h : 20, note: p.slice(6).join(' | ') };
   });
-  return { mode, crop: raw.crop === 'contain' ? 'contain' : 'cover', focus, start, end, safe, shade, direction: dirMap[String(raw.direction || 'none').toLowerCase()] || 'none', speed: speedMap[String(raw.speed || 'slow').toLowerCase()] || 'slow', details };
+  return { mode, restore: raw.restore !== false && !['nej','false','none'].includes(String(raw.restore).toLowerCase()), crop: raw.crop === 'contain' ? 'contain' : 'cover', focus, start, end, safe, shade, direction: dirMap[String(raw.direction || 'none').toLowerCase()] || 'none', speed: speedMap[String(raw.speed || 'slow').toLowerCase()] || 'slow', details };
 }
 function imageBrief(sl, defaults) {
   if (!sl || (!sl.image && !sl.imageDirection && !sl.imageBrief)) return null;
@@ -549,7 +549,7 @@ function renderSlide(sl, i, deck, img) {
       let semantic = '', restore = '';
       if (d.mode === 'detail' || d.mode === 'spotlight' || d.mode === 'guided') {
         semantic = detailNodes;
-        restore = steps ? `<span data-dramaturgy-restore${st('none')} aria-hidden="true"></span>` : '';
+        restore = steps && d.restore ? `<span data-dramaturgy-restore${st('none')} aria-hidden="true"></span>` : '';
       } else if (d.mode === 'reveal') semantic = detailNodes;
       const focusFilm = sl.video && sl.videoFocus && ['spotlight','guided'].includes(d.mode) ? `<video class="ir-live-video" data-film-src="${esc(img(sl.video))}" data-film-focus="${esc(sl.videoFocus)}" muted playsinline preload="none" aria-label="${esc(sl.alt || plain(title) || 'Film')}"></video>` : '';
       const guidedFrame = d.mode === 'guided' ? '<div class="ir-guided-frame" aria-hidden="true"></div>' : '';

@@ -11,7 +11,7 @@ with sync_playwright() as p:
         page.goto('http://127.0.0.1:5173/dist/kunskapsgymmet-och-uppgiftslabbet.html')
         page.evaluate("""theme=>{window.d=JSON.parse(document.getElementById('scen-data').textContent);
           d.theme.id=theme;window.tour=d.slides.find(s=>s.imageDirection?.mode==='guided'&&!s.video);
-          tour={...tour,title:'En lång rubrik om att orientera sig i en komplex helbild',items:[
+          tour={...tour,imageDirection:{...tour.imageDirection,restore:true},title:'En lång rubrik om att orientera sig i en komplex helbild',items:[
             'a | Övre vänstra hörnet | 10 | 10 | 12 | 12 | Ett litet område.',
             'b | Nedre högra hörnet | 90 | 90 | 12 | 12 | Ett annat område.',
             'c | En lång etikett som ska få plats | 50 | 45 | 60 | 50 | En längre förklaring som beskriver en central del av samma bild utan att lämna kontexten.']};

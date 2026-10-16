@@ -57,6 +57,17 @@ with sync_playwright() as p:
                 else:assert opacity<.01,(index,step,'frame not restored')
             page.screenshot(path=str(OUT/f'{index+1:02d}-{step:02d}.png'))
             report.append({'scene':index+1,'step':step,'images':slide.locator('img').count()})
+        if slide.get_attribute('data-image-mode')=='guided' and page.evaluate('(i)=>qaDeck.slides[i].imageDirection.restore===false',index):
+            assert slide.locator('[data-dramaturgy-restore]').count()==0
+            assert count==page.evaluate('(i)=>qaDeck.slides[i].items.length',index)
+            if index+1<page.evaluate('qaDeck.slides.length'):
+                # The last focus goes straight to the next view; outgoing camera stays put.
+                page.evaluate('qaPlayer.next()');page.wait_for_timeout(150)
+                assert page.locator('.sc-deck > .slide').nth(index+1).evaluate('(s)=>s.classList.contains("active")')
+                assert slide.get_attribute('data-dramaturgy-state')=='focus'
+                page.evaluate('qaPlayer.prev()')
+                assert slide.evaluate('(s)=>s.classList.contains("active")')
+                assert slide.get_attribute('data-dramaturgy-state')=='focus'
         print('SCENE',index+1,'STEPS',count,flush=True)
     assert not errors,errors
     assert not external,external

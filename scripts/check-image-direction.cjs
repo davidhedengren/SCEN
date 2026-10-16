@@ -95,3 +95,13 @@ assert(tourHtml.includes('data-film-focus="gor"'),'Film ska följa det valda fok
 assert.equal((tourHtml.match(/data-step="/g)||[]).length,2,'Ett fokussteg och en återgång till helheten.');
 assert.equal((Scen.renderSlide({...guided,steps:false},0,deck,x=>x).match(/data-step="/g)||[]).length,0);
 console.log('OK: Bildregi-metadata, Image Brief, manus-roundtrip, vandring med film och fem dramaturgier.');
+
+const direct=Manus.parse('[bildregi]\nbild: test.png\nbildläge: vandring\nåterställ: nej\n- knapp | Öppna | 50 | 40 | 20 | 10 | Nästa vy.').slides[0];
+assert.equal(direct.imageDirection.restore,false);
+const directRound=Manus.parse(Manus.stringify({title:'Direkt',slides:[direct]})).slides[0];
+assert.equal(directRound.imageDirection.restore,false,'Nej ska bevaras när manuset sparas.');
+const directHtml=Scen.renderSlide(directRound,0,deck,x=>x);
+assert(!directHtml.includes('data-dramaturgy-restore'),'Direkt flöde får inte lägga till ett helbildsklick.');
+assert.equal((directHtml.match(/data-step="/g)||[]).length,1,'Sista fokussteget följs av nästa scen.');
+assert.equal(Scen.normalizeImageDirection({}).restore,true,'Befintliga presentationer behåller återgång som standard.');
+console.log('OK: valfri återgång till helbild, manus-roundtrip och bevarat standardbeteende.');

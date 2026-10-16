@@ -484,7 +484,7 @@ textarea.code{width:100%;border:1px solid var(--line-2);border-radius:8px;backgr
 .scen [data-image-mode="guided"] .ir-copy{left:40px;top:auto;bottom:24px;width:1840px;height:auto;min-height:90px;display:flex;align-items:center;gap:32px;padding:20px 28px;border:1px solid var(--line);border-radius:16px;background:var(--bg);color:var(--ink);text-shadow:none}
 .scen [data-image-mode="guided"] .ir-copy h2,.scen [data-image-mode="guided"] .ir-copy h2.long{font-size:36px;line-height:1.1;flex:none;max-width:56%}
 .scen [data-image-mode="guided"] .ir-copy>p:not(.ir-kicker){font-size:26px;line-height:1.25;max-width:none;color:var(--muted)}
-.scen [data-image-mode="guided"] .ir-kicker{font:18px var(--mono);color:var(--accent-2);max-width:150px}
+.scen [data-image-mode="guided"] .ir-kicker{font:18px var(--mono);color:var(--accent-2);max-width:none;flex:none}
 .scen [data-image-mode="guided"][data-dramaturgy-state="focus"] .ir-copy{opacity:0}
 .scen [data-image-mode="guided"] .ir-detail{left:40px;right:40px;top:auto;bottom:24px;width:auto;height:auto;transform:none;opacity:0!important}
 .scen [data-image-mode="guided"] .ir-detail.dramaturgy-current{opacity:1!important}
@@ -2578,7 +2578,7 @@ function normalizeImageDirection(sl) {
     const x = Number(p[2]), y = Number(p[3]), w = Number(p[4]), h = Number(p[5]);
     return { id: p[0] || `detail-${index + 1}`, label: p[1] || `Detalj ${index + 1}`, x: Number.isFinite(x) ? x : 50, y: Number.isFinite(y) ? y : 50, w: Number.isFinite(w) ? w : 16, h: Number.isFinite(h) ? h : 20, note: p.slice(6).join(' | ') };
   });
-  return { mode, crop: raw.crop === 'contain' ? 'contain' : 'cover', focus, start, end, safe, shade, direction: dirMap[String(raw.direction || 'none').toLowerCase()] || 'none', speed: speedMap[String(raw.speed || 'slow').toLowerCase()] || 'slow', details };
+  return { mode, restore: raw.restore !== false && !['nej','false','none'].includes(String(raw.restore).toLowerCase()), crop: raw.crop === 'contain' ? 'contain' : 'cover', focus, start, end, safe, shade, direction: dirMap[String(raw.direction || 'none').toLowerCase()] || 'none', speed: speedMap[String(raw.speed || 'slow').toLowerCase()] || 'slow', details };
 }
 function imageBrief(sl, defaults) {
   if (!sl || (!sl.image && !sl.imageDirection && !sl.imageBrief)) return null;
@@ -3047,7 +3047,7 @@ function renderSlide(sl, i, deck, img) {
       let semantic = '', restore = '';
       if (d.mode === 'detail' || d.mode === 'spotlight' || d.mode === 'guided') {
         semantic = detailNodes;
-        restore = steps ? `<span data-dramaturgy-restore${st('none')} aria-hidden="true"></span>` : '';
+        restore = steps && d.restore ? `<span data-dramaturgy-restore${st('none')} aria-hidden="true"></span>` : '';
       } else if (d.mode === 'reveal') semantic = detailNodes;
       const focusFilm = sl.video && sl.videoFocus && ['spotlight','guided'].includes(d.mode) ? `<video class="ir-live-video" data-film-src="${esc(img(sl.video))}" data-film-focus="${esc(sl.videoFocus)}" muted playsinline preload="none" aria-label="${esc(sl.alt || plain(title) || 'Film')}"></video>` : '';
       const guidedFrame = d.mode === 'guided' ? '<div class="ir-guided-frame" aria-hidden="true"></div>' : '';
@@ -6345,9 +6345,9 @@ const Manus = (() => {
     'övergång': 'transition', bakgrund: 'bg', 'miljö': 'env', 'märke': 'badge', 'källrad': 'credit', rubrikrörelse: 'ta', 'rörelse': 'ba', visa: 'reveal', rubrikrad: 'header', mall: 'tpl', aktiv: 'active', siffra: 'number', slutsats: 'text', max: 'max', mitten: 'text'
   };
   const OUT_KEY = { video: 'film', videoFocus: 'filmsteg', scale: 'skala', conclusion: 'slutsats', max: 'max', active: 'aktiv', title: 'rubrik', text: 'text', caption: 'etikett', answer: 'svar', example: 'exempel', number: 'tal', minutes: 'tid', image: 'bild', alt: 'alt', lt: 'vänster', rt: 'höger', ret: 'retur', start: 'start', end: 'slut', question: 'fråga', cause: 'orsak', effect: 'konsekvens', condition: 'villkor', alternative: 'alternativ', source: 'källa', whole: 'helhet', reservation: 'reservation', common: 'gemensamt', tension: 'spänning', synthesis: 'syntes', transition: 'övergång', bg: 'bakgrund', ta: 'rubrikrörelse', ba: 'rörelse', tpl: 'mall' };
-  const IMAGE_DIRECTION_KEYS = { 'bildläge':'mode', fokuspunkt:'focus', 'beskärning':'crop', startutsnitt:'start', slututsnitt:'end', 'säker-yta':'safe', 'mörkning':'shade', riktning:'direction', hastighet:'speed' };
+  const IMAGE_DIRECTION_KEYS = { 'bildläge':'mode', 'återställ':'restore', fokuspunkt:'focus', 'beskärning':'crop', startutsnitt:'start', slututsnitt:'end', 'säker-yta':'safe', 'mörkning':'shade', riktning:'direction', hastighet:'speed' };
   const IMAGE_BRIEF_KEYS = { 'bild-id':'id', filnamn:'filename', scen:'scene', syfte:'purpose', motiv:'subject', komposition:'composition', motivplacering:'placement', format:'aspectRatio', undvik:'avoid', prompt:'prompt' };
-  const IMAGE_DIRECTION_OUT = { mode:'bildläge', focus:'fokuspunkt', crop:'beskärning', start:'startutsnitt', end:'slututsnitt', safe:'säker-yta', shade:'mörkning', direction:'riktning', speed:'hastighet' };
+  const IMAGE_DIRECTION_OUT = { mode:'bildläge', restore:'återställ', focus:'fokuspunkt', crop:'beskärning', start:'startutsnitt', end:'slututsnitt', safe:'säker-yta', shade:'mörkning', direction:'riktning', speed:'hastighet' };
   const IMAGE_BRIEF_OUT = { id:'bild-id', filename:'filnamn', scene:'scen', purpose:'syfte', subject:'motiv', composition:'komposition', placement:'motivplacering', aspectRatio:'format', avoid:'undvik', prompt:'prompt' };
   const REVEAL = { allt: 'none', rader: 'rows', facit: 'answers', 'facit-rader': 'rest', fall: 'cases' };
   const REVEAL_OUT = { none: 'allt', rows: 'rader', answers: 'facit', rest: 'facit-rader', cases: 'fall' };
@@ -6418,6 +6418,7 @@ const Manus = (() => {
         const field = IMAGE_DIRECTION_KEYS[label], v = kv[2].trim();
         const target = s.imageDirection = s.imageDirection || {};
         if (['focus','start','end','safe','shade'].includes(field)) target[field] = v.split(/[\s,]+/).map(Number).filter(Number.isFinite);
+        else if (field === 'restore') target.restore = !['nej','false','none'].includes(v.toLowerCase());
         else if (field === 'mode') target.mode = ({ hero:'hero',cinematic:'hero',detalj:'detail',detail:'detail',vandring:'guided',guided:'guided',spotlight:'spotlight',annotation:'spotlight',reveal:'reveal',mask:'reveal',levande:'live',live:'live' })[v.toLowerCase()] || 'hero';
         else if (field === 'direction') target.direction = ({ höger:'right',hoger:'right',right:'right',vänster:'left',vanster:'left',left:'left',upp:'up',up:'up',ned:'down',down:'down',stilla:'none',none:'none' })[v.toLowerCase()] || 'none';
         else if (field === 'speed') target.speed = ({ långsam:'slow',langsamt:'slow',slow:'slow',normal:'medium',medium:'medium',snabb:'fast',fast:'fast' })[v.toLowerCase()] || 'slow';
@@ -6545,7 +6546,7 @@ const Manus = (() => {
     put('videoFocus', s.videoFocus);
     if ((s.image || s.video) && s.alt) put('alt', s.alt);
     if (L === 'bildregi' && s.imageDirection) Object.entries(IMAGE_DIRECTION_OUT).forEach(([field,label]) => {
-      const v=s.imageDirection[field]; if(v==null||v==='') return; out.push(`${label}: ${Array.isArray(v)?v.join(' '):v}`);
+      const v=s.imageDirection[field]; if(v==null||v==='') return; out.push(`${label}: ${field==='restore'?(v?'ja':'nej'):Array.isArray(v)?v.join(' '):v}`);
     });
     if ((L === 'ordbild' || L === 'bildfält') && s.imageDirection && Array.isArray(s.imageDirection.focus) && s.imageDirection.focus.length) out.push(`fokuspunkt: ${s.imageDirection.focus.join(' ')}`);
     if (L === 'bildregi' && s.imageBrief) Object.entries(IMAGE_BRIEF_OUT).forEach(([field,label]) => {
@@ -7631,6 +7632,7 @@ function renderInsp() {
   if (L === 'bildregi') {
     const d = Scen.normalizeImageDirection(s);
     h += `<div class="fld"><label for="f-image-mode">Bildläge</label><select id="f-image-mode" data-t="image-mode">${opt({hero:'Helbild',detail:'Detaljresa',guided:'Vandring: zoom och markering',spotlight:'Spotlight',reveal:'Avslöja',live:'Levande bild'},d.mode)}</select><span class="hint">Levande bild: stillbild först, zoom på första klicket och film på nästa. Filmen stannar vid slutet.</span></div>`;
+    if (['detail','guided','spotlight'].includes(d.mode)) h += `<label class="chk"><input type="checkbox" data-t="image-restore"${d.restore ? ' checked' : ''}> Återgå till helbild efter sista fokussteget</label>`;
     for (const [key,label] of [['start','Startutsnitt'],['end','Slututsnitt']]) h += `<div class="fld"><label for="f-image-${key}">${label} (x y skala)</label><input id="f-image-${key}" data-t="image-tuple" data-f="${key}" value="${esc(d[key].join(' '))}"><span class="hint">Bildens centrum i procent, följt av zoom. Exempel: 65 70 1.8.</span></div>`;
   }
   if (STEPPED.includes(L)) h += `<label class="chk"><input type="checkbox" id="f-steps" data-f="steps" data-t="check"${s.steps !== false ? ' checked' : ''}> Visa rubriker och innehåll stegvis, på klick</label>
@@ -7659,6 +7661,7 @@ function onInspInput(e) {
   const el = e.target; const t = el.dataset.t; if (!t || !deck) return;
   const s = deck.slides[cur];
   if (t === 'image-mode') (s.imageDirection ||= {}).mode = el.value;
+  else if (t === 'image-restore') (s.imageDirection ||= {}).restore = el.checked;
   else if (t === 'image-tuple') { const a = el.value.trim().split(/[\s,]+/).map(Number); if (a.length !== 3 || !a.every(Number.isFinite)) return; (s.imageDirection ||= {})[el.dataset.f] = a; }
   else if (t === 'text') s[el.dataset.f] = el.value;
   else if (t === 'list') s[el.dataset.f] = s.layout === 'trad' ? el.value.split('\n').map(x => { const d = Math.floor(x.replace(/\t/g, '  ').match(/^\s*/)[0].length / 2); return '- '.repeat(d) + x.trim(); }) : el.value.split('\n');

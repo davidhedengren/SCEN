@@ -11,12 +11,13 @@ text: Vi börjar som elev. Sedan skapar vi ett pass och ett övningsblad.
 bild: bilder/verktygspresentation/vandring/kg-start.png
 alt: Hela webbläsarvyn: Så använder du Kunskapsgymmet.
 bildläge: vandring
+återställ: nej
 beskärning: cover
 övergång: tona
 rubrikrörelse: ingen
 - steg1 | Öppna lärarens pass | 50.0 | 40.64 | 73.5 | 13.56 | Uppdraget finns på startsidan. Här heter det Inför Prov v.48.
 - steg2 | Eller välj egen träning | 50 | 70 | 74 | 28 | Kurserna ligger längre ned på samma sida.
-> 25 sekunder. Visa hela startsidan innan du klickar. Vi följer ett exempel i fysik, men visar också de andra kurserna. Allt är verkliga gränssnitt från lokala kopior med fiktiva konton och resultat. Filmerna visar riktiga musklick och drag i dessa kopior. Högerpil flyttar kameran; sista klicket återgår till helheten. N visar anteckningar. P öppnar talarvyn.
+> 15 sekunder. Visa hela startsidan innan du klickar. Vi följer ett exempel i fysik, men visar också de andra kurserna. Allt är verkliga gränssnitt från lokala kopior med fiktiva konton och resultat. Filmerna visar riktiga musklick och drag i dessa kopior. Högerpil flyttar kameran. Efter sista markeringen går nästa klick direkt till den nya vyn. N visar anteckningar. P öppnar talarvyn.
 
 ---
 
@@ -27,12 +28,13 @@ text: Matematikens kurser och spår finns samlade på startsidan.
 bild: bilder/verktygspresentation/vandring/kg-kurser.png
 alt: Hela webbläsarvyn: Välj den kurs eleven läser.
 bildläge: vandring
+återställ: nej
 beskärning: cover
 övergång: tona
 rubrikrörelse: ingen
 - steg1 | Nivå 1, nivå 2 och fortsättning | 50 | 24 | 74 | 20 | Öppna rätt kurs. Spåren framgår på kurskortet.
 - steg2 | Fortsättning och fördjupning | 50 | 42 | 74 | 18 | Fler kurser finns på samma sida.
-> 15 sekunder. Peka på de verkliga kursnamnen. Nivåerna i kursnamnen ska inte blandas ihop med träningsnivån inne i en uppgift. Vi scrollar sedan längre ned på startsidan.
+> 10 sekunder. Peka på de verkliga kursnamnen. Nivåerna i kursnamnen ska inte blandas ihop med träningsnivån inne i en uppgift. Vi scrollar sedan längre ned på startsidan.
 
 ---
 
@@ -43,12 +45,13 @@ text: Vi öppnar Fysik nivå 1 i demonstrationen.
 bild: bilder/verktygspresentation/vandring/kg-kurser-fysik.png
 alt: Hela webbläsarvyn: Här finns också fysik.
 bildläge: vandring
+återställ: nej
 beskärning: cover
 övergång: tona
 rubrikrörelse: ingen
 - steg1 | Fysik nivå 1 och nivå 2 | 50.0 | 62.16 | 73.5 | 23.45 | Kurserna ligger på samma startsida.
 - steg2 | Klicka på Fysik nivå 1 | 31.62 | 64.44 | 33.88 | 14.22 | Kurskortet öppnar träningssidan.
-> 10 sekunder. Visa fysikkorten. Historiekortet längre ned är märkt under uppbyggnad och presenteras inte som en färdig kurs.
+> 5 sekunder. Visa fysikkorten. Historiekortet längre ned är märkt under uppbyggnad och presenteras inte som en färdig kurs.
 
 ---
 
@@ -59,13 +62,14 @@ text: Eleven får hjälp att välja vad och hur den ska träna.
 bild: bilder/verktygspresentation/vandring/kg-kurs.png
 alt: Hela webbläsarvyn: Din personliga tränare föreslår ett pass.
 bildläge: vandring
+återställ: nej
 beskärning: cover
 övergång: tona
 rubrikrörelse: ingen
 - steg1 | Ett förslag att börja med | 42.31 | 52.78 | 47.25 | 8.89 | Nya elever börjar med Grundpass. Senare används träningshistoriken.
 - steg2 | Se vilka kapitel du jobbar med | 40.31 | 66.67 | 51.25 | 6.0 | Ändra låter eleven välja kapitel. Starta passet sätter igång träningen.
 - steg3 | Klicka på Byt pass | 27.51 | 60.33 | 6.61 | 6.22 | Öppna alternativen om du vill träna på ett annat sätt.
-> 40 sekunder. Tränaren föreslår ett pass utifrån tidigare träning och valda kapitel. Grundpass är starten för nya elever. Teknikpass riktas mot svagare områden, tungt pass mot starkare och repetition mot sådant eleven inte tränat på ett tag. När eleven fastnar kan tränaren föreslå en genomgång. Lärarens namngivna pass är en separat ingång.
+> 25 sekunder. Tränaren föreslår ett pass utifrån tidigare träning och valda kapitel. Grundpass är starten för nya elever. Teknikpass riktas mot svagare områden, tungt pass mot starkare och repetition mot sådant eleven inte tränat på ett tag. När eleven fastnar kan tränaren föreslå en genomgång. Lärarens namngivna pass är en separat ingång.
 
 ---
 
@@ -76,26 +80,29 @@ text: Här syns de olika passen i den personliga tränaren.
 bild: bilder/verktygspresentation/vandring/kg-tranare-val.png
 alt: Hela webbläsarvyn: Välj träning efter behov.
 bildläge: vandring
+återställ: nej
 beskärning: cover
 övergång: tona
 rubrikrörelse: ingen
 - steg1 | Teknik, mängd, tyngre träning eller repetition | 40.31 | 78.0 | 51.25 | 16.67 | Beskrivningen på varje knapp visar vad passet fokuserar på.
 - steg2 | Klicka på Grundpass | 23.4 | 75.39 | 17.42 | 7.89 | Vi behåller grundpasset och återgår till tränarens översikt.
-> 25 sekunder. Detta är passvalen som öppnades med Byt pass. Repetera dina fel kan också visas när eleven har fel att träna på. Antalet uppgifter och nivåerna varierar mellan passen.
+> 15 sekunder. Detta är passvalen som öppnades med Byt pass. Repetera dina fel kan också visas när eleven har fel att träna på. Antalet uppgifter och nivåerna varierar mellan passen.
 
 ---
 
 [bildregi]
 etikett: KUNSKAPSGYMMET
 rubrik: Från tränaren till uppdragsboken
+text:
 bild: bilder/verktygspresentation/vandring/kg-tranare-bok.png
 alt: Hela webbläsarvyn: Från tränaren till uppdragsboken.
 bildläge: vandring
+återställ: nej
 beskärning: cover
 övergång: tona
 rubrikrörelse: ingen
 - steg1 | Klicka på bokomslaget | 63.44 | 42.78 | 5.5 | 13.78 | Öppna uppdragsboken visar dagens uppdrag.
-> 10 sekunder. Markera knappen och låt publiken hitta den i hela sidvyn. Nästa scen visar resultatet av klicket.
+> 5 sekunder. Markera knappen och låt publiken hitta den i hela sidvyn. Nästa scen visar resultatet av klicket.
 
 ---
 
@@ -106,41 +113,79 @@ text: Dagens uppdrag, framsteg och XP-belöningar syns på uppslaget.
 bild: bilder/verktygspresentation/vandring/kg-uppdragsbok.png
 alt: Hela webbläsarvyn: Titta i uppdragsboken.
 bildläge: vandring
+återställ: nej
 beskärning: cover
 övergång: tona
 rubrikrörelse: ingen
 - steg1 | Börja med huvuduppdraget | 35.31 | 46.78 | 26.38 | 18.59 | Här ska eleven klara fem uppgifter. Börja-knappen startar träningen.
 - steg2 | Följ de andra uppdragen | 65 | 50 | 29 | 58 | Varje uppdrag visar vad som ska göras, framsteg och belöning.
-- steg3 | Stäng boken med krysset | 78.25 | 14.7 | 3.5 | 6.22 | Vi går tillbaka och öppnar lärarens pass från startsidan.
-> 35 sekunder. Låt bokuppslaget vara synligt några sekunder. Visa sedan huvuduppdraget och de tre andra uppdragen. I exemplet är inget färdigt ännu. Förklara att uppdrag och belöningar kan variera. Datum och bläddring finns under boken.
+> 25 sekunder. Låt bokuppslaget vara synligt några sekunder. Visa sedan huvuduppdraget och de tre andra uppdragen. I exemplet är inget färdigt ännu. Förklara att uppdrag och belöningar kan variera. Datum och bläddring finns under boken.
+
+---
+
+[bildregi]
+etikett: KUNSKAPSGYMMET
+rubrik: Hitta genomgångarna på kurssidan
+text:
+bild: bilder/verktygspresentation/vandring/kg-genomgang-knapp.png
+alt: Hela webbläsarvyn: Hitta genomgångarna på kurssidan.
+bildläge: vandring
+återställ: nej
+beskärning: cover
+övergång: tona
+rubrikrörelse: ingen
+- steg1 | Klicka på Det här behöver du kunna | 54.37 | 76.89 | 15.06 | 5.11 | Under det öppna kapitlet finns korta genomgångar av metoderna.
+> 5 sekunder. Markera knappen och låt publiken hitta den i hela sidvyn. Nästa scen visar resultatet av klicket.
+
+---
+
+[bildregi]
+etikett: KUNSKAPSGYMMET
+rubrik: Läs en genomgång innan du tränar
+text: Varje genomgång visar en typuppgift och hur den löses.
+bild: bilder/verktygspresentation/vandring/kg-genomgang.png
+alt: Hela webbläsarvyn: Läs en genomgång innan du tränar.
+bildläge: vandring
+återställ: nej
+beskärning: cover
+övergång: tona
+rubrikrörelse: ingen
+- steg1 | Börja med typuppgiften | 50 | 39 | 40 | 24 | Här ska 72 km/h omvandlas till m/s.
+- steg2 | Följ lösningen steg för steg | 50 | 66 | 40 | 43 | Förklaringar, beräkningar och slutsvar finns samlade.
+- steg3 | Återgå till kurssidan | 68.5 | 11.89 | 3.38 | 6.0 | Stäng genomgången när du vill fortsätta träna.
+> 15 sekunder. Knappen Det här behöver du kunna finns vid kapitlet på kurssidan. Här visas den första genomgången i Fysikens grunder. Pilarna i dialogen bläddrar mellan metoderna. Eleven kan läsa före träningen eller återvända när något är svårt.
 
 ---
 
 [bildregi]
 etikett: KUNSKAPSGYMMET
 rubrik: Tillbaka till startsidan
+text:
 bild: bilder/verktygspresentation/vandring/kg-till-start.png
 alt: Hela webbläsarvyn: Tillbaka till startsidan.
 bildläge: vandring
+återställ: nej
 beskärning: cover
 övergång: tona
 rubrikrörelse: ingen
 - steg1 | Klicka på Kunskapsgymmet | 19.31 | 3.78 | 12.12 | 5.11 | Logotypen tar dig till startsidan.
-> 10 sekunder. Markera knappen och låt publiken hitta den i hela sidvyn. Nästa scen visar resultatet av klicket.
+> 5 sekunder. Markera knappen och låt publiken hitta den i hela sidvyn. Nästa scen visar resultatet av klicket.
 
 ---
 
 [bildregi]
 etikett: KUNSKAPSGYMMET
 rubrik: Starta Inför Prov v.48
+text:
 bild: bilder/verktygspresentation/vandring/kg-starta-pass.png
 alt: Hela webbläsarvyn: Starta Inför Prov v.48.
 bildläge: vandring
+återställ: nej
 beskärning: cover
 övergång: tona
 rubrikrörelse: ingen
 - steg1 | Klicka på Börja | 82.23 | 42.31 | 6.67 | 6.22 | Lärarens pass tränar de områden som är valda inför provet.
-> 10 sekunder. Markera knappen och låt publiken hitta den i hela sidvyn. Nästa scen visar resultatet av klicket.
+> 5 sekunder. Markera knappen och låt publiken hitta den i hela sidvyn. Nästa scen visar resultatet av klicket.
 
 ---
 
@@ -151,12 +196,13 @@ text: Läs, lös på papper och skriv sedan svaret.
 bild: bilder/verktygspresentation/vandring/kg-uppgift.png
 alt: Hela webbläsarvyn: Så arbetar eleven med en uppgift.
 bildläge: vandring
+återställ: nej
 beskärning: cover
 övergång: tona
 rubrikrörelse: ingen
 - steg1 | Läs frågan | 50.0 | 47.42 | 56.0 | 63.5 | En person landar efter ett fall. Hur stor kraft utövar golvet?
 - steg2 | Klicka på Visa ledtråd | 34.63 | 73.72 | 8.1 | 6.22 | Ta hjälp med hur du kan börja, innan du tittar på lösningen.
-> 30 sekunder. Ge publiken en kort stund att orientera sig. Svaret är cirka 32 200 N. Stödet finns kvar runt samma uppgift; eleven behöver inte lämna sidan. Vi visar först ledtråden och därefter svarskontrollen.
+> 20 sekunder. Ge publiken en kort stund att orientera sig. Svaret är cirka 32 200 N. Stödet finns kvar runt samma uppgift; eleven behöver inte lämna sidan. Vi visar först ledtråden och därefter svarskontrollen.
 
 ---
 
@@ -167,13 +213,14 @@ text: Stödet öppnas vid uppgiften, på samma sida.
 bild: bilder/verktygspresentation/vandring/kg-ledtrad.png
 alt: Hela webbläsarvyn: En ledtråd som hjälper eleven vidare.
 bildläge: vandring
+återställ: nej
 beskärning: cover
 övergång: tona
 rubrikrörelse: ingen
 - steg1 | Dela upp problemet i tre steg | 50.0 | 76.64 | 53.37 | 12.05 | Beräkna farten före kontakten, sedan retardationen och till sist kraften.
 - steg2 | Räkna och skriv ditt svar i N | 50.0 | 62.11 | 53.37 | 7.22 | Omvandla fallhöjden och stoppsträckan till meter.
 - steg3 | Klicka på Kontrollera | 27.19 | 85.55 | 7.76 | 6.22 | Nu prövar vi svaret 32200.
-> 30 sekunder. Ledtråden ger en arbetsordning: fart före kontakten, retardation under stoppet och kontaktkraften m(g + b). Eleven får själv omvandla längderna och genomföra beräkningarna. Ledtråden visas med appens riktiga knapp.
+> 20 sekunder. Ledtråden ger en arbetsordning: fart före kontakten, retardation under stoppet och kontaktkraften m(g + b). Eleven får själv omvandla längderna och genomföra beräkningarna. Ledtråden visas med appens riktiga knapp.
 
 ---
 
@@ -184,13 +231,14 @@ text: Nästa klick spelar en kort inspelning från uppgiften.
 bild: bilder/verktygspresentation/vandring/kg-svara-xp.png
 alt: Hela webbläsarvyn: Kontrollera svaret – se vad som händer.
 bildläge: vandring
+återställ: nej
 beskärning: cover
 övergång: tona
 rubrikrörelse: ingen
 film: bilder/verktygspresentation/vandring/kg-svara-xp.mp4
 filmsteg: spela
 - spela | Klicka på Kontrollera | 50 | 42 | 65 | 84 | Svaret blir grönt och XP-mätaren ökar.
-> 15 sekunder. Klicka och låt filmen spela färdigt, ungefär fem sekunder. Eleven har skrivit 32200 och klickar på Kontrollera. Inspelningen visar den faktiska svarskontrollen och XP-animationen. Nästa scen stannar vid resultatet.
+> 10 sekunder. Klicka och låt filmen spela färdigt, ungefär fem sekunder. Eleven har skrivit 32200 och klickar på Kontrollera. Inspelningen visar den faktiska svarskontrollen och XP-animationen. Nästa scen stannar vid resultatet.
 
 ---
 
@@ -201,13 +249,14 @@ text: Rätt svar ger XP. Här visas både resultatet och mätaren.
 bild: bilder/verktygspresentation/vandring/kg-ratt.png
 alt: Hela webbläsarvyn: Stanna vid återkopplingen.
 bildläge: vandring
+återställ: nej
 beskärning: cover
 övergång: tona
 rubrikrörelse: ingen
 - steg1 | Rätt svar ger XP | 50.0 | 93.0 | 53.37 | 9.11 | Belöningen för just detta svar visas bredvid återkopplingen.
 - steg2 | Mätaren går framåt | 39.6 | 4.4 | 26 | 7.5 | XP ökar även när eleven har använt en ledtråd.
 - steg3 | Klicka på Visa lösning | 36.75 | 85.55 | 8.14 | 6.22 | Efter försöket jämför eleven med den fullständiga lösningen.
-> 25 sekunder. Flytta först fokus till rättmarkeringen, sedan hela vägen upp till XP-mätaren. Det är denna förflyttning som hjälper publiken att förstå var olika saker händer. XP-beloppet varierar mellan uppgifter och situationer; här användes en ledtråd före svaret. XP är inte ett betyg.
+> 15 sekunder. Flytta först fokus till rättmarkeringen, sedan hela vägen upp till XP-mätaren. Det är denna förflyttning som hjälper publiken att förstå var olika saker händer. XP-beloppet varierar mellan uppgifter och situationer; här användes en ledtråd före svaret. XP är inte ett betyg.
 
 ---
 
@@ -218,39 +267,44 @@ text: Visa lösning ligger vid samma uppgift.
 bild: bilder/verktygspresentation/vandring/kg-losning.png
 alt: Hela webbläsarvyn: Gå igenom lösningen vid behov.
 bildläge: vandring
+återställ: nej
 beskärning: cover
 övergång: tona
 rubrikrörelse: ingen
 - steg1 | Följ hela beräkningen | 50.0 | 84.11 | 53.37 | 31.78 | Omvandla längderna, räkna på fallet och stoppet, och använd F − mg = mb.
-> 15 sekunder. Vi visar lösningen efter elevens försök. Lösningen omvandlar 60,0 cm till 0,600 m och 1,5 cm till 0,015 m. Sedan beräknas v² = 2gh och retardationen b = v²/(2s). Golvets kraft måste både motverka tyngdkraften och bromsa personen: F − mg = mb. Slutligen blir F = 80,0(9,82 + 392,8) ≈ 32 200 N med tre värdesiffror. Jämför alla led med elevens egen lösning.
+> 10 sekunder. Vi visar lösningen efter elevens försök. Lösningen omvandlar 60,0 cm till 0,600 m och 1,5 cm till 0,015 m. Sedan beräknas v² = 2gh och retardationen b = v²/(2s). Golvets kraft måste både motverka tyngdkraften och bromsa personen: F − mg = mb. Slutligen blir F = 80,0(9,82 + 392,8) ≈ 32 200 N med tre värdesiffror. Jämför alla led med elevens egen lösning.
 
 ---
 
 [bildregi]
 etikett: KUNSKAPSGYMMET
 rubrik: Lämna uppgiften och gå till kursen
+text:
 bild: bilder/verktygspresentation/vandring/kg-avsluta.png
 alt: Hela webbläsarvyn: Lämna uppgiften och gå till kursen.
 bildläge: vandring
+återställ: nej
 beskärning: cover
 övergång: tona
 rubrikrörelse: ingen
 - steg1 | Klicka på Avsluta | 24.48 | 4.28 | 4.96 | 4.89 | Du återgår till kurssidan, där sidhuvudets meny finns.
-> 10 sekunder. Markera knappen och låt publiken hitta den i hela sidvyn. Nästa scen visar resultatet av klicket.
+> 5 sekunder. Markera knappen och låt publiken hitta den i hela sidvyn. Nästa scen visar resultatet av klicket.
 
 ---
 
 [bildregi]
 etikett: KUNSKAPSGYMMET
 rubrik: Hitta topplistan i sidhuvudet
+text:
 bild: bilder/verktygspresentation/vandring/kg-till-topplista.png
 alt: Hela webbläsarvyn: Hitta topplistan i sidhuvudet.
 bildläge: vandring
+återställ: nej
 beskärning: cover
 övergång: tona
 rubrikrörelse: ingen
 - steg1 | Klicka på Topplistan | 77.14 | 3.78 | 7.96 | 5.11 | Knappen finns högst upp på sidan.
-> 10 sekunder. Markera knappen och låt publiken hitta den i hela sidvyn. Nästa scen visar resultatet av klicket.
+> 5 sekunder. Markera knappen och låt publiken hitta den i hela sidvyn. Nästa scen visar resultatet av klicket.
 
 ---
 
@@ -261,6 +315,7 @@ text: Välj tidsperiod och se XP och genomförda uppgifter.
 bild: bilder/verktygspresentation/vandring/kg-topplista.png
 alt: Hela webbläsarvyn: Öppna topplistan.
 bildläge: vandring
+återställ: nej
 beskärning: cover
 övergång: tona
 rubrikrörelse: ingen
@@ -268,7 +323,7 @@ rubrikrörelse: ingen
 - steg2 | Läs listan | 50.0 | 67.5 | 70.62 | 35.44 | Här visas användarnamn, nivå, medaljer, uppgifter och XP.
 - steg3 | Eleven väljer sin synlighet | 50.0 | 27.56 | 73.5 | 8.89 | Dölj mig tar bort eleven från den synliga listan.
 - steg4 | Klicka på Klasser | 20.74 | 39.33 | 5.81 | 5.11 | Byt från elever till klassernas lista.
-> 30 sekunder. Alla namn och placeringar är fiktiva. Topplistan är en motivationsfunktion; XP ska inte läsas som kunskapsbetyg. Perioderna gäller XP och aktivitet under den valda perioden, medan nivå bygger på total XP.
+> 20 sekunder. Alla namn och placeringar är fiktiva. Topplistan är en motivationsfunktion; XP ska inte läsas som kunskapsbetyg. Perioderna gäller XP och aktivitet under den valda perioden, medan nivå bygger på total XP.
 
 ---
 
@@ -279,11 +334,111 @@ text: Samma topplista kan visa klassernas samlade aktivitet.
 bild: bilder/verktygspresentation/vandring/kg-klasstopp.png
 alt: Hela webbläsarvyn: Växla till Klasser.
 bildläge: vandring
+återställ: nej
 beskärning: cover
 övergång: tona
 rubrikrörelse: ingen
 - steg1 | Se klassernas samlade XP | 50.0 | 60.94 | 70.62 | 21.89 | Här syns också hur många elever som har tränat.
-> 15 sekunder. Peka på antal aktiva elever. Poängen beräknas enligt reglerna under listan, inklusive taket per elev och period. Detta är demonstrationsvärden.
+- steg2 | Klicka på Kunskapsgymmet | 19.31 | 3.78 | 12.12 | 5.11 | Vi går till startsidan och visar hjälpmedlen i en matematikkurs.
+> 10 sekunder. Peka på antal aktiva elever. Poängen beräknas enligt reglerna under listan, inklusive taket per elev och period. Detta är demonstrationsvärden.
+
+---
+
+[bildregi]
+etikett: KUNSKAPSGYMMET
+rubrik: Välj en matematikkurs
+text:
+bild: bilder/verktygspresentation/vandring/kg-matte-val.png
+alt: Hela webbläsarvyn: Välj en matematikkurs.
+bildläge: vandring
+återställ: nej
+beskärning: cover
+övergång: tona
+rubrikrörelse: ingen
+- steg1 | Klicka på Matematik nivå 2 | 41.06 | 65.32 | 3.75 | 6.67 | Här visar vi både miniräknaren och kursens formelblad.
+> 5 sekunder. Markera knappen och låt publiken hitta den i hela sidvyn. Nästa scen visar resultatet av klicket.
+
+---
+
+[bildregi]
+etikett: KUNSKAPSGYMMET
+rubrik: Starta ett matematikpass
+text:
+bild: bilder/verktygspresentation/vandring/kg-matte-kurs.png
+alt: Hela webbläsarvyn: Starta ett matematikpass.
+bildläge: vandring
+återställ: nej
+beskärning: cover
+övergång: tona
+rubrikrörelse: ingen
+- steg1 | Klicka på Starta passet | 19.73 | 45.67 | 10.08 | 6.22 | Hjälpmedlen ligger vid svarsfältet inne i uppgiften.
+> 5 sekunder. Markera knappen och låt publiken hitta den i hela sidvyn. Nästa scen visar resultatet av klicket.
+
+---
+
+[bildregi]
+etikett: KUNSKAPSGYMMET
+rubrik: Öppna miniräknaren vid uppgiften
+text:
+bild: bilder/verktygspresentation/vandring/kg-hjalpmedel.png
+alt: Hela webbläsarvyn: Öppna miniräknaren vid uppgiften.
+bildläge: vandring
+återställ: nej
+beskärning: cover
+övergång: tona
+rubrikrörelse: ingen
+- steg1 | Klicka på Miniräknare | 71.86 | 67.0 | 9.66 | 6.22 | Räknaren visas där den är tillåten för uppgiften.
+> 5 sekunder. Markera knappen och låt publiken hitta den i hela sidvyn. Nästa scen visar resultatet av klicket.
+
+---
+
+[bildregi]
+etikett: KUNSKAPSGYMMET
+rubrik: Räkna med uppgiften kvar på sidan
+text: Miniräknaren öppnas bredvid uppgiften.
+bild: bilder/verktygspresentation/vandring/kg-miniraknare.png
+alt: Hela webbläsarvyn: Räkna med uppgiften kvar på sidan.
+bildläge: vandring
+återställ: nej
+beskärning: cover
+övergång: tona
+rubrikrörelse: ingen
+- steg1 | Använd räknaren direkt i verktyget | 83.75 | 30.97 | 28.5 | 61.06 | Du kan skriva uttryck och göra beräkningar utan att byta webbplats.
+- steg2 | Stäng räknaren när du är klar | 95.75 | 4.22 | 2.88 | 5.11 | Nu visar vi formelbladet vid samma uppgift.
+> 10 sekunder. Fönstret går att flytta och ändra storlek på. Knappen finns bara när miniräknare är tillåten för uppgiften; i fysik är den tillåten. Här använder vi en verklig matematikuppgift som tillåter räknare.
+
+---
+
+[bildregi]
+etikett: KUNSKAPSGYMMET
+rubrik: Hitta kursens formelblad
+text:
+bild: bilder/verktygspresentation/vandring/kg-formel-knapp.png
+alt: Hela webbläsarvyn: Hitta kursens formelblad.
+bildläge: vandring
+återställ: nej
+beskärning: cover
+övergång: tona
+rubrikrörelse: ingen
+- steg1 | Klicka på Formelblad | 62.79 | 67.0 | 9.46 | 6.22 | Knappen ligger intill miniräknaren på matematikuppgiften.
+> 5 sekunder. Markera knappen och låt publiken hitta den i hela sidvyn. Nästa scen visar resultatet av klicket.
+
+---
+
+[bildregi]
+etikett: KUNSKAPSGYMMET
+rubrik: Ha formlerna bredvid uppgiften
+text: Kursens formelblad öppnas på samma sida.
+bild: bilder/verktygspresentation/vandring/kg-formelblad.png
+alt: Hela webbläsarvyn: Ha formlerna bredvid uppgiften.
+bildläge: vandring
+återställ: nej
+beskärning: cover
+övergång: tona
+rubrikrörelse: ingen
+- steg1 | Läs formelbladet medan du arbetar | 83.75 | 50.0 | 32.0 | 99.11 | Bläddra i bladet utan att lämna uppgiften.
+- steg2 | Zooma eller öppna som PDF | 83.75 | 4.44 | 31.87 | 7.78 | Reglagen sitter högst upp i formelbladets fönster.
+> 15 sekunder. Detta är det verkliga formelbladet för Matematik nivå 2, visat med appens PDF-läsare. Formelbladsknappen finns i matematikkurserna. Fönstret kan flyttas och ändra storlek. Vi byter sedan till lärarkontot för att visa hur träningen följs upp.
 
 ---
 
@@ -291,21 +446,23 @@ rubrikrörelse: ingen
 etikett: KORT STOPP
 rubrik: Var skulle du låta en elev börja?
 svar: Med ett avgränsat lärarpass – eller med egen träning i rätt kurs.
-> 15 sekunder. Ta ett eller två korta svar. Nu byter vi till lärarens vy och skapar ett sådant pass.
+> 5 sekunder. Ta ett eller två korta svar. Nu byter vi till lärarens vy och skapar ett sådant pass.
 
 ---
 
 [bildregi]
 etikett: LÄRARE
 rubrik: Nu är vi inloggade som lärare
+text:
 bild: bilder/verktygspresentation/vandring/kg-min-undervisning.png
 alt: Hela webbläsarvyn: Nu är vi inloggade som lärare.
 bildläge: vandring
+återställ: nej
 beskärning: cover
 övergång: tona
 rubrikrörelse: ingen
 - steg1 | Klicka på Min undervisning | 18.98 | 11.89 | 11.45 | 6.67 | Knappen öppnar lärarens grupper.
-> 10 sekunder. Markera knappen och låt publiken hitta den i hela sidvyn. Nästa scen visar resultatet av klicket.
+> 5 sekunder. Markera knappen och låt publiken hitta den i hela sidvyn. Nästa scen visar resultatet av klicket.
 
 ---
 
@@ -316,11 +473,12 @@ text: Lärarens grupper finns samlade här.
 bild: bilder/verktygspresentation/vandring/kg-larare.png
 alt: Hela webbläsarvyn: Byt till Min undervisning.
 bildläge: vandring
+återställ: nej
 beskärning: cover
 övergång: tona
 rubrikrörelse: ingen
 - steg1 | Öppna undervisningsgruppen | 22.5 | 49.32 | 18.5 | 14.78 | Vi väljer Fysik · NA26a.
-> 15 sekunder. Visa att lärarvyn har en egen ingång och att grupperna är kopplade till en kurs.
+> 10 sekunder. Visa att lärarvyn har en egen ingång och att grupperna är kopplade till en kurs.
 
 ---
 
@@ -331,27 +489,113 @@ text: Utgå från gruppens sida.
 bild: bilder/verktygspresentation/vandring/kg-grupp.png
 alt: Hela webbläsarvyn: Skapa ett träningspass till gruppen.
 bildläge: vandring
+återställ: nej
 beskärning: cover
 övergång: tona
 rubrikrörelse: ingen
 - steg1 | Välj Skapa träningspass | 18.2 | 52.26 | 9.9 | 5.33 | Du kommer till formuläret där innehåll och omfattning väljs.
-> 15 sekunder. Gruppen är redan vald när vi startar här. Namn och elevantal är demonstrationsdata.
+> 10 sekunder. Gruppen är redan vald när vi startar här. Namn och elevantal är demonstrationsdata.
 
 ---
 
 [bildregi]
 etikett: LÄRARE
-rubrik: Ge passet namn och omfattning
-text: Exemplet innehåller 15 uppgifter om energi.
+rubrik: Ge passet ett tydligt namn
+text: Exemplet heter Inför Prov v.48.
 bild: bilder/verktygspresentation/vandring/kg-skapa.png
-alt: Hela webbläsarvyn: Ge passet namn och omfattning.
+alt: Hela webbläsarvyn: Ge passet ett tydligt namn.
 bildläge: vandring
+återställ: nej
 beskärning: cover
 övergång: tona
 rubrikrörelse: ingen
-- steg1 | Skriv ett namn eleverna känner igen | 50.0 | 40.43 | 73.5 | 5.78 | Här: Inför Prov v.48.
-- steg2 | Välj omfattning och inställningar | 50 | 64 | 74 | 34 | Anpassa antal uppgifter, datum och nivåer till gruppen.
-> 30 sekunder. Visa namnfältet och sedan inställningarna. Vi scrollar ned i samma formulär för att välja områden. Lärarens nivåval och elevens användarnivå i XP-systemet är olika saker.
+- steg1 | Skriv ett namn eleverna känner igen | 50.0 | 40.43 | 73.5 | 5.78 | Välj sedan kurs och ett eventuellt slutdatum.
+- steg2 | Välj vilka som ska få passet | 50.0 | 65.19 | 73.5 | 27.07 | Hela gruppen är förvald när du börjar från gruppens sida.
+> 15 sekunder. Ett pass kan nu riktas till en elev, flera valda elever eller hela grupper. För ett individuellt urval avmarkerar vi först gruppkrysset. Samma elevval finns när ett pass redigeras.
+
+---
+
+[bildregi]
+etikett: LÄRARE
+rubrik: Öppna elevvalet
+text:
+bild: bilder/verktygspresentation/vandring/kg-elevval-knapp.png
+alt: Hela webbläsarvyn: Öppna elevvalet.
+bildläge: vandring
+återställ: nej
+beskärning: cover
+övergång: tona
+rubrikrörelse: ingen
+- steg1 | Klicka på Välj elever | 82.72 | 59.32 | 6.43 | 5.33 | Gruppkrysset är avmarkerat. Nu väljer vi enskilda mottagare.
+> 5 sekunder. Markera knappen och låt publiken hitta den i hela sidvyn. Nästa scen visar resultatet av klicket.
+
+---
+
+[bildregi]
+etikett: LÄRARE
+rubrik: Ge en elev ett eget träningspass
+text: Här är bara Alva Berg markerad.
+bild: bilder/verktygspresentation/vandring/kg-elevval-en.png
+alt: Hela webbläsarvyn: Ge en elev ett eget träningspass.
+bildläge: vandring
+återställ: nej
+beskärning: cover
+övergång: tona
+rubrikrörelse: ingen
+- steg1 | Kryssa i eleven som ska få passet | 21.25 | 33.32 | 14.37 | 6.22 | Välj till exempel ett område som elevstatistiken visar behöver tränas.
+- steg2 | Kontrollera mottagaren | 50.0 | 71.43 | 73.5 | 7.56 | Individuellt valda sammanfattar vilka som kommer att få passet.
+- steg3 | Markera också Amir om flera behöver samma träning | 35.62 | 33.32 | 14.37 | 6.22 | Du kan välja fler elever i samma lista.
+> 15 sekunder. Ett individuellt pass kan innehålla samma frågor och inställningar som ett grupppass. Skillnaden är mottagarna: bara de valda eleverna får det automatiskt. Om läraren senare delar koden kan även andra ansluta.
+
+---
+
+[bildregi]
+etikett: LÄRARE
+rubrik: Välj flera elever – eller hela gruppen
+text: Nu är både Alva och Amir valda.
+bild: bilder/verktygspresentation/vandring/kg-elevval-flera.png
+alt: Hela webbläsarvyn: Välj flera elever – eller hela gruppen.
+bildläge: vandring
+återställ: nej
+beskärning: cover
+övergång: tona
+rubrikrörelse: ingen
+- steg1 | Två individuella mottagare | 50.0 | 71.43 | 73.5 | 7.56 | Resten av gruppen får inte passet automatiskt.
+- steg2 | Kryssa i gruppen för att välja alla | 46.87 | 26.65 | 65.61 | 6.0 | I det fortsatta exemplet ska hela Fysik · NA26a få Inför Prov v.48.
+> 15 sekunder. Elevval från olika grupper kan kombineras. Hela grupper omfattar också elever som senare ansluter till gruppen, medan individuella urval gäller de valda personerna. Vi väljer här hela gruppen och fäller ihop elevlistan.
+
+---
+
+[bildregi]
+etikett: LÄRARE
+rubrik: Kontrollera vilka som får passet
+text: Hela gruppen är nu vald.
+bild: bilder/verktygspresentation/vandring/kg-elevval-hela.png
+alt: Hela webbläsarvyn: Kontrollera vilka som får passet.
+bildläge: vandring
+återställ: nej
+beskärning: cover
+övergång: tona
+rubrikrörelse: ingen
+- steg1 | Alla i Fysik · NA26a får passet | 46.91 | 26.65 | 65.7 | 6.0 | Vi fortsätter med omfattning, nivåer och innehåll.
+> 5 sekunder. Det är samma formulär genom hela mottagarvalet. Gruppens kryss ersätter de individuella valen i gruppen.
+
+---
+
+[bildregi]
+etikett: LÄRARE
+rubrik: Välj hur mycket eleverna ska träna
+text: Vi scrollar vidare i samma formulär.
+bild: bilder/verktygspresentation/vandring/kg-omfattning.png
+alt: Hela webbläsarvyn: Välj hur mycket eleverna ska träna.
+bildläge: vandring
+återställ: nej
+beskärning: cover
+övergång: tona
+rubrikrörelse: ingen
+- steg1 | Välj nivåer för uppgifterna | 50.0 | 41.51 | 73.5 | 8.44 | Här är E, C och A markerade.
+- steg2 | Välj ett kort pass med 15 uppgifter | 50.0 | 49.95 | 73.5 | 8.44 | Omfattningen kan ändras efter behov.
+> 15 sekunder. Nivåerna här gäller uppgifterna, inte elevens XP-nivå. Sedan väljer vi områden under rätt kapitel.
 
 ---
 
@@ -362,25 +606,28 @@ text: Områdena väljs i samma formulär.
 bild: bilder/verktygspresentation/vandring/kg-innehall.png
 alt: Hela webbläsarvyn: Välj vad eleverna ska träna på.
 bildläge: vandring
+återställ: nej
 beskärning: cover
 övergång: tona
 rubrikrörelse: ingen
 - steg1 | Markera områdena | 50.0 | 49.95 | 73.5 | 18.44 | Här väljs arbete, rörelseenergi samt effekt och verkningsgrad.
-> 20 sekunder. Visa kryssrutorna och att de ligger under det aktuella kapitlet. Välj sedan Skapa träningspass. I demonstrationen hanteras skapandet lokalt utan att något publiceras till riktiga elever.
+> 15 sekunder. Visa kryssrutorna och att de ligger under det aktuella kapitlet. Välj sedan Skapa träningspass. I demonstrationen hanteras skapandet lokalt utan att något publiceras till riktiga elever.
 
 ---
 
 [bildregi]
 etikett: LÄRARE
 rubrik: Skapa det färdiga passet
+text:
 bild: bilder/verktygspresentation/vandring/kg-skapa-knapp.png
 alt: Hela webbläsarvyn: Skapa det färdiga passet.
 bildläge: vandring
+återställ: nej
 beskärning: cover
 övergång: tona
 rubrikrörelse: ingen
 - steg1 | Klicka på Skapa träningspass | 81.12 | 91.14 | 11.26 | 6.22 | Namn, områden och antal är nu valda.
-> 10 sekunder. Markera knappen och låt publiken hitta den i hela sidvyn. Nästa scen visar resultatet av klicket.
+> 5 sekunder. Markera knappen och låt publiken hitta den i hela sidvyn. Nästa scen visar resultatet av klicket.
 
 ---
 
@@ -391,26 +638,29 @@ text: Efter skapandet visas passets kod och länk.
 bild: bilder/verktygspresentation/vandring/kg-dela-pass.png
 alt: Hela webbläsarvyn: Ge eleverna vägen till passet.
 bildläge: vandring
+återställ: nej
 beskärning: cover
 övergång: tona
 rubrikrörelse: ingen
 - steg1 | Kopiera kod eller länk | 50.0 | 41.1 | 73.5 | 20.44 | Elever i den valda gruppen ser också passet på sin startsida.
 - steg2 | Klicka på Klar | 84.34 | 48.21 | 4.82 | 6.22 | Återgå till gruppen för att följa upp passet.
-> 20 sekunder. Knyt tillbaka till den första elevbilden. Detta är vägen från lärarens val till elevens uppdrag. Koden i demonstrationen är fiktiv.
+> 15 sekunder. Knyt tillbaka till den första elevbilden. Detta är vägen från lärarens val till elevens uppdrag. Koden i demonstrationen är fiktiv.
 
 ---
 
 [bildregi]
 etikett: UPPFÖLJNING
 rubrik: Öppna passets resultat
+text:
 bild: bilder/verktygspresentation/vandring/kg-resultat-knapp.png
 alt: Hela webbläsarvyn: Öppna passets resultat.
 bildläge: vandring
+återställ: nej
 beskärning: cover
 övergång: tona
 rubrikrörelse: ingen
 - steg1 | Klicka på Inför Prov v.48 | 50.0 | 46.64 | 73.38 | 8.33 | Passraden fäller ut sammanställningen.
-> 10 sekunder. Markera knappen och låt publiken hitta den i hela sidvyn. Nästa scen visar resultatet av klicket.
+> 5 sekunder. Markera knappen och låt publiken hitta den i hela sidvyn. Nästa scen visar resultatet av klicket.
 
 ---
 
@@ -421,26 +671,29 @@ text: Öppna passet för att se sammanställningen.
 bild: bilder/verktygspresentation/vandring/kg-passstatistik.png
 alt: Hela webbläsarvyn: Följ upp träningspasset.
 bildläge: vandring
+återställ: nej
 beskärning: cover
 övergång: tona
 rubrikrörelse: ingen
 - steg1 | Hur många har tränat? | 50.0 | 58.26 | 71.62 | 3.78 | Börja med omfattningen innan du tolkar resultaten.
 - steg2 | Jämför innehållsområdena | 50.0 | 68.87 | 71.62 | 13.67 | Här syns försök och andel rätt i just detta pass.
-> 30 sekunder. Alla resultat är exempeldata. Tolka andel rätt i relation till antal försök och användningen av stöd. Fråga gärna kollegorna vilket område de skulle vilja följa upp.
+> 20 sekunder. Alla resultat är exempeldata. Tolka andel rätt i relation till antal försök och användningen av stöd. Fråga gärna kollegorna vilket område de skulle vilja följa upp.
 
 ---
 
 [bildregi]
 etikett: UPPFÖLJNING
 rubrik: Hitta resultaten per elev
+text:
 bild: bilder/verktygspresentation/vandring/kg-elever-knapp.png
 alt: Hela webbläsarvyn: Hitta resultaten per elev.
 bildläge: vandring
+återställ: nej
 beskärning: cover
 övergång: tona
 rubrikrörelse: ingen
 - steg1 | Klicka för att visa alla elever | 50.0 | 80.89 | 71.62 | 6.22 | Elevlistan fälls ut under passets sammanställning.
-> 10 sekunder. Markera knappen och låt publiken hitta den i hela sidvyn. Nästa scen visar resultatet av klicket.
+> 5 sekunder. Markera knappen och låt publiken hitta den i hela sidvyn. Nästa scen visar resultatet av klicket.
 
 ---
 
@@ -451,53 +704,143 @@ text: Fäll ut elevlistan i passets resultat.
 bild: bilder/verktygspresentation/vandring/kg-elevstatistik.png
 alt: Hela webbläsarvyn: Se hur det går för enskilda elever.
 bildläge: vandring
+återställ: nej
 beskärning: cover
 övergång: tona
 rubrikrörelse: ingen
 - steg1 | Läs genomförande och rätta svar | 50 | 39 | 72 | 62 | Listan visar vilka som kommit igång och hur långt de har kommit.
-> 20 sekunder. Peka på att genomförda och rätta uppgifter är separata kolumner. Listan är underlag för uppföljning och samtal, inte en färdig betygsbedömning.
+> 15 sekunder. Peka på att genomförda och rätta uppgifter är separata kolumner. Listan är underlag för uppföljning och samtal, inte en färdig betygsbedömning.
 
 ---
 
 [bildregi]
 etikett: UPPFÖLJNING
 rubrik: Tillbaka till undervisningsgrupperna
+text:
 bild: bilder/verktygspresentation/vandring/kg-till-grupper.png
 alt: Hela webbläsarvyn: Tillbaka till undervisningsgrupperna.
 bildläge: vandring
+återställ: nej
 beskärning: cover
 övergång: tona
 rubrikrörelse: ingen
 - steg1 | Klicka på Min undervisning | 18.98 | 11.89 | 11.45 | 6.67 | Vi ska följa upp gruppens samlade träning.
-> 10 sekunder. Markera knappen och låt publiken hitta den i hela sidvyn. Nästa scen visar resultatet av klicket.
+> 5 sekunder. Markera knappen och låt publiken hitta den i hela sidvyn. Nästa scen visar resultatet av klicket.
 
 ---
 
 [bildregi]
 etikett: UPPFÖLJNING
 rubrik: Öppna samma undervisningsgrupp igen
+text:
 bild: bilder/verktygspresentation/vandring/kg-larare.png
 alt: Hela webbläsarvyn: Öppna samma undervisningsgrupp igen.
 bildläge: vandring
+återställ: nej
 beskärning: cover
 övergång: tona
 rubrikrörelse: ingen
 - steg1 | Klicka på Fysik · NA26a | 22.5 | 49.32 | 18.5 | 14.78 | Gruppens sida har en flik för områdesstatistik.
-> 10 sekunder. Markera knappen och låt publiken hitta den i hela sidvyn. Nästa scen visar resultatet av klicket.
+> 5 sekunder. Markera knappen och låt publiken hitta den i hela sidvyn. Nästa scen visar resultatet av klicket.
+
+---
+
+[bildregi]
+etikett: UPPFÖLJNING
+rubrik: Öppna gruppens elevlista
+text:
+bild: bilder/verktygspresentation/vandring/kg-elever-flik.png
+alt: Hela webbläsarvyn: Öppna gruppens elevlista.
+bildläge: vandring
+återställ: nej
+beskärning: cover
+övergång: tona
+rubrikrörelse: ingen
+- steg1 | Klicka på Elever | 28.39 | 64.93 | 5.33 | 5.11 | Här väljer du vilken elev du vill följa upp.
+> 5 sekunder. Markera knappen och låt publiken hitta den i hela sidvyn. Nästa scen visar resultatet av klicket.
+
+---
+
+[bildregi]
+etikett: UPPFÖLJNING
+rubrik: Öppna en enskild elev
+text:
+bild: bilder/verktygspresentation/vandring/kg-valj-elev.png
+alt: Hela webbläsarvyn: Öppna en enskild elev.
+bildläge: vandring
+återställ: nej
+beskärning: cover
+övergång: tona
+rubrikrörelse: ingen
+- steg1 | Klicka på Alva Berg | 50.0 | 82.1 | 73.38 | 5.89 | Elevens rad öppnar den individuella statistiken.
+> 5 sekunder. Markera knappen och låt publiken hitta den i hela sidvyn. Nästa scen visar resultatet av klicket.
+
+---
+
+[bildregi]
+etikett: UPPFÖLJNING
+rubrik: Se vad just den här eleven behöver
+text: Elevöversikten samlar aktivitet och resultat per område.
+bild: bilder/verktygspresentation/vandring/kg-individ.png
+alt: Hela webbläsarvyn: Se vad just den här eleven behöver.
+bildläge: vandring
+återställ: nej
+beskärning: cover
+övergång: tona
+rubrikrörelse: ingen
+- steg1 | Börja med aktivitet och antal försök | 50.0 | 44.93 | 73.5 | 11.22 | Alva har gjort 80 uppgifter totalt och 12 den senaste veckan.
+- steg2 | Behöver träna mer på | 32.19 | 79.81 | 35.5 | 16.22 | Effekt och verkningsgrad samt rörelseenergi är svagast i exemplet.
+- steg3 | Starkast i | 67.81 | 79.81 | 35.5 | 16.22 | Enheter samt arbete och lägesenergi är säkrare områden.
+- steg4 | Klicka på Alla 5 områden eleven har tränat | 50.0 | 88.59 | 71.12 | 3.56 | Fäll ut underlaget för en mer detaljerad jämförelse.
+> 25 sekunder. Allt är fiktiva elevdata. Staplarna visar uppskattad behärskning, medan texten under varje område visar antal försök och andel rätt i senaste försöken. Till exempel är effekt 39 procent uppskattad behärskning och 40 procent rätt i tio försök. Använd skillnaderna för ett samtal och ett riktat träningspass, inte som ett färdigt betyg.
+
+---
+
+[bildregi]
+etikett: UPPFÖLJNING
+rubrik: Jämför elevens samtliga tränade områden
+text: Den utfällda listan ger ett bredare underlag för uppföljning.
+bild: bilder/verktygspresentation/vandring/kg-individ-alla.png
+alt: Hela webbläsarvyn: Jämför elevens samtliga tränade områden.
+bildläge: vandring
+återställ: nej
+beskärning: cover
+övergång: tona
+rubrikrörelse: ingen
+- steg1 | Läs resultatet tillsammans med antalet försök | 50.0 | 59.42 | 71.12 | 24.78 | Ett område med få försök behöver tolkas försiktigt.
+> 10 sekunder. Här visas alla fem områden som vår fiktiva elev har tränat. Överväg en kort genomgång eller ett avgränsat pass för det eleven har svårt för. Under listan förklaras vad behärskningsprocenten betyder.
+
+---
+
+[bildregi]
+etikett: UPPFÖLJNING
+rubrik: Tillbaka till elevens grupp
+text:
+bild: bilder/verktygspresentation/vandring/kg-individ-tillbaka.png
+alt: Hela webbläsarvyn: Tillbaka till elevens grupp.
+bildläge: vandring
+återställ: nej
+beskärning: cover
+övergång: tona
+rubrikrörelse: ingen
+- steg1 | Klicka på Fysik · NA26a | 16.65 | 32.21 | 6.79 | 3.56 | Vi lämnar elevöversikten för att jämföra med gruppen.
+> 5 sekunder. Markera knappen och låt publiken hitta den i hela sidvyn. Nästa scen visar resultatet av klicket.
 
 ---
 
 [bildregi]
 etikett: UPPFÖLJNING
 rubrik: Byt till gruppens områdesstatistik
-bild: bilder/verktygspresentation/vandring/kg-omraden-knapp.png
+text:
+bild: bilder/verktygspresentation/vandring/kg-omraden-fran-elev.png
 alt: Hela webbläsarvyn: Byt till gruppens områdesstatistik.
 bildläge: vandring
+återställ: nej
 beskärning: cover
 övergång: tona
 rubrikrörelse: ingen
 - steg1 | Klicka på Gruppens statistik per område | 37.29 | 64.93 | 14.46 | 5.11 | Här följer du gruppens träning över flera pass.
-> 10 sekunder. Markera knappen och låt publiken hitta den i hela sidvyn. Nästa scen visar resultatet av klicket.
+> 5 sekunder. Markera knappen och låt publiken hitta den i hela sidvyn. Nästa scen visar resultatet av klicket.
 
 ---
 
@@ -508,12 +851,13 @@ text: Gruppens områdesstatistik finns på en egen flik.
 bild: bilder/verktygspresentation/vandring/kg-omradesstatistik.png
 alt: Hela webbläsarvyn: Välj nästa sak att arbeta med.
 bildläge: vandring
+återställ: nej
 beskärning: cover
 övergång: tona
 rubrikrörelse: ingen
 - steg1 | Jämför uppskattad behärskning | 50 | 82 | 74 | 16 | Effekt och verkningsgrad ligger lägst i detta exempel.
 - steg2 | Skapa ett nytt pass härifrån | 77 | 94 | 22 | 6 | Knappen utgår från de svagaste områdena.
-> 30 sekunder. Skilj på staplarnas uppskattade behärskning och andelen rätt i den mindre texten. Det är olika mått. Försök och antal elever hjälper oss att bedöma underlaget. Nu går vi vidare till att skapa material i Uppgiftslabbet.
+> 20 sekunder. Skilj på staplarnas uppskattade behärskning och andelen rätt i den mindre texten. Det är olika mått. Försök och antal elever hjälper oss att bedöma underlaget. Nu går vi vidare till att skapa material i Uppgiftslabbet.
 
 ---
 
@@ -524,25 +868,28 @@ text: Vi byter verktyg för att skapa ett övningsblad.
 bild: bilder/verktygspresentation/vandring/ul-kurser.png
 alt: Hela webbläsarvyn: Öppna uppgiftslabbet.se och välj kurs.
 bildläge: vandring
+återställ: nej
 beskärning: cover
 övergång: tona
 rubrikrörelse: ingen
 - steg1 | Klicka på Fysik nivå 1 | 26.9 | 46.2 | 23.17 | 23.6 | Kurskortet öppnar uppgiftsbanken och ditt blad.
-> 15 sekunder. Öppna uppgiftslabbet.se i webbläsaren. Nu är vi inloggade med ett lärarkonto. Börja på kursvalet så att kollegorna kan följa samma väg själva.
+> 5 sekunder. Öppna uppgiftslabbet.se i webbläsaren. Nu är vi inloggade med ett lärarkonto. Börja på kursvalet så att kollegorna kan följa samma väg själva.
 
 ---
 
 [bildregi]
 etikett: UPPGIFTSLABBET
 rubrik: Välj uppgifter om arbete
+text:
 bild: bilder/verktygspresentation/vandring/ul-valj-omrade.png
 alt: Hela webbläsarvyn: Välj uppgifter om arbete.
 bildläge: vandring
+återställ: nej
 beskärning: cover
 övergång: tona
 rubrikrörelse: ingen
 - steg1 | Klicka på Arbete och lägesenergi | 8.66 | 79.76 | 15.81 | 5.33 | Scrolla till Energi och rörelsemängd i vänstermenyn och välj området.
-> 10 sekunder. Markera knappen och låt publiken hitta den i hela sidvyn. Nästa scen visar resultatet av klicket.
+> 5 sekunder. Markera knappen och låt publiken hitta den i hela sidvyn. Nästa scen visar resultatet av klicket.
 
 ---
 
@@ -553,13 +900,14 @@ text: Välj kurs och område. Banken ligger i mitten, bladet till höger.
 bild: bilder/verktygspresentation/vandring/ul-bank.png
 alt: Hela webbläsarvyn: Bygg ett övningsblad i Uppgiftslabbet.
 bildläge: vandring
+återställ: nej
 beskärning: cover
 övergång: tona
 rubrikrörelse: ingen
 - steg1 | 1 · Välj område | 8.5 | 79.5 | 16 | 9 | Vi har valt Arbete och lägesenergi.
 - steg2 | 2 · Läs uppgifterna i banken | 46 | 46 | 55 | 58 | Här kan du granska innehållet och visa facit.
 - steg3 | 3 · Samla uppgifter till höger | 87.16 | 66.98 | 25.69 | 39.81 | Dra från banken och släpp i övningsbladet.
-> 30 sekunder. Förklara först de tre delarna av sidan. Alla delar hör till samma fullständiga webbläsarvy. Nästa scen visar fyra verkliga drag.
+> 20 sekunder. Förklara först de tre delarna av sidan. Alla delar hör till samma fullständiga webbläsarvy. Nästa scen visar fyra verkliga drag.
 
 ---
 
@@ -570,27 +918,30 @@ text: Nästa klick visar hela arbetsmomentet.
 bild: bilder/verktygspresentation/vandring/ul-dra-fyra.png
 alt: Hela webbläsarvyn: Dra fyra uppgifter till övningsbladet.
 bildläge: vandring
+återställ: nej
 beskärning: cover
 övergång: tona
 rubrikrörelse: ingen
 film: bilder/verktygspresentation/vandring/ul-dra-fyra.mp4
 filmsteg: spela
 - spela | Dra från mitten till höger | 59 | 48 | 82 | 78 | Släpp i den tomma ytan för att lägga till som en ny uppgift.
-> 25 sekunder. Klicka och låt den ungefär tolv sekunder långa filmen spela färdigt. Fyra separata drag bygger upp listan. Markören visar rörelsen och bladets antal förändras. Att släppa på en befintlig uppgift kan i stället gruppera deluppgifter; här släpper vi i den tomma ytan.
+> 15 sekunder. Klicka och låt den ungefär tolv sekunder långa filmen spela färdigt. Fyra separata drag bygger upp listan. Markören visar rörelsen och bladets antal förändras. Att släppa på en befintlig uppgift kan i stället gruppera deluppgifter; här släpper vi i den tomma ytan.
 
 ---
 
 [bildregi]
 etikett: UPPGIFTSLABBET
 rubrik: Fyra uppgifter ligger i bladet
+text:
 bild: bilder/verktygspresentation/vandring/ul-fyra.png
 alt: Hela webbläsarvyn: Fyra uppgifter ligger i bladet.
 bildläge: vandring
+återställ: nej
 beskärning: cover
 övergång: tona
 rubrikrörelse: ingen
 - steg1 | Klicka på Redigera | 87.16 | 41.52 | 25.69 | 6.11 | Knappen ovanför bladet öppnar dokumentets förhandsvisning.
-> 10 sekunder. Markera knappen och låt publiken hitta den i hela sidvyn. Nästa scen visar resultatet av klicket.
+> 5 sekunder. Markera knappen och låt publiken hitta den i hela sidvyn. Nästa scen visar resultatet av klicket.
 
 ---
 
@@ -601,13 +952,14 @@ text: Fyra uppgifter finns nu i bladet till höger.
 bild: bilder/verktygspresentation/vandring/ul-forhandsvisa.png
 alt: Hela webbläsarvyn: Klicka på Redigera för att förhandsvisa.
 bildläge: vandring
+återställ: nej
 beskärning: cover
 övergång: tona
 rubrikrörelse: ingen
 film: bilder/verktygspresentation/vandring/ul-forhandsvisa.mp4
 filmsteg: spela
 - spela | Öppna dokumentet | 50 | 47 | 100 | 88 | Redigera visar bladets utseende och layoutverktyg.
-> 15 sekunder. Nästa klick visar den verkliga knappen och övergången till förhandsvisningen. Vänta tills dokumentet har öppnats. Vi stannar vid verktygen på nästa scen.
+> 10 sekunder. Nästa klick visar den verkliga knappen och övergången till förhandsvisningen. Vänta tills dokumentet har öppnats. Vi stannar vid verktygen på nästa scen.
 
 ---
 
@@ -618,6 +970,7 @@ text: Sidan ligger kvar medan vi går mellan de viktigaste verktygen.
 bild: bilder/verktygspresentation/vandring/ul-redigera.png
 alt: Hela webbläsarvyn: Anpassa dokumentet i förhandsvisningen.
 bildläge: vandring
+återställ: nej
 beskärning: cover
 övergång: tona
 rubrikrörelse: ingen
@@ -625,21 +978,23 @@ rubrikrörelse: ingen
 - steg2 | Justera avståndet | 54 | 6.5 | 25 | 7 | Avståndsreglaget påverkar utrymmet mellan uppgifterna.
 - steg3 | Välj facit och exportformat | 75 | 6.5 | 17 | 7 | Här finns Facit, PDF och Word.
 - steg4 | Klicka på Klar för att återgå | 83.99 | 6.43 | 4.52 | 5.67 | Tillbaka vid banken kan du också redigera en enskild uppgift.
-> 35 sekunder. Visa först hela förhandsvisningen. Förklara skillnaden mellan att redigera dokumentets layout här och att redigera själva uppgiftstexten. Exportknapparna visas; vi genomför ingen export under presentationen.
+> 25 sekunder. Visa först hela förhandsvisningen. Förklara skillnaden mellan att redigera dokumentets layout här och att redigera själva uppgiftstexten. Exportknapparna visas; vi genomför ingen export under presentationen.
 
 ---
 
 [bildregi]
 etikett: UPPGIFTSLABBET
 rubrik: Öppna uppgiftens egen redigering
+text:
 bild: bilder/verktygspresentation/vandring/ul-penna.png
 alt: Hela webbläsarvyn: Öppna uppgiftens egen redigering.
 bildläge: vandring
+återställ: nej
 beskärning: cover
 övergång: tona
 rubrikrörelse: ingen
 - steg1 | Klicka på pennan vid uppgiften | 93.16 | 50.91 | 2.56 | 4.56 | Pennan visas på uppgiften i bladet till höger.
-> 10 sekunder. Markera knappen och låt publiken hitta den i hela sidvyn. Nästa scen visar resultatet av klicket.
+> 5 sekunder. Markera knappen och låt publiken hitta den i hela sidvyn. Nästa scen visar resultatet av klicket.
 
 ---
 
@@ -650,27 +1005,30 @@ text: Uppgiftens redigering öppnas ovanpå arbetsytan.
 bild: bilder/verktygspresentation/vandring/ul-uppgiftsredigering.png
 alt: Hela webbläsarvyn: Redigera en uppgift vid behov.
 bildläge: vandring
+återställ: nej
 beskärning: cover
 övergång: tona
 rubrikrörelse: ingen
 - steg1 | Anpassa formuleringen | 38.5 | 36 | 30 | 28 | Redigera uppgiftens innehåll för ditt material.
 - steg2 | Anpassa figuren | 65 | 39 | 23 | 44 | Här finns bildval, förhandsvisning och bildstorlek.
 - steg3 | Klicka på Avbryt för att återgå | 65.15 | 88.79 | 5.39 | 5.44 | I demonstrationen lämnar vi uppgiften oförändrad.
-> 25 sekunder. Detta är redigeringsdialogen, inte dokumentets layoutvy. Vi avbryter i demonstrationen, så ingen uppgift i banken ändras.
+> 15 sekunder. Detta är redigeringsdialogen, inte dokumentets layoutvy. Vi avbryter i demonstrationen, så ingen uppgift i banken ändras.
 
 ---
 
 [bildregi]
 etikett: UPPGIFTSLABBET
 rubrik: Öppna delningen från arbetsytan
+text:
 bild: bilder/verktygspresentation/vandring/ul-dela-knapp.png
 alt: Hela webbläsarvyn: Öppna delningen från arbetsytan.
 bildläge: vandring
+återställ: nej
 beskärning: cover
 övergång: tona
 rubrikrörelse: ingen
 - steg1 | Klicka på Dela | 89.74 | 29.5 | 4.42 | 5.0 | Knappen vid dokumentet öppnar kollegorna på din skola.
-> 10 sekunder. Markera knappen och låt publiken hitta den i hela sidvyn. Nästa scen visar resultatet av klicket.
+> 5 sekunder. Markera knappen och låt publiken hitta den i hela sidvyn. Nästa scen visar resultatet av klicket.
 
 ---
 
@@ -681,27 +1039,30 @@ text: Välj Dela vid ditt dokument för att öppna denna dialog.
 bild: bilder/verktygspresentation/vandring/ul-dela.png
 alt: Hela webbläsarvyn: Dela dokumentet med kollegor.
 bildläge: vandring
+återställ: nej
 beskärning: cover
 övergång: tona
 rubrikrörelse: ingen
 - steg1 | Välj en kollega | 50 | 45 | 36 | 20 | Kollegor på samma skola listas här.
 - steg2 | Se vilka som redan har tillgång | 50 | 71 | 36 | 25 | Dokumentet kan ha flera medarbetare.
 - steg3 | Stäng dialogen med krysset | 66.25 | 16.03 | 3.12 | 5.56 | Vi återgår till arbetsytan innan vi öppnar sparat material.
-> 25 sekunder. Delningsvyn kräver godkända lärarkonton. I exemplet är Alex och Sara fiktiva användare. Inga verkliga inbjudningar skickas. Visa precis var man ser redan tillagda kollegor.
+> 15 sekunder. Delningsvyn kräver godkända lärarkonton. I exemplet är Alex och Sara fiktiva användare. Inga verkliga inbjudningar skickas. Visa precis var man ser redan tillagda kollegor.
 
 ---
 
 [bildregi]
 etikett: UPPGIFTSLABBET
 rubrik: Hitta ditt sparade material
+text:
 bild: bilder/verktygspresentation/vandring/ul-mina-knapp.png
 alt: Hela webbläsarvyn: Hitta ditt sparade material.
 bildläge: vandring
+återställ: nej
 beskärning: cover
 övergång: tona
 rubrikrörelse: ingen
 - steg1 | Klicka på Mina prov och övningsblad | 74.22 | 5.06 | 13.96 | 6.0 | Knappen öppnar biblioteket med egna och delade dokument.
-> 10 sekunder. Markera knappen och låt publiken hitta den i hela sidvyn. Nästa scen visar resultatet av klicket.
+> 5 sekunder. Markera knappen och låt publiken hitta den i hela sidvyn. Nästa scen visar resultatet av klicket.
 
 ---
 
@@ -712,11 +1073,12 @@ text: Mina prov och övningsblad samlar dokumenten.
 bild: bilder/verktygspresentation/vandring/ul-bibliotek.png
 alt: Hela webbläsarvyn: Hitta tillbaka till sparat material.
 bildläge: vandring
+återställ: nej
 beskärning: cover
 övergång: tona
 rubrikrörelse: ingen
 - steg1 | Öppna eget eller delat material | 50 | 48 | 59 | 34 | Dokumentraderna visar kurs och information om delning.
-> 20 sekunder. Visa att materialet finns kvar att arbeta vidare med och att även kollegors delade dokument går att hitta här.
+> 15 sekunder. Visa att materialet finns kvar att arbeta vidare med och att även kollegors delade dokument går att hitta här.
 
 ---
 
@@ -725,4 +1087,4 @@ etikett: PROVA SJÄLV
 rubrik: Vilket arbetsmoment vill du prova först?
 svar: Skapa ett kort träningspass – eller dra ihop ett övningsblad med fyra uppgifter.
 text: kunskapsgymmet.se · uppgiftslabbet.se
-> 25 sekunder. Låt kollegorna välja en konkret sak att prova. Avsluta här, eller använd återstående tid till frågor. Verktygen har separata arbetsflöden; ett uppgiftsblad blir inte automatiskt ett träningspass.
+> 15 sekunder. Låt kollegorna välja en konkret sak att prova. Avsluta här, eller använd återstående tid till frågor. Verktygen har separata arbetsflöden; ett uppgiftsblad blir inte automatiskt ett träningspass.

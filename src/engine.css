@@ -185,7 +185,7 @@
 .scen [data-image-mode="guided"] .ir-copy{left:40px;top:auto;bottom:24px;width:1840px;height:auto;min-height:90px;display:flex;align-items:center;gap:32px;padding:20px 28px;border:1px solid var(--line);border-radius:16px;background:var(--bg);color:var(--ink);text-shadow:none}
 .scen [data-image-mode="guided"] .ir-copy h2,.scen [data-image-mode="guided"] .ir-copy h2.long{font-size:36px;line-height:1.1;flex:none;max-width:56%}
 .scen [data-image-mode="guided"] .ir-copy>p:not(.ir-kicker){font-size:26px;line-height:1.25;max-width:none;color:var(--muted)}
-.scen [data-image-mode="guided"] .ir-kicker{font:18px var(--mono);color:var(--accent-2);max-width:150px}
+.scen [data-image-mode="guided"] .ir-kicker{font:18px var(--mono);color:var(--accent-2);max-width:none;flex:none}
 .scen [data-image-mode="guided"][data-dramaturgy-state="focus"] .ir-copy{opacity:0}
 .scen [data-image-mode="guided"] .ir-detail{left:40px;right:40px;top:auto;bottom:24px;width:auto;height:auto;transform:none;opacity:0!important}
 .scen [data-image-mode="guided"] .ir-detail.dramaturgy-current{opacity:1!important}

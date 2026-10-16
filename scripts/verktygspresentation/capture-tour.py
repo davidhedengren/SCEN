@@ -15,6 +15,7 @@ metadata=json.loads((OUT/'regions.json').read_text()) if (OUT/'regions.json').ex
 def shot(page,name,selectors):
     if TASK_ONLY and name!='kg-uppgift':return
     assert not page.locator('#cheer.show').count(), f'Celebration obscures {name}'
+    page.wait_for_function("!document.querySelector('.pt [aria-busy=true]')",timeout=15000)
     page.evaluate('document.fonts.ready');page.wait_for_timeout(500)
     page.screenshot(path=str(OUT/(name+'.png')),animations='disabled')
     regions={}
@@ -227,8 +228,9 @@ def ul(browser,css):
     print('ERRORS',errors,flush=True);assert not errors,errors
     video=page.video.path();c.close();encode(video,clips)
 
-with sync_playwright() as p:
-    browser=launch(p);css=fonts_css()
-    if len(sys.argv)==1 or 'kg' in sys.argv or TASK_ONLY:kg(browser,css)
-    if len(sys.argv)==1 or 'ul' in sys.argv:ul(browser,css)
-    browser.close()
+if __name__=='__main__':
+    with sync_playwright() as p:
+        browser=launch(p);css=fonts_css()
+        if len(sys.argv)==1 or 'kg' in sys.argv or TASK_ONLY:kg(browser,css)
+        if len(sys.argv)==1 or 'ul' in sys.argv:ul(browser,css)
+        browser.close()

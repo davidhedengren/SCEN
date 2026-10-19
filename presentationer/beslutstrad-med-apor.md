@@ -26,15 +26,15 @@ etikett: Uppdraget
 
 [bildregi]
 etikett: Exempel
-rubrik: Åtta ormar där vi vet svaret
+rubrik: Åtta ormar där vi vet om de är giftiga eller inte
 bild: bilder/beslutstrad-apor/ormar-traning.svg
 alt: Fyra giftiga och fyra ofarliga tecknade ormar. De giftiga har triangulärt huvud och smala pupiller.
 bildläge: guided
 textband: kompakt
 maxzoom: 1.65
 - giftiga | Giftiga | 27.6 | 47.4 | 34 | 74 | Alla fyra har triangulärt huvud och smala pupiller.
-- huvud | Triangulärt huvud räcker inte | 64.1 | 29.4 | 17 | 36 | Orm 05 har triangulärt huvud men runda pupiller. Den är ofarlig.
-- pupill | Smala pupiller räcker inte | 64.1 | 65.5 | 17 | 36 | Orm 07 har smala pupiller men runt huvud. Den är också ofarlig.
+- huvud | Triangulärt huvud räcker inte | 64.1 | 29.4 | 17 | 36 | Orm 05 har triangulärt huvud men runda pupiller och den är ofarlig.
+- pupill | Smala pupiller räcker inte | 64.1 | 65.5 | 17 | 36 | Orm 07 har smala pupiller men runt huvud och är också ofarlig.
 - färg | Färgen avslöjar inget | 50 | 47 | 96 | 86 | Det finns röda ormar i båda grupperna.
 > Fråga klassen innan första klicket: vad har de giftiga ormarna gemensamt som de ofarliga saknar?
 > Ormarna är ett urval ur aktiviteten på ai-aktiviteter.se/beslutstrad, där hela träningsdatan har 20 ormar.
@@ -44,8 +44,8 @@ maxzoom: 1.65
 [träd]
 etikett: Exempel
 rubrik: Är ormen giftig?
-text: Två frågor räcker för att sortera alla åtta ormarna rätt.
-slutsats: Varje fråga handlar om något man kan se.
+text: Genom att fråga om huvudform och pupiller kan vi sortera alla åtta ormarna i exemplet rätt.
+slutsats: Varje fråga (nod) handlar om något man kan se på bilderna.
 - Huvudform?
   - Runt: Ofarlig
   - Triangulärt: Pupiller?
@@ -65,7 +65,7 @@ slutsats: Varje fråga handlar om något man kan se.
 etikett: Testdata
 rubrik: Är ormen giftig?
 text: Två ormar som trädet aldrig har sett. Vi följer dem en fråga i taget.
-slutsats: Nu gör ni samma sak, fast med apor och utan facit.
+slutsats: Eran uppgift är att göra samma sak, fast av en större datamängd med apor.
 - Huvudform?
   - Runt: Ofarlig
   - Triangulärt: Pupiller?
@@ -80,9 +80,9 @@ slutsats: Nu gör ni samma sak, fast med apor och utan facit.
 
 [etapper]
 etikett: Så går det till
-rubrik: Från apkort till ett prövat träd
+rubrik: Bygg ett beslutsträd och testa nya apor
 - Utforska | I par: sortera träningsaporna och leta efter mönster.
-- Bygg trädet | Rita ett beslutsträd som avgör om en apa bits.
+- Bygg trädet | Rita ett beslutsträd som avgör om en apa bits eller inte.
 - Byt och testa | Använd en annan grupps träd på nya apor.
 - Utvärdera | Jämför med facit. Vilket träd fungerade bäst?
 > Ur instruktionen: reglerna ska skrivas så tydligt att en annan grupp kan använda dem utan att fråga.
@@ -91,30 +91,69 @@ rubrik: Från apkort till ett prövat träd
 
 [bildregi]
 etikett: Träningsdata
-rubrik: Vad ska ni titta på?
-text: 27 apor där vi vet svaret: 13 bits och 14 bits inte.
-bild: bilder/beslutstrad-apor/traningsdata.png
-alt: Tretton apor som bits till vänster och fjorton apor som inte bits till höger.
+rubrik: Undersök egenskaper hos aporna
+text: 27 apor där vi vet svaret. Här ligger de blandade.
+bild: bilder/beslutstrad-apor/traningsdata-blandad.png
+alt: De 27 träningsaporna blandade i fyra rader, utan uppdelning i bits och bits inte.
 bildläge: guided
 textband: kompakt
 maxzoom: 3
-- m1 | Munnen | 11.04 | 23.3 | 9 | 8 | Visar tänderna (apa 01).
-- m2 | Munnen | 32.29 | 23.3 | 9 | 8 | Ler (apa 05).
-- m3 | Munnen | 42.92 | 23.3 | 9 | 8 | Sur (apa 09).
-- m4 | Munnen | 21.67 | 42.2 | 9 | 8 | Öppen (apa 14).
-- m5 | Munnen | 11.04 | 62.5 | 9 | 10 | Tungan ute (apa 17).
-- o1 | Ögonen | 11.04 | 18.1 | 9 | 6 | Båda öppna (apa 01).
-- o2 | Ögonen | 11.04 | 36.9 | 9 | 6 | Ett öga blinkar (apa 10).
-- o3 | Ögonen | 57.08 | 18.1 | 9 | 6 | Stängda (apa 04).
-- o4 | Ögonen | 67.71 | 18.1 | 9 | 6 | Kryss (apa 07).
-- s1 | Saker och detaljer | 88.96 | 38.7 | 10.5 | 18.5 | Glasögon (apa 25).
-- s2 | Saker och detaljer | 57.08 | 57.6 | 10.5 | 18.5 | Rosett (apa 30).
-- s3 | Saker och detaljer | 78.33 | 57.6 | 10.5 | 18.5 | Mask (apa 37).
-- s4 | Saker och detaljer | 57.08 | 76.5 | 10.5 | 18.5 | Plåster (apa 39).
-- s5 | Saker och detaljer | 78.33 | 38.7 | 10.5 | 18.5 | Rufsigt hår (apa 24).
-> Visa vad man kan titta på, men inte vilka egenskaper som spelar roll. Det ska eleverna komma fram till själva.
-> Sista klicket visar alla apor i färg igen. Diskutera egenskaperna innan ni går vidare.
+- m1 | Munnen | 14.69 | 58.24 | 9.84 | 8.17 | Visar tänderna (apa 01).
+- m2 | Munnen | 14.69 | 79.17 | 9.84 | 8.17 | Ler (apa 05).
+- m3 | Munnen | 73.54 | 58.24 | 9.84 | 8.17 | Sur (apa 09).
+- m4 | Munnen | 26.46 | 16.39 | 9.84 | 8.17 | Öppen (apa 14).
+- m5 | Munnen | 50 | 16.39 | 9.84 | 9.72 | Tungan ute (apa 17).
+- o1 | Ögonen | 14.69 | 52.41 | 9.84 | 5.83 | Båda öppna (apa 01).
+- o2 | Ögonen | 61.77 | 73.33 | 9.84 | 5.83 | Ett öga blinkar (apa 10).
+- o3 | Ögonen | 50 | 31.48 | 9.84 | 5.83 | Stängda (apa 04).
+- o4 | Ögonen | 85.31 | 10.56 | 9.84 | 5.83 | Kryss (apa 07).
+- s1 | Saker och detaljer | 38.23 | 75.28 | 11.59 | 20.61 | Glasögon (apa 25).
+- s2 | Saker och detaljer | 38.23 | 12.5 | 11.59 | 20.61 | Rosett (apa 30).
+- s3 | Saker och detaljer | 85.31 | 33.43 | 11.59 | 20.61 | Mask (apa 37).
+- s4 | Saker och detaljer | 73.54 | 12.5 | 11.59 | 20.61 | Plåster (apa 39).
+- s5 | Saker och detaljer | 38.23 | 33.43 | 11.59 | 20.61 | Rufsigt hår (apa 24).
+> Aporna är blandade så att det inte syns vilka som bits. Gå igenom vad man kan titta på, inte vilka egenskaper som spelar roll.
+> Sista klicket visar alla apor igen. Diskutera egenskaperna innan ni går vidare.
 > Eleverna har samma apor som kort. Testaporna delas inte ut än.
+
+---
+
+[fri]
+@text 144 70 1632 110 storlek=76 typsnitt=rubrik | Sortera era kort
+@form 144 220 800 720 färg=accent2 bakgrund=yta
+@form 976 220 800 720 bakgrund=yta
+@text 200 250 700 110 storlek=84 färg=accent2 typsnitt=rubrik | Bits
+@text 1032 250 700 110 storlek=84 färg=accent typsnitt=rubrik | Bits inte
+@text 200 400 160 110 storlek=88 | 01
+@text 370 400 160 110 storlek=88 | 02
+@text 540 400 160 110 storlek=88 | 05
+@text 710 400 160 110 storlek=88 | 09
+@text 200 525 160 110 storlek=88 | 10
+@text 370 525 160 110 storlek=88 | 14
+@text 540 525 160 110 storlek=88 | 15
+@text 710 525 160 110 storlek=88 | 16
+@text 200 650 160 110 storlek=88 | 17
+@text 370 650 160 110 storlek=88 | 28
+@text 540 650 160 110 storlek=88 | 33
+@text 710 650 160 110 storlek=88 | 35
+@text 200 775 160 110 storlek=88 | 36
+@text 1032 400 160 110 storlek=88 | 04
+@text 1202 400 160 110 storlek=88 | 07
+@text 1372 400 160 110 storlek=88 | 12
+@text 1542 400 160 110 storlek=88 | 19
+@text 1032 525 160 110 storlek=88 | 22
+@text 1202 525 160 110 storlek=88 | 23
+@text 1372 525 160 110 storlek=88 | 24
+@text 1542 525 160 110 storlek=88 | 25
+@text 1032 650 160 110 storlek=88 | 30
+@text 1202 650 160 110 storlek=88 | 32
+@text 1372 650 160 110 storlek=88 | 37
+@text 1542 650 160 110 storlek=88 | 38
+@text 1032 775 160 110 storlek=88 | 39
+@text 1202 775 160 110 storlek=88 | 40
+@text 144 965 1632 60 storlek=36 färg=dampad | 13 apor bits och 14 bits inte. Lägg korten i två högar.
+> Bilden visar bara nummer, så att eleverna själva letar fram och sorterar sina kort.
+> Nästa bild visar aporna sorterade, med ledtrådar. Den kan stå kvar när paren har kommit en bit.
 
 ---
 
@@ -171,7 +210,7 @@ rubrik: Hur många av de 13 testaporna fick trädet ni använde rätt?
 [träd]
 etikett: Ett möjligt träd
 rubrik: Ett träd som klarar alla apor
-text: Tre frågor räcker för både träningsdatan och testdatan. Vi skickar några testapor genom trädet.
+text: Det går att konstruera ett träd med 3 frågor som kan klassificera alla apor både i träningsdatan och testdatan. Vi testar några testapor genom trädet.
 slutsats: 27 av 27 träningsapor och 13 av 13 testapor. Men det finns fler träd som fungerar.
 - Öppen mun?
   - Ja: Bits
@@ -206,9 +245,9 @@ slutsats: En modell kan bara lära sig det som syns i träningsdatan.
 ---
 
 [sats]
-rubrik: Så lär sig en dator också
-text: Ni har gjort övervakad inlärning för hand.
-- Träningsdata | Exempel där svaret är känt. Modellen byggs av dem.
+rubrik: Hur lär sig en dator?
+text: I kapitel 3 ska vi se hur vi kan använda maskininlärning för att låta ett AI-system bygga beslutsträd åt oss.
+- Träningsdata | Exempel där svaret är känt. Modellen byggs av dessa exempel.
 - Testdata | Nya exempel som modellen aldrig sett. De visar om den fungerar.
 - Överanpassning | Modellen lär sig träningsdatan utantill och klarar nya fall sämre.
 > Fråga avslutningsvis: hur gick er egen inlärning till? Jämför med hur en dator bygger ett träd. Ingen modell är 100 procent rätt, och vi väljer den som klarar testdatan bäst.

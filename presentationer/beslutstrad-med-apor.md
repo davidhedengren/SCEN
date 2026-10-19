@@ -65,7 +65,7 @@ slutsats: Varje fråga (nod) handlar om något man kan se på bilderna.
 etikett: Testdata
 rubrik: Är ormen giftig?
 text: Två ormar som trädet aldrig har sett. Vi följer dem en fråga i taget.
-slutsats: Eran uppgift är att göra samma sak, fast av en större datamängd med apor.
+slutsats: Er uppgift är att göra samma sak, fast med en större datamängd av apor.
 - Huvudform?
   - Runt: Ofarlig
   - Triangulärt: Pupiller?

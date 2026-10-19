@@ -51,9 +51,11 @@ slutsats: Varje fråga handlar om något man kan se.
   - Triangulärt: Pupiller?
     - Runda: Ofarlig
     - Smala: Giftig
-- fokus: väg Runt | Första frågan | Runt huvud: 07 och 08. Båda är ofarliga.
-- fokus: väg Triangulärt > Runda | Andra frågan | Triangulärt huvud men runda pupiller: 05 och 06 är ofarliga.
-- fokus: väg Triangulärt > Smala | Giftiga | Triangulärt huvud och smala pupiller: 01–04.
+- fokus: rot | Första frågan | Huvudformen delar ormarna i två grupper.
+- fokus: väg Runt | Runt huvud | 07 och 08. Båda är ofarliga.
+- fokus: väg Triangulärt | Triangulärt huvud | 01–06 går vidare till nästa fråga: pupillerna.
+- fokus: väg Triangulärt > Runda | Runda pupiller | 05 och 06 är ofarliga.
+- fokus: väg Triangulärt > Smala | Smala pupiller | 01–04 är giftiga.
 @bild 144 640 540 310 passning=hela | bilder/beslutstrad-apor/ormar-mini.svg
 > Miniatyrerna är de åtta ormarna från förra bilden. Följ varje orm genom trädet tillsammans med klassen.
 
@@ -62,15 +64,17 @@ slutsats: Varje fråga handlar om något man kan se.
 [träd]
 etikett: Testdata
 rubrik: Är ormen giftig?
-text: En orm som trädet aldrig har sett.
+text: Två ormar som trädet aldrig har sett. Vi följer dem en fråga i taget.
 slutsats: Nu gör ni samma sak, fast med apor och utan facit.
 - Huvudform?
   - Runt: Ofarlig
   - Triangulärt: Pupiller?
     - Runda: Ofarlig
     - Smala: Giftig
-- fokus: väg Triangulärt > Smala | En ny orm | Triangulärt huvud och smala pupiller. Trädet svarar giftig. | bilder/beslutstrad-apor/orm-ny.svg
-> Fråga klassen innan klicket: vad svarar trädet? Ormen kommer från testdatan i ai-aktiviteter.se/beslutstrad och är giftig.
+- fokus: steg Triangulärt > Smala | Ny orm 1 | Triangulärt huvud och smala pupiller. Trädet svarar giftig. | bilder/beslutstrad-apor/orm-ny.svg
+- fokus: steg Triangulärt > Runda | Ny orm 2 | Triangulärt huvud men runda pupiller. Trädet svarar ofarlig. | bilder/beslutstrad-apor/orm-ny-2.svg
+> Första klicket visar ormen vid roten. Varje klick därefter går en fråga ner i trädet. Fråga klassen före varje klick: vilket svar gäller för den här ormen?
+> Båda ormarna kommer från testdatan i ai-aktiviteter.se/beslutstrad. Ny orm 1 är giftig och ny orm 2 är ofarlig, så trädet gissar rätt på båda.
 
 ---
 
@@ -176,13 +180,13 @@ slutsats: 27 av 27 träningsapor och 13 av 13 testapor. Men det finns fler träd
     - Nej: Något öga öppet?
       - Ja: Bits
       - Nej: Bits inte
-- fokus: väg Ja | Apa 13 | Öppen mun. Den bits. | bilder/beslutstrad-apor/kort-13.png
-- fokus: väg Nej > Ja | Apa 29 | Ingen öppen mun, men en mask. Den bits inte. | bilder/beslutstrad-apor/kort-29.png
-- fokus: väg Nej > Nej > Ja | Apa 06 | Inget på sig och ett öppet öga. Den bits. | bilder/beslutstrad-apor/kort-06.png
-- fokus: väg Nej > Nej > Nej | Apa 08 | Inget på sig och stängda ögon. Den bits inte. | bilder/beslutstrad-apor/kort-08.png
-- fokus: väg Nej > Ja | Apa 26 | Plåstret räknas som en sak. Den bits inte. | bilder/beslutstrad-apor/kort-26.png
+- fokus: steg Ja | Apa 13 | Öppen mun. Den bits. | bilder/beslutstrad-apor/kort-13.png
+- fokus: steg Nej > Ja | Apa 29 | Ingen öppen mun, men en mask. Den bits inte. | bilder/beslutstrad-apor/kort-29.png
+- fokus: steg Nej > Nej > Ja | Apa 06 | Inget på sig och ett öppet öga. Den bits. | bilder/beslutstrad-apor/kort-06.png
+- fokus: steg Nej > Nej > Nej | Apa 08 | Inget på sig och stängda ögon. Den bits inte. | bilder/beslutstrad-apor/kort-08.png
+- fokus: steg Nej > Ja | Apa 26 | Plåstret räknas som en sak. Den bits inte. | bilder/beslutstrad-apor/kort-26.png
 > Visa först efter att eleverna har testat sina egna träd och sett facit.
-> Fråga klassen före varje klick: vart går apan i trädet?
+> Första klicket för varje apa visar den vid roten. Varje klick därefter går en fråga ner. Fråga klassen före varje klick: vad svarar apan på frågan?
 > Trädet är samma som i AI Unplugged (Open mouth? Accessory? At least one eye open?). Plåstret räknas som en sak. Annars blir apa 26 fel.
 > Rufsigt hår och tungan spelar ingen roll. Den som byggde regler på dem har hittat mönster som bara råkar finnas i träningsdatan.
 

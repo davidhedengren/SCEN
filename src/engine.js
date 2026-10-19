@@ -183,8 +183,13 @@ function allocate(weights, total) {
 function gtAdd(map, id, j) { (map[id] = map[id] || new Set()).add(j); }
 function gtPanel(intro, focus, end, extra, x, y, w, pics) {
   pics = pics || {};
-  const notes = focus.map((f, j) => `<div class="gt-note${pics[j] ? ' gt-hascase' : ''}" data-dramaturgy-in="${j}"${pics[j] ? pics[j].attr : ''}>` +
-    (f.head ? `<p class="gt-head">${fmt(f.head)}</p>` : '') + (pics[j] ? pics[j].html : '') + (f.text ? `<p class="gt-text">${fmt(f.text)}</p>` : '') + (extra[j] || '') + `</div>`).join('');
+  const notes = focus.map((f, j) => {
+    if (f.ids && f.grp !== j) return '';
+    const pic = pics[j], last = f.ids ? f.ids[f.ids.length - 1] : j;
+    return `<div class="gt-note${pic ? ' gt-hascase' : ''}${f.ids ? ' gt-steps' : ''}" data-dramaturgy-in="${f.ids ? f.ids.join(' ') : j}"${pic ? ` style="--arr:${pic.arr}ms"` : ''}>` +
+      (f.head ? `<p class="gt-head">${fmt(f.head)}</p>` : '') + (pic ? pic.html : '') +
+      (f.text ? `<p class="gt-text"${f.ids ? ` data-dramaturgy-in="${last}"` : ''}>${fmt(f.text)}</p>` : '') + (extra[j] || '') + `</div>`;
+  }).join('');
   return `<div class="gt-pan" style="left:${x}px;top:${y}px;width:${w}px">` +
     (intro ? `<div class="gt-note gt-intro"><p class="gt-text">${fmt(intro)}</p></div>` : '') + notes +
     (end ? `<div class="gt-note gt-end"><p class="gt-text">${fmt(end)}</p></div>` : '') + `</div>`;
@@ -941,8 +946,16 @@ function renderSlide(sl, i, deck, img) {
     }
     case 'trad': {
       /* Ett träd ur indragen lista. "svar: nod" ger grenen en etikett.
-         Fokus: rot, löv, föräldrar, grenar, nivå N, barn X, en nod, eller väg a > b (svar eller nod i tur och ordning). */
-      const T2 = parseTrad(sl.items), focus = gtFocusLines(sl.items);
+         Fokus: rot, löv, föräldrar, grenar, nivå N, barn X, en nod, eller väg a > b (svar eller nod i tur och ordning).
+         "steg a > b" följer samma väg en gren per klick. Med en bild visas fallet först vid roten. */
+      const T2 = parseTrad(sl.items), focus = [];
+      gtFocusLines(sl.items).forEach(f => {
+        const m = f.target.match(/^\s*steg\s+(.+)$/i);
+        if (!m) { focus.push(f); return; }
+        const toks = m[1].split(/\s+(?:->|>|→)\s+/).map(x => x.trim()).filter(Boolean);
+        const n = toks.length + (f.img ? 1 : 0), first = focus.length, ids = Array.from({ length: n }, (_, k) => first + k);
+        for (let k = 0; k < n; k++) { const upto = f.img ? k : k + 1; focus.push({ ...f, target: upto ? 'väg ' + toks.slice(0, upto).join(' > ') : 'rot', grp: first, ids, step: k }); }
+      });
       const hasPan = !!(focus.some(f => f.head || f.text) || plain(sl.text || '') || plain(sl.conclusion || ''));
       const AX = hasPan ? 740 : 180, AW = hasPan ? 1060 : 1560, AY = 300, AH = 620;
       const N = Math.max(1, T2.leaves), Lv = Math.max(1, T2.levels);
@@ -983,7 +996,7 @@ function renderSlide(sl, i, deck, img) {
           });
           way.forEach(n => gtAdd(inN, n.i, j));
           way.slice(1).forEach(n => gtAdd(inE, n.i, j));
-          if (way.length > 1) routes.push({ j, way, img: f.img });
+          if (way.length > 1) routes.push({ j, way, img: f.img, f });
         } else byLabel(t).forEach(n => { gtAdd(inN, n.i, j); if (n.parent) gtAdd(inE, n.i, j); });
       });
       const seg = n => { const [x1, y1] = P(n.parent), [x2, y2] = P(n), a = y1 + hb, b = y2 - hb, mid = (a + b) / 2; return { d: `M${x1.toFixed(1)} ${a.toFixed(1)} C${x1.toFixed(1)} ${mid.toFixed(1)} ${x2.toFixed(1)} ${mid.toFixed(1)} ${x2.toFixed(1)} ${b.toFixed(1)}`, m: [(x1 + x2) / 2, mid], len: Math.hypot(x2 - x1, b - a) }; };
@@ -993,42 +1006,86 @@ function renderSlide(sl, i, deck, img) {
         edges += `<path class="tr-edge"${gtIn(inE[n.i])} d="${s.d}"/>`;
         if (n.edge) elabs += `<span class="tr-elab${onRoute ? '' : ''}"${gtIn(inE[n.i])} style="left:${Math.round(s.m[0])}px;top:${Math.round(s.m[1])}px">${fmt(n.edge)}</span>`;
       });
+      /* Fortsätter en väg där förra klickets väg slutade står den gemensamma delen kvar och bara resten ritas.
+         Ett fall i en stegvis väg börjar där det stannade förra klicket. */
+      const routeAt = {};
+      routes.forEach(r => { routeAt[r.j] = r; });
+      routes.forEach(r => {
+        const pr = routeAt[r.j - 1], pf = focus[r.j - 1];
+        r.cp = 1;
+        if (pr) while (r.cp < r.way.length - 1 && r.cp < pr.way.length && pr.way[r.cp] === r.way[r.cp]) r.cp++;
+        r.chain = !!(r.f.ids && pf && pf.grp === r.f.grp);
+        r.p = r.chain && pr ? r.cp : 1;
+        r.lead = r.chain && r.f.img ? 320 : 0;
+      });
       const route = routes.map(r => {
-        let d = '', len = 0;
-        r.way.slice(1).forEach((n, q) => { const s = seg(n); d += (q ? ' ' : '') + s.d; len += s.len; });
-        return `<path class="gt-route" data-dramaturgy-in="${r.j}" d="${d}" pathLength="1" style="--dur:${Math.round(Math.max(900, Math.min(2800, 500 + len * 1.5)))}ms"/>`;
+        let done = '', d = '', len = 0;
+        r.way.slice(1).forEach((n, q) => { const s = seg(n); if (q + 1 < r.cp) done += (done ? ' ' : '') + s.d; else { d += (d ? ' ' : '') + s.d; len += s.len; } });
+        r.dur = Math.round(Math.max(r.cp > 1 ? 700 : 900, Math.min(2800, 500 + len * 1.5)));
+        return (done ? `<path class="gt-route gt-done" data-dramaturgy-in="${r.j}" d="${done}" pathLength="1"/>` : '') +
+          `<path class="gt-route" data-dramaturgy-in="${r.j}" d="${d}" pathLength="1" style="--dur:${r.dur}ms;--del:${150 + r.lead}ms"/>`;
       }).join('');
       /* Ett fall med bild vandrar längs vägen i takt med att linjen ritas: frågorna tänds när fallet
-         passerar, och lövet och svaret i sidokolumnen när det kommer fram. Fallet stannar strax ovanför lövet. */
+         passerar, och lövet och svaret i sidokolumnen när det kommer fram. Fallet stannar strax ovanför noden.
+         I en stegvis väg står fallet först ovanför roten och går sedan en gren per klick. */
       const uid = 'u' + hash((sl.id || '') + i + L);
       const pics = {};
       let caseCss = '', caseHtml = '';
       const easeInv = f => { let lo = 0, hi = 1; for (let q = 0; q < 30; q++) { const u = (lo + hi) / 2; (3 * u * u - 2 * u * u * u < f ? lo = u : hi = u); } const u = (lo + hi) / 2; return 3 * (1 - u) * (1 - u) * u * .45 + 3 * (1 - u) * u * u * .2 + u * u * u; };
+      const R = 46, pre = j => `.scen .slide.${uid}[data-dramaturgy-state="focus"][data-dramaturgy-focus="${j}"]`;
+      const curve = n => { const [x1, y1] = P(n.parent), [x2, y2] = P(n), a = y1 + hb, b = y2 - hb, mid = (a + b) / 2, pts = [];
+        for (let q = 0; q <= 16; q++) { const u = q / 16, w = 1 - u; pts.push([x1 * (w * w * w + 3 * w * w * u) + x2 * (3 * w * u * u + u * u * u), a * w * w * w + 3 * mid * w * w * u + 3 * mid * w * u * u + b * u * u * u]); }
+        return pts; };
+      const plen = pts => pts.slice(1).reduce((m, pt, q) => m + Math.hypot(pt[0] - pts[q][0], pt[1] - pts[q][1]), 0);
+      /* Var fallet vilar vid noden n: ovanför roten, annars bredvid noden på den sida grenen inte kommer ifrån,
+         så att varken frågan eller grenens svar täcks. Bredden uppskattas ur texten och nodens maxbredd. */
+      const nodeHalf = n => Math.min(Math.max(120, slotW - 18), plain(n.label).length * fs * .56 + 28) / 2;
+      const restAt = n => {
+        const [x, y] = P(n);
+        if (!n.parent) return [x, y - hb - R - 8];
+        const side = P(n.parent)[0] > x ? -1 : 1;
+        return [x + side * (nodeHalf(n) + R + 14), y];
+      };
+      /* punkten på grenen in till n där fallet viker av mot sin viloplats */
+      const stopOn = n => R + 12;
+      focus.forEach((f, j) => {
+        if (!f.img || !f.ids || f.grp !== j || !T2.roots[0]) return;
+        const [x, y] = restAt(T2.roots[0]);
+        caseHtml += `<img class="tr-case g${j}" src="${esc(img(f.img))}" alt="" aria-hidden="true" style="left:${Math.round(x)}px;top:${Math.round(y)}px">`;
+        pics[j] = { html: `<img class="gt-case" src="${esc(img(f.img))}" alt="">`, arr: 0 };
+        caseCss += `${pre(j)} .tr-case.g${j}{opacity:1}${pre(j)} .tr-node.n${T2.roots[0].i}{animation:tr-visit .35s ease 150ms both}`;
+      });
       routes.filter(r => r.img).forEach(r => {
-        const R = 46, segs = r.way.slice(1).map(n => { const [x1, y1] = P(n.parent), [x2, y2] = P(n), a = y1 + hb, b = y2 - hb, mid = (a + b) / 2;
-          const pts = []; for (let q = 0; q <= 16; q++) { const u = q / 16, w = 1 - u; pts.push([x1 * (w * w * w + 3 * w * w * u) + x2 * (3 * w * u * u + u * u * u), a * w * w * w + 3 * mid * w * w * u + 3 * mid * w * u * u + b * u * u * u]); }
-          return { n, pts }; });
-        let tot = 0; segs.forEach(sg => { sg.len = 0; sg.pts.slice(1).forEach((pt, q) => { sg.len += Math.hypot(pt[0] - sg.pts[q][0], pt[1] - sg.pts[q][1]); }); tot += sg.len; });
-        const dur = Math.round(Math.max(900, Math.min(2800, 500 + tot * 1.5))), stop = Math.max(0, tot - R - 12), keys = [], arrive = {};
+        const tok = r.f.ids ? 'g' + r.f.grp : 'c' + r.j, fresh = r.way.slice(r.p), segs = fresh.map(n => ({ n, pts: curve(n) }));
+        segs.forEach(sg => { sg.len = plen(sg.pts); });
+        const tot = segs.reduce((m, sg) => m + sg.len, 0), stop = Math.max(0, tot - stopOn()), keys = [], arrive = {};
+        if (r.chain) {
+          const from = r.way[r.p - 1], [x, y] = P(from), [rx, ry] = restAt(from);
+          keys.push([rx, ry, 0], [x, y + hb, r.lead]);
+        }
         let acc = 0;
         segs.forEach((sg, q) => {
+          let sAt = acc;
           sg.pts.forEach((pt, k) => {
-            const sAt = acc + (k ? sg.pts.slice(1, k + 1).reduce((m, p2, z) => m + Math.hypot(p2[0] - sg.pts[z][0], p2[1] - sg.pts[z][1]), 0) : 0);
-            if (sAt <= stop || !keys.length) keys.push([pt[0], pt[1], easeInv(Math.min(1, sAt / (tot || 1)))]);
+            if (k) sAt += Math.hypot(pt[0] - sg.pts[k - 1][0], pt[1] - sg.pts[k - 1][1]);
+            if (sAt <= stop || (!keys.length && !k)) keys.push([pt[0], pt[1], r.lead + easeInv(Math.min(1, sAt / (tot || 1))) * r.dur]);
           });
           acc += sg.len;
-          if (q < segs.length - 1) arrive[sg.n.i] = Math.round(easeInv(Math.min(1, acc / (tot || 1))) * dur) + 150;
+          if (q < segs.length - 1) arrive[sg.n.i] = Math.round(r.lead + easeInv(Math.min(1, acc / (tot || 1))) * r.dur) + 150;
         });
-        const last = keys[keys.length - 1], T = Math.max(1, Math.round(last[2] * dur)), leaf = r.way[r.way.length - 1];
-        arrive[leaf.i] = T + 150;
-        const kf = keys.map(([x, y, t], q) => `${Math.min(100, t * dur / T * 100 + q * .001).toFixed(3)}%{left:${Math.round(x)}px;top:${Math.round(y)}px}`).join('');
-        const pre = `.scen .slide.${uid}[data-dramaturgy-state="focus"][data-dramaturgy-focus="${r.j}"]`;
-        caseCss += `@keyframes cs${uid}${r.j}{${kf}}${pre} .tr-case.c${r.j}{opacity:1;animation:cs${uid}${r.j} ${T}ms linear 150ms both}` +
-          `${pre} .tr-node.n${r.way[0].i}{animation:tr-visit .35s ease 150ms both}` +
-          r.way.slice(1, -1).map(n => `${pre} .tr-node.n${n.i}{animation:tr-visit .35s ease ${arrive[n.i]}ms both}`).join('') +
-          `${pre} .tr-node.n${leaf.i}{animation:tr-arrive .6s ease ${arrive[leaf.i]}ms both}`;
-        caseHtml += `<img class="tr-case c${r.j}" src="${esc(img(r.img))}" alt="" aria-hidden="true" style="left:${Math.round(keys[0][0])}px;top:${Math.round(keys[0][1])}px">`;
-        pics[r.j] = { html: `<img class="gt-case" src="${esc(img(r.img))}" alt="">`, attr: ` style="--arr:${arrive[leaf.i]}ms"` };
+        const end = r.way[r.way.length - 1], [ex, ey] = restAt(end);
+        keys.push([ex, ey, keys[keys.length - 1][2] + 260]);
+        const T = Math.max(1, Math.round(keys[keys.length - 1][2]));
+        arrive[end.i] = T + 150;
+        const kf = keys.map(([x, y, t], q) => `${Math.min(100, t / T * 100 + q * .001).toFixed(3)}%{left:${Math.round(x)}px;top:${Math.round(y)}px}`).join('');
+        caseCss += `@keyframes cs${uid}${r.j}{${kf}}${pre(r.j)} .tr-case.${tok}{opacity:1;animation:cs${uid}${r.j} ${T}ms linear 150ms both}` +
+          (r.chain ? '' : `${pre(r.j)} .tr-node.n${r.way[0].i}{animation:tr-visit .35s ease 150ms both}`) +
+          fresh.slice(0, -1).map(n => `${pre(r.j)} .tr-node.n${n.i}{animation:tr-visit .35s ease ${arrive[n.i]}ms both}`).join('') +
+          `${pre(r.j)} .tr-node.n${end.i}{animation:${end.kids.length ? 'tr-visit .35s' : 'tr-arrive .6s'} ease ${arrive[end.i]}ms both}`;
+        if (!r.f.ids) {
+          caseHtml += `<img class="tr-case ${tok}" src="${esc(img(r.img))}" alt="" aria-hidden="true" style="left:${Math.round(keys[0][0])}px;top:${Math.round(keys[0][1])}px">`;
+          pics[r.j] = { html: `<img class="gt-case" src="${esc(img(r.img))}" alt="">`, arr: arrive[end.i] };
+        } else if (r.j === r.f.ids[r.f.ids.length - 1] && pics[r.f.grp]) pics[r.f.grp].arr = arrive[end.i];
       });
       const nodes = T2.all.map(n => {
         const [x, y] = P(n), kind = n.kids.length ? (n.parent ? 'tr-inner' : 'tr-root') : 'tr-leaf';

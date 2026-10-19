@@ -1197,7 +1197,7 @@
 
 /* vägen: ritas i färdriktningen när fokus landar, försvinner utan att spolas tillbaka */
 .scen .slide:is([data-layout="graf"],[data-layout="trad"]) .gt-route{fill:none;stroke:var(--accent);stroke-width:7;stroke-linecap:round;stroke-linejoin:round;stroke-dasharray:1 1;stroke-dashoffset:1;opacity:0;transition:opacity .25s var(--dramaturgy-soft-ease)}
-.scen .slide:is([data-layout="graf"],[data-layout="trad"])[data-dramaturgy-state="focus"] .gt-route.dramaturgy-current{stroke-dashoffset:0;opacity:1;transition:stroke-dashoffset var(--dur,1400ms) cubic-bezier(.45,0,.2,1) .15s,opacity .2s}
+.scen .slide:is([data-layout="graf"],[data-layout="trad"])[data-dramaturgy-state="focus"] .gt-route.dramaturgy-current{stroke-dashoffset:0;opacity:1;transition:stroke-dashoffset var(--dur,1400ms) cubic-bezier(.45,0,.2,1) var(--del,.15s),opacity .2s}
 
 /* sidokolumnen: en text i taget på samma plats */
 .scen .slide:is([data-layout="graf"],[data-layout="trad"]) .gt-pan{position:absolute;z-index:2;display:grid}
@@ -1260,8 +1260,10 @@
 @keyframes tr-arrive{from{color:var(--muted);box-shadow:inset 0 -3px 0 color-mix(in srgb,var(--muted) 45%,transparent)}to{color:var(--accent);box-shadow:inset 0 -4px 0 var(--accent);text-shadow:0 0 26px color-mix(in srgb,var(--accent) 55%,transparent)}}
 .scen .slide[data-layout="trad"] .tr-case{position:absolute;width:92px;height:92px;transform:translate(-50%,-50%);box-sizing:border-box;border-radius:18px;object-fit:contain;background:var(--surface);box-shadow:0 0 0 4px var(--accent-2),0 12px 30px rgba(0,0,0,.45);opacity:0;pointer-events:none;transition:opacity .2s ease}
 .scen .slide:is([data-layout="graf"],[data-layout="trad"]) .gt-case{display:block;width:240px;height:240px;margin:0 0 22px;object-fit:contain;border-radius:20px}
-.scen .slide:is([data-layout="graf"],[data-layout="trad"]) .gt-hascase .gt-text{opacity:0;transition:opacity .4s ease}
-.scen .slide:is([data-layout="graf"],[data-layout="trad"])[data-dramaturgy-state="focus"] .gt-hascase.dramaturgy-current .gt-text{opacity:1;transition-delay:var(--arr,0ms)}
+.scen .slide:is([data-layout="graf"],[data-layout="trad"]) :is(.gt-hascase,.gt-steps) .gt-text{opacity:0;transition:opacity .4s ease}
+.scen .slide:is([data-layout="graf"],[data-layout="trad"])[data-dramaturgy-state="focus"] :is(.gt-hascase:not(.gt-steps).dramaturgy-current .gt-text,.gt-steps .gt-text.dramaturgy-current){opacity:1;transition-delay:var(--arr,0ms)}
+/* en väg som fortsätter: det som redan ritats står kvar utan ny animation */
+.scen .slide[data-layout="trad"][data-dramaturgy-state="focus"] .gt-route.gt-done.dramaturgy-current{stroke-dashoffset:0;opacity:1;transition:none}
 @media (prefers-reduced-motion:reduce){.scen .slide[data-layout="trad"] :is(.tr-case,.tr-node){animation-duration:1ms!important;animation-delay:0s!important}.scen .slide:is([data-layout="graf"],[data-layout="trad"]) .gt-hascase .gt-text{transition-delay:0s!important}}
 
 /* ---------- Flöde och Urval: fast geometri, vandrande fokus ---------- */

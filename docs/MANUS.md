@@ -308,9 +308,23 @@ Stegen sitter på en ring, högst sex. Varje klick flyttar en ljusring till näs
 
 I `[träd]` visar `- fokus: ordning | rubrik | text` i vilken ordning noderna gås igenom: en ring glider från nod till nod, varje nod tänds och får sitt nummer, och ett spår ritas mellan noderna. `ordning` och `ordning bfs` går nivå för nivå från vänster till höger, `ordning dfs` går djupet först med vänster gren först, och `ordning A C G O` följer de noder du skriver. Lägg till `utan linje`, till exempel `ordning bfs utan linje`, om du inte vill ha spåret mellan noderna. Numren står kvar när slutsatsen visas.
 
+### Följa en väg steg för steg
+
+Om en väg i `[träd]` fortsätter där förra klickets väg slutade står den gemensamma delen kvar, och bara den nya grenen ritas. `fokus: väg Ja` följt av `fokus: väg Ja > Nej` stannar alltså först vid nästa fråga och går sedan vidare.
+
+Med `steg` blir det automatiskt: `- fokus: steg Nej > Ja | Rubrik | text` ger ett klick per gren, och texten visas i sista klicket.
+
 ### Ett fall som vandrar genom trädet
 
-En väg i `[träd]` kan få en bild som sista fält: `- fokus: väg Nej > Ja | Apa 26 | Bits inte. | bilder/kurs/apa-26.png`. Bilden visas stort i sidokolumnen och som en liten bricka som vandrar ner längs vägen medan den ritas. Frågorna tänds när brickan passerar, och lövet och texten visas när den kommer fram. Passar beslutsträd där publiken ska följa ett exempel i taget, till exempel testdata, diagnoser eller vardagsval.
+En väg eller ett steg kan få en bild som sista fält:
+
+```
+- fokus: steg Nej > Ja | Apa 26 | Bits inte. | bilder/kurs/apa-26.png
+```
+
+Med `steg` visas fallet först ovanför roten. Varje klick därefter flyttar det en fråga ner, och frågan tänds när fallet kommer fram. Fallet vilar bredvid noden så att varken frågan eller grenens svar täcks. Svaret i sidokolumnen visas när fallet når lövet. Med `väg` i stället för `steg` vandrar fallet hela vägen på ett klick.
+
+Passar beslutsträd där publiken ska följa ett exempel i taget, till exempel testdata, diagnoser eller vardagsval.
 
 ### Ordbild och bildfält med fokuspunkt
 

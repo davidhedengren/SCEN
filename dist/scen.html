@@ -2427,6 +2427,66 @@ textarea.code{width:100%;border:1px solid var(--line-2);border-radius:8px;backgr
 .scen i.fx-done{display:none}
 .scen [data-layout="sats"] .sig-equation article p{font-size:32px;line-height:1.4}
 .scen [data-layout="sats"] .sig-conclusion{font-size:56px;font-family:var(--font-display,var(--font));font-weight:var(--h-weight,650);letter-spacing:-.02em}
+
+/* ---------- Tidsresa: en tidslinje som byggs ut genom hela presentationen ---------- */
+.scen [data-layout="tidsresa"]{display:block;--lit:0;--cur:0;--now:190px}
+.scen [data-layout="tidsresa"] .kicker{position:absolute;left:144px;top:96px;margin:0}
+.scen [data-layout="tidsresa"] h2{position:absolute;left:144px;top:130px;right:144px;margin:0;font-size:70px;line-height:1.04}
+.scen [data-layout="tidsresa"] .tr-lead{position:absolute;left:144px;top:228px;width:1560px;max-width:none;margin:0;font-size:29px;line-height:1.35;color:var(--muted)}
+.scen [data-layout="tidsresa"] .tr-cards{position:absolute;left:144px;right:144px;top:268px;height:520px;display:grid}
+.scen [data-layout="tidsresa"] .tr-cards.tr-low{top:322px;height:470px}
+.scen [data-layout="tidsresa"] .tr-card{grid-area:1/1;display:grid;grid-template-columns:minmax(0,1fr) 520px;gap:64px;align-items:start;opacity:0;transform:translateY(18px);transition:opacity .55s ease,transform .7s cubic-bezier(.2,.8,.2,1)}
+.scen [data-layout="tidsresa"] .tr-card.nopic{grid-template-columns:minmax(0,1fr)}
+.scen [data-layout="tidsresa"] .tr-copy{min-width:0}
+.scen [data-layout="tidsresa"] .tr-when{margin:0 0 6px;font-family:var(--font-display,var(--font));font-weight:var(--h-weight,650);font-size:104px;line-height:.95;letter-spacing:-.03em;color:var(--accent);text-shadow:0 0 50px color-mix(in srgb,var(--accent) 35%,transparent)}
+.scen [data-layout="tidsresa"] .tr-when.tr-pwhen{font-size:64px;color:var(--accent-2);text-shadow:0 0 40px color-mix(in srgb,var(--accent-2) 30%,transparent)}
+.scen [data-layout="tidsresa"] .tr-name{margin:0 0 16px;font-family:var(--font-display,var(--font));font-weight:var(--h-weight,650);font-size:50px;line-height:1.08;letter-spacing:-.02em;color:var(--ink)}
+.scen [data-layout="tidsresa"] .tr-point .tr-name{font-size:56px;color:var(--accent);margin-top:8px}
+.scen [data-layout="tidsresa"] .tr-text{margin:0 0 14px;font-size:30px;line-height:1.36;color:var(--ink);text-wrap:pretty;max-width:1000px}
+.scen [data-layout="tidsresa"] .tr-pts{margin:0;padding:0;list-style:none;max-width:1000px}
+.scen [data-layout="tidsresa"] .tr-pts li{position:relative;margin:0 0 10px;padding-left:30px;font-size:26px;line-height:1.36;color:var(--muted)}
+.scen [data-layout="tidsresa"] .tr-pts li::before{content:"";position:absolute;left:0;top:.62em;width:14px;height:3px;border-radius:2px;background:var(--accent)}
+.scen [data-layout="tidsresa"] .tr-pic{margin:0;height:500px;display:grid;place-items:center;border-radius:28px;background:radial-gradient(circle at 50% 50%,color-mix(in srgb,var(--accent) 16%,transparent),transparent 68%)}
+.scen [data-layout="tidsresa"] .tr-pic img{max-width:100%;max-height:440px;object-fit:contain;filter:drop-shadow(0 18px 40px rgba(0,0,0,.45))}
+.scen [data-layout="tidsresa"] .tr-pic img[src$=".svg"]{width:400px;height:400px}
+.scen [data-layout="tidsresa"] .tr-end{position:absolute;left:144px;width:1560px;top:736px;margin:0;font-size:25px;line-height:1.35;font-style:italic;color:var(--accent-2);opacity:0;transform:translateY(10px);transition:opacity .6s ease .2s,transform .7s ease .2s}
+.scen [data-layout="tidsresa"] .tr-overend{position:absolute;left:144px;top:300px;width:1400px;margin:0;font-size:28px;font-style:italic;color:var(--accent-2)}
+/* bandet */
+.scen [data-layout="tidsresa"] .tr-band{position:absolute;left:0;top:808px;width:1920px;height:272px;--names:0}
+.scen [data-layout="tidsresa"] .tr-band::before{content:"";position:absolute;inset:0;background:linear-gradient(180deg,transparent,color-mix(in srgb,var(--bg) 70%,transparent) 30%);pointer-events:none}
+.scen [data-layout="tidsresa"] .tr-track{position:absolute;left:0;right:0;top:118px;height:4px}
+.scen [data-layout="tidsresa"] .tr-rail{position:absolute;left:150px;right:240px;top:0;height:3px;border-radius:2px;background:repeating-linear-gradient(90deg,var(--line) 0 10px,transparent 10px 18px)}
+.scen [data-layout="tidsresa"] .tr-prog{position:absolute;left:190px;top:-1px;height:5px;border-radius:3px;width:calc(var(--now) - 190px);background:linear-gradient(90deg,color-mix(in srgb,var(--accent) 40%,transparent),var(--accent));box-shadow:0 0 18px color-mix(in srgb,var(--accent) 60%,transparent);transition:width 1.3s cubic-bezier(.45,0,.2,1)}
+.scen [data-layout="tidsresa"] .tr-node{position:absolute;top:0;width:120px;margin-left:-60px;height:220px;display:flex;flex-direction:column;align-items:center;z-index:2}
+.scen [data-layout="tidsresa"] .tr-ic{width:66px;height:66px;margin-top:30px;object-fit:contain;transform:scale(calc(1 + var(--cur) * .45));transform-origin:50% 90%;filter:brightness(var(--lit)) drop-shadow(0 0 1.6px rgba(170,205,235,calc(.6 - var(--lit) * .6))) drop-shadow(0 0 calc(var(--cur) * 22px) color-mix(in srgb,var(--accent) 80%,transparent));opacity:calc(.82 + var(--lit) * .18);transition:filter 1.1s ease,transform .8s cubic-bezier(.2,.8,.2,1),opacity .8s}
+.scen [data-layout="tidsresa"] .tr-dot{display:block;width:16px;height:16px;margin-top:84px;border-radius:50%;background:color-mix(in srgb,var(--accent) calc(var(--lit) * 100%),#05080d);box-shadow:0 0 0 2px rgba(170,205,235,calc(.35 - var(--lit) * .2)),0 0 calc(var(--cur) * 18px) var(--accent);transform:scale(calc(1 + var(--cur) * .5));transition:all .8s}
+.scen [data-layout="tidsresa"] .tr-node:not(.tr-minor)::after{content:"";position:absolute;top:114px;left:50%;width:12px;height:12px;margin-left:-6px;border-radius:50%;background:color-mix(in srgb,var(--accent) calc(var(--lit) * 100%),#05080d);box-shadow:0 0 0 2px rgba(170,205,235,calc(.4 - var(--lit) * .25)),0 0 calc(var(--cur) * 16px) var(--accent);transition:all .8s}
+.scen [data-layout="tidsresa"] .tr-yr{margin-top:auto;position:absolute;top:136px;font-family:var(--font-mono,var(--mono,monospace));font-weight:500;font-size:19px;letter-spacing:.02em;white-space:nowrap;color:color-mix(in srgb,var(--accent) calc(var(--cur) * 100%),var(--muted));opacity:var(--lit);transition:opacity .8s,color .8s}
+.scen [data-layout="tidsresa"] .tr-minor .tr-yr{font-size:15px;top:140px}
+.scen [data-layout="tidsresa"] .tr-nm{position:absolute;top:162px;width:170px;text-align:center;font-size:16px;line-height:1.2;color:var(--ink);opacity:calc(var(--lit) * var(--names));transition:opacity .7s}
+.scen [data-layout="tidsresa"] .tr-odd .tr-nm{top:202px}
+.scen [data-layout="tidsresa"] .tr-minor .tr-nm{display:none}
+@keyframes tr-wake{0%{filter:brightness(0) drop-shadow(0 0 1.6px rgba(170,205,235,.6));transform:scale(1.1)}55%{filter:brightness(1.6) drop-shadow(0 0 30px var(--accent));transform:scale(1.62)}100%{filter:brightness(1) drop-shadow(0 0 22px color-mix(in srgb,var(--accent) 80%,transparent));transform:scale(1.45)}}
+/* perioder: staplar i egna fält under årtalen, och en tonad yta bakom linjen när perioden är aktuell */
+.scen [data-layout="tidsresa"] .tr-per{position:absolute;height:24px;border-radius:12px;top:calc(196px + var(--lane, 0) * 32px);background:color-mix(in srgb,var(--accent-2) calc(14% + var(--cur) * 40%),#05080d);box-shadow:inset 0 0 0 1.5px color-mix(in srgb,var(--accent-2) calc(25% + var(--lit) * 35%),rgba(170,205,235,.25));opacity:calc(.55 + var(--lit) * .45);transition:all .8s;z-index:1}
+.scen [data-layout="tidsresa"] .tr-per.l1{--lane:1}
+.scen [data-layout="tidsresa"] .tr-per.l2{--lane:2}
+.scen [data-layout="tidsresa"] .tr-per span{display:flex;align-items:center;gap:6px;height:24px;padding:0 12px;font-size:15px;font-weight:600;letter-spacing:.04em;text-transform:uppercase;white-space:nowrap;color:color-mix(in srgb,var(--ink) calc(var(--lit) * 100%),transparent);transition:color .8s}
+.scen [data-layout="tidsresa"] .tr-per span img{width:16px;height:16px;opacity:var(--lit)}
+.scen [data-layout="tidsresa"] .tr-tint{position:absolute;top:18px;height:150px;border-radius:18px;background:linear-gradient(180deg,color-mix(in srgb,var(--accent-2) 22%,transparent),transparent);opacity:var(--cur);transition:opacity .8s;z-index:0}
+.scen [data-layout="tidsresa"] .tr-span{position:absolute;top:8px;height:160px;border-radius:18px;background:linear-gradient(180deg,color-mix(in srgb,var(--accent) 16%,transparent),transparent);box-shadow:inset 0 2px 0 color-mix(in srgb,var(--accent) 60%,transparent);z-index:0}
+.scen [data-layout="tidsresa"] .tr-span span{position:absolute;left:14px;top:-30px;font-size:16px;font-weight:600;letter-spacing:.06em;text-transform:uppercase;white-space:nowrap;color:var(--accent)}
+.scen [data-layout="tidsresa"] .tr-k{position:absolute;width:1px;height:1px;opacity:0;pointer-events:none}
+/* öppning och översikt */
+.scen .slide.tr-mode-hero .tr-hero{position:absolute;left:144px;top:210px;width:1500px}
+.scen .slide.tr-mode-hero .tr-hero h1{margin:0;font-size:156px;line-height:.98;letter-spacing:-.04em}
+.scen .slide.tr-mode-hero .tr-hero .lead{margin:28px 0 0;font-size:40px;color:var(--muted)}
+.scen .slide.tr-mode-hero .tr-hero .kicker{position:static;margin:0 0 22px}
+.scen .slide.tr-mode-hero .tr-years{margin:34px 0 0;font-family:var(--font-mono,var(--mono,monospace));font-size:26px;letter-spacing:.2em;color:var(--accent-2)}
+.scen .slide.tr-mode-over .tr-band{top:330px}
+.scen .slide.tr-mode-over .tr-per{top:calc(262px + var(--lane, 0) * 32px)}
+.scen .slide.tr-mode-over .tr-overend{top:auto;bottom:120px}
+@media (prefers-reduced-motion:reduce){.scen [data-layout="tidsresa"] *{transition:none!important;animation:none!important}}
 </style>
 </head>
 <body>
@@ -2526,7 +2586,7 @@ const ACCENTS = {
   blue: ['#2F5BF5', '#809EFF', 'Blå'], green: ['#0A7F58', '#4CD4A0', 'Grön'], orange: ['#C2410C', '#FF9A5C', 'Orange'],
   teal: ['#0B7A83', '#46D6DE', 'Turkos'], purple: ['#6B3FDF', '#B59BFF', 'Lila'], red: ['#C1263D', '#FF7A8C', 'Röd'], graphite: ['#27344F', '#C8D2E6', 'Grafit']
 };
-const LAYOUTS = {etapper:"Etapper",vagval:"Vägval",lager:"Lager",resonemang:"Resonemang",helhet:"Helhet",
+const LAYOUTS = {tidsresa:"Tidsresa",etapper:"Etapper",vagval:"Vägval",lager:"Lager",resonemang:"Resonemang",helhet:"Helhet",
   skiften: 'Skiften', prisma: 'Prisma', verkningar: 'Verkningar', belagg: 'Belägg', sammanflode: 'Sammanflöde',
   lameller: 'Lameller', register: 'Register', samband: 'Samband', marginal: 'Marginal', sats: 'Sats', formel: 'Formel', kretslopp: 'Kretslopp', mobil: 'Mobil',
   title: 'Titel', section: 'Avsnitt', statement: 'Påstående', bullets: 'Punktlista', split: 'Text och bild',
@@ -2753,6 +2813,87 @@ function parseTrad(items) {
   const place = n => { if (!n.kids.length) { n.slot = slot++; return; } n.kids.forEach(place); n.slot = (n.kids[0].slot + n.kids[n.kids.length - 1].slot) / 2; };
   roots.forEach(place);
   return { roots, all, leaves: slot, levels: all.reduce((m, n) => Math.max(m, n.depth + 1), 0) };
+}
+
+/* ---------- tidsresa ----------
+   En tidslinje som byggs ut genom hela presentationen. Alla [tidsresa]-bilder delar samma linje: händelser
+   och perioder samlas från hela manuset och placeras i tidsordning. Det som redan har visats lyser, den
+   aktuella händelsen lyfts fram och det som kommer senare syns som mörka siluetter. Raderna i en bild:
+     år | namn | text | punkt | punkt | ikon.svg | bild.jpg     en händelse (ett klick)
+     år–år | namn | text | ...                                  en period, t.ex. en epok (ett klick)
+     rubrik | text | punkt | ...                                ett kort utan tid; linjen står still (ett klick)
+     spann: år–år | etikett                                     markerar ett spann under hela bilden
+   Första bilden i ett fält används som ikon på linjen, en eventuell andra bild som stor bild i kortet. */
+function trWhen(s) {
+  const parts = String(s || '').split(/\s*[·,]\s*/).map(x => x.trim()).filter(Boolean);
+  if (!parts.length) return null;
+  const ranges = [];
+  for (const q of parts) {
+    const m = q.match(/^(?:ca\.?\s*)?(\d{4})(-tal)?(?:\s*[–—-]\s*(?:ca\.?\s*)?(\d{4})?)?$/i);
+    if (!m) return null;
+    const open = !m[3] && /[–—]\s*$|\d{4}\s*-\s*$/.test(q);
+    ranges.push({ a: +m[1], b: m[3] ? +m[3] : (open ? Infinity : null) });
+  }
+  return { period: ranges.some(r => r.b !== null), ranges, label: String(s).trim(), year: ranges[0].a };
+}
+function trItems(items) {
+  const steps = [], spans = [];
+  lines(items).forEach(raw => {
+    const t = String(raw).replace(/^(- )+/, '').trim();
+    if (!t) return;
+    const sm = t.match(/^spann\s*:\s*(.*)$/i);
+    const p = (sm ? sm[1] : t).split('|').map(x => x.trim());
+    const imgs = [];
+    while (p.length > 1 && IMG_REF.test(p[p.length - 1])) imgs.unshift(p.pop());
+    const w = trWhen(p[0]);
+    if (sm) { if (w) spans.push({ when: w, name: p[1] || '' }); return; }
+    if (w) {
+      const o = { kind: w.period ? 'period' : 'event', when: w, name: p[1] || '', text: p[2] || '', pts: p.slice(3).filter(Boolean), icon: imgs[0] || '', pic: imgs[1] || imgs[0] || '' };
+      o.key = (w.period ? 'p:' : 'e:') + gtKey(o.name) + '@' + w.year;
+      steps.push(o);
+    } else steps.push({ kind: 'point', name: p[0] || '', text: p[1] || '', pts: p.slice(2).filter(Boolean), icon: '', pic: imgs[imgs.length - 1] || '' });
+  });
+  return { steps, spans };
+}
+const TR_X0 = 190, TR_X1 = 1640;
+function trDeck(deck) {
+  const all = (deck && deck.slides) || [];
+  const evs = new Map(), pers = new Map(), per = [];
+  all.forEach((s, si) => {
+    if (!s || s.layout !== 'tidsresa') { per.push(null); return; }
+    const r = trItems(s.items); per.push(r);
+    r.steps.forEach((o, j) => {
+      if (o.kind === 'point') return;
+      const m = o.kind === 'event' ? evs : pers;
+      if (!m.has(o.key)) m.set(o.key, Object.assign({}, o, { si, j }));
+      else { const e = m.get(o.key); if (!e.icon && o.icon) e.icon = o.icon; }
+    });
+  });
+  const E = [...evs.values()].sort((a, b) => a.when.year - b.when.year || a.si - b.si || a.j - b.j);
+  const n = E.length;
+  E.forEach((e, k) => { e.k = k; e.x = n > 1 ? TR_X0 + k * (TR_X1 - TR_X0) / (n - 1) : (TR_X0 + TR_X1) / 2; });
+  /* år till läge: mellan två händelser interpoleras läget linjärt */
+  const yx = y => {
+    if (!n) return (TR_X0 + TR_X1) / 2;
+    if (y === Infinity) return TR_X1 + 40;
+    if (y <= E[0].when.year) return Math.max(TR_X0 - 40, E[0].x - (E[0].when.year - y) * 6);
+    if (y >= E[n - 1].when.year) return Math.min(TR_X1 + 40, E[n - 1].x + (y - E[n - 1].when.year) * 6);
+    for (let k = 0; k < n - 1; k++) {
+      const a = E[k], b = E[k + 1];
+      if (y === a.when.year) return a.x;
+      if (y > a.when.year && y < b.when.year) return a.x + (b.x - a.x) * (y - a.when.year) / (b.when.year - a.when.year);
+    }
+    return E[n - 1].x;
+  };
+  const P = [...pers.values()].sort((a, b) => a.when.year - b.when.year || a.si - b.si);
+  const lanes = [];
+  P.forEach(pp => {
+    pp.segs = pp.when.ranges.map(r => [yx(r.a), yx(r.b == null ? r.a : r.b)]);
+    let lane = 0;
+    while (lanes[lane] && pp.segs.some(([a, b]) => lanes[lane].some(([c, d]) => a < d - 2 && c < b - 2))) lane++;
+    (lanes[lane] = lanes[lane] || []).push(...pp.segs); pp.lane = lane;
+  });
+  return { E, P, yx, per };
 }
 
 /* ---------- Sökning, rutnät och kö: algoritmen räknas fram, varje klick är ett steg ----------
@@ -3458,6 +3599,87 @@ function renderSlide(sl, i, deck, img) {
         (hasPan ? gtPanel(sl.text, focus, sl.conclusion, extra, 144, 320, 560) : '') + cues;
       if (plain(title).length > 44) cls = 'gt-long';
       attrs += ` data-dramaturgy="focus-restore" data-dramaturgy-state="${steps ? 'overview' : 'restored'}"${steps ? '' : ' data-dramaturgy-static="true"'}`;
+      break;
+    }
+    case 'tidsresa': {
+      const TD = trDeck(deck);
+      const si = deck && deck.slides ? Math.max(0, deck.slides.indexOf(sl)) : i;
+      const own = TD.per[si] || trItems(sl.items);
+      const ST = own.steps, ns = ST.length;
+      const uid = 'u' + hash((sl.id || '') + i + L);
+      const lastJ = Math.max(0, ns - 1);
+      /* läge per steg: hur långt linjen har ritats, och vilka händelser som lyser */
+      const litFrom = e => (e.si < si ? 0 : e.si === si ? e.j : Infinity);
+      const nowAt = j => TD.E.reduce((m, e) => (litFrom(e) <= j ? Math.max(m, e.x) : m), TR_X0);
+      const prevNow = () => {
+        for (let q = si - 1; q >= 0; q--) {
+          if (!TD.per[q]) continue;
+          const lim = Math.max(0, TD.per[q].steps.length - 1);
+          return TD.E.reduce((m, e) => ((e.si < q || (e.si === q && e.j <= lim)) ? Math.max(m, e.x) : m), TR_X0);
+        }
+        return TR_X0;
+      };
+      const over = !ns, anyLit = TD.E.some(e => e.si < si), hero = over && !anyLit;
+      const kSteps = over ? (anyLit ? 1 : 0) : ns;
+      const sel = j => {
+        let x = `.scen:not(.static) .slide.${uid}`;
+        if (j > 0) x += `:has(.tr-k.k${j}.in)`;
+        if (j < kSteps - 1) x += `:not(:has(.tr-k.k${j + 1}.in))`;
+        return x;
+      };
+      const stat = `.scen.static .slide.${uid}`;
+      let css = '';
+      /* tända noder: kumulativt per steg */
+      const litSel = [];
+      for (let j = 0; j <= lastJ; j++) litSel.push(j === 0 ? `.slide.${uid} .lf0` : `.slide.${uid}:has(.tr-k.k${j}.in) .lf${j}`, `${stat} .lf${j}`);
+      css += `${litSel.join(',')}{--lit:1}`;
+      if (!over) {
+        for (let j = 0; j < ns; j++) {
+          css += `${sel(j)}{--now:${Math.round(nowAt(j))}px}${sel(j)} .c${j}{--cur:1}${sel(j)} .tr-card.c${j}{opacity:1;transform:none}`;
+          css += `.scen:not(.static) .slide.active.${uid}${sel(j).replace(`.scen:not(.static) .slide.${uid}`, '')} .tr-node.c${j}.lf${j} .tr-ic{animation:tr-wake 1.3s cubic-bezier(.2,.8,.2,1) ${j === 0 ? '.45s' : '0s'} both}`;
+        }
+        css += `${stat}{--now:${Math.round(nowAt(lastJ))}px}${stat} .c${lastJ}{--cur:1}${stat} .tr-card.c${lastJ}{opacity:1;transform:none}`;
+        css += `${sel(lastJ)} .tr-end,${stat} .tr-end{opacity:1;transform:none}`;
+      } else css += `.slide.${uid}{--now:${Math.round(nowAt(0))}px}` + (kSteps ? `.slide.${uid}:has(.tr-k.k1.in) .tr-band,${stat} .tr-band{--names:1}` : '');
+      const p0 = Math.round(prevNow()), n0 = Math.round(over ? nowAt(0) : nowAt(0));
+      if (p0 !== n0) css += `@keyframes tp${uid}{from{width:${Math.max(0, p0 - TR_X0)}px}}.scen:not(.static) .slide.active.${uid} .tr-prog{animation:tp${uid} 1.5s cubic-bezier(.45,0,.2,1) .25s backwards}`;
+
+      /* linjen */
+      const stepOf = key => ST.reduce((a, o, j) => (o.key === key ? a.concat(j) : a), []);
+      const nodes = TD.E.map(e => {
+        const lf = litFrom(e), cur = stepOf(e.key);
+        const cls = ['tr-node', 'n' + e.k, e.icon ? '' : 'tr-minor', Number.isFinite(lf) ? 'lf' + Math.min(lf, lastJ) : '', ...cur.map(j => 'c' + j), (e.si === si && e.j === 0) ? 'tr-new' : '', e.k % 2 ? 'tr-odd' : ''].filter(Boolean).join(' ');
+        return `<div class="${cls}" style="left:${Math.round(e.x)}px">` + (e.icon ? `<img class="tr-ic" src="${esc(img(e.icon))}" alt="">` : `<i class="tr-dot"></i>`) +
+          `<b class="tr-yr">${fmt(e.when.label)}</b><span class="tr-nm">${fmt(e.name)}</span></div>`;
+      }).join('');
+      const pers = TD.P.map((pp, q) => {
+        const lf = litFrom(pp), cur = stepOf(pp.key);
+        const c = ['tr-per', 'l' + pp.lane, Number.isFinite(lf) ? 'lf' + Math.min(lf, lastJ) : '', ...cur.map(j => 'c' + j)].filter(Boolean).join(' ');
+        return pp.segs.map(([a, b], z) => `<div class="${c}" style="left:${Math.round(a)}px;width:${Math.max(24, Math.round(b - a))}px">${z === 0 ? `<span>${pp.icon ? `<img src="${esc(img(pp.icon))}" alt="">` : ''}${fmt(pp.name)}</span>` : ''}</div>` +
+          `<div class="tr-tint ${cur.map(j => 'c' + j).join(' ')}" style="left:${Math.round(a)}px;width:${Math.max(24, Math.round(b - a))}px"></div>`).join('');
+      }).join('');
+      const spans = own.spans.map(sp => sp.when.ranges.map(r => { const a = TD.yx(r.a), b = TD.yx(r.b == null ? r.a : r.b); return `<div class="tr-span" style="left:${Math.round(a)}px;width:${Math.max(24, Math.round(b - a))}px"><span>${fmt(sp.when.label)}${sp.name ? ' · ' + fmt(sp.name) : ''}</span></div>`; }).join('')).join('');
+      const band = `<div class="tr-band" data-id="tr-band"><div class="tr-track"><i class="tr-rail"></i><i class="tr-prog"></i></div>${spans}${pers}${nodes}</div>`;
+
+      /* korten */
+      const cards = ST.map((o, j) => {
+        const pic = o.pic ? `<figure class="tr-pic"><img src="${esc(img(o.pic))}" alt=""></figure>` : '';
+        const when = o.kind === 'point' ? '' : `<p class="tr-when${o.kind === 'period' ? ' tr-pwhen' : ''}">${fmt(o.when.label)}</p>`;
+        return `<div class="tr-card c${j}${pic ? '' : ' nopic'} tr-${o.kind}"><div class="tr-copy">${when}<h3 class="tr-name">${fmt(o.name)}</h3>` +
+          (o.text ? `<p class="tr-text">${fmt(o.text)}</p>` : '') + (o.pts.length ? `<ul class="tr-pts">${o.pts.map(x => `<li>${fmt(x)}</li>`).join('')}</ul>` : '') + `</div>${pic}</div>`;
+      }).join('');
+      let marks = '';
+      for (let j = 1; j < (over ? kSteps + 1 : ns); j++) marks += `<i class="tr-k k${j}"${steps ? st('none') : ''} aria-hidden="true"></i>`;
+      if (hero) {
+        body = `<style>${css}</style><div class="tr-hero">${sl.caption ? `<p class="kicker"${A('fade', 200)}>${fmt(sl.caption)}</p>` : ''}<h1${title ? tid(title) : ''}${A(tA('words'), 300)}>${fmt(title || 'Tidsresa')}</h1>` +
+          (sl.text ? `<p class="lead"${A('fade', 900)}>${fmt(sl.text)}</p>` : '') + (sl.conclusion ? `<p class="tr-years"${A('fade', 1300)}>${fmt(sl.conclusion)}</p>` : '') + `</div>${band}${marks}`;
+      } else {
+        body = `<style>${css}</style>` + (sl.caption ? `<p class="kicker"${A('fade')}>${fmt(sl.caption)}</p>` : '') + H2('', 'mask') +
+          (sl.text ? `<p class="lead tr-lead"${A('fade', 250)}>${fmt(sl.text)}</p>` : '') +
+          (over ? (sl.conclusion ? `<p class="tr-overend"${A('fade', 600)}>${fmt(sl.conclusion)}</p>` : '') :
+            `<div class="tr-cards${sl.text ? ' tr-low' : ''}">${cards}</div>` + (sl.conclusion ? `<p class="tr-end">${fmt(sl.conclusion)}</p>` : '')) + band + marks;
+      }
+      cls = uid + (hero ? ' tr-mode-hero' : over ? ' tr-mode-over' : '');
       break;
     }
     case 'trad': {
@@ -6442,7 +6664,7 @@ const PptxImport = (() => {
 <script>/* ===== Manus: presentationen som text, och mallkatalogen =====
    Manus.parse(text) -> {meta, slides}   Manus.stringify(deck) -> text   Manus.CATALOG */
 const Manus = (() => {
-  const TAGS = {"etapper":"etapper","v\u00e4gval":"vagval","lager":"lager","resonemang":"resonemang","helhet":"helhet",lameller: "lameller",register: "register",samband: "samband",marginal: "marginal",sats: "sats",
+  const TAGS = {"tidsresa":"tidsresa","etapper":"etapper","v\u00e4gval":"vagval","lager":"lager","resonemang":"resonemang","helhet":"helhet",lameller: "lameller",register: "register",samband: "samband",marginal: "marginal",sats: "sats",
     titel: 'title', avsnitt: 'section', 'påstående': 'statement', punkter: 'bullets', 'text-bild': 'split', helbild: 'image', bildregi: 'bildregi', terminal: 'terminal', 'kodförklaring': 'kodforklaring', kodskrivning: 'kodskrivning', formel: 'formel', kretslopp: 'kretslopp', mobil: 'mobil', typografi: 'typografisk', texttempo: 'texttempo',
     kort: 'cards', 'jämförelse': 'compare', tabell: 'table', tal: 'number', 'två-tal': 'duo', tidslinje: 'timeline',
     'fråga': 'question', 'omröstning': 'poll', reflektion: 'reflect', definition: 'define', samtal: 'chat', citat: 'quote',
@@ -6462,8 +6684,8 @@ const Manus = (() => {
   const IMAGE_BRIEF_OUT = { id:'bild-id', filename:'filnamn', scene:'scen', purpose:'syfte', subject:'motiv', composition:'komposition', placement:'motivplacering', aspectRatio:'format', avoid:'undvik', prompt:'prompt' };
   const REVEAL = { allt: 'none', rader: 'rows', facit: 'answers', 'facit-rader': 'rest', fall: 'cases' };
   const REVEAL_OUT = { none: 'allt', rows: 'rader', answers: 'facit', rest: 'facit-rader', cases: 'fall' };
-  const LIST_FIELD = {spegel:'items',ordpar:'items',spektrum:'items',livslopp:'items',lexikon:'items',rad:'items',rutor:'items',remsor:'items',provning:'items',sammaform:'items',mosaik:'items',karna:'items',graf:'items',trad:'items',flode:'items',urval:'items',forgrening:'items',inzoomning:'items',fyrfalt:'items',vagskal:'items',sokning:'items',rutnat:'items',ko:'items',kodskrivning:'items',formel:'items',kretslopp:'items',mobil:'items',etapper:'items',vagval:'items',lager:'items',resonemang:'items',helhet:'items',skiften:'items',prisma:'items',verkningar:'items',belagg:'items',sammanflode:'items',register:'items',samband:'items',marginal:'items',sats:'items', bullets: 'bullets', split: 'bullets', question: 'bullets', poll: 'bullets', reflect: 'bullets', cards: 'items', timeline: 'items', bildregi:'items', terminal:'items', kodforklaring:'items', typografisk:'items', texttempo:'items', chat: 'items', duo: 'items', egen: 'items', compare: 'lb', karta: 'items', triad: 'items', motsats: 'items', bildkant: 'bullets', omlopp: 'items', gradskiva: 'items', bro: 'items', ringar: 'items', lins: 'items', 'strålkastare': 'items', fokus: 'items', 'bildfält': 'bullets', delning: 'items' };
-  const STEPPED = ["spegel","ordpar","spektrum","livslopp","lexikon","rad","rutor","remsor","provning","sammaform","mosaik","karna","graf","trad","flode","urval","forgrening","inzoomning","fyrfalt","vagskal","sokning","rutnat","ko","kodskrivning","formel","kretslopp","mobil","etapper","vagval","lager","resonemang","helhet","skiften","prisma","verkningar","belagg","sammanflode",'register','samband','marginal','sats','table','bullets', 'split', 'cards', 'compare', 'timeline', 'bildregi', 'terminal', 'kodforklaring', 'typografisk', 'texttempo', 'chat', 'duo', 'egen', 'karta', 'triad', 'motsats', 'bildkant', 'omlopp', 'gradskiva', 'bro', 'ringar', 'lins', 'strålkastare', 'fokus', 'bildfält', 'delning'];
+  const LIST_FIELD = {tidsresa:'items',spegel:'items',ordpar:'items',spektrum:'items',livslopp:'items',lexikon:'items',rad:'items',rutor:'items',remsor:'items',provning:'items',sammaform:'items',mosaik:'items',karna:'items',graf:'items',trad:'items',flode:'items',urval:'items',forgrening:'items',inzoomning:'items',fyrfalt:'items',vagskal:'items',sokning:'items',rutnat:'items',ko:'items',kodskrivning:'items',formel:'items',kretslopp:'items',mobil:'items',etapper:'items',vagval:'items',lager:'items',resonemang:'items',helhet:'items',skiften:'items',prisma:'items',verkningar:'items',belagg:'items',sammanflode:'items',register:'items',samband:'items',marginal:'items',sats:'items', bullets: 'bullets', split: 'bullets', question: 'bullets', poll: 'bullets', reflect: 'bullets', cards: 'items', timeline: 'items', bildregi:'items', terminal:'items', kodforklaring:'items', typografisk:'items', texttempo:'items', chat: 'items', duo: 'items', egen: 'items', compare: 'lb', karta: 'items', triad: 'items', motsats: 'items', bildkant: 'bullets', omlopp: 'items', gradskiva: 'items', bro: 'items', ringar: 'items', lins: 'items', 'strålkastare': 'items', fokus: 'items', 'bildfält': 'bullets', delning: 'items' };
+  const STEPPED = ["tidsresa","spegel","ordpar","spektrum","livslopp","lexikon","rad","rutor","remsor","provning","sammaform","mosaik","karna","graf","trad","flode","urval","forgrening","inzoomning","fyrfalt","vagskal","sokning","rutnat","ko","kodskrivning","formel","kretslopp","mobil","etapper","vagval","lager","resonemang","helhet","skiften","prisma","verkningar","belagg","sammanflode",'register','samband','marginal','sats','table','bullets', 'split', 'cards', 'compare', 'timeline', 'bildregi', 'terminal', 'kodforklaring', 'typografisk', 'texttempo', 'chat', 'duo', 'egen', 'karta', 'triad', 'motsats', 'bildkant', 'omlopp', 'gradskiva', 'bro', 'ringar', 'lins', 'strålkastare', 'fokus', 'bildfält', 'delning'];
   const yes = v => /^(ja|j|yes|true|1|på)$/i.test(String(v).trim());
   function enumVal(map, v) {
     const x = String(v).trim().toLowerCase();
@@ -6545,7 +6767,7 @@ const Manus = (() => {
       }
       if (s.layout === 'prisma' && label === 'fråga') key = 'question';
       if (s.layout === 'belagg' && label === 'källa') key = 'source';
-      if (['spegel', 'ordpar', 'spektrum', 'livslopp', 'lexikon', 'graf', 'trad', 'flode', 'urval', 'rad', 'rutor', 'remsor', 'mosaik', 'karna', 'forgrening', 'inzoomning', 'fyrfalt', 'vagskal', 'sokning', 'rutnat', 'ko', 'formel', 'kretslopp', 'mobil', 'provning', 'sammaform'].includes(s.layout) && label === 'slutsats') key = 'conclusion';
+      if (['tidsresa', 'spegel', 'ordpar', 'spektrum', 'livslopp', 'lexikon', 'graf', 'trad', 'flode', 'urval', 'rad', 'rutor', 'remsor', 'mosaik', 'karna', 'forgrening', 'inzoomning', 'fyrfalt', 'vagskal', 'sokning', 'rutnat', 'ko', 'formel', 'kretslopp', 'mobil', 'provning', 'sammaform'].includes(s.layout) && label === 'slutsats') key = 'conclusion';
       if (s.layout === 'formel' && label === 'formel') key = 'text';
       if (s.layout === 'kretslopp' && label === 'mitten') key = 'core';
       if (s.layout === 'livslopp' && label === 'skala') key = 'scale';
@@ -6640,7 +6862,7 @@ const Manus = (() => {
     if (L === 'verkningar') { put('condition', s.condition); put('alternative', s.alternative); }
     if (L === 'belagg') { put('whole', s.whole); put('reservation', s.reservation); }
     if (L === 'sammanflode') put('synthesis', s.synthesis);
-    if (['spegel', 'ordpar', 'spektrum', 'livslopp', 'lexikon', 'graf', 'trad', 'flode', 'urval', 'rad', 'rutor', 'remsor', 'mosaik', 'karna', 'forgrening', 'inzoomning', 'fyrfalt', 'vagskal', 'sokning', 'rutnat', 'ko', 'formel', 'kretslopp', 'mobil', 'provning', 'sammaform'].includes(L)) put('conclusion', s.conclusion);
+    if (['tidsresa', 'spegel', 'ordpar', 'spektrum', 'livslopp', 'lexikon', 'graf', 'trad', 'flode', 'urval', 'rad', 'rutor', 'remsor', 'mosaik', 'karna', 'forgrening', 'inzoomning', 'fyrfalt', 'vagskal', 'sokning', 'rutnat', 'ko', 'formel', 'kretslopp', 'mobil', 'provning', 'sammaform'].includes(L)) put('conclusion', s.conclusion);
     if (L === 'livslopp') put('scale', s.scale);
     if (L === 'kretslopp') { if (s.core != null && val(s.core) !== '') out.push(`mitten: ${multi(s.core)}`); put('start', s.start); put('ret', s.ret); }
     if (L === 'ordpar' || L === 'spektrum') { put('lt', s.lt); put('rt', s.rt); }
@@ -6840,6 +7062,8 @@ const Manus = (() => {
       ex: '[lexikon]\netikett: Begrepp\nrubrik: Ord att känna till\n- Fotosyntes | Biologi | Växter bygger socker av koldioxid och vatten med hjälp av ljus. | Bladen är växtens solpaneler.\n- Cellandning | Biologi | Cellerna frigör energi ur socker med hjälp av syre. | Sker i alla levande celler.' },
     { l: 'graf', cat: 'System', syfte: 'Noder och kanter i en fast karta. Hela grafen syns från början. Varje klick lyfter fram noder, kanter, vikter, en enskild nod eller en väg som ritas i färdriktningen. Resten ligger kvar nedtonat, och sista klicket visar helheten med en slutsats.', undvik: 'Fler än tolv noder, eller när ordningen i en process är poängen (använd bro eller etapper). Vikterna är text du skriver själv.',
       ex: '[graf]\netikett: Datastruktur\nrubrik: En graf är noder och kanter\ntext: En graf beskriver saker och hur de hänger ihop.\n- nod: A | 10 20\n- nod: B | 45 5\n- nod: C | 85 30\n- nod: D | 60 90\n- nod: E | 15 80\n- kant: A - B | 4\n- kant: B - C | 3\n- kant: A - E | 2\n- kant: E - D | 6\n- kant: C - D | 2\n- kant: B - D | 7\n- fokus: noder | Noder | Punkterna. De kan vara platser, personer eller tillstånd.\n- fokus: kanter | Kanter | Linjerna visar vilka noder som hör ihop.\n- fokus: vikter | Vikter | Ett värde på varje kant, till exempel avstånd, kostnad eller tid.\n- fokus: A > B > C > D | En väg | Vägen följer kanterna från A till D.\n- fokus: A > E > D | En kortare väg | Samma start och mål, lägre summa.\nslutsats: Med vikter kan vi jämföra vägar och välja den bästa.' },
+    { l: 'tidsresa', cat: 'Analys', syfte: 'En tidslinje som byggs ut genom hela presentationen. Alla tidsresebilder i manuset delar samma linje längst ned: händelser och perioder från alla bilderna placeras i tidsordning. Det som redan har visats lyser, den aktuella händelsen lyfts fram med ett stort kort ovanför, och det som kommer senare syns som mörka siluetter tills man når dem. Linjen står still mellan bilderna medan innehållet byts, så presentationen hänger ihop som en resa. Varje rad är ett klick: år | namn | text | punkt | ikon (en händelse), år–år | namn | text (en period, t.ex. en epok) eller rubrik | text (ett kort där linjen står still). spann: år–år | etikett markerar ett spann under hela bilden. Första bilden i en rad blir ikonen på linjen, en andra bild visas stort i kortet. En tidsresebild utan rader blir öppning (allt i siluett) eller översikt (allt som visats, med namn på klick).', undvik: 'Händelser utan tydlig tidsordning. Fler än ungefär tjugo händelser på samma linje.',
+      ex: '[tidsresa]\netikett: Rymdkapplöpningen\nrubrik: De första stegen ut\n- 1957 | Sputnik 1 | Den första konstgjorda satelliten skickas upp. | Startskottet för rymdkapplöpningen.\n- 1961 | Gagarin | Den första människan i rymden.\n- 1969 | Månlandningen | Apollo 11 landar på månen.' },
     { l: 'trad', cat: 'System', syfte: 'Ett träd eller beslutsträd ur en indragen lista. Hela trädet syns från början. Varje klick lyfter fram roten, en nivå, grenarna, löven eller en väg från roten till ett löv, som ritas nedåt gren för gren. Med fokus: ordning glider en ring genom noderna i tur och ordning, nivå för nivå (bfs), djupet först (dfs) eller i en egen ordning (ordning A C G), och varje nod får sitt nummer. En väg som fortsätter förra klickets väg ritar bara den nya delen. Med fokus: steg Ja > Nej följs vägen en gren per klick. En väg eller ett steg kan få en bild som sista fält (fokus: steg Ja > Nej | Fall 3 | svaret | bilder/x/fall.png): då visas fallet först vid roten och vandrar sedan ner, frågorna tänds när det passerar, och svaret visas när det når lövet.', undvik: 'Fler än åtta löv eller fem nivåer. Långa texter i noderna.',
       ex: '[träd]\netikett: Beslutsträd\nrubrik: Ska vi ha lektionen ute?\ntext: Varje fråga delar upp fallen. Varje löv är ett beslut.\n- Regnar det?\n  - Ja: Inne\n  - Nej: Är det kallare än 5 grader?\n    - Ja: Inne\n    - Nej: Ute\n- fokus: rot | Roten | Den första frågan ställs alltid.\n- fokus: grenar | Grenar | Varje gren är ett möjligt svar.\n- fokus: löv | Löv | Löven är de slutliga besluten.\n- fokus: väg Nej > Nej | Ett fall | Uppehåll och 12 grader ger lektion ute.\nslutsats: Samma frågor i samma ordning ger samma beslut varje gång.' },
     { l: 'flode', cat: 'System', syfte: 'Något flödar genom ett system: indata, bearbetning, utdata. En eller två banor genom samma steg. Hela flödet syns nedtonat från början. Varje klick tänder samma steg i alla banor och en markör följer flödet, så att två processer jämförs steg för steg. Ett steg som heter ? blir en stängd låda. Sista klicket visar hela kedjan och slutsatsen.', undvik: 'Fler än två banor eller fem steg per bana. Steg utan inbördes ordning (använd fokus eller kort), eller orsak och verkan med villkor (använd verkningar).',
@@ -7380,7 +7604,7 @@ async function handleFile(file) {
 }
 
 /* =================== redigerare =================== */
-const FIELDS = {etapper:[["caption", "Etikett", "text"], ["title", "Rubrik", "text"], ["items", "Högst 4 rader: rubrik | text", "list"]],vagval:[["caption", "Etikett", "text"], ["title", "Rubrik", "text"], ["items", "Högst 4 rader: kriterium | vänster | höger", "list"], ["lt", "Vänster alternativ", "text"], ["rt", "Höger alternativ", "text"]],lager:[["caption", "Etikett", "text"], ["title", "Rubrik", "text"], ["items", "Högst 3 rader: rubrik | text", "list"]],resonemang:[["caption", "Etikett", "text"], ["title", "Rubrik", "text"], ["items", "Högst 3 rader: rubrik | text", "list"], ["text", "Slutsats", "area"]],helhet:[["caption", "Etikett", "text"], ["title", "Rubrik", "text"], ["items", "Högst 4 rader: rubrik | text", "list"]],
+const FIELDS = {tidsresa:[["caption", "Etikett", "text"], ["title", "Rubrik", "text"], ["text", "Ingress under rubriken", "area"], ["items", "En rad per klick: år | namn | text | punkt | ikon.svg (händelse), år–år | namn | text (period) eller rubrik | text (kort). spann: år–år | etikett markerar ett spann. Utan rader blir bilden öppning eller översikt", "list"], ["conclusion", "Slutsats som visas vid sista klicket", "area"]],etapper:[["caption", "Etikett", "text"], ["title", "Rubrik", "text"], ["items", "Högst 4 rader: rubrik | text", "list"]],vagval:[["caption", "Etikett", "text"], ["title", "Rubrik", "text"], ["items", "Högst 4 rader: kriterium | vänster | höger", "list"], ["lt", "Vänster alternativ", "text"], ["rt", "Höger alternativ", "text"]],lager:[["caption", "Etikett", "text"], ["title", "Rubrik", "text"], ["items", "Högst 3 rader: rubrik | text", "list"]],resonemang:[["caption", "Etikett", "text"], ["title", "Rubrik", "text"], ["items", "Högst 3 rader: rubrik | text", "list"], ["text", "Slutsats", "area"]],helhet:[["caption", "Etikett", "text"], ["title", "Rubrik", "text"], ["items", "Högst 4 rader: rubrik | text", "list"]],
 skiften: [["caption", "Etikett", "text"], ["title", "Rubrik", "text"], ["start", "Utgångsläge", "text"], ["end", "Slutläge", "text"], ["items", "3–6 brytpunkter: tid | händelse | förändring (förändring krävs)", "list"], ["text", "Övergripande slutsats", "area"]],
 prisma: [["caption", "Etikett", "text"], ["title", "Rubrik", "text"], ["question", "Gemensam fråga", "area"], ["items", "3–5 perspektiv: perspektiv | betonar | grund", "list"], ["common", "Gemensamt", "area"], ["tension", "Spänning eller oenighet", "area"]],
 verkningar: [["caption", "Etikett", "text"], ["title", "Rubrik", "text"], ["cause", "Orsak", "area"], ["items", "1–3 mekanismer: mekanism | förändring", "list"], ["effect", "Konsekvens", "area"], ["condition", "Villkor", "area"], ["alternative", "Alternativ förklaring", "area"]],
@@ -7480,8 +7704,8 @@ const DEFAULTS = {
   quote: { text: 'Citat', caption: 'Källa' },
   egen: { title: 'Rubrik', items: ['Första | Förklaring', 'Andra | Förklaring', 'Tredje | Förklaring'], steps: true }
 };
-['etapper','vagval','lager','resonemang','helhet','skiften','prisma','verkningar','belagg','sammanflode','lameller','register','samband','marginal','sats','terminal','kodforklaring','kodskrivning','typografisk','texttempo','poll', 'reflect', 'define', 'chat', 'duo', 'omslag', 'karta', 'triad', 'motsats', 'bildkant', 'båge', 'omlopp', 'gradskiva', 'bro', 'graf', 'trad', 'spegel', 'ordpar', 'spektrum', 'livslopp', 'lexikon', 'rad', 'rutor', 'remsor', 'mosaik', 'karna', 'flode', 'urval', 'forgrening', 'inzoomning', 'fyrfalt', 'vagskal', 'sokning', 'rutnat', 'ko', 'formel', 'kretslopp', 'mobil', 'ringar', 'lins', 'mätare', 'ridå', 'strålkastare', 'fokus', 'ordbild', 'bildfält', 'delning', 'sammaform', 'provning', 'ljustal'].forEach(l => { const c = Manus.CATALOG.find(x => x.l === l); if (c) { const p = Manus.parseBlock(c.ex); delete p.layout; DEFAULTS[l] = p; } });
-const WF = {etapper:"<path class=\"l\" d=\"M15 30H55V45H100V60H145\"/>",vagval:"<path class=\"l\" d=\"M14 30H146M14 50H146M14 70H146M60 15V75M103 15V75\"/>",lager:"<path class=\"l\" d=\"M15 20H140M30 45H140M45 70H140\"/>",resonemang:"<path class=\"l\" d=\"M15 20H75M15 45H75M15 70H75M92 20V70\"/><rect class=\"a\" x=\"105\" y=\"30\" width=\"40\" height=\"30\"/>",helhet:"<rect class=\"a\" x=\"14\" y=\"20\" width=\"60\" height=\"54\"/><path class=\"l\" d=\"M88 20H145M88 45H145M88 70H145\"/>",
+['tidsresa','etapper','vagval','lager','resonemang','helhet','skiften','prisma','verkningar','belagg','sammanflode','lameller','register','samband','marginal','sats','terminal','kodforklaring','kodskrivning','typografisk','texttempo','poll', 'reflect', 'define', 'chat', 'duo', 'omslag', 'karta', 'triad', 'motsats', 'bildkant', 'båge', 'omlopp', 'gradskiva', 'bro', 'graf', 'trad', 'spegel', 'ordpar', 'spektrum', 'livslopp', 'lexikon', 'rad', 'rutor', 'remsor', 'mosaik', 'karna', 'flode', 'urval', 'forgrening', 'inzoomning', 'fyrfalt', 'vagskal', 'sokning', 'rutnat', 'ko', 'formel', 'kretslopp', 'mobil', 'ringar', 'lins', 'mätare', 'ridå', 'strålkastare', 'fokus', 'ordbild', 'bildfält', 'delning', 'sammaform', 'provning', 'ljustal'].forEach(l => { const c = Manus.CATALOG.find(x => x.l === l); if (c) { const p = Manus.parseBlock(c.ex); delete p.layout; DEFAULTS[l] = p; } });
+const WF = {tidsresa:"<path class=\"l\" d=\"M14 66H146\"/><rect class=\"a\" x=\"14\" y=\"14\" width=\"70\" height=\"12\"/><path class=\"l\" d=\"M14 36H100M14 46H90\"/><circle class=\"a\" cx=\"30\" cy=\"66\" r=\"5\"/><circle class=\"a\" cx=\"62\" cy=\"66\" r=\"7\"/><circle cx=\"94\" cy=\"66\" r=\"5\" style=\"fill:var(--line)\"/><circle cx=\"126\" cy=\"66\" r=\"5\" style=\"fill:var(--line)\"/>",etapper:"<path class=\"l\" d=\"M15 30H55V45H100V60H145\"/>",vagval:"<path class=\"l\" d=\"M14 30H146M14 50H146M14 70H146M60 15V75M103 15V75\"/>",lager:"<path class=\"l\" d=\"M15 20H140M30 45H140M45 70H140\"/>",resonemang:"<path class=\"l\" d=\"M15 20H75M15 45H75M15 70H75M92 20V70\"/><rect class=\"a\" x=\"105\" y=\"30\" width=\"40\" height=\"30\"/>",helhet:"<rect class=\"a\" x=\"14\" y=\"20\" width=\"60\" height=\"54\"/><path class=\"l\" d=\"M88 20H145M88 45H145M88 70H145\"/>",
 skiften:'<line class="l" x1="14" y1="48" x2="146" y2="48"/><circle class="a" cx="28" cy="48" r="4"/><circle class="a" cx="80" cy="48" r="5"/><circle class="a" cx="132" cy="48" r="4"/><path class="m" d="M28 38V22M80 58V75M132 38V22"/>',prisma:'<circle class="o" cx="80" cy="46" r="15"/><path class="l" d="M80 31L80 8M94 42L140 24M91 58L124 79M69 58L36 79M66 42L20 24"/><circle class="a" cx="80" cy="46" r="6"/>',verkningar:'<path class="l" d="M15 48H145"/><circle class="a" cx="18" cy="48" r="6"/><circle class="o" cx="60" cy="48" r="5"/><circle class="o" cx="100" cy="48" r="5"/><path class="a" d="M136 42l9 6-9 6"/>',belagg:'<rect class="m" x="14" y="18" width="76" height="7" rx="2"/><rect class="m" x="14" y="32" width="94" height="7" rx="2"/><rect class="a" x="48" y="31" width="34" height="9" rx="2"/><path class="l" d="M82 36H118V62"/><rect class="m" x="112" y="62" width="34" height="5" rx="2"/>',sammanflode:'<path class="l" d="M14 18C42 18 52 45 78 45M14 45H78M14 72C42 72 52 45 78 45M146 24C118 24 108 45 78 45"/><path class="a" d="M78 45C90 55 105 64 138 72"/><circle class="a" cx="78" cy="45" r="5"/>',
 lameller:"<path class=\"l\" d=\"M25 10V80M50 10V80M75 10V80M100 10V80M125 10V80\"/><rect class=\"a\" x=\"12\" y=\"50\" width=\"100\" height=\"18\"/>",register:"<rect class=\"o\" x=\"12\" y=\"15\" width=\"30\" height=\"60\"/><rect class=\"a\" x=\"45\" y=\"15\" width=\"72\" height=\"60\"/><rect class=\"o\" x=\"120\" y=\"15\" width=\"28\" height=\"60\"/>",samband:"<path class=\"l\" d=\"M20 20H55L100 45H145M20 70H55L100 45\"/><circle class=\"a\" cx=\"130\" cy=\"45\" r=\"15\"/>",marginal:"<rect class=\"o\" x=\"12\" y=\"12\" width=\"80\" height=\"65\"/><path class=\"l\" d=\"M100 20H148M100 45H148M100 70H148\"/>",sats:"<text class=\"a\" x=\"20\" y=\"50\" style=\"font:30px serif\">x + y</text><path class=\"l\" d=\"M20 65H140\"/>",
   title: '<rect class="a" x="14" y="46" width="96" height="16" rx="3"/><rect class="m" x="14" y="68" width="62" height="5" rx="2"/>',

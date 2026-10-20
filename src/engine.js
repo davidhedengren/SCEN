@@ -10,7 +10,7 @@ const ACCENTS = {
   blue: ['#2F5BF5', '#809EFF', 'Blå'], green: ['#0A7F58', '#4CD4A0', 'Grön'], orange: ['#C2410C', '#FF9A5C', 'Orange'],
   teal: ['#0B7A83', '#46D6DE', 'Turkos'], purple: ['#6B3FDF', '#B59BFF', 'Lila'], red: ['#C1263D', '#FF7A8C', 'Röd'], graphite: ['#27344F', '#C8D2E6', 'Grafit']
 };
-const LAYOUTS = {etapper:"Etapper",vagval:"Vägval",lager:"Lager",resonemang:"Resonemang",helhet:"Helhet",
+const LAYOUTS = {tidsresa:"Tidsresa",etapper:"Etapper",vagval:"Vägval",lager:"Lager",resonemang:"Resonemang",helhet:"Helhet",
   skiften: 'Skiften', prisma: 'Prisma', verkningar: 'Verkningar', belagg: 'Belägg', sammanflode: 'Sammanflöde',
   lameller: 'Lameller', register: 'Register', samband: 'Samband', marginal: 'Marginal', sats: 'Sats', formel: 'Formel', kretslopp: 'Kretslopp', mobil: 'Mobil',
   title: 'Titel', section: 'Avsnitt', statement: 'Påstående', bullets: 'Punktlista', split: 'Text och bild',
@@ -237,6 +237,87 @@ function parseTrad(items) {
   const place = n => { if (!n.kids.length) { n.slot = slot++; return; } n.kids.forEach(place); n.slot = (n.kids[0].slot + n.kids[n.kids.length - 1].slot) / 2; };
   roots.forEach(place);
   return { roots, all, leaves: slot, levels: all.reduce((m, n) => Math.max(m, n.depth + 1), 0) };
+}
+
+/* ---------- tidsresa ----------
+   En tidslinje som byggs ut genom hela presentationen. Alla [tidsresa]-bilder delar samma linje: händelser
+   och perioder samlas från hela manuset och placeras i tidsordning. Det som redan har visats lyser, den
+   aktuella händelsen lyfts fram och det som kommer senare syns som mörka siluetter. Raderna i en bild:
+     år | namn | text | punkt | punkt | ikon.svg | bild.jpg     en händelse (ett klick)
+     år–år | namn | text | ...                                  en period, t.ex. en epok (ett klick)
+     rubrik | text | punkt | ...                                ett kort utan tid; linjen står still (ett klick)
+     spann: år–år | etikett                                     markerar ett spann under hela bilden
+   Första bilden i ett fält används som ikon på linjen, en eventuell andra bild som stor bild i kortet. */
+function trWhen(s) {
+  const parts = String(s || '').split(/\s*[·,]\s*/).map(x => x.trim()).filter(Boolean);
+  if (!parts.length) return null;
+  const ranges = [];
+  for (const q of parts) {
+    const m = q.match(/^(?:ca\.?\s*)?(\d{4})(-tal)?(?:\s*[–—-]\s*(?:ca\.?\s*)?(\d{4})?)?$/i);
+    if (!m) return null;
+    const open = !m[3] && /[–—]\s*$|\d{4}\s*-\s*$/.test(q);
+    ranges.push({ a: +m[1], b: m[3] ? +m[3] : (open ? Infinity : null) });
+  }
+  return { period: ranges.some(r => r.b !== null), ranges, label: String(s).trim(), year: ranges[0].a };
+}
+function trItems(items) {
+  const steps = [], spans = [];
+  lines(items).forEach(raw => {
+    const t = String(raw).replace(/^(- )+/, '').trim();
+    if (!t) return;
+    const sm = t.match(/^spann\s*:\s*(.*)$/i);
+    const p = (sm ? sm[1] : t).split('|').map(x => x.trim());
+    const imgs = [];
+    while (p.length > 1 && IMG_REF.test(p[p.length - 1])) imgs.unshift(p.pop());
+    const w = trWhen(p[0]);
+    if (sm) { if (w) spans.push({ when: w, name: p[1] || '' }); return; }
+    if (w) {
+      const o = { kind: w.period ? 'period' : 'event', when: w, name: p[1] || '', text: p[2] || '', pts: p.slice(3).filter(Boolean), icon: imgs[0] || '', pic: imgs[1] || imgs[0] || '' };
+      o.key = (w.period ? 'p:' : 'e:') + gtKey(o.name) + '@' + w.year;
+      steps.push(o);
+    } else steps.push({ kind: 'point', name: p[0] || '', text: p[1] || '', pts: p.slice(2).filter(Boolean), icon: '', pic: imgs[imgs.length - 1] || '' });
+  });
+  return { steps, spans };
+}
+const TR_X0 = 190, TR_X1 = 1640;
+function trDeck(deck) {
+  const all = (deck && deck.slides) || [];
+  const evs = new Map(), pers = new Map(), per = [];
+  all.forEach((s, si) => {
+    if (!s || s.layout !== 'tidsresa') { per.push(null); return; }
+    const r = trItems(s.items); per.push(r);
+    r.steps.forEach((o, j) => {
+      if (o.kind === 'point') return;
+      const m = o.kind === 'event' ? evs : pers;
+      if (!m.has(o.key)) m.set(o.key, Object.assign({}, o, { si, j }));
+      else { const e = m.get(o.key); if (!e.icon && o.icon) e.icon = o.icon; }
+    });
+  });
+  const E = [...evs.values()].sort((a, b) => a.when.year - b.when.year || a.si - b.si || a.j - b.j);
+  const n = E.length;
+  E.forEach((e, k) => { e.k = k; e.x = n > 1 ? TR_X0 + k * (TR_X1 - TR_X0) / (n - 1) : (TR_X0 + TR_X1) / 2; });
+  /* år till läge: mellan två händelser interpoleras läget linjärt */
+  const yx = y => {
+    if (!n) return (TR_X0 + TR_X1) / 2;
+    if (y === Infinity) return TR_X1 + 40;
+    if (y <= E[0].when.year) return Math.max(TR_X0 - 40, E[0].x - (E[0].when.year - y) * 6);
+    if (y >= E[n - 1].when.year) return Math.min(TR_X1 + 40, E[n - 1].x + (y - E[n - 1].when.year) * 6);
+    for (let k = 0; k < n - 1; k++) {
+      const a = E[k], b = E[k + 1];
+      if (y === a.when.year) return a.x;
+      if (y > a.when.year && y < b.when.year) return a.x + (b.x - a.x) * (y - a.when.year) / (b.when.year - a.when.year);
+    }
+    return E[n - 1].x;
+  };
+  const P = [...pers.values()].sort((a, b) => a.when.year - b.when.year || a.si - b.si);
+  const lanes = [];
+  P.forEach(pp => {
+    pp.segs = pp.when.ranges.map(r => [yx(r.a), yx(r.b == null ? r.a : r.b)]);
+    let lane = 0;
+    while (lanes[lane] && pp.segs.some(([a, b]) => lanes[lane].some(([c, d]) => a < d - 2 && c < b - 2))) lane++;
+    (lanes[lane] = lanes[lane] || []).push(...pp.segs); pp.lane = lane;
+  });
+  return { E, P, yx, per };
 }
 
 /* ---------- Sökning, rutnät och kö: algoritmen räknas fram, varje klick är ett steg ----------
@@ -942,6 +1023,87 @@ function renderSlide(sl, i, deck, img) {
         (hasPan ? gtPanel(sl.text, focus, sl.conclusion, extra, 144, 320, 560) : '') + cues;
       if (plain(title).length > 44) cls = 'gt-long';
       attrs += ` data-dramaturgy="focus-restore" data-dramaturgy-state="${steps ? 'overview' : 'restored'}"${steps ? '' : ' data-dramaturgy-static="true"'}`;
+      break;
+    }
+    case 'tidsresa': {
+      const TD = trDeck(deck);
+      const si = deck && deck.slides ? Math.max(0, deck.slides.indexOf(sl)) : i;
+      const own = TD.per[si] || trItems(sl.items);
+      const ST = own.steps, ns = ST.length;
+      const uid = 'u' + hash((sl.id || '') + i + L);
+      const lastJ = Math.max(0, ns - 1);
+      /* läge per steg: hur långt linjen har ritats, och vilka händelser som lyser */
+      const litFrom = e => (e.si < si ? 0 : e.si === si ? e.j : Infinity);
+      const nowAt = j => TD.E.reduce((m, e) => (litFrom(e) <= j ? Math.max(m, e.x) : m), TR_X0);
+      const prevNow = () => {
+        for (let q = si - 1; q >= 0; q--) {
+          if (!TD.per[q]) continue;
+          const lim = Math.max(0, TD.per[q].steps.length - 1);
+          return TD.E.reduce((m, e) => ((e.si < q || (e.si === q && e.j <= lim)) ? Math.max(m, e.x) : m), TR_X0);
+        }
+        return TR_X0;
+      };
+      const over = !ns, anyLit = TD.E.some(e => e.si < si), hero = over && !anyLit;
+      const kSteps = over ? (anyLit ? 1 : 0) : ns;
+      const sel = j => {
+        let x = `.scen:not(.static) .slide.${uid}`;
+        if (j > 0) x += `:has(.tr-k.k${j}.in)`;
+        if (j < kSteps - 1) x += `:not(:has(.tr-k.k${j + 1}.in))`;
+        return x;
+      };
+      const stat = `.scen.static .slide.${uid}`;
+      let css = '';
+      /* tända noder: kumulativt per steg */
+      const litSel = [];
+      for (let j = 0; j <= lastJ; j++) litSel.push(j === 0 ? `.slide.${uid} .lf0` : `.slide.${uid}:has(.tr-k.k${j}.in) .lf${j}`, `${stat} .lf${j}`);
+      css += `${litSel.join(',')}{--lit:1}`;
+      if (!over) {
+        for (let j = 0; j < ns; j++) {
+          css += `${sel(j)}{--now:${Math.round(nowAt(j))}px}${sel(j)} .c${j}{--cur:1}${sel(j)} .tr-card.c${j}{opacity:1;transform:none}`;
+          css += `.scen:not(.static) .slide.active.${uid}${sel(j).replace(`.scen:not(.static) .slide.${uid}`, '')} .tr-node.c${j}.lf${j} .tr-ic{animation:tr-wake 1.3s cubic-bezier(.2,.8,.2,1) ${j === 0 ? '.45s' : '0s'} both}`;
+        }
+        css += `${stat}{--now:${Math.round(nowAt(lastJ))}px}${stat} .c${lastJ}{--cur:1}${stat} .tr-card.c${lastJ}{opacity:1;transform:none}`;
+        css += `${sel(lastJ)} .tr-end,${stat} .tr-end{opacity:1;transform:none}`;
+      } else css += `.slide.${uid}{--now:${Math.round(nowAt(0))}px}` + (kSteps ? `.slide.${uid}:has(.tr-k.k1.in) .tr-band,${stat} .tr-band{--names:1}` : '');
+      const p0 = Math.round(prevNow()), n0 = Math.round(over ? nowAt(0) : nowAt(0));
+      if (p0 !== n0) css += `@keyframes tp${uid}{from{width:${Math.max(0, p0 - TR_X0)}px}}.scen:not(.static) .slide.active.${uid} .tr-prog{animation:tp${uid} 1.5s cubic-bezier(.45,0,.2,1) .25s backwards}`;
+
+      /* linjen */
+      const stepOf = key => ST.reduce((a, o, j) => (o.key === key ? a.concat(j) : a), []);
+      const nodes = TD.E.map(e => {
+        const lf = litFrom(e), cur = stepOf(e.key);
+        const cls = ['tr-node', 'n' + e.k, e.icon ? '' : 'tr-minor', Number.isFinite(lf) ? 'lf' + Math.min(lf, lastJ) : '', ...cur.map(j => 'c' + j), (e.si === si && e.j === 0) ? 'tr-new' : '', e.k % 2 ? 'tr-odd' : ''].filter(Boolean).join(' ');
+        return `<div class="${cls}" style="left:${Math.round(e.x)}px">` + (e.icon ? `<img class="tr-ic" src="${esc(img(e.icon))}" alt="">` : `<i class="tr-dot"></i>`) +
+          `<b class="tr-yr">${fmt(e.when.label)}</b><span class="tr-nm">${fmt(e.name)}</span></div>`;
+      }).join('');
+      const pers = TD.P.map((pp, q) => {
+        const lf = litFrom(pp), cur = stepOf(pp.key);
+        const c = ['tr-per', 'l' + pp.lane, Number.isFinite(lf) ? 'lf' + Math.min(lf, lastJ) : '', ...cur.map(j => 'c' + j)].filter(Boolean).join(' ');
+        return pp.segs.map(([a, b], z) => `<div class="${c}" style="left:${Math.round(a)}px;width:${Math.max(24, Math.round(b - a))}px">${z === 0 ? `<span>${pp.icon ? `<img src="${esc(img(pp.icon))}" alt="">` : ''}${fmt(pp.name)}</span>` : ''}</div>` +
+          `<div class="tr-tint ${cur.map(j => 'c' + j).join(' ')}" style="left:${Math.round(a)}px;width:${Math.max(24, Math.round(b - a))}px"></div>`).join('');
+      }).join('');
+      const spans = own.spans.map(sp => sp.when.ranges.map(r => { const a = TD.yx(r.a), b = TD.yx(r.b == null ? r.a : r.b); return `<div class="tr-span" style="left:${Math.round(a)}px;width:${Math.max(24, Math.round(b - a))}px"><span>${fmt(sp.when.label)}${sp.name ? ' · ' + fmt(sp.name) : ''}</span></div>`; }).join('')).join('');
+      const band = `<div class="tr-band" data-id="tr-band"><div class="tr-track"><i class="tr-rail"></i><i class="tr-prog"></i></div>${spans}${pers}${nodes}</div>`;
+
+      /* korten */
+      const cards = ST.map((o, j) => {
+        const pic = o.pic ? `<figure class="tr-pic"><img src="${esc(img(o.pic))}" alt=""></figure>` : '';
+        const when = o.kind === 'point' ? '' : `<p class="tr-when${o.kind === 'period' ? ' tr-pwhen' : ''}">${fmt(o.when.label)}</p>`;
+        return `<div class="tr-card c${j}${pic ? '' : ' nopic'} tr-${o.kind}"><div class="tr-copy">${when}<h3 class="tr-name">${fmt(o.name)}</h3>` +
+          (o.text ? `<p class="tr-text">${fmt(o.text)}</p>` : '') + (o.pts.length ? `<ul class="tr-pts">${o.pts.map(x => `<li>${fmt(x)}</li>`).join('')}</ul>` : '') + `</div>${pic}</div>`;
+      }).join('');
+      let marks = '';
+      for (let j = 1; j < (over ? kSteps + 1 : ns); j++) marks += `<i class="tr-k k${j}"${steps ? st('none') : ''} aria-hidden="true"></i>`;
+      if (hero) {
+        body = `<style>${css}</style><div class="tr-hero">${sl.caption ? `<p class="kicker"${A('fade', 200)}>${fmt(sl.caption)}</p>` : ''}<h1${title ? tid(title) : ''}${A(tA('words'), 300)}>${fmt(title || 'Tidsresa')}</h1>` +
+          (sl.text ? `<p class="lead"${A('fade', 900)}>${fmt(sl.text)}</p>` : '') + (sl.conclusion ? `<p class="tr-years"${A('fade', 1300)}>${fmt(sl.conclusion)}</p>` : '') + `</div>${band}${marks}`;
+      } else {
+        body = `<style>${css}</style>` + (sl.caption ? `<p class="kicker"${A('fade')}>${fmt(sl.caption)}</p>` : '') + H2('', 'mask') +
+          (sl.text ? `<p class="lead tr-lead"${A('fade', 250)}>${fmt(sl.text)}</p>` : '') +
+          (over ? (sl.conclusion ? `<p class="tr-overend"${A('fade', 600)}>${fmt(sl.conclusion)}</p>` : '') :
+            `<div class="tr-cards${sl.text ? ' tr-low' : ''}">${cards}</div>` + (sl.conclusion ? `<p class="tr-end">${fmt(sl.conclusion)}</p>` : '')) + band + marks;
+      }
+      cls = uid + (hero ? ' tr-mode-hero' : over ? ' tr-mode-over' : '');
       break;
     }
     case 'trad': {

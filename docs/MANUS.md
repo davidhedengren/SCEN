@@ -326,6 +326,29 @@ Med `steg` visas fallet först ovanför roten. Varje klick därefter flyttar det
 
 Passar beslutsträd där publiken ska följa ett exempel i taget, till exempel testdata, diagnoser eller vardagsval.
 
+### Tidsresa
+
+`[tidsresa]` bygger en tidslinje genom hela presentationen. Alla tidsresebilder i manuset delar samma linje längst ned. Händelser och perioder från alla bilderna placeras i tidsordning, och linjen står still mellan bilderna medan innehållet ovanför byts.
+
+```
+[tidsresa]
+etikett: 1955–1956
+rubrik: AI blir ett eget forskningsfält
+text: valfri ingress under rubriken
+slutsats: visas vid sista klicket
+- 1955 | Logic Theorist | text | punkt | punkt | bilder/kurs/ikon.svg
+- 1956 | Dartmouthkonferensen | text | bilder/kurs/ikon.svg | bilder/kurs/foto.jpg
+- 1966–1980 | Första AI-vintern | text            (en period)
+- Följderna | text | punkt                         (ett kort utan tid, linjen står still)
+- spann: 1960–1979 | Symbolisk AI                (markerar ett spann under hela bilden, inget klick)
+```
+
+Varje rad är ett klick. Första bilden i en rad blir ikonen på linjen och visas också stort i kortet. En andra bild visas i kortet i stället. En händelse utan ikon blir en liten punkt på linjen.
+
+Det som redan har visats lyser, den aktuella händelsen lyfts fram och det som kommer senare syns som mörka siluetter. Ordningen följer manuset, inte årtalen, så en bild kan gå tillbaka i tiden (till exempel ett parallellt spår). En händelse eller period som nämns i flera bilder känns igen på namn och år. Perioder visas som band under årtalen och tonas fram bakom linjen när de är aktuella.
+
+En tidsresebild utan rader blir öppning om inget har visats än (stor rubrik, allt i siluett), annars översikt: linjen glider upp till mitten med alla årtal, och ett klick visar namnen.
+
 ### Ordbild och bildfält med fokuspunkt
 
 I `[ordbild]` och `[bildfält]` väljer `fokuspunkt: x y` (procent) vilken del av bilden som syns, till exempel `fokuspunkt: 85 30` för ett motiv uppe till höger. I ordbild är det den del som fyller ordet. Utan fokuspunkt används bildens mitt.

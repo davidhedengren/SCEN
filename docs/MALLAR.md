@@ -68,6 +68,7 @@ Varje bild i ett manus börjar med mallens namn inom hakparentes. Samma katalog 
 | `[livslopp]` | Jämförelse | Två eller tre banor på samma tidsaxel, till exempel två liv, två länder eller två processer. En streckad gräns kan markera en brytpunkt. Varje klick tänder en händelse eller gränsen, och läget på axeln visar när något sker. |
 | `[lexikon]` | Begrepp | Ett register med begrepp till vänster och ett stort uppslag till höger. Registret syns hela tiden, en markering glider till begreppet du pratar om och uppslaget visar definition och exempel. Skriv begrepp | definition | exempel, eller begrepp | kategori | definition | exempel. |
 | `[graf]` | System | Noder och kanter i en fast karta. Hela grafen syns från början. Varje klick lyfter fram noder, kanter, vikter, en enskild nod eller en väg som ritas i färdriktningen. Resten ligger kvar nedtonat, och sista klicket visar helheten med en slutsats. |
+| `[tidsresa]` | Analys | En tidslinje som byggs ut genom hela presentationen. Alla tidsresebilder i manuset delar samma linje längst ned: händelser och perioder från alla bilderna placeras i tidsordning. Det som redan har visats lyser, den aktuella händelsen lyfts fram med ett stort kort ovanför, och det som kommer senare syns som mörka siluetter tills man når dem. Linjen står still mellan bilderna medan innehållet byts, så presentationen hänger ihop som en resa. Varje rad är ett klick: år | namn | text | punkt | ikon (en händelse), år–år | namn | text (en period, t.ex. en epok) eller rubrik | text (ett kort där linjen står still). spann: år–år | etikett markerar ett spann under hela bilden. Första bilden i en rad blir ikonen på linjen, en andra bild visas stort i kortet. En tidsresebild utan rader blir öppning (allt i siluett) eller översikt (allt som visats, med namn på klick). |
 | `[träd]` | System | Ett träd eller beslutsträd ur en indragen lista. Hela trädet syns från början. Varje klick lyfter fram roten, en nivå, grenarna, löven eller en väg från roten till ett löv, som ritas nedåt gren för gren. Med fokus: ordning glider en ring genom noderna i tur och ordning, nivå för nivå (bfs), djupet först (dfs) eller i en egen ordning (ordning A C G), och varje nod får sitt nummer. En väg som fortsätter förra klickets väg ritar bara den nya delen. Med fokus: steg Ja > Nej följs vägen en gren per klick. En väg eller ett steg kan få en bild som sista fält (fokus: steg Ja > Nej | Fall 3 | svaret | bilder/x/fall.png): då visas fallet först vid roten och vandrar sedan ner, frågorna tänds när det passerar, och svaret visas när det når lövet. |
 | `[flöde]` | System | Något flödar genom ett system: indata, bearbetning, utdata. En eller två banor genom samma steg. Hela flödet syns nedtonat från början. Varje klick tänder samma steg i alla banor och en markör följer flödet, så att två processer jämförs steg för steg. Ett steg som heter ? blir en stängd låda. Sista klicket visar hela kedjan och slutsatsen. |
 | `[urval]` | System | En helhet av punkter i två till fyra grupper och ett urval ur den. Först syns helheten, sedan lyfts urvalet fram medan resten ligger kvar nedtonat, sedan den grupp som är mest underrepresenterad. Staplar visar andelarna i helheten och i urvalet. Sista klicket visar helheten igen med slutsatsen. |
@@ -370,6 +371,21 @@ rubrik: Ett beslut med flera krav
 gemensamt: Lösningen måste fungera över tid.
 spänning: Snabb leverans står mot långsiktig kvalitet.
 syntes: Välj den minsta lösning som kan växa utan att byggas om.
+```
+
+### `[tidsresa]` Tidsresa
+
+En tidslinje som byggs ut genom hela presentationen. Alla tidsresebilder i manuset delar samma linje längst ned: händelser och perioder från alla bilderna placeras i tidsordning. Det som redan har visats lyser, den aktuella händelsen lyfts fram med ett stort kort ovanför, och det som kommer senare syns som mörka siluetter tills man når dem. Linjen står still mellan bilderna medan innehållet byts, så presentationen hänger ihop som en resa. Varje rad är ett klick: år | namn | text | punkt | ikon (en händelse), år–år | namn | text (en period, t.ex. en epok) eller rubrik | text (ett kort där linjen står still). spann: år–år | etikett markerar ett spann under hela bilden. Första bilden i en rad blir ikonen på linjen, en andra bild visas stort i kortet. En tidsresebild utan rader blir öppning (allt i siluett) eller översikt (allt som visats, med namn på klick).
+
+**Undvik när:** Händelser utan tydlig tidsordning. Fler än ungefär tjugo händelser på samma linje.
+
+```
+[tidsresa]
+etikett: Rymdkapplöpningen
+rubrik: De första stegen ut
+- 1957 | Sputnik 1 | Den första konstgjorda satelliten skickas upp. | Startskottet för rymdkapplöpningen.
+- 1961 | Gagarin | Den första människan i rymden.
+- 1969 | Månlandningen | Apollo 11 landar på månen.
 ```
 
 ## Struktur

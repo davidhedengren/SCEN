@@ -81,12 +81,11 @@ slutsats: **Ja**, ett recept är en algoritm.
 [klipp]
 etikett: Algoritm
 rubrik: Robot-Bingo
-text: När gör roboten något annat än det var tänkt? Varför blir det så?
-slutsats: Vad hade instruktionen behövt säga för att roboten skulle göra rätt?
+text: När gör Robot-Bingo något annat än vad som var tänkt?
 film: https://www.youtube.com/watch?v=YYAlfZqUZrM
 källrad: Bluey – Officiella Svenska Kanalen, YouTube
 > Klippet ligger på Blueys officiella svenska kanal på YouTube och kräver internet. Fungerar det inte i rummet finns en länk under stillbilden som öppnar det på YouTube.
-> Första klicket startar klippet, andra klicket pausar det och visar frågan efter. Klicka i klippet om du vill pausa. Piltangenterna och klickern fungerar ändå.
+> Klicket startar klippet och nästa klick går vidare. Klicka i klippet om du vill pausa. Piltangenterna och klickern fungerar ändå.
 > Koppla till robotfrågan och kriterierna: exakta steg, bestämd ordning och ett slut. En dator kan inte gissa vad vi menar.
 
 ---
@@ -138,7 +137,8 @@ etikett: Exempel
 rubrik: Hitta en väg från A till E
 slutsats: Målet är hittat först när noden tas ut ur kön och utforskas.
 - algoritm: bfs
-- berättelse: kort
+- berättelse: kort, bara vid målet
+- takt: algoritmen först
 - kötyp: dold
 - mål: E
 - A
@@ -148,7 +148,7 @@ slutsats: Målet är hittat först när noden tas ut ur kön och utforskas.
     - D
       - F
 - not: 6 | C lades i kön före D och utforskas därför först. Mer om det när vi pratar om köer.
-> Varje klick är ett steg i algoritmen. Algoritmstegen till vänster lyser i takt med grafen. Texten under grafen svarar bara på frågan om noden är målet.
+> Två klick per steg: först tänds steget i algoritmen till vänster, sedan rör sig grafen och kön. Texten under grafen visas först när målet är hittat.
 > Poängen: E upptäcks redan när C utforskas, men lösningen är hittad först när E tas ut ur kön.
 
 ---
@@ -174,11 +174,16 @@ slutsats: Vilken nod som tas ut ur kön beror på vilken sorts kö algoritmen an
 - in: B 1
 - in: C 2
 - ut
+- in: D 4
+- in: E 1
+- ut
+- ut
 - ut
 - ut
 - berättelse: dold
-> En kö i taget. Först läggs A, B och C in, sedan tas alla tre ut. Siffran är prioriteten, som bara prioritetskön bryr sig om.
-> FIFO-kön lämnar ut A, B, C (först in först ut), stacken C, B, A (sist in först ut) och prioritetskön B, C, A (lägst värde först).
+> En kö i taget. Först läggs A, B och C in och en nod tas ut. Den utforskas, och dess barn D och E läggs in i kön. Sedan tas resten ut. Siffran är prioriteten, som bara prioritetskön bryr sig om.
+> FIFO-kön lämnar ut A, B, C, D, E (först in först ut), stacken C, E, D, B, A (sist in först ut) och prioritetskön B, E, C, A, D (lägst värde först).
+> Lägg märke till prioritetskön: E kommer in sist men går före C och A, eftersom den har lägst värde.
 > Raden längst ner visar i vilken ordning elementen kom ut. På sista klicket kan köerna jämföras.
 > BFS använder en FIFO-kö, DFS en stack och de informerade sökningarna en prioritetskö.
 
@@ -358,7 +363,7 @@ text: Målnoderna är markerade. a) I vilken ordning utforskas noderna? b) Vilke
       - L
     - G
 > När algoritmen har nått fram till en lösning i sin sökning returnerar den lösningen.
-> Klick 1 och 2 visar exemplets facit. Låt eleverna lösa uppgift 1 och 2 innan du klickar vidare.
+> Klick 1 lyfter fram exemplet, klick 2 och 3 visar dess facit. Varje uppgift lyfts fram på samma sätt innan svaret visas. Låt eleverna lösa uppgift 1 och 2 innan du klickar vidare.
 > Facit uppgift 1: a) A, B, C, D, E, F, G, H, I. b) A, B, D, I.
 > Facit uppgift 2: a) A, B, C, D, E. b) A, B, E.
 
@@ -625,8 +630,8 @@ text: def bfs(graph, start, goal):
 - 5 | queue.pop(0) | Tar ut den nod som lades in först: en FIFO-kö.
 - 9 | current == goal | Är noden målet? Då är lösningen hittad.
 - 13 | queue.append(neighbor) | Barnnoderna läggs sist i kön.
-- 5 | queue.pop(0) -> queue.pop() | Ta ut den nod som lades in sist i stället: en stack.
-- 1 | bfs -> dfs | Det var hela skillnaden. Nu är det en DFS.
+- 1 | bfs -> dfs | Nu gör vi om den till en DFS.
+- 5 | queue.pop(0) -> queue.pop() | Ta ut den nod som lades in sist i stället: en stack. Det är hela skillnaden.
 > Kodbilden går att hoppa över i klasser som inte programmerar.
 > Jämför med algoritmstegen: ta ut en nod, kontrollera om det är målet, lägg till barnen.
 > visited ser till att samma nod inte utforskas två gånger.

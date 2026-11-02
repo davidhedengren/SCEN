@@ -2185,22 +2185,29 @@ function renderSlide(sl, i, deck, img) {
         const G = sokGraph(rows), goals = sokGoals(G, cfg['mål']);
         const start = cfg['start'] ? (G.nodes.find(n => plain(n.name).toLowerCase() === plain(cfg['start']).toLowerCase()) || G.nodes[0] || {}).i : 0;
         const S = G.nodes.length ? sokTrace(G, algo, goals, start) : [];
-        nSteps = S.length;
+        /* - takt: algoritmen först ger två klick per steg: först tänds steget i algoritmen, sedan rör sig grafen och kön.
+           at(k) är klicket då steg k animeras, keep() låter ett läge stå kvar över nästa stegs algoritmklick och
+           lineAt() tänder algoritmraden på båda klicken. */
+        const split = /algoritm/i.test(cfg['takt'] || '');
+        const at = k => split ? 2 * k + 1 : k;
+        const keep = ks => split ? ks.flatMap(k => k + 1 < S.length ? [2 * k + 1, 2 * k + 2] : [2 * k + 1]) : ks;
+        const lineAt = ks => split ? ks.flatMap(k => [2 * k, 2 * k + 1]) : ks;
+        nSteps = split ? 2 * S.length : S.length;
         const box = { x: 1020, y: 300, w: 756, h: 500 }, { r, P } = drawGraph(G, box);
         const name = j => esc(plain(G.nodes[j].name));
         const fin = S[S.length - 1] || { done: [], path: [] }, finPath = new Set(fin.path || []);
         G.edges.forEach(([a, b]) => {
           const onPath = S.map((s, j) => (s.path || []).includes(a) && (s.path || []).includes(b) && Math.abs(s.path.indexOf(a) - s.path.indexOf(b)) === 1 ? j : -1).filter(j => j >= 0);
-          svg += `<path class="sk-e" d="${edgeD(P, a, b, r)}" marker-end="url(#skm${uid})"/><path class="sk-ep${onPath.length ? ' fin' : ''}" d="${edgeD(P, a, b, r)}" pathLength="1"${IN(onPath)}/>`;
+          svg += `<path class="sk-e" d="${edgeD(P, a, b, r)}" marker-end="url(#skm${uid})"/><path class="sk-ep${onPath.length ? ' fin' : ''}" d="${edgeD(P, a, b, r)}" pathLength="1"${IN(keep(onPath))}/>`;
         });
         G.nodes.forEach((n, j) => {
           const fr = [], cu = [], dn = [], pa = [];
           S.forEach((s, k) => { if (s.fr.includes(j)) fr.push(k); if (s.cur === j) cu.push(k); if (s.done.includes(j)) dn.push(k); if ((s.path || []).includes(j)) pa.push(k); });
           const [x, y] = P[j];
-          const layers = `<circle class="sk-dn${fin.done.includes(j) ? ' fin' : ''}" cx="${x.toFixed(1)}" cy="${y.toFixed(1)}" r="${r}"${IN(dn)}/>` +
-            `<circle class="sk-fr" cx="${x.toFixed(1)}" cy="${y.toFixed(1)}" r="${r + 7}"${IN(fr)}/>` +
-            `<circle class="sk-cu${fin.cur === j ? ' fin' : ''}" cx="${x.toFixed(1)}" cy="${y.toFixed(1)}" r="${r + 12}"${IN(cu)}/>` +
-            `<circle class="sk-pa${finPath.has(j) ? ' fin' : ''}" cx="${x.toFixed(1)}" cy="${y.toFixed(1)}" r="${r}"${IN(pa)}/>`;
+          const layers = `<circle class="sk-dn${fin.done.includes(j) ? ' fin' : ''}" cx="${x.toFixed(1)}" cy="${y.toFixed(1)}" r="${r}"${IN(keep(dn))}/>` +
+            `<circle class="sk-fr" cx="${x.toFixed(1)}" cy="${y.toFixed(1)}" r="${r + 7}"${IN(keep(fr))}/>` +
+            `<circle class="sk-cu${fin.cur === j ? ' fin' : ''}" cx="${x.toFixed(1)}" cy="${y.toFixed(1)}" r="${r + 12}"${IN(keep(cu))}/>` +
+            `<circle class="sk-pa${finPath.has(j) ? ' fin' : ''}" cx="${x.toFixed(1)}" cy="${y.toFixed(1)}" r="${r}"${IN(keep(pa))}/>`;
           svg += nodeSvg(G, P, r, j, layers, goals);
           if (goals.has(j)) html += `<p class="sk-goaltag" style="left:${Math.round(x - 60)}px;top:${Math.round(y + r + 8)}px">Mål</p>`;
         });
@@ -2216,7 +2223,7 @@ function renderSlide(sl, i, deck, img) {
            - kötyp: dold döljer BFS/DFS och köns namn, till exempel innan köerna har gåtts igenom. */
         const showAlg = !/dold|nej/i.test(cfg['algoritmen'] || ''), showKind = !/dold|nej/i.test(cfg['kötyp'] || '');
         if (showAlg) html += `<div class="sk-alg"><p class="sk-algh"><b>Algoritmen</b>${showKind ? `<span>${stack ? 'DFS · stack' : 'BFS · FIFO-kö'}</span>` : ''}</p><ol>` +
-          AL.map((t, q) => `<li class="l${q}${q === 3 ? ' goalline' : ''}"${IN(S.map((s, k) => LINE[s.kind] === q ? k : -1).filter(k => k >= 0))}>${t}</li>`).join('') +
+          AL.map((t, q) => `<li class="l${q}${q === 3 ? ' goalline' : ''}"${IN(lineAt(S.map((s, k) => LINE[s.kind] === q ? k : -1).filter(k => k >= 0)))}>${t}</li>`).join('') +
           `</ol></div>`;
         /* Frontiern under algoritmen: en liggande kö för BFS, en stående stack för DFS. */
         const CH = stack ? 64 : 72, GAP = stack ? 10 : 12, FX = 144, FY = stack ? 654 : 668;
@@ -2237,10 +2244,10 @@ function renderSlide(sl, i, deck, img) {
           s.done.filter(j => j !== s.cur).forEach((j, q) => { out += rule(`${pre} .sk-ch.n${j}`, slotDone(q), 'done'); });
           return out;
         };
-        S.forEach((s, k) => { css += place(s, `.${uid}[data-dramaturgy-focus="${k}"]`); });
+        S.forEach((s, k) => { css += place(s, `.${uid}[data-dramaturgy-focus="${at(k)}"]`); if (split && k + 1 < S.length) css += place(s, `.${uid}[data-dramaturgy-focus="${2 * k + 2}"]`); });
         if (S.length) css += place(S[S.length - 1], `.${uid}[data-dramaturgy-state="restored"]`);
         /* Status: vad som händer i varje steg, med lärarens egna kommentarer. */
-        const kort = /kort/i.test(cfg['berättelse'] || '');
+        const kort = /kort/i.test(cfg['berättelse'] || ''), onlyGoal = /mål/i.test(cfg['berättelse'] || '');
         const saidShort = s => s.kind === 'start' ? '' : s.kind === 'take' ? `Är ${name(s.cur)} målet? Nej.` :
           s.kind === 'add' ? (showAlg ? '' : s.added.length ? `${sokList(s.added.map(name))} läggs i kön.` : 'Inga nya noder.') :
           s.kind === 'goal' ? `Är ${name(s.cur)} målet? Ja! Vägen: ${s.path.map(name).join(' → ')}.` : 'Kön är tom. Ingen lösning.';
@@ -2249,7 +2256,7 @@ function renderSlide(sl, i, deck, img) {
           s.kind === 'goal' ? `${name(s.cur)} tas ut ur kön. Det är målet! Vägen: ${s.path.map(name).join(' → ')}.` : 'Kön är tom. Det finns ingen lösning.';
         html += (showAlg ? `<div class="sk-status" style="left:${box.x}px;top:${box.y + box.h + 22}px;width:${box.w}px">` : `<div class="sk-status sk-big" style="left:144px;top:300px;width:800px">`) +
           (sl.text ? `<p class="sk-say sk-intro">${fmt(sl.text)}</p>` : '') +
-          S.map((s, k) => `<div class="sk-say"${T(k)}>${said(s) ? `<p class="say-term">${said(s)}</p>` : ''}${notes[k + 1] ? `<p class="sk-note">${fmt(notes[k + 1])}</p>` : ''}</div>`).join('') +
+          S.map((s, k) => { const t = onlyGoal && s.kind !== 'goal' && s.kind !== 'fail' ? '' : said(s); return `<div class="sk-say"${T(at(k))}>${t ? `<p class="say-term">${t}</p>` : ''}${notes[k + 1] ? `<p class="sk-note">${fmt(notes[k + 1])}</p>` : ''}</div>`; }).join('') +
           (sl.conclusion ? `<p class="sk-say sk-end">${fmt(sl.conclusion)}</p>` : '') + `</div>`;
       } else if (mode === 'vandring') {
         const G = sokGraph(rows), W = G.nodes.length ? sokWalk(G, algo, 0) : [];
@@ -2274,17 +2281,17 @@ function renderSlide(sl, i, deck, img) {
           W.map((n, k) => `<div class="sk-say"${T(k)}><p class="say-term">${first[n] === k ? `Utforskar ${nm(n)}.` : `Inga fler nya grannar. Backar till ${nm(n)}.`}</p>${notes[k + 1] ? `<p class="sk-note">${fmt(notes[k + 1])}</p>` : ''}</div>`).join('') +
           (sl.conclusion ? `<p class="sk-say sk-end">${fmt(sl.conclusion)}</p>` : '') + `</div>`;
       } else {
-        /* Övning: ett till tre träd bredvid varandra. Två klick per träd: ordningen, sedan vägen. */
+        /* Övning: ett till tre träd bredvid varandra. Tre klick per träd: trädet lyfts fram, ordningen, sedan vägen. */
         const panels = []; let cur = null;
         rows.forEach(rw => { if (rw.key === 'uppgift') { const p = rw.v.split('|').map(s => s.trim()); cur = { name: p[0] || '', goal: p[1] || cfg['mål'] || '', rows: [] }; panels.push(cur); } else if (rw.t != null) { if (!cur) { cur = { name: '', goal: cfg['mål'] || '', rows: [] }; panels.push(cur); } cur.rows.push(rw); } });
         const np = Math.min(3, panels.length), gap = 70, pw = np ? (1632 - gap * (np - 1)) / np : 0;
         panels.slice(0, 3).forEach((pn, q) => {
           const G = sokGraph(pn.rows), goals = sokGoals(G, pn.goal), S = sokTrace(G, algo, goals, 0);
           const order = S.filter(s => s.kind === 'take' || s.kind === 'goal').map(s => s.cur), last = S[S.length - 1], path = last && last.kind === 'goal' ? last.path : [];
-          const k0 = 2 * q, k1 = k0 + 1, box = { x: 144 + q * (pw + gap), y: 380, w: pw, h: 400 }, { r, P } = drawGraph(G, box);
-          const upTo = k => Array.from({ length: 2 * np }, (_, t) => t).filter(t => t >= k);
+          const kh = 3 * q, k0 = kh + 1, k1 = kh + 2, box = { x: 144 + q * (pw + gap), y: 380, w: pw, h: 400 }, { r, P } = drawGraph(G, box);
+          const upTo = k => Array.from({ length: 3 * np }, (_, t) => t).filter(t => t >= k);
           const nm = j => esc(plain(G.nodes[j].name));
-          svg += `<g class="sk-panel"${IN([k0, k1])} data-p="${q}">`;
+          svg += `<g class="sk-panel"${IN([kh, k0, k1])} data-p="${q}">`;
           G.edges.forEach(([a, b]) => { const on = path.includes(a) && path.includes(b) && Math.abs(path.indexOf(a) - path.indexOf(b)) === 1; svg += `<path class="sk-e" d="${edgeD(P, a, b, r)}" marker-end="url(#skm${uid})"/><path class="sk-ep${on ? ' fin' : ''}" d="${edgeD(P, a, b, r)}" pathLength="1"${on ? IN(upTo(k1)) : ''}/>`; });
           G.nodes.forEach((n, j) => { const [x, y] = P[j], onP = path.includes(j); svg += nodeSvg(G, P, r, j, `<circle class="sk-pa${onP ? ' fin' : ''}" cx="${x.toFixed(1)}" cy="${y.toFixed(1)}" r="${r}"${onP ? IN(upTo(k1)) : ''}/>`, goals); });
           svg += `</g>`;
@@ -2293,7 +2300,7 @@ function renderSlide(sl, i, deck, img) {
           html += `<p class="sk-pname" style="left:${Math.round(box.x)}px;top:320px;width:${Math.round(pw)}px">${fmt(pn.name)}${goals.size ? ` <span>mål ${sokList([...new Set([...goals].map(nm))])}</span>` : ''}</p>` +
             `<div class="sk-ans" style="left:${Math.round(box.x)}px;top:820px;width:${Math.round(pw)}px"><p class="a"${IN(upTo(k0))}><b>a)</b> ${order.map(nm).join(', ')}</p><p class="b"${IN(upTo(k1))}><b>b)</b> ${path.length ? path.map(nm).join(', ') : 'Ingen väg'}</p></div>`;
         });
-        nSteps = 2 * np;
+        nSteps = 3 * np;
         if (sl.text) html += `<p class="sk-lead">${fmt(sl.text)}</p>`;
       }
       if (steps) {

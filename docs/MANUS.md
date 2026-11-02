@@ -232,7 +232,9 @@ Algoritmerna räknas fram automatiskt. Du skriver grafen eller labyrinten och v�
 - mål: E                     (flera mål: E, L)
 - läge: kö                   (kö, vandring eller övning)
 - berättelse: kort           (valfri: bara "Är A målet? Nej." i stället för hela förloppet)
-- not: 4 | kommentar         (visas vid klick 4)
+                               (lägg till "bara vid målet", t.ex. kort, bara vid målet, så skrivs raden bara ut när målet hittas)
+- takt: algoritmen först     (valfri: två klick per steg, först tänds steget i algoritmen, sedan rör sig grafen och kön)
+- not: 4 | kommentar         (visas när steg 4 animeras)
 - algoritmen: dold           (valfri: tar bort algoritmstegen, den skrivna raden står där i stället)
 - kötyp: dold                (valfri: döljer BFS/DFS och köns namn, t.ex. innan köerna gåtts igenom)
 - A                          (trädet med indrag, eller nod- och kantrader som i [graf])
@@ -241,7 +243,7 @@ Algoritmerna räknas fram automatiskt. Du skriver grafen eller labyrinten och v�
 
 [sökning] i läget övning
 - läge: övning
-- uppgift: Exempel | E       (upp till tre träd, två klick per träd: ordningen, sedan vägen)
+- uppgift: Exempel | E       (upp till tre träd, tre klick per träd: trädet lyfts fram, ordningen, sedan vägen)
 - A
   - B
 
@@ -264,7 +266,7 @@ Algoritmerna räknas fram automatiskt. Du skriver grafen eller labyrinten och v�
 - berättelse: dold           (valfri: ingen textrad om vad som händer, du berättar själv)
 ```
 
-I `[kö]` går köerna en i taget: elementen läggs in i ett klick, sedan är varje `ut` ett klick. Det som tas ut står kvar i en rad under kön, så att köerna kan jämföras på slutet. Ett fjärde fält efter förklaringen visar en kodrad under könamnet, men lägg hellre koden på en egen kodbild så att den går att hoppa över.
+I `[kö]` går köerna en i taget: flera `in` i rad läggs in i ett klick, och varje `ut` är ett klick. Skriv `in` efter ett `ut` för att visa att en nod utforskas och dess barn läggs i kön. Det som tas ut står kvar i en rad under kön, så att köerna kan jämföras på slutet. Ett fjärde fält efter förklaringen visar en kodrad under könamnet, men lägg hellre koden på en egen kodbild så att den går att hoppa över.
 
 Raderna som beskriver vad algoritmen gör, till exempel "Utforskar A." eller "Lägst f i kön", skrivs fram som i en kommandotolk när klicket kommer. Egna kommentarer med `not:` visas som vanlig text under.
 

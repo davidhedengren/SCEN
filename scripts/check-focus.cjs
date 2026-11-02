@@ -9,10 +9,11 @@ for(const layout of ['bro','cards','bullets','timeline','sats','register','samba
  }
  const parsed=Manus.parse(Manus.stringify({title:'Test',theme:{id:'bana'},slides:[slide]}));assert.equal(parsed.slides[0].focus,focus);
 }
-const body=engine.slice(engine.indexOf('  function setSteps('),engine.indexOf('  function stopTimers('));
-const setSteps=new Function('reduced','running','startTimer','applyDramaturgy',body+';return setSteps;')(()=>true,[],()=>{},()=>{});
+// Only setSteps itself (up to the first "  }" line); the film, clip and focus light code it calls is stubbed.
+const start=engine.indexOf('  function setSteps('),end=start+engine.slice(start).search(/\n  \}/)+4;assert(start>=0&&end>start);
+const setSteps=new Function('reduced','running','startTimer','applyDramaturgy','syncFilms','syncClips','trackFocus','slides','cur',engine.slice(start,end)+';return setSteps;')(()=>true,[],()=>{},()=>{},()=>{},()=>{},()=>{},[],0);
 const make=()=>{const flags=new Set();return {dataset:{},classList:{toggle(k,v){v?flags.add(k):flags.delete(k)},contains:k=>flags.has(k)}}};
-const sec={_groups:[[make(),make()],[make()],[make()]],querySelectorAll:()=>[],dataset:{focus:'soft'}};
+const sec={_groups:[[make(),make()],[make()],[make()]],querySelectorAll:()=>[],dataset:{focus:'soft'},classList:{contains:()=>false}};
 for(const n of [0,1,2,3,2,1,0]){setSteps(sec,n,false);sec._groups.forEach((g,i)=>g.forEach(el=>{assert.equal(el.classList.contains('in'),i<n);assert.equal(el.classList.contains('step-current'),i===n-1);assert.equal(el.classList.contains('step-past'),i<n-1)}));}
 const bro=Manus.parseBlock(Manus.CATALOG.find(c=>c.l==='bro').ex);assert(Scen.renderSlide(bro,0,{}).includes('data-focus="soft"'));bro.dim=false;assert(!Scen.renderSlide(bro,0,{}).includes('data-focus='));const out=Manus.parse(Manus.stringify({slides:[bro],theme:{}}));assert.equal(out.slides[0].dim,false);
 console.log('OK: focus modes in seven layouts and two themes; round trips; grouped steps forward/back/reset; Bro defaults and opt-out.');

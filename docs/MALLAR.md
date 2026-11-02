@@ -47,7 +47,7 @@ Varje bild i ett manus börjar med mallens namn inom hakparentes. Samma katalog 
 | `[definition]` | Struktur | Ett begrepp med definition och ett exempel som visas på klick. |
 | `[samtal]` | Interaktivt | Ett AI-samtal som visas replik för replik. Skriv vem | repliken. |
 | `[omslag]` | Redaktionellt | Tidskriftsomslag för start eller nytt kapitel. Enorm rubrik, liten etikett, kort text, ett stort dekorativt tal i bakgrunden och bild i högerkanten. |
-| `[karta]` | Redaktionellt | Visar ett ramverk som numrerade kort. Sätt aktiv för att markera var i ramverket ni är, och återanvänd kartan som avsnittsbyte. |
+| `[karta]` | Redaktionellt | Visar ett ramverk som numrerade kort. Sätt aktiv för att markera var i ramverket ni är, flera delar med komma (aktiv: 1, 2), och återanvänd kartan som avsnittsbyte. |
 | `[triad]` | Redaktionellt | Två till fyra premisser som leder fram till en slutsats. Premisserna kommer en i taget och slutsatsen landar stort sist. |
 | `[motsats]` | Redaktionellt | Två begrepp mot varandra. Första klicket visar det ena, andra klicket låter det andra ta scenen, tredje visar ett exempel som binder ihop. |
 | `[bildkant]` | Redaktionellt | En bild som spiller ut över kanten i ett hörn, med rubrik och punkter i motsatt hörn. Ger fart åt en bild som annars bara hade stått i en ruta. |
@@ -194,7 +194,7 @@ tal: 02
 
 ### `[karta]` Karta
 
-Visar ett ramverk som numrerade kort. Sätt aktiv för att markera var i ramverket ni är, och återanvänd kartan som avsnittsbyte.
+Visar ett ramverk som numrerade kort. Sätt aktiv för att markera var i ramverket ni är, flera delar med komma (aktiv: 1, 2), och återanvänd kartan som avsnittsbyte.
 
 **Undvik när:** Mer än åtta delar.
 

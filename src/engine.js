@@ -822,17 +822,18 @@ function renderSlide(sl, i, deck, img) {
     }
     case 'karta': {
       const dims = lines(sl.items).map(t => { const p = t.split('|'); return { n: p[0].trim(), d: p.slice(1).join('|').trim() }; });
-      const act = parseInt(sl.active, 10) || 0;
+      /* aktiv: 2 markerar en del, aktiv: 1, 2 flera. Etiketten Här är vi hamnar på den första. */
+      const act = new Set(String(sl.active || '').split(/[^0-9]+/).map(x => parseInt(x, 10)).filter(x => x > 0)), first = act.size ? Math.min(...act) : 0;
       const n = Math.max(1, dims.length);
       const cols = n > 4 ? Math.ceil(n / 2) : n;
       const li = dims.map((o, j) => {
-        const on = act === j + 1, off = act && !on;
-        return `<li class="${on ? 'on' : ''}${off ? 'off' : ''}" data-id="map-${j}"${steps && !act ? st('rise') : ''}><span class="no">${String(j + 1).padStart(2, '0')}</span><b>${fmt(o.n)}</b>${o.d ? `<span class="d">${fmt(o.d)}</span>` : ''}${on ? '<em class="here">Här är vi</em>' : ''}</li>`;
+        const on = act.has(j + 1), off = act.size && !on;
+        return `<li class="${on ? 'on' : ''}${off ? 'off' : ''}" data-id="map-${j}"${steps && !act.size ? st('rise') : ''}><span class="no">${String(j + 1).padStart(2, '0')}</span><b>${fmt(o.n)}</b>${o.d ? `<span class="d">${fmt(o.d)}</span>` : ''}${j + 1 === first ? '<em class="here">Här är vi</em>' : ''}</li>`;
       }).join('');
       cls = n > 4 ? 'rows2' : '';
       body = (sl.caption ? `<p class="kicker"${A('fade')}>${fmt(sl.caption)}</p>` : '') + H2('', 'words') +
         (sl.text ? `<p class="lead"${A('fade', 300)}>${fmt(sl.text)}</p>` : '') +
-        `<div class="map" style="--cols:${cols}"><div class="map-line"${A('grow', 250)}></div><ol${(!steps || act) ? A(act ? 'fade' : bodyA, 350, ' data-stagger="90"') : ''}>${li}</ol></div>`;
+        `<div class="map" style="--cols:${cols}"><div class="map-line"${A('grow', 250)}></div><ol${(!steps || act.size) ? A(act.size ? 'fade' : bodyA, 350, ' data-stagger="90"') : ''}>${li}</ol></div>`;
       break;
     }
     case 'triad': {
@@ -3461,7 +3462,6 @@ function player(root, deck, opt) {
     const f = document.activeElement;
     if (f && f.tagName === 'IFRAME' && f.closest('.kp-live')) { f.blur(); G.focus(); }
   }, 0);
-  G.addEventListener('blur', clipFocus);
   function filmVisibility() {
     deckEl.querySelectorAll('[data-film-src]').forEach(v => {
       if (document.hidden) { v._resume = v._wanted && !v.paused; v.pause(); }
@@ -3746,6 +3746,7 @@ button{font:inherit;padding:8px 14px;border-radius:8px;border:1px solid #26345A;
       else if (k === '?') help();
     };
     G.addEventListener('keydown', keyH);
+    G.addEventListener('blur', clipFocus);
     sc.addEventListener('click', e => {
       const a = e.target.closest('[data-a]');
       if (a) { const f = { overview: () => overview(), notes: () => notes(), full, help: () => help(), exit: () => opt.onExit && opt.onExit(cur) }[a.dataset.a]; f && f(); e.stopPropagation(); return; }

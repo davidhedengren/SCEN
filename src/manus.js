@@ -355,7 +355,7 @@ const Manus = (() => {
   CATALOG.push(
     { l: 'omslag', cat: 'Redaktionellt', from: 'EditorialHero', syfte: 'Tidskriftsomslag för start eller nytt kapitel. Enorm rubrik, liten etikett, kort text, ett stort dekorativt tal i bakgrunden och bild i högerkanten.', undvik: 'Mer än två meningar text.',
       ex: '[omslag]\netikett: Kapitel 2\nrubrik: Miljön styr agenten\ntext: Samma algoritm beter sig olika i olika världar.\ntal: 02' },
-    { l: 'karta', cat: 'Redaktionellt', from: 'DimensionMap', syfte: 'Visar ett ramverk som numrerade kort. Sätt aktiv för att markera var i ramverket ni är, och återanvänd kartan som avsnittsbyte.', undvik: 'Mer än åtta delar.',
+    { l: 'karta', cat: 'Redaktionellt', from: 'DimensionMap', syfte: 'Visar ett ramverk som numrerade kort. Sätt aktiv för att markera var i ramverket ni är, flera delar med komma (aktiv: 1, 2), och återanvänd kartan som avsnittsbyte.', undvik: 'Mer än åtta delar.',
       ex: '[karta]\nrubrik: Fyra frågor om en källa\n- Vem | Vem står bakom?\n- När | Hur aktuell är den?\n- Varför | Vad vill avsändaren?\n- Hur | Går det att kontrollera?\naktiv: 2' },
     { l: 'triad', cat: 'Redaktionellt', from: 'TriadStatement', syfte: 'Två till fyra premisser som leder fram till en slutsats. Premisserna kommer en i taget och slutsatsen landar stort sist.', undvik: 'När det inte finns någon tydlig slutsats.',
       ex: '[triad]\nrubrik: Varför kunskap spelar roll\n- Frågor | För att ställa bra frågor krävs kunskap.\n- Svar | För att värdera svar krävs kunskap.\nslutsats: AI **förstärker** det du redan kan.' },

@@ -189,6 +189,21 @@ slutsats: Vilken nod som tas ut ur kön beror på vilken sorts kö algoritmen an
 
 ---
 
+[karta]
+etikett: Sökalgoritmer
+rubrik: Oinformerade sökalgoritmer
+text: De vet inget om var målet finns. De letar systematiskt, nod för nod, tills målet är hittat eller kön är tom.
+aktiv: 1, 2
+- BFS | Bredden först. Nivå för nivå, med en FIFO-kö.
+- DFS | Djupet först. En gren i taget, med en stack.
+- Girig bäst först | Informerad. Använder en uppskattning av hur långt det är kvar.
+- A* | Informerad. Räknar också med hur långt den redan har gått.
+> Oinformerad betyder att algoritmen inte har någon information om var målet ligger. Den vet bara hur grafen hänger ihop och om en nod är målet.
+> Nu går vi igenom BFS och DFS. De två sista korten kommer senare, i delen om informerade sökningar.
+> Fråga gärna: vad skulle en algoritm behöva veta för att leta smartare än så här?
+
+---
+
 [bildregi]
 rubrik: Bredden först‑sökning (BFS)
 bild: bilder/sokalgoritmer/labyrint-bfs.jpg

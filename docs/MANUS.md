@@ -47,7 +47,7 @@ Första raden är mallen inom hakparentes, t.ex. `[kort]`. Alla mallar finns i [
 | `exempel` | Exemplet i `[definition]` |
 | `tal` | Talet i `[tal]`, bakgrundstalet i `[omslag]` |
 | `tid` | Minuter i `[reflektion]` |
-| `aktiv` | Vilken del som lyser i `[karta]` |
+| `aktiv` | Vilken del som lyser i `[karta]`, eller flera med komma, t.ex. `1, 2` |
 | `max` | Maxvärdet i `[mätare]` när talet inte är en andel |
 | `mitten` | Det gemensamma i `[ringar]` |
 | `start`, `slut` | Utgångs- och slutläge i `[skiften]` |

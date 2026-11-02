@@ -526,7 +526,7 @@ sats: [["title", "Rubrik", "text"], ["items", "Högst 3 rader: rubrik | text", "
   chat: [['title', 'Rubrik', 'text'], ['items', 'Repliker, en per rad: vem | text', 'list']],
   duo: [['title', 'Rubrik', 'text'], ['items', 'Tal, ett per rad: tal | förklaring', 'list'], ['text', 'Slutsats', 'area']],
   omslag: [['caption', 'Etikett, t.ex. kapitel', 'text'], ['title', 'Rubrik', 'area'], ['text', 'Kort text', 'area'], ['number', 'Dekorativt tal i bakgrunden, t.ex. 01', 'text'], ['image', 'Bild i högerkanten', 'image']],
-  karta: [['caption', 'Etikett', 'text'], ['title', 'Rubrik', 'text'], ['text', 'Ingress', 'area'], ['items', 'Delar, en per rad: namn | beskrivning', 'list'], ['active', 'Markera del nummer (tomt = ingen)', 'text']],
+  karta: [['caption', 'Etikett', 'text'], ['title', 'Rubrik', 'text'], ['text', 'Ingress', 'area'], ['items', 'Delar, en per rad: namn | beskrivning', 'list'], ['active', 'Markera del nummer, flera med komma, t.ex. 1, 2 (tomt = ingen)', 'text']],
   triad: [['caption', 'Etikett', 'text'], ['title', 'Rubrik', 'text'], ['items', 'Premisser, en per rad: nyckelord | mening', 'list'], ['text', 'Slutsats, landar sist', 'area'], ['image', 'Bildband överst', 'image']],
   motsats: [['caption', 'Etikett', 'text'], ['title', 'Rubrik', 'text'], ['items', 'Tre rader: vänster | text, höger | text, exempel | text', 'list'], ['image', 'Bild', 'image'], ['banner', 'Visa bilden som band överst', 'check'], ['flip', 'Bilden till höger', 'check']],
   bildkant: [['caption', 'Etikett', 'text'], ['title', 'Rubrik', 'text'], ['text', 'Ingress', 'area'], ['bullets', 'Punkter', 'list'], ['image', 'Bild i hörnet', 'image'], ['flip', 'Bilden nere till vänster', 'check']],

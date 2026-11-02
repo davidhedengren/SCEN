@@ -58,7 +58,7 @@ Första raden är mallen inom hakparentes, t.ex. `[kort]`. Alla mallar finns i [
 | `källa`, `helhet`, `reservation` | Proveniens, samlad tolkning och avgränsning i `[belägg]` |
 | `syntes` | Den nya slutsats som växer fram i `[sammanflöde]` |
 | `bild` | Sökväg till en bild, t.ex. `bilder/kurs/foto.jpg` |
-| `film` | `[bildregi]` med `bildläge: levande`: MP4 eller WebM som startar på andra klicket, efter inzoomningen. Använd första bildrutan i `bild:`. |
+| `film` | `[bildregi]` med `bildläge: levande`: MP4 eller WebM som startar på andra klicket, efter inzoomningen. Använd första bildrutan i `bild:`. I `[klipp]`: en YouTube-länk eller en egen mp4 som spelas på första klicket. |
 | `filmsteg` | `[bildregi]` med `bildläge: spotlight` eller `vandring`: detaljens id som startar filmen, t.ex. `dyn`. Filmen spelar medan området har fokus. |
 | `alt` | Bildbeskrivning för skärmläsare |
 | `bildläge` | `[bildregi]`: `hero`, `detail`, `spotlight`, `reveal` eller `levande` |
@@ -287,6 +287,22 @@ slutsats: visas när hela samtalet syns
 ```
 
 En Android-telefon med ett samtal, ett meddelande per klick. I en grupp får varje person en egen färg på namnet. Den som svarar syns med tre prickar innan meddelandet kommer.
+
+### Klipp
+
+```text
+[klipp]
+etikett: Algoritm
+rubrik: Robot-Bingo
+text: Vad ska klassen titta efter?        (visas före klippet)
+slutsats: Fråga att diskutera efteråt     (visas på andra klicket, valfri)
+film: https://www.youtube.com/watch?v=YYAlfZqUZrM
+källrad: Kanalens namn, YouTube
+```
+
+Ett klipp med ett uppdrag. Före klippet syns rubriken, vad klassen ska titta efter och en stillbild med spelknapp. Första klicket låter klippet växa till hela scenen och börja spela. Andra klicket pausar klippet, krymper det och visar frågan efter klippet. Går man tillbaka fortsätter klippet där det var.
+
+`film:` kan vara en YouTube-länk eller en egen mp4, till exempel `bilder/kurs/forsok.mp4`. En starttid i länken gäller, till exempel `t=90` eller `t=1m30s`. `bild:` ger en egen stillbild, annars används YouTubes. YouTube kräver internet. Under stillbilden finns en länk som öppnar klippet på YouTube om det inte går att spela i presentationen. Klickar man i klippet för att pausa fungerar piltangenterna och klickern ändå.
 
 ### Kretslopp
 

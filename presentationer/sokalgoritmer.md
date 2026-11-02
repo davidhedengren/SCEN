@@ -78,6 +78,19 @@ slutsats: **Ja**, ett recept är en algoritm.
 
 ---
 
+[klipp]
+etikett: Algoritm
+rubrik: Robot-Bingo
+text: När gör roboten något annat än det var tänkt? Varför blir det så?
+slutsats: Vad hade instruktionen behövt säga för att roboten skulle göra rätt?
+film: https://www.youtube.com/watch?v=YYAlfZqUZrM
+källrad: Bluey – Officiella Svenska Kanalen, YouTube
+> Klippet ligger på Blueys officiella svenska kanal på YouTube och kräver internet. Fungerar det inte i rummet finns en länk under stillbilden som öppnar det på YouTube.
+> Första klicket startar klippet, andra klicket pausar det och visar frågan efter. Klicka i klippet om du vill pausa. Piltangenterna och klickern fungerar ändå.
+> Koppla till robotfrågan och kriterierna: exakta steg, bestämd ordning och ett slut. En dator kan inte gissa vad vi menar.
+
+---
+
 [bildfält]
 etikett: En sökalgoritm
 rubrik: Du har tappat nycklarna. Hur letar du?

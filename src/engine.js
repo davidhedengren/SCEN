@@ -12,7 +12,7 @@ const ACCENTS = {
 };
 const LAYOUTS = {tidsresa:"Tidsresa",etapper:"Etapper",vagval:"Vägval",lager:"Lager",resonemang:"Resonemang",helhet:"Helhet",
   skiften: 'Skiften', prisma: 'Prisma', verkningar: 'Verkningar', belagg: 'Belägg', sammanflode: 'Sammanflöde',
-  lameller: 'Lameller', register: 'Register', samband: 'Samband', marginal: 'Marginal', sats: 'Sats', formel: 'Formel', kretslopp: 'Kretslopp', mobil: 'Mobil',
+  lameller: 'Lameller', register: 'Register', samband: 'Samband', marginal: 'Marginal', sats: 'Sats', formel: 'Formel', kretslopp: 'Kretslopp', mobil: 'Mobil', klipp: 'Klipp',
   title: 'Titel', section: 'Avsnitt', statement: 'Påstående', bullets: 'Punktlista', split: 'Text och bild',
   image: 'Helbild', bildregi: 'Bildregi', terminal: 'Terminal', kodforklaring: 'Kodförklaring', typografisk: 'Typografiskt statement', texttempo: 'Typografiskt tempo', cards: 'Kort', compare: 'Jämförelse', table: 'Tabell', number: 'Stort tal', timeline: 'Tidslinje',
   question: 'Fråga och svar', poll: 'Omröstning', reflect: 'Reflektion', define: 'Definition', chat: 'AI-samtal', duo: 'Två tal',
@@ -1916,6 +1916,28 @@ function renderSlide(sl, i, deck, img) {
       attrs += ` data-dramaturgy="focus-restore" data-dramaturgy-state="${steps ? 'overview' : 'restored'}"${steps ? '' : ' data-dramaturgy-static="true"'}`;
       break;
     }
+    case 'klipp': {
+      /* Ett klipp med ett uppdrag: något att titta efter före (text), klippet på första klicket och en fråga efter (slutsats).
+         Själva spelaren skapas först på klicket och bara vid visning, se syncClips i player(). */
+      const yt = youTube(sl.video), file = yt ? '' : (sl.video ? img(sl.video) : '');
+      const own = sl.image ? img(sl.image) : '';
+      const thumb = yt ? `https://i.ytimg.com/vi/${yt.id}/` : '';
+      const alt = esc(sl.alt || plain(title) || 'Klipp');
+      const poster = own ? `<img class="kp-poster" src="${esc(own)}" alt="${alt}">`
+        : yt ? `<img class="kp-poster" src="${thumb}maxresdefault.jpg" onerror="this.onerror=null;this.src='${thumb}hqdefault.jpg'" alt="${alt}">`
+        : file ? `<video class="kp-poster" src="${esc(file)}#t=0.1" muted playsinline preload="metadata" aria-hidden="true"></video>` : '<div class="kp-poster ph">Inget klipp valt</div>';
+      const source = yt ? ` data-clip-yt="${yt.id}" data-clip-start="${yt.start}"` : file ? ` data-clip-src="${esc(file)}"` : '';
+      const after = sl.conclusion || '';
+      cls = after ? '' : 'kp-single';
+      body = `<div class="kp-side">${sl.caption ? `<p class="kicker"${A('fade')}>${fmt(sl.caption)}</p>` : ''}${H2(plain(title).length > 40 ? 'long' : '', 'rise')}` +
+        (sl.text ? `<div class="kp-task"${A('fade', 450)}><span>Titta efter</span><p>${fmt(sl.text)}</p></div>` : '') + `</div>` +
+        `<figure class="kp-screen"${source}><div class="kp-frame"${A('zoom', 200)}>${poster}<div class="kp-live"></div>${source ? '<button class="kp-play" type="button" aria-label="Spela klippet"></button>' : ''}</div></figure>` +
+        (after ? `<div class="kp-after"><span>Efter klippet</span><p>${fmt(after)}</p></div>` : '') +
+        (yt ? `<a class="kp-open" href="https://www.youtube.com/watch?v=${yt.id}${yt.start ? `&t=${yt.start}s` : ''}" target="_blank" rel="noopener"${A('fade', 700)}>Öppna på YouTube ↗</a>` : '') +
+        (steps ? `<i data-clip-play${st('none')} aria-hidden="true"></i>${after ? `<i data-clip-after${st('none')} aria-hidden="true"></i>` : ''}` : '');
+      attrs += ' data-clip-state="before"';
+      break;
+    }
     case 'mobil': {
       /* En konversation i en Android-telefon, ett meddelande per klick. Avsändarna skrivs "namn: text"
          och "du: text" är den som håller i telefonen. Bredvid står rubrik, ingress och en kommentar per klick. */
@@ -3207,6 +3229,14 @@ function imagesOf(sl) {
   lines(sl.items).forEach(t => String(t).split('|').slice(1).forEach(p => { p = p.trim(); if (IMG_REF.test(p)) out.push(p); }));
   return out.filter(Boolean).map(s => String(s).replace(/^img:/, ''));
 }
+/* YouTube-länk -> { id, start } eller null. Klarar watch?v=, youtu.be/, shorts/, live/ och embed/, och starttid som t=90, t=1m30s eller start=90. */
+function youTube(url) {
+  const u = String(url || '').trim();
+  const m = u.match(/^https?:\/\/(?:www\.|m\.)?(?:youtube\.com\/(?:watch\?(?:[^#]*&)?v=|embed\/|shorts\/|live\/)|youtube-nocookie\.com\/embed\/|youtu\.be\/)([\w-]{11})/i);
+  if (!m) return null;
+  const t = u.match(/[?&#](?:t|start)=(?:(\d+)h)?(?:(\d+)m)?(\d+)?s?(?:&|#|$)/i);
+  return { id: m[1], start: t ? (+t[1] || 0) * 3600 + (+t[2] || 0) * 60 + (+t[3] || 0) : 0 };
+}
 function resolve(ref, images) {
   if (!ref) return '';
   if (/^(data:|blob:|https?:)/.test(ref)) return ref;
@@ -3319,6 +3349,7 @@ function player(root, deck, opt) {
 
   function stopAll() {
     syncFilms(null, 0);
+    syncClips(null, 0);
     running.forEach(a => { try { a.finish(); } catch (e) {} });
     running = [];
     if (trans) { trans.forEach(a => { try { a.finish(); } catch (e) {} }); trans = null; }
@@ -3337,6 +3368,7 @@ function player(root, deck, opt) {
     });
     applyDramaturgy(sec, n, false);
     syncFilms(sec, n, allowFilm);
+    syncClips(sec, n);
     if (sec === slides[cur] || sec.classList.contains('active')) trackFocus(sec, n);
     if (animate && n > 0 && groups[n - 1] && !reduced()) {
       groups[n - 1].forEach(el => running.push(playNamed(el, el.dataset.stepAnim || 'fade', 0)));
@@ -3383,6 +3415,43 @@ function player(root, deck, opt) {
       }
     });
   }
+  /* Klipp: läget följer klicksteget (före, spelar, efter). Spelaren skapas först när klippet ska spela, och bara vid visning,
+     så att miniatyrer och talarvyn aldrig spelar upp något. YouTube pausas och fortsätter via postMessage (enablejsapi). */
+  const clipCmd = (f, func) => { try { f.contentWindow.postMessage(JSON.stringify({ event: 'command', func, args: [] }), '*'); } catch (e) {} };
+  function syncClips(sec, n) {
+    deckEl.querySelectorAll('.kp-screen').forEach(box => {
+      const owner = box.closest('.slide');
+      const manual = !(owner._groups || []).length && owner === sec ? owner._clipManual : '';
+      owner.dataset.clipState = manual || (owner === sec ? (n >= 2 ? 'after' : n >= 1 ? 'playing' : 'before') : 'before');
+      if (owner !== sec) owner._clipManual = '';
+      const want = owner === sec && owner.dataset.clipState === 'playing' && mode === 'present';
+      const live = box.querySelector('.kp-live');
+      const el = live && live.firstElementChild;
+      if (want && !el) {
+        let v = null;
+        if (box.dataset.clipYt) {
+          v = document.createElement('iframe');
+          v.src = `https://www.youtube-nocookie.com/embed/${box.dataset.clipYt}?autoplay=1&rel=0&playsinline=1&enablejsapi=1&start=${+box.dataset.clipStart || 0}`;
+          v.allow = 'autoplay; encrypted-media; picture-in-picture; fullscreen';
+          v.allowFullscreen = true; v.referrerPolicy = 'strict-origin-when-cross-origin';
+          v.title = (owner.querySelector('h2') || {}).textContent || 'Klipp';
+        } else if (box.dataset.clipSrc) {
+          v = document.createElement('video'); v.src = box.dataset.clipSrc; v.controls = true; v.playsInline = true;
+          const p = v.play(); if (p) p.catch(() => {});
+        }
+        if (v) live.appendChild(v);
+      } else if (el) {
+        if (el.tagName === 'IFRAME') clipCmd(el, want ? 'playVideo' : 'pauseVideo');
+        else if (want) { const p = el.play(); if (p) p.catch(() => {}); } else el.pause();
+      }
+    });
+  }
+  /* Har man klickat i YouTube-spelaren hamnar tangenterna där. Lämna tillbaka fokus så att piltangenter och klicker fungerar. */
+  const clipFocus = () => setTimeout(() => {
+    const f = document.activeElement;
+    if (f && f.tagName === 'IFRAME' && f.closest('.kp-live')) { f.blur(); G.focus(); }
+  }, 0);
+  G.addEventListener('blur', clipFocus);
   function filmVisibility() {
     deckEl.querySelectorAll('[data-film-src]').forEach(v => {
       if (document.hidden) { v._resume = v._wanted && !v.paused; v.pause(); }
@@ -3672,6 +3741,13 @@ button{font:inherit;padding:8px 14px;border-radius:8px;border:1px solid #26345A;
       if (a) { const f = { overview: () => overview(), notes: () => notes(), full, help: () => help(), exit: () => opt.onExit && opt.onExit(cur) }[a.dataset.a]; f && f(); e.stopPropagation(); return; }
       if (e.target.closest('.sc-overview,.sc-notes,.sc-help')) return;
       if (e.target.closest('.sc-black')) { $('.sc-black').classList.remove('on'); return; }
+      const kp = e.target.closest('.kp-play');
+      if (kp && slides[cur] && slides[cur].contains(kp)) {
+        const B = slides[cur];
+        if ((B._groups || []).length) { if (step === 0) next(); }
+        else { B._clipManual = 'playing'; syncClips(B, step); }
+        return;
+      }
       if (e.target.closest('a,button,input,select,textarea')) return;
       const pl = e.target.closest('.poll li');
       if (pl) { vote(slides[cur], '', pl); return; }
@@ -3710,6 +3786,7 @@ button{font:inherit;padding:8px 14px;border-radius:8px;border:1px solid #26345A;
     destroy() {
       alive = false; stopAll(); stopTimers(); bg.stop(); ro && ro.disconnect(); clearInterval(timerIv); clearTimeout(idleT);
       document.removeEventListener('visibilitychange', filmVisibility);
+      G.removeEventListener('blur', clipFocus);
       if (keyH) G.removeEventListener('keydown', keyH);
       if (spk && !spk.closed) spk.close();
       root.innerHTML = '';

@@ -79,6 +79,7 @@ Varje bild i ett manus börjar med mallens namn inom hakparentes. Samma katalog 
 | `[rutnät]` | System | En sökalgoritm i ett rutnät, till exempel en labyrint, en karta eller en spelplan. Rutnätet skrivs som text med # för vägg, punkt för fri ruta, A för start och B för mål. BFS går en nivå per klick som en våg, DFS, girig bäst först och A* en ruta per klick; takt: 3 ger tre rutor per klick. Utforskade rutor färgas, kön ringas in och sista klicket ritar vägen. Rutorna kan visa h (Manhattan-avståndet till målet) eller g + h, i samma färger som i formelmallen. Två algoritmer med komma, till exempel algoritm: bfs, dfs, söker bredvid varandra i samma labyrint med var sin räknare, så att de kan jämföras. |
 | `[kö]` | System | Två eller tre köer sida vid sida, till exempel en FIFO-kö, en stack och en prioritetskö, som får samma element. En kö i taget: först läggs elementen in i ett klick, sedan är varje ut ett klick, medan de andra köerna tonas ned. Det som tas ut hamnar på en rad under kön och står kvar, så att ordningen kan jämföras mellan köerna på slutet. Med takt: samtidigt gör alla köer samma steg på en gång. Varje kö kan visa en kodrad. |
 | `[mobil]` | Redaktionellt | Ett samtal i en mobil, ett meddelande per klick: en gruppchatt, sms, en AI-chatt eller en dialog på ett annat språk. Varje rad skrivs namn: text, och du: är den som håller i telefonen. I en grupp får varje person en egen färg på namnet, och den som svarar syns med tre prickar innan meddelandet kommer. Bredvid telefonen står rubrik och ingress, och en kommentar kan läggas vid valfritt klick (not: 3 | text). Sista klicket visar slutsatsen. |
+| `[klipp]` | Bild | Ett videoklipp med ett uppdrag. Före klippet syns rubriken, vad klassen ska titta efter (text) och en stillbild med spelknapp. Första klicket låter klippet växa till hela scenen och börja spela, och resten tonas bort. Andra klicket pausar och krymper klippet och låter frågan efter klippet (slutsats) ta scenen. film: är en YouTube-länk eller en egen mp4. En starttid i länken (t=90) gäller. YouTube kräver internet, och under stillbilden finns en länk som öppnar klippet på YouTube. |
 | `[kretslopp]` | System | En process som upprepas: stegen sitter på en ring och en ring av ljus glider till nästa steg för varje klick, medan mitten förklarar steget. En ingång (start) kan leda in i kretsloppet, och ett steg kan ha en utgång som leder ut ur det. Ett steg som slutar med frågetecken får ja mot utgången och nej vidare i ringen. Näst sista klicket sluter ringen (retur), sista visar helheten med slutsatsen i mitten. Passar loopar, cykler och kretslopp: algoritmer, vattnets kretslopp, cellcykeln, konjunkturer, skrivprocessen. |
 | `[förgrening]` | System | Ett släktträd över tid: en stam och grenar som skjuter ut ur varandra, till exempel kyrkor, språk, arter eller programspråk. Varje gren har ett namn, en tid, grenen den växer ur och en kort text. Tidsaxeln är schematisk, varje förgreningstid får en kolumn. Hela trädet syns nedtonat från början. Varje klick ritar nästa gren i tidsordning och visar dess text längst ner, medan tidigare grenar står kvar. En gren som delas i två vid samma tid slutar där. Sista klicket visar hela trädet med slutsatsen. |
 | `[ringar]` | Banor | Två eller tre begrepp som delvis överlappar, som ett Venndiagram. Det gemensamma skrivs i mitten och visas sist. |
@@ -635,6 +636,22 @@ startutsnitt: 50 50 1
 slututsnitt: 58 46 1.08
 säker-yta: 5 12 38 72
 - robot | Rörelsen | 67 | 34 | 16 | 34 | Figuren bär scenens handling.
+```
+
+### `[klipp]` Klipp
+
+Ett videoklipp med ett uppdrag. Före klippet syns rubriken, vad klassen ska titta efter (text) och en stillbild med spelknapp. Första klicket låter klippet växa till hela scenen och börja spela, och resten tonas bort. Andra klicket pausar och krymper klippet och låter frågan efter klippet (slutsats) ta scenen. film: är en YouTube-länk eller en egen mp4. En starttid i länken (t=90) gäller. YouTube kräver internet, och under stillbilden finns en länk som öppnar klippet på YouTube.
+
+**Undvik när:** Klipp utan uppdrag, eller långa filmer. Visa hellre en kort del med starttid.
+
+```
+[klipp]
+etikett: Algoritm
+rubrik: Säg exakt vad du menar
+text: Vad händer när instruktionen inte är tydlig?
+slutsats: Vilka instruktioner hade roboten behövt?
+film: https://www.youtube.com/watch?v=YYAlfZqUZrM
+källrad: Bluey – Officiella Svenska Kanalen, YouTube
 ```
 
 ## Textregi

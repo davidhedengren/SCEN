@@ -21,17 +21,17 @@ hastighet: slow
 ---
 
 [kretslopp]
-övergång: morph
 etikett: Begrepp 1
 rubrik: Vad är en agent?
 text: En aktör som uppfattar sin omgivning och agerar i den.
-slutsats: Här står inget om AI. En agent kan vara en människa, ett djur eller en maskin.
-mitten: Agenten
-retur: Agenten reagerar på förändringar, varv efter varv.
+slutsats: Kräver inte någon AI. En agent kan vara en människa, ett djur eller en maskin.
+mitten: Agent
+retur: Agenten reagerar på förändringar.
+övergång: morph
 miljö: bilder/ai-agenter-miljoer/korsning.jpg | 80
 - Uppfattar | Med sinnen, sensorer eller data.
 - Beslutar | Utifrån sitt mål.
-- Agerar | Med kroppen eller aktuatorer.
+- Agerar | Med kroppen eller så kallade aktuatorer.
 - Omgivningen förändras | Både av agentens handling och av sig själv.
 > Klick 1–4 går runt loopen: uppfatta, besluta, agera, och omgivningen förändras. Klick 5 sluter ringen: agenten börjar om och uppfattar den nya situationen. Sista klicket visar hela loopen.
 > Agenten interagerar med sin miljö, samlar in information och reagerar på förändringar.
@@ -41,7 +41,6 @@ miljö: bilder/ai-agenter-miljoer/korsning.jpg | 80
 ---
 
 [bildregi]
-övergång: morph
 etikett: Exempel
 rubrik: Agent eller AI-agent?
 text: Agent betyder inte AI. Fotgängaren är en agent. En självkörande bil är en AI-agent.
@@ -51,6 +50,7 @@ bildläge: spotlight
 fokuspunkt: 62 64
 säker-yta: 4 14 34 60
 mörkning: 0 0 42 100 0.55
+övergång: morph
 - manniska | Människan: agent | 75 | 70 | 16 | 12 | Ser trafiken, bestämmer sig och går över gatan.
 - bil | Självkörande bil: AI-agent | 59 | 59 | 12 | 12 | Använder AI för att välja och planera sina handlingar.
 > Tänk dig att bilen är självkörande. Båda uppfattar, beslutar och agerar i samma korsning, men bara bilen använder AI.
@@ -59,13 +59,13 @@ mörkning: 0 0 42 100 0.55
 ---
 
 [bildregi]
-övergång: tona
 bild: bilder/ai-agenter-miljoer/sensorvy-korsning.png
 alt: Regnig stadskorsning på natten, täckt av blå mätpunkter. Fotgängare, bilar och en cyklist har var sin genomskinlig ruta runt sig.
 bildläge: spotlight
 fokuspunkt: 50 60
 säker-yta: 3 4 40 30
 mörkning: 0 0 52 40 0.7
+övergång: tona
 - fotgangare | Fotgängare | 74 | 70 | 10 | 13 | En ruta i punktmolnet. Vart är den på väg?
 - bil | Bil | 59 | 59 | 9 | 12 | En annan förare. Vad den gör härnäst påverkar AI-agentens nästa beslut.
 - cyklist | Cyklist | 83 | 79 | 8 | 16 | Ännu en agent, med egna mål.
@@ -76,8 +76,8 @@ mörkning: 0 0 52 40 0.7
 ---
 
 [typografi]
-övergång: morph
 etikett: Begrepp 2
+övergång: morph
 bakgrund: fokusljus
 miljö: bilder/ai-agenter-miljoer/korsning.jpg | 84
 - statement | En **agent** uppfattar, beslutar och agerar. | Agent
@@ -88,8 +88,8 @@ miljö: bilder/ai-agenter-miljoer/korsning.jpg | 84
 ---
 
 [lexikon]
-övergång: morph
 rubrik: Från agent till miljö
+övergång: morph
 bakgrund: fokusljus
 miljö: bilder/ai-agenter-miljoer/korsning.jpg | 84
 - Agent | Grunden | Uppfattar, beslutar och agerar.
@@ -102,10 +102,10 @@ miljö: bilder/ai-agenter-miljoer/korsning.jpg | 84
 ---
 
 [rutor]
-övergång: morph
 etikett: Miljön
-rubrik: Sex frågor om agentens värld
+rubrik: Hur ser agentens värld ut?
 text: Miljöer kan klassificeras i dimensioner som påverkar hur agenten interagerar med sin omgivning och fattar beslut.
+övergång: morph
 miljö: bilder/ai-agenter-miljoer/robotdammsugare.jpg | 72
 - Fullständigt / partiellt observerbar | Ser agenten allt som händer i miljön?
 - Singel / multiagent | Är agenten ensam, eller finns det andra agenter?
@@ -119,7 +119,6 @@ miljö: bilder/ai-agenter-miljoer/robotdammsugare.jpg | 72
 ---
 
 [bildregi]
-övergång: morph
 etikett: 1 / 6 · Observerbarhet
 rubrik: Fullständigt observerbar
 text: Agenten har tillgång till all information om miljön och fattar beslut med komplett kunskap. Enkelt att modellera, men orealistiskt i verkliga scenarier.
@@ -132,13 +131,13 @@ slututsnitt: 50 50 1.05
 säker-yta: 4 5 38 46
 mörkning: 0 0 46 56 0.55
 hastighet: slow
+övergång: morph
 > Här behövs inget strålkastarljus. Allt syns: alla pjäser och deras positioner, för båda spelarna.
 > Fördel: enkel modellering, inga osäkerhetsfaktorer. Nackdel: orealistisk i verkliga scenarier.
 
 ---
 
 [bildregi]
-övergång: morph
 etikett: 1 / 6 · Observerbarhet
 rubrik: Partiellt observerbar
 text: Agenten har bara delvis information och måste hantera osäkerhet och göra antaganden.
@@ -148,6 +147,7 @@ bildläge: spotlight
 fokuspunkt: 50 50
 säker-yta: 3 3 36 36
 mörkning: 0 0 42 46 0.7
+övergång: morph
 - egna | Sensordata | 26 | 78 | 26 | 22 | Agenten samlar in information. Här: sina egna kort.
 - dolda | Okänd information | 58 | 24 | 14 | 20 | Det finns alltid information som är osynlig för agenten.
 - beslut | Beslutsfattande | 49 | 48 | 20 | 18 | Agenten måste fatta beslut med ofullständig information.
@@ -157,11 +157,11 @@ mörkning: 0 0 42 46 0.7
 ---
 
 [vägval]
-övergång: morph
 etikett: 2 / 6 · Singel / multiagent
 rubrik: Ensam eller bland andra?
 vänster: Singelagent
 höger: Multiagent
+övergång: morph
 bakgrund: fokusljus
 miljö: bilder/ai-agenter-miljoer/korsning.jpg | 84
 fokus: mjuk
@@ -175,9 +175,9 @@ fokus: mjuk
 ---
 
 [omröstning]
-övergång: morph
 rubrik: Schack mot dator: singel- eller multiagentmiljö?
 svar: Två agenter fattar beslut i samma miljö. Motståndarens drag påverkar direkt vilka handlingar och resultat som är möjliga för den andra agenten.
+övergång: morph
 bakgrund: fokusljus
 miljö: bilder/ai-agenter-miljoer/schack-robotarm.jpg | 84
 - Singelagent
@@ -191,8 +191,8 @@ miljö: bilder/ai-agenter-miljoer/schack-robotarm.jpg | 84
 ---
 
 [typografi]
-övergång: morph
 etikett: 3 / 6 · Deterministisk / stokastisk
+övergång: morph
 bakgrund: fokusljus
 miljö: bilder/ai-agenter-miljoer/poker-pov.jpg | 84
 - statement | Samma handling. **Samma** utfall. | Deterministisk
@@ -204,9 +204,9 @@ miljö: bilder/ai-agenter-miljoer/poker-pov.jpg | 84
 ---
 
 [fokus]
-övergång: morph
 etikett: 4 / 6 · Episodisk / sekventiell
 rubrik: Påverkar ett beslut nästa?
+övergång: morph
 bakgrund: fokusljus
 miljö: bilder/ai-agenter-miljoer/domino.jpg | 80
 - Episodisk | Varje handling är fristående och påverkar inte framtida handlingar.
@@ -217,7 +217,6 @@ miljö: bilder/ai-agenter-miljoer/domino.jpg | 80
 ---
 
 [bildregi]
-övergång: morph
 etikett: 5 / 6 · Statisk / dynamisk
 rubrik: Statisk eller dynamisk?
 text: Statisk: förändras bara när agenten agerar, som ett schackspel. Dynamisk: förändras hela tiden, som trafiken runt en självkörande bil.
@@ -230,12 +229,12 @@ slututsnitt: 50 50 1.12
 säker-yta: 4 12 34 64
 mörkning: 0 0 42 100 0.55
 hastighet: medium
+övergång: morph
 > Samma korsning som i början. Ljusspåren visar att världen rör sig oavsett vad bilen gör.
 
 ---
 
 [bildregi]
-övergång: morph
 etikett: 6 / 6 · Diskret / kontinuerlig
 rubrik: Diskret eller kontinuerlig?
 text: Schack är en diskret miljö. Robotik i verkligheten är en kontinuerlig miljö.
@@ -245,16 +244,17 @@ bildläge: spotlight
 fokuspunkt: 60 60
 säker-yta: 4 5 38 46
 mörkning: 0 0 46 56 0.55
-- rutor | Diskret | 56 | 76 | 16 | 14 | Tillstånd och handlingar i separata steg: en ruta i taget.
+övergång: morph
+- rutor | Diskret | 56 | 71 | 16 | 14 | Tillstånd och handlingar i separata steg: en ruta i taget.
 - arm | Kontinuerlig | 71 | 36 | 16 | 30 | Robotarmens rörelse har oändligt många lägen, utan tydliga avgränsningar.
 > Samma bild innehåller båda. Spelet är diskret, robotarmens rörelse är kontinuerlig. Det beror på vad vi väljer att modellera.
 
 ---
 
 [fokus]
+etikett: Exempel
+rubrik: Schack mot dator
 övergång: morph
-etikett: Helheten
-rubrik: Schack mot dator: sex svar
 bakgrund: fokusljus
 miljö: bilder/ai-agenter-miljoer/schack-robotarm.jpg | 84
 - Fullständigt observerbar | Alla pjäser och positioner syns för båda spelarna.
@@ -268,9 +268,7 @@ miljö: bilder/ai-agenter-miljoer/schack-robotarm.jpg | 84
 ---
 
 [bildregi]
-övergång: morph
 etikett: Sammanfattning
-fokus: spotlight
 rubrik: Rätt modell av miljön är avgörande för effektiva AI-system.
 text: AI-agenter verkar i miljöer med olika egenskaper. Att förstå dem är avgörande för system som ska navigera i komplexa och dynamiska omvärldar.
 bild: bilder/ai-agenter-miljoer/korsning-levande.jpg
@@ -281,22 +279,23 @@ bildläge: spotlight
 fokuspunkt: 62 64
 säker-yta: 3 8 40 78
 mörkning: 0 0 42 100 0.55
-- obs | Partiellt observerbar | 70 | 40 | 12 | 16 | Träd, hus och andra fordon skymmer. Bilen ser bara en del av vägen.
+övergång: morph
+fokus: spotlight
+- obs | Partiellt observerbar | 85 | 65 | 12 | 16 | Träd, hus och andra fordon skymmer. Bilen ser bara en del av vägen.
 - multi | Multiagent | 75 | 70 | 16 | 12 | Fotgängare, cyklister och förare är också agenter.
 - stok | Stokastisk | 58 | 59 | 10 | 10 | Vad föraren framför gör härnäst går inte att veta säkert.
-- sekv | Sekventiell | 52 | 74 | 12 | 10 | Att svänga eller bromsa nu påverkar nästa situation.
+- sekv | Sekventiell | 52 | 75 | 12 | 10 | Att svänga eller bromsa nu påverkar nästa situation.
 - dyn | Dynamisk | 65 | 72 | 8 | 18 | Trafikljusen slår om och alla rör sig, oavsett vad bilen gör.
-- kont | Kontinuerlig | 58 | 86 | 14 | 10 | Hastighet och styrning har inga tydliga steg.
+- kont | Kontinuerlig | 53 | 75 | 14 | 10 | Hastighet och styrning har inga tydliga steg.
 > Sammanfattning före övningen. Samma korsning som i början: tänk dig att en av bilarna är självkörande. Nu kan vi läsa miljön med alla sex frågorna, i samma ordning som tabellen.
 > Scenen visar svaren för raden "Självkörande bil i trafik". Använd den som ett genomarbetat exempel, eller låt eleverna börja med de andra raderna.
-
 > När Dynamisk får fokus startar filmen automatiskt. Personen med paraply står kvar medan trafiken rör sig. Kameran ligger stilla och rutan styr blicken. Vid nästa fokussteg återställs stillbilden.
+
 ---
 
 [tabell]
-övergång: morph
 rubrik: Övning i par: fyll i och diskutera tabellen
-visa: allt
+övergång: morph
 bakgrund: fokusljus
 fokus: mjuk
 | Uppgift | Fullt/partiellt\nobserverbart | Singel/\nmultiagent | Deterministisk/\nstokastisk | Episodisk/\nsekventiell | Statiskt/\ndynamiskt | Diskret/\nkontinuerligt |
@@ -374,16 +373,15 @@ fokus: mjuk
 > Statisk: Miljön (patientens symptom) ändras inte under analysen.
 > Diskret: Diagnosen leder till ett val mellan fördefinierade sjukdomar eller tillstånd.
 
-
 ---
 
 [tabell]
-övergång: morph
 rubrik: Övning i par: fyll i och diskutera tabellen
 visa: facit-rader
+övergång: morph
 bakgrund: fokusljus
-fokus: mjuk
 rörelse: tona
+fokus: mjuk
 | Uppgift | Fullt/partiellt\nobserverbart | Singel/\nmultiagent | Deterministisk/\nstokastisk | Episodisk/\nsekventiell | Statiskt/\ndynamiskt | Diskret/\nkontinuerligt |
 | Schack mot dator | Fullt | Multi | Deterministisk | Sekventiell | Statisk | Diskret |
 | Korsord | Fullt | Singel | Deterministisk | Sekventiell | Statisk | Diskret |
@@ -462,10 +460,10 @@ rörelse: tona
 ---
 
 [rad]
-övergång: morph
 etikett: Aktivitet
 rubrik: Observerbarhet i luffarschack
 flöde: ja
+övergång: morph
 - Spela | Spela några partier luffarschack med en kompis.
 - Dölj rutor | Spela versionen där några slumpvis valda rutor är dolda.
 - Diskutera | Diskutera frågorna som ligger i Teams.

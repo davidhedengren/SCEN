@@ -23,9 +23,9 @@ hastighet: slow
 
 [typografi]
 etikett: Klassisk AI
-- statement | Grafer och träd **representerar** relationer. | Etablering
-- focus | Sökalgoritmer **navigerar** dem. | Fokus
-- precisering | Så blir problemlösning till **beslut**. | Precisering
+- statement | Grafer och träd **representerar** relationer. |
+- | Sökalgoritmer **navigerar** dem. | 
+- precisering | Så blir problemlösning till **beslut**. | 
 > Grafer och träd används för att representera och analysera relationer mellan data. Sökalgoritmer utnyttjar strukturerna för att hitta lösningar.
 
 ---
@@ -40,7 +40,7 @@ bild: bilder/grafer-och-trad/natverk-karta.jpg
 
 [graf]
 etikett: Datastruktur
-rubrik: En graf består av noder och kanter
+rubrik: Noder och kanter
 text: En graf är en datastruktur där noder är sammankopplade med kanter.
 slutsats: Samma struktur kan beskriva vägar, vänskaper, länkar eller tillstånd i ett spel.
 - nod: Göteborg | 4 52
@@ -63,7 +63,7 @@ slutsats: Samma struktur kan beskriva vägar, vänskaper, länkar eller tillstå
 
 [graf]
 etikett: Viktad graf
-rubrik: Vikter gör vägar jämförbara
+rubrik: Vikter
 text: I en viktad graf har varje kant ett värde, till exempel avstånd, kostnad eller tid.
 slutsats: Ruttoptimering är att hitta vägen med lägst summa. Sökalgoritmer gör det i stora grafer.
 - nod: Göteborg | 4 52
@@ -78,15 +78,15 @@ slutsats: Ruttoptimering är att hitta vägen med lägst summa. Sökalgoritmer g
 - kant: Jönköping - Malmö | 296
 - kant: Nässjö - Malmö | 314
 - fokus: vikter | Vikter | Varje kant har ett värde. Här är det vägavstånd i kilometer.
-- fokus: Göteborg > Malmö > Nässjö | En möjlig väg | Via Malmö kommer vi fram, men vägen är lång.
-- fokus: Göteborg > Falköping > Jönköping > Nässjö | Kortaste vägen | Samma start och mål. Lägst summa av vikterna.
+- fokus: Göteborg > Malmö > Nässjö | En möjlig väg | Vi kan komma till Nässjö från Götebord via Malmö, men vägen är lång.
+- fokus: Göteborg > Falköping > Jönköping > Nässjö | Kortaste vägen | Samma start och mål men lägre summa av vikterna.
 > Vikterna är vägavstånd med bil i kilometer, enligt ruttplanerare.se (september 2026). Fråga gärna klassen innan klick 3: vilken väg är kortast?
 
 ---
 
 [samma form]
 etikett: Grafer i AI
-rubrik: En struktur, många användningar
+rubrik: Flera användningar
 slutsats: Alla beskriver relationer som noder och kanter.
 - nod: 4 52
 - nod: 38 12

@@ -13,17 +13,6 @@ text: Från kalkylblad till medelvärde, standardavvikelse, lådagram, r-värde 
 
 ---
 
-[etapper]
-etikett: Arbetsgången
-rubrik: Fyra steg varje gång
-- Öppna kalkylbladet | Välj Kalkylblad när GeoGebra startar.
-- Skriv in värdena | Ett värde per cell, uppifrån och ned i kolumn A.
-- Markera och analysera | Markera cellerna och välj ett analysverktyg.
-- Läs av | Statistiken och diagrammet visas till höger.
-> Samma arbetsgång gäller för envariabelanalys och tvåvariabelanalys. Normalfördelningen räknas i stället i Sannolikhet.
-
----
-
 [avsnitt]
 etikett: Del 1
 rubrik: Envariabelanalys
@@ -43,7 +32,7 @@ maxzoom: 1.65
 beskärning: cover
 övergång: tona
 rubrikrörelse: ingen
-- steg1 | Klicka på Kalkylblad | 91.4 | 58.1 | 16.5 | 5.3 | Listan visas när GeoGebra startar.
+- steg1 | Klicka på Kalkylblad | 91.4 | 58.1 | 16.5 | 5.3 | Listan visas när GeoGebra startar. Annars klickar
 > Har listan stängts: öppna menyn uppe till höger (tre streck), välj Perspektiv och sedan Kalkylblad.
 
 ---
@@ -166,7 +155,8 @@ rubrik: σ eller s?
 ---
 
 [fråga]
-rubrik: De 15 eleverna är ett urval ur skolan. Vilken rad läser du av?
+rubrik: Du vill bestämma standardavvikelsen för ett stickprov av 15 elever.
+Vilken rad läser du av?
 svar: s = 7,27. Datan är ett stickprov, så standardavvikelsen är s (sx).
 - σ = 7,02
 - * s = 7,27

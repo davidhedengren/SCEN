@@ -152,7 +152,6 @@ maxzoom: 3
 @text 1032 775 160 110 storlek=88 | 39
 @text 1202 775 160 110 storlek=88 | 40
 @text 144 965 1632 60 storlek=36 färg=dampad | 13 apor bits och 14 bits inte.
-@text 560 450 800 110 storlek=56 färg=text | 
 > Bilden visar bara nummer, så att eleverna själva letar fram och sorterar sina kort.
 > Nästa bild visar aporna sorterade, med ledtrådar. Den kan stå kvar när paren har kommit en bit.
 
@@ -250,5 +249,5 @@ rubrik: Hur lär sig en dator?
 text: I kapitel 3 ska vi se hur vi kan använda maskininlärning för att låta ett AI-system bygga beslutsträd åt oss.
 - Träningsdata | Exempel där svaret är känt. Modellen byggs av dessa exempel.
 - Testdata | Nya exempel som modellen aldrig sett. De visar om den fungerar.
-- Överanpassning | Blir trädet för specifikt kan modellen kan lära sig träningsdatan "utantill" och klarar då nya fall sämre.
+- Överanpassning | Blir trädet för specifikt kan modellen lära sig träningsdatan "utantill" och klarar då nya fall sämre.
 > Fråga avslutningsvis: hur gick er egen inlärning till? Jämför med hur en dator bygger ett träd. Ingen modell är 100 procent rätt, och vi väljer den som klarar testdatan bäst.

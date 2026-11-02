@@ -32,7 +32,7 @@ maxzoom: 1.65
 beskärning: cover
 övergång: tona
 rubrikrörelse: ingen
-- steg1 | Klicka på Kalkylblad | 91.4 | 58.1 | 16.5 | 5.3 | Listan visas när GeoGebra startar. Annars klickar
+- steg1 | Klicka på Kalkylblad | 91.4 | 58.1 | 16.5 | 5.3 | Listan visas när GeoGebra startar. Annars klickar du på menyn uppe till höger och väljer Perspektiv och sedan Kalkylblad.
 > Har listan stängts: öppna menyn uppe till höger (tre streck), välj Perspektiv och sedan Kalkylblad.
 
 ---

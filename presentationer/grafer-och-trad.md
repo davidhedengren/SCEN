@@ -78,7 +78,7 @@ slutsats: Ruttoptimering är att hitta vägen med lägst summa. Sökalgoritmer g
 - kant: Jönköping - Malmö | 296
 - kant: Nässjö - Malmö | 314
 - fokus: vikter | Vikter | Varje kant har ett värde. Här är det vägavstånd i kilometer.
-- fokus: Göteborg > Malmö > Nässjö | En möjlig väg | Vi kan komma till Nässjö från Götebord via Malmö, men vägen är lång.
+- fokus: Göteborg > Malmö > Nässjö | En möjlig väg | Vi kan komma till Nässjö från Göteborg via Malmö, men vägen är lång.
 - fokus: Göteborg > Falköping > Jönköping > Nässjö | Kortaste vägen | Samma start och mål men lägre summa av vikterna.
 > Vikterna är vägavstånd med bil i kilometer, enligt ruttplanerare.se (september 2026). Fråga gärna klassen innan klick 3: vilken väg är kortast?
 

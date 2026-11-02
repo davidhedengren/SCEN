@@ -64,8 +64,17 @@ button,input,select,textarea{font:inherit;color:inherit}
 .lib-head h1{margin:0;font:650 32px/1.1 var(--display);letter-spacing:-.03em}
 .lib-head p{margin:6px 0 0}
 .grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:22px}
-.grid-group{grid-column:1/-1;margin:22px 0 -8px;font:650 22px/1.2 var(--display);letter-spacing:-.02em}
-.grid-group:first-child{margin-top:4px}
+/* Biblioteket: en kurs per rad, som fälls ut till ett rutnät av kort. */
+.course:first-child{border-top:1px solid var(--line)}
+.course{border-bottom:1px solid var(--line)}
+.course-head{all:unset;box-sizing:border-box;cursor:pointer;display:flex;align-items:center;gap:14px;width:100%;padding:18px 12px;border-radius:var(--r)}
+.course-head:hover{background:var(--sunk)}
+.course-head:focus-visible{outline:2px solid var(--accent);outline-offset:-2px}
+.course-head .chev{flex:none;width:9px;height:9px;margin:0 3px;border-right:2px solid var(--muted);border-bottom:2px solid var(--muted);transform:rotate(-45deg);transition:transform .2s ease}
+.course-head[aria-expanded="true"] .chev{transform:rotate(45deg)}
+.course-name{font:650 20px/1.2 var(--display);letter-spacing:-.015em}
+.course-count{margin-left:auto;font-size:13.5px;color:var(--muted);white-space:nowrap}
+.course-body{padding:8px 12px 30px}
 .card{display:grid;gap:10px;align-content:start;min-width:0}
 .card-thumb{all:unset;cursor:pointer;display:block;border-radius:12px;outline:1px solid var(--line);overflow:hidden;transition:outline-color .15s,transform .15s}
 .card-thumb:hover{outline:2px solid var(--accent)}
@@ -74,7 +83,10 @@ button,input,select,textarea{font:inherit;color:inherit}
 .card h3{margin:0;font:600 16px/1.3 var(--font);overflow-wrap:anywhere}
 .card .meta{font-size:13px;color:var(--muted);display:flex;gap:8px;align-items:center;flex-wrap:wrap}
 .tag{font-size:11.5px;font-weight:600;letter-spacing:.04em;text-transform:uppercase;color:var(--accent);background:var(--accent-soft);padding:2px 7px;border-radius:5px}
-.card .acts{display:flex;flex-wrap:wrap;gap:6px}
+.card .acts{display:flex;flex-wrap:wrap;gap:2px;margin-left:-10px}
+.card .acts .btn{color:var(--muted)}
+.card .acts .btn:hover{color:var(--ink)}
+.card .acts .btn.danger{color:var(--bad)}
 .card .confirm{display:flex;flex-wrap:wrap;gap:6px;align-items:center;font-size:13.5px}
 .empty-new{all:unset;cursor:pointer;display:grid;place-items:center;aspect-ratio:16/9;border:2px dashed var(--line-2);border-radius:12px;color:var(--muted);font-weight:550;text-align:center;padding:12px}
 .empty-new:hover{border-color:var(--accent);color:var(--accent)}
@@ -191,7 +203,7 @@ button,input,select,textarea{font:inherit;color:inherit}
   .lib-main{padding:20px 16px 48px}
   .swatches{order:5}
 }
-@media (prefers-reduced-motion:reduce){.toast,.card-thumb,.bar i{transition:none}}
+@media (prefers-reduced-motion:reduce){.toast,.card-thumb,.bar i,.course-head .chev{transition:none}}
 
 /* ---------- Scen 3: teman, manus, mallar, Claude ---------- */
 .tdot{width:12px;height:12px;border-radius:50%;flex:none;outline:1px solid var(--line-2)}
@@ -2537,7 +2549,7 @@ textarea.code{width:100%;border:1px solid var(--line-2);border-radius:8px;backgr
     <div class="lib-head">
       <div><h1>Mina presentationer</h1><p class="muted" id="libSub"></p></div>
     </div>
-    <div id="grid" class="grid"></div>
+    <div id="grid" class="lib-list"></div>
     <section class="how" aria-labelledby="howH">
       <h2 id="howH">Så sparas dina presentationer</h2>
       <div><h3>I appen</h3><p>Allt sparas automatiskt medan du arbetar och ligger här nästa gång du öppnar Scen. Bara du ser dina presentationer.</p></div>
@@ -7505,43 +7517,60 @@ async function showLibrary() {
   decks.sort((a, b) => (b.updatedAt || 0) - (a.updatedAt || 0));
   renderGrid();
 }
+/* Vilka kurser som är utfällda i biblioteket. Sparas bara i den här webbläsaren, som en bekvämlighet. */
+const LIB_OPEN = 'scen:lib:open';
+function libOpen() { try { return new Set(JSON.parse(localStorage.getItem(LIB_OPEN) || '[]')); } catch (e) { return new Set(); } }
+function setLibOpen(course, on) {
+  const open = libOpen(); on ? open.add(course) : open.delete(course);
+  try { localStorage.setItem(LIB_OPEN, JSON.stringify([...open])); } catch (e) {}
+}
 function renderGrid() {
   const g = $('#grid'); g.innerHTML = '';
   const entries = decks.map(d => [d, false]).concat(repoDecks && repoDecks.length ? repoDecks.map(d => [d, true]) : [[SAMPLE, true]]);
   const courses = [...new Set(entries.map(([d]) => (d.course || '').trim()).filter(Boolean))].sort((a, b) => a.localeCompare(b, 'sv'));
-  const groups = courses.length ? courses.concat('') : [''];
-  groups.forEach(course => {
+  const grid = () => { const el = document.createElement('div'); el.className = 'grid'; return el; };
+  if (!courses.length) { const one = grid(); entries.forEach(([d, sample]) => one.appendChild(card(d, sample))); g.appendChild(one); }
+  /* En kurs per rad som fälls ut med ett klick. Korten ritas först när kursen fälls ut. */
+  const open = libOpen();
+  courses.concat('').forEach(course => {
     const members = entries.filter(([d]) => (d.course || '').trim() === course);
-    if (!members.length) return;
-    if (courses.length) { const h = document.createElement('h2'); h.className = 'grid-group'; h.textContent = course || 'Övrigt'; g.appendChild(h); }
-    members.forEach(([d, sample]) => g.appendChild(card(d, sample)));
+    if (!members.length || !courses.length) return;
+    const name = course || 'Övrigt', own = members.filter(([, sample]) => !sample).length;
+    const sec = document.createElement('section'); sec.className = 'course';
+    sec.dataset.repoCount = members.filter(([d]) => d.repo).length;
+    const head = document.createElement('button'); head.type = 'button'; head.className = 'course-head';
+    head.innerHTML = `<span class="chev" aria-hidden="true"></span><span class="course-name">${esc(name)}</span>` +
+      `<span class="course-count">${plural(members.length, 'presentation', 'presentationer')}${own ? ` · ${own} ${own === 1 ? 'egen' : 'egna'}` : ''}</span>`;
+    const body = grid(); body.classList.add('course-body');
+    const fill = () => { if (!body.childElementCount) members.forEach(([d, sample]) => body.appendChild(card(d, sample))); };
+    const show = on => { body.hidden = !on; head.setAttribute('aria-expanded', String(on)); if (on) fill(); };
+    show(open.has(name));
+    head.onclick = () => { const on = body.hidden; show(on); setLibOpen(name, on); };
+    sec.append(head, body); g.appendChild(sec);
   });
-  const nb = document.createElement('button'); nb.type = 'button'; nb.className = 'empty-new'; nb.textContent = '+ Ny presentation';
-  nb.onclick = newDeck;
-  const wrap = document.createElement('div'); wrap.className = 'card'; wrap.appendChild(nb);
-  g.appendChild(wrap);
   $('#libSub').textContent = decks.length ? plural(decks.length, 'presentation', 'presentationer') + '. Klicka på en för att redigera.' : 'Inga egna presentationer än. Börja med en ny, importera en PowerPoint eller spela exemplet.';
 }
 function card(d, sample) {
   const el = document.createElement('article'); el.className = 'card';
   const th = document.createElement('button'); th.type = 'button'; th.className = 'card-thumb';
-  th.setAttribute('aria-label', (sample ? 'Spela exemplet ' : 'Redigera ') + d.title);
+  th.setAttribute('aria-label', (sample ? 'Spela ' : 'Redigera ') + d.title);
   th.appendChild(Scen.thumb(d.slides[0] || { layout: 'title', title: d.title }, d, IMG, 0));
   th.onclick = () => sample ? play(d, 0) : openDeck(d.id);
   el.appendChild(th);
   const h = document.createElement('h3'); h.textContent = d.title || 'Namnlös presentation'; el.appendChild(h);
   const meta = document.createElement('div'); meta.className = 'meta';
-  meta.innerHTML = (sample ? `<span class="tag">${d.repo ? 'I repot' : 'Exempel'}</span>` : '') + `<span>${plural(d.slides.length, 'bild', 'bilder')}${d.updatedAt ? ' · ändrad ' + esc(when(d.updatedAt)) : ''}</span>`;
+  /* Presentationerna i repot är originalen och behöver ingen etikett. Egna kopior märks, så att de syns. */
+  meta.innerHTML = (sample ? (d.repo ? '' : '<span class="tag">Exempel</span>') : '<span class="tag">Egen</span>') + `<span>${plural(d.slides.length, 'bild', 'bilder')}${d.updatedAt ? ' · ändrad ' + esc(when(d.updatedAt)) : ''}</span>`;
   el.appendChild(meta);
   const acts = document.createElement('div'); acts.className = 'acts';
-  const B = (label, fn, cls) => { const b = document.createElement('button'); b.type = 'button'; b.className = 'btn small ' + (cls || ''); b.textContent = label; b.onclick = fn; acts.appendChild(b); return b; };
+  const B = (label, fn, cls, tip) => { const b = document.createElement('button'); b.type = 'button'; b.className = 'btn small ghost ' + (cls || ''); b.textContent = label; if (tip) b.title = tip; b.onclick = fn; acts.appendChild(b); return b; };
   if (sample) {
     B('Spela', () => play(d, 0));
-    if (d.repo) B('Spara på datorn', () => exportDeck(d));
-    B('Gör en egen kopia', () => duplicate(d, true));
+    if (d.repo) B('Spara', () => exportDeck(d), '', 'Spara på datorn som en .html-fil');
+    B('Kopiera', () => duplicate(d, true), '', 'Gör en egen kopia att redigera');
   } else {
     B('Spela', async () => { const imgs = await safeImages(d.id); Object.assign(IMG, imgs); play(d, 0); });
-    B('Spara på datorn', () => exportDeck(d));
+    B('Spara', () => exportDeck(d), '', 'Spara på datorn som en .html-fil');
     B('Duplicera', () => duplicate(d));
     B('Ta bort', () => {
       acts.hidden = true;
@@ -7572,6 +7601,7 @@ async function duplicate(src, fromSample) {
     for (const [k, v] of Object.entries(imgs)) await Store.saveImage(d.id, k, v);
     await Store.save(d);
     Object.assign(IMG, imgs);
+    setLibOpen((d.course || '').trim() || 'Övrigt', true);
     decks.unshift(d); renderGrid();
     toast(src.repo ? 'Kopian är sparad i den här webbläsaren. Spara manus (.md) för att lägga tillbaka ändringar i repot.' : fromSample ? 'Exemplet finns nu bland dina presentationer.' : 'Kopian är sparad.');
     if (fromSample) openDeck(d.id);

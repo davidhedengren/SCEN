@@ -46,11 +46,16 @@ window.addEventListener('unhandledrejection', event => {
     result.indexCount = response.ok ? (await response.json()).length : 0;
     result.libraryReady = await waitFor(() => document.querySelector('#storeChip')?.textContent !== 'Ansluter…');
     result.storeChip = document.querySelector('#storeChip')?.textContent || '';
-    result.repoReady = await waitFor(() => [...document.querySelectorAll('#grid .tag')].filter(tag => tag.textContent.trim() === 'I repot').length === result.indexCount);
-    result.repoCount = [...document.querySelectorAll('#grid .tag')].filter(tag => tag.textContent.trim() === 'I repot').length;
+    // Kurserna är hopfällda från början. Varje kursrad vet hur många av presentationerna i repot den har.
+    const repoCount = () => [...document.querySelectorAll('#grid .course')].reduce((sum, course) => sum + Number(course.dataset.repoCount || 0), 0);
+    result.repoReady = await waitFor(() => repoCount() === result.indexCount);
+    result.repoCount = repoCount();
+    const firstCourse = document.querySelector('#grid .course-head');
+    if (firstCourse && firstCourse.getAttribute('aria-expanded') !== 'true') firstCourse.click();
+    result.courseOpens = await waitFor(() => document.querySelectorAll('#grid .course-body:not([hidden]) .card').length > 0);
     result.undoExists = Boolean(document.querySelector('#btnUndo'));
     result.layerButtonCount = document.querySelectorAll('[data-add]').length;
-    const copyButton = [...document.querySelectorAll('#grid button')].find(button => button.textContent.trim() === 'Gör en egen kopia');
+    const copyButton = [...document.querySelectorAll('#grid button')].find(button => button.textContent.trim() === 'Kopiera');
     result.copyButtonExists = Boolean(copyButton);
     if (copyButton) copyButton.click();
     result.editorOpened = await waitFor(() => document.querySelector('#ed') && !document.querySelector('#ed').hidden);
@@ -154,6 +159,7 @@ async function main() {
         [result.libraryReady && result.storeChip !== 'Ansluter…', `Biblioteket startade inte: ${result.storeChip}`],
         [result.indexStatus === 200 && result.indexCount > 0, `presentationer/index.json: status ${result.indexStatus}, antal ${result.indexCount}`],
         [result.repoCount === result.indexCount, `Förväntade ${result.indexCount} repopresentationer, hittade ${result.repoCount}`],
+        [result.courseOpens, 'En kurs i biblioteket gick inte att fälla ut'],
         [result.undoExists, '#btnUndo saknas'],
         [result.layerButtonCount === 6, `Förväntade 6 lagerknappar, hittade ${result.layerButtonCount}`],
         [result.copyButtonExists && result.editorOpened, 'Kunde inte öppna en repopresentation i editorn'],
@@ -161,7 +167,7 @@ async function main() {
       ];
       const failures = checks.filter(([ok]) => !ok).map(([, message]) => message);
       if (failures.length) throw new Error(failures.join('\n'));
-      console.log(`OK: browser start, ${result.repoCount} repopresentationer, editor, undo och ${result.layerButtonCount} lagerverktyg.`);
+      console.log(`OK: browser start, ${result.repoCount} repopresentationer i hopfällbara kurser, editor, undo och ${result.layerButtonCount} lagerverktyg.`);
     } finally {
       fs.rmSync(profile, { recursive: true, force: true });
     }

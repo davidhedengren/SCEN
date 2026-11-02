@@ -242,43 +242,60 @@ async function showLibrary() {
   decks.sort((a, b) => (b.updatedAt || 0) - (a.updatedAt || 0));
   renderGrid();
 }
+/* Vilka kurser som är utfällda i biblioteket. Sparas bara i den här webbläsaren, som en bekvämlighet. */
+const LIB_OPEN = 'scen:lib:open';
+function libOpen() { try { return new Set(JSON.parse(localStorage.getItem(LIB_OPEN) || '[]')); } catch (e) { return new Set(); } }
+function setLibOpen(course, on) {
+  const open = libOpen(); on ? open.add(course) : open.delete(course);
+  try { localStorage.setItem(LIB_OPEN, JSON.stringify([...open])); } catch (e) {}
+}
 function renderGrid() {
   const g = $('#grid'); g.innerHTML = '';
   const entries = decks.map(d => [d, false]).concat(repoDecks && repoDecks.length ? repoDecks.map(d => [d, true]) : [[SAMPLE, true]]);
   const courses = [...new Set(entries.map(([d]) => (d.course || '').trim()).filter(Boolean))].sort((a, b) => a.localeCompare(b, 'sv'));
-  const groups = courses.length ? courses.concat('') : [''];
-  groups.forEach(course => {
+  const grid = () => { const el = document.createElement('div'); el.className = 'grid'; return el; };
+  if (!courses.length) { const one = grid(); entries.forEach(([d, sample]) => one.appendChild(card(d, sample))); g.appendChild(one); }
+  /* En kurs per rad som fälls ut med ett klick. Korten ritas först när kursen fälls ut. */
+  const open = libOpen();
+  courses.concat('').forEach(course => {
     const members = entries.filter(([d]) => (d.course || '').trim() === course);
-    if (!members.length) return;
-    if (courses.length) { const h = document.createElement('h2'); h.className = 'grid-group'; h.textContent = course || 'Övrigt'; g.appendChild(h); }
-    members.forEach(([d, sample]) => g.appendChild(card(d, sample)));
+    if (!members.length || !courses.length) return;
+    const name = course || 'Övrigt', own = members.filter(([, sample]) => !sample).length;
+    const sec = document.createElement('section'); sec.className = 'course';
+    sec.dataset.repoCount = members.filter(([d]) => d.repo).length;
+    const head = document.createElement('button'); head.type = 'button'; head.className = 'course-head';
+    head.innerHTML = `<span class="chev" aria-hidden="true"></span><span class="course-name">${esc(name)}</span>` +
+      `<span class="course-count">${plural(members.length, 'presentation', 'presentationer')}${own ? ` · ${own} ${own === 1 ? 'egen' : 'egna'}` : ''}</span>`;
+    const body = grid(); body.classList.add('course-body');
+    const fill = () => { if (!body.childElementCount) members.forEach(([d, sample]) => body.appendChild(card(d, sample))); };
+    const show = on => { body.hidden = !on; head.setAttribute('aria-expanded', String(on)); if (on) fill(); };
+    show(open.has(name));
+    head.onclick = () => { const on = body.hidden; show(on); setLibOpen(name, on); };
+    sec.append(head, body); g.appendChild(sec);
   });
-  const nb = document.createElement('button'); nb.type = 'button'; nb.className = 'empty-new'; nb.textContent = '+ Ny presentation';
-  nb.onclick = newDeck;
-  const wrap = document.createElement('div'); wrap.className = 'card'; wrap.appendChild(nb);
-  g.appendChild(wrap);
   $('#libSub').textContent = decks.length ? plural(decks.length, 'presentation', 'presentationer') + '. Klicka på en för att redigera.' : 'Inga egna presentationer än. Börja med en ny, importera en PowerPoint eller spela exemplet.';
 }
 function card(d, sample) {
   const el = document.createElement('article'); el.className = 'card';
   const th = document.createElement('button'); th.type = 'button'; th.className = 'card-thumb';
-  th.setAttribute('aria-label', (sample ? 'Spela exemplet ' : 'Redigera ') + d.title);
+  th.setAttribute('aria-label', (sample ? 'Spela ' : 'Redigera ') + d.title);
   th.appendChild(Scen.thumb(d.slides[0] || { layout: 'title', title: d.title }, d, IMG, 0));
   th.onclick = () => sample ? play(d, 0) : openDeck(d.id);
   el.appendChild(th);
   const h = document.createElement('h3'); h.textContent = d.title || 'Namnlös presentation'; el.appendChild(h);
   const meta = document.createElement('div'); meta.className = 'meta';
-  meta.innerHTML = (sample ? `<span class="tag">${d.repo ? 'I repot' : 'Exempel'}</span>` : '') + `<span>${plural(d.slides.length, 'bild', 'bilder')}${d.updatedAt ? ' · ändrad ' + esc(when(d.updatedAt)) : ''}</span>`;
+  /* Presentationerna i repot är originalen och behöver ingen etikett. Egna kopior märks, så att de syns. */
+  meta.innerHTML = (sample ? (d.repo ? '' : '<span class="tag">Exempel</span>') : '<span class="tag">Egen</span>') + `<span>${plural(d.slides.length, 'bild', 'bilder')}${d.updatedAt ? ' · ändrad ' + esc(when(d.updatedAt)) : ''}</span>`;
   el.appendChild(meta);
   const acts = document.createElement('div'); acts.className = 'acts';
-  const B = (label, fn, cls) => { const b = document.createElement('button'); b.type = 'button'; b.className = 'btn small ' + (cls || ''); b.textContent = label; b.onclick = fn; acts.appendChild(b); return b; };
+  const B = (label, fn, cls, tip) => { const b = document.createElement('button'); b.type = 'button'; b.className = 'btn small ghost ' + (cls || ''); b.textContent = label; if (tip) b.title = tip; b.onclick = fn; acts.appendChild(b); return b; };
   if (sample) {
     B('Spela', () => play(d, 0));
-    if (d.repo) B('Spara på datorn', () => exportDeck(d));
-    B('Gör en egen kopia', () => duplicate(d, true));
+    if (d.repo) B('Spara', () => exportDeck(d), '', 'Spara på datorn som en .html-fil');
+    B('Kopiera', () => duplicate(d, true), '', 'Gör en egen kopia att redigera');
   } else {
     B('Spela', async () => { const imgs = await safeImages(d.id); Object.assign(IMG, imgs); play(d, 0); });
-    B('Spara på datorn', () => exportDeck(d));
+    B('Spara', () => exportDeck(d), '', 'Spara på datorn som en .html-fil');
     B('Duplicera', () => duplicate(d));
     B('Ta bort', () => {
       acts.hidden = true;
@@ -309,6 +326,7 @@ async function duplicate(src, fromSample) {
     for (const [k, v] of Object.entries(imgs)) await Store.saveImage(d.id, k, v);
     await Store.save(d);
     Object.assign(IMG, imgs);
+    setLibOpen((d.course || '').trim() || 'Övrigt', true);
     decks.unshift(d); renderGrid();
     toast(src.repo ? 'Kopian är sparad i den här webbläsaren. Spara manus (.md) för att lägga tillbaka ändringar i repot.' : fromSample ? 'Exemplet finns nu bland dina presentationer.' : 'Kopian är sparad.');
     if (fromSample) openDeck(d.id);

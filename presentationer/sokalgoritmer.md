@@ -97,7 +97,7 @@ text: Letar du på måfå kan du leta på samma ställe två gånger eller missa
 bild: bilder/sokalgoritmer/nycklar.jpg
 alt: Ett mörkt rum där en ficklampa lyser över golvet och fångar ett par nycklar.
 - Lite i varje rum först, sedan grundligare
-- Ett rum i taget, ända till botten
+- Ett rum i taget, grundligt, innan du går vidare till nästa
 - Där de troligast ligger först
 > Låt eleverna säga hur de själva brukar leta.
 > De tre sätten motsvarar ungefär det vi ska gå igenom: bredden först, djupet först och informerad sökning, som använder en tumregel om var målet troligast finns.
@@ -106,7 +106,7 @@ alt: Ett mörkt rum där en ficklampa lyser över golvet och fångar ett par nyc
 ---
 
 [definition]
-etikett: Ett ord vi behöver
+etikett: Viktigt begrepp
 rubrik: Kö
 text: De noder som vi har hittat, men ännu inte undersökt.
 exempel: Som en att göra-lista med platser du vet finns men inte har besökt. Algoritmen tar en plats i taget från listan.
@@ -119,11 +119,11 @@ bakgrund: fokusljus
 [kretslopp]
 etikett: Sökalgoritm
 rubrik: Så fungerar en sökalgoritm
-slutsats: BFS, DFS, girig bäst först och A* går alla runt i den här loopen. Det som skiljer dem är vilken nod som tas ut.
+slutsats: Alla sökalgoritmer går runt i den här loopen. Det som skiljer dem är vilken nod som tas ut från kön.
 mitten: Kön
 start: Lägg startnoden i kön
 retur: Upprepa tills lösningen är hittad eller kön är tom.
-- Kön tom? | Finns det inga noder kvar att utforska? | Ingen lösning
+- Är kön tom? | Finns det inga noder kvar att utforska? | Ingen lösning
 - Ta ut en nod | En nod tas ut ur kön.
 - Målet? | Är noden den vi letar efter? | Lösningen är hittad
 - Utforska | Lägg nodens barn i kön.
@@ -156,7 +156,7 @@ slutsats: Målet är hittat först när noden tas ut ur kön och utforskas.
 [ridå]
 etikett: Datastrukturer
 rubrik: Olika köer
-text: Vem står på tur?
+text: Vilken nod står på tur att undersökas?
 bild: bilder/sokalgoritmer/ko.jpg
 > Vilken nod som tas ut ur kön härnäst beror på vilken sorts kö algoritmen använder.
 
@@ -212,7 +212,7 @@ flöde: ja
 - Start | Börjar vid en given startnod.
 - Nivå 1 | Alla barnnoder till startnoden utforskas.
 - Nivå 2 | Alla noder som är anslutna till noderna på nivå 1 utforskas.
-- Tills målet | Processen fortsätter tills målnoden hittas eller alla noder har utforskats.
+- Nivå för nivå | Processen fortsätter tills målnoden hittas eller alla noder har utforskats.
 > BFS använder en FIFO-kö där noderna utforskas i den ordning de läggs till i kön.
 
 ---
@@ -221,7 +221,7 @@ flöde: ja
 etikett: Bredden först
 rubrik: BFS utforskar nivå för nivå
 text: Alla noder på en nivå utforskas innan sökningen går vidare till nästa nivå.
-slutsats: Ordningen blir A, B, C, D, E, F, G, H, I, J, K, L, M, N, O.
+slutsats: Sökordningen blir A, B, C, D, E, F, G, H, I, J, K, L, M, N, O.
 - A
   - B
     - D
@@ -408,8 +408,8 @@ rubrik: Så arbetar DFS
 text: DFS står för Depth-First Search. Algoritmen utforskar grafer och träd genom att gå så djupt som möjligt längs varje gren innan den backar. DFS använder en stack (LIFO-kö).
 - Start | Börjar vid en given startnod.
 - Djupt | Går vidare till en barnnod och följer vägen tills den når ett löv.
-- Backa | Utan nya grannar backar DFS till den senaste noden med oupptäckta grannar.
-- Tills målet | Processen fortsätter tills målnoden hittas eller alla noder har utforskats.
+- Backa | Finns inga fler barnnoder backar DFS till den senaste noden med oupptäckta grannar.
+- Fortsätter | Processen fortsätter tills målnoden hittas eller alla noder har utforskats.
 > Djupt: algoritmen går vidare till den första tillgängliga barnnoden och fortsätter att följa denna väg tills den når ett löv.
 > Backa: när DFS når en nod utan nya grannar backar algoritmen tillbaka till den senaste noden med oupptäckta grannar och utforskar nästa tillgängliga väg.
 > DFS använder en stack, där den senaste noden som lagts till i kön utforskas först.
@@ -658,7 +658,7 @@ hastighet: slow
 [bildfält]
 etikett: Informerade sökningar
 rubrik: Heuristik
-text: En form av tumregel som, baserat på tidigare erfarenheter eller tillgänglig information, hjälper till att guida sökningen åt rätt håll snarare än att analysera alla möjliga alternativ noggrant.
+text: En form av tumregel som, baserat på tidigare erfarenheter eller tillgänglig information, hjälper till att guida sökningen åt rätt håll.
 bild: bilder/sokalgoritmer/labyrint.jpg
 fokuspunkt: 55 50
 - Algoritmer som använder heuristik nyttjar en prioritetskö.
@@ -692,7 +692,7 @@ slutsats: Vägen blev 33 steg. Finns det en kortare väg?
 [fråga]
 etikett: Diskutera
 rubrik: Varför blev det en sådan omväg?
-svar: Den bryr sig inte om hur långt den redan har gått. Girig bäst först tittar bara på h, hur långt det verkar vara kvar.
+svar: Den bryr sig inte om hur långt den redan har gått. Girig bäst först tittar bara på hur långt det verkar vara kvar.
 rubrikrörelse: skrivmaskin
 - Algoritmen valde en ruta på måfå
 - Den vet inte hur långt det är kvar till målet
@@ -719,11 +719,11 @@ hastighet: slow
 
 [formel]
 etikett: A*-algoritmen
-rubrik: Kostnaden för en nod
+rubrik: Kostnadsfunktion
 formel: f(n) = g(n) + h(n)
 slutsats: A* utforskar alltid den nod i kön som har lägst f(n).
-- h(n) | Uppskattad kostnad att nå målet från n. Det enda som girig bäst först tittar på.
-- g(n) | Kostnad att nå noden n. Den delen saknade girig bäst först.
+- h(n) | Uppskattad kostnad att nå målet från n (det enda som girig bäst först tittar på)
+- g(n) | Kostnad att nå noden n. Hur långt algoritmen har gått hittills
 - f(n) | Den uppskattade totala kostnaden för en väg genom noden n.
 > Båda algoritmerna använder en prioritetskö, men sorterar på olika värden: girig bäst först på h, A* på g + h.
 > Färgerna följer med till A*-labyrinten: g i turkost och h i orange.

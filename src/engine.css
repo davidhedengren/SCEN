@@ -1567,7 +1567,12 @@
 .scen .sk-num.dramaturgy-current,.scen .slide[data-dramaturgy-state="restored"] .sk-num.fin{opacity:1;transform:none}
 .scen .sk-cursor{position:absolute;border-radius:50%;border:4px solid var(--accent);box-shadow:0 0 0 10px var(--hl),0 0 40px var(--hl);opacity:0;transition:left .55s cubic-bezier(.65,0,.25,1),top .55s cubic-bezier(.65,0,.25,1),opacity .3s ease;z-index:2}
 .scen .sk-panel{transition:opacity .45s ease}
-.scen .slide[data-dramaturgy-state="focus"] .sk-panel:not(.dramaturgy-current){opacity:.28}
+.scen .slide[data-dramaturgy-state="focus"] .sk-panel:not(.dramaturgy-current){opacity:.12}
+.scen .slide[data-dramaturgy-state="focus"] .sk-pset:not(.dramaturgy-current){opacity:.25}
+.scen .sk-pset{transition:opacity .45s ease}
+.scen .sk-pbg{fill:color-mix(in srgb,var(--accent) 8%,transparent);stroke:color-mix(in srgb,var(--accent) 45%,transparent);stroke-width:2;opacity:0;transition:opacity .45s ease}
+.scen .slide[data-dramaturgy-state="focus"] .sk-panel.dramaturgy-current{filter:drop-shadow(0 0 18px color-mix(in srgb,var(--accent) 30%,transparent))}
+.scen .slide[data-dramaturgy-state="focus"] .sk-panel.dramaturgy-current .sk-pbg{opacity:1}
 .scen .sk-pname{position:absolute;margin:0;font:600 30px/1.1 var(--font-display,var(--font));color:var(--ink)}
 .scen .sk-pname span{margin-left:12px;font:600 16px var(--font-mono,var(--mono));letter-spacing:.12em;text-transform:uppercase;color:var(--accent-2)}
 .scen .sk-ans{position:absolute;display:grid;gap:6px}
@@ -1829,9 +1834,9 @@
 .scen .ko-say p{font-size:26px}
 .scen .ko-say b{color:var(--accent)}
 .scen .ko-set{transition:opacity .5s ease}
-.scen .slide[data-dramaturgy-state="focus"] .ko-set:not(.dramaturgy-current){opacity:.22}
+.scen .slide[data-dramaturgy-state="focus"] .ko-set:not(.dramaturgy-current){opacity:.16}
 .scen .ko-frame{position:absolute;top:292px;height:716px;border-radius:30px;border:2px solid var(--accent);background:color-mix(in srgb,var(--accent) 5%,transparent);box-shadow:0 0 0 6px color-mix(in srgb,var(--accent) 10%,transparent),0 0 60px color-mix(in srgb,var(--accent) 22%,transparent);opacity:0;transform:scale(.985);transition:opacity .45s ease,transform .5s cubic-bezier(.2,.8,.2,1)}
-.scen .slide[data-dramaturgy-state="focus"] .ko-set.dramaturgy-current .ko-frame{opacity:1;transform:none}
+.scen .slide[data-dramaturgy-state="focus"] .ko-set.dramaturgy-current .ko-frame{opacity:1;transform:none;background:color-mix(in srgb,var(--accent) 9%,transparent);box-shadow:0 0 0 8px color-mix(in srgb,var(--accent) 14%,transparent),0 0 90px color-mix(in srgb,var(--accent) 34%,transparent)}
 .scen .slide[data-dramaturgy-state="focus"] .ko-set.dramaturgy-current .ko-col h3{color:var(--accent)}
 @media (prefers-reduced-motion:reduce){.scen :is(.sk-stage,.rn-stage,.ko-stage) *{transition-duration:.01s!important;transition-delay:0s!important}}
 .scen .slide[data-body-motion="none"] :is(.sk-stage,.rn-stage,.ko-stage) *{transition:none!important}

@@ -2291,14 +2291,15 @@ function renderSlide(sl, i, deck, img) {
           const kh = 3 * q, k0 = kh + 1, k1 = kh + 2, box = { x: 144 + q * (pw + gap), y: 380, w: pw, h: 400 }, { r, P } = drawGraph(G, box);
           const upTo = k => Array.from({ length: 3 * np }, (_, t) => t).filter(t => t >= k);
           const nm = j => esc(plain(G.nodes[j].name));
-          svg += `<g class="sk-panel"${IN([kh, k0, k1])} data-p="${q}">`;
+          svg += `<g class="sk-panel"${IN([kh, k0, k1])} data-p="${q}"><rect class="sk-pbg" x="${Math.round(box.x - 28)}" y="300" width="${Math.round(pw + 56)}" height="630" rx="30"/>`;
           G.edges.forEach(([a, b]) => { const on = path.includes(a) && path.includes(b) && Math.abs(path.indexOf(a) - path.indexOf(b)) === 1; svg += `<path class="sk-e" d="${edgeD(P, a, b, r)}" marker-end="url(#skm${uid})"/><path class="sk-ep${on ? ' fin' : ''}" d="${edgeD(P, a, b, r)}" pathLength="1"${on ? IN(upTo(k1)) : ''}/>`; });
           G.nodes.forEach((n, j) => { const [x, y] = P[j], onP = path.includes(j); svg += nodeSvg(G, P, r, j, `<circle class="sk-pa${onP ? ' fin' : ''}" cx="${x.toFixed(1)}" cy="${y.toFixed(1)}" r="${r}"${onP ? IN(upTo(k1)) : ''}/>`, goals); });
           svg += `</g>`;
           const bs = Math.round(Math.max(22, Math.min(34, r * 1.05)));
+          html += `<div class="sk-pset"${IN([kh, k0, k1])}>`;
           order.forEach((j, o) => { const [x, y] = P[j]; html += `<span class="sk-num fin" style="left:${Math.round(x + r * .5)}px;top:${Math.round(y - r - bs * .55)}px;--d:${o};min-width:${bs}px;height:${bs}px;font-size:${Math.round(bs * .52)}px"${IN(upTo(k0))}>${o + 1}</span>`; });
           html += `<p class="sk-pname" style="left:${Math.round(box.x)}px;top:320px;width:${Math.round(pw)}px">${fmt(pn.name)}${goals.size ? ` <span>mål ${sokList([...new Set([...goals].map(nm))])}</span>` : ''}</p>` +
-            `<div class="sk-ans" style="left:${Math.round(box.x)}px;top:820px;width:${Math.round(pw)}px"><p class="a"${IN(upTo(k0))}><b>a)</b> ${order.map(nm).join(', ')}</p><p class="b"${IN(upTo(k1))}><b>b)</b> ${path.length ? path.map(nm).join(', ') : 'Ingen väg'}</p></div>`;
+            `<div class="sk-ans" style="left:${Math.round(box.x)}px;top:820px;width:${Math.round(pw)}px"><p class="a"${IN(upTo(k0))}><b>a)</b> ${order.map(nm).join(', ')}</p><p class="b"${IN(upTo(k1))}><b>b)</b> ${path.length ? path.map(nm).join(', ') : 'Ingen väg'}</p></div></div>`;
         });
         nSteps = 3 * np;
         if (sl.text) html += `<p class="sk-lead">${fmt(sl.text)}</p>`;
@@ -2398,7 +2399,7 @@ function renderSlide(sl, i, deck, img) {
           const say = s => {
             if (s === pathStep) return `Vägen från A till B: ${res.path.length - 1} steg.`;
             const js = G2[s], o = res.order[js[js.length - 1]], hit = res.T && js.some(j => key(res.order[j].p) === key(res.T));
-            const base = level ? `Nivå ${o.g}: ${js.length} ${js.length === 1 ? 'ny ruta' : 'nya rutor'}.` : algo === 'girig' ? `Lägst h i kön: ${o.h}.` : algo === 'astar' ? `Lägst f i kön: ${o.g} + ${o.h} = ${o.g + o.h}.` : `Utforskade rutor: ${js[js.length - 1]}.`;
+            const base = level ? `Nivå ${o.g}: ${js.length} ${js.length === 1 ? 'ny ruta' : 'nya rutor'}.` : algo === 'girig' ? `Lägst uppskattad kostnad i kön: ${o.h}.` : algo === 'astar' ? `Lägst f i kön: ${o.g} + ${o.h} = ${o.g + o.h}.` : `Utforskade rutor: ${js[js.length - 1]}.`;
             if (onlyEnd && !notes[s + 1]) return hit ? `Målet B är hittat! Utforskade rutor: ${js[js.length - 1]}.` : '';
             return base + (hit ? ' Målet B är hittat!' : '');
           };
@@ -2466,7 +2467,9 @@ function renderSlide(sl, i, deck, img) {
       lanes.forEach((l, li) => { state[li].last = null; css += place(`.${uid}[data-dramaturgy-state="restored"]`, li, state[li], false); });
       lanes.forEach((l, li) => {
         const x0 = 144 + li * (cw + gap), act = plan.map((P, t) => P.lanes.includes(li) ? t : -1).filter(t => t >= 0);
-        html += `<div class="ko-set"${act.length ? ` data-dramaturgy-in="${act.join(' ')}"` : ''}><div class="ko-frame" aria-hidden="true" style="left:${Math.round(x0 - 22)}px;width:${Math.round(cw + 44)}px"></div><div class="ko-col" style="left:${Math.round(x0)}px;width:${Math.round(cw)}px"><h3>${fmt(l.name)}</h3>${l.sub ? `<p>${fmt(l.sub)}</p>` : ''}${l.code ? `<code>${esc(l.code)}</code>` : ''}</div>` +
+        const first = act.length ? act[0] : 0, hide = `{opacity:.05}`;
+        if (first > 0) css += `.scen .slide.${uid}[data-dramaturgy-state="overview"] .ko-set.kl${li}${hide}` + Array.from({ length: first }, (_, t) => `.scen .slide.${uid}[data-dramaturgy-focus="${t}"] .ko-set.kl${li}${hide}`).join('');
+        html += `<div class="ko-set kl${li}"${act.length ? ` data-dramaturgy-in="${act.join(' ')}"` : ''}><div class="ko-frame" aria-hidden="true" style="left:${Math.round(x0 - 22)}px;width:${Math.round(cw + 44)}px"></div><div class="ko-col" style="left:${Math.round(x0)}px;width:${Math.round(cw)}px"><h3>${fmt(l.name)}</h3>${l.sub ? `<p>${fmt(l.sub)}</p>` : ''}${l.code ? `<code>${esc(l.code)}</code>` : ''}</div>` +
           (l.type === 'lifo' ? `<div class="ko-lane lifo" style="left:${Math.round(x0 + cw / 2 - CH / 2 - 14)}px;top:440px;width:${CH + 28}px;height:390px"><span class="ko-io">in och ut ↕</span></div>`
             : `<div class="ko-lane ${l.type}" style="left:${Math.round(x0)}px;top:600px;width:${Math.round(cw)}px;height:${CH + 28}px"><span class="ko-io l">← ut</span><span class="ko-io r">← in</span></div>`) +
           `<p class="ko-out" style="left:${Math.round(x0)}px;top:866px">Ut, i ordning</p>`;

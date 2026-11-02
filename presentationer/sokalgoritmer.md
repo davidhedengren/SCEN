@@ -156,7 +156,7 @@ slutsats: Målet är hittat först när noden tas ut ur kön och utforskas.
 [ridå]
 etikett: Datastrukturer
 rubrik: Olika köer
-text: Vilken nod står på tur att undersökas?
+text: Hur bestämmer vi vilken nod i kön som väljs ut?
 bild: bilder/sokalgoritmer/ko.jpg
 > Vilken nod som tas ut ur kön härnäst beror på vilken sorts kö algoritmen använder.
 
@@ -670,7 +670,7 @@ fokuspunkt: 55 50
 [rutnät]
 etikett: Informerad sökning
 rubrik: Girig bäst först-sökning
-text: Väljer den ruta med lägst uppskattad kostnad till målet, h(n). Här är h Manhattan-avståndet.
+text: Väljer den ruta med lägst uppskattad kostnad till målet (här är detta avstånd Manhattan-avståndet)
 slutsats: Vägen blev 33 steg. Finns det en kortare väg?
 - algoritm: girig
 - berättelse: slut

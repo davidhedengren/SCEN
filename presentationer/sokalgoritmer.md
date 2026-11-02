@@ -655,6 +655,22 @@ text: def bfs(graph, start, goal):
 
 ---
 
+[karta]
+etikett: Sökalgoritmer
+rubrik: Informerade sökalgoritmer
+text: De har en uppskattning av hur långt det är kvar till målet. Den avgör vilken nod i kön som utforskas först.
+aktiv: 3, 4
+- BFS | Oinformerad. Nivå för nivå, med en FIFO-kö.
+- DFS | Oinformerad. En gren i taget, med en stack.
+- Girig bäst först | Väljer den nod som verkar ligga närmast målet, med en prioritetskö.
+- A* | Räknar också med hur långt den redan har gått.
+> Samma karta som före BFS, men nu lyser de två sista korten.
+> Informerad betyder att algoritmen har en uppskattning av hur långt det är kvar till målet. BFS och DFS visste bara hur grafen hänger ihop och om en nod är målet.
+> Båda de informerade algoritmerna använder en prioritetskö, men sorterar på olika värden.
+> Knyt an till frågan från förra kartan: vad skulle en algoritm behöva veta för att leta smartare?
+
+---
+
 [bildregi]
 rubrik: Girig bäst först-sökning
 bild: bilder/sokalgoritmer/labyrint-girig.jpg

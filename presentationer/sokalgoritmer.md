@@ -81,7 +81,7 @@ slutsats: **Ja**, ett recept är en algoritm.
 [klipp]
 etikett: Algoritm
 rubrik: Robot-Bingo
-text: När gör Robot-Bingo något annat än vad som var tänkt?
+text: Varför gör Robot-Bingo något annat än vad som var tänkt?
 film: https://www.youtube.com/watch?v=YYAlfZqUZrM
 källrad: Bluey – Officiella Svenska Kanalen, YouTube
 > Klippet ligger på Blueys officiella svenska kanal på YouTube och kräver internet. Fungerar det inte i rummet finns en länk under stillbilden som öppnar det på YouTube.

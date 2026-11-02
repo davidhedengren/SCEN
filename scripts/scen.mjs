@@ -35,6 +35,15 @@ function readDeck(file) {
   deck.theme = Object.assign({ id: 'scen', accent: 'auto', look: 'auto' }, deck.theme);
   return deck;
 }
+/* Manusen: filerna i presentationer/ och i undermappar ett steg ned, t.ex. exempelmallar/x.md. */
+function deckFiles() {
+  const dir = path.join(ROOT, 'presentationer'), out = [];
+  for (const e of fs.readdirSync(dir, { withFileTypes: true })) {
+    if (e.isFile() && e.name.endsWith('.md')) out.push(e.name);
+    else if (e.isDirectory()) fs.readdirSync(path.join(dir, e.name)).filter(f => f.endsWith('.md')).forEach(f => out.push(e.name + '/' + f));
+  }
+  return out.sort();
+}
 function loadRepoTemplates() {
   const out = {};
   const idx = path.join(ROOT, 'mallar/index.json');
@@ -84,7 +93,7 @@ const cmds = {
     wr('dist/scen.html', s);
     console.log('dist/scen.html', Math.round(s.length / 1024) + ' kB. Den här filen kan publiceras som artefakt i claude.ai.');
     // Samma app med repots presentationer och mallar inbakade. Fungerar med dubbelklick, utan server.
-    const md = fs.readdirSync(path.join(ROOT, 'presentationer')).filter(f => f.endsWith('.md')).sort();
+    const md = deckFiles();
     const repo = md.map(fil => ({ fil, text: rd('presentationer/' + fil) }));
     const tpls = Object.values(loadRepoTemplates());
     const images = {};
@@ -116,9 +125,9 @@ const cmds = {
     console.log(out, Math.round(html.length / 1024) + ' kB');
     if (missing.length) console.warn('  Saknas: ' + missing.join(', '));
   },
-  'exportera-alla'() { fs.readdirSync(path.join(ROOT, 'presentationer')).filter(f => f.endsWith('.md')).forEach(f => cmds.exportera('presentationer/' + f)); },
+  'exportera-alla'() { deckFiles().forEach(f => cmds.exportera('presentationer/' + f)); },
   index() {
-    const md = fs.readdirSync(path.join(ROOT, 'presentationer')).filter(f => f.endsWith('.md')).sort();
+    const md = deckFiles();
     wr('presentationer/index.json', JSON.stringify(md, null, 2) + '\n');
     const tp = fs.existsSync(path.join(ROOT, 'mallar')) ? fs.readdirSync(path.join(ROOT, 'mallar')).filter(f => f.endsWith('.json') && f !== 'index.json').sort() : [];
     wr('mallar/index.json', JSON.stringify(tp, null, 2) + '\n');
@@ -143,7 +152,7 @@ const cmds = {
   },
   kolla() {
     let bad = 0;
-    for (const f of fs.readdirSync(path.join(ROOT, 'presentationer')).filter(f => f.endsWith('.md'))) {
+    for (const f of deckFiles()) {
       const d = readDeck('presentationer/' + f);
       const probs = [];
       d.slides.forEach((s, i) => {

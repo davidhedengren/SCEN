@@ -252,13 +252,18 @@ function setLibOpen(course, on) {
 function renderGrid() {
   const g = $('#grid'); g.innerHTML = '';
   const entries = decks.map(d => [d, false]).concat(repoDecks && repoDecks.length ? repoDecks.map(d => [d, true]) : [[SAMPLE, true]]);
-  const courses = [...new Set(entries.map(([d]) => (d.course || '').trim()).filter(Boolean))].sort((a, b) => a.localeCompare(b, 'sv'));
+  /* Manus i en undermapp i repot, t.ex. exempelmallar/, hamnar i en egen grupp efter kurserna. */
+  const folderOf = d => d.repo && /\//.test(d.file || '') ? d.file.split('/')[0] : '';
+  const groupOf = d => { const f = folderOf(d); return f ? f.charAt(0).toUpperCase() + f.slice(1) : (d.course || '').trim(); };
+  const sorted = list => [...new Set(list.filter(Boolean))].sort((a, b) => a.localeCompare(b, 'sv'));
+  const folders = sorted(entries.map(([d]) => folderOf(d) && groupOf(d)));
+  const courses = sorted(entries.map(([d]) => !folderOf(d) && groupOf(d))).concat(folders);
   const grid = () => { const el = document.createElement('div'); el.className = 'grid'; return el; };
   if (!courses.length) { const one = grid(); entries.forEach(([d, sample]) => one.appendChild(card(d, sample))); g.appendChild(one); }
   /* En kurs per rad som fälls ut med ett klick. Korten ritas först när kursen fälls ut. */
   const open = libOpen();
   courses.concat('').forEach(course => {
-    const members = entries.filter(([d]) => (d.course || '').trim() === course);
+    const members = entries.filter(([d]) => groupOf(d) === course);
     if (!members.length || !courses.length) return;
     const name = course || 'Övrigt', own = members.filter(([, sample]) => !sample).length;
     const sec = document.createElement('section'); sec.className = 'course';

@@ -1,6 +1,6 @@
 # Berättande mallar: Ett beslut i korsningen
 
-Öppna **Ett beslut i korsningen** under **Scen · Berättande mallar** i biblioteket. En fristående version finns i `dist/ett-beslut-i-korsningen.html` och kan öppnas direkt utan server. Använd högerpil eller klick för nästa steg, vänsterpil för att gå tillbaka och N för talaranteckningar.
+Öppna **Ett beslut i korsningen** under **Exempelmallar** i biblioteket (`presentationer/exempelmallar/`). En fristående version finns i `dist/ett-beslut-i-korsningen.html` och kan öppnas direkt utan server. Använd högerpil eller klick för nästa steg, vänsterpil för att gå tillbaka och N för talaranteckningar.
 
 Presentationens fem avsnitt använder samma korsningsbild. Fyra egna mallar visar olika sätt att rikta uppmärksamheten. De finns under **Mallar** i appen och kan användas i andra presentationer. Manus: `presentationer/ett-beslut-i-korsningen.md`.
 

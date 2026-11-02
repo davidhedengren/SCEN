@@ -13,6 +13,7 @@ Allt användaren ser är på svenska: manus, mallnamn, knappar, felmeddelanden, 
 - `src/manus.js` – manusformatet (`parse`, `stringify`) och `CATALOG`, mallkatalogen som både människor och Claude läser.
 - `src/app.js` – bibliotek, redigerare, lagring, import och export, Claude-funktioner i claude.ai.
 - `presentationer/*.md` – manus. `presentationer/index.json` listar dem (uppdateras med `npm run index`).
+- `presentationer/exempelmallar/` – exempelpresentationer som visar mallarna. En undermapp blir en egen grupp i biblioteket, efter kurserna.
 - `mallar/*.json` – egna mallar i HTML och CSS, se `docs/EGNA-MALLAR.md`.
 - `docs/MALLAR.md` – genereras från `CATALOG`. Redigera inte för hand.
 

@@ -401,8 +401,8 @@ rörelse: ingen
 
 [egen: bildband-och-kort]
 rubrik: Varför beskärning?
-bild:
-alt: Varför beskärning?
+bild: bilder/minimax/minimax-beskarning.jpg
+alt: En sekatör klipper bort en tunn gren från ett bonsaiträd; resten av trädet står kvar.
 text:
 rörelse: tona
 fokus: ingen

@@ -9,7 +9,7 @@ Omarbetad föreläsningsversion: 21 scener i samma ordning som originalets 21 bi
 Den omarbetade versionen har **21 scener i originalets ordning**, en per originalbild. Version 3 (2026-11-10) bygger om alla diagram från grunden och ger textbilderna fyra genomarbetade mallar.
 
 - **Scen 2, 5, 9, 21:** *Bild och förklaring.* Numrerade rader; aktuell rad får accentram, tidigare rader tonas ned men går att läsa. Aktiviteter och extrauppgift har en etikett ovanför rubriken.
-- **Scen 3, 4, 15:** *Bildband och kort.* Originalets nätverksbild som brett band överst, tre kort i rad som i originalet. Ett klick fyller i och lyfter ett kort. Scen 15 saknar bild och får korten centrerade.
+- **Scen 3, 4, 15:** *Bildband och kort.* Originalets nätverksbild som brett band överst, tre kort i rad som i originalet. Ett klick fyller i och lyfter ett kort. Scen 15 har den genererade bonsaibilden som band.
 - **Scen 6:** tomt bräde → 9 första drag → O:s 8 svar på mittendraget. Antalet ställningar per nivå (1, 9, 72) står i vänsterkanten.
 - **Scen 7, 8, 10:** spelträden ritas från riktiga spelställningar och värdena räknas med minimax i byggskriptet. Värdena avslöjas nerifrån och upp. Fokusramen ritas runt brädet och dess värde i samma SVG, så den kan inte hamna fel. Senaste draget är tonat, tre i rad har en linje, slutställningar säger ”X vinner”, ”O vinner” eller ”Oavgjort”. Varje beräkning visas som en etikett, till exempel `min(1, 0) = 0`, och den valda grenen färgas.
 - **Scen 11–14, 17–20:** trianglar uppåt för MAX (turkos), nedåt för MIN (bärnsten). Aktuell nod och dess barn är i fokus, resten tonas ned. Beskurna grenar är streckade med ett rött kryss och deras delträd tonas nästan bort. I scen 17 står α och β vid noderna och en räknare visar undersökta löv (6 av 9).
@@ -75,7 +75,7 @@ Två synkroniserade vyer visar samma struktur med olika metod, med en räknare f
 
 ## Bildprompter
 
-Den genererade bilden enligt **prompt 1** är nu inlagd på titeln. Prompt 4 behövs för scen 15, som i dag saknar bild. Övriga är valfria; originalets bilder används på övriga bildscener. Låt AI skapa stämningsbilder, inte algoritmdiagram: text, siffror, grenar och exakta bräden lägger vi i SCEN.
+Den genererade bilden enligt **prompt 1** är nu inlagd på titeln. Bilden enligt prompt 4 är inlagd på scen 15. Övriga är valfria; originalets bilder används på övriga bildscener. Låt AI skapa stämningsbilder, inte algoritmdiagram: text, siffror, grenar och exakta bräden lägger vi i SCEN.
 
 Använd samma färgvärld genom serien: mörk blåsvart bakgrund, mjukt turkost ljus, en liten varm bärnstensfärgad kontrast. 16:9, minst 1920 × 1080. Inga texter, logotyper, vattenstämplar eller inritade highlight-rutor. Använd gärna första bilden som stilreferens för de andra.
 
@@ -103,9 +103,9 @@ Använd samma färgvärld genom serien: mörk blåsvart bakgrund, mjukt turkost 
 
 **Vad bilden gör:** en visuell paus före beräkningen. Den är en metafor; beviset för att en gren kan beskäras kommer i det exakta trädet efteråt. Behövs inte om du vill hålla lektionen tätare.
 
-### Bild 4 — Beskärning (behövs)
+### Bild 4 — Beskärning (inlagd)
 
-**Placering:** scen 15 *Varför beskärning?*, som bildband överst. Filnamn: `bilder/minimax/minimax-beskarning.png`. Lägg sedan in `bild: bilder/minimax/minimax-beskarning.png` i scenen.
+**Placering:** scen 15 *Varför beskärning?*, som bildband överst. Filnamn: `bilder/minimax/minimax-beskarning.jpg`.
 
 > Cinematic macro photograph, 16:9 landscape. Precise pruning shears closing on a thin branch of a small, elegant bonsai tree. The trimmed twig and a few small leaves are falling away; the rest of the tree remains healthy and clearly structured. Composition is wide and shallow: the shears, branch and foliage sit in the upper half and center of the frame, while the bottom third is calm, dark and nearly empty because it will fade into a title. Deep blue-black background, soft turquoise rim light on the tree, a restrained warm amber highlight on the blades. Realistic materials, shallow depth of field. No text, no numbers, no arrows, no diagrams, no logos. Match the palette of the reference image.
 

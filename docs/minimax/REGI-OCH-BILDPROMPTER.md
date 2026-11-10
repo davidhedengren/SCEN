@@ -6,66 +6,76 @@ Omarbetad föreläsningsversion: 21 scener i samma ordning som originalets 21 bi
 
 ## Regin
 
-Den omarbetade versionen har **21 scener i originalets ordning**, en per originalbild. Spelställningar, argument, uppgifter och deras kopplingar är åter samlade. Den nya genererade schackbilden används på titeln; övriga symbolbilder är originalets.
+Den omarbetade versionen har **21 scener i originalets ordning**, en per originalbild. Version 3 (2026-11-10) bygger om alla diagram från grunden och ger textbilderna fyra genomarbetade mallar.
 
-- **Scen 2–5:** originalets bild och namngivna förklaringar bredvid varandra. Ett klick visar och framhäver nästa förklaring. Tidigare förklaringar fortsätter vara läsbara. Ingen cirkulerande text.
-- **Scen 6–10:** spelbräden och förgreningar kommer direkt från originalets vektorformer. I scen 7 ligger robotbilden, citatet och det konkreta spelträdet åter på samma bild. Utfall och nodvärden avslöjas från löven uppåt.
-- **Scen 11–14:** stora trianglar i originalets riktning: uppåt för MAX, nedåt för MIN. I minimax räknas en gren per klick. I introduktionen till beskärning syns originalets lövvärden; röda kryss markerar exakt vilka grenar som kan lämnas outforskade.
-- **Scen 16–17:** definitionerna av alfa och beta följs av ett eget konkret förlopp. α och β står vid noderna och uppdateras vid varje söksteg. Framtida värden är dolda i denna förloppsvisning.
-- **Scen 18–19:** olöst övning följd av stegvis facit med samma diagrampositioner. Den tidigare godkända rättelsen till värdet 3 är kvar.
-- **Scen 20:** samtliga 22 noder och 21 förbindelser är återgivna. Roten är MIN, precis som i originalet. Grenarna har spridits ut för att göra de små noderna lättare att läsa.
+- **Scen 2, 5, 9, 21:** *Bild och förklaring.* Numrerade rader; aktuell rad får accentram, tidigare rader tonas ned men går att läsa. Aktiviteter och extrauppgift har en etikett ovanför rubriken.
+- **Scen 3, 4, 15:** *Bildband och kort.* Originalets nätverksbild som brett band överst, tre kort i rad som i originalet. Ett klick fyller i och lyfter ett kort. Scen 15 saknar bild och får korten centrerade.
+- **Scen 6:** tomt bräde → 9 första drag → O:s 8 svar på mittendraget. Antalet ställningar per nivå (1, 9, 72) står i vänsterkanten.
+- **Scen 7, 8, 10:** spelträden ritas från riktiga spelställningar och värdena räknas med minimax i byggskriptet. Värdena avslöjas nerifrån och upp. Fokusramen ritas runt brädet och dess värde i samma SVG, så den kan inte hamna fel. Senaste draget är tonat, tre i rad har en linje, slutställningar säger ”X vinner”, ”O vinner” eller ”Oavgjort”. Varje beräkning visas som en etikett, till exempel `min(1, 0) = 0`, och den valda grenen färgas.
+- **Scen 11–14, 17–20:** trianglar uppåt för MAX (turkos), nedåt för MIN (bärnsten). Aktuell nod och dess barn är i fokus, resten tonas ned. Beskurna grenar är streckade med ett rött kryss och deras delträd tonas nästan bort. I scen 17 står α och β vid noderna och en räknare visar undersökta löv (6 av 9).
+- **Scen 16:** *Symbolnyckel.* α, β och α ≥ β i stora rutor; en betydelse i taget.
 
 Stanna före svarsklicken. Be om både värde och motivering: ”Vem väljer här?” och ”Vad vet vi redan som gör resten ointressant?” Alla scener har kvar originalets text i talaranteckningarna som stöd.
 
 ## Mallarna i denna version
 
-### Resonemang i bild
+Alla fyra mallar använder bara temats variabler och fungerar i ljusa och mörka teman. Diagrammen i `bilder/minimax/v3/` har genomskinlig bakgrund men färger valda för mörka teman (presentationen använder Natt).
+
+### Resonemang i bild (förbättrad)
 
 `[egen: resonemang-i-bild]` används för spelträd och andra bildförlopp.
 
 1. **Syfte:** följa en visuell beräkning i ett stabilt koordinatsystem.
 2. **När:** en lösning, undersökning eller bild förändras mellan tydliga tillstånd.
-3. **Skillnad mot Bildregi:** diagraminnehållet kan ändras, till exempel när ett värde blir känt. Markeringarna finns i själva SVG-bilden; de placeras inte utifrån visningsytans procentkoordinater.
-4. **Fokus:** grundbild → ett tillstånd per klick, med markerad nod eller värde och en kort förklaring nedanför. Bakåt återställer föregående tillstånd. Utan klicksteg visas slutläget.
-5. **Innehåll:** en grundbild, valfri rubrik och etikett, sedan `etikett | bildsökväg | förklaring` per steg. Alla tillstånd har samma bildutsnitt. En fast yta för bildtext gör att en längre förklaring inte krymper diagrammet.
+3. **Skillnad mot Bildregi:** diagraminnehållet kan ändras, till exempel när ett värde blir känt. Markeringarna finns i själva SVG-bilden.
+4. **Fokus:** grundbild → ett tillstånd per klick. Textlisten nedanför har stegnummer, etikett och förklaring, och står still så att diagrammet inte hoppar. Etiketten (t.ex. ”Exempel 2 · X:s tur”) visas som en liten skylt bredvid rubriken.
+5. **Innehåll:** grundbild, valfri rubrik och etikett, sedan `etikett | bildsökväg | förklaring` per steg.
 6. **Återanvändning:** matematiska lösningar, fysikexperiment, historiska kartor, textrevision, kodspårning och medicinska förlopp.
 
-Mallen beräknar inte algoritmer. Diagramtillstånden är förberedda SVG-bilder. En framtida trädmodell bör göra beräkningen automatiskt när läraren ändrar lövvärdena.
+### Bild och förklaring (förbättrad)
 
-### Bild och förklaring
+1. **Syfte:** förena en illustration med 2–4 namngivna förklaringar.
+2. **När:** begrepp, instruktioner, uppgifter och användningsområden som hör till ett motiv.
+3. **Skillnad mot Text och bild:** alla rubriker syns från start och numreras; klick fyller i förklaringen.
+4. **Fokus:** aktuell rad får accentram och färgad rubrik, tidigare rader tonas ned. Sista klicket visar allt lika.
+5. **Innehåll:** valfri bild, etikett, rubrik och ingress; `rubrik | förklaring` per punkt. Utan bild får texten hela bredden.
+6. **Återanvändning:** historiska dokument, litterär analys, laborationsinstruktioner, begreppsgenomgångar.
 
-`[egen: bild-och-forklaring]` används för definitioner, tillämpningar, begränsningar och instruktioner.
+### Bildband och kort (ny)
 
-1. **Syfte:** förena originalets illustration med dess förklarande text.
-2. **När:** 2–4 namngivna förklaringar hör till ett stabilt motiv.
-3. **Skillnad mot Text och bild:** alla delrubriker finns från början, medan klick visar förklaringarna och framhäver aktuell rad. Mallen hanterar längre originalformuleringar och en gemensam slutvy.
-4. **Fokus:** nästa rad markeras med en accentlinje; redan visade förklaringar ligger kvar med hög läsbarhet. Sista klicket återger helheten.
-5. **Innehåll:** valfri bild, rubrik och ingress; `rubrik | förklaring` per punkt. Utan bild får förklaringen hela bredden.
-6. **Återanvändning:** begrepp, historiska dokument, litterär analys, fysikens villkor, användningsområden och praktiska instruktioner.
+1. **Syfte:** sätta en stämning med en bred bild och ställa 2–4 jämbördiga kategorier bredvid varandra.
+2. **När:** användningsområden, begränsningar, skäl, aspekter, för- och nackdelar.
+3. **Skillnad mot Kort och Numrerade kort:** bildbandet tonar in i rubriken, korten har stegvis innehåll med lyft och tonar ned tidigare kort. Utan bild fungerar den som en ren kortvy.
+4. **Fokus:** alla kortrubriker syns från start → ett kort i taget fylls i och lyfts → slutläge där alla kort är lika.
+5. **Innehåll:** valfri bild, etikett, rubrik, ingress; `rubrik | förklaring` per kort.
+6. **Återanvändning:** samhällskunskapens perspektiv, religionernas högtider, kemins reaktionstyper, programmeringsparadigm, projektets risker.
+
+### Symbolnyckel (ny)
+
+1. **Syfte:** förklara beteckningar så att symbolen och betydelsen hålls ihop.
+2. **När:** 2–4 symboler, storheter, förkortningar eller regler som ska läras in.
+3. **Skillnad mot Definition och Formel:** flera symboler i samma vy med gemensam kolumn; ingen härledning.
+4. **Fokus:** symbolerna syns från start → en betydelse i taget, symbolen lyfts med accent och tidigare rader tonas ned → hela nyckeln.
+5. **Innehåll:** `symbol | betydelse`; `**ord**` framhäver namnet i betydelsen.
+6. **Återanvändning:** fysikens storheter, kemiska beteckningar, kartsymboler, musiknotation, logiska operatorer, förkortningar i samhällskunskap.
 
 ## Tre förslag till nästa mallar
 
 ### 1. Värden vandrar
 
-En generell trädmodell med regler för hur barnens värden sammanställs i föräldern. Vid varje klick markeras indata, operation och resultat. På vägen upp syns varför värdet ändras.
-
-Passar minimax, kostnadsträd, sannolikhetsträd, organisationsbudgetar och uttrycksträd. Till skillnad från befintliga Träd ska den hålla både struktur och beräknat tillstånd, inte bara flytta fokus. Innehåll: noder, barnrelationer, värden och en uttrycklig sammanställningsregel. Det är det mest värdefulla nästa utvecklingssteget.
+En generell trädmodell med regler för hur barnens värden sammanställs i föräldern. Vid varje klick markeras indata, operation och resultat. Byggskriptet för den här presentationen gör redan detta för minimax; nästa steg är att flytta logiken in i SCEN så att läraren kan ändra lövvärden i manuset.
 
 ### 2. Tillräckligt för ett beslut
 
-En del av underlaget är känt. Nästa klick visar en avgörande gräns, och resterande undersökning markeras som onödig. Jämförelsen med ett redan säkrat alternativ ligger synlig.
-
-Passar beskärning, matematiska olikheter, urvalsprocesser, diagnostik och ekonomiska beslut. Kräver att föreläsaren anger en faktisk beslutsregel; ett exempel ska inte automatiskt tolkas som bevis. Skillnaden mot en vanlig reveal är att det okända får förbli okänt även i slutläget. Innehåll: känt underlag, regel, gräns och delar som kan lämnas outforskade.
+En del av underlaget är känt. Nästa klick visar en avgörande gräns, och resterande undersökning markeras som onödig. Passar beskärning, olikheter, urvalsprocesser och diagnostik.
 
 ### 3. Samma problem, två förlopp
 
-Två synkroniserade vyer visar samma struktur med olika metod. En räknare visar faktiska besökta objekt. Gemensamma steg sker samtidigt; skillnader framhävs där metoderna avviker.
-
-Passar minimax/alfa-beta, sorteringsalgoritmer, produktionsflöden, experimentella metoder och alternativa rättsprocesser. Den befintliga Flöde-mallen visar jämförbara processled; här behövs separata tillstånd och olika antal arbetssteg. Definiera alltid vad räknaren räknar och hur tidpunkterna synkroniseras.
+Två synkroniserade vyer visar samma struktur med olika metod, med en räknare för besökta objekt. Passar minimax/alfa-beta och sorteringsalgoritmer.
 
 ## Bildprompter
 
-Den genererade bilden enligt **prompt 1** är nu inlagd på titeln. Övriga två bilder är valfria; originalets bilder används på övriga bildscener. Låt AI skapa stämningsbilder, inte algoritmdiagram: text, siffror, grenar och exakta bräden lägger vi i SCEN.
+Den genererade bilden enligt **prompt 1** är nu inlagd på titeln. Prompt 4 behövs för scen 15, som i dag saknar bild. Övriga är valfria; originalets bilder används på övriga bildscener. Låt AI skapa stämningsbilder, inte algoritmdiagram: text, siffror, grenar och exakta bräden lägger vi i SCEN.
 
 Använd samma färgvärld genom serien: mörk blåsvart bakgrund, mjukt turkost ljus, en liten varm bärnstensfärgad kontrast. 16:9, minst 1920 × 1080. Inga texter, logotyper, vattenstämplar eller inritade highlight-rutor. Använd gärna första bilden som stilreferens för de andra.
 
@@ -93,10 +103,40 @@ Använd samma färgvärld genom serien: mörk blåsvart bakgrund, mjukt turkost 
 
 **Vad bilden gör:** en visuell paus före beräkningen. Den är en metafor; beviset för att en gren kan beskäras kommer i det exakta trädet efteråt. Behövs inte om du vill hålla lektionen tätare.
 
+### Bild 4 — Beskärning (behövs)
+
+**Placering:** scen 15 *Varför beskärning?*, som bildband överst. Filnamn: `bilder/minimax/minimax-beskarning.png`. Lägg sedan in `bild: bilder/minimax/minimax-beskarning.png` i scenen.
+
+> Cinematic macro photograph, 16:9 landscape. Precise pruning shears closing on a thin branch of a small, elegant bonsai tree. The trimmed twig and a few small leaves are falling away; the rest of the tree remains healthy and clearly structured. Composition is wide and shallow: the shears, branch and foliage sit in the upper half and center of the frame, while the bottom third is calm, dark and nearly empty because it will fade into a title. Deep blue-black background, soft turquoise rim light on the tree, a restrained warm amber highlight on the blades. Realistic materials, shallow depth of field. No text, no numbers, no arrows, no diagrams, no logos. Match the palette of the reference image.
+
+**Vad bilden gör:** en symbol för att ta bort det som inte påverkar resultatet. Bildbandet visar bara den övre delen, så motivet ska ligga högt.
+
+### Bild 5 — Nytt bildband för användningsområden (valfri)
+
+**Placering:** scen 3, ersätter originalets nätverksbild som är för lågupplöst för ett helt bildband (799 × 365 px). Filnamn: `minimax-anvandning.png`. Originalbilden behålls om du hellre vill det.
+
+> Cinematic editorial still life, ultra-wide 21:9 landscape, at least 2560 × 1100. Three objects on a long dark matte table, evenly spaced from left to right: a chess board with a few pieces mid-game, a printed financial chart on paper beside a pen, and a small industrial robot arm. All three are lit by soft turquoise light from above with a single restrained amber accent. Objects sit in the upper 60 percent of the frame; the bottom 40 percent is smooth dark table surface. Deep blue-black surroundings, realistic materials, calm documentary mood. No text, no numbers, no logos, no holographic interfaces.
+
+### Bild 6 — Nytt bildband för begränsningar (valfri)
+
+**Placering:** scen 4. Filnamn: `minimax-begransning.png`.
+
+> Cinematic photograph, ultra-wide 21:9 landscape, at least 2560 × 1100. A single path in a dark forest splits into more and more branching trails that disappear into dense fog. The nearest fork is clearly lit in soft turquoise; the farther branches fade into blue-black mist, impossible to follow. Motif in the upper 60 percent, bottom 40 percent dark and calm. Restrained amber glow far away. No text, no numbers, no symbols, no logos, no people.
+
+**Vad bilden gör:** antalet vägar växer snabbare än vi hinner följa dem, vilket är kärnan i beräkningskostnaden.
+
+### Bild 7 — Monte Carlo (valfri)
+
+**Placering:** scen 21. Filnamn: `minimax-mcts.png`.
+
+> Cinematic overhead photograph, 16:9 landscape. A dark game board with several pale dice mid-roll, each trailing a faint turquoise light path that branches across the surface like the beginnings of a tree. One path is brighter than the others. Deep blue-black background, a small warm amber accent. Leave the left half calm and dark for text. No text, no numbers on the dice faces visible in focus, no logos.
+
 ## Innehåll som behöver lärarens bedömning
 
-Endast den uttryckligen godkända rättelsen nedan är genomförd. Övriga formuleringar behålls i scenerna; förslag är inte införda som nya fakta.
+Endast de uttryckligen godkända rättelserna nedan är genomförda. Övriga formuleringar behålls i scenerna; förslag är inte införda som nya fakta.
 
+- **Originalbild 10 — rättad på lärarens begäran 2026-11-10:** högra MIN-noden (X nere till höger) hade värdet 0. O vinner då direkt med övre mitten, så värdet är min(−1, 0) = −1. Roten är fortfarande max(0, −1, −1) = 0. Alla spelträd för tre-i-rad räknas nu i byggskriptet och kontrolleras i `test:bildsteg`.
+- **Originalbild 20 — inte rättad, behöver beslut:** MAX-noden ovanför löven 1, 0 och 1 är märkt 3, men max(1, 0, 1) = 1. Antingen ska noden vara tom som de andra inre noderna, eller så är 3 ett löv och pilarna hör till en annan nod. Övningen frågar om antal utforskade noder, så felet påverkar svaret.
 - **Originalbild 19 — rättad med godkännande 2026-10-13:** MAX över löven 2 och 3 ska ge 3, inte 2. MIN ovanför blir då min(7, 3) = 3, inte 2. Roten är fortfarande max(5, 3) = 5. Sju facitklick förklarar beräkningen och beskärningen.
 - **Originalbild 4, ”35^100 noder”:** detta är en grov modell med antaganden om förgreningsfaktor och djup, inte ett exakt räknat schackträd. Föreslagen formulering: ”Redan en grov modell med 35 möjliga drag i 100 halvdrag ger omkring 35^100 möjliga förlopp.” Antagandena behöver en källa innan de presenteras som etablerad uppskattning.
 - **Originalbild 4, icke-optimal motståndare:** standardminimax skyddar mot optimalt motspel. Det utnyttjar däremot inte nödvändigtvis en svag motståndares specifika misstag maximalt. Föreslagen precisering: ”Minimax räknar med bästa möjliga motspel; en modell av motståndarens misstag kan ibland ge bättre praktiskt spel.”
@@ -108,18 +148,18 @@ Endast den uttryckligen godkända rättelsen nedan är genomförd. Övriga formu
 
 - Alla 21 originalbilder finns i den oförändrade bifogade PowerPoint-filen. Alla 27 mediafiler finns i `bilder/minimax/original/`; flera små bilder är PowerPoints automatiska reservbilder för formler, inte separata illustrationer.
 - Originalets symbolbilder 2, 3, 5, 6 och 7 används i presentationen. Titelbild 1 är ersatt av den genererade schackbilden och finns bevarad i originalmappen. Nätverksbilden används på samma två bilder som i originalet.
-- Spelställningarna och förbindelserna hämtas från originalets former. Spelbrädenas positioner, kryss och ringar bevaras. Numeriska träd har ritats större med samma struktur, lövvärden och nodtyper. Fokusmarkeringar och beskärningskryss ligger i diagrammets egen SVG. Original-PowerPoint är underlag för innehåll och ursprunglig animation.
+- Spelställningarna är avskrivna från originalet och ligger som data i byggskriptet; trädens grenar och värden räknas fram ur dem. Kryss, ringar och grenarnas ordning följer originalet. Numeriska träd har samma struktur, lövvärden och nodtyper som originalet. Robotbilden och citatet i scen 7 ligger kvar på samma bild. Fokusmarkeringar och beskärningskryss ligger i diagrammets egen SVG. Original-PowerPoint är underlag för innehåll och ursprunglig animation.
 - SCEN-versionen är en redigerad föreläsningsversion, inte en pixelidentisk import. Varje scen har hänvisning till originalbild och dess text i anteckningarna. Dubbletter som användes för PowerPoint-animationer är inte separata innehållspunkter i SCEN.
 - Teams-övningsfilen har inte bifogats. Instruktionen att öppna den finns kvar.
 - [Originalets MCTS-klipp på YouTube](https://www.youtube.com/watch?v=lhFXKNyA0QA) är bevarat som länk, inte nedladdat eller inbäddat.
 
-## Verifiering av första versionen
+## Verifiering av version 3
 
-- Manusvalidering, bygg och fristående export genomförda.
-- Alla 21 scener öppnade i Natt och Klassrum. Diagramsteg testade framåt och bakåt; exakt ett bildtillstånd syns åt gången.
-- Visning utan klicksteg visar slutläget. Exporten har testats med externa nätverksanrop blockerade.
-- `test:bildsteg`, `test:berattande`, `test:film` och `test:inlasning` godkända. Bildstegstestet kontrollerar också identiska bildutsnitt och att varje nodmarkering verkligen omsluter rätt triangel. Hela projektets testsvit är inte grön sedan tidigare: det befintliga editorial-testet för Etapper förväntar tre steg där mallen har fyra inklusive återställning. Det felet är separat från denna konvertering.
+- `npm run kolla`, `npm run bygg` och fristående export utan fel.
+- Alla 21 scener granskade i visningsläget med alla klicksteg, bland annat 3, 7, 8, 10, 15 och 16 steg för steg.
+- `test:bildsteg` kontrollerar nu att varje fokusram omsluter rätt bräde eller triangel i samma SVG, att markeringar faktiskt finns, och räknar om minimaxvärdena i scen 7, 8 och 10 med en egen implementation.
+- Övriga node-tester godkända. Webbläsartesterna `check-browser` och `check-timeline-browser` fallerar likadant på koden före ändringen i den här miljön.
 
 ## Återskapa diagrammen
 
-`python scripts/build-minimax-visuals.py` läser den bevarade PowerPoint-filen och skriver SVG-tillstånden i `bilder/minimax/v2/`. För detta författarverktyg behövs `python-pptx`; presentationen och SCEN har ingen sådan beroende vid visning. Underlaget för nodräkningsövningens noder och förbindelser sparas i [diagramdata-v2.json](diagramdata-v2.json).
+`python3 scripts/build-minimax-visuals.py` skriver alla diagramtillstånd till `bilder/minimax/v3/`. Spelställningar och träd står som data i skriptet; värden räknas och kontrolleras med `assert`. Bara Pillow behövs (för att komprimera robotbilden i scen 7). Nodräkningsövningens noder och förbindelser läses från [diagramdata-v2.json](diagramdata-v2.json).

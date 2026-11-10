@@ -1,10 +1,12 @@
 [
   "aterkomst.json",
   "bild-och-forklaring.json",
+  "bildband-och-kort.json",
   "byt-antagande.json",
   "genomlysning.json",
   "numrerade-kort.json",
   "omformning.json",
   "resonemang-i-bild.json",
+  "symbolnyckel.json",
   "tva-forlopp.json"
 ]

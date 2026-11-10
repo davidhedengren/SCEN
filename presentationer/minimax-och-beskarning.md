@@ -41,10 +41,10 @@ fokus: ingen
 
 ---
 
-[egen: bild-och-forklaring]
+[egen: bildband-och-kort]
 rubrik: Användningsområden
 bild: bilder/minimax/original/image3.png
-alt: Användningsområden
+alt: Abstrakt nätverk av data och diagram i blått ljus.
 text:
 rörelse: tona
 fokus: ingen
@@ -62,10 +62,10 @@ fokus: ingen
 
 ---
 
-[egen: bild-och-forklaring]
+[egen: bildband-och-kort]
 rubrik: Begränsningar
 bild: bilder/minimax/original/image3.png
-alt: Begränsningar
+alt: Abstrakt nätverk av data och diagram i blått ljus.
 text:
 rörelse: tona
 fokus: ingen
@@ -110,15 +110,15 @@ fokus: ingen
 
 [egen: resonemang-i-bild]
 rubrik: Beslutsträd för 3-i-rad
-bild: bilder/minimax/v2/speltrad-0.svg
+bild: bilder/minimax/v3/speltrad-0.svg
 alt: Tre-i-rad: ett tomt bräde, nio möjliga första drag och nästa nivå av trädet.
 text: Varje nod är en spelställning. Varje gren är ett möjligt drag.
 fokus: ingen
 rörelse: ingen
 övergång: tona
-- Rotnod | bilder/minimax/v2/speltrad-1.svg | Varje nod motsvarar en spelställning.
-- Möjliga drag | bilder/minimax/v2/speltrad-2.svg | Varje gren representerar ett möjligt speldrag.
-- Fortsätt trädet | bilder/minimax/v2/speltrad-3.svg | Efter ett drag följer motståndarens möjliga svar.
+- Rotnod | bilder/minimax/v3/speltrad-1.svg | Varje nod motsvarar en spelställning. Roten är det tomma brädet.
+- Möjliga drag | bilder/minimax/v3/speltrad-2.svg | Varje gren representerar ett möjligt speldrag. X har 9 möjliga första drag.
+- Fortsätt trädet | bilder/minimax/v3/speltrad-3.svg | Efter varje drag har O 8 möjliga svar. Redan efter två drag: 9 · 8 = 72 ställningar.
 > Källa: originalbild 6. Presentation av David Hedengren.
 > Originaltext: Rotnod
 > Originaltext: Beslutsträd för 3-i-rad
@@ -127,15 +127,16 @@ rörelse: ingen
 
 [egen: resonemang-i-bild]
 rubrik:
-bild: bilder/minimax/v2/spel-7-0.svg
-alt: O väljer mellan två fortsättningar med minimaxvärdena 1 och 0.
-text: O:s tur. Följ värdena från löven till roten.
+etikett: Exempel 1 · O:s tur
+bild: bilder/minimax/v3/spel-7-0.svg
+alt: O väljer mellan två fortsättningar. Vänster leder till vinst för X (1), höger till oavgjort (0). Min-värdet är 0.
+text: Två tomma rutor kvar. Vi räknar värdena från slutställningarna upp mot roten.
 fokus: ingen
 rörelse: ingen
 övergång: tona
-- Lövnoderna | bilder/minimax/v2/spel-7-1.svg | Vinst för X = 1. Oavgjort = 0.
-- Max väljer | bilder/minimax/v2/spel-7-2.svg | Max-värde: 1 i den vänstra grenen, 0 i den högra.
-- Min väljer | bilder/minimax/v2/spel-7-3.svg | Min-värde: 0. O väljer utfallet som är sämst för X.
+- Lövnoderna | bilder/minimax/v3/spel-7-1.svg | Slutställningarna får sina värden: vinst för X = 1, oavgjort = 0.
+- Max väljer | bilder/minimax/v3/spel-7-2.svg | X har bara ett drag kvar i varje gren. Max-värde: 1 till vänster, 0 till höger.
+- Min väljer | bilder/minimax/v3/spel-7-3.svg | Min-värde: min(1, 0) = 0. O väljer utfallet som är sämst för X.
 > Källa: originalbild 7. Presentation av David Hedengren.
 > Originaltext: ”Jag baserar mitt drag nu på vad min motståndare kommer göra i nästa drag och för att göra det funderar jag över vad jag skulle göra efter det och så vidare”
 > Originaltext: Min-värde: 0
@@ -149,17 +150,19 @@ rörelse: ingen
 
 [egen: resonemang-i-bild]
 rubrik:
-bild: bilder/minimax/v2/spel-8-0.svg
-alt: X har tre möjliga drag med minimaxvärdena 0, -1 och 1.
-text: X:s tur. Följ hur Max och Min värderar de möjliga utfallen.
+etikett: Exempel 2 · X:s tur
+bild: bilder/minimax/v3/spel-8-0.svg
+alt: X har tre möjliga drag med minimaxvärdena 0, −1 och 1. Max-värdet i roten är 1.
+text: Tre tomma rutor kvar. Följ hur Max och Min värderar de möjliga utfallen.
 fokus: ingen
 rörelse: ingen
 övergång: tona
-- Vänstra grenens utfall | bilder/minimax/v2/spel-8-1.svg | De två utfallen är 1 och 0.
-- Min-värde: 0 | bilder/minimax/v2/spel-8-2.svg | Max väljer 1 respektive 0; Min väljer sedan 0.
-- Min-värde: -1 | bilder/minimax/v2/spel-8-3.svg | I mitten kan Min nå utfallet -1.
-- Värde: 1 | bilder/minimax/v2/spel-8-4.svg | Det högra draget ger en direkt vinst för X.
-- Max-värde: 1 | bilder/minimax/v2/spel-8-5.svg | Max väljer det största värdet: 1.
+- Lövnoderna | bilder/minimax/v3/spel-8-1.svg | Vänstra grenen slutar i vinst för X (1) och oavgjort (0).
+- Max-värde: 1 och 0 | bilder/minimax/v3/spel-8-2.svg | X har bara ett drag kvar. Värdet flyttas rakt upp.
+- Min-värde: 0 | bilder/minimax/v3/spel-8-3.svg | O väljer det minsta: min(1, 0) = 0.
+- Min-värde: −1 | bilder/minimax/v3/spel-8-4.svg | I mitten kan O vinna direkt. Min väljer −1.
+- Värde: 1 | bilder/minimax/v3/spel-8-5.svg | Det högra draget ger tre i rad i mittkolumnen: direkt vinst för X.
+- Max-värde: 1 | bilder/minimax/v3/spel-8-6.svg | Max väljer det största värdet: max(0, −1, 1) = 1.
 > Källa: originalbild 8. Presentation av David Hedengren.
 > Originaltext: Värde: 1
 > Originaltext: Värde: 0
@@ -177,9 +180,10 @@ rörelse: ingen
 ---
 
 [egen: bild-och-forklaring]
-rubrik: Aktivitet: Spela tre-i-rad med grannen
+rubrik: Spela tre-i-rad med grannen
+etikett: Aktivitet
 bild: bilder/minimax/original/image7.png
-alt: Aktivitet: Spela tre-i-rad med grannen
+alt: Ett tre-i-rad-bräde med kryss och ringar.
 text: Öppna filen ”Lektionsaktivitet – Minimax i Tre-i-rad” från Teams och läs instruktionerna
 rörelse: tona
 fokus: ingen
@@ -201,16 +205,18 @@ fokus: ingen
 
 [egen: resonemang-i-bild]
 rubrik:
-bild: bilder/minimax/v2/spel-10-0.svg
-alt: Spelträdet för tre-i-rad med växling mellan Max och Min.
-text: Max: vinst = 1 · Min: vinst = -1 · X:s tur
+etikett: Exempel 3 · X:s tur
+bild: bilder/minimax/v3/spel-10-0.svg
+alt: Spelträd där X har tre möjliga drag med minimaxvärdena 0, −1 och −1. Rotens värde är 0.
+text: Max: vinst = 1 · Min: vinst = −1 · Oavgjort = 0. Räkna nerifrån och upp.
 fokus: ingen
 rörelse: ingen
 övergång: tona
-- Lövnoder | bilder/minimax/v2/spel-10-1.svg | Börja med de färdiga spelens värden.
-- Max | bilder/minimax/v2/spel-10-2.svg | Välj det största värdet bland barnen.
-- Min | bilder/minimax/v2/spel-10-3.svg | Välj det minsta värdet bland barnen.
-- Roten | bilder/minimax/v2/spel-10-4.svg | Max-värde: 0. Bästa motspel leder till oavgjort.
+- Lövnoder | bilder/minimax/v3/spel-10-1.svg | Börja med de färdiga spelens värden. Två av O:s drag vinner direkt: −1.
+- Max | bilder/minimax/v3/spel-10-2.svg | X har ett drag kvar. Max väljer det största värdet bland barnen.
+- Min | bilder/minimax/v3/spel-10-3.svg | Min väljer det minsta i varje gren: 0, −1 och −1.
+- Roten | bilder/minimax/v3/spel-10-4.svg | Max-värde: 0. X måste spärra övre mitten. Bästa motspel leder till oavgjort.
+> Rättelse 2026-11-10 på lärarens begäran: originalets värde 0 i högra MIN-noden (X nere till höger) är rättat till −1. O vinner då direkt med övre mitten. Roten är fortfarande 0. Värdena räknas av scripts/build-minimax-visuals.py.
 > Källa: originalbild 10. Presentation av David Hedengren.
 > Originaltext: = min (vinst = -1)
 > Originaltext: = max (vinst = 1)
@@ -234,13 +240,13 @@ rörelse: ingen
 
 [egen: resonemang-i-bild]
 rubrik: Generell version av minimax-algoritmen
-bild: bilder/minimax/v2/val-0.svg
+bild: bilder/minimax/v3/val-0.svg
 alt: Max väljer mellan värdena 4, 3 och 2.
-text: ▲ Max drag · ▼ Min drag
+text: ▲ Max drag · ▼ Min drag. Max väljer bland Min-nodernas värden.
 fokus: ingen
 rörelse: ingen
 övergång: tona
-- Max drag | bilder/minimax/v2/val-1.svg | max(4, 3, 2) = 4
+- Max drag | bilder/minimax/v3/val-1.svg | max(4, 3, 2) = 4
 > Källa: originalbild 11. Presentation av David Hedengren.
 > Originaltext: Generell version av minimax-algoritmen
 > Originaltext: Max drag
@@ -255,16 +261,16 @@ rörelse: ingen
 
 [egen: resonemang-i-bild]
 rubrik: Generell version av minimax-algoritmen
-bild: bilder/minimax/v2/minimax-0.svg
+bild: bilder/minimax/v3/minimax-0.svg
 alt: Spelträd med tre grenar och bladvärdena 8, 5, 6; 9, 3, 7; 2, 4, 6.
 text: Alla lövvärden syns. Räkna från löven mot roten.
 fokus: ingen
 rörelse: ingen
 övergång: tona
-- Vänster | bilder/minimax/v2/minimax-1.svg | min(8, 5, 6) = 5
-- Mitten | bilder/minimax/v2/minimax-2.svg | min(9, 3, 7) = 3
-- Höger | bilder/minimax/v2/minimax-3.svg | min(2, 4, 6) = 2
-- Roten | bilder/minimax/v2/minimax-4.svg | max(5, 3, 2) = 5
+- Vänster | bilder/minimax/v3/minimax-1.svg | min(8, 5, 6) = 5
+- Mitten | bilder/minimax/v3/minimax-2.svg | min(9, 3, 7) = 3
+- Höger | bilder/minimax/v3/minimax-3.svg | min(2, 4, 6) = 2
+- Roten | bilder/minimax/v3/minimax-4.svg | max(5, 3, 2) = 5
 > Källa: originalbild 12. Presentation av David Hedengren.
 > Originaltext: Generell version av minimax-algoritmen
 > Originaltext: 5
@@ -287,17 +293,18 @@ rörelse: ingen
 ---
 
 [egen: resonemang-i-bild]
-rubrik: Uppgift – Vilket värde får rotnoden?
-bild: bilder/minimax/v2/rotnod-0.svg
+rubrik: Vilket värde får rotnoden?
+etikett: Uppgift
+bild: bilder/minimax/v3/rotnod-0.svg
 alt: Spelträd med MIN i roten; övning i att beräkna nodvärden.
 text: Låt eleverna räkna först. Klicka sedan fram en nivå i taget.
 fokus: ingen
 rörelse: ingen
 övergång: tona
-- Första nivån | bilder/minimax/v2/rotnod-1.svg | Jämför löven under varje MAX-nod.
-- Nästa nivå | bilder/minimax/v2/rotnod-2.svg | MIN väljer det minsta värdet i varje gren.
-- Nivån under roten | bilder/minimax/v2/rotnod-3.svg | MAX väljer det största barnvärdet.
-- Rotnoden | bilder/minimax/v2/rotnod-4.svg | Roten är MIN i detta träd. Värdet är 2.
+- Första nivån | bilder/minimax/v3/rotnod-1.svg | Jämför löven under varje MAX-nod.
+- Nästa nivå | bilder/minimax/v3/rotnod-2.svg | MIN väljer det minsta värdet i varje gren.
+- Nivån under roten | bilder/minimax/v3/rotnod-3.svg | MAX väljer det största barnvärdet.
+- Rotnoden | bilder/minimax/v3/rotnod-4.svg | Roten är MIN i detta träd. Värdet är 2.
 > Källa: originalbild 13. Presentation av David Hedengren.
 > Originaltext: Uppgift – Vilket värde får rotnoden?
 > Originaltext: 4
@@ -356,15 +363,15 @@ rörelse: ingen
 
 [egen: resonemang-i-bild]
 rubrik: Alfa-beta-beskärning (pruning)
-bild: bilder/minimax/v2/beskarning-0.svg
+bild: bilder/minimax/v3/beskarning-0.svg
 alt: Samma spelträd där tre grenar kan beskäras.
 text: Vänstra grenen ger 5. Kan någon av de andra grenarna bli bättre för Max?
 fokus: ingen
 rörelse: ingen
 övergång: tona
-- Mittenvägen | bilder/minimax/v2/beskarning-1.svg | Kommer inte kunna vara högre än 3, Max kommer därför inte välja mittenvägen (eftersom 5>3)
-- Högra vägen | bilder/minimax/v2/beskarning-2.svg | De sista två grenarna kan också beskäras eftersom oavsett vad de har för värde kommer inte Max välja den högra vägen
-- Beskärning | bilder/minimax/v2/beskarning-3.svg | Vi kan beskära (prune) trädet här och behöver inte utforska några grenar nedanför
+- Mittenvägen | bilder/minimax/v3/beskarning-1.svg | Kommer inte kunna vara högre än 3, Max kommer därför inte välja mittenvägen (eftersom 5>3)
+- Högra vägen | bilder/minimax/v3/beskarning-2.svg | De sista två grenarna kan också beskäras eftersom oavsett vad de har för värde kommer inte Max välja den högra vägen
+- Beskärning | bilder/minimax/v3/beskarning-3.svg | Vi kan beskära (prune) trädet här och behöver inte utforska några grenar nedanför
 > Källa: originalbild 14. Presentation av David Hedengren.
 > Originaltext: Alfa-beta-beskärning (pruning)
 > Originaltext: 5
@@ -392,7 +399,7 @@ rörelse: ingen
 
 ---
 
-[egen: bild-och-forklaring]
+[egen: bildband-och-kort]
 rubrik: Varför beskärning?
 bild:
 alt: Varför beskärning?
@@ -413,16 +420,14 @@ fokus: ingen
 
 ---
 
-[egen: bild-och-forklaring]
+[egen: symbolnyckel]
 rubrik: Alfa- och betavärden
-bild:
-alt: Alfa- och betavärden
 text: Algoritmen tilldelar varje nod ett alfavärde (𝛼) och ett betavärde 𝛽 och gör en Depth First Search i trädet.
 rörelse: tona
 fokus: ingen
-- α · Alfavärdet | Alfavärdet (𝛼) är det hittills bästa värde som Max kan garantera. Från början ges noden alfavärdet (𝛼=−∞) och uppdateras vid maxnoder om ett högre värde hittats.
-- β · Betavärdet | Betavärdet (𝛽) är det hittills bästa värde som Min kan garantera. Betavärdet sätts från början till 𝛽=+∞ och uppdateras vid minnoder om ett lägre värde hittats.
-- α ≥ β · Beskärning | Om 𝛼≥𝛽 behöver grenen inte utforskas mer och kan beskäras.
+- α | **Alfavärdet** (𝛼) är det hittills bästa värde som Max kan garantera. Från början ges noden alfavärdet (𝛼=−∞) och uppdateras vid maxnoder om ett högre värde hittats.
+- β | **Betavärdet** (𝛽) är det hittills bästa värde som Min kan garantera. Betavärdet sätts från början till 𝛽=+∞ och uppdateras vid minnoder om ett lägre värde hittats.
+- α ≥ β | **Beskärning.** Om 𝛼≥𝛽 behöver grenen inte utforskas mer och kan beskäras.
 > Källa: originalbild 16. Presentation av David Hedengren.
 > Originaltext: Alfa- och betavärden
 > Originaltext: Algoritmen tilldelar varje nod ett alfavärde (𝛼) och ett betavärde 𝛽 och gör en Depth First Search i trädet.
@@ -436,20 +441,20 @@ fokus: ingen
 
 [egen: resonemang-i-bild]
 rubrik: Alfa- och betavärden
-bild: bilder/minimax/v2/alpha-0.svg
+bild: bilder/minimax/v3/alpha-0.svg
 alt: Djupet först genom ett spelträd, med alfa och beta vid noderna.
 text: Djupet först, från vänster till höger. α och β visas vid noderna.
 fokus: ingen
 rörelse: ingen
 övergång: tona
-- β = 8 | bilder/minimax/v2/alpha-1.svg | Det första lövet ger MIN gränsen 8.
-- β = 5 | bilder/minimax/v2/alpha-2.svg | MIN uppdaterar när ett lägre värde hittas.
-- Min-värde: 5 | bilder/minimax/v2/alpha-3.svg | Det sista lövet ändrar inte grenens värde.
-- α = 5 | bilder/minimax/v2/alpha-4.svg | Max kan nu garantera 5. Gränsen följer med till nästa gren.
-- β = 9 | bilder/minimax/v2/alpha-5.svg | Mittenvägens första löv.
-- β ≤ α | bilder/minimax/v2/alpha-6.svg | 3 ≤ 5. Vi behöver inte fortsätta söka i grenen.
-- β ≤ α | bilder/minimax/v2/alpha-7.svg | 2 ≤ 5. Vi behöver inte fortsätta söka i grenen.
-- Samma beslut | bilder/minimax/v2/alpha-8.svg | Rotens värde är 5. Sex av nio löv behövde undersökas.
+- β = 8 | bilder/minimax/v3/alpha-1.svg | Det första lövet ger MIN gränsen 8.
+- β = 5 | bilder/minimax/v3/alpha-2.svg | MIN uppdaterar när ett lägre värde hittas.
+- Min-värde: 5 | bilder/minimax/v3/alpha-3.svg | Det sista lövet ändrar inte grenens värde.
+- α = 5 | bilder/minimax/v3/alpha-4.svg | Max kan nu garantera 5. Gränsen följer med till nästa gren.
+- β = 9 | bilder/minimax/v3/alpha-5.svg | Mittenvägens första löv.
+- β ≤ α | bilder/minimax/v3/alpha-6.svg | 3 ≤ 5. Vi behöver inte fortsätta söka i grenen.
+- β ≤ α | bilder/minimax/v3/alpha-7.svg | 2 ≤ 5. Vi behöver inte fortsätta söka i grenen.
+- Samma beslut | bilder/minimax/v3/alpha-8.svg | Rotens värde är 5. Sex av nio löv behövde undersökas.
 > Källa: originalbild 17. Presentation av David Hedengren.
 > Originaltext: 𝛼=𝛽=
 > Originaltext: −∞+∞
@@ -495,8 +500,9 @@ rörelse: ingen
 ---
 
 [egen: resonemang-i-bild]
-rubrik: Aktivitet – Vilka grenar kan beskäras?
-bild: bilder/minimax/v2/ovning-0.svg
+rubrik: Vilka grenar kan beskäras?
+etikett: Aktivitet
+bild: bilder/minimax/v3/ovning-0.svg
 alt: Fyra nivåer: MAX, MIN, MAX, MIN, och åtta bladvärden.
 text: Arbeta från vänster till höger. Markera vilka grenar som kan hoppas över.
 fokus: ingen
@@ -516,20 +522,21 @@ rörelse: ingen
 ---
 
 [egen: resonemang-i-bild]
-rubrik: Aktivitet – Vilka grenar kan beskäras?
-bild: bilder/minimax/v2/ovning-0.svg
+rubrik: Vilka grenar kan beskäras?
+etikett: Aktivitet
+bild: bilder/minimax/v3/ovning-0.svg
 alt: Stegvis facit till övningen med åtta bladvärden.
 text: Facit. Sök från vänster till höger och förklara varje värde.
 fokus: ingen
 rörelse: ingen
 övergång: tona
-- Första MAX | bilder/minimax/v2/ovning-1.svg | max(5, 3) = 5. MIN får gränsen β = 5.
-- Beskär | bilder/minimax/v2/ovning-2.svg | 8 räcker. Lövet 2 i samma gren behöver inte undersökas.
-- Vänstra MIN | bilder/minimax/v2/ovning-3.svg | Värdet blir 5. Rotens α uppdateras till 5.
-- Högra sidan | bilder/minimax/v2/ovning-4.svg | max(7, 1) = 7.
-- Sista MAX | bilder/minimax/v2/ovning-5.svg | max(2, 3) = 3.
-- Högra MIN | bilder/minimax/v2/ovning-6.svg | min(7, 3) = 3.
-- Roten | bilder/minimax/v2/ovning-7.svg | max(5, 3) = 5.
+- Första MAX | bilder/minimax/v3/ovning-1.svg | max(5, 3) = 5. MIN-noden ovanför kan nu som mest bli 5 (β = 5).
+- Beskär | bilder/minimax/v3/ovning-2.svg | Första lövet är 8 ≥ 5. MAX ger minst 8, så MIN väljer aldrig grenen. Lövet 2 hoppas över.
+- Vänstra MIN | bilder/minimax/v3/ovning-3.svg | Värdet blir 5. Rotens α uppdateras till 5.
+- Högra sidan | bilder/minimax/v3/ovning-4.svg | max(7, 1) = 7.
+- Sista MAX | bilder/minimax/v3/ovning-5.svg | max(2, 3) = 3.
+- Högra MIN | bilder/minimax/v3/ovning-6.svg | min(7, 3) = 3.
+- Roten | bilder/minimax/v3/ovning-7.svg | max(5, 3) = 5.
 > Källa: originalbild 19. Presentation av David Hedengren.
 > Originaltext: Aktivitet – Vilka grenar kan beskäras?
 > Originaltext: 5
@@ -552,8 +559,9 @@ rörelse: ingen
 ---
 
 [egen: resonemang-i-bild]
-rubrik: Aktivitet – Hur många noder behöver utforskas?
-bild: bilder/minimax/v2/rakna-noder.svg
+rubrik: Hur många noder behöver utforskas?
+etikett: Aktivitet
+bild: bilder/minimax/v3/rakna-noder.svg
 alt: Oregelbundet minimax-träd med färdiga bladvärden och tomma interna noder.
 text: Hur många noder besöks med alfa-beta-beskärning? Sök från vänster till höger.
 fokus: ingen
@@ -578,7 +586,8 @@ rörelse: ingen
 ---
 
 [egen: bild-och-forklaring]
-rubrik: Extrauppgift – Monte Carlo Tree Search (MCTS)
+rubrik: Monte Carlo Tree Search (MCTS)
+etikett: Extrauppgift
 bild:
 alt: Extrauppgift – Monte Carlo Tree Search (MCTS)
 text: Bekanta dig med sökalgoritmen MCTS genom att söka på internet och/eller titta på klippet nedan

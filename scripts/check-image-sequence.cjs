@@ -43,16 +43,39 @@ for (const slide of templated) {
   for (const ref of refs) {
     const svg=read(ref);
     assert.equal(bounds(svg),bounds(base),`Olika bildutsnitt i ${ref}`);
-    // Highlight rectangles surround the actual triangle in the SAME SVG, not a guessed viewport area.
+    // Fokusmarkeringar omsluter den faktiska noden i SAMMA SVG, inte en gissad yta i visningen.
     const attr=(s,n)=>new RegExp(`\\b${n}="([^"]+)"`).exec(s)?.[1];
-    const polygons=new Map([...svg.matchAll(/<g\s+data-node="([^"]+)"[^>]*><polygon\s+points="([^"]+)"/g)].map(m=>[m[1],m[2].split(' ').map(p=>p.split(',').map(Number))]));
-    for (const match of svg.matchAll(/<rect\s+data-focus-node="([^"]+)"[^>]*>/g)) {
+    const toPoints=s=>s.split(' ').map(p=>p.split(',').map(Number));
+    const polygons=new Map([...svg.matchAll(/<g\s+data-node="([^"]+)"[^>]*><polygon\s+points="([^"]+)"/g)].map(m=>[m[1],toPoints(m[2])]));
+    for (const match of svg.matchAll(/<polygon\s+data-focus-node="([^"]+)"[^>]*>/g)) {
       const points=polygons.get(match[1]);assert(points,`${ref}: fokus utan nod`);
-      const x=+attr(match[0],'x'),y=+attr(match[0],'y'),w=+attr(match[0],'width'),h=+attr(match[0],'height');
-      assert(points.every(([px,py])=>px>x&&px<x+w&&py>y&&py<y+h),`${ref}: rutan missar noden`);
+      const halo=toPoints(attr(match[0],'points'));
+      const xs=halo.map(p=>p[0]),ys=halo.map(p=>p[1]);
+      assert(points.every(([px,py])=>px>Math.min(...xs)&&px<Math.max(...xs)&&py>Math.min(...ys)&&py<Math.max(...ys)),`${ref}: markeringen missar noden ${match[1]}`);
+    }
+    const boards=new Map([...svg.matchAll(/<rect\s+data-board="([^"]+)"[^>]*>/g)].map(m=>[m[1],m[0]]));
+    for (const match of svg.matchAll(/<rect\s+data-focus-board="([^"]+)"[^>]*>/g)) {
+      const board=boards.get(match[1]);assert(board,`${ref}: fokus utan bräde`);
+      const box=s=>['x','y','width','height'].map(n=>+attr(s,n));
+      const [fx,fy,fw,fh]=box(match[0]),[bx,by,bw,bh]=box(board);
+      assert(fx<bx&&fy<by&&fx+fw>bx+bw&&fy+fh>by+bh,`${ref}: ramen missar brädet ${match[1]}`);
     }
   }
 }
+// Markeringarna finns verkligen, så att kontrollen ovan inte blir tom.
+const allSvg=templated.flatMap(s=>Scen.imagesOf(s)).map(read).join('');
+assert((allSvg.match(/data-focus-node=/g)||[]).length>20);
+assert((allSvg.match(/data-focus-board=/g)||[]).length>20);
+// Oberoende minimax för spelställningarna i scen 7, 8 och 10.
+const LINES=[[0,1,2],[3,4,5],[6,7,8],[0,3,6],[1,4,7],[2,5,8],[0,4,8],[2,4,6]];
+const ttt=(b,p)=>{for(const[a,c,d]of LINES)if(b[a]!=='.'&&b[a]===b[c]&&b[a]===b[d])return b[a]==='X'?1:-1;const e=[...b].flatMap((x,i)=>x==='.'?[i]:[]);if(!e.length)return 0;const v=e.map(i=>ttt(b.slice(0,i)+p+b.slice(i+1),p==='X'?'O':'X'));return p==='X'?Math.max(...v):Math.min(...v);};
+const after=(b,i,p)=>b.slice(0,i)+p+b.slice(i+1);
+assert.equal(ttt('.XOOXXX.O','O'),0);
+assert.equal(ttt('.XOOX.X.O','X'),1);
+const s10='O.OOXXX..';
+assert.deepEqual([1,7,8].map(i=>ttt(after(s10,i,'X'),'O')),[0,-1,-1]);
+assert.equal(ttt(s10,'X'),0);
+assert(/X nere till höger[^\n]*−1/.test(read('presentationer/minimax-och-beskarning.md')),'Rättelsen i scen 10 ska stå i anteckningen');
 const data=JSON.parse(read('docs/minimax/diagramdata-v2.json'));
 assert.equal(Object.keys(data.source20.nodes).length,22);
 assert.equal(data.source20.edges.length,21);

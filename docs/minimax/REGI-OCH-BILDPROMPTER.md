@@ -34,7 +34,9 @@ Alla fem mallar använder bara temats variabler och fungerar i ljusa och mörka 
 
 ### Resonemang med logg (ny)
 
-`[egen: resonemang-med-logg]` används på scen 12, 17 och 19, där algoritmens ”tankar” skrivs som en logg i kommandotolksstil.
+`[egen: resonemang-med-logg]` skriver algoritmens ”tankar” som en logg i kommandotolksstil. I den här presentationen används den bara på scen 19 (facit).
+
+**Varför bara på facit?** När ett begrepp är nytt (scen 12 och 17) ska blicken vara på ett ställe: beräkningen och jämförelsen α ≥ β står vid noden där de görs, och en kort mening räcker under. En växande logg bredvid skulle dela uppmärksamheten mellan träd och text, och tävla med lärarens röst. På facit har eleverna redan räknat själva. Där är historiken poängen: de jämför sin lösning rad för rad, och hela spåret står kvar.
 
 1. **Syfte:** visa både vad som händer i diagrammet och varför, i den ordning det sker.
 2. **När:** algoritmer, kodspårning, beräkningar steg för steg, laborationsprotokoll och beslutsprocesser där ordningen är poängen.
@@ -43,7 +45,7 @@ Alla fem mallar använder bara temats variabler och fungerar i ljusa och mörka 
 5. **Innehåll:** grundbild, rubrik, etikett, ingress; `etikett | bildsökväg | rad` per steg. `**ord**` framhäver ett ord i raden (här ”beskär”).
 6. **Återanvändning:** sorteringsalgoritmer, programspårning i programmering, reaktionssteg i kemi, ekvationslösning, ett experimentprotokoll i fysik, källkritisk granskning steg för steg.
 
-Diagrammen bredvid loggen är ritade smalare (1160 px i stället för 1760 px) så att de fyller sin del av bilden.
+Diagrammen bredvid loggen ritas smalare (1160 px i stället för 1760 px) så att de fyller sin del av bilden.
 
 ### Bild och förklaring (förbättrad)
 

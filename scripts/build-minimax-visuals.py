@@ -37,7 +37,13 @@ FONT = "'IBM Plex Sans','Segoe UI',Inter,Helvetica,Arial,sans-serif"
 MONO = "'IBM Plex Mono','SFMono-Regular',Menlo,Consolas,monospace"
 DIM = .42          # opacitet för det som inte är i fokus
 
-W = 1760           # gemensam bredd för alla diagram
+W = 1760           # bredd för diagram som får hela bildytan
+W_LOGG = 1160      # bredd för diagram bredvid en logg (mallen Resonemang med logg)
+
+
+def set_width(w):
+    global W
+    W = w
 
 
 def esc(s):
@@ -586,16 +592,17 @@ def num_tree(name, nodes, edges, values, h, focus=(), chosen=(), pruned=(), call
             hot = ch is not None and ch[0] == which
             lab = f'{sym} = {fmtnum(ch[1])} → {fmtnum(val)}' if hot else f'{sym} = {fmtnum(val)}'
             rows.append((lab, col, dy, hot))
-        wmax = max(len(r[0]) for r in rows) * 23 * .62 + 30
+        pf = round(23 * min(1, size + .04))
+        wmax = max(len(r[0]) for r in rows) * pf * .62 + 30
         left = x + tw / 2 + 14 if x + tw / 2 + 14 + wmax < W else x - tw / 2 - 14 - wmax
         g = f'<g data-bounds="{k}" opacity="{op}">'
         for lab, col, dy, hot in rows:
-            w = len(lab) * 23 * .62 + 30
+            w = len(lab) * pf * .62 + 30
             if hot:
                 g += f'<rect x="{left:.1f}" y="{y + dy - 20:.1f}" width="{w:.1f}" height="40" rx="20" fill="{col}" fill-opacity=".35" filter="url(#glow)"/>'
             g += (f'<rect x="{left:.1f}" y="{y + dy - 20:.1f}" width="{w:.1f}" height="40" rx="20" fill="{col if hot else CARD}" '
                   f'fill-opacity="{.22 if hot else 1}" stroke="{col}" stroke-opacity="{1 if hot else .55}" stroke-width="{3 if hot else 1.6}"/>')
-            g += text(left + 15, y + dy + 8, lab, 23, INK if hot else col, 'start', 700 if hot else 600, MONO)
+            g += text(left + 15, y + dy + 8, lab, pf, INK if hot else col, 'start', 700 if hot else 600, MONO)
         body += g + '</g>'
     if rule:
         body += text(0, 76, rule, 22, MUTED, 'start', 500)
@@ -677,10 +684,12 @@ SPEC12 = [[8, 5, 6], [9, 3, 7], [2, 4, 6]]
 
 
 def scene12():
-    nodes, edges, leaves = layout_nested(SPEC12, 120, W - 120, 150, 260, 'max')
+    # Bredvid en logg: beräkningarna står i loggen, diagrammet visar var de sker.
+    set_width(W_LOGG)
+    nodes, edges, leaves = layout_nested(SPEC12, 40, W - 40, 170, 300, 'max')
     vals, ch = minimax_values(nodes, edges, leaves)
     assert [vals['r0'], vals['r1'], vals['r2'], vals['r']] == [5, 3, 2, 5]
-    h = 790
+    h = 870
     v = dict(leaves)
     num_tree('minimax-0', nodes, edges, v, h)
     chosen = set()
@@ -689,12 +698,13 @@ def scene12():
         best = next(c for c in ch[k] if vals[c] == vals[k])
         chosen.add((k, best))
         args = ', '.join(str(leaves[c]) for c in ch[k])
-        num_tree(f'minimax-{i}', nodes, edges, v, h, focus={k, *ch[k]}, chosen=set(chosen),
-                 callouts={k: (f'min({args}) = {vals[k]}', 'right' if i < 3 else 'left', None)})
+        assert args
+        num_tree(f'minimax-{i}', nodes, edges, v, h, focus={k, *ch[k]}, chosen=set(chosen))
     v['r'] = vals['r']
     chosen.add(('r', 'r0'))
     num_tree('minimax-4', nodes, edges, v, h, focus={'r', 'r0', 'r1', 'r2'}, chosen=chosen,
              callouts={'r': ('max(5, 3, 2) = 5', 'right', None)})
+    set_width(1760)
 
 
 def scene13():
@@ -737,6 +747,10 @@ def scene14_17():
 
     # Scen 17: α och β steg för steg, djupet först, som i simuleringen på ai-aktiviteter.se.
     # Varje steg är en händelse: besök (ärv sökfönster), löv (uppdatera β/α), kontroll α ≥ β, tillbaka.
+    # Diagrammet står bredvid algoritmens logg; jämförelserna skrivs i loggen.
+    set_width(W_LOGG)
+    nodes, edges, leaves = layout_nested(SPEC12, 40, W - 130, 170, 300, 'max')
+    h = 880
     inf, ninf = '+∞', '−∞'
     R = 'MAX höjer α  ·  MIN sänker β  ·  α ≥ β → beskär resten'
     leafkeys = list(leaves)
@@ -746,9 +760,10 @@ def scene14_17():
         hidden = {k for k in leafkeys if k not in st['v']}
         hidden -= {k for k in hidden if any(k.startswith(p) for p in st['pruned'])}
         seen = sum(1 for k in leafkeys if k in st['v'])
+        calls = {k: c for k, c in (calls or {}).items() if c[1] != 'pills'}
         num_tree(name, nodes, edges, dict(st['v']), h, focus=set(focus), chosen=set(path) | st['chosen'],
-                 pruned=set(st['pruned']), callouts=calls or {}, bounds=dict(st['b']), hidden=hidden,
-                 counter=f'Undersökta löv: {seen} / 9', changed=changed or {}, rule=R)
+                 pruned=set(st['pruned']), callouts=calls, bounds=dict(st['b']), hidden=hidden,
+                 counter=f'Undersökta löv: {seen} / 9', changed=changed or {}, rule=R, size=.9)
 
     frame('alpha-0', {'r'}, set())
     steps = [
@@ -799,6 +814,7 @@ def scene14_17():
         return v
     assert ab('r', float('-inf'), float('inf')) == 5
     assert order == [k for k in leafkeys if k in st['v']], order
+    set_width(1760)
 
 
 def scene18_19():
@@ -819,12 +835,19 @@ def scene18_19():
         ({'r1': 3}, {'r1', 'r10', 'r11'}, set(), {'r1': ('min(7, 3) = 3', 'right', None)}, {('r1', 'r11')}),
         ({'r': 5}, {'r', 'r0', 'r1'}, set(), {'r': ('max(5, 3) = 5', 'right', None)}, {('r', 'r0')}),
     ]
+    # Facit (scen 19) står bredvid algoritmens logg.
+    set_width(W_LOGG)
+    nodes, edges, leaves = layout_nested(spec, 40, W - 40, 130, 235, 'max')
+    h = 880
+    v = dict(leaves)
+    num_tree('facit-0', nodes, edges, v, h)
     pruned, chosen = set(), set()
     for i, (add, focus, pr, calls, chs) in enumerate(plan, 1):
         v.update(add)
         pruned |= pr
         chosen |= chs
-        num_tree(f'ovning-{i}', nodes, edges, v, h, focus=focus, chosen=set(chosen), pruned=set(pruned), callouts=calls)
+        num_tree(f'facit-{i}', nodes, edges, v, h, focus=focus, chosen=set(chosen), pruned=set(pruned))
+    set_width(1760)
 
 
 def scene20():

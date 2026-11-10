@@ -19,7 +19,7 @@ Stanna före svarsklicken. Be om både värde och motivering: ”Vem väljer hä
 
 ## Mallarna i denna version
 
-Alla fyra mallar använder bara temats variabler och fungerar i ljusa och mörka teman. Diagrammen i `bilder/minimax/v3/` har genomskinlig bakgrund men färger valda för mörka teman (presentationen använder Natt).
+Alla fem mallar använder bara temats variabler och fungerar i ljusa och mörka teman. Diagrammen i `bilder/minimax/v3/` har genomskinlig bakgrund men färger valda för mörka teman (presentationen använder Natt).
 
 ### Resonemang i bild (förbättrad)
 
@@ -31,6 +31,19 @@ Alla fyra mallar använder bara temats variabler och fungerar i ljusa och mörka
 4. **Fokus:** grundbild → ett tillstånd per klick. Textlisten nedanför har stegnummer, etikett och förklaring, och står still så att diagrammet inte hoppar. Etiketten (t.ex. ”Exempel 2 · X:s tur”) visas som en liten skylt bredvid rubriken.
 5. **Innehåll:** grundbild, valfri rubrik och etikett, sedan `etikett | bildsökväg | förklaring` per steg.
 6. **Återanvändning:** matematiska lösningar, fysikexperiment, historiska kartor, textrevision, kodspårning och medicinska förlopp.
+
+### Resonemang med logg (ny)
+
+`[egen: resonemang-med-logg]` används på scen 12, 17 och 19, där algoritmens ”tankar” skrivs som en logg i kommandotolksstil.
+
+1. **Syfte:** visa både vad som händer i diagrammet och varför, i den ordning det sker.
+2. **När:** algoritmer, kodspårning, beräkningar steg för steg, laborationsprotokoll och beslutsprocesser där ordningen är poängen.
+3. **Skillnad mot Resonemang i bild:** förklaringen byts inte ut vid varje klick utan läggs till. Hela resonemanget står kvar som historik, så eleverna kan läsa tillbaka.
+4. **Fokus:** ingressen är loggens första kommandorad (`$ …`). Varje klick byter bild och skriver en numrerad rad. Aktuell rad lyser med markör, tidigare rader tonas ned, och när loggen är full rullar äldre rader ut upptill. Utan klicksteg visas slutbilden med hela loggen.
+5. **Innehåll:** grundbild, rubrik, etikett, ingress; `etikett | bildsökväg | rad` per steg. `**ord**` framhäver ett ord i raden (här ”beskär”).
+6. **Återanvändning:** sorteringsalgoritmer, programspårning i programmering, reaktionssteg i kemi, ekvationslösning, ett experimentprotokoll i fysik, källkritisk granskning steg för steg.
+
+Diagrammen bredvid loggen är ritade smalare (1160 px i stället för 1760 px) så att de fyller sin del av bilden.
 
 ### Bild och förklaring (förbättrad)
 

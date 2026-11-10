@@ -259,18 +259,18 @@ rörelse: ingen
 
 ---
 
-[egen: resonemang-i-bild]
+[egen: resonemang-med-logg]
 rubrik: Generell version av minimax-algoritmen
 bild: bilder/minimax/v3/minimax-0.svg
 alt: Spelträd med tre grenar och bladvärdena 8, 5, 6; 9, 3, 7; 2, 4, 6.
-text: Alla lövvärden syns. Räkna från löven mot roten.
+text: minimax(rot)  # MAX i roten, MIN under. Räkna från löven.
 fokus: ingen
 rörelse: ingen
 övergång: tona
-- Vänster | bilder/minimax/v3/minimax-1.svg | min(8, 5, 6) = 5
-- Mitten | bilder/minimax/v3/minimax-2.svg | min(9, 3, 7) = 3
-- Höger | bilder/minimax/v3/minimax-3.svg | min(2, 4, 6) = 2
-- Roten | bilder/minimax/v3/minimax-4.svg | max(5, 3, 2) = 5
+- Vänster | bilder/minimax/v3/minimax-1.svg | MIN: min(8, 5, 6) = 5. Jag väljer det sämsta för MAX.
+- Mitten | bilder/minimax/v3/minimax-2.svg | MIN: min(9, 3, 7) = 3.
+- Höger | bilder/minimax/v3/minimax-3.svg | MIN: min(2, 4, 6) = 2.
+- Roten | bilder/minimax/v3/minimax-4.svg | MAX: max(5, 3, 2) = 5. Jag väljer vänster gren.
 > Källa: originalbild 12. Presentation av David Hedengren.
 > Originaltext: Generell version av minimax-algoritmen
 > Originaltext: 5
@@ -439,27 +439,27 @@ fokus: ingen
 
 ---
 
-[egen: resonemang-i-bild]
+[egen: resonemang-med-logg]
 rubrik: Alfa- och betavärden
 bild: bilder/minimax/v3/alpha-0.svg
 alt: Alfa-beta-sökning steg för steg. Varje besökt nod visar sitt α och β; beskurna grenar är överkryssade. Roten får värdet 5 efter 6 av 9 löv.
-text: Djupet först, från vänster till höger. Varje nod har sitt eget sökfönster: α (MAX) och β (MIN). Roten börjar med α = −∞, β = +∞.
+text: alfabeta(rot, α = −∞, β = +∞)  # djupet först, vänster till höger
 fokus: ingen
 rörelse: ingen
 övergång: tona
-- Ner till MIN | bilder/minimax/v3/alpha-1.svg | MIN ärver sökfönstret från roten: α = −∞, β = +∞.
-- β = 8 | bilder/minimax/v3/alpha-2.svg | Första lövet är 8. Det blir MIN:s bästa hittills, så β sänks från +∞ till 8.
-- β = 5 | bilder/minimax/v3/alpha-3.svg | 5 är mindre än 8. MIN uppdaterar β från 8 till 5.
-- β stannar | bilder/minimax/v3/alpha-4.svg | 6 är inte mindre än 5, så β stannar på 5. MIN-noden får värdet 5.
-- α = 5 | bilder/minimax/v3/alpha-5.svg | 5 skickas upp till roten. MAX kan nu garantera 5: α höjs från −∞ till 5.
-- Ner till MIN | bilder/minimax/v3/alpha-6.svg | Mittennoden ärver α = 5 och β = +∞. MAX vet redan att den kan få 5.
-- β = 9 | bilder/minimax/v3/alpha-7.svg | Lövet 9 ger β = 9. α = 5 är mindre än β = 9, så vi fortsätter söka.
-- β = 3 | bilder/minimax/v3/alpha-8.svg | Lövet 3 ger β = 3. MIN kan nu tvinga fram högst 3 i den här grenen.
-- β ≤ α: beskär | bilder/minimax/v3/alpha-9.svg | α = 5 ≥ β = 3. MAX väljer aldrig en gren som ger högst 3. Vi behöver inte fortsätta söka i grenen.
-- α stannar | bilder/minimax/v3/alpha-10.svg | MIN skickar upp 3. 3 är inte större än 5, så α stannar på 5.
-- Ner till MIN | bilder/minimax/v3/alpha-11.svg | Högra noden ärver α = 5 och β = +∞.
-- β = 2: beskär | bilder/minimax/v3/alpha-12.svg | Lövet 2 ger β = 2. α = 5 ≥ β = 2, så de två sista löven beskärs.
-- Samma beslut | bilder/minimax/v3/alpha-13.svg | Rotens värde är 5, samma som utan beskärning. Bara 6 av 9 löv behövde undersökas.
+- besök MIN vänster | bilder/minimax/v3/alpha-1.svg | Jag ärver fönstret från roten: α = −∞, β = +∞.
+- löv 8 | bilder/minimax/v3/alpha-2.svg | 8 < +∞. Bästa hittills för MIN, så β = 8.
+- löv 5 | bilder/minimax/v3/alpha-3.svg | 5 < 8. Jag sänker β från 8 till 5.
+- löv 6 | bilder/minimax/v3/alpha-4.svg | 6 > 5. β stannar på 5. Jag skickar upp 5.
+- MAX ← 5 | bilder/minimax/v3/alpha-5.svg | 5 > −∞. MAX kan garantera 5, så α = 5.
+- besök MIN mitten | bilder/minimax/v3/alpha-6.svg | Jag ärver α = 5, β = +∞.
+- löv 9 | bilder/minimax/v3/alpha-7.svg | 9 < +∞, så β = 9. α 5 < β 9: jag fortsätter.
+- löv 3 | bilder/minimax/v3/alpha-8.svg | 3 < 9, så β = 3. Jag kan tvinga fram högst 3.
+- kontroll | bilder/minimax/v3/alpha-9.svg | β 3 ≤ α 5 → **beskär**. MAX väljer aldrig den här grenen.
+- MAX ← 3 | bilder/minimax/v3/alpha-10.svg | 3 < 5. α stannar på 5.
+- besök MIN höger | bilder/minimax/v3/alpha-11.svg | Jag ärver α = 5, β = +∞.
+- löv 2 | bilder/minimax/v3/alpha-12.svg | β = 2. β 2 ≤ α 5 → **beskär** två grenar.
+- klar | bilder/minimax/v3/alpha-13.svg | Roten = 5. Samma svar, men bara 6 av 9 löv undersökta.
 > Stegen följer simuleringen på ai-aktiviteter.se (Minimax med alfa-beta-beskärning): besök och ärv sökfönster, uppdatera α eller β, kontrollera α ≥ β, skicka värdet uppåt.
 > Källa: originalbild 17. Presentation av David Hedengren.
 > Originaltext: 𝛼=𝛽=
@@ -527,22 +527,22 @@ rörelse: ingen
 
 ---
 
-[egen: resonemang-i-bild]
+[egen: resonemang-med-logg]
 rubrik: Vilka grenar kan beskäras?
 etikett: Aktivitet
-bild: bilder/minimax/v3/ovning-0.svg
+bild: bilder/minimax/v3/facit-0.svg
 alt: Stegvis facit till övningen med åtta bladvärden.
-text: Facit. Sök från vänster till höger och förklara varje värde.
+text: alfabeta(rot)  # facit, vänster till höger
 fokus: ingen
 rörelse: ingen
 övergång: tona
-- Första MAX | bilder/minimax/v3/ovning-1.svg | max(5, 3) = 5. MIN-noden ovanför kan nu som mest bli 5 (β = 5).
-- Beskär | bilder/minimax/v3/ovning-2.svg | Första lövet är 8 ≥ 5. MAX ger minst 8, så MIN väljer aldrig grenen. Lövet 2 hoppas över.
-- Vänstra MIN | bilder/minimax/v3/ovning-3.svg | Värdet blir 5. Rotens α uppdateras till 5.
-- Högra sidan | bilder/minimax/v3/ovning-4.svg | max(7, 1) = 7.
-- Sista MAX | bilder/minimax/v3/ovning-5.svg | max(2, 3) = 3.
-- Högra MIN | bilder/minimax/v3/ovning-6.svg | min(7, 3) = 3.
-- Roten | bilder/minimax/v3/ovning-7.svg | max(5, 3) = 5.
+- MAX ← 5, 3 | bilder/minimax/v3/facit-1.svg | max(5, 3) = 5. MIN ovanför får β = 5.
+- löv 8 | bilder/minimax/v3/facit-2.svg | 8 ≥ 5. MAX ger minst 8, MIN väljer aldrig grenen → **beskär** lövet 2.
+- MIN vänster | bilder/minimax/v3/facit-3.svg | min(5, ≥8) = 5. Roten får α = 5.
+- MAX ← 7, 1 | bilder/minimax/v3/facit-4.svg | max(7, 1) = 7.
+- MAX ← 2, 3 | bilder/minimax/v3/facit-5.svg | max(2, 3) = 3.
+- MIN höger | bilder/minimax/v3/facit-6.svg | min(7, 3) = 3.
+- roten | bilder/minimax/v3/facit-7.svg | max(5, 3) = 5.
 > Källa: originalbild 19. Presentation av David Hedengren.
 > Originaltext: Aktivitet – Vilka grenar kan beskäras?
 > Originaltext: 5

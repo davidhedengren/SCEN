@@ -17,7 +17,7 @@ for (const steps of [true, false]) {
   assert.equal(parsed.tpl, slide.tpl);
 }
 const deck = Manus.parse(read('presentationer/minimax-och-beskarning.md'));
-const templated = deck.slides.filter(s => s.tpl === 'resonemang-i-bild');
+const templated = deck.slides.filter(s => ['resonemang-i-bild','resonemang-med-logg'].includes(s.tpl));
 assert(templated.length >= 6);
 for (const s of templated) for (const ref of Scen.imagesOf(s)) assert(fs.existsSync(path.join(root, ref)), ref);
 // Independent checks of the worked examples and approved correction.

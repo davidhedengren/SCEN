@@ -32,6 +32,8 @@ CARD_LINE = '#28405C'
 GRID = '#365571'
 MAXC = '#3DD6D0'   # X / MAX
 MINC = '#FFB547'   # O / MIN
+MAX_HI = '#A6FBF6' # ljusare kant för MAX i fokus
+MIN_HI = '#FFE0A8' # ljusare kant för MIN i fokus
 CUT = '#FF7A6E'    # beskärning
 FONT = "'IBM Plex Sans','Segoe UI',Inter,Helvetica,Arial,sans-serif"
 MONO = "'IBM Plex Mono','SFMono-Regular',Menlo,Consolas,monospace"
@@ -552,13 +554,12 @@ def num_tree(name, nodes, edges, values, h, focus=(), chosen=(), pruned=(), call
         col = (MAXC if r1 == 'max' else MINC) if on else (INK if isfocus else EDGE)
         op = 1 if (not anyfocus or isfocus or on) else DIM + .1
         body += f'<path data-edge="{a}:{b}" d="M{x1:.1f},{y1:.1f}L{x2:.1f},{y2:.1f}" stroke="{col}" stroke-width="{5 if on else 3 if isfocus else 2.5}" stroke-linecap="round" fill="none" opacity="{op}"/>'
-    # fokusglöd
+    # Fokus: ett mjukt sken bakom noden, ingen extra kontur. Själva noden blir ljusare och skarpare nedan.
     for k in focus:
         x, y, role = nodes[k]
         col = MAXC if role == 'max' else MINC
-        p = tri_points(x, y + (th * .06 if role == 'max' else -th * .06), role, tw, th, 1.42)
-        body += f'<polygon points="{pts(p)}" fill="{col}" fill-opacity=".14" stroke="{col}" stroke-width="12" stroke-opacity=".28" stroke-linejoin="round" filter="url(#glow)"/>'
-        body += f'<polygon data-focus-node="{k}" points="{pts(p)}" fill="{col}" fill-opacity=".05" stroke="{col}" stroke-width="3" stroke-linejoin="round"/>'
+        p = tri_points(x, y, role, tw, th, 1.16)
+        body += f'<polygon data-focus-node="{k}" points="{pts(p)}" fill="{col}" fill-opacity=".55" stroke="{col}" stroke-width="14" stroke-opacity=".5" stroke-linejoin="round" filter="url(#glow)"/>'
     # noder
     for k, (x, y, role) in nodes.items():
         col = MAXC if role == 'max' else MINC
@@ -575,9 +576,13 @@ def num_tree(name, nodes, edges, values, h, focus=(), chosen=(), pruned=(), call
         v = values.get(k, '')
         ty = y + th * .26 if role == 'max' else y + th * .02
         fs = 40 * size if len(str(v)) < 3 else 30 * size
-        g = f'<g data-node="{k}" opacity="{op}"><polygon points="{pts(p)}" fill="{col}" fill-opacity="{.26 if v != "" else .1}" stroke="{col}" stroke-width="3" stroke-linejoin="round"/>'
+        if k in focus:
+            hi = MAX_HI if role == 'max' else MIN_HI
+            g = f'<g data-node="{k}" opacity="{op}"><polygon points="{pts(p)}" fill="{col}" fill-opacity=".62" stroke="{hi}" stroke-width="5" stroke-linejoin="round"/>'
+        else:
+            g = f'<g data-node="{k}" opacity="{op}"><polygon points="{pts(p)}" fill="{col}" fill-opacity="{.26 if v != "" else .1}" stroke="{col}" stroke-width="3" stroke-linejoin="round"/>'
         if v != '':
-            g += text(x, ty, fmtnum(v), fs, INK, 'middle', 700)
+            g += text(x, ty, fmtnum(v), fs * (1.06 if k in focus else 1), '#FFFFFF' if k in focus else INK, 'middle', 800 if k in focus else 700)
         g += '</g>'
         body += g
     # α/β: som i simuleringen har varje besökt nod sitt eget sökfönster.
@@ -831,8 +836,8 @@ def scene18_19():
     ]
     # Facit (scen 19) står bredvid algoritmens logg.
     set_width(W_LOGG)
-    nodes, edges, leaves = layout_nested(spec, 40, W - 40, 130, 235, 'max')
-    h = 880
+    nodes, edges, leaves = layout_nested(spec, 40, W - 40, 110, 228, 'max')
+    h = 900
     v = dict(leaves)
     num_tree('facit-0', nodes, edges, v, h)
     pruned, chosen = set(), set()

@@ -512,7 +512,7 @@ def pts(p):
 
 
 def num_tree(name, nodes, edges, values, h, focus=(), chosen=(), pruned=(), callouts=None, bounds=None,
-             size=1.0, counter='', legend=True, hidden=(), changed=(), rule=''):
+             size=1.0, counter='', legend=True, hidden=(), changed=(), rule='', route=()):
     """nodes: key -> (x, y, role). values: key -> text. pruned: barn vars inkommande kant är beskuren.
     hidden: noder som inte är upptäckta ännu (ritas som konturer)."""
     callouts = callouts or {}
@@ -551,9 +551,18 @@ def num_tree(name, nodes, edges, values, h, focus=(), chosen=(), pruned=(), call
                 mx, my = x1 + (x2 - x1) * .55, y1 + (y2 - y1) * .55
                 body += f'<g data-cut="{b}"><circle cx="{mx:.1f}" cy="{my:.1f}" r="19" fill="{CUT}" fill-opacity=".14" stroke="{CUT}" stroke-width="2.5"/><path d="M{mx - 8:.1f},{my - 8:.1f}L{mx + 8:.1f},{my + 8:.1f}M{mx + 8:.1f},{my - 8:.1f}L{mx - 8:.1f},{my + 8:.1f}" stroke="{CUT}" stroke-width="4" stroke-linecap="round"/></g>'
             continue
-        col = (MAXC if r1 == 'max' else MINC) if on else (INK if isfocus else EDGE)
+        col = (MAXC if r1 == 'max' else MINC) if on else (MUTED if isfocus else EDGE)
         op = 1 if (not anyfocus or isfocus or on) else DIM + .1
         body += f'<path data-edge="{a}:{b}" d="M{x1:.1f},{y1:.1f}L{x2:.1f},{y2:.1f}" stroke="{col}" stroke-width="{5 if on else 3 if isfocus else 2.5}" stroke-linecap="round" fill="none" opacity="{op}"/>'
+    # Slutvägen: en vit, lysande linje från roten till lövet som ger rotens värde.
+    for a, b in route:
+        x1, y1, _ = nodes[a]
+        x2, y2, _ = nodes[b]
+        y1 += th / 2 + 4
+        y2 -= th / 2 + 4
+        d = f'M{x1:.1f},{y1:.1f}L{x2:.1f},{y2:.1f}'
+        body += f'<path d="{d}" stroke="#FFFFFF" stroke-width="16" stroke-opacity=".28" stroke-linecap="round" filter="url(#glow)"/>'
+        body += f'<path data-route="{a}:{b}" d="{d}" stroke="#FFFFFF" stroke-width="6" stroke-linecap="round"/>'
     # Fokus: ett mjukt sken bakom noden, ingen extra kontur. Själva noden blir ljusare och skarpare nedan.
     for k in focus:
         x, y, role = nodes[k]
@@ -674,6 +683,18 @@ def minimax_values(nodes, edges, leaves):
     return vals, children
 
 
+def best_route(edges, vals, root='r'):
+    kids = {}
+    for a, b in edges:
+        kids.setdefault(a, []).append(b)
+    route, k = [], root
+    while k in kids:
+        c = next(c for c in kids[k] if vals.get(c) == vals[k])
+        route.append((k, c))
+        k = c
+    return route
+
+
 def scene11():
     nodes, edges, leaves = layout_nested([4, 3, 2], 300, W - 300, 170, 420, 'max')
     v = dict(leaves)
@@ -707,8 +728,9 @@ def scene12():
                  callouts={k: (f'min({args}) = {vals[k]}', 'right' if i < 3 else 'left', None)})
     v['r'] = vals['r']
     chosen.add(('r', 'r0'))
-    num_tree('minimax-4', nodes, edges, v, h, focus={'r', 'r0', 'r1', 'r2'}, chosen=chosen,
-             callouts={'r': ('max(5, 3, 2) = 5', 'right', None)})
+    route = best_route(edges, vals)
+    num_tree('minimax-4', nodes, edges, v, h, focus={'r', 'r0', 'r1', 'r2'} | {b for a, b in route}, chosen=chosen,
+             callouts={'r': ('max(5, 3, 2) = 5', 'right', None)}, route=route)
 
 
 def scene13():
@@ -730,24 +752,45 @@ def scene13():
             chosen.add((k, best))
         focus = set(level) | {c for k in level for c in ch[k]}
         num_tree(f'rotnod-{i}', nodes, edges, v, h, focus=focus, chosen=set(chosen), size=.66)
+    route = best_route(edges, vals)
+    assert [vals[b] for a, b in route] == [2, 2, 2, 2]
+    num_tree(f'rotnod-{i + 1}', nodes, edges, v, h, focus={'r'} | {b for a, b in route}, chosen=set(chosen), size=.66, route=route)
 
 
 def scene14_17():
     nodes, edges, leaves = layout_nested(SPEC12, 120, W - 120, 150, 260, 'max')
     h = 790
-    # Scen 14: begreppet beskärning
-    v = dict(leaves)
-    v.update({'r0': 5, 'r': '≥5'})
-    num_tree('beskarning-0', nodes, edges, v, h, focus={'r', 'r0'}, chosen={('r0', 'r01')})
-    v['r1'] = '≤3'
-    num_tree('beskarning-1', nodes, edges, v, h, focus={'r1', 'r10', 'r11'}, chosen={('r0', 'r01')}, pruned={'r12'},
-             callouts={'r1': ('3 < 5', 'right', CUT)})
-    v['r2'] = '≤2'
-    num_tree('beskarning-2', nodes, edges, v, h, focus={'r2', 'r20'}, chosen={('r0', 'r01')}, pruned={'r12', 'r21', 'r22'},
-             callouts={'r2': ('2 < 5', 'left', CUT)})
-    v['r'] = 5
-    num_tree('beskarning-3', nodes, edges, v, h, focus={'r', 'r0'}, chosen={('r0', 'r01'), ('r', 'r0')}, pruned={'r12', 'r21', 'r22'},
-             callouts={'r': ('max(5, ≤3, ≤2) = 5', 'right', None)})
+    # Scen 14: beskärning som djupet först-sökning, nod för nod (samma rytm som scen 17, utan α och β).
+    leafkeys14 = list(leaves)
+    v, pruned = {}, set()
+    plan14 = [
+        # (nya värden, fokus, väg, beskurna, callouts)
+        ({}, {'r0'}, [('r', 'r0')], set(), {}),
+        ({'r00': 8, 'r0': '≤8'}, {'r0', 'r00'}, [('r', 'r0'), ('r0', 'r00')], set(), {}),
+        ({'r01': 5, 'r0': '≤5'}, {'r0', 'r01'}, [('r', 'r0'), ('r0', 'r01')], set(), {}),
+        ({'r02': 6, 'r0': 5}, {'r0', 'r02'}, [('r', 'r0'), ('r0', 'r02')], set(), {'r0': ('min(8, 5, 6) = 5', 'right', None)}),
+        ({'r': '≥5'}, {'r', 'r0'}, [('r', 'r0')], set(), {'r': ('minst 5', 'right', None)}),
+        ({}, {'r1'}, [('r', 'r1')], set(), {}),
+        ({'r10': 9, 'r1': '≤9'}, {'r1', 'r10'}, [('r', 'r1'), ('r1', 'r10')], set(), {}),
+        ({'r11': 3, 'r1': '≤3'}, {'r1', 'r11'}, [('r', 'r1'), ('r1', 'r11')], set(), {'r1': ('≤3 < 5', 'right', CUT)}),
+        ({}, {'r1'}, [('r', 'r1')], {'r12'}, {}),
+        ({'r20': 2, 'r2': '≤2'}, {'r2', 'r20'}, [('r', 'r2'), ('r2', 'r20')], {'r21', 'r22'}, {'r2': ('≤2 < 5', 'right', CUT)}),
+        ({'r': 5}, {'r', 'r0', 'r01'}, [], set(), {'r': ('max(5, ≤3, ≤2) = 5', 'right', None)}),
+    ]
+
+    def frame14(name, focus, path, calls, route=()):
+        hidden = {k for k in leafkeys14 if k not in v} - {k for k in leafkeys14 if k in pruned}
+        seen = sum(1 for k in leafkeys14 if k in v)
+        num_tree(name, nodes, edges, dict(v), h, focus=set(focus), chosen=set(path), pruned=set(pruned),
+                 callouts=calls, hidden=hidden, counter=f'Undersökta löv: {seen} / 9', route=route)
+        return seen
+    frame14('beskarning-0', {'r'}, [], {})
+    for i, (add, focus, path, pr, calls) in enumerate(plan14, 1):
+        v.update(add)
+        pruned |= pr
+        last = i == len(plan14)
+        seen = frame14(f'beskarning-{i}', focus, path, calls, [('r', 'r0'), ('r0', 'r01')] if last else ())
+    assert seen == 6
 
     # Scen 17: α och β steg för steg, djupet först, som i simuleringen på ai-aktiviteter.se.
     # Varje steg är en händelse: besök (ärv sökfönster), löv (uppdatera β/α), kontroll α ≥ β, tillbaka.
@@ -757,13 +800,13 @@ def scene14_17():
     leafkeys = list(leaves)
     st = {'v': {}, 'b': {'r': (ninf, inf)}, 'pruned': set(), 'chosen': set()}
 
-    def frame(name, focus, path, changed=None, calls=None):
+    def frame(name, focus, path, changed=None, calls=None, route=()):
         hidden = {k for k in leafkeys if k not in st['v']}
         hidden -= {k for k in hidden if any(k.startswith(p) for p in st['pruned'])}
         seen = sum(1 for k in leafkeys if k in st['v'])
         num_tree(name, nodes, edges, dict(st['v']), h, focus=set(focus), chosen=set(path) | st['chosen'],
                  pruned=set(st['pruned']), callouts=calls or {}, bounds=dict(st['b']), hidden=hidden,
-                 counter=f'Undersökta löv: {seen} / 9', changed=changed or {}, rule=R)
+                 counter=f'Undersökta löv: {seen} / 9', changed=changed or {}, rule=R, route=route)
 
     frame('alpha-0', {'r'}, set())
     steps = [
@@ -786,9 +829,7 @@ def scene14_17():
         st['v'].update(vals)
         st['b'].update(wins)
         st['pruned'] |= pr
-        if i == len(steps):
-            st['chosen'] = {('r', 'r0'), ('r0', 'r01')}
-        frame(f'alpha-{i}', focus, path, ch, calls)
+        frame(f'alpha-{i}', focus, path, ch, calls, route=[('r', 'r0'), ('r0', 'r01')] if i == len(steps) else ())
     seen = sum(1 for k in leafkeys if k in st['v'])
     assert seen == 6 and st['v']['r'] == 5
     # Kontroll mot en riktig alfa-beta-sökning.
@@ -845,7 +886,8 @@ def scene18_19():
         v.update(add)
         pruned |= pr
         chosen |= chs
-        num_tree(f'facit-{i}', nodes, edges, v, h, focus=focus, chosen=set(chosen), pruned=set(pruned))
+        route = [('r', 'r0'), ('r0', 'r00'), ('r00', 'r000')] if i == len(plan) else ()
+        num_tree(f'facit-{i}', nodes, edges, v, h, focus=focus | {b for a, b in route}, chosen=set(chosen), pruned=set(pruned), route=route)
     set_width(1760)
 
 

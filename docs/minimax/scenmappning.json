@@ -11,58 +11,58 @@
   ],
   [
     3,
+    5,
+    "[egen: bild-och-forklaring]"
+  ],
+  [
+    4,
+    6,
+    "[egen: resonemang-i-bild]"
+  ],
+  [
+    5,
+    7,
+    "[egen: resonemang-i-bild]"
+  ],
+  [
+    6,
+    8,
+    "[egen: resonemang-i-bild]"
+  ],
+  [
+    7,
+    9,
+    "[egen: bild-och-forklaring]"
+  ],
+  [
+    8,
+    10,
+    "[egen: resonemang-i-bild]"
+  ],
+  [
+    9,
+    11,
+    "[egen: resonemang-i-bild]"
+  ],
+  [
+    10,
+    12,
+    "[egen: resonemang-i-bild]"
+  ],
+  [
+    11,
+    13,
+    "[egen: resonemang-i-bild]"
+  ],
+  [
+    12,
     3,
-    "[egen: bild-och-forklaring]"
-  ],
-  [
-    4,
-    4,
-    "[egen: bild-och-forklaring]"
-  ],
-  [
-    5,
-    5,
-    "[egen: bild-och-forklaring]"
-  ],
-  [
-    6,
-    6,
-    "[egen: resonemang-i-bild]"
-  ],
-  [
-    7,
-    7,
-    "[egen: resonemang-i-bild]"
-  ],
-  [
-    8,
-    8,
-    "[egen: resonemang-i-bild]"
-  ],
-  [
-    9,
-    9,
-    "[egen: bild-och-forklaring]"
-  ],
-  [
-    10,
-    10,
-    "[egen: resonemang-i-bild]"
-  ],
-  [
-    11,
-    11,
-    "[egen: resonemang-i-bild]"
-  ],
-  [
-    12,
-    12,
-    "[egen: resonemang-i-bild]"
+    "[egen: bildband-och-kort]"
   ],
   [
     13,
-    13,
-    "[egen: resonemang-i-bild]"
+    4,
+    "[egen: bildband-och-kort]"
   ],
   [
     14,
@@ -72,12 +72,12 @@
   [
     15,
     15,
-    "[egen: bild-och-forklaring]"
+    "[egen: bildband-och-kort]"
   ],
   [
     16,
     16,
-    "[egen: bild-och-forklaring]"
+    "[egen: symbolnyckel]"
   ],
   [
     17,
@@ -92,7 +92,7 @@
   [
     19,
     19,
-    "[egen: resonemang-i-bild]"
+    "[egen: resonemang-med-logg]"
   ],
   [
     20,

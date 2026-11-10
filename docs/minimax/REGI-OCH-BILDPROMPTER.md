@@ -6,14 +6,29 @@ Omarbetad föreläsningsversion: 21 scener i samma ordning som originalets 21 bi
 
 ## Regin
 
-Den omarbetade versionen har **21 scener i originalets ordning**, en per originalbild. Version 3 (2026-11-10) bygger om alla diagram från grunden och ger textbilderna fyra genomarbetade mallar.
+Presentationen har **21 scener**, en per originalbild. Ordningen följer originalet med ett undantag: **Användningsområden och Begränsningar (original 3 och 4) ligger efter minimaxuppgiften, direkt före alfa-beta-beskärning.** Eleverna förstår användningsområdena bättre när de vet vad MAX och MIN är, och begränsningen ”trädet blir för stort” blir en naturlig brygga till beskärningen. Talaranteckningen på Begränsningar har en sådan brygga.
 
-- **Scen 2, 5, 9, 21:** *Bild och förklaring.* Numrerade rader; aktuell rad får accentram, tidigare rader tonas ned men går att läsa. Aktiviteter och extrauppgift har en etikett ovanför rubriken.
-- **Scen 3, 4, 15:** *Bildband och kort.* Originalets nätverksbild som brett band överst, tre kort i rad som i originalet. Ett klick fyller i och lyfter ett kort. Scen 15 har den genererade bonsaibilden som band.
-- **Scen 6:** tomt bräde → 9 första drag → O:s 8 svar på mittendraget. Antalet ställningar per nivå (1, 9, 72) står i vänsterkanten.
-- **Scen 7, 8, 10:** spelträden ritas från riktiga spelställningar och värdena räknas med minimax i byggskriptet. Värdena avslöjas nerifrån och upp. Fokusramen ritas runt brädet och dess värde i samma SVG, så den kan inte hamna fel. Senaste draget är tonat, tre i rad har en linje, slutställningar säger ”X vinner”, ”O vinner” eller ”Oavgjort”. Varje beräkning visas som en etikett, till exempel `min(1, 0) = 0`, och den valda grenen färgas.
-- **Scen 11–14, 17–20:** trianglar uppåt för MAX (turkos), nedåt för MIN (bärnsten). Aktuell nod och dess barn är i fokus: fylld, ljusare och med skarp ljus kant och ett mjukt sken. Ingen extra kontur, så det blir aldrig dubbla trianglar. Resten tonas ned. Beskurna grenar är streckade med ett rött kryss och deras delträd tonas nästan bort. Scen 17 följer simuleringen på ai-aktiviteter.se: 13 steg där varje nod visar sitt eget α (MAX-färg) och β (MIN-färg). Ett värde som just ändras visas som ”8 → 5” och lyser. Varje gren ärver sökfönstret, kontrollen α ≥ β står vid noden och en räknare visar undersökta löv (6 av 9). Sökordningen kontrolleras mot en riktig alfa-beta-sökning i byggskriptet.
-- **Scen 16:** *Symbolnyckel.* α, β och α ≥ β i stora rutor; en betydelse i taget.
+| Scen | Innehåll | Original |
+|---|---|---|
+| 1–2 | Titel, vad minimax är | 1–2 |
+| 3–4 | Minimax i tre-i-rad, beslutsträdet | 5–6 |
+| 5–6 | Exempel 1 och 2 | 7–8 |
+| 7 | Aktivitet: spela med grannen | 9 |
+| 8 | Exempel 3 | 10 |
+| 9–11 | Generell version (två scener), uppgift: vilket värde får rotnoden? | 11–13 |
+| 12–13 | Användningsområden, begränsningar | 3–4 |
+| 14–17 | Alfa-beta: idén, varför, α och β, steg för steg | 14–17 |
+| 18–21 | Aktivitet, facit, nodräkning, extrauppgift MCTS | 18–21 |
+
+- **Scen 2, 3, 7, 21:** *Bild och förklaring.* Numrerade rader; aktuell rad får accentram, tidigare rader tonas ned men går att läsa.
+- **Scen 12, 13, 15:** *Bildband och kort.* Scen 12 har en ingress om att minimax fungerar överallt där två sidor har motsatta mål. Scen 15 har bonsaibilden som band.
+- **Scen 4–6 och 8:** spelträden för tre-i-rad ritas från riktiga spelställningar; värdena räknas med minimax i byggskriptet och avslöjas nerifrån och upp.
+- **Talträd (scen 9–11, 14, 17–20):** trianglar uppåt för MAX (turkos), nedåt för MIN (bärnsten). Noden i fokus fylls, får skarp ljus kant och ett mjukt sken; resten tonas ned. Beskurna grenar är streckade med rött kryss, och löv som inte undersökts är streckade konturer.
+- **Slutvägen:** det sista steget på scen 10, 11, 14, 17 och 19 visar en vit, lysande linje från roten till lövet som ger rotens värde. På scen 11 är det ett eget klick (”Slutvägen”).
+- **Scen 14:** beskärningen visas som djupet först-sökning, en nod i taget med räknare för undersökta löv, i samma rytm som scen 17 men utan α och β. Originalets formuleringar ligger på klick 8–10.
+- **Scen 16:** *Symbolnyckel.* ”uppdateras vid maxnoder” och ”uppdateras vid minnoder” är framhävda.
+- **Scen 17:** följer simuleringen på ai-aktiviteter.se: varje nod visar sitt eget α och β; ett ändrat värde visas som ”8 → 5”.
+- **Scen 19:** facit i *Resonemang med logg*. Raderna skrivs fram tecken för tecken (`rörelse: skrivmaskin`), som om algoritmen skriver.
 
 Stanna före svarsklicken. Be om både värde och motivering: ”Vem väljer här?” och ”Vad vet vi redan som gör resten ointressant?” Alla scener har kvar originalets text i talaranteckningarna som stöd.
 
@@ -34,9 +49,9 @@ Alla fem mallar använder bara temats variabler och fungerar i ljusa och mörka 
 
 ### Resonemang med logg (ny)
 
-`[egen: resonemang-med-logg]` skriver algoritmens ”tankar” som en logg i kommandotolksstil. I den här presentationen används den bara på scen 19 (facit).
+`[egen: resonemang-med-logg]` skriver algoritmens ”tankar” som en logg i kommandotolksstil. I den här presentationen används den bara på scen 19 (facit), med `rörelse: skrivmaskin` så att varje rad skrivs fram tecken för tecken.
 
-**Varför bara på facit?** När ett begrepp är nytt (scen 12 och 17) ska blicken vara på ett ställe: beräkningen och jämförelsen α ≥ β står vid noden där de görs, och en kort mening räcker under. En växande logg bredvid skulle dela uppmärksamheten mellan träd och text, och tävla med lärarens röst. På facit har eleverna redan räknat själva. Där är historiken poängen: de jämför sin lösning rad för rad, och hela spåret står kvar.
+**Varför bara på facit?** När ett begrepp är nytt (scen 10 och 17) ska blicken vara på ett ställe: beräkningen och jämförelsen α ≥ β står vid noden där de görs, och en kort mening räcker under. En växande logg bredvid skulle dela uppmärksamheten mellan träd och text, och tävla med lärarens röst. På facit har eleverna redan räknat själva. Där är historiken poängen: de jämför sin lösning rad för rad, och hela spåret står kvar.
 
 1. **Syfte:** visa både vad som händer i diagrammet och varför, i den ordning det sker.
 2. **När:** algoritmer, kodspårning, beräkningar steg för steg, laborationsprotokoll och beslutsprocesser där ordningen är poängen.

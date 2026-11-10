@@ -5361,7 +5361,8 @@ function renderSlide(sl, i, deck, img) {
         punkter: uses('punkter') ? its.map(t => `<li${steps ? st(bodyA) : ''}>${item(t)}</li>`).join('') : '',
         bildsteg: uses('bildsteg') ? its.map(t => {
           const p = t.split('|').map(x => x.trim());
-          return `<figure class="image-step"${steps ? st('none') : ''}><img src="${esc(img(p[1] || ''))}" alt="${esc(plain(p[0] || ''))}"><figcaption><b>${fmt(p[0] || '')}</b><span>${fmt(p.slice(2).join(' | '))}</span></figcaption></figure>`;
+          /* rörelse: skrivmaskin skriver fram stegets text tecken för tecken i snabb takt, som algoritmens tankar. Annars byts bara bilden. */
+          return `<figure class="image-step"${steps ? st(bodyA === 'type' ? 'typefast' : 'none') : ''}><img src="${esc(img(p[1] || ''))}" alt="${esc(plain(p[0] || ''))}"><figcaption><b>${fmt(p[0] || '')}</b><span>${fmt(p.slice(2).join(' | '))}</span></figcaption></figure>`;
         }).join('') : '',
         prövningar: uses('prövningar') ? its.map(t => {
           const p = t.split('|').map(x => x.trim());
@@ -5639,6 +5640,7 @@ function playNamed(el, name, delay, dur) {
     return { cancel: end, finish: end };
   }
   if (name === 'type') return typeOut(el, delay);
+  if (name === 'typefast') return typeOut(el, delay, true);
   if (name === 'typecode') return typeCode(el, delay);
   if (name === 'typeline') return typeCode(el.closest('.ks-code') || el, delay, el);
   const p = ANIMS[name] || ANIMS.fade;

@@ -33,7 +33,10 @@ console.log('OK: bildstegens resurser, manusrundtur, räkneexempel och täckning
 
 // The lesson follows the original again; overlays in slide coordinates are not used for diagrams.
 assert.equal(deck.slides.length,21);
-assert(mapping.every((row,i)=>row[0]===i+1&&row[1]===i+1));
+// Användningsområden och Begränsningar (original 3 och 4) ligger efter minimaxuppgiften, före alfa-beta.
+// Varje scen pekar på rätt originalbild i sin anteckning.
+assert(mapping.every((row,i)=>row[0]===i+1));
+deck.slides.forEach((s,i)=>{const m=/originalbild (\d+)\./.exec(JSON.stringify(s.notes||''));if(m)assert.equal(+m[1],mapping[i][1],`scen ${i+1}`);});
 assert(!deck.slides.some(s=>s.imageDirection?.mode==='spotlight'));
 // A different caption must never change the diagram's coordinate system.
 const bounds = text => /viewBox="([^"]+)"/.exec(text)?.[1];

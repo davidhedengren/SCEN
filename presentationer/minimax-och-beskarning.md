@@ -41,49 +41,6 @@ fokus: ingen
 
 ---
 
-[egen: bildband-och-kort]
-rubrik: Användningsområden
-bild: bilder/minimax/original/image3.png
-alt: Abstrakt nätverk av data och diagram i blått ljus.
-text:
-rörelse: tona
-fokus: ingen
-- Spelutveckling | Minimax används för att skapa intelligenta motståndare i spel som schack, dam, tic-tac-toe och andra spel där miljön är fullt observerbar
-- Ekonomi | Minimax kan användas i ekonomiska modeller för att förutsäga resultatet av beslut och för att optimera investeringsstrategier
-- Robotik | Minimax kan användas för att styra robotar i komplexa miljöer, till exempel för att maximera effektivitet I rörelser och minska energiförbrukning
-> Källa: originalbild 3. Presentation av David Hedengren.
-> Originaltext: Användningsområden
-> Originaltext: Spelutveckling
-> Originaltext: Minimax används för att skapa intelligenta motståndare i spel som schack, dam, tic-tac-toe och andra spel där miljön är fullt observerbar
-> Originaltext: Ekonomi
-> Originaltext: Minimax kan användas i ekonomiska modeller för att förutsäga resultatet av beslut och för att optimera investeringsstrategier
-> Originaltext: Robotik
-> Originaltext: Minimax kan användas för att styra robotar i komplexa miljöer, till exempel för att maximera effektivitet I rörelser och minska energiförbrukning
-
----
-
-[egen: bildband-och-kort]
-rubrik: Begränsningar
-bild: bilder/minimax/original/image3.png
-alt: Abstrakt nätverk av data och diagram i blått ljus.
-text:
-rörelse: tona
-fokus: ingen
-- Beräkningskostnad | Kan bli mycket tidskrävande och kräva stora mängder beräkningsresurser, särskilt i spel med stora sökträd och många möjliga drag. Ett sökträd för ett helt parti schack har ca 35^{100} noder
-- Kan inte hantera osäkerhet | Minimax fungerar bäst i spel med perfekt information och kan inte hantera dolda eller osäkra faktorer (som i t.ex. poker)
-- Motståndarens strategi | Minimax-algoritmen fungerar mindre bra om  om motståndaren inte spelar optimalt.
-> Källa: originalbild 4. Presentation av David Hedengren.
-> Originaltext: Begränsningar
-> Originaltext: Beräkningskostnad
-> Originaltext: Kan bli mycket tidskrävande och kräva stora mängder beräkningsresurser, särskilt i spel med stora sökträd och många möjliga drag.
-> Originaltext: Ett sökträd för ett helt parti schack har ca 35^{100} noder
-> Originaltext: Kan inte hantera osäkerhet
-> Originaltext: Minimax fungerar bäst i spel med perfekt information och kan inte hantera dolda eller osäkra faktorer (som i t.ex. poker)
-> Originaltext: Motståndarens strategi
-> Originaltext: Minimax-algoritmen fungerar mindre bra om  om motståndaren inte spelar optimalt.
-
----
-
 [egen: bild-och-forklaring]
 rubrik: Minimax i 3-i-rad
 bild: bilder/minimax/original/image5.png
@@ -306,6 +263,7 @@ rörelse: ingen
 - Nästa nivå | bilder/minimax/v3/rotnod-2.svg | MIN väljer det minsta värdet i varje gren.
 - Nivån under roten | bilder/minimax/v3/rotnod-3.svg | MAX väljer det största barnvärdet.
 - Rotnoden | bilder/minimax/v3/rotnod-4.svg | Roten är MIN i detta träd. Värdet är 2.
+- Slutvägen | bilder/minimax/v3/rotnod-5.svg | Följ värdet 2 nedåt. Med bästa spel från båda sidor går partiet längs den vita vägen till lövet 2.
 > Källa: originalbild 13. Presentation av David Hedengren.
 > Originaltext: Uppgift – Vilket värde får rotnoden?
 > Originaltext: 4
@@ -362,17 +320,69 @@ rörelse: ingen
 
 ---
 
+[egen: bildband-och-kort]
+rubrik: Användningsområden
+bild: bilder/minimax/original/image3.png
+alt: Abstrakt nätverk av data och diagram i blått ljus.
+text: Minimax är mest känt från spel, men fungerar överallt där två sidor har motsatta mål: den ena vill ha ett så högt utfall som möjligt (MAX), den andra ett så lågt som möjligt (MIN). Motståndaren kan vara en spelare, en konkurrent, marknaden eller naturen.
+rörelse: tona
+fokus: ingen
+- Spelutveckling | Minimax används för att skapa intelligenta motståndare i spel som schack, dam, tic-tac-toe och andra spel där miljön är fullt observerbar
+- Ekonomi | Minimax kan användas i ekonomiska modeller för att förutsäga resultatet av beslut och för att optimera investeringsstrategier
+- Robotik | Minimax kan användas för att styra robotar i komplexa miljöer, till exempel för att maximera effektivitet I rörelser och minska energiförbrukning
+> Källa: originalbild 3. Presentation av David Hedengren.
+> Originaltext: Användningsområden
+> Originaltext: Spelutveckling
+> Originaltext: Minimax används för att skapa intelligenta motståndare i spel som schack, dam, tic-tac-toe och andra spel där miljön är fullt observerbar
+> Originaltext: Ekonomi
+> Originaltext: Minimax kan användas i ekonomiska modeller för att förutsäga resultatet av beslut och för att optimera investeringsstrategier
+> Originaltext: Robotik
+> Originaltext: Minimax kan användas för att styra robotar i komplexa miljöer, till exempel för att maximera effektivitet I rörelser och minska energiförbrukning
+
+---
+
+[egen: bildband-och-kort]
+rubrik: Begränsningar
+bild: bilder/minimax/original/image3.png
+alt: Abstrakt nätverk av data och diagram i blått ljus.
+text:
+rörelse: tona
+fokus: ingen
+- Beräkningskostnad | Kan bli mycket tidskrävande och kräva stora mängder beräkningsresurser, särskilt i spel med stora sökträd och många möjliga drag. Ett sökträd för ett helt parti schack har ca 35^{100} noder
+- Kan inte hantera osäkerhet | Minimax fungerar bäst i spel med perfekt information och kan inte hantera dolda eller osäkra faktorer (som i t.ex. poker)
+- Motståndarens strategi | Minimax-algoritmen fungerar mindre bra om  om motståndaren inte spelar optimalt.
+> Brygga: beräkningskostnaden är skälet till alfa-beta-beskärning, som kommer på nästa bild. ”Trädet blir för stort. Måste vi verkligen undersöka allt?”
+> Källa: originalbild 4. Presentation av David Hedengren.
+> Originaltext: Begränsningar
+> Originaltext: Beräkningskostnad
+> Originaltext: Kan bli mycket tidskrävande och kräva stora mängder beräkningsresurser, särskilt i spel med stora sökträd och många möjliga drag.
+> Originaltext: Ett sökträd för ett helt parti schack har ca 35^{100} noder
+> Originaltext: Kan inte hantera osäkerhet
+> Originaltext: Minimax fungerar bäst i spel med perfekt information och kan inte hantera dolda eller osäkra faktorer (som i t.ex. poker)
+> Originaltext: Motståndarens strategi
+> Originaltext: Minimax-algoritmen fungerar mindre bra om  om motståndaren inte spelar optimalt.
+
+---
+
 [egen: resonemang-i-bild]
 rubrik: Alfa-beta-beskärning (pruning)
 bild: bilder/minimax/v3/beskarning-0.svg
 alt: Samma spelträd där tre grenar kan beskäras.
-text: Vänstra grenen ger 5. Kan någon av de andra grenarna bli bättre för Max?
+text: Samma träd som förut, men nu söker vi djupet först, en nod i taget, från vänster till höger.
 fokus: ingen
 rörelse: ingen
 övergång: tona
-- Mittenvägen | bilder/minimax/v3/beskarning-1.svg | Kommer inte kunna vara högre än 3, Max kommer därför inte välja mittenvägen (eftersom 5>3)
-- Högra vägen | bilder/minimax/v3/beskarning-2.svg | De sista två grenarna kan också beskäras eftersom oavsett vad de har för värde kommer inte Max välja den högra vägen
-- Beskärning | bilder/minimax/v3/beskarning-3.svg | Vi kan beskära (prune) trädet här och behöver inte utforska några grenar nedanför
+- Ner till vänster | bilder/minimax/v3/beskarning-1.svg | Sökningen går först ner i den vänstra grenen.
+- Lövet 8 | bilder/minimax/v3/beskarning-2.svg | MIN kan nu ge högst 8.
+- Lövet 5 | bilder/minimax/v3/beskarning-3.svg | 5 är mindre. MIN kan ge högst 5.
+- Lövet 6 | bilder/minimax/v3/beskarning-4.svg | 6 ändrar inget. Vänstra grenen är klar: min(8, 5, 6) = 5.
+- Roten | bilder/minimax/v3/beskarning-5.svg | Max kan få minst 5. Kan någon av de andra grenarna bli bättre för Max?
+- Ner till mitten | bilder/minimax/v3/beskarning-6.svg | Nu undersöks mittenvägen.
+- Lövet 9 | bilder/minimax/v3/beskarning-7.svg | MIN kan ge högst 9. Det kan fortfarande bli bättre än 5.
+- Lövet 3 | bilder/minimax/v3/beskarning-8.svg | Kommer inte kunna vara högre än 3, Max kommer därför inte välja mittenvägen (eftersom 5>3)
+- Mittenvägen | bilder/minimax/v3/beskarning-9.svg | Vi kan beskära (prune) trädet här och behöver inte utforska några grenar nedanför
+- Högra vägen | bilder/minimax/v3/beskarning-10.svg | Lövet 2 räcker. De sista två grenarna kan också beskäras eftersom oavsett vad de har för värde kommer inte Max välja den högra vägen
+- Beskärning | bilder/minimax/v3/beskarning-11.svg | Roten får 5, samma svar som utan beskärning. Bara 6 av 9 löv behövde undersökas.
 > Källa: originalbild 14. Presentation av David Hedengren.
 > Originaltext: Alfa-beta-beskärning (pruning)
 > Originaltext: 5
@@ -426,8 +436,8 @@ rubrik: Alfa- och betavärden
 text: Algoritmen tilldelar varje nod ett alfavärde (𝛼) och ett betavärde 𝛽 och gör en Depth First Search i trädet.
 rörelse: tona
 fokus: ingen
-- α | **Alfavärdet** (𝛼) är det hittills bästa värde som Max kan garantera. Från början ges noden alfavärdet (𝛼=−∞) och uppdateras vid maxnoder om ett högre värde hittats.
-- β | **Betavärdet** (𝛽) är det hittills bästa värde som Min kan garantera. Betavärdet sätts från början till 𝛽=+∞ och uppdateras vid minnoder om ett lägre värde hittats.
+- α | **Alfavärdet** (𝛼) är det hittills bästa värde som Max kan garantera. Från början ges noden alfavärdet (𝛼=−∞) och **uppdateras vid maxnoder** om ett högre värde hittats.
+- β | **Betavärdet** (𝛽) är det hittills bästa värde som Min kan garantera. Betavärdet sätts från början till 𝛽=+∞ och **uppdateras vid minnoder** om ett lägre värde hittats.
 - α ≥ β | **Beskärning.** Om 𝛼≥𝛽 behöver grenen inte utforskas mer och kan beskäras.
 > Källa: originalbild 16. Presentation av David Hedengren.
 > Originaltext: Alfa- och betavärden
@@ -539,7 +549,7 @@ bild: bilder/minimax/v3/facit-0.svg
 alt: Stegvis facit till övningen med åtta bladvärden.
 text: alfabeta(rot)  # facit, vänster till höger
 fokus: ingen
-rörelse: ingen
+rörelse: skrivmaskin
 övergång: tona
 - MAX ← 5, 3 | bilder/minimax/v3/facit-1.svg | max(5, 3) = 5. MIN ovanför får β = 5.
 - löv 8 | bilder/minimax/v3/facit-2.svg | 8 ≥ 5. MAX ger minst 8, MIN väljer aldrig grenen → **beskär** lövet 2.

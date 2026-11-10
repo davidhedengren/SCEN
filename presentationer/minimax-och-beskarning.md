@@ -442,19 +442,25 @@ fokus: ingen
 [egen: resonemang-i-bild]
 rubrik: Alfa- och betavärden
 bild: bilder/minimax/v3/alpha-0.svg
-alt: Djupet först genom ett spelträd, med alfa och beta vid noderna.
-text: Djupet först, från vänster till höger. α och β visas vid noderna.
+alt: Alfa-beta-sökning steg för steg. Varje besökt nod visar sitt α och β; beskurna grenar är överkryssade. Roten får värdet 5 efter 6 av 9 löv.
+text: Djupet först, från vänster till höger. Varje nod har sitt eget sökfönster: α (MAX) och β (MIN). Roten börjar med α = −∞, β = +∞.
 fokus: ingen
 rörelse: ingen
 övergång: tona
-- β = 8 | bilder/minimax/v3/alpha-1.svg | Det första lövet ger MIN gränsen 8.
-- β = 5 | bilder/minimax/v3/alpha-2.svg | MIN uppdaterar när ett lägre värde hittas.
-- Min-värde: 5 | bilder/minimax/v3/alpha-3.svg | Det sista lövet ändrar inte grenens värde.
-- α = 5 | bilder/minimax/v3/alpha-4.svg | Max kan nu garantera 5. Gränsen följer med till nästa gren.
-- β = 9 | bilder/minimax/v3/alpha-5.svg | Mittenvägens första löv.
-- β ≤ α | bilder/minimax/v3/alpha-6.svg | 3 ≤ 5. Vi behöver inte fortsätta söka i grenen.
-- β ≤ α | bilder/minimax/v3/alpha-7.svg | 2 ≤ 5. Vi behöver inte fortsätta söka i grenen.
-- Samma beslut | bilder/minimax/v3/alpha-8.svg | Rotens värde är 5. Sex av nio löv behövde undersökas.
+- Ner till MIN | bilder/minimax/v3/alpha-1.svg | MIN ärver sökfönstret från roten: α = −∞, β = +∞.
+- β = 8 | bilder/minimax/v3/alpha-2.svg | Första lövet är 8. Det blir MIN:s bästa hittills, så β sänks från +∞ till 8.
+- β = 5 | bilder/minimax/v3/alpha-3.svg | 5 är mindre än 8. MIN uppdaterar β från 8 till 5.
+- β stannar | bilder/minimax/v3/alpha-4.svg | 6 är inte mindre än 5, så β stannar på 5. MIN-noden får värdet 5.
+- α = 5 | bilder/minimax/v3/alpha-5.svg | 5 skickas upp till roten. MAX kan nu garantera 5: α höjs från −∞ till 5.
+- Ner till MIN | bilder/minimax/v3/alpha-6.svg | Mittennoden ärver α = 5 och β = +∞. MAX vet redan att den kan få 5.
+- β = 9 | bilder/minimax/v3/alpha-7.svg | Lövet 9 ger β = 9. α = 5 är mindre än β = 9, så vi fortsätter söka.
+- β = 3 | bilder/minimax/v3/alpha-8.svg | Lövet 3 ger β = 3. MIN kan nu tvinga fram högst 3 i den här grenen.
+- β ≤ α: beskär | bilder/minimax/v3/alpha-9.svg | α = 5 ≥ β = 3. MAX väljer aldrig en gren som ger högst 3. Vi behöver inte fortsätta söka i grenen.
+- α stannar | bilder/minimax/v3/alpha-10.svg | MIN skickar upp 3. 3 är inte större än 5, så α stannar på 5.
+- Ner till MIN | bilder/minimax/v3/alpha-11.svg | Högra noden ärver α = 5 och β = +∞.
+- β = 2: beskär | bilder/minimax/v3/alpha-12.svg | Lövet 2 ger β = 2. α = 5 ≥ β = 2, så de två sista löven beskärs.
+- Samma beslut | bilder/minimax/v3/alpha-13.svg | Rotens värde är 5, samma som utan beskärning. Bara 6 av 9 löv behövde undersökas.
+> Stegen följer simuleringen på ai-aktiviteter.se (Minimax med alfa-beta-beskärning): besök och ärv sökfönster, uppdatera α eller β, kontrollera α ≥ β, skicka värdet uppåt.
 > Källa: originalbild 17. Presentation av David Hedengren.
 > Originaltext: 𝛼=𝛽=
 > Originaltext: −∞+∞
@@ -567,6 +573,7 @@ text: Hur många noder besöks med alfa-beta-beskärning? Sök från vänster ti
 fokus: ingen
 rörelse: ingen
 övergång: tona
+> Lärarens beslut 2026-11-10: alla inre noder är tomma i aktiviteten. Originalets 3 i MAX-noden ovanför löven 1, 0 och 1 visas inte.
 > Källa: originalbild 20. Presentation av David Hedengren.
 > Originaltext: Aktivitet – Hur många noder behöver utforskas?
 > Originaltext: 0

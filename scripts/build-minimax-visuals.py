@@ -503,7 +503,7 @@ def pts(p):
 
 
 def num_tree(name, nodes, edges, values, h, focus=(), chosen=(), pruned=(), callouts=None, bounds=None,
-             size=1.0, counter='', legend=True, hidden=(), changed=()):
+             size=1.0, counter='', legend=True, hidden=(), changed=(), rule=''):
     """nodes: key -> (x, y, role). values: key -> text. pruned: barn vars inkommande kant är beskuren.
     hidden: noder som inte är upptäckta ännu (ritas som konturer)."""
     callouts = callouts or {}
@@ -573,23 +573,39 @@ def num_tree(name, nodes, edges, values, h, focus=(), chosen=(), pruned=(), call
             g += text(x, ty, fmtnum(v), fs, INK, 'middle', 700)
         g += '</g>'
         body += g
-    # α/β-etiketter
+    # α/β: som i simuleringen har varje besökt nod sitt eget sökfönster.
+    # α (MAX:s garanti) överst i MAX-färg, β (MIN:s garanti) under i MIN-färg.
+    # Ett värde som just ändrats visas som "gammalt → nytt" och lyser.
+    changed = changed if isinstance(changed, dict) else {k: None for k in changed}
     for k, (a, b) in bounds.items():
         x, y, role = nodes[k]
-        hl = k in changed
-        lab = f'α {a}   β {b}'
-        w = len(lab) * 22 * .62 + 28
-        left = x + tw / 2 + 16 if x < W - 360 else x - tw / 2 - 16 - w
-        col = INK if hl else MUTED
-        stroke = MAXC if hl else CARD_LINE
-        op = .45 if k in cut else 1
-        body += f'<g data-bounds="{k}" opacity="{op}"><rect x="{left:.1f}" y="{y - 21:.1f}" width="{w:.1f}" height="42" rx="10" fill="{CARD}" stroke="{stroke}" stroke-width="{2.5 if hl else 1.6}"/>'
-        body += text(left + w / 2, y + 8, lab, 22, col, 'middle', 600 if hl else 500, MONO) + '</g>'
+        op = .4 if k in cut else (.62 if anyfocus and k not in focus else 1)
+        ch = changed.get(k)
+        rows = []
+        for which, sym, val, col, dy in (('a', 'α', a, MAXC, -25), ('b', 'β', b, MINC, 25)):
+            hot = ch is not None and ch[0] == which
+            lab = f'{sym} = {fmtnum(ch[1])} → {fmtnum(val)}' if hot else f'{sym} = {fmtnum(val)}'
+            rows.append((lab, col, dy, hot))
+        wmax = max(len(r[0]) for r in rows) * 23 * .62 + 30
+        left = x + tw / 2 + 14 if x + tw / 2 + 14 + wmax < W else x - tw / 2 - 14 - wmax
+        g = f'<g data-bounds="{k}" opacity="{op}">'
+        for lab, col, dy, hot in rows:
+            w = len(lab) * 23 * .62 + 30
+            if hot:
+                g += f'<rect x="{left:.1f}" y="{y + dy - 20:.1f}" width="{w:.1f}" height="40" rx="20" fill="{col}" fill-opacity=".35" filter="url(#glow)"/>'
+            g += (f'<rect x="{left:.1f}" y="{y + dy - 20:.1f}" width="{w:.1f}" height="40" rx="20" fill="{col if hot else CARD}" '
+                  f'fill-opacity="{.22 if hot else 1}" stroke="{col}" stroke-opacity="{1 if hot else .55}" stroke-width="{3 if hot else 1.6}"/>')
+            g += text(left + 15, y + dy + 8, lab, 23, INK if hot else col, 'start', 700 if hot else 600, MONO)
+        body += g + '</g>'
+    if rule:
+        body += text(0, 76, rule, 22, MUTED, 'start', 500)
     for k, (label, side, color) in callouts.items():
         x, y, role = nodes[k]
         col = color or (MAXC if role == 'max' else MINC)
         if side == 'right':
             body += pill(x + tw / 2 + 22, y, label, col)
+        elif side == 'pills':
+            body += pill(x + tw / 2 + 14, y + 78, label, col)
         elif side == 'left':
             body += pill(x - tw / 2 - 22, y, label, col, anchor='end')
         elif side == 'above':
@@ -719,36 +735,70 @@ def scene14_17():
     num_tree('beskarning-3', nodes, edges, v, h, focus={'r', 'r0'}, chosen={('r0', 'r01'), ('r', 'r0')}, pruned={'r12', 'r21', 'r22'},
              callouts={'r': ('max(5, ≤3, ≤2) = 5', 'right', None)})
 
-    # Scen 17: α och β steg för steg, djupet först
+    # Scen 17: α och β steg för steg, djupet först, som i simuleringen på ai-aktiviteter.se.
+    # Varje steg är en händelse: besök (ärv sökfönster), löv (uppdatera β/α), kontroll α ≥ β, tillbaka.
     inf, ninf = '+∞', '−∞'
-    b = {k: (ninf, inf) for k in ['r', 'r0', 'r1', 'r2']}
-    v = {}
-    leafkeys = [k for k in leaves]
-    hidden = set(leafkeys)
-    num_tree('alpha-0', nodes, edges, v, h, bounds=dict(b), hidden=hidden, counter='Undersökta löv: 0 / 9')
-    frames = [
-        ({'r00': 8}, {'r0': (ninf, 8)}, {'r0', 'r00'}, set(), {}, set()),
-        ({'r01': 5}, {'r0': (ninf, 5)}, {'r0', 'r01'}, set(), {}, set()),
-        ({'r02': 6, 'r0': 5}, {}, {'r0', 'r02'}, set(), {'r0': ('min(8, 5, 6) = 5', 'below', None)}, {('r0', 'r01')}),
-        ({'r': '≥5'}, {'r': (5, inf), 'r1': (5, inf), 'r2': (5, inf)}, {'r', 'r0'}, set(), {}, {('r', 'r0')}),
-        ({'r10': 9}, {'r1': (5, 9)}, {'r1', 'r10'}, set(), {}, set()),
-        ({'r11': 3, 'r1': '≤3'}, {'r1': (5, 3)}, {'r1', 'r11'}, {'r12'}, {'r1': ('β 3 ≤ α 5', 'below', CUT)}, set()),
-        ({'r20': 2, 'r2': '≤2'}, {'r2': (5, 2)}, {'r2', 'r20'}, {'r21', 'r22'}, {'r2': ('β 2 ≤ α 5', 'below', CUT)}, set()),
-        ({'r': 5}, {}, {'r', 'r0'}, set(), {'r': ('max(5, ≤3, ≤2) = 5', 'left', None)}, set()),
+    R = 'MAX höjer α  ·  MIN sänker β  ·  α ≥ β → beskär resten'
+    leafkeys = list(leaves)
+    st = {'v': {}, 'b': {'r': (ninf, inf)}, 'pruned': set(), 'chosen': set()}
+
+    def frame(name, focus, path, changed=None, calls=None):
+        hidden = {k for k in leafkeys if k not in st['v']}
+        hidden -= {k for k in hidden if any(k.startswith(p) for p in st['pruned'])}
+        seen = sum(1 for k in leafkeys if k in st['v'])
+        num_tree(name, nodes, edges, dict(st['v']), h, focus=set(focus), chosen=set(path) | st['chosen'],
+                 pruned=set(st['pruned']), callouts=calls or {}, bounds=dict(st['b']), hidden=hidden,
+                 counter=f'Undersökta löv: {seen} / 9', changed=changed or {}, rule=R)
+
+    frame('alpha-0', {'r'}, set())
+    steps = [
+        # (nya värden, nya fönster, fokus, väg, ändrat, beskurna, callouts)
+        ({}, {'r0': (ninf, inf)}, {'r0'}, {('r', 'r0')}, {}, set(), {}),
+        ({'r00': 8, 'r0': 8}, {'r0': (ninf, 8)}, {'r0', 'r00'}, {('r', 'r0'), ('r0', 'r00')}, {'r0': ('b', inf)}, set(), {}),
+        ({'r01': 5, 'r0': 5}, {'r0': (ninf, 5)}, {'r0', 'r01'}, {('r', 'r0'), ('r0', 'r01')}, {'r0': ('b', 8)}, set(), {}),
+        ({'r02': 6}, {}, {'r0', 'r02'}, {('r', 'r0'), ('r0', 'r02')}, {}, set(), {'r0': ('6 > 5: β stannar', 'pills', MINC)}),
+        ({'r': 5}, {'r': (5, inf)}, {'r', 'r0'}, {('r', 'r0')}, {'r': ('a', ninf)}, set(), {}),
+        ({}, {'r1': (5, inf)}, {'r1'}, {('r', 'r1')}, {}, set(), {}),
+        ({'r10': 9, 'r1': 9}, {'r1': (5, 9)}, {'r1', 'r10'}, {('r', 'r1'), ('r1', 'r10')}, {'r1': ('b', inf)}, set(), {'r1': ('α 5 < β 9: fortsätt', 'pills', INK)}),
+        ({'r11': 3, 'r1': 3}, {'r1': (5, 3)}, {'r1', 'r11'}, {('r', 'r1'), ('r1', 'r11')}, {'r1': ('b', 9)}, set(), {}),
+        ({}, {}, {'r1'}, {('r', 'r1')}, {}, {'r12'}, {'r1': ('α 5 ≥ β 3: beskär', 'pills', CUT)}),
+        ({}, {}, {'r', 'r1'}, {('r', 'r1')}, {}, set(), {'r': ('3 < 5: α stannar', 'left', MAXC)}),
+        ({}, {'r2': (5, inf)}, {'r2'}, {('r', 'r2')}, {}, set(), {}),
+        ({'r20': 2, 'r2': 2}, {'r2': (5, 2)}, {'r2', 'r20'}, {('r', 'r2'), ('r2', 'r20')}, {'r2': ('b', inf)}, {'r21', 'r22'}, {'r2': ('α 5 ≥ β 2: beskär', 'pills', CUT)}),
+        ({}, {}, {'r', 'r0'}, set(), {}, set(), {'r': ('max(5, 3, 2) = 5', 'left', MAXC)}),
     ]
-    pruned, chosen = set(), set()
-    for i, (add, bs, focus, pr, calls, ch) in enumerate(frames, 1):
-        v.update(add)
-        b.update(bs)
-        pruned |= pr
-        chosen |= ch
-        for k in add:
-            hidden.discard(k)
-        seen = sum(1 for k in leafkeys if k in v)
-        num_tree(f'alpha-{i}', nodes, edges, v, h, focus=focus, chosen=set(chosen), pruned=set(pruned), callouts=calls,
-                 bounds=dict(b), hidden=set(hidden) - {k for k in hidden if k in pruned or any(k.startswith(p) for p in pruned)},
-                 counter=f'Undersökta löv: {seen} / 9', changed=set(bs))
-    assert seen == 6
+    for i, (vals, wins, focus, path, ch, pr, calls) in enumerate(steps, 1):
+        st['v'].update(vals)
+        st['b'].update(wins)
+        st['pruned'] |= pr
+        if i == len(steps):
+            st['chosen'] = {('r', 'r0'), ('r0', 'r01')}
+        frame(f'alpha-{i}', focus, path, ch, calls)
+    seen = sum(1 for k in leafkeys if k in st['v'])
+    assert seen == 6 and st['v']['r'] == 5
+    # Kontroll mot en riktig alfa-beta-sökning.
+    order = []
+
+    def ab(k, a, b):
+        if k in leaves:
+            order.append(k)
+            return leaves[k]
+        kids = [c for p, c in edges if p == k]
+        if nodes[k][2] == 'max':
+            v = float('-inf')
+            for c in kids:
+                v = max(v, ab(c, a, b)); a = max(a, v)
+                if a >= b:
+                    break
+        else:
+            v = float('inf')
+            for c in kids:
+                v = min(v, ab(c, a, b)); b = min(b, v)
+                if a >= b:
+                    break
+        return v
+    assert ab('r', float('-inf'), float('inf')) == 5
+    assert order == [k for k in leafkeys if k in st['v']], order
 
 
 def scene18_19():
@@ -801,7 +851,8 @@ def scene20():
     lay(root, 0)
     maxdepth = max(d for _, d in positions.values())
     nodes = {k: (110 + x * (W - 220) / (leafindex[0] - 1), 110 + d * 730 / maxdepth, ns[k]['role']) for k, (x, d) in positions.items()}
-    num_tree('rakna-noder', nodes, es, {k: v['value'] for k, v in ns.items()}, 900, size=.72)
+    # Lärarens beslut 2026-11-10: i aktiviteten är alla inre noder tomma; bara löven har värden.
+    num_tree('rakna-noder', nodes, es, {k: (v['value'] if not children[k] else '') for k, v in ns.items()}, 900, size=.72)
 
 
 if __name__ == '__main__':

@@ -93,7 +93,7 @@ rörelse: ingen
 övergång: tona
 - Lövnoderna | bilder/minimax/v3/spel-7-1.svg | Slutställningarna får sina värden: vinst för X = 1, oavgjort = 0.
 - Max väljer | bilder/minimax/v3/spel-7-2.svg | X har bara ett drag kvar i varje gren. Max-värde: 1 till vänster, 0 till höger.
-- Min väljer | bilder/minimax/v3/spel-7-3.svg | Min-värde: min(1, 0) = 0. O väljer utfallet som är sämst för X.
+- Min väljer | bilder/minimax/v3/spel-7-3.svg | Min-värde: 0. O väljer det minsta av 1 och 0, alltså utfallet som är sämst för X.
 > Källa: originalbild 7. Presentation av David Hedengren.
 > Originaltext: ”Jag baserar mitt drag nu på vad min motståndare kommer göra i nästa drag och för att göra det funderar jag över vad jag skulle göra efter det och så vidare”
 > Originaltext: Min-värde: 0
@@ -116,10 +116,10 @@ rörelse: ingen
 övergång: tona
 - Lövnoderna | bilder/minimax/v3/spel-8-1.svg | Vänstra grenen slutar i vinst för X (1) och oavgjort (0).
 - Max-värde: 1 och 0 | bilder/minimax/v3/spel-8-2.svg | X har bara ett drag kvar. Värdet flyttas rakt upp.
-- Min-värde: 0 | bilder/minimax/v3/spel-8-3.svg | O väljer det minsta: min(1, 0) = 0.
+- Min-värde: 0 | bilder/minimax/v3/spel-8-3.svg | O väljer det minsta av 1 och 0, alltså 0.
 - Min-värde: −1 | bilder/minimax/v3/spel-8-4.svg | I mitten kan O vinna direkt. Min väljer −1.
 - Värde: 1 | bilder/minimax/v3/spel-8-5.svg | Det högra draget ger tre i rad i mittkolumnen: direkt vinst för X.
-- Max-värde: 1 | bilder/minimax/v3/spel-8-6.svg | Max väljer det största värdet: max(0, −1, 1) = 1.
+- Max-värde: 1 | bilder/minimax/v3/spel-8-6.svg | Max väljer det största av 0, −1 och 1, alltså 1.
 > Källa: originalbild 8. Presentation av David Hedengren.
 > Originaltext: Värde: 1
 > Originaltext: Värde: 0
@@ -141,7 +141,7 @@ rubrik: Spela tre-i-rad med grannen
 etikett: Aktivitet
 bild: bilder/minimax/original/image7.png
 alt: Ett tre-i-rad-bräde med kryss och ringar.
-text: Öppna filen ”Lektionsaktivitet – Minimax i Tre-i-rad” från Teams och läs instruktionerna
+text: Öppna filen ”Lektionsaktivitet – Minimax i Tre-i-rad” i Vklass och läs instruktionerna
 rörelse: tona
 fokus: ingen
 - 1. Spela | Spela ett parti tre-i-rad med grannen. Notera varje drag och dess position på ett papper eller på datorn.
@@ -203,7 +203,7 @@ text: ▲ Max drag · ▼ Min drag. Max väljer bland Min-nodernas värden.
 fokus: ingen
 rörelse: ingen
 övergång: tona
-- Max drag | bilder/minimax/v3/val-1.svg | max(4, 3, 2) = 4
+- Max drag | bilder/minimax/v3/val-1.svg | Max väljer det största av 4, 3 och 2, alltså 4.
 > Källa: originalbild 11. Presentation av David Hedengren.
 > Originaltext: Generell version av minimax-algoritmen
 > Originaltext: Max drag
@@ -224,10 +224,10 @@ text: Alla lövvärden syns. Räkna från löven mot roten.
 fokus: ingen
 rörelse: ingen
 övergång: tona
-- Vänster | bilder/minimax/v3/minimax-1.svg | min(8, 5, 6) = 5
-- Mitten | bilder/minimax/v3/minimax-2.svg | min(9, 3, 7) = 3
-- Höger | bilder/minimax/v3/minimax-3.svg | min(2, 4, 6) = 2
-- Roten | bilder/minimax/v3/minimax-4.svg | max(5, 3, 2) = 5
+- Vänster | bilder/minimax/v3/minimax-1.svg | MIN väljer det minsta av 8, 5 och 6, alltså 5.
+- Mitten | bilder/minimax/v3/minimax-2.svg | MIN väljer det minsta av 9, 3 och 7, alltså 3.
+- Höger | bilder/minimax/v3/minimax-3.svg | MIN väljer det minsta av 2, 4 och 6, alltså 2.
+- Roten | bilder/minimax/v3/minimax-4.svg | MAX väljer det största av 5, 3 och 2, alltså 5.
 > Stanna före varje klick och fråga: ”Vilket värde väljer MIN här, och varför det minsta?” Låt eleverna svara innan värdet visas.
 > Källa: originalbild 12. Presentation av David Hedengren.
 > Originaltext: Generell version av minimax-algoritmen
@@ -255,7 +255,7 @@ rubrik: Vilket värde får rotnoden?
 etikett: Uppgift
 bild: bilder/minimax/v3/rotnod-0.svg
 alt: Spelträd med MIN i roten; övning i att beräkna nodvärden.
-text: Låt eleverna räkna först. Klicka sedan fram en nivå i taget.
+text: Räkna från löven upp till roten. Vem väljer på varje nivå, MAX eller MIN?
 fokus: ingen
 rörelse: ingen
 övergång: tona
@@ -264,6 +264,7 @@ rörelse: ingen
 - Nivån under roten | bilder/minimax/v3/rotnod-3.svg | MAX väljer det största barnvärdet.
 - Rotnoden | bilder/minimax/v3/rotnod-4.svg | Roten är MIN i detta träd. Värdet är 2.
 - Slutvägen | bilder/minimax/v3/rotnod-5.svg | Följ värdet 2 nedåt. Med bästa spel från båda sidor går partiet längs den vita vägen till lövet 2.
+> Låt eleverna räkna först. Klicka sedan fram en nivå i taget.
 > Källa: originalbild 13. Presentation av David Hedengren.
 > Originaltext: Uppgift – Vilket värde får rotnoden?
 > Originaltext: 4
@@ -375,14 +376,16 @@ rörelse: ingen
 - Ner till vänster | bilder/minimax/v3/beskarning-1.svg | Sökningen går först ner i den vänstra grenen.
 - Lövet 8 | bilder/minimax/v3/beskarning-2.svg | MIN kan nu ge högst 8.
 - Lövet 5 | bilder/minimax/v3/beskarning-3.svg | 5 är mindre. MIN kan ge högst 5.
-- Lövet 6 | bilder/minimax/v3/beskarning-4.svg | 6 ändrar inget. Vänstra grenen är klar: min(8, 5, 6) = 5.
+- Lövet 6 | bilder/minimax/v3/beskarning-4.svg | 6 ändrar inget. MIN väljer det minsta av 8, 5 och 6, alltså 5.
 - Roten | bilder/minimax/v3/beskarning-5.svg | Max kan få minst 5. Kan någon av de andra grenarna bli bättre för Max?
 - Ner till mitten | bilder/minimax/v3/beskarning-6.svg | Nu undersöks mittenvägen.
 - Lövet 9 | bilder/minimax/v3/beskarning-7.svg | MIN kan ge högst 9. Det kan fortfarande bli bättre än 5.
 - Lövet 3 | bilder/minimax/v3/beskarning-8.svg | Kommer inte kunna vara högre än 3, Max kommer därför inte välja mittenvägen (eftersom 5>3)
 - Mittenvägen | bilder/minimax/v3/beskarning-9.svg | Vi kan beskära (prune) trädet här och behöver inte utforska några grenar nedanför
-- Högra vägen | bilder/minimax/v3/beskarning-10.svg | Lövet 2 räcker. De sista två grenarna kan också beskäras eftersom oavsett vad de har för värde kommer inte Max välja den högra vägen
-- Beskärning | bilder/minimax/v3/beskarning-11.svg | Roten får 5, samma svar som utan beskärning. Bara 6 av 9 löv behövde undersökas.
+- Ner till höger | bilder/minimax/v3/beskarning-10.svg | Nu undersöks högra vägen.
+- Lövet 2 | bilder/minimax/v3/beskarning-11.svg | Högra vägen kan inte bli högre än 2. Max har redan 5.
+- Högra vägen | bilder/minimax/v3/beskarning-12.svg | De sista två grenarna kan också beskäras eftersom oavsett vad de har för värde kommer inte Max välja den högra vägen
+- Beskärning | bilder/minimax/v3/beskarning-13.svg | Roten får 5, samma svar som utan beskärning. Bara 6 av 9 löv behövde undersökas.
 > Källa: originalbild 14. Presentation av David Hedengren.
 > Originaltext: Alfa-beta-beskärning (pruning)
 > Originaltext: 5
@@ -417,9 +420,9 @@ alt: En sekatör klipper bort en tunn gren från ett bonsaiträd; resten av trä
 text:
 rörelse: tona
 fokus: ingen
-- Minskad beräkningskostnad | Alfa-beta beskärning reducerar antalet noder som måste utforskas i spelträdet genom att eliminera grenar som inte påverkar det slutliga resultatet. Detta gör Minimax betydligt snabbare och mer effektiv.
-- Djupare träd | Gör det möjligt att utforska djupare träd
-- Snabbare beslut | Genom att undvika utforskning av irrelevanta grenar, kan algoritmen fatta beslut snabbare. Detta är särskilt viktigt i komplexa spel som schack, där antalet möjliga drag kan bli astronomiskt stort.
+- Minskad beräkningskostnad | Grenar som inte kan påverka resultatet hoppas över. Algoritmen behöver undersöka färre noder.
+- Djupare träd | Tiden som sparas kan användas till att se fler drag framåt.
+- Snabbare beslut | Genom att undvika att utforska onödiga grenar kan algoritmen fatta beslut snabbare.
 > Källa: originalbild 15. Presentation av David Hedengren.
 > Originaltext: Varför beskärning?
 > Originaltext: Minskad beräkningskostnad
@@ -433,7 +436,7 @@ fokus: ingen
 
 [egen: symbolnyckel]
 rubrik: Alfa- och betavärden
-text: Algoritmen tilldelar varje nod ett alfavärde (𝛼) och ett betavärde 𝛽 och gör en Depth First Search i trädet.
+text: Algoritmen tilldelar varje nod ett alfavärde (𝛼) och ett betavärde 𝛽 och gör en djupet först-sökning i trädet.
 rörelse: tona
 fokus: ingen
 - α | **Alfavärdet** (𝛼) är det hittills bästa värde som Max kan garantera. Från början ges noden alfavärdet (𝛼=−∞) och **uppdateras vid maxnoder** om ett högre värde hittats.
@@ -551,13 +554,13 @@ text: alfabeta(rot)  # facit, vänster till höger
 fokus: ingen
 rörelse: skrivmaskin
 övergång: tona
-- MAX ← 5, 3 | bilder/minimax/v3/facit-1.svg | max(5, 3) = 5. MIN ovanför får β = 5.
+- Första MAX | bilder/minimax/v3/facit-1.svg | Väljer det största av 5 och 3, alltså 5. MIN ovanför får β = 5.
 - löv 8 | bilder/minimax/v3/facit-2.svg | 8 ≥ 5. MAX ger minst 8, MIN väljer aldrig grenen → **beskär** lövet 2.
-- MIN vänster | bilder/minimax/v3/facit-3.svg | min(5, ≥8) = 5. Roten får α = 5.
-- MAX ← 7, 1 | bilder/minimax/v3/facit-4.svg | max(7, 1) = 7.
-- MAX ← 2, 3 | bilder/minimax/v3/facit-5.svg | max(2, 3) = 3.
-- MIN höger | bilder/minimax/v3/facit-6.svg | min(7, 3) = 3.
-- roten | bilder/minimax/v3/facit-7.svg | max(5, 3) = 5.
+- Vänstra MIN | bilder/minimax/v3/facit-3.svg | Väljer det minsta av 5 och minst 8, alltså 5. Roten får α = 5.
+- Tredje MAX | bilder/minimax/v3/facit-4.svg | Väljer det största av 7 och 1, alltså 7.
+- Fjärde MAX | bilder/minimax/v3/facit-5.svg | Väljer det största av 2 och 3, alltså 3.
+- Högra MIN | bilder/minimax/v3/facit-6.svg | Väljer det minsta av 7 och 3, alltså 3.
+- Roten | bilder/minimax/v3/facit-7.svg | Väljer det största av 5 och 3, alltså 5.
 > Pedagogik: loggen används på facit eftersom eleverna redan har räknat själva. Låt dem jämföra sin lösning rad för rad; hela spåret står kvar efter sista klicket.
 > Källa: originalbild 19. Presentation av David Hedengren.
 > Originaltext: Aktivitet – Vilka grenar kan beskäras?
@@ -620,7 +623,7 @@ fokus: ingen
 - Likheter och skillnader | Vad finns det för likheter/skillnader?
 - För- och nackdelar | Vad finns det för för- och nackdelar med respektive algoritm?
 @text 126 936 1650 65 storlek=24 färg=dampad | Monte Carlo Tree Search: https://www.youtube.com/watch?v=lhFXKNyA0QA
-> Originalets videolänk är bevarad. Teams-övningsfilen är inte bifogad.
+> Originalets videolänk är bevarad. Övningsfilen i Vklass är inte bifogad.
 > Källa: originalbild 21. Presentation av David Hedengren.
 > Originaltext: Extrauppgift – Monte Carlo Tree Search algoritmen (MCTS)
 > Originaltext: Bekanta dig med sökalgoritmen MCTS genom att söka på internet och/eller titta på klippet nedan

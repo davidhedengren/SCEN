@@ -25,10 +25,12 @@ Presentationen har **21 scener**, en per originalbild. Ordningen följer origina
 - **Scen 4–6 och 8:** spelträden för tre-i-rad ritas från riktiga spelställningar; värdena räknas med minimax i byggskriptet och avslöjas nerifrån och upp.
 - **Talträd (scen 9–11, 14, 17–20):** trianglar uppåt för MAX (turkos), nedåt för MIN (bärnsten). Noden i fokus fylls, får skarp ljus kant och ett mjukt sken; resten tonas ned. Beskurna grenar är streckade med rött kryss, och löv som inte undersökts är streckade konturer.
 - **Slutvägen:** det sista steget på scen 10, 11, 14, 17 och 19 visar en vit, lysande linje från roten till lövet som ger rotens värde. På scen 11 är det ett eget klick (”Slutvägen”).
-- **Scen 14:** beskärningen visas som djupet först-sökning, en nod i taget med räknare för undersökta löv, i samma rytm som scen 17 men utan α och β. Originalets formuleringar ligger på klick 8–10.
+- **Scen 14:** beskärningen visas som djupet först-sökning, en nod i taget med räknare för undersökta löv, i samma rytm som scen 17 men utan α och β. Både mitten- och högergrenen stegas nod för nod: ner till noden, lövet, beskärning. Originalets formuleringar ligger på klick 8, 9 och 12.
 - **Scen 16:** *Symbolnyckel.* ”uppdateras vid maxnoder” och ”uppdateras vid minnoder” är framhävda.
 - **Scen 17:** följer simuleringen på ai-aktiviteter.se: varje nod visar sitt eget α och β; ett ändrat värde visas som ”8 → 5”.
 - **Scen 19:** facit i *Resonemang med logg*. Raderna skrivs fram tecken för tecken (`rörelse: skrivmaskin`), som om algoritmen skriver.
+
+Förklaringstexterna under diagrammen är skrivna i ord (”väljer det största av 4, 3 och 2”), så att presentationen går att läsa i efterhand. Skrivsättet max(4, 3, 2) finns bara i själva träden. Lärarinstruktioner står i talaranteckningarna, aldrig på bilden.
 
 Stanna före svarsklicken. Be om både värde och motivering: ”Vem väljer här?” och ”Vad vet vi redan som gör resten ointressant?” Alla scener har kvar originalets text i talaranteckningarna som stöd.
 
@@ -180,7 +182,7 @@ Endast de uttryckligen godkända rättelserna nedan är genomförda. Övriga for
 - Originalets symbolbilder 2, 3, 5, 6 och 7 används i presentationen. Titelbild 1 är ersatt av den genererade schackbilden och finns bevarad i originalmappen. Nätverksbilden används på samma två bilder som i originalet.
 - Spelställningarna är avskrivna från originalet och ligger som data i byggskriptet; trädens grenar och värden räknas fram ur dem. Kryss, ringar och grenarnas ordning följer originalet. Numeriska träd har samma struktur, lövvärden och nodtyper som originalet. Robotbilden och citatet i scen 7 ligger kvar på samma bild. Fokusmarkeringar och beskärningskryss ligger i diagrammets egen SVG. Original-PowerPoint är underlag för innehåll och ursprunglig animation.
 - SCEN-versionen är en redigerad föreläsningsversion, inte en pixelidentisk import. Varje scen har hänvisning till originalbild och dess text i anteckningarna. Dubbletter som användes för PowerPoint-animationer är inte separata innehållspunkter i SCEN.
-- Teams-övningsfilen har inte bifogats. Instruktionen att öppna den finns kvar.
+- Övningsfilen i Vklass har inte bifogats. Instruktionen säger att den finns i Vklass (originalet sa Teams).
 - [Originalets MCTS-klipp på YouTube](https://www.youtube.com/watch?v=lhFXKNyA0QA) är bevarat som länk, inte nedladdat eller inbäddat.
 
 ## Verifiering av version 3

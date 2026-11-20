@@ -204,8 +204,9 @@ window.ScenCloud = (() => {
       async list() {
         try { for (const r of await listRows('scen_library?' + selected)) await adopt(r); }
         catch (e) { if (!(e instanceof TypeError) && e.name !== 'TimeoutError') throw e; }
-        const rows = (await cache.all('documents')).filter(r=>!r.removed);
-        rows.forEach(r=>seen.set(r.deck_id,r.change_id)); return rows.map(r=>r.document);
+        const rows = await cache.all('documents');
+        rows.forEach(r=>seen.set(r.deck_id,r.change_id));
+        return rows.filter(r=>!r.removed).map(r=>r.document);
       },
       async save(d, removed = false) {
         await locks(d.id,async()=>{

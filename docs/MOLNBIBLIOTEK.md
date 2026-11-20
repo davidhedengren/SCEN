@@ -18,7 +18,8 @@ SCEN använder samma Supabase-projekt som Kunskapsgymmet och Uppgiftslabbet. Den
 
 ## Använd biblioteket
 
-- Under **Mitt konto** kan du välja vilka presentationer från den här webbläsaren som ska kopieras till kontot. När du kopierar en av kursens originalpresentationer i inloggat läge hamnar kopian också i ditt privata bibliotek.
+- Under **Mitt konto** kan du välja vilka presentationer från den här webbläsaren som ska kopieras till kontot.
+- När du är inloggad öppnar **Redigera** eller miniatyren en kurspresentation i redigeraren. Första ändringen sparar din privata version på samma plats i kursen. Därifrån öppnar **Spela** och **Redigera** din version även på en annan dator. Den offentliga kurslänken visar kursoriginalet. **Återgå till original** låter dig välja kursoriginalet igen. Tidigare kopior finns separat i biblioteket.
 - SCEN sparar ett lokalt utkast först. **Sparad i molnet** visas först när presentationens mediefiler, de egna mallar som används och manusversionen har sparats. Externa webblänkar, exempelvis YouTube, fortsätter att kräva nät. Inloggningen gäller för din webbläsarflik.
 - Öppna samma SCEN-adress på en andra dator och logga in där. De uppladdade bilderna och filmerna hämtas när du öppnar presentationen.
 - Med redigeraren öppen kan du fortsätta skriva vid nätavbrott. Utkastet försöker synka vid återanslutning och nästa inloggning. **Mitt konto → Synka nu** gör ett nytt försök. Den fristående HTML-exporten går att spela offline.
@@ -26,6 +27,6 @@ SCEN använder samma Supabase-projekt som Kunskapsgymmet och Uppgiftslabbet. Den
 
 ## Prova klickredigeraren
 
-Kopiera **AI-agenter och miljöer**, välj scen 17 och klicka på **Dynamisk** i raden under bilden. **Ändra fokusram** låter dig rita eller flytta ramen och välja filmstart. **Lägg till fokus** skapar ett nytt klick. **Repetera från klicket** startar spelaren med det steget valt.
+Välj **Redigera** på **AI-agenter och miljöer**, välj scen 17 och klicka på **Dynamisk** i raden under bilden. **Ändra fokusram** låter dig rita eller flytta ramen och välja filmstart. **Lägg till fokus** skapar ett nytt klick. **Repetera från klicket** startar spelaren med det steget valt.
 
 I **Minimax-algoritmen och beskärning**, välj scen 17 och ett bildsteg. Med **Markera nod** klickar du på en triangel eller väljer noden i listan. SCEN sparar markeringen i en egen diagramfil i din presentation, i diagrammets koordinater. Funktionen fungerar med SVG-bildsteg som innehåller markerade nodgrupper med polygoner.

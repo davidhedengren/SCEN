@@ -53,5 +53,13 @@ function device(api) {
   await b.restore('demo',1);
   assert((await b.list()).some(d=>d.title==='Start (version 1)'));
   assert.equal(versions.filter(v=>v.deck_id==='demo').length,2);
+  const course = {id:'kurs:exempelmallar/exempel.md',title:'Min föreläsning',slides:[]};
+  await a.save(course); await a.retry();
+  await a.remove(course.id); await a.retry();
+  const fresh = device(api);
+  assert(!(await fresh.list()).some(d=>d.id===course.id));
+  await fresh.save({...course,title:'Ny privat version'}); await fresh.retry();
+  assert.equal(versions.filter(v=>v.deck_id===course.id).length,3);
+  assert((await a.list()).some(d=>d.id===course.id && d.title==='Ny privat version'));
   console.log('OK: privat bibliotek, lokalt utkast, två datorer, samtidiga ändringar och återställning.');
 })().catch(e=>{console.error(e);process.exitCode=1;});

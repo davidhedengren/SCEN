@@ -10,6 +10,7 @@ const IMG = Object.assign({}, window.SCEN_IMAGES || {});
 let decks = [], deck = null, cur = 0, pv = null, presenter = null, dl = null, SAMPLER = null, myTpls = [];
 
 /* =================== lagring =================== */
+let account, privateStore;
 const Store = {
   mode: 'memory', db: null, uid: null, mem: { decks: {}, imgs: {} },
   async init() {
@@ -299,9 +300,10 @@ function card(d, sample) {
     if (d.repo) B('Spara', () => exportDeck(d), '', 'Spara på datorn som en .html-fil');
     B('Kopiera', () => duplicate(d, true), '', 'Gör en egen kopia att redigera');
   } else {
-    B('Spela', async () => { const imgs = await safeImages(d.id); Object.assign(IMG, imgs); play(d, 0); });
+    B('Spela', async () => { const imgs = await safeImages(d.id); if (!imgs) return; Object.assign(IMG, imgs); play(d, 0); });
     B('Spara', () => exportDeck(d), '', 'Spara på datorn som en .html-fil');
     B('Duplicera', () => duplicate(d));
+    if (privateStore) B('Versioner', () => versionDialog(d));
     B('Ta bort', () => {
       acts.hidden = true;
       const c = document.createElement('div'); c.className = 'confirm';
@@ -320,45 +322,46 @@ function card(d, sample) {
   el.appendChild(acts);
   return el;
 }
-async function safeImages(id) { try { return await Store.loadImages(id); } catch (e) { toast('Bilderna kunde inte hämtas: ' + errMsg(e)); return {}; } }
+async function safeImages(id) { try { return await Store.loadImages(id); } catch (e) { toast('Presentationens media kunde inte hämtas. ' + errMsg(e)); return null; } }
 async function duplicate(src, fromSample) {
   const d = clone(src); delete d.sample;
   await ensureDeckTemplates(d);
   d.id = rid(); d.title = fromSample ? src.title : src.title + ' (kopia)'; d.createdAt = d.updatedAt = now();
   delete d.repo; delete d.file;
   const imgs = src.repo ? {} : fromSample ? { 'ex-parabel': PARABEL } : await safeImages(src.id);
+  if (!imgs) return;
   try {
     for (const [k, v] of Object.entries(imgs)) await Store.saveImage(d.id, k, v);
     await Store.save(d);
     Object.assign(IMG, imgs);
     setLibOpen((d.course || '').trim() || 'Övrigt', true);
     decks.unshift(d); renderGrid();
-    toast(src.repo ? 'Kopian är sparad i den här webbläsaren. Spara manus (.md) för att lägga tillbaka ändringar i repot.' : fromSample ? 'Exemplet finns nu bland dina presentationer.' : 'Kopian är sparad.');
+    toast('Kopian finns i ditt bibliotek.');
     if (fromSample) openDeck(d.id);
   } catch (e) { toast('Kunde inte spara kopian: ' + errMsg(e)); }
 }
 async function newDeck() {
   const d = normalize({ id: rid(), title: 'Namnlös presentation', createdAt: now(), updatedAt: now(), slides: [{ id: rid(), layout: 'title', title: 'Namnlös presentation', text: '', bg: 'nodes' }] });
-  try { await Store.save(d); } catch (e) { toast(errMsg(e)); }
+  try { await Store.save(d); } catch (e) { toast(errMsg(e)); return; }
   decks.unshift(d);
   deck = clone(d); cur = 0; showEditor();
   const t = $('#deckTitle'); t.focus(); t.select();
 }
 async function openDeck(id) {
   const d = decks.find(x => x.id === id); if (!d) return;
-  Object.assign(IMG, await safeImages(id));
+  try { Object.assign(IMG,await Store.loadImages(id)); } catch(e) { toast('Kunde inte öppna presentationens media. ' + errMsg(e)); return; }
   deck = normalize(clone(d));
   await ensureDeckTemplates(deck);
   cur = 0; showEditor();
 }
 
 /* =================== uppspelning =================== */
-async function play(d, start) {
+async function play(d, start, startStep) {
   await ensureDeckTemplates(d);
   const host = $('#present'); host.hidden = false;
   if (presenter) presenter.destroy();
   presenter = Scen.player(host, d, {
-    mode: 'present', images: IMG, start: start || 0,
+    mode: 'present', images: IMG, start: start || 0, startStep,
     onExit(i) {
       if (document.fullscreenElement) { try { document.exitFullscreen(); } catch (e) {} }
       presenter.destroy(); presenter = null; host.hidden = true;
@@ -416,7 +419,7 @@ function exportDeck(d) {
   $('#expMd').onclick = () => { closeModal(); exportAs(d, 'md'); };
 }
 async function exportAs(d, kind) {
-  if (!deck || d.id !== deck.id) Object.assign(IMG, await safeImages(d.id));
+  if (!deck || d.id !== deck.id) { const assets = await safeImages(d.id); if (!assets) return; Object.assign(IMG,assets); }
   try {
     if (kind === 'md') await saveFile(fileName(d.title, '.md'), new Blob([Manus.stringify(d)], { type: 'text/markdown' }));
     else await saveFile(fileName(d.title + (kind === 'student' ? ' – elevversion' : '')), new Blob([await standaloneHtml(d, kind === 'student')], { type: 'text/html' }));
@@ -665,6 +668,147 @@ lameller:"<path class=\"l\" d=\"M25 10V80M50 10V80M75 10V80M100 10V80M125 10V80\
 };
 const wf = l => `<svg class="wf" viewBox="0 0 160 90" aria-hidden="true">${WF[l] || ''}</svg>`;
 
+let requestedCue = null;
+function renderCues(index, step) {
+  const bar = $('#cueBar'), slide = deck?.slides[index];
+  if (!bar || !slide) return;
+  const scene = $('#preview .slide.active');
+  if (!scene) return;
+  const groups = scene._groups || [], direction = Scen.normalizeImageDirection(slide);
+  const photo = slide.layout === 'bildregi' && ['spotlight','guided','reveal','detail'].includes(direction.mode);
+  const sequence = slide.layout === 'egen' && scene.querySelector('.image-step');
+  bar.hidden = !groups.length && !(photo && slide.steps !== false);
+  bar.replaceChildren(); if (bar.hidden) return;
+  const strip = document.createElement('div'); strip.className = 'cue-strip'; strip.setAttribute('aria-label','Klicksteg');
+  for (let n = 0; n <= groups.length; n++) {
+    const b = document.createElement('button'); b.type = 'button'; b.className = 'cue';
+    b.setAttribute('aria-pressed',String(n === step));
+    const detail = photo && n ? direction.details[n-1] : null;
+    const frame = sequence && n ? scene.querySelectorAll('.image-step')[n-1] : null;
+    const label = n === 0 ? 'Start' : detail?.label || frame?.querySelector('figcaption b')?.textContent ||
+      (groups[n-1].some(el=>el.hasAttribute('data-dramaturgy-restore')) ? 'Helbild' : 'Klick ' + n);
+    if (photo || sequence) {
+      const src = frame?.querySelector('img')?.getAttribute('src') || Scen.resolve(slide.image,IMG);
+      if (src) {
+        const thumb = document.createElement('span'); thumb.className = 'cue-thumb'; thumb.style.backgroundColor = getComputedStyle(scene).getPropertyValue('--bg');
+        const image = new Image(); image.src = src; image.alt = ''; thumb.append(image); b.append(thumb);
+        if (photo) {
+          image.style.objectFit = direction.crop; image.style.objectPosition = direction.start.slice(0,2).map(v=>v+'%').join(' ');
+          if (detail) { const mark = document.createElement('i'); rectStyle(mark,detail); thumb.append(mark); }
+        }
+      }
+    }
+    const text = document.createElement('span'); text.textContent = label; b.append(text); b.title = label;
+    b.onclick = () => { clearInterval(autoSteps._t); pv.go(index,{step:n,anim:false}); };
+    strip.append(b);
+  }
+  bar.append(strip);
+  const tools = document.createElement('div'); tools.className = 'cue-actions'; bar.append(tools);
+  function action(label, fn) { const b = document.createElement('button'); b.type='button'; b.className='btn small'; b.textContent=label; b.onclick=fn; tools.append(b); }
+  if (photo && slide.steps !== false) {
+    if (step > 0 && step <= direction.details.length) action('Ändra fokusram',()=>frameDialog(slide,step-1));
+    action('Lägg till fokus',()=>frameDialog(slide,direction.details.length));
+  }
+  const frames = Scen.lines(slide.items);
+  const source = step ? frames[step-1]?.split('|')[1]?.trim() : slide.image;
+  if (sequence && /\.svg$/i.test(source || '')) action('Markera nod',()=>nodeDialog(slide,step,source));
+  action('Repetera från klicket',()=>play(deck,index,step));
+  // Håll valt klick synligt även när raden är bredare än arbetsytan.
+  const current = strip.children[step];
+  if (current) strip.scrollLeft = Math.max(0,current.offsetLeft-strip.offsetLeft-strip.clientWidth/2+current.offsetWidth/2);
+}
+function rectStyle(el, r) {
+  Object.assign(el.style,{left:(r.x-r.w/2)+'%',top:(r.y-r.h/2)+'%',width:r.w+'%',height:r.h+'%'});
+}
+function frameDialog(slide, index) {
+  const dir = Scen.normalizeImageDirection(slide), existing = dir.details[index];
+  let rect = existing ? {...existing} : {x:50,y:50,w:18,h:22};
+  const dlg = modal('<h2>'+(existing?'Ändra fokusram':'Lägg till fokus')+'</h2><p>Dra över bilden för att rita ramen. Dra i ramen för att flytta den.</p><div class="frame-canvas"><img alt=""><i class="focus-rect" tabindex="0" aria-label="Fokusram. Flytta med piltangenterna."></i></div><label class="fld">Etikett<input id="frameLabel" type="text" required></label><label class="film-at" hidden><input type="checkbox"> Starta filmen vid detta klick</label><div class="acts"><button class="btn" data-close>Avbryt</button><button class="btn primary" id="frameSave">Spara klick</button></div>');
+  const canvas = dlg.querySelector('.frame-canvas'), mark = canvas.querySelector('i'), img = canvas.querySelector('img');
+  const film = dlg.querySelector('.film-at'), field = $('#frameLabel');
+  field.value = existing?.label || 'Detalj ' + (index+1);
+  film.hidden = !slide.video || !['spotlight','guided'].includes(dir.mode);
+  film.firstChild.checked = !!existing && existing.id === slide.videoFocus;
+  img.src = Scen.resolve(slide.image,IMG); img.style.objectFit = dir.crop;
+  img.style.objectPosition = dir.start.slice(0,2).map(v=>v+'%').join(' '); img.style.transform = 'scale('+Math.max(1,dir.start[2])+')';
+  const clamp = (x,min,max)=>Math.max(min,Math.min(max,x));
+  const point = e => { const b=canvas.getBoundingClientRect(); return [clamp((e.clientX-b.left)*100/b.width,0,100),clamp((e.clientY-b.top)*100/b.height,0,100)]; };
+  const move = (x,y) => { rect.x=clamp(x,rect.w/2,100-rect.w/2); rect.y=clamp(y,rect.h/2,100-rect.h/2); rectStyle(mark,rect); };
+  let drag;
+  rectStyle(mark,rect);
+  canvas.onpointerdown = e=>{
+    if (e.button !== 0) return;
+    drag={start:point(e),move:e.target===mark,old:{...rect}}; canvas.setPointerCapture(e.pointerId); e.preventDefault();
+  };
+  canvas.onpointermove = e=>{
+    if (!drag) return;
+    const [x,y]=point(e), [sx,sy]=drag.start;
+    if (drag.move) move(drag.old.x+x-sx,drag.old.y+y-sy);
+    else { rect.w=Math.max(1,Math.abs(x-sx)); rect.h=Math.max(1,Math.abs(y-sy)); move((sx+x)/2,(sy+y)/2); }
+  };
+  canvas.onpointerup=canvas.onpointercancel=()=>{drag=null;};
+  mark.onkeydown=e=>{
+    const delta={ArrowLeft:[-1,0],ArrowRight:[1,0],ArrowUp:[0,-1],ArrowDown:[0,1]}[e.key];
+    if (delta) { e.preventDefault(); move(rect.x+delta[0],rect.y+delta[1]); }
+  };
+  $('#frameSave').onclick=()=>{
+    if (!field.value.trim() || field.value.includes('|')) { field.setCustomValidity('Skriv en etikett utan lodstreck.'); field.reportValidity(); field.oninput=()=>field.setCustomValidity(''); return; }
+    const id = existing?.id || 'detalj-'+rid();
+    const rows = Scen.lines(slide.imageDirection?.details || slide.items);
+    rows[index]=[id,field.value.trim(),...[rect.x,rect.y,rect.w,rect.h].map(x=>Number(x.toFixed(2))),...(existing?.note?[existing.note]:[])].join(' | ');
+    slide.items=rows; if (slide.imageDirection) delete slide.imageDirection.details;
+    if (!film.hidden && film.firstChild.checked) slide.videoFocus=id;
+    else if (!film.hidden && slide.videoFocus===id) delete slide.videoFocus;
+    requestedCue=index+1; closeModal(); changed({now:true}); renderInsp();
+  };
+}
+async function nodeDialog(slide, step, ref) {
+  const target = deck;
+  try {
+    const source = Scen.resolve(ref,IMG);
+    const res = await fetch(source); if (!res.ok) throw new Error('Diagrammet kunde inte hämtas.');
+    const xml = new DOMParser().parseFromString(await res.text(),'image/svg+xml');
+    const svg = xml.documentElement;
+    const nodes = [...svg.querySelectorAll('[data-node] > polygon:not([data-editor-node])')].filter(n=>/^[\dEe+.,\s-]+$/.test(n.getAttribute('points') || ''));
+    if (!nodes.length) { toast('Den här bilden saknar markerbara noder.'); return; }
+    if (deck !== target || deck.slides[cur] !== slide) return;
+    const dlg = modal('<h2>Markera en nod</h2><p>Välj noden som ska framhävas.</p><div class="node-canvas"><img alt="Spelträd"><svg aria-label="Välj nod"></svg></div><label class="fld">Nod<select></select></label><label><input type="checkbox" id="nodeAppend"> Lägg till som nästa klick</label><label class="fld" id="nodeLabel" hidden>Etikett för klicket<input type="text"></label><div class="acts"><button class="btn" data-close>Avbryt</button><button class="btn primary" id="nodeSave">Spara markering</button></div>');
+    dlg.querySelector('img').src=source;
+    const layer=dlg.querySelector('svg'), select=dlg.querySelector('select');
+    layer.setAttribute('viewBox',svg.getAttribute('viewBox'));
+    const shapes=[];
+    function choose(i) { select.selectedIndex=i; shapes.forEach((p,j)=>p.classList.toggle('chosen',j===i)); }
+    nodes.forEach((node,i)=>{
+      const id=node.parentElement.getAttribute('data-node'), value=node.parentElement.textContent.trim();
+      select.add(new Option(id+(value?' · '+value:''),id));
+      const p=document.createElementNS('http://www.w3.org/2000/svg','polygon');
+      p.setAttribute('points',node.getAttribute('points')); p.onclick=()=>choose(i); layer.append(p); shapes.push(p);
+    });
+    choose(Math.max(0,nodes.findIndex(n=>n.parentElement.dataset.node === svg.querySelector('[data-editor-node]')?.getAttribute('data-editor-node'))));
+    select.onchange=()=>choose(select.selectedIndex);
+    $('#nodeAppend').onchange=e=>{ $('#nodeLabel').hidden=!e.target.checked; };
+    $('#nodeSave').onclick=async e=>{
+      const button=e.currentTarget; button.disabled=true;
+      try {
+        svg.querySelectorAll('[data-editor-node]').forEach(el=>el.remove());
+        const node=nodes[select.selectedIndex], mark=node.cloneNode(false);
+        for (const a of [...mark.attributes]) if (a.name!=='points') mark.removeAttribute(a.name);
+        mark.setAttribute('data-editor-node',select.value); mark.setAttribute('fill','none'); mark.setAttribute('stroke','#fff');
+        mark.setAttribute('stroke-width','8'); mark.setAttribute('stroke-linejoin','round'); node.after(mark);
+        const data = await new Promise((ok,no)=>{const r=new FileReader();r.onload=()=>ok(r.result);r.onerror=()=>no(r.error);r.readAsDataURL(new Blob([new XMLSerializer().serializeToString(xml)],{type:'image/svg+xml'}));});
+        const key=rid()+'.svg'; await Store.saveImage(target.id,key,data); IMG[key]=data;
+        const append = $('#nodeAppend').checked;
+        if (append) {
+          const label = $('#nodeLabel input').value.trim().replaceAll('|',' ') || ('Nod ' + select.value);
+          (slide.items ||= []).splice(step,0,label+' | img:'+key+' | ');
+        } else if (step) { const parts=slide.items[step-1].split('|');parts[1]=' img:'+key+' ';slide.items[step-1]=parts.join('|'); }
+        else slide.image='img:'+key;
+        requestedCue=step+(append ? 1 : 0);closeModal();changed({now:true});renderInsp();
+      } catch(err) { toast(errMsg(err));button.disabled=false; }
+    };
+  } catch(e) { toast('Kunde inte öppna diagrammet. '+errMsg(e)); }
+}
+
 function showEditor() {
   view('ed');
   if (manusOn) toggleManus(false);
@@ -673,12 +817,14 @@ function showEditor() {
   renderTheme();
   cur = Math.max(0, Math.min(cur, deck.slides.length - 1));
   if (pv) pv.destroy();
-  pv = Scen.player($('#preview'), deck, { mode: 'preview', images: IMG, start: cur });
+  pv = Scen.player($('#preview'), deck, { mode: 'preview', images: IMG, start: cur, onChange:renderCues });
   const ov = document.createElement('div'); ov.className = 'sel-ov';
   ov.innerHTML = '<div class="sel-box" hidden>' + ['nw', 'n', 'ne', 'e', 'se', 's', 'sw', 'w'].map(h => `<i data-h="${h}"></i>`).join('') + '</div>';
   $('#preview').appendChild(ov);
+  renderCues(cur,pv.step());
   selL = null; snapReset(); updateUndoBtn();
   renderRail(); renderInsp(); setSave('saved');
+  if (privateStore) showPrivateStatus(deck.id);
 }
 function renderTheme() {
   const T = Scen.THEMES[deck.theme.id] || Scen.THEMES.scen;
@@ -699,12 +845,13 @@ function changed(o) {
   o = o || {};
   deck.updatedAt = now();
   trackUndo();
-  clearTimeout(pvT); pvT = setTimeout(() => { pv && pv.setDeck(deck, IMG, cur); drawSel(); }, o.now ? 0 : 90);
+  clearTimeout(pvT); pvT = setTimeout(() => { if (pv && deck) { const step = pv.step(); pv.setDeck(deck, IMG, cur); pv.go(cur,{anim:false,step:requestedCue ?? step}); requestedCue = null; } drawSel(); }, o.now ? 0 : 90);
   clearTimeout(railT); railT = setTimeout(() => o.all ? renderRail() : refreshThumb(cur), o.now ? 0 : 250);
   scheduleSave();
 }
 function setSave(s, m) {
   const el = $('#saveState'); el.classList.toggle('error', s === 'error');
+  el.dataset.state = s;
   el.textContent = { saved: Store.mode === 'memory' ? 'Inte sparad' : 'Sparat', dirty: 'Ändrad…', saving: 'Sparar…', error: m || 'Kunde inte spara' }[s];
   el.title = s === 'error' ? (m || '') : '';
 }
@@ -718,12 +865,18 @@ async function doSave() {
   try {
     await Store.save(snap);
     const k = decks.findIndex(x => x.id === snap.id); if (k >= 0) decks[k] = snap; else decks.unshift(snap);
-    setSave('saved');
+    if (deck?.id === snap.id && deck.updatedAt === snap.updatedAt && deck.title === snap.title) {
+      if (privateStore) await showPrivateStatus(snap.id); else setSave('saved');
+    }
   } catch (e) { setSave('error', errMsg(e)); }
   saving = false;
   if (again) { again = false; doSave(); }
 }
-async function flush() { clearTimeout(saveT); if ($('#saveState').textContent !== 'Sparat') await doSave(); while (saving) await new Promise(r => setTimeout(r, 80)); }
+async function flush() {
+  clearTimeout(saveT);
+  while (saving) await new Promise(r => setTimeout(r, 50));
+  if ($('#saveState').dataset.state !== 'saved') await doSave();
+}
 
 function renderRail() {
   const ol = $('#rail'); ol.innerHTML = '';
@@ -789,7 +942,8 @@ async function fillLibPicker() {
   const show = async () => {
     const src = decks.find(d => d.id === sel.value); if (!src) return;
     const box = $('#libSlides'); box.innerHTML = '<p class="muted">Hämtar…</p>';
-    Object.assign(IMG, await safeImages(src.id));
+    const assets = await safeImages(src.id); if (!assets) { box.textContent = 'Mediefilerna kunde inte läsas.'; return; }
+    Object.assign(IMG, assets);
     box.innerHTML = '';
     src.slides.forEach((sl, i) => {
       const b = document.createElement('button'); b.type = 'button'; b.className = 'pick';
@@ -798,7 +952,9 @@ async function fillLibPicker() {
       b.onclick = async () => {
         const c = clone(sl); c.id = rid();
         if (c.layout === 'egen' && src.templates && src.templates[c.tpl]) { deck.templates = deck.templates || {}; deck.templates[c.tpl] = clone(src.templates[c.tpl]); }
-        if (c.image && /^img:/.test(c.image)) { const id = c.image.slice(4); if (IMG[id]) { try { await Store.saveImage(deck.id, id, IMG[id]); } catch (e) { toast(errMsg(e)); } } }
+        try {
+          for (const id of Scen.imagesOf(c)) if (assets[id]) await Store.saveImage(deck.id,id,assets[id]);
+        } catch (e) { toast(errMsg(e)); return; }
         deck.slides.splice(cur + 1, 0, c); cur++;
         changed({ all: true, now: true }); setTimeout(() => select(cur), 10);
         b.classList.add('done'); toast('Bilden är inlagd efter bild ' + cur + '.');
@@ -826,7 +982,9 @@ function renderInsp() {
     <div class="grp"><h3>Innehåll</h3>` + (L === 'tom' ? '<p class="hint">Fri yta har bara fria lager. Lägg till text, bilder och former med knapparna under bilden.</p>' : '');
   (FIELDS[L] || []).forEach(([f, label, t]) => {
     const id = 'f-' + f;
-    if (t === 'text') h += `<div class="fld"><label for="${id}">${esc(label)}</label><input type="text" id="${id}" data-f="${f}" data-t="text" value="${esc(valOf(s[f]))}"></div>`;
+    if (L === 'bildregi' && f === 'video') {
+      h += `<div class="fld"><label for="${id}">${esc(label)}</label><input type="text" id="${id}" data-f="video" data-t="text" value="${esc(valOf(s.video))}"><label class="btn small file-btn">Välj film från datorn<input type="file" class="film-input" accept="video/mp4,video/webm,.mp4,.webm"></label></div>`;
+    } else if (t === 'text') h += `<div class="fld"><label for="${id}">${esc(label)}</label><input type="text" id="${id}" data-f="${f}" data-t="text" value="${esc(valOf(s[f]))}"></div>`;
     else if (t === 'area') h += `<div class="fld"><label for="${id}">${esc(label)}</label><textarea id="${id}" data-f="${f}" data-t="text" rows="3">${esc(valOf(s[f]))}</textarea></div>`;
     else if (t === 'list') h += `<div class="fld"><label for="${id}">${esc(label)}</label><textarea class="list" id="${id}" data-f="${f}" data-t="list" rows="${L === 'trad' ? 10 : 5}">${esc(L === 'trad' ? Scen.lines(s[f]).map(x => { const d = (String(x).match(/^(- )+/) || [''])[0].length / 2; return '  '.repeat(d) + String(x).slice(d * 2); }).join('\n') : valOf(s[f]))}</textarea>${f === 'items' ? '' : '<span class="hint">En per rad. Börja en rad med - för en underpunkt.</span>'}</div>`;
     else if (t === 'check') h += `<label class="chk"><input type="checkbox" id="${id}" data-f="${f}" data-t="check"${s[f] ? ' checked' : ''}> ${esc(label)}</label>`;
@@ -923,7 +1081,7 @@ function onInspClick(e) {
     else { b.dataset.sure = '1'; b.textContent = 'Säker?'; b.classList.add('solid'); setTimeout(() => { if (b.isConnected) { delete b.dataset.sure; b.textContent = 'Ta bort'; b.classList.remove('solid'); } }, 3000); }
   }
   else if (a === 'layouts') layoutPicker(l => { const sel = $('#f-layout'); sel.value = l; sel.dispatchEvent(new Event('input', { bubbles: true })); }, 'Byt layout för den här bilden');
-  else if (a === 'img') { const f = $('#imgfile'); f.value = ''; f.click(); }
+  else if (a === 'img') { imgTarget = 'slide'; const f = $('#imgfile'); f.value = ''; f.click(); }
   else if (a === 'noimg') { s.image = ''; changed(); renderInsp(); }
   else if (a === 'row+') { const n = s.table.rows.reduce((m, r) => Math.max(m, r.length), 1); s.table.rows.push(Array(n).fill('')); changed(); renderInsp(); }
   else if (a === 'row-') { s.table.rows.pop(); changed(); renderInsp(); }
@@ -954,7 +1112,7 @@ async function setImage(file, target) {
   try { url = await PptxImport.compress(file, ext); } catch (e) { url = null; }
   if (!url) { toast('Bilden kunde inte läsas. Prova JPG eller PNG.'); return; }
   const id = rid(); IMG[id] = url;
-  try { await Store.saveImage(deck.id, id, url); } catch (e) { toast('Bilden visas men kunde inte sparas: ' + errMsg(e)); }
+  try { await Store.saveImage(deck.id, id, url); } catch (e) { toast('Bilden kunde inte sparas. ' + errMsg(e)); return; }
   if (target === 'layer' || target === 'lyreplace') {
     const dims = await new Promise(res => { const im = new Image(); im.onload = () => res([im.naturalWidth, im.naturalHeight]); im.onerror = () => res([4, 3]); im.src = url; });
     if (target === 'lyreplace' && selL && findL(selL)) findL(selL).src = 'img:' + id;
@@ -1613,7 +1771,7 @@ function wire() {
   $('#file').onchange = e => handleFile(e.target.files[0]);
   $('#imgfile').onchange = e => setImage(e.target.files[0]);
   wireLayers();
-  $('#back').onclick = async () => { if (manusOn) toggleManus(false); const d = deck; await flush(); cleanupImages(d); showLibrary(); };
+  $('#back').onclick = async () => { if (manusOn) toggleManus(false); const d = deck; await flush(); if ($('#saveState').dataset.state === 'error') return; cleanupImages(d); showLibrary(); };
   $('#btnTheme').onclick = themePicker;
   $('#btnManus').onclick = () => toggleManus();
   $('#manusText').addEventListener('input', () => { clearTimeout(manusT); manusT = setTimeout(applyManus, 450); });
@@ -1630,6 +1788,21 @@ function wire() {
   $('#addSlide').onclick = () => layoutPicker(addSlide, 'Lägg till en bild', true);
   $('#pvPlay').onclick = previewPlay;
   const insp = $('#insp');
+  insp.addEventListener('change', async e => {
+    if (!e.target.matches('.film-input') || !deck) return;
+    const file = e.target.files[0]; if (!file) return;
+    const extension = file.name.split('.').pop().toLowerCase();
+    if (!['mp4','webm'].includes(extension)) { toast('Välj en MP4- eller WebM-fil.'); return; }
+    const ownerDeck = deck, slide = deck.slides[cur], key = rid() + '.' + extension;
+    try {
+      const data = await new Promise((ok,no) => {
+        const reader = new FileReader(); reader.onload=()=>ok(reader.result); reader.onerror=()=>no(reader.error); reader.readAsDataURL(file);
+      });
+      await Store.saveImage(ownerDeck.id,key,data);
+      if (deck !== ownerDeck || !deck.slides.includes(slide)) return;
+      IMG[key]=data; slide.video='img:'+key; changed({now:true}); renderInsp();
+    } catch(err) { toast('Kunde inte spara filmen. ' + errMsg(err)); }
+  });
   insp.addEventListener('input', onInspInput);
   insp.addEventListener('click', onInspClick);
   insp.addEventListener('paste', onInspPaste);
@@ -1654,7 +1827,108 @@ function wire() {
     else if (!deck) handleFile(f);
     else toast('Gå till biblioteket för att importera en presentation.');
   });
-  window.addEventListener('beforeunload', () => { if (deck) doSave(); });
+  document.addEventListener('visibilitychange', () => { if (document.hidden && deck && $('#saveState').dataset.state === 'dirty') { clearTimeout(saveT); doSave(); } });
+  window.addEventListener('beforeunload', e => {
+    if (deck && $('#saveState').dataset.state !== 'saved') { doSave(); e.preventDefault(); e.returnValue = ''; }
+  });
+}
+
+async function showPrivateStatus(id) {
+  const msg = await privateStore.status(id);
+  if (deck?.id === id) { setSave('saved'); $('#saveState').textContent = msg; }
+}
+async function versionDialog(d) {
+  try {
+    const history = await privateStore.history(d.id);
+    const dialog = modal('<h2>Tidigare versioner</h2><p>Öppna en tidigare sparning som en egen kopia.</p><div class="revision-list"></div><button class="btn" data-close>Stäng</button>');
+    for (const r of history) {
+      const b = document.createElement('button'); b.className = 'btn';
+      b.textContent = 'Version ' + r.revision + ' · ' + when(new Date(r.saved_at).getTime());
+      b.onclick = async () => {
+        b.disabled = true;
+        try { await privateStore.restore(d.id,r.revision); closeModal(); await showLibrary(); }
+        catch(e) { toast(errMsg(e)); b.disabled = false; }
+      };
+      dialog.querySelector('.revision-list').append(b);
+    }
+  } catch(e) { toast('Kunde inte läsa tidigare versioner. ' + errMsg(e)); }
+}
+async function initAccount() {
+  const button = $('#btnAccount');
+  const local = Object.create(Store);
+  const localList = Store.list.bind(local), localImages = Store.loadImages.bind(local);
+  try { account = await ScenCloud.init(); } catch(e) { toast('Inloggningen kunde inte slutföras. ' + errMsg(e)); }
+  if (!account) return;
+  button.hidden = false;
+  if (account.user) {
+    try { privateStore = await account.workspace(); }
+    catch (e) { toast('Molnbiblioteket kunde inte öppnas. ' + errMsg(e)); }
+  }
+  async function loginDialog() {
+    const dialog = modal('<h2>Logga in i ditt bibliotek</h2><form><label class="fld">Din e-postadress<input type="email" autocomplete="email" required autofocus></label><p role="status"></p><div class="acts"><button type="button" class="btn" data-close>Stäng</button><button class="btn primary">Skicka inloggningslänk</button></div></form>');
+    dialog.querySelector('form').onsubmit = async e => {
+      e.preventDefault();
+      const submit = dialog.querySelector('.primary'), status = dialog.querySelector('[role=status]'); submit.disabled = true;
+      try {
+        await account.login(dialog.querySelector('input').value.trim());
+        status.textContent = 'Öppna länken från mejlet i den här webbläsaren.';
+      } catch { status.textContent = 'Länken kunde inte skickas. Kontrollera adressen och försök igen.'; }
+      finally { submit.disabled = false; }
+    };
+  }
+  async function manage() {
+    const locals = await localList();
+    const dialog = modal('<h2>Ditt konto</h2><p>' + esc(account.user.email) + '</p><div class="local-import"></div><p role="status"></p><div class="acts"><button class="btn" id="syncAgain">Synka nu</button><button class="btn" id="signOut">Logga ut</button><button class="btn primary" data-close>Stäng</button></div>');
+    if (privateStore && locals.length) {
+      const group = dialog.querySelector('.local-import');
+      group.innerHTML = '<h3>Kopiera från den här datorn</h3>';
+      locals.forEach(d => {
+        const b = document.createElement('button'); b.className = 'btn'; b.textContent = d.title; group.append(b);
+        b.onclick = async () => {
+          b.disabled = true;
+          try {
+            const copy = clone(d); copy.id = crypto.randomUUID();
+            await ensureDeckTemplates(copy);
+            for (const [k,v] of Object.entries(await localImages(d.id))) await privateStore.saveImage(copy.id,k,v);
+            await privateStore.save(copy); b.textContent = 'Kopierad · ' + d.title; await showLibrary();
+          } catch(e) { b.disabled = false; toast(errMsg(e)); }
+        };
+      });
+    }
+    $('#syncAgain').onclick = async e => {
+      if (!privateStore) { location.reload(); return; }
+      const b = e.currentTarget; b.disabled = true;
+      try { await privateStore.retry(); await showLibrary(); dialog.querySelector('[role=status]').textContent = 'Biblioteket är synkat.'; }
+      catch(e) { dialog.querySelector('[role=status]').textContent = errMsg(e); }
+      finally { b.disabled = false; }
+    };
+    $('#signOut').onclick = async () => { try { await account.logout(); } finally { location.reload(); } };
+  }
+  button.onclick = account.user ? manage : loginDialog;
+  if (account.user) button.textContent = 'Mitt konto';
+  if (account.user && !privateStore) {
+    const note=document.createElement('p'); note.className='hint';
+    note.append('Det privata biblioteket kunde inte öppnas. Dina lokala presentationer visas. ');
+    const link=document.createElement('a'); link.href='docs/MOLNBIBLIOTEK.md'; link.textContent='Aktivera biblioteket'; note.append(link);
+    $('#libSub').after(note);
+  }
+  if (!privateStore) return;
+  // Behåll lokala metoder för den uttryckliga importen, och växla normal lagring.
+  for (const method of ['list','save','remove','loadImages','saveImage','deleteImage','listTemplates','saveTemplate','removeTemplate']) {
+    Store[method] = privateStore[method].bind(privateStore);
+  }
+  $('#storeChip').textContent = 'Privat molnbibliotek'; $('#storeChip').title = account.user.email;
+  privateStore.onStatus((id,msg,fork)=>{
+    if (fork && deck?.id === id) {
+      deck.id = fork.id; deck.title = deck.title + ' (parallell ändring)';
+      $('#deckTitle').value = deck.title; snapReset(); setSave('saved');
+      $('#saveState').textContent = msg; scheduleSave();
+    }
+    if (deck?.id === id && $('#saveState').dataset.state === 'saved') $('#saveState').textContent = msg;
+    if (msg.startsWith('Parallella')) toast(msg);
+  });
+  const retry = () => privateStore.retry().catch(e=>toast('Molnsynkningen väntar. ' + errMsg(e)));
+  window.addEventListener('online',retry); retry();
 }
 
 async function boot() {
@@ -1663,6 +1937,7 @@ async function boot() {
   $('#storeChip').textContent = 'Ansluter…';
   await Store.init();
   storeChip();
+  if (Store.mode === 'local') await initAccount();
   $('#btnClaude').hidden = !SAMPLER; $('#btnClaudeEd').hidden = !SAMPLER;
   await loadTemplates();
   await showLibrary();

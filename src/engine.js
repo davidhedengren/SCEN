@@ -3600,8 +3600,9 @@ function player(root, deck, opt) {
     slides.forEach(s => { if (s !== A && s !== B) { s.classList.remove('active'); s.style.zIndex = ''; } });
     B.getAnimations({ subtree: true }).forEach(a => a.cancel());
     B.classList.add('active');
-    step = o.atEnd ? (B._groups || []).length : 0;
-    setSteps(B, step, false, false);
+    const count = (B._groups || []).length;
+    step = Number.isInteger(o.step) ? Math.min(count, Math.max(0,o.step)) : o.atEnd ? count : 0;
+    setSteps(B, step, false, o.playCue === true);
     let base = 0, skip = null;
     if (A && A !== B && o.anim !== false) { const t = transition(A, B, o.dir || 1); base = t.base; skip = t.skip; }
     else if (A && A !== B) A.classList.remove('active');
@@ -3780,7 +3781,7 @@ button{font:inherit;padding:8px 14px;border-radius:8px;border:1px solid #26345A;
   }
 
   build(); fit();
-  show(opt.start || 0, { anim: mode === 'present', atEnd: mode === 'preview' });
+  show(opt.start || 0, { anim: mode === 'present' && !opt.startStep, atEnd: mode === 'preview', step:opt.startStep, playCue:opt.startStep > 0 });
   if (mode === 'present' && opt.hint !== false) setTimeout(() => toast('→ eller klick går vidare · ? visar tangenter'), 600);
 
   return {

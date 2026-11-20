@@ -83,7 +83,7 @@ const cmds = {
     let s = index;
     s = s.replace(/<link rel="stylesheet" href="src\/app\.css(?:\?v=[^"]*)?">/, () => `<style id="app-css">${rd('src/app.css')}</style>`);
     s = s.replace(/<link rel="stylesheet" id="scen-engine-css" href="src\/engine\.css(?:\?v=[^"]*)?">/, () => `<style id="scen-engine-css">${rd('src/engine.css')}</style>`);
-    for (const f of ['engine', 'pptx', 'manus', 'app']) {
+    for (const f of ['engine', 'pptx', 'manus', 'cloud', 'app']) {
       const tag = new RegExp('<script' + (f === 'engine' ? ' id="scen-engine"' : '') + ' src="src/' + f + '\\.js(?:\\?v=[^"]*)?"></script>');
       const js = rd(`src/${f}.js`);
       if (/<\/script/i.test(js)) throw new Error(`src/${f}.js innehåller </script och kan inte bäddas in`);

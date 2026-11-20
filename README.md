@@ -57,7 +57,7 @@ CLAUDE.md                instruktioner för Claude Code
 2. **Lägg in bilder** i `bilder/<presentation>/` och peka på dem med `bild: bilder/<presentation>/fil.jpg`.
 3. **Uppdatera listan:** `npm run index`.
 4. **Titta och justera** i webbläsaren. I redigeraren finns knappen **Manus**, där du redigerar all text och ser resultatet direkt.
-5. **Spara tillbaka.** Ändringar i webbläsaren sparas lokalt. Välj **Spara på datorn → Manus (.md)** och lägg filen i `presentationer/`. Committa.
+5. **Spara tillbaka.** Ändringar sparas i ditt valda bibliotek. Välj **Spara på datorn → Manus (.md)** och lägg filen i `presentationer/`. Committa.
 6. **Dela.** `npm run exportera` gör en fristående `.html` per presentation i `dist/`, med bilderna inbäddade.
 
 ## Kommandon
@@ -76,7 +76,7 @@ CLAUDE.md                instruktioner för Claude Code
 
 `dist/scen.html` kan publiceras som artefakt i claude.ai. Då sparas presentationerna i ditt Claude-konto, och knapparna för Claude (skapa presentation, ändra bild, skapa mall) blir aktiva. Mappen `presentationer/` finns inte där. Importera manus med **Importera** i stället.
 
-Utanför claude.ai sparas det du gör i webbläsarens lagring. Det som ska vara kvar hör hemma som manus i repot.
+På webbplatsen kan du logga in i ett personligt molnbibliotek. Under **Mitt konto** kan du kopiera dina lokala presentationer dit. Utloggad används webbläsarens lokala lagring. [Aktivera det personliga biblioteket och prova klickredigeraren](docs/MOLNBIBLIOTEK.md).
 
 ## Tangenter vid visning
 

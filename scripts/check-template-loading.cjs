@@ -8,7 +8,7 @@ const read = file => fs.readFileSync(path.join(root, file), 'utf8');
 
 // A release must request a fresh URL for every changed local script or stylesheet.
 const refs = [...read('index.html').matchAll(/(?:src|href)="(src\/[^"?]+\.(?:js|css))(?:\?v=([^"]+))?"/g)];
-assert.equal(refs.length, 6);
+assert.deepEqual(refs.map(r => r[1]).sort(), ['src/app.css','src/app.js','src/cloud.js','src/engine.css','src/engine.js','src/manus.js','src/pptx.js']);
 for (const [, file, version] of refs) assert.equal(version, createHash('sha256').update(read(file)).digest('hex').slice(0, 12), file);
 for (const file of ['scen.html', 'dist/scen.html']) assert(!/(?:src|href)="src\//.test(read(file)), `${file} must embed local code`);
 

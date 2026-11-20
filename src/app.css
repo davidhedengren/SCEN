@@ -298,3 +298,27 @@ textarea.code{width:100%;border:1px solid var(--line-2);border-radius:8px;backgr
 .insp>*{min-width:0}
 .lyr-list,.lyr-list li,.lyr-item{min-width:0;max-width:100%}
 .lyr-item span{min-width:0}
+
+.cue-bar{width:100%;min-width:0;display:grid;gap:7px}
+.cue-strip{display:flex;position:relative;overflow-x:auto;gap:5px;padding:3px;scrollbar-width:thin}
+.cue{border:1px solid var(--line);background:var(--surface);color:var(--ink);padding:4px 7px;border-radius:6px;min-width:54px;max-width:128px;flex-shrink:0;font:inherit;cursor:pointer}
+.cue>span:last-child{display:block;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.cue[aria-pressed=true]{outline:2px solid var(--accent);outline-offset:-1px;font-weight:650}
+.cue-thumb{position:relative;display:block;width:70px;height:32px;margin:0 auto 3px;overflow:hidden;background:var(--bg)}
+.cue-thumb img{display:block;width:100%;height:100%;object-fit:contain}
+.cue-thumb i,.focus-rect{position:absolute;box-sizing:border-box;border:2px solid white;box-shadow:0 0 0 1px #161a20,0 0 0 2000px #0003}
+.cue-actions,.revision-list,.local-import{display:flex;gap:6px;flex-wrap:wrap}
+.local-import h3{width:100%}
+.revision-list{max-height:55vh;overflow:auto}
+.dlg:has(.frame-canvas,.node-canvas){width:min(880px,94vw)}
+.frame-canvas,.node-canvas{position:relative;aspect-ratio:16/9;background:#080f18;overflow:hidden;margin:12px 0;touch-action:none}
+.frame-canvas{cursor:crosshair}
+.frame-canvas img,.node-canvas img,.node-canvas svg{position:absolute;inset:0;width:100%;height:100%;object-fit:contain;user-select:none}
+.frame-canvas img{pointer-events:none}
+.focus-rect{cursor:move}
+.node-canvas polygon{fill:transparent;stroke:transparent;cursor:pointer}
+.node-canvas polygon:hover,.node-canvas polygon.chosen{stroke:white;stroke-width:8;stroke-linejoin:round;fill:#ffffff20}
+.film-at{display:block;margin-top:12px}
+.file-btn{position:relative;justify-self:start;overflow:hidden}
+.file-btn:focus-within{outline:2px solid var(--accent)}
+.file-btn input{position:absolute;inset:0;opacity:0;cursor:pointer}

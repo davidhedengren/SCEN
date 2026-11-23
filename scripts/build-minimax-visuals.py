@@ -67,7 +67,11 @@ def text(x, y, s, size=28, fill=INK, anchor='middle', weight=400, family=FONT, e
 DEFS = ('<defs>'
         '<filter id="glow" x="-40%" y="-40%" width="180%" height="180%"><feGaussianBlur stdDeviation="9"/></filter>'
         '<filter id="soft" x="-20%" y="-20%" width="140%" height="140%"><feGaussianBlur stdDeviation="4"/></filter>'
-        '</defs>')
+        '</defs>'
+        # Puls: valt värde markeras med en ring som växer och tonar bort, i stället för att allt lyser.
+        '<style>.pulse{animation:pulse 1.7s ease-out infinite}'
+        '@keyframes pulse{0%{stroke-opacity:.95;stroke-width:3}70%{stroke-opacity:0;stroke-width:30}100%{stroke-opacity:0;stroke-width:30}}'
+        '@media (prefers-reduced-motion:reduce){.pulse{animation:none;stroke-opacity:.7;stroke-width:9}}</style>')
 
 
 def save(name, body, h):
@@ -201,7 +205,7 @@ def result_word(n):
     return ''
 
 
-def game_tree_svg(tree, pos, s, h, shown, focus=(), chosen=(), callouts=None, extra='', row_labels=None, leftpad=0, faded=()):
+def game_tree_svg(tree, pos, s, h, shown, focus=(), chosen=(), callouts=None, extra='', row_labels=None, leftpad=0, faded=(), pulse=()):
     # faded: noder som tonas ned utan att något annat är i fokus, t.ex. det man redan sett på förra bilden.
     """pos: key -> (x, y) övre vänstra hörnet på brädet.
     shown: nycklar vars värde syns. focus: nycklar i fokus. chosen: kanter (förälder, barn) som visar valet."""
@@ -226,6 +230,8 @@ def game_tree_svg(tree, pos, s, h, shown, focus=(), chosen=(), callouts=None, ex
             on = (k, c['key']) in chosen
             col = (MAXC if n['player'] == 'X' else MINC) if on else EDGE
             op = 1 if (not anyfocus or (k in focus and c['key'] in focus) or on) else DIM
+            if k in focus and c['key'] in pulse:
+                op = 1
             if c['key'] in faded and not anyfocus:
                 op = FADED
             body += f'<path d="M{x1:.1f},{y1:.1f}L{x2:.1f},{y2:.1f}" stroke="{col}" stroke-width="{5 if on else 2.5}" stroke-linecap="round" opacity="{op}"/>'
@@ -243,10 +249,13 @@ def game_tree_svg(tree, pos, s, h, shown, focus=(), chosen=(), callouts=None, ex
     # noder
     for k, n in nodes.items():
         x, y = pos[k]
-        op = 1 if (not anyfocus or k in focus) else DIM
+        op = 1 if (not anyfocus or k in focus or k in pulse) else DIM
         if k in faded and not anyfocus:
             op = FADED
         g = f'<g data-node="{k}" opacity="{op}">'
+        if k in pulse:
+            pc = INK if not n['children'] else (MAXC if n['player'] == 'X' else MINC)
+            g += f'<circle class="pulse" data-pulse="{k}" cx="{x + s + gap + r:.1f}" cy="{y + s / 2:.1f}" r="{r + 4:.1f}" fill="none" stroke="{pc}"/>'
         g += f'<rect data-board="{k}" x="{x:.1f}" y="{y:.1f}" width="{s}" height="{s}" fill="none"/>'
         g += draw_board(x, y, s, n['board'], n.get('move'), n['win'] if k in shown else None)
         bx, by = x + s + gap + r, y + s / 2
@@ -486,14 +495,15 @@ def scene7():
     for y, a, b in rows:
         labels += text(left - 10, y + s / 2 - 2, a, 24, INK, 'start', 600) + text(left - 10, y + s / 2 + 28, b, 20, MUTED, 'start')
     # Etiketterna står till vänster om träden; flytta noderna så att de inte krockar.
+    # Bara noden som väljer lyser; värdet den väljer pulserar.
     frames = [
-        (set(), set(), set(), {}),
-        ({'r00', 'r10'}, {'r00', 'r10'}, set(), {}),
-        ({'r00', 'r10', 'r0', 'r1'}, {'r0', 'r1', 'r00', 'r10'}, {('r0', 'r00'), ('r1', 'r10')}, {}),
-        ({'r00', 'r10', 'r0', 'r1', 'r'}, {'r', 'r1', 'r10'}, {('r0', 'r00'), ('r1', 'r10'), ('r', 'r1')}, {'r': ('min(1, 0) = 0', 'right')}),
+        (set(), set(), set(), {}, set()),
+        ({'r00', 'r10'}, {'r00', 'r10'}, set(), {}, set()),
+        ({'r00', 'r10', 'r0', 'r1'}, {'r0', 'r1'}, {('r0', 'r00'), ('r1', 'r10')}, {}, {'r00', 'r10'}),
+        ({'r00', 'r10', 'r0', 'r1', 'r'}, {'r'}, {('r0', 'r00'), ('r1', 'r10'), ('r', 'r1')}, {'r': ('min(1, 0) = 0', 'right')}, {'r1'}),
     ]
-    for i, (shown, focus, chosen, calls) in enumerate(frames):
-        body = art + labels + game_tree_svg(tree, pos, s, h, shown, focus, chosen, calls)
+    for i, (shown, focus, chosen, calls, pulse) in enumerate(frames):
+        body = art + labels + game_tree_svg(tree, pos, s, h, shown, focus, chosen, calls, pulse=pulse)
         save(f'spel-7-{i}', body, h)
 
 
@@ -518,18 +528,18 @@ def scene8():
     assert nodes8['r0']['board'] == parse_board('.XO OXX X.O') and nodes8['r0']['value'] == 0
     shown, chosen = set(left), set(left_edges)
     plan = [
-        ({'r10', 'r110'}, {'r10', 'r110'}, set(), {}),
-        ({'r11'}, {'r11', 'r110'}, {('r11', 'r110')}, {}),
-        ({'r1'}, {'r1', 'r10', 'r11'}, {('r1', 'r10')}, {'r1': ('min(−1, 0) = −1', 'below')}),
-        ({'r2'}, {'r2'}, set(), {}),
-        ({'r'}, {'r', 'r2'}, {('r', 'r2')}, {'r': ('max(0, −1, 1) = 1', 'right')}),
+        ({'r10', 'r110'}, {'r10', 'r110'}, set(), {}, set()),
+        ({'r11'}, {'r11'}, {('r11', 'r110')}, {}, {'r110'}),
+        ({'r1'}, {'r1'}, {('r1', 'r10')}, {'r1': ('min(−1, 0) = −1', 'below')}, {'r10'}),
+        ({'r2'}, {'r2'}, set(), {}, set()),
+        ({'r'}, {'r'}, {('r', 'r2')}, {'r': ('max(0, −1, 1) = 1', 'right')}, {'r2'}),
     ]
     # Vänstra grenen tonas ned lite: den är känd från förra bilden. Det nya lyser.
     save('spel-8-0', labels + game_tree_svg(tree, pos, s, h, shown, set(), chosen, faded=left), h)
-    for i, (add, focus, ch, calls) in enumerate(plan, 1):
+    for i, (add, focus, ch, calls, pulse) in enumerate(plan, 1):
         shown |= add
         chosen |= ch
-        save(f'spel-8-{i}', labels + game_tree_svg(tree, pos, s, h, shown, focus, chosen, calls), h)
+        save(f'spel-8-{i}', labels + game_tree_svg(tree, pos, s, h, shown, focus, chosen, calls, pulse=pulse), h)
     # Startutsnitt: vänstra grenen ska ligga där trädet i scen 5 stod, så att övertoningen
     # mellan bilderna smälter ihop och kameran sedan drar ut. Brädena i scen 5 är 150 stora,
     # raderna 290 isär; här 124 och 222. Skalan följer radavståndet.
@@ -561,19 +571,19 @@ def scene10():
     maxes = {'r00', 'r01', 'r11', 'r21'}
     mins = {'r0', 'r1', 'r2'}
     plan = [
-        (leaves, leaves, set(), {}),
-        (maxes, maxes | {'r000', 'r010', 'r110', 'r210'}, {('r00', 'r000'), ('r01', 'r010'), ('r11', 'r110'), ('r21', 'r210')}, {}),
-        (mins, mins | {'r00', 'r01', 'r10', 'r11', 'r20', 'r21'}, {('r0', 'r00'), ('r1', 'r10'), ('r2', 'r20')},
-         {'r0': ('min(0, 1) = 0', 'below'), 'r1': ('min(−1, 1) = −1', 'below'), 'r2': ('min(−1, 0) = −1', 'below')}),
-        ({'r'}, {'r', 'r0', 'r00', 'r000'}, {('r', 'r0')}, {'r': ('max(0, −1, −1) = 0', 'right')}),
+        (leaves, leaves, set(), {}, set()),
+        (maxes, maxes, {('r00', 'r000'), ('r01', 'r010'), ('r11', 'r110'), ('r21', 'r210')}, {}, {'r000', 'r010', 'r110', 'r210'}),
+        (mins, mins, {('r0', 'r00'), ('r1', 'r10'), ('r2', 'r20')},
+         {'r0': ('min(0, 1) = 0', 'below'), 'r1': ('min(−1, 1) = −1', 'below'), 'r2': ('min(−1, 0) = −1', 'below')}, {'r00', 'r10', 'r20'}),
+        ({'r'}, {'r'}, {('r', 'r0')}, {'r': ('max(0, −1, −1) = 0', 'right')}, {'r0'}),
     ]
     shown = set()
     chosen = set()
     save('spel-10-0', labels + game_tree_svg(tree, pos, s, h, set()), h)
-    for i, (add, focus, ch, calls) in enumerate(plan, 1):
+    for i, (add, focus, ch, calls, pulse) in enumerate(plan, 1):
         shown |= add
         chosen |= ch
-        save(f'spel-10-{i}', labels + game_tree_svg(tree, pos, s, h, shown, focus, chosen, calls), h)
+        save(f'spel-10-{i}', labels + game_tree_svg(tree, pos, s, h, shown, focus, chosen, calls, pulse=pulse), h)
     return tree
 
 
@@ -593,7 +603,7 @@ def pts(p):
 
 
 def num_tree(name, nodes, edges, values, h, focus=(), chosen=(), pruned=(), callouts=None, bounds=None,
-             size=1.0, counter='', legend=True, hidden=(), changed=(), rule='', route=()):
+             size=1.0, counter='', legend=True, hidden=(), changed=(), rule='', route=(), pulse=()):
     """nodes: key -> (x, y, role). values: key -> text. pruned: barn vars inkommande kant är beskuren.
     hidden: noder som inte är upptäckta ännu (ritas som konturer)."""
     callouts = callouts or {}
@@ -623,7 +633,7 @@ def num_tree(name, nodes, edges, values, h, focus=(), chosen=(), pruned=(), call
         y1 += th / 2 + 4
         y2 -= th / 2 + 4
         on = (a, b) in chosen
-        isfocus = a in focus and b in focus
+        isfocus = a in focus and (b in focus or b in pulse)
         if b in cut:
             op = .55 if b in pruned else .25
             col = CUT if b in pruned else EDGE
@@ -655,11 +665,13 @@ def num_tree(name, nodes, edges, values, h, focus=(), chosen=(), pruned=(), call
         col = MAXC if role == 'max' else MINC
         if k in cut:
             op = .22
-        elif anyfocus and k not in focus:
+        elif anyfocus and k not in focus and k not in pulse:
             op = DIM + .16
         else:
             op = 1
         p = tri_points(x, y, role, tw, th)
+        if k in pulse and k not in hidden:
+            body += f'<polygon class="pulse" data-pulse="{k}" points="{pts(p)}" fill="none" stroke="{col}" stroke-linejoin="round"/>'
         if k in hidden:
             body += f'<g data-node="{k}" opacity="{op}"><polygon points="{pts(p)}" fill="none" stroke="{col}" stroke-width="2.5" stroke-dasharray="7 7" stroke-linejoin="round" opacity=".7"/></g>'
             continue
@@ -784,7 +796,7 @@ def scene11():
     vals, _ = minimax_values(nodes, edges, leaves)
     assert vals['r'] == 4
     v['r'] = 4
-    num_tree('val-1', nodes, edges, v, h, focus={'r', 'r0', 'r1', 'r2'}, chosen={('r', 'r0')},
+    num_tree('val-1', nodes, edges, v, h, focus={'r'}, pulse={'r0'}, chosen={('r', 'r0')},
              callouts={'r': ('max(4, 3, 2) = 4', 'right', None)})
 
 
@@ -805,12 +817,12 @@ def scene12():
         best = next(c for c in ch[k] if vals[c] == vals[k])
         chosen.add((k, best))
         args = ', '.join(str(leaves[c]) for c in ch[k])
-        num_tree(f'minimax-{i}', nodes, edges, v, h, focus={k, *ch[k]}, chosen=set(chosen),
+        num_tree(f'minimax-{i}', nodes, edges, v, h, focus={k}, pulse={best}, chosen=set(chosen),
                  callouts={k: (f'min({args}) = {vals[k]}', 'right' if i < 3 else 'left', None)})
     v['r'] = vals['r']
     chosen.add(('r', 'r0'))
     route = best_route(edges, vals)
-    num_tree('minimax-4', nodes, edges, v, h, focus={'r', 'r0', 'r1', 'r2'} | {b for a, b in route}, chosen=chosen,
+    num_tree('minimax-4', nodes, edges, v, h, focus={'r'}, pulse={'r0'}, chosen=chosen,
              callouts={'r': ('max(5, 3, 2) = 5', 'right', None)}, route=route)
 
 
@@ -824,15 +836,22 @@ def scene13():
     maxd = max(depth.values())
     v = dict(leaves)
     num_tree('rotnod-0', nodes, edges, v, h, size=.66)
+    # Två klick per nivå: först lyser noderna vars tur det är (tomma), sedan fylls värdena i
+    # och det valda barnvärdet under varje nod pulserar. Löven lyser aldrig alla på en gång.
     chosen = set()
-    for i, d in enumerate(range(maxd - 1, -1, -1), 1):
+    i = 0
+    for d in range(maxd - 1, -1, -1):
         level = [k for k in nodes if depth[k] == d and k not in leaves]
+        i += 1
+        num_tree(f'rotnod-{i}', nodes, edges, v, h, focus=set(level), chosen=set(chosen), size=.66)
+        picked = set()
         for k in level:
             v[k] = vals[k]
             best = next(c for c in ch[k] if vals[c] == vals[k])
             chosen.add((k, best))
-        focus = set(level) | {c for k in level for c in ch[k]}
-        num_tree(f'rotnod-{i}', nodes, edges, v, h, focus=focus, chosen=set(chosen), size=.66)
+            picked.add(best)
+        i += 1
+        num_tree(f'rotnod-{i}', nodes, edges, v, h, focus=set(level), pulse=picked, chosen=set(chosen), size=.66)
     route = best_route(edges, vals)
     assert [vals[b] for a, b in route] == [2, 2, 2, 2]
     num_tree(f'rotnod-{i + 1}', nodes, edges, v, h, focus={'r'} | {b for a, b in route}, chosen=set(chosen), size=.66, route=route)
@@ -845,34 +864,40 @@ def scene14_17():
     leafkeys14 = list(leaves)
     v, pruned = {}, set()
     plan14 = [
-        # (nya värden, fokus, väg, beskurna, callouts)
-        ({}, {'r0'}, [('r', 'r0')], set(), {}),
-        ({'r00': 8, 'r0': '≤8'}, {'r0', 'r00'}, [('r', 'r0'), ('r0', 'r00')], set(), {}),
-        ({'r01': 5, 'r0': '≤5'}, {'r0', 'r01'}, [('r', 'r0'), ('r0', 'r01')], set(), {}),
-        ({'r02': 6, 'r0': 5}, {'r0', 'r02'}, [('r', 'r0'), ('r0', 'r02')], set(), {'r0': ('min(8, 5, 6) = 5', 'right', None)}),
-        ({'r': '≥5'}, {'r', 'r0'}, [('r', 'r0')], set(), {'r': ('minst 5', 'right', None)}),
-        ({}, {'r1'}, [('r', 'r1')], set(), {}),
-        ({'r10': 9, 'r1': '≤9'}, {'r1', 'r10'}, [('r', 'r1'), ('r1', 'r10')], set(), {}),
-        ({'r11': 3, 'r1': '≤3'}, {'r1', 'r11'}, [('r', 'r1'), ('r1', 'r11')], set(), {'r1': ('≤3 < 5', 'right', CUT)}),
-        ({}, {'r1'}, [('r', 'r1')], {'r12'}, {}),
-        ({}, {'r2'}, [('r', 'r2')], set(), {}),
-        ({'r20': 2, 'r2': '≤2'}, {'r2', 'r20'}, [('r', 'r2'), ('r2', 'r20')], set(), {'r2': ('≤2 < 5', 'right', CUT)}),
-        ({}, {'r2'}, [('r', 'r2')], {'r21', 'r22'}, {}),
-        ({'r': 5}, {'r', 'r0', 'r01'}, [], set(), {'r': ('max(5, ≤3, ≤2) = 5', 'right', None)}),
+        # (nya värden, fokus, väg, beskurna, callouts, puls). Först syns lövet, nästa klick uppdaterar föräldern.
+        ({}, {'r0'}, [('r', 'r0')], set(), {}, set()),
+        ({'r00': 8}, {'r00'}, [('r', 'r0'), ('r0', 'r00')], set(), {}, set()),
+        ({'r0': '≤8'}, {'r0'}, [('r', 'r0'), ('r0', 'r00')], set(), {}, {'r00'}),
+        ({'r01': 5}, {'r01'}, [('r', 'r0'), ('r0', 'r01')], set(), {}, set()),
+        ({'r0': '≤5'}, {'r0'}, [('r', 'r0'), ('r0', 'r01')], set(), {}, {'r01'}),
+        ({'r02': 6}, {'r02'}, [('r', 'r0'), ('r0', 'r02')], set(), {}, set()),
+        ({'r0': 5}, {'r0'}, [('r', 'r0'), ('r0', 'r01')], set(), {'r0': ('min(8, 5, 6) = 5', 'right', None)}, {'r01'}),
+        ({'r': '≥5'}, {'r'}, [('r', 'r0')], set(), {'r': ('minst 5', 'right', None)}, {'r0'}),
+        ({}, {'r1'}, [('r', 'r1')], set(), {}, set()),
+        ({'r10': 9}, {'r10'}, [('r', 'r1'), ('r1', 'r10')], set(), {}, set()),
+        ({'r1': '≤9'}, {'r1'}, [('r', 'r1'), ('r1', 'r10')], set(), {}, {'r10'}),
+        ({'r11': 3}, {'r11'}, [('r', 'r1'), ('r1', 'r11')], set(), {}, set()),
+        ({'r1': '≤3'}, {'r1'}, [('r', 'r1'), ('r1', 'r11')], set(), {'r1': ('≤3 < 5', 'right', CUT)}, {'r11'}),
+        ({}, {'r1'}, [('r', 'r1')], {'r12'}, {}, set()),
+        ({}, {'r2'}, [('r', 'r2')], set(), {}, set()),
+        ({'r20': 2}, {'r20'}, [('r', 'r2'), ('r2', 'r20')], set(), {}, set()),
+        ({'r2': '≤2'}, {'r2'}, [('r', 'r2'), ('r2', 'r20')], set(), {'r2': ('≤2 < 5', 'right', CUT)}, {'r20'}),
+        ({}, {'r2'}, [('r', 'r2')], {'r21', 'r22'}, {}, set()),
+        ({'r': 5}, {'r'}, [], set(), {'r': ('max(5, ≤3, ≤2) = 5', 'right', None)}, {'r0'}),
     ]
 
-    def frame14(name, focus, path, calls, route=()):
+    def frame14(name, focus, path, calls, route=(), pulse=()):
         hidden = {k for k in leafkeys14 if k not in v} - {k for k in leafkeys14 if k in pruned}
         seen = sum(1 for k in leafkeys14 if k in v)
         num_tree(name, nodes, edges, dict(v), h, focus=set(focus), chosen=set(path), pruned=set(pruned),
-                 callouts=calls, hidden=hidden, counter=f'Undersökta löv: {seen} / 9', route=route)
+                 callouts=calls, hidden=hidden, counter=f'Undersökta löv: {seen} / 9', route=route, pulse=set(pulse))
         return seen
     frame14('beskarning-0', {'r'}, [], {})
-    for i, (add, focus, path, pr, calls) in enumerate(plan14, 1):
+    for i, (add, focus, path, pr, calls, pulse) in enumerate(plan14, 1):
         v.update(add)
         pruned |= pr
         last = i == len(plan14)
-        seen = frame14(f'beskarning-{i}', focus, path, calls, [('r', 'r0'), ('r0', 'r01')] if last else ())
+        seen = frame14(f'beskarning-{i}', focus, path, calls, [('r', 'r0'), ('r0', 'r01')] if last else (), pulse)
     assert seen == 6
 
     # Scen 17: α och β steg för steg, djupet först, som i simuleringen på ai-aktiviteter.se.
@@ -883,36 +908,46 @@ def scene14_17():
     leafkeys = list(leaves)
     st = {'v': {}, 'b': {'r': (ninf, inf)}, 'pruned': set(), 'chosen': set()}
 
-    def frame(name, focus, path, changed=None, calls=None, route=()):
+    def frame(name, focus, path, changed=None, calls=None, route=(), pulse=()):
         hidden = {k for k in leafkeys if k not in st['v']}
         hidden -= {k for k in hidden if any(k.startswith(p) for p in st['pruned'])}
         seen = sum(1 for k in leafkeys if k in st['v'])
         num_tree(name, nodes, edges, dict(st['v']), h, focus=set(focus), chosen=set(path) | st['chosen'],
                  pruned=set(st['pruned']), callouts=calls or {}, bounds=dict(st['b']), hidden=hidden,
-                 counter=f'Undersökta löv: {seen} / 9', changed=changed or {}, rule=R, route=route)
+                 counter=f'Undersökta löv: {seen} / 9', changed=changed or {}, rule=R, route=route, pulse=set(pulse))
 
     frame('alpha-0', {'r'}, set())
+    P = [('r', 'r0')]
+    M = [('r', 'r1')]
+    H = [('r', 'r2')]
     steps = [
-        # (nya värden, nya fönster, fokus, väg, ändrat, beskurna, callouts)
-        ({}, {'r0': (ninf, inf)}, {'r0'}, {('r', 'r0')}, {}, set(), {}),
-        ({'r00': 8, 'r0': 8}, {'r0': (ninf, 8)}, {'r0', 'r00'}, {('r', 'r0'), ('r0', 'r00')}, {'r0': ('b', inf)}, set(), {}),
-        ({'r01': 5, 'r0': 5}, {'r0': (ninf, 5)}, {'r0', 'r01'}, {('r', 'r0'), ('r0', 'r01')}, {'r0': ('b', 8)}, set(), {}),
-        ({'r02': 6}, {}, {'r0', 'r02'}, {('r', 'r0'), ('r0', 'r02')}, {}, set(), {'r0': ('6 > 5: β stannar', 'pills', MINC)}),
-        ({'r': 5}, {'r': (5, inf)}, {'r', 'r0'}, {('r', 'r0')}, {'r': ('a', ninf)}, set(), {}),
-        ({}, {'r1': (5, inf)}, {'r1'}, {('r', 'r1')}, {}, set(), {}),
-        ({'r10': 9, 'r1': 9}, {'r1': (5, 9)}, {'r1', 'r10'}, {('r', 'r1'), ('r1', 'r10')}, {'r1': ('b', inf)}, set(), {'r1': ('α 5 < β 9: fortsätt', 'pills', INK)}),
-        ({'r11': 3, 'r1': 3}, {'r1': (5, 3)}, {'r1', 'r11'}, {('r', 'r1'), ('r1', 'r11')}, {'r1': ('b', 9)}, set(), {}),
-        ({}, {}, {'r1'}, {('r', 'r1')}, {}, {'r12'}, {'r1': ('α 5 ≥ β 3: beskär', 'pills', CUT)}),
-        ({}, {}, {'r', 'r1'}, {('r', 'r1')}, {}, set(), {'r': ('3 < 5: α stannar', 'left', MAXC)}),
-        ({}, {'r2': (5, inf)}, {'r2'}, {('r', 'r2')}, {}, set(), {}),
-        ({'r20': 2, 'r2': 2}, {'r2': (5, 2)}, {'r2', 'r20'}, {('r', 'r2'), ('r2', 'r20')}, {'r2': ('b', inf)}, {'r21', 'r22'}, {'r2': ('α 5 ≥ β 2: beskär', 'pills', CUT)}),
-        ({}, {}, {'r', 'r0'}, set(), {}, set(), {'r': ('max(5, 3, 2) = 5', 'left', MAXC)}),
+        # (nya värden, nya fönster, fokus, väg, ändrat, beskurna, callouts, puls). Först lövet, sedan uppdateringen.
+        ({}, {'r0': (ninf, inf)}, {'r0'}, P, {}, set(), {}, set()),
+        ({'r00': 8}, {}, {'r00'}, P + [('r0', 'r00')], {}, set(), {}, set()),
+        ({'r0': 8}, {'r0': (ninf, 8)}, {'r0'}, P + [('r0', 'r00')], {'r0': ('b', inf)}, set(), {}, {'r00'}),
+        ({'r01': 5}, {}, {'r01'}, P + [('r0', 'r01')], {}, set(), {}, set()),
+        ({'r0': 5}, {'r0': (ninf, 5)}, {'r0'}, P + [('r0', 'r01')], {'r0': ('b', 8)}, set(), {}, {'r01'}),
+        ({'r02': 6}, {}, {'r02'}, P + [('r0', 'r02')], {}, set(), {}, set()),
+        ({}, {}, {'r0'}, P + [('r0', 'r01')], {}, set(), {'r0': ('6 > 5: β stannar', 'pills', MINC)}, {'r01'}),
+        ({'r': 5}, {'r': (5, inf)}, {'r'}, P, {'r': ('a', ninf)}, set(), {}, {'r0'}),
+        ({}, {'r1': (5, inf)}, {'r1'}, M, {}, set(), {}, set()),
+        ({'r10': 9}, {}, {'r10'}, M + [('r1', 'r10')], {}, set(), {}, set()),
+        ({'r1': 9}, {'r1': (5, 9)}, {'r1'}, M + [('r1', 'r10')], {'r1': ('b', inf)}, set(), {'r1': ('α 5 < β 9: fortsätt', 'pills', INK)}, {'r10'}),
+        ({'r11': 3}, {}, {'r11'}, M + [('r1', 'r11')], {}, set(), {}, set()),
+        ({'r1': 3}, {'r1': (5, 3)}, {'r1'}, M + [('r1', 'r11')], {'r1': ('b', 9)}, set(), {}, {'r11'}),
+        ({}, {}, {'r1'}, M, {}, {'r12'}, {'r1': ('α 5 ≥ β 3: beskär', 'pills', CUT)}, set()),
+        ({}, {}, {'r'}, M, {}, set(), {'r': ('3 < 5: α stannar', 'left', MAXC)}, {'r1'}),
+        ({}, {'r2': (5, inf)}, {'r2'}, H, {}, set(), {}, set()),
+        ({'r20': 2}, {}, {'r20'}, H + [('r2', 'r20')], {}, set(), {}, set()),
+        ({'r2': 2}, {'r2': (5, 2)}, {'r2'}, H + [('r2', 'r20')], {'r2': ('b', inf)}, set(), {}, {'r20'}),
+        ({}, {}, {'r2'}, H, {}, {'r21', 'r22'}, {'r2': ('α 5 ≥ β 2: beskär', 'pills', CUT)}, set()),
+        ({}, {}, {'r'}, [], {}, set(), {'r': ('max(5, 3, 2) = 5', 'left', MAXC)}, {'r0'}),
     ]
-    for i, (vals, wins, focus, path, ch, pr, calls) in enumerate(steps, 1):
+    for i, (vals, wins, focus, path, ch, pr, calls, pulse) in enumerate(steps, 1):
         st['v'].update(vals)
         st['b'].update(wins)
         st['pruned'] |= pr
-        frame(f'alpha-{i}', focus, path, ch, calls, route=[('r', 'r0'), ('r0', 'r01')] if i == len(steps) else ())
+        frame(f'alpha-{i}', focus, path, ch, calls, route=[('r', 'r0'), ('r0', 'r01')] if i == len(steps) else (), pulse=pulse)
     seen = sum(1 for k in leafkeys if k in st['v'])
     assert seen == 6 and st['v']['r'] == 5
     # Kontroll mot en riktig alfa-beta-sökning.
@@ -950,13 +985,14 @@ def scene18_19():
     v = dict(leaves)
     num_tree('ovning-0', nodes, edges, v, h)
     plan = [
-        ({'r00': 5, 'r0': '≤5'}, {'r00', 'r000', 'r001'}, set(), {'r00': ('max(5, 3) = 5', 'right', None)}, {('r00', 'r000')}),
-        ({'r01': '≥8'}, {'r01', 'r010', 'r0'}, {'r011'}, {'r01': ('8 ≥ 5', 'right', CUT)}, set()),
-        ({'r0': 5, 'r': '≥5'}, {'r0', 'r00', 'r01'}, set(), {'r0': ('min(5, ≥8) = 5', 'left', None)}, {('r0', 'r00')}),
-        ({'r10': 7}, {'r10', 'r100', 'r101'}, set(), {'r10': ('max(7, 1) = 7', 'left', None)}, {('r10', 'r100')}),
-        ({'r11': 3}, {'r11', 'r110', 'r111'}, set(), {'r11': ('max(2, 3) = 3', 'left', None)}, {('r11', 'r111')}),
-        ({'r1': 3}, {'r1', 'r10', 'r11'}, set(), {'r1': ('min(7, 3) = 3', 'right', None)}, {('r1', 'r11')}),
-        ({'r': 5}, {'r', 'r0', 'r1'}, set(), {'r': ('max(5, 3) = 5', 'right', None)}, {('r', 'r0')}),
+        # (nya värden, fokus, beskurna, callouts, valda kanter, puls)
+        ({'r00': 5, 'r0': '≤5'}, {'r00'}, set(), {'r00': ('max(5, 3) = 5', 'right', None)}, {('r00', 'r000')}, {'r000'}),
+        ({'r01': '≥8'}, {'r01'}, {'r011'}, {'r01': ('8 ≥ 5', 'right', CUT)}, set(), {'r010'}),
+        ({'r0': 5, 'r': '≥5'}, {'r0'}, set(), {'r0': ('min(5, ≥8) = 5', 'left', None)}, {('r0', 'r00')}, {'r00'}),
+        ({'r10': 7}, {'r10'}, set(), {'r10': ('max(7, 1) = 7', 'left', None)}, {('r10', 'r100')}, {'r100'}),
+        ({'r11': 3}, {'r11'}, set(), {'r11': ('max(2, 3) = 3', 'left', None)}, {('r11', 'r111')}, {'r111'}),
+        ({'r1': 3}, {'r1'}, set(), {'r1': ('min(7, 3) = 3', 'right', None)}, {('r1', 'r11')}, {'r11'}),
+        ({'r': 5}, {'r'}, set(), {'r': ('max(5, 3) = 5', 'right', None)}, {('r', 'r0')}, {'r0'}),
     ]
     # Facit (scen 19) står bredvid algoritmens logg.
     set_width(W_LOGG)
@@ -965,12 +1001,12 @@ def scene18_19():
     v = dict(leaves)
     num_tree('facit-0', nodes, edges, v, h)
     pruned, chosen = set(), set()
-    for i, (add, focus, pr, calls, chs) in enumerate(plan, 1):
+    for i, (add, focus, pr, calls, chs, pulse) in enumerate(plan, 1):
         v.update(add)
         pruned |= pr
         chosen |= chs
         route = [('r', 'r0'), ('r0', 'r00'), ('r00', 'r000')] if i == len(plan) else ()
-        num_tree(f'facit-{i}', nodes, edges, v, h, focus=focus | {b for a, b in route}, chosen=set(chosen), pruned=set(pruned), route=route)
+        num_tree(f'facit-{i}', nodes, edges, v, h, focus=focus, pulse=pulse, chosen=set(chosen), pruned=set(pruned), route=route)
     set_width(1760)
 
 

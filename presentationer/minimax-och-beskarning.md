@@ -261,11 +261,15 @@ text: Räkna från löven upp till roten. Vem väljer på varje nivå, MAX eller
 fokus: ingen
 rörelse: ingen
 övergång: tona
-- Första nivån | bilder/minimax/v3/rotnod-1.svg | Jämför löven under varje MAX-nod.
-- Nästa nivå | bilder/minimax/v3/rotnod-2.svg | MIN väljer det minsta värdet i varje gren.
-- Nivån under roten | bilder/minimax/v3/rotnod-3.svg | MAX väljer det största barnvärdet.
-- Rotnoden | bilder/minimax/v3/rotnod-4.svg | Roten är MIN i detta träd. Värdet är 2.
-- Slutvägen | bilder/minimax/v3/rotnod-5.svg | Följ värdet 2 nedåt. Med bästa spel från båda sidor går partiet längs den vita vägen till lövet 2.
+- MAX:s tur | bilder/minimax/v3/rotnod-1.svg | Nivån ovanför löven är MAX. Vilket värde väljer varje MAX-nod?
+- MAX väljer | bilder/minimax/v3/rotnod-2.svg | Varje MAX-nod väljer det största av sina löv.
+- MIN:s tur | bilder/minimax/v3/rotnod-3.svg | Nästa nivå är MIN. Vilket värde väljer varje MIN-nod?
+- MIN väljer | bilder/minimax/v3/rotnod-4.svg | Varje MIN-nod väljer det minsta av sina barn.
+- MAX:s tur | bilder/minimax/v3/rotnod-5.svg | Nivån under roten är MAX igen. Vilket värde väljer de två noderna?
+- MAX väljer | bilder/minimax/v3/rotnod-6.svg | Varje MAX-nod väljer det största av sina barn: 4 och 2.
+- Rotnoden | bilder/minimax/v3/rotnod-7.svg | Roten är MIN i detta träd. Vilket värde väljer den?
+- Roten väljer | bilder/minimax/v3/rotnod-8.svg | Roten väljer det minsta av 4 och 2. Värdet är 2.
+- Slutvägen | bilder/minimax/v3/rotnod-9.svg | Följ värdet 2 nedåt. Med bästa spel från båda sidor går partiet längs den vita vägen till lövet 2.
 > Låt eleverna räkna först. Klicka sedan fram en nivå i taget.
 > Källa: originalbild 13. Presentation av David Hedengren.
 > Originaltext: Uppgift – Vilket värde får rotnoden?
@@ -376,18 +380,24 @@ fokus: ingen
 rörelse: ingen
 övergång: tona
 - Ner till vänster | bilder/minimax/v3/beskarning-1.svg | Sökningen går först ner i den vänstra grenen.
-- Lövet 8 | bilder/minimax/v3/beskarning-2.svg | MIN kan nu ge högst 8.
-- Lövet 5 | bilder/minimax/v3/beskarning-3.svg | 5 är mindre. MIN kan ge högst 5.
-- Lövet 6 | bilder/minimax/v3/beskarning-4.svg | 6 ändrar inget. MIN väljer det minsta av 8, 5 och 6, alltså 5.
-- Roten | bilder/minimax/v3/beskarning-5.svg | Max kan få minst 5. Kan någon av de andra grenarna bli bättre för Max?
-- Ner till mitten | bilder/minimax/v3/beskarning-6.svg | Nu undersöks mittenvägen.
-- Lövet 9 | bilder/minimax/v3/beskarning-7.svg | MIN kan ge högst 9. Det kan fortfarande bli bättre än 5.
-- Lövet 3 | bilder/minimax/v3/beskarning-8.svg | Kommer inte kunna vara högre än 3, Max kommer därför inte välja mittenvägen (eftersom 5>3)
-- Mittenvägen | bilder/minimax/v3/beskarning-9.svg | Vi kan beskära (prune) trädet här och behöver inte utforska några grenar nedanför
-- Ner till höger | bilder/minimax/v3/beskarning-10.svg | Nu undersöks högra vägen.
-- Lövet 2 | bilder/minimax/v3/beskarning-11.svg | Högra vägen kan inte bli högre än 2. Max har redan 5.
-- Högra vägen | bilder/minimax/v3/beskarning-12.svg | De sista två grenarna kan också beskäras eftersom oavsett vad de har för värde kommer inte Max välja den högra vägen
-- Beskärning | bilder/minimax/v3/beskarning-13.svg | Roten får 5, samma svar som utan beskärning. Bara 6 av 9 löv behövde undersökas.
+- Lövet 8 | bilder/minimax/v3/beskarning-2.svg | Första lövet är 8.
+- MIN: högst 8 | bilder/minimax/v3/beskarning-3.svg | MIN kan nu ge högst 8.
+- Lövet 5 | bilder/minimax/v3/beskarning-4.svg | Nästa löv är 5.
+- MIN: högst 5 | bilder/minimax/v3/beskarning-5.svg | 5 är mindre än 8. MIN kan ge högst 5.
+- Lövet 6 | bilder/minimax/v3/beskarning-6.svg | Sista lövet i grenen är 6.
+- MIN väljer 5 | bilder/minimax/v3/beskarning-7.svg | 6 ändrar inget. MIN väljer det minsta av 8, 5 och 6, alltså 5.
+- Roten | bilder/minimax/v3/beskarning-8.svg | Max kan få minst 5. Kan någon av de andra grenarna bli bättre för Max?
+- Ner till mitten | bilder/minimax/v3/beskarning-9.svg | Nu undersöks mittenvägen.
+- Lövet 9 | bilder/minimax/v3/beskarning-10.svg | Första lövet i mitten är 9.
+- MIN: högst 9 | bilder/minimax/v3/beskarning-11.svg | MIN kan ge högst 9. Det kan fortfarande bli bättre än 5.
+- Lövet 3 | bilder/minimax/v3/beskarning-12.svg | Nästa löv är 3.
+- MIN: högst 3 | bilder/minimax/v3/beskarning-13.svg | Kommer inte kunna vara högre än 3, Max kommer därför inte välja mittenvägen (eftersom 5>3)
+- Mittenvägen | bilder/minimax/v3/beskarning-14.svg | Vi kan beskära (prune) trädet här och behöver inte utforska några grenar nedanför
+- Ner till höger | bilder/minimax/v3/beskarning-15.svg | Nu undersöks högra vägen.
+- Lövet 2 | bilder/minimax/v3/beskarning-16.svg | Första lövet i högra vägen är 2.
+- MIN: högst 2 | bilder/minimax/v3/beskarning-17.svg | Högra vägen kan inte bli högre än 2. Max har redan 5.
+- Högra vägen | bilder/minimax/v3/beskarning-18.svg | De sista två grenarna kan också beskäras eftersom oavsett vad de har för värde kommer inte Max välja den högra vägen
+- Beskärning | bilder/minimax/v3/beskarning-19.svg | Roten får 5, samma svar som utan beskärning. Bara 6 av 9 löv behövde undersökas.
 > Källa: originalbild 14. Presentation av David Hedengren.
 > Originaltext: Alfa-beta-beskärning (pruning)
 > Originaltext: 5
@@ -464,21 +474,28 @@ fokus: ingen
 rörelse: ingen
 övergång: tona
 - Ner till MIN | bilder/minimax/v3/alpha-1.svg | MIN ärver sökfönstret från roten: α = −∞, β = +∞.
-- β = 8 | bilder/minimax/v3/alpha-2.svg | Första lövet är 8. Det blir MIN:s bästa hittills, så β sänks från +∞ till 8.
-- β = 5 | bilder/minimax/v3/alpha-3.svg | 5 är mindre än 8. MIN uppdaterar β från 8 till 5.
-- β stannar | bilder/minimax/v3/alpha-4.svg | 6 är inte mindre än 5, så β stannar på 5. MIN-noden får värdet 5.
-- α = 5 | bilder/minimax/v3/alpha-5.svg | 5 skickas upp till roten. MAX kan nu garantera 5: α höjs från −∞ till 5.
-- Ner till MIN | bilder/minimax/v3/alpha-6.svg | Mittennoden ärver α = 5 och β = +∞. MAX vet redan att den kan få 5.
-- β = 9 | bilder/minimax/v3/alpha-7.svg | Lövet 9 ger β = 9. α = 5 är mindre än β = 9, så vi fortsätter söka.
-- β = 3 | bilder/minimax/v3/alpha-8.svg | Lövet 3 ger β = 3. MIN kan nu tvinga fram högst 3 i den här grenen.
-- β ≤ α: beskär | bilder/minimax/v3/alpha-9.svg | α = 5 ≥ β = 3. MAX väljer aldrig en gren som ger högst 3. Vi behöver inte fortsätta söka i grenen.
-- α stannar | bilder/minimax/v3/alpha-10.svg | MIN skickar upp 3. 3 är inte större än 5, så α stannar på 5.
-- Ner till MIN | bilder/minimax/v3/alpha-11.svg | Högra noden ärver α = 5 och β = +∞.
-- β = 2: beskär | bilder/minimax/v3/alpha-12.svg | Lövet 2 ger β = 2. α = 5 ≥ β = 2, så de två sista löven beskärs.
-- Samma beslut | bilder/minimax/v3/alpha-13.svg | Rotens värde är 5, samma som utan beskärning. Bara 6 av 9 löv behövde undersökas.
+- Lövet 8 | bilder/minimax/v3/alpha-2.svg | Första lövet är 8.
+- β = 8 | bilder/minimax/v3/alpha-3.svg | 8 blir MIN:s bästa hittills, så β sänks från +∞ till 8.
+- Lövet 5 | bilder/minimax/v3/alpha-4.svg | Nästa löv är 5.
+- β = 5 | bilder/minimax/v3/alpha-5.svg | 5 är mindre än 8. MIN uppdaterar β från 8 till 5.
+- Lövet 6 | bilder/minimax/v3/alpha-6.svg | Sista lövet i grenen är 6.
+- β stannar | bilder/minimax/v3/alpha-7.svg | 6 är inte mindre än 5, så β stannar på 5. MIN-noden får värdet 5.
+- α = 5 | bilder/minimax/v3/alpha-8.svg | 5 skickas upp till roten. MAX kan nu garantera 5: α höjs från −∞ till 5.
+- Ner till MIN | bilder/minimax/v3/alpha-9.svg | Mittennoden ärver α = 5 och β = +∞. MAX vet redan att den kan få 5.
+- Lövet 9 | bilder/minimax/v3/alpha-10.svg | Första lövet i mitten är 9.
+- β = 9 | bilder/minimax/v3/alpha-11.svg | β sänks till 9. α = 5 är mindre än β = 9, så vi fortsätter söka.
+- Lövet 3 | bilder/minimax/v3/alpha-12.svg | Nästa löv är 3.
+- β = 3 | bilder/minimax/v3/alpha-13.svg | β sänks till 3. MIN kan nu tvinga fram högst 3 i den här grenen.
+- β ≤ α: beskär | bilder/minimax/v3/alpha-14.svg | α = 5 ≥ β = 3. MAX väljer aldrig en gren som ger högst 3. Vi behöver inte fortsätta söka i grenen.
+- α stannar | bilder/minimax/v3/alpha-15.svg | MIN skickar upp 3. 3 är inte större än 5, så α stannar på 5.
+- Ner till MIN | bilder/minimax/v3/alpha-16.svg | Högra noden ärver α = 5 och β = +∞.
+- Lövet 2 | bilder/minimax/v3/alpha-17.svg | Första lövet i högra grenen är 2.
+- β = 2 | bilder/minimax/v3/alpha-18.svg | β sänks till 2.
+- β ≤ α: beskär | bilder/minimax/v3/alpha-19.svg | α = 5 ≥ β = 2, så de två sista löven beskärs.
+- Samma beslut | bilder/minimax/v3/alpha-20.svg | Rotens värde är 5, samma som utan beskärning. Bara 6 av 9 löv behövde undersökas.
 > Pedagogik: ett fokus i taget. Jämförelsen α ≥ β står vid noden där den görs, så blicken inte behöver hoppa mellan träd och text.
-> Stanna före klick 9: ”α är 5 och β är 3. Behöver vi titta på sista lövet?” Låt eleverna motivera innan du klickar.
-> Stanna före klick 12: ”Lövet är 2. Vad händer nu?” Eleverna bör kunna förutsäga beskärningen själva.
+> Stanna före klick 14: ”α är 5 och β är 3. Behöver vi titta på sista lövet?” Låt eleverna motivera innan du klickar.
+> Stanna före klick 18: ”Lövet är 2. Vad händer nu?” Eleverna bör kunna förutsäga beskärningen själva.
 > Efteråt kan eleverna öva i simuleringen Minimax med alfa-beta-beskärning på ai-aktiviteter.se.
 > Stegen följer simuleringen på ai-aktiviteter.se (Minimax med alfa-beta-beskärning): besök och ärv sökfönster, uppdatera α eller β, kontrollera α ≥ β, skicka värdet uppåt.
 > Källa: originalbild 17. Presentation av David Hedengren.

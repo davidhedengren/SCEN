@@ -1037,6 +1037,61 @@ def scene20():
     # Lärarens beslut 2026-11-10: i aktiviteten är alla inre noder tomma; bara löven har värden.
     num_tree('rakna-noder', nodes, es, {k: (v['value'] if not children[k] else '') for k, v in ns.items()}, 900, size=.72)
 
+    # Facit: alfa-beta djupet först, vänster till höger. Räknaren visar besökta noder (roten inräknad).
+    leaves = {k: int(v['value']) for k, v in ns.items() if not children[k]}
+    order, cut = [], []
+
+    def ab(k, a, b):
+        order.append(k)
+        if not children[k]:
+            return leaves[k]
+        mx = ns[k]['role'] == 'max'
+        v = float('-inf') if mx else float('inf')
+        for i, c in enumerate(children[k]):
+            r = ab(c, a, b)
+            v = max(v, r) if mx else min(v, r)
+            a, b = (max(a, v), b) if mx else (a, min(b, v))
+            if a >= b:
+                cut.extend(children[k][i + 1:])
+                break
+        return v
+    rootval = ab(root, float('-inf'), float('inf'))
+    left, right = children[root]
+    assert rootval == 4 and len(order) == 6 and cut == children[right][1:], (rootval, order, cut)
+    assert [leaves[c] for c in children[left]] == [3, 4] and leaves[children[right][0]] == 5
+    l3, l4 = children[left]
+    r5, big = children[right]
+    parent = {b: a for a, b in es}
+
+    def subtree(k):
+        return 1 + sum(subtree(c) for c in children[k])
+    assert subtree(big) == 16 and len(ns) == 22
+    vals = {k: str(v) for k, v in leaves.items()}
+    seen = []
+    plan = [
+        # (besökt nod, nya värden, fokus, puls, beskurna, callouts, slutväg)
+        (root, {}, {root}, set(), set(), {}, ()),
+        (left, {}, {left}, set(), set(), {}, ()),
+        (l3, {}, {l3}, set(), set(), {}, ()),
+        (l4, {}, {l4}, set(), set(), {}, ()),
+        (None, {left: 4, root: '≤4'}, {left}, {l4}, set(), {left: ('max(3, 4) = 4', 'right', None)}, ()),
+        (right, {}, {right}, set(), set(), {}, ()),
+        (r5, {}, {r5}, set(), set(), {}, ()),
+        (None, {right: '≥5'}, {right}, {r5}, {big}, {right: ('5 ≥ 4: beskär', 'left', CUT)}, ()),
+        (None, {root: 4}, {root}, {left}, set(), {root: ('min(4, ≥5) = 4', 'right', None)}, ((root, left), (left, l4))),
+    ]
+    pruned = set()
+    num_tree('rakna-facit-0', nodes, es, dict(vals), 900, size=.72, counter='Besökta noder: 0 / 22')
+    for i, (visit, add, focus, pulse, pr, calls, route) in enumerate(plan, 1):
+        if visit:
+            seen.append(visit)
+        vals.update({k: str(v) for k, v in add.items()})
+        pruned |= pr
+        walked = {(parent[k], k) for k in seen if k in parent}
+        num_tree(f'rakna-facit-{i}', nodes, es, dict(vals), 900, size=.72, focus=focus, pulse=pulse, chosen=walked,
+                 pruned=set(pruned), callouts=calls, route=route, counter=f'Besökta noder: {len(seen)} / 22')
+    assert len(seen) == 6
+
 
 if __name__ == '__main__':
     scene6()

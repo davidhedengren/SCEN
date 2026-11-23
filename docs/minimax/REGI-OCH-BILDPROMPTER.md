@@ -6,7 +6,7 @@ Omarbetad föreläsningsversion: 21 scener i samma ordning som originalets 21 bi
 
 ## Regin
 
-Presentationen har **21 scener**, en per originalbild. Ordningen följer originalet med ett undantag: **Användningsområden och Begränsningar (original 3 och 4) ligger efter minimaxuppgiften, direkt före alfa-beta-beskärning.** Eleverna förstår användningsområdena bättre när de vet vad MAX och MIN är, och begränsningen ”trädet blir för stort” blir en naturlig brygga till beskärningen. Talaranteckningen på Begränsningar har en sådan brygga.
+Presentationen har **22 scener**: en per originalbild och ett tillagt facit till nodräkningsövningen. Ordningen följer originalet med ett undantag: **Användningsområden och Begränsningar (original 3 och 4) ligger efter minimaxuppgiften, direkt före alfa-beta-beskärning.** Eleverna förstår användningsområdena bättre när de vet vad MAX och MIN är, och begränsningen ”trädet blir för stort” blir en naturlig brygga till beskärningen. Talaranteckningen på Begränsningar har en sådan brygga.
 
 | Scen | Innehåll | Original |
 |---|---|---|
@@ -18,7 +18,9 @@ Presentationen har **21 scener**, en per originalbild. Ordningen följer origina
 | 9–11 | Generell version (två scener), uppgift: vilket värde får rotnoden? | 11–13 |
 | 12–13 | Användningsområden, begränsningar | 3–4 |
 | 14–17 | Alfa-beta: idén, varför, α och β, steg för steg | 14–17 |
-| 18–21 | Aktivitet, facit, nodräkning, extrauppgift MCTS | 18–21 |
+| 18–19 | Aktivitet: vilka grenar kan beskäras, facit | 18–19 |
+| 20–21 | Aktivitet: hur många noder, facit (tillagt) | 20 |
+| 22 | Extrauppgift MCTS | 21 |
 
 - **Scen 2, 3, 7, 21:** *Bild och förklaring.* Numrerade rader; aktuell rad får accentram, tidigare rader tonas ned men går att läsa.
 - **Scen 12, 13, 15:** *Bildband och kort.* Scen 12 har en ingress om att minimax fungerar överallt där två sidor har motsatta mål. Scen 15 har bonsaibilden som band.
@@ -30,6 +32,7 @@ Presentationen har **21 scener**, en per originalbild. Ordningen följer origina
 - **Scen 14:** beskärningen visas som djupet först-sökning, en nod i taget med räknare för undersökta löv, i samma rytm som scen 17 men utan α och β. Både mitten- och högergrenen stegas nod för nod: ner till noden, lövet, beskärning. Originalets formuleringar ligger på klick 8, 9 och 12.
 - **Scen 16:** *Symbolnyckel.* ”uppdateras vid maxnoder” och ”uppdateras vid minnoder” är framhävda.
 - **Scen 17:** följer simuleringen på ai-aktiviteter.se: varje nod visar sitt eget α och β; ett ändrat värde visas som ”8 → 5”.
+- **Scen 21 (tillagd):** facit till nodräkningen. Samma träd som övningen; den utforskade delen färgas och en räknare visar besökta noder. Svar: 6 av 22 noder, roten inräknad (5 utan roten). Den högra MAX-nodens första löv är 5 ≥ β 4, så hela resten av grenen, 16 noder, beskärs. Uträknat med alfa-beta i byggskriptet.
 - **Scen 19:** facit i *Resonemang med logg*. Raderna skrivs fram tecken för tecken (`rörelse: skrivmaskin`), som om algoritmen skriver.
 
 **Markering i träden.** Bara det som händer just nu lyser: noden som räknas eller lövet som undersöks. Värdet som en nod väljer pulserar i stället för att alla barn lyser. När ett löv undersöks syns först lövet, och nästa klick uppdaterar föräldern (≤8, β = 8). På uppgiften om rotnoden (scen 11) lyser först nivån vars tur det är, tomma, och nästa klick fyller i värdena.

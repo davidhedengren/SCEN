@@ -32,7 +32,8 @@ assert.deepEqual([...new Set(mapping.map(x=>x[1]))].sort((a,b)=>a-b),Array.from(
 console.log('OK: bildstegens resurser, manusrundtur, räkneexempel och täckning av samtliga originalbilder.');
 
 // The lesson follows the original again; overlays in slide coordinates are not used for diagrams.
-assert.equal(deck.slides.length,21);
+// 21 originalbilder plus ett tillagt facit till nodräkningsövningen (originalbild 20).
+assert.equal(deck.slides.length,22);
 // Användningsområden och Begränsningar (original 3 och 4) ligger efter minimaxuppgiften, före alfa-beta.
 // Varje scen pekar på rätt originalbild i sin anteckning.
 assert(mapping.every((row,i)=>row[0]===i+1));

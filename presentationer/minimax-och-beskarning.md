@@ -630,6 +630,31 @@ rörelse: ingen
 
 ---
 
+[egen: resonemang-i-bild]
+rubrik: Hur många noder behöver utforskas?
+etikett: Facit
+bild: bilder/minimax/v3/rakna-facit-0.svg
+alt: Facit: alfa-beta-sökning i nodräkningsövningen. Sex av 22 noder besöks; den högra grenens stora delträd beskärs. Roten får värdet 4.
+text: Sök djupet först, från vänster till höger. Räkna varje nod som besöks, roten inräknad.
+fokus: ingen
+rörelse: ingen
+övergång: tona
+- Roten | bilder/minimax/v3/rakna-facit-1.svg | Sökningen börjar i roten, en MIN-nod. Den räknas som besökt.
+- Vänstra MAX | bilder/minimax/v3/rakna-facit-2.svg | Ner till vänstra MAX-noden.
+- Lövet 3 | bilder/minimax/v3/rakna-facit-3.svg | Första lövet är 3.
+- Lövet 4 | bilder/minimax/v3/rakna-facit-4.svg | Nästa löv är 4.
+- MAX väljer 4 | bilder/minimax/v3/rakna-facit-5.svg | Väljer det största av 3 och 4, alltså 4. Roten (MIN) kan nu ge högst 4.
+- Högra MAX | bilder/minimax/v3/rakna-facit-6.svg | Ner till högra MAX-noden.
+- Lövet 5 | bilder/minimax/v3/rakna-facit-7.svg | Första lövet är 5.
+- Beskär | bilder/minimax/v3/rakna-facit-8.svg | MAX kan få minst 5, men MIN har redan högst 4. Resten av grenen, 16 noder, behöver aldrig undersökas.
+- Svar: 6 noder | bilder/minimax/v3/rakna-facit-9.svg | Roten väljer det minsta av 4 och minst 5, alltså 4. Bara 6 av 22 noder behövde undersökas.
+> Facit tillagt 2026-11-23 på lärarens begäran; det finns inte i originalet. Räknat med alfa-beta i scripts/build-minimax-visuals.py: 6 av 22 noder, roten inräknad.
+> Räknar man inte roten blir svaret 5. Bestäm hur ni räknar innan eleverna börjar.
+> Stanna före klick 8: ”MAX kan få minst 5 här. Vad vet vi redan om roten?”
+> Källa: originalbild 20. Presentation av David Hedengren.
+
+---
+
 [egen: bild-och-forklaring]
 rubrik: Monte Carlo Tree Search (MCTS)
 etikett: Extrauppgift

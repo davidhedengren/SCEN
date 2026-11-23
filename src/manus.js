@@ -220,6 +220,7 @@ const Manus = (() => {
     if (L === 'bildregi' && s.imageDirection) Object.entries(IMAGE_DIRECTION_OUT).forEach(([field,label]) => {
       const v=s.imageDirection[field]; if(v==null||v==='') return; out.push(`${label}: ${field==='restore'?(v?'ja':'nej'):field==='copy'?(v==='compact'?'kompakt':'normal'):Array.isArray(v)?v.join(' '):v}`);
     });
+    if (L === 'egen' && s.imageDirection && Array.isArray(s.imageDirection.start) && s.imageDirection.start.length) out.push(`startutsnitt: ${s.imageDirection.start.join(' ')}`);
     if ((L === 'ordbild' || L === 'bildfält') && s.imageDirection && Array.isArray(s.imageDirection.focus) && s.imageDirection.focus.length) out.push(`fokuspunkt: ${s.imageDirection.focus.join(' ')}`);
     if (L === 'bildregi' && s.imageBrief) Object.entries(IMAGE_BRIEF_OUT).forEach(([field,label]) => {
       const v=s.imageBrief[field]; if(v==null||val(v)==='') return; out.push(`${label}: ${multi(v)}`);

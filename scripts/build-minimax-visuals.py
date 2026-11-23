@@ -377,10 +377,72 @@ def scene6():
     for step in range(4):
         save(f'speltrad-{step}', frame(step), h)
 
+    # Steg 4: kameran drar ut. Förra klickets bild ligger som exakt miniatyr högst upp
+    # (skala 1/ZK), och under den breder hela spelträdet ut sig nivå för nivå.
+    # Bredden på varje nivå är proportionell mot antalet ställningar på nivån.
+    counts, games = count_full_tree()
+    assert counts == [1, 9, 72, 504, 3024, 15120, 54720, 148176, 200448, 127872], counts
+    assert sum(counts) == 549946 and games == 255168
+    ZK, cx, my = 7, 1010, 24
+    mw, mh = W / ZK, h / ZK
+    mx = cx - mw / 2
+    body = f'<g data-mini="speltrad-3" transform="translate({mx:.2f},{my}) scale({1 / ZK:.6f})">' + frame(3) + '</g>'
+    # Ramen ligger utanför miniatyren, så att den inte syns när kameran står inzoomad.
+    pad = 26
+    body += f'<rect x="{mx - pad:.1f}" y="{my - pad / 2:.1f}" width="{mw + 2 * pad:.1f}" height="{mh + pad:.1f}" rx="10" fill="none" stroke="{MAXC}" stroke-width="2.5" stroke-dasharray="7 6"/>'
+    body += text(mx + mw + pad + 14, my + mh / 2 - 4, 'Här var vi', 24, MAXC, 'start', 600)
+    body += text(mx + mw + pad + 14, my + mh / 2 + 24, 'nivå 0–2', 20, MUTED, 'start')
+    ys = {3: 210, 4: 300, 5: 390, 6: 480, 7: 575, 8: 675, 9: 775}
+    top = my + mh + 4
+    scale = 1300 / max(counts)
+    left = [(cx, top)] + [(cx - counts[d] * scale / 2, ys[d]) for d in range(3, 10)]
+    right = [(cx + counts[d] * scale / 2, ys[d]) for d in range(9, 2, -1)] + [(cx, top)]
+    shape = 'M' + ' L'.join(f'{x:.1f},{y:.1f}' for x, y in left + right) + 'Z'
+    body += (f'<defs><linearGradient id="tg" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="{MAXC}" stop-opacity=".55"/>'
+             f'<stop offset="1" stop-color="{MINC}" stop-opacity=".45"/></linearGradient>'
+             f'<pattern id="td" width="9" height="9" patternUnits="userSpaceOnUse"><circle cx="4.5" cy="4.5" r="1.3" fill="{INK}" fill-opacity=".55"/></pattern>'
+             f'<clipPath id="tc"><path d="{shape}"/></clipPath></defs>')
+    body += f'<path d="{shape}" fill="url(#tg)" stroke="{MAXC}" stroke-opacity=".7" stroke-width="2" stroke-linejoin="round"/>'
+    body += f'<rect x="0" y="0" width="{W}" height="{h}" fill="url(#td)" clip-path="url(#tc)"/>'
+    for d in range(3, 10):
+        y, w = ys[d], counts[d] * scale
+        body += f'<path d="M{cx - w / 2:.1f},{y}H{cx + w / 2:.1f}" stroke="{INK}" stroke-opacity=".35" stroke-width="1.5"/>'
+    # Nivåtabell till vänster: drag och antal ställningar.
+    rows = [(0, my + 6), (1, my + 47), (2, my + 100)] + [(d, ys[d]) for d in range(3, 10)]
+    for d, y in rows:
+        col = INK if d >= 3 else MUTED
+        body += text(0, y + 8, f'{d} drag', 21, MUTED, 'start', 500)
+        body += text(300, y + 8, f'{counts[d]:,}'.replace(',', ' '), 24 if d >= 3 else 20, col, 'end', 600, MONO)
+    body += f'<path d="M0,{ys[9] + 40}H300" stroke="{EDGE}" stroke-width="2"/>'
+    body += text(0, ys[9] + 78, 'Totalt', 22, MUTED, 'start', 500)
+    body += text(300, ys[9] + 80, f'{sum(counts):,}'.replace(',', ' '), 30, INK, 'end', 700, MONO)
+    # Huvudbudskapet
+    body += text(W - 8, ys[9] + 66, f'{sum(counts):,} spelställningar'.replace(',', ' '), 40, INK, 'end', 700)
+    body += text(W - 8, ys[9] + 104, f'{games:,} möjliga partier i ett enda litet spel'.replace(',', ' '), 24, MUTED, 'end', 500)
+    save('speltrad-4', body, h)
+    # Punkten som kameran drar ut ifrån: miniatyren ska fylla hela bilden i början.
+    print(f'utzoom scen 4: {(mx + mw / 2) / W * 100:.2f} {(my + mh / 2) / h * 100:.2f} {ZK}')
+
 
 # ---------------------------------------------------------------------------
 # Scen 7, 8, 10: konkreta minimaxträd för tre-i-rad
 # ---------------------------------------------------------------------------
+
+def count_full_tree():
+    """Antal ställningar per nivå (antal gjorda drag) i hela spelträdet för tre-i-rad, och antal färdiga partier."""
+    counts, games = [0] * 10, [0]
+
+    def rec(b, p, d):
+        counts[d] += 1
+        if winner(b)[0] or '.' not in b:
+            games[0] += 1
+            return
+        for i in range(9):
+            if b[i] == '.':
+                rec(b[:i] + p + b[i + 1:], 'O' if p == 'X' else 'X', d + 1)
+    rec('.' * 9, 'X', 0)
+    return counts, games[0]
+
 
 def robot_image_data():
     src = ROOT / 'bilder/minimax/original/image6.png'
@@ -442,23 +504,35 @@ def scene8():
     labels = ''
     for y, a, b in rows:
         labels += text(0, y + s / 2 - 2, a, 24, INK, 'start', 600) + (text(0, y + s / 2 + 28, b, 20, MUTED, 'start') if b else '')
-    A = {'r000', 'r010'}
-    frames = []
-    shown = set()
-    chosen = set()
+    # Vänstra grenen är exakt exempel 1 (scen 5). Den är redan uträknad när bilden börjar,
+    # och kameran drar ut från den (startutsnitt) till hela trädet.
+    left = {'r0', 'r00', 'r01', 'r000', 'r010'}
+    left_edges = {('r0', 'r01'), ('r00', 'r000'), ('r01', 'r010')}
+    nodes8 = {n['key']: n for n in walk(tree)}
+    assert nodes8['r0']['board'] == parse_board('.XO OXX X.O') and nodes8['r0']['value'] == 0
+    shown, chosen = set(left), set(left_edges)
     plan = [
-        (A, A, set(), {}),
-        ({'r00', 'r01'}, {'r00', 'r01', 'r000', 'r010'}, {('r00', 'r000'), ('r01', 'r010')}, {}),
-        ({'r0'}, {'r0', 'r00', 'r01'}, {('r0', 'r01')}, {'r0': ('min(1, 0) = 0', 'left')}),
-        ({'r10', 'r110', 'r11', 'r1'}, {'r1', 'r10', 'r11', 'r110'}, {('r11', 'r110'), ('r1', 'r10')}, {'r1': ('min(−1, 0) = −1', 'below')}),
+        ({'r10', 'r110'}, {'r10', 'r110'}, set(), {}),
+        ({'r11'}, {'r11', 'r110'}, {('r11', 'r110')}, {}),
+        ({'r1'}, {'r1', 'r10', 'r11'}, {('r1', 'r10')}, {'r1': ('min(−1, 0) = −1', 'below')}),
         ({'r2'}, {'r2'}, set(), {}),
         ({'r'}, {'r', 'r2'}, {('r', 'r2')}, {'r': ('max(0, −1, 1) = 1', 'right')}),
     ]
-    save('spel-8-0', labels + game_tree_svg(tree, pos, s, h, set()), h)
+    save('spel-8-0', labels + game_tree_svg(tree, pos, s, h, shown, set(), chosen), h)
     for i, (add, focus, ch, calls) in enumerate(plan, 1):
         shown |= add
         chosen |= ch
         save(f'spel-8-{i}', labels + game_tree_svg(tree, pos, s, h, shown, focus, chosen, calls), h)
+    # Startutsnitt: vänstra grenen ska ligga där trädet i scen 5 stod, så att övertoningen
+    # mellan bilderna smälter ihop och kameran sedan drar ut. Brädena i scen 5 är 150 stora,
+    # raderna 290 isär; här 124 och 222. Skalan följer radavståndet.
+    k = 290 / 222
+    p5 = ((620 + 400 + 75) / 1760, (70 + 75) / 860)          # rotbrädets mitt i scen 5, andel av bilden
+    r0 = pos['r0']
+    p6 = ((r0[0] + s / 2) / W, (r0[1] + s / 2) / h)           # samma ställning här
+    cx = p6[0] - (p5[0] - .5) / k
+    cy = p6[1] - (p5[1] - .5) / k
+    print(f'startutsnitt scen 6: {cx * 100:.2f} {cy * 100:.2f} {k:.2f}')
 
 
 def scene10():

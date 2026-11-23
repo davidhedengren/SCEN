@@ -2728,15 +2728,23 @@ function renderSlide(sl, i, deck, img) {
       const its = lines(sl.items && lines(sl.items).length ? sl.items : sl.bullets);
       const item = t => { const p = t.split('|'); return p.length > 1 ? `<b>${fmt(p[0].trim())}</b><span>${fmt(p.slice(1).join('|').trim())}</span>` : `<span>${fmt(t)}</span>`; };
       const uses = name => new RegExp('\\{\\{\\s*' + name + '\\s*\\}\\}', 'i').test(T.html || '');
+      /* Kameran drar ut från ett utsnitt: x y är vyns mittpunkt i procent, skala hur inzoomat den börjar. */
+      const zoomAttr = zm => zm ? ` data-utzoom style="--zoom-x:${Math.max(0, Math.min(100, zm[0]))}%;--zoom-y:${Math.max(0, Math.min(100, zm[1]))}%;--zoom-from:${Math.max(1, Math.min(20, zm[2] || 4))}"` : '';
+      const startView = sl.imageDirection && sl.imageDirection.start != null && String(sl.imageDirection.start).trim() !== '' ? numericTuple(sl.imageDirection.start, [50, 50, 1], 3) : null;
       const slot = {
         rubrik: fmt(title), text: fmt(sl.text || ''), etikett: fmt(sl.caption || ''), svar: fmt(sl.answer || ''),
         bild: esc(sl.image ? img(sl.image) : ''),
         bildid: sl.image ? `i-${hash(sl.image)}` : '', alt: esc(sl.alt || plain(title) || 'Bild'),
+        bildstart: startView && startView[2] > 1 ? zoomAttr(startView) : '',
         punkter: uses('punkter') ? its.map(t => `<li${steps ? st(bodyA) : ''}>${item(t)}</li>`).join('') : '',
         bildsteg: uses('bildsteg') ? its.map(t => {
           const p = t.split('|').map(x => x.trim());
+          /* Valfritt sista fält "utzoom: x y skala": steget börjar inzoomat med vyns mittpunkt i x y (procent av bilden,
+             samma betydelse som startutsnitt) och drar sedan ut kameran till helbild. Mallens CSS sköter rörelsen. */
+          const zm = p.length > 3 && /^utzoom\s*:/i.test(p[p.length - 1]) ? numericTuple(p.pop().replace(/^utzoom\s*:/i, ''), [50, 50, 4], 3) : null;
+          const zoom = zoomAttr(zm);
           /* rörelse: skrivmaskin skriver fram stegets text tecken för tecken i snabb takt, som algoritmens tankar. Annars byts bara bilden. */
-          return `<figure class="image-step"${steps ? st(bodyA === 'type' ? 'typefast' : 'none') : ''}><img src="${esc(img(p[1] || ''))}" alt="${esc(plain(p[0] || ''))}"><figcaption><b>${fmt(p[0] || '')}</b><span>${fmt(p.slice(2).join(' | '))}</span></figcaption></figure>`;
+          return `<figure class="image-step"${zoom}${steps ? st(bodyA === 'type' ? 'typefast' : 'none') : ''}><img src="${esc(img(p[1] || ''))}" alt="${esc(plain(p[0] || ''))}"><figcaption><b>${fmt(p[0] || '')}</b><span>${fmt(p.slice(2).join(' | '))}</span></figcaption></figure>`;
         }).join('') : '',
         prövningar: uses('prövningar') ? its.map(t => {
           const p = t.split('|').map(x => x.trim());

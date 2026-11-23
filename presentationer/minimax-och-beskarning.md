@@ -76,6 +76,7 @@ rörelse: ingen
 - Rotnod | bilder/minimax/v3/speltrad-1.svg | Varje nod motsvarar en spelställning. Roten är det tomma brädet.
 - Möjliga drag | bilder/minimax/v3/speltrad-2.svg | Varje gren representerar ett möjligt speldrag. X har 9 möjliga första drag.
 - Fortsätt trädet | bilder/minimax/v3/speltrad-3.svg | Efter varje drag har O 8 möjliga svar. Redan efter två drag: 9 · 8 = 72 ställningar.
+- Hela trädet | bilder/minimax/v3/speltrad-4.svg | Det vi har sett är bara toppen. Hela trädet för tre-i-rad har 549 946 spelställningar och 255 168 möjliga partier. | utzoom: 57.39 9.81 7
 > Källa: originalbild 6. Presentation av David Hedengren.
 > Originaltext: Rotnod
 > Originaltext: Beslutsträd för 3-i-rad
@@ -109,17 +110,18 @@ rörelse: ingen
 rubrik:
 etikett: Exempel 2 · X:s tur
 bild: bilder/minimax/v3/spel-8-0.svg
+startutsnitt: 16.34 62.07 1.31
 alt: X har tre möjliga drag med minimaxvärdena 0, −1 och 1. Max-värdet i roten är 1.
-text: Tre tomma rutor kvar. Följ hur Max och Min värderar de möjliga utfallen.
+text: Vänstra grenen känner vi igen från exempel 1: värdet är 0. Nu tar vi med X:s två andra drag.
 fokus: ingen
 rörelse: ingen
 övergång: tona
-- Lövnoderna | bilder/minimax/v3/spel-8-1.svg | Vänstra grenen slutar i vinst för X (1) och oavgjort (0).
-- Max-värde: 1 och 0 | bilder/minimax/v3/spel-8-2.svg | X har bara ett drag kvar. Värdet flyttas rakt upp.
-- Min-värde: 0 | bilder/minimax/v3/spel-8-3.svg | O väljer det minsta av 1 och 0, alltså 0.
-- Min-värde: −1 | bilder/minimax/v3/spel-8-4.svg | I mitten kan O vinna direkt. Min väljer −1.
-- Värde: 1 | bilder/minimax/v3/spel-8-5.svg | Det högra draget ger tre i rad i mittkolumnen: direkt vinst för X.
-- Max-värde: 1 | bilder/minimax/v3/spel-8-6.svg | Max väljer det största av 0, −1 och 1, alltså 1.
+- Lövnoderna i mitten | bilder/minimax/v3/spel-8-1.svg | I mitten kan O vinna direkt (−1). Annars blir det oavgjort (0).
+- Max-värde: 0 | bilder/minimax/v3/spel-8-2.svg | X har bara ett drag kvar. Värdet flyttas rakt upp.
+- Min-värde: −1 | bilder/minimax/v3/spel-8-3.svg | O väljer det minsta av −1 och 0, alltså −1.
+- Värde: 1 | bilder/minimax/v3/spel-8-4.svg | Det högra draget ger tre i rad i mittkolumnen: direkt vinst för X.
+- Max-värde: 1 | bilder/minimax/v3/spel-8-5.svg | Max väljer det största av 0, −1 och 1, alltså 1.
+> Övergång: bilden börjar inzoomad på vänstra grenen, som är exakt exempel 1, och drar ut kameran till hela trädet. Vänstra grenens värden är därför redan ifyllda.
 > Källa: originalbild 8. Presentation av David Hedengren.
 > Originaltext: Värde: 1
 > Originaltext: Värde: 0

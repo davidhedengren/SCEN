@@ -335,7 +335,7 @@ text: Minimax är mest känt från spel, men fungerar överallt där två sidor 
 rörelse: tona
 fokus: ingen
 - Spelutveckling | Minimax används för att skapa intelligenta motståndare i spel som schack, dam, tic-tac-toe och andra spel där miljön är fullt observerbar
-- Ekonomi | Minimax kan användas i ekonomiska modeller för att förutsäga resultatet av beslut och för att optimera investeringsstrategier
+- Ekonomi | Ett företag kan använda minimax för att jämföra investeringar. Om målet är att begränsa förlusten väljer företaget den investering som klarar sig bäst om utvecklingen blir dålig.
 - Robotik | Minimax kan användas för att styra robotar i komplexa miljöer, till exempel för att maximera effektivitet I rörelser och minska energiförbrukning
 > Källa: originalbild 3. Presentation av David Hedengren.
 > Originaltext: Användningsområden

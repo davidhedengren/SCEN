@@ -6,7 +6,10 @@ Omarbetad föreläsningsversion: 21 scener i samma ordning som originalets 21 bi
 
 ## Regin
 
-Presentationen har **22 scener**: en per originalbild och ett tillagt facit till nodräkningsövningen. Ordningen följer originalet med ett undantag: **Användningsområden och Begränsningar (original 3 och 4) ligger efter minimaxuppgiften, direkt före alfa-beta-beskärning.** Eleverna förstår användningsområdena bättre när de vet vad MAX och MIN är, och begränsningen ”trädet blir för stort” blir en naturlig brygga till beskärningen. Talaranteckningen på Begränsningar har en sådan brygga.
+Presentationen har **21 scener**. Två ändringar mot originalets ordning, beslutade med läraren:
+
+- **Användningsområden (original 3) är borttagen** (2026-11-23). Utanför spel blev exemplen krystade. Originaltexten finns i `originaltext.json`.
+- **Ordningen följer konkret → övning → formalisering.** Begränsningar (original 4) ligger efter minimaxuppgiften som brygga till beskärningen. Övningen ”Vilka grenar kan beskäras?” med facit ligger direkt efter idén om beskärning, före α och β. Eleverna beskär först med frågan ”kan grenen bli bättre?”. Sedan får det de gjort namnen α och β, och nodräkningen kräver hela metoden.
 
 | Scen | Innehåll | Original |
 |---|---|---|
@@ -16,24 +19,25 @@ Presentationen har **22 scener**: en per originalbild och ett tillagt facit till
 | 7 | Aktivitet: spela med grannen | 9 |
 | 8 | Exempel 3 | 10 |
 | 9–11 | Generell version (två scener), uppgift: vilket värde får rotnoden? | 11–13 |
-| 12–13 | Användningsområden, begränsningar | 3–4 |
-| 14–17 | Alfa-beta: idén, varför, α och β, steg för steg | 14–17 |
-| 18–19 | Aktivitet: vilka grenar kan beskäras, facit | 18–19 |
-| 20–21 | Aktivitet: hur många noder, facit (tillagt) | 20 |
-| 22 | Extrauppgift MCTS | 21 |
+| 12 | Begränsningar | 4 |
+| 13–14 | Beskärning: idén nod för nod, varför beskärning | 14–15 |
+| 15–16 | Aktivitet: vilka grenar kan beskäras, facit (utan α och β) | 18–19 |
+| 17–18 | α och β: definitioner, steg för steg | 16–17 |
+| 19–20 | Aktivitet: hur många noder, facit (tillagt) | 20 |
+| 21 | Extrauppgift MCTS | 21 |
 
-- **Scen 2, 3, 7, 21:** *Bild och förklaring.* Numrerade rader; aktuell rad får accentram, tidigare rader tonas ned men går att läsa.
-- **Scen 12, 13, 15:** *Bildband och kort.* Scen 12 har en ingress om att minimax fungerar överallt där två sidor har motsatta mål. Scen 15 har bonsaibilden som band.
+- **Scen 2, 3, 7, 21:** *Bild och förklaring* (scen 21 är MCTS). Numrerade rader; aktuell rad får accentram, tidigare rader tonas ned men går att läsa.
+- **Scen 12 och 14:** *Bildband och kort.* Scen 14 har bonsaibilden som band.
 - **Scen 4, sista klicket:** kameran drar ut från trädet man just sett till hela spelträdet för tre-i-rad. Det man såg är en miniatyr högst upp; under den breder trädet ut sig nivå för nivå, med bredd i proportion till antalet ställningar (1, 9, 72, 504, 3 024, 15 120, 54 720, 148 176, 200 448, 127 872). Totalt 549 946 spelställningar och 255 168 möjliga partier, uträknat av byggskriptet.
 - **Scen 5 → 6:** startställningen i exempel 1 är vänstra grenen i exempel 2. Scen 6 börjar inzoomad på den grenen, på samma plats som trädet i scen 5, och drar ut kameran till hela trädet (`startutsnitt`). Vänstra grenens värden är redan ifyllda och grenen är lätt nedtonad: den tonas ned under övertoningen från scen 5, så att man ser att den kommer från förra bilden och att det nya lyser. Klicken räknar mitten- och högergrenen.
 - **Scen 4–6 och 8:** spelträden för tre-i-rad ritas från riktiga spelställningar; värdena räknas med minimax i byggskriptet och avslöjas nerifrån och upp.
 - **Talträd (scen 9–11, 14, 17–20):** trianglar uppåt för MAX (turkos), nedåt för MIN (bärnsten). Noden i fokus fylls, får skarp ljus kant och ett mjukt sken; resten tonas ned. Beskurna grenar är streckade med rött kryss, och löv som inte undersökts är streckade konturer.
-- **Slutvägen:** det sista steget på scen 10, 11, 14, 17 och 19 visar en vit, lysande linje från roten till lövet som ger rotens värde. På scen 11 är det ett eget klick (”Slutvägen”).
-- **Scen 14:** beskärningen visas som djupet först-sökning, en nod i taget med räknare för undersökta löv, i samma rytm som scen 17 men utan α och β. Både mitten- och högergrenen stegas nod för nod: ner till noden, lövet, beskärning. Originalets formuleringar ligger på klick 8, 9 och 12.
-- **Scen 16:** *Symbolnyckel.* ”uppdateras vid maxnoder” och ”uppdateras vid minnoder” är framhävda.
-- **Scen 17:** följer simuleringen på ai-aktiviteter.se: varje nod visar sitt eget α och β; ett ändrat värde visas som ”8 → 5”.
-- **Scen 21 (tillagd):** facit till nodräkningen. Samma träd som övningen; den utforskade delen färgas och en räknare visar besökta noder. Svar: 6 av 22 noder, roten inräknad (5 utan roten). Den högra MAX-nodens första löv är 5 ≥ β 4, så hela resten av grenen, 16 noder, beskärs. Uträknat med alfa-beta i byggskriptet.
-- **Scen 19:** facit i *Resonemang med logg*. Raderna skrivs fram tecken för tecken (`rörelse: skrivmaskin`), som om algoritmen skriver.
+- **Slutvägen:** det sista steget på scen 10, 11, 13, 16, 18 och 20 visar en vit, lysande linje från roten till lövet som ger rotens värde. På scen 11 är det ett eget klick (”Slutvägen”).
+- **Scen 13:** beskärningen visas som djupet först-sökning, en nod i taget med räknare för undersökta löv, i samma rytm som scen 18 men utan α och β. Både mitten- och högergrenen stegas nod för nod: ner till noden, lövet, beskärning. Originalets formuleringar ligger på klick 8, 9 och 12.
+- **Scen 17:** *Symbolnyckel.* ”uppdateras vid maxnoder” och ”uppdateras vid minnoder” är framhävda.
+- **Scen 18:** följer simuleringen på ai-aktiviteter.se: varje nod visar sitt eget α och β; ett ändrat värde visas som ”8 → 5”.
+- **Scen 20 (tillagd):** facit till nodräkningen. Samma träd som övningen; den utforskade delen färgas och en räknare visar besökta noder. Svar: 6 av 22 noder, roten inräknad (5 utan roten). Den högra MAX-nodens första löv är 5 ≥ β 4, så hela resten av grenen, 16 noder, beskärs. Uträknat med alfa-beta i byggskriptet.
+- **Scen 16:** facit till grenövningen i *Resonemang med logg*, skrivet utan α och β eftersom det kommer före dem. Raderna skrivs fram tecken för tecken (`rörelse: skrivmaskin`), som om algoritmen skriver.
 
 **Markering i träden.** Bara det som händer just nu lyser: noden som räknas eller lövet som undersöks. Värdet som en nod väljer blinkar till en gång i stället för att alla barn lyser. När ett löv undersöks syns först lövet, och nästa klick uppdaterar föräldern (≤8, β = 8). På uppgiften om rotnoden (scen 11) lyser först nivån vars tur det är, tomma, och nästa klick fyller i värdena.
 
@@ -58,9 +62,9 @@ Alla fem mallar använder bara temats variabler och fungerar i ljusa och mörka 
 
 ### Resonemang med logg (ny)
 
-`[egen: resonemang-med-logg]` skriver algoritmens ”tankar” som en logg i kommandotolksstil. I den här presentationen används den bara på scen 19 (facit), med `rörelse: skrivmaskin` så att varje rad skrivs fram tecken för tecken.
+`[egen: resonemang-med-logg]` skriver algoritmens ”tankar” som en logg i kommandotolksstil. I den här presentationen används den bara på scen 16 (facit), med `rörelse: skrivmaskin` så att varje rad skrivs fram tecken för tecken.
 
-**Varför bara på facit?** När ett begrepp är nytt (scen 10 och 17) ska blicken vara på ett ställe: beräkningen och jämförelsen α ≥ β står vid noden där de görs, och en kort mening räcker under. En växande logg bredvid skulle dela uppmärksamheten mellan träd och text, och tävla med lärarens röst. På facit har eleverna redan räknat själva. Där är historiken poängen: de jämför sin lösning rad för rad, och hela spåret står kvar.
+**Varför bara på facit?** När ett begrepp är nytt (scen 10 och 18) ska blicken vara på ett ställe: beräkningen och jämförelsen α ≥ β står vid noden där de görs, och en kort mening räcker under. En växande logg bredvid skulle dela uppmärksamheten mellan träd och text, och tävla med lärarens röst. På facit har eleverna redan räknat själva. Där är historiken poängen: de jämför sin lösning rad för rad, och hela spåret står kvar.
 
 1. **Syfte:** visa både vad som händer i diagrammet och varför, i den ordning det sker.
 2. **När:** algoritmer, kodspårning, beräkningar steg för steg, laborationsprotokoll och beslutsprocesser där ordningen är poängen.
@@ -114,7 +118,7 @@ Två synkroniserade vyer visar samma struktur med olika metod, med en räknare f
 
 ## Bildprompter
 
-Den genererade bilden enligt **prompt 1** är nu inlagd på titeln. Bilden enligt prompt 4 är inlagd på scen 15. Övriga är valfria; originalets bilder används på övriga bildscener. Låt AI skapa stämningsbilder, inte algoritmdiagram: text, siffror, grenar och exakta bräden lägger vi i SCEN.
+Den genererade bilden enligt **prompt 1** är nu inlagd på titeln. Bilden enligt prompt 4 är inlagd på scen 14. Övriga är valfria; originalets bilder används på övriga bildscener. Låt AI skapa stämningsbilder, inte algoritmdiagram: text, siffror, grenar och exakta bräden lägger vi i SCEN.
 
 Använd samma färgvärld genom serien: mörk blåsvart bakgrund, mjukt turkost ljus, en liten varm bärnstensfärgad kontrast. 16:9, minst 1920 × 1080. Inga texter, logotyper, vattenstämplar eller inritade highlight-rutor. Använd gärna första bilden som stilreferens för de andra.
 
@@ -144,7 +148,7 @@ Använd samma färgvärld genom serien: mörk blåsvart bakgrund, mjukt turkost 
 
 ### Bild 4 — Beskärning (inlagd)
 
-**Placering:** scen 15 *Varför beskärning?*, som bildband överst. Filnamn: `bilder/minimax/minimax-beskarning.jpg`.
+**Placering:** scen 14 *Varför beskärning?*, som bildband överst. Filnamn: `bilder/minimax/minimax-beskarning.jpg`.
 
 > Cinematic macro photograph, 16:9 landscape. Precise pruning shears closing on a thin branch of a small, elegant bonsai tree. The trimmed twig and a few small leaves are falling away; the rest of the tree remains healthy and clearly structured. Composition is wide and shallow: the shears, branch and foliage sit in the upper half and center of the frame, while the bottom third is calm, dark and nearly empty because it will fade into a title. Deep blue-black background, soft turquoise rim light on the tree, a restrained warm amber highlight on the blades. Realistic materials, shallow depth of field. No text, no numbers, no arrows, no diagrams, no logos. Match the palette of the reference image.
 

@@ -32,6 +32,7 @@ fokus: ingen
 - Algoritmen | Algoritmen utforskar alla möjliga drag och väljer det som maximerar vinsten och minimerar den största möjliga förlusten
 - Max | Vi kallar spelarna Max och Min där Max försöker maximera sin vinst
 - Min | Och Min försöker minimera Max’s vinst
+> Bilden Användningsområden (originalbild 3) är borttagen på lärarens beslut 2026-11-23: utanför spel blev exemplen krystade. Originaltexten finns i docs/minimax/originaltext.json.
 > Källa: originalbild 2. Presentation av David Hedengren.
 > Originaltext: Minimax-algoritmen
 > Originaltext: En beslutsfattande algoritm som kan användas för att hitta den bästa strategin i ett spel med två spelare. (t.ex. 3-i-rad eller schack)
@@ -328,27 +329,6 @@ rörelse: ingen
 ---
 
 [egen: bildband-och-kort]
-rubrik: Användningsområden
-bild: bilder/minimax/original/image3.png
-alt: Abstrakt nätverk av data och diagram i blått ljus.
-text: Minimax är mest känt från spel, men fungerar överallt där två sidor har motsatta mål: den ena vill ha ett så högt utfall som möjligt (MAX), den andra ett så lågt som möjligt (MIN). Motståndaren kan vara en spelare, en konkurrent, marknaden eller naturen.
-rörelse: tona
-fokus: ingen
-- Spelutveckling | Minimax används för att skapa intelligenta motståndare i spel som schack, dam, tic-tac-toe och andra spel där miljön är fullt observerbar
-- Ekonomi | Ett företag kan använda minimax för att jämföra investeringar. Om målet är att begränsa förlusten väljer företaget den investering som klarar sig bäst om utvecklingen blir dålig.
-- Robotik | En lagerrobot kan använda minimax när något kan gå fel, till exempel att en gång blockeras. Roboten väljer den väg som fungerar bäst även om det värsta händer, så att varorna ändå kommer fram i tid.
-> Källa: originalbild 3. Presentation av David Hedengren.
-> Originaltext: Användningsområden
-> Originaltext: Spelutveckling
-> Originaltext: Minimax används för att skapa intelligenta motståndare i spel som schack, dam, tic-tac-toe och andra spel där miljön är fullt observerbar
-> Originaltext: Ekonomi
-> Originaltext: Minimax kan användas i ekonomiska modeller för att förutsäga resultatet av beslut och för att optimera investeringsstrategier
-> Originaltext: Robotik
-> Originaltext: Minimax kan användas för att styra robotar i komplexa miljöer, till exempel för att maximera effektivitet I rörelser och minska energiförbrukning
-
----
-
-[egen: bildband-och-kort]
 rubrik: Begränsningar
 bild: bilder/minimax/original/image3.png
 alt: Abstrakt nätverk av data och diagram i blått ljus.
@@ -446,6 +426,66 @@ fokus: ingen
 
 ---
 
+[egen: resonemang-i-bild]
+rubrik: Vilka grenar kan beskäras?
+etikett: Aktivitet
+bild: bilder/minimax/v3/ovning-0.svg
+alt: Fyra nivåer: MAX, MIN, MAX, MIN, och åtta bladvärden.
+text: Arbeta från vänster till höger. Markera vilka grenar som kan hoppas över.
+fokus: ingen
+rörelse: ingen
+övergång: tona
+> Källa: originalbild 18. Presentation av David Hedengren.
+> Originaltext: Aktivitet – Vilka grenar kan beskäras?
+> Originaltext: 2
+> Originaltext: 2
+> Originaltext: 3
+> Originaltext: 3
+> Originaltext: 5
+> Originaltext: 8
+> Originaltext: 7
+> Originaltext: 1
+
+---
+
+[egen: resonemang-med-logg]
+rubrik: Vilka grenar kan beskäras?
+etikett: Aktivitet
+bild: bilder/minimax/v3/facit-0.svg
+alt: Stegvis facit till övningen med åtta bladvärden.
+text: sök(rot)  # facit: djupet först, från vänster till höger
+fokus: ingen
+rörelse: skrivmaskin
+övergång: tona
+- Första MAX | bilder/minimax/v3/facit-1.svg | Väljer det största av 5 och 3, alltså 5. MIN ovanför kan som mest bli 5.
+- Lövet 8 | bilder/minimax/v3/facit-2.svg | 8 är större än 5. MAX ger minst 8, så MIN väljer aldrig grenen → **beskär** lövet 2.
+- Vänstra MIN | bilder/minimax/v3/facit-3.svg | Väljer det minsta av 5 och minst 8, alltså 5. Roten (MAX) får minst 5.
+- Tredje MAX | bilder/minimax/v3/facit-4.svg | Väljer det största av 7 och 1, alltså 7.
+- Fjärde MAX | bilder/minimax/v3/facit-5.svg | Väljer det största av 2 och 3, alltså 3.
+- Högra MIN | bilder/minimax/v3/facit-6.svg | Väljer det minsta av 7 och 3, alltså 3.
+- Roten | bilder/minimax/v3/facit-7.svg | Väljer det största av 5 och 3, alltså 5.
+> Pedagogik: loggen används på facit eftersom eleverna redan har räknat själva. Låt dem jämföra sin lösning rad för rad; hela spåret står kvar efter sista klicket.
+> Källa: originalbild 19. Presentation av David Hedengren.
+> Originaltext: Aktivitet – Vilka grenar kan beskäras?
+> Originaltext: 5
+> Originaltext: 5
+> Originaltext: 5
+> Originaltext: 8
+> Originaltext: 7
+> Originaltext: 2
+> Originaltext: 2
+> Originaltext: 2
+> Originaltext: 2
+> Originaltext: 3
+> Originaltext: 3
+> Originaltext: 5
+> Originaltext: 8
+> Originaltext: 7
+> Originaltext: 1
+> Godkänd rättelse 2026-10-13: originalets 2 i MAX-noden över löven 2 och 3 samt i MIN-noden ovanför är rättade till 3. Roten är fortfarande 5.
+
+---
+
 [egen: symbolnyckel]
 rubrik: Alfa- och betavärden
 text: Algoritmen tilldelar varje nod ett alfavärde (𝛼) och ett betavärde 𝛽 och gör en djupet först-sökning i trädet.
@@ -454,6 +494,7 @@ fokus: ingen
 - α | **Alfavärdet** (𝛼) är det hittills bästa värde som Max kan garantera. Från början ges noden alfavärdet (𝛼=−∞) och **uppdateras vid maxnoder** om ett högre värde hittats.
 - β | **Betavärdet** (𝛽) är det hittills bästa värde som Min kan garantera. Betavärdet sätts från början till 𝛽=+∞ och **uppdateras vid minnoder** om ett lägre värde hittats.
 - α ≥ β | **Beskärning.** Om 𝛼≥𝛽 behöver grenen inte utforskas mer och kan beskäras.
+> Brygga från övningen: nu sätter vi namn på det eleverna redan gjort. α är det MAX redan har säkrat (”minst 5”), β det MIN redan har säkrat (”högst 3”). När α ≥ β kan grenen beskäras.
 > Källa: originalbild 16. Presentation av David Hedengren.
 > Originaltext: Alfa- och betavärden
 > Originaltext: Algoritmen tilldelar varje nod ett alfavärde (𝛼) och ett betavärde 𝛽 och gör en Depth First Search i trädet.
@@ -539,66 +580,6 @@ rörelse: ingen
 > Originaltext: 2
 > Originaltext: 52
 > Originaltext: Beta≤ Alfa , Vi behöver inte fortsätta söka i grenen
-
----
-
-[egen: resonemang-i-bild]
-rubrik: Vilka grenar kan beskäras?
-etikett: Aktivitet
-bild: bilder/minimax/v3/ovning-0.svg
-alt: Fyra nivåer: MAX, MIN, MAX, MIN, och åtta bladvärden.
-text: Arbeta från vänster till höger. Markera vilka grenar som kan hoppas över.
-fokus: ingen
-rörelse: ingen
-övergång: tona
-> Källa: originalbild 18. Presentation av David Hedengren.
-> Originaltext: Aktivitet – Vilka grenar kan beskäras?
-> Originaltext: 2
-> Originaltext: 2
-> Originaltext: 3
-> Originaltext: 3
-> Originaltext: 5
-> Originaltext: 8
-> Originaltext: 7
-> Originaltext: 1
-
----
-
-[egen: resonemang-med-logg]
-rubrik: Vilka grenar kan beskäras?
-etikett: Aktivitet
-bild: bilder/minimax/v3/facit-0.svg
-alt: Stegvis facit till övningen med åtta bladvärden.
-text: alfabeta(rot)  # facit, vänster till höger
-fokus: ingen
-rörelse: skrivmaskin
-övergång: tona
-- Första MAX | bilder/minimax/v3/facit-1.svg | Väljer det största av 5 och 3, alltså 5. MIN ovanför får β = 5.
-- löv 8 | bilder/minimax/v3/facit-2.svg | 8 ≥ 5. MAX ger minst 8, MIN väljer aldrig grenen → **beskär** lövet 2.
-- Vänstra MIN | bilder/minimax/v3/facit-3.svg | Väljer det minsta av 5 och minst 8, alltså 5. Roten får α = 5.
-- Tredje MAX | bilder/minimax/v3/facit-4.svg | Väljer det största av 7 och 1, alltså 7.
-- Fjärde MAX | bilder/minimax/v3/facit-5.svg | Väljer det största av 2 och 3, alltså 3.
-- Högra MIN | bilder/minimax/v3/facit-6.svg | Väljer det minsta av 7 och 3, alltså 3.
-- Roten | bilder/minimax/v3/facit-7.svg | Väljer det största av 5 och 3, alltså 5.
-> Pedagogik: loggen används på facit eftersom eleverna redan har räknat själva. Låt dem jämföra sin lösning rad för rad; hela spåret står kvar efter sista klicket.
-> Källa: originalbild 19. Presentation av David Hedengren.
-> Originaltext: Aktivitet – Vilka grenar kan beskäras?
-> Originaltext: 5
-> Originaltext: 5
-> Originaltext: 5
-> Originaltext: 8
-> Originaltext: 7
-> Originaltext: 2
-> Originaltext: 2
-> Originaltext: 2
-> Originaltext: 2
-> Originaltext: 3
-> Originaltext: 3
-> Originaltext: 5
-> Originaltext: 8
-> Originaltext: 7
-> Originaltext: 1
-> Godkänd rättelse 2026-10-13: originalets 2 i MAX-noden över löven 2 och 3 samt i MIN-noden ovanför är rättade till 3. Roten är fortfarande 5.
 
 ---
 

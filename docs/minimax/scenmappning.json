@@ -56,43 +56,43 @@
   ],
   [
     12,
-    3,
-    "[egen: bildband-och-kort]"
-  ],
-  [
-    13,
     4,
     "[egen: bildband-och-kort]"
   ],
   [
-    14,
+    13,
     14,
     "[egen: resonemang-i-bild]"
   ],
   [
-    15,
+    14,
     15,
     "[egen: bildband-och-kort]"
   ],
   [
+    15,
+    18,
+    "[egen: resonemang-i-bild]"
+  ],
+  [
     16,
+    19,
+    "[egen: resonemang-med-logg]"
+  ],
+  [
+    17,
     16,
     "[egen: symbolnyckel]"
   ],
   [
-    17,
+    18,
     17,
     "[egen: resonemang-i-bild]"
   ],
   [
-    18,
-    18,
+    19,
+    20,
     "[egen: resonemang-i-bild]"
-  ],
-  [
-    19,
-    19,
-    "[egen: resonemang-med-logg]"
   ],
   [
     20,
@@ -101,11 +101,6 @@
   ],
   [
     21,
-    20,
-    "[egen: resonemang-i-bild]"
-  ],
-  [
-    22,
     21,
     "[egen: bild-och-forklaring]"
   ]

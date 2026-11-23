@@ -28,12 +28,13 @@ const right = Math.min(Math.max(7,1),Math.max(2,3));
 assert.equal(right, 3);
 assert.equal(Math.max(left,right), 5);
 const mapping = JSON.parse(read('docs/minimax/scenmappning.json'));
-assert.deepEqual([...new Set(mapping.map(x=>x[1]))].sort((a,b)=>a-b),Array.from({length:21},(_,i)=>i+1));
+// Originalbild 3 (Användningsområden) är borttagen på lärarens beslut 2026-11-23; övriga finns med.
+assert.deepEqual([...new Set(mapping.map(x=>x[1]))].sort((a,b)=>a-b),Array.from({length:21},(_,i)=>i+1).filter(n=>n!==3));
 console.log('OK: bildstegens resurser, manusrundtur, räkneexempel och täckning av samtliga originalbilder.');
 
 // The lesson follows the original again; overlays in slide coordinates are not used for diagrams.
-// 21 originalbilder plus ett tillagt facit till nodräkningsövningen (originalbild 20).
-assert.equal(deck.slides.length,22);
+// 20 originalbilder (utan Användningsområden) plus ett tillagt facit till nodräkningsövningen.
+assert.equal(deck.slides.length,21);
 // Användningsområden och Begränsningar (original 3 och 4) ligger efter minimaxuppgiften, före alfa-beta.
 // Varje scen pekar på rätt originalbild i sin anteckning.
 assert(mapping.every((row,i)=>row[0]===i+1));

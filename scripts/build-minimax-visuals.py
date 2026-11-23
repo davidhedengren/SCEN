@@ -37,6 +37,7 @@ MIN_HI = '#FFE0A8' # ljusare kant för MIN i fokus
 CUT = '#FF7A6E'    # beskärning
 FONT = "'IBM Plex Sans','Segoe UI',Inter,Helvetica,Arial,sans-serif"
 MONO = "'IBM Plex Mono','SFMono-Regular',Menlo,Consolas,monospace"
+FADED = .5          # det man redan känner igen från förra bilden
 DIM = .42          # opacitet för det som inte är i fokus
 
 W = 1760           # bredd för diagram som får hela bildytan
@@ -200,7 +201,8 @@ def result_word(n):
     return ''
 
 
-def game_tree_svg(tree, pos, s, h, shown, focus=(), chosen=(), callouts=None, extra='', row_labels=None, leftpad=0):
+def game_tree_svg(tree, pos, s, h, shown, focus=(), chosen=(), callouts=None, extra='', row_labels=None, leftpad=0, faded=()):
+    # faded: noder som tonas ned utan att något annat är i fokus, t.ex. det man redan sett på förra bilden.
     """pos: key -> (x, y) övre vänstra hörnet på brädet.
     shown: nycklar vars värde syns. focus: nycklar i fokus. chosen: kanter (förälder, barn) som visar valet."""
     callouts = callouts or {}
@@ -224,6 +226,8 @@ def game_tree_svg(tree, pos, s, h, shown, focus=(), chosen=(), callouts=None, ex
             on = (k, c['key']) in chosen
             col = (MAXC if n['player'] == 'X' else MINC) if on else EDGE
             op = 1 if (not anyfocus or (k in focus and c['key'] in focus) or on) else DIM
+            if c['key'] in faded and not anyfocus:
+                op = FADED
             body += f'<path d="M{x1:.1f},{y1:.1f}L{x2:.1f},{y2:.1f}" stroke="{col}" stroke-width="{5 if on else 2.5}" stroke-linecap="round" opacity="{op}"/>'
     # fokusramar under noderna
     for k in focus:
@@ -240,6 +244,8 @@ def game_tree_svg(tree, pos, s, h, shown, focus=(), chosen=(), callouts=None, ex
     for k, n in nodes.items():
         x, y = pos[k]
         op = 1 if (not anyfocus or k in focus) else DIM
+        if k in faded and not anyfocus:
+            op = FADED
         g = f'<g data-node="{k}" opacity="{op}">'
         g += f'<rect data-board="{k}" x="{x:.1f}" y="{y:.1f}" width="{s}" height="{s}" fill="none"/>'
         g += draw_board(x, y, s, n['board'], n.get('move'), n['win'] if k in shown else None)
@@ -518,7 +524,8 @@ def scene8():
         ({'r2'}, {'r2'}, set(), {}),
         ({'r'}, {'r', 'r2'}, {('r', 'r2')}, {'r': ('max(0, −1, 1) = 1', 'right')}),
     ]
-    save('spel-8-0', labels + game_tree_svg(tree, pos, s, h, shown, set(), chosen), h)
+    # Vänstra grenen tonas ned lite: den är känd från förra bilden. Det nya lyser.
+    save('spel-8-0', labels + game_tree_svg(tree, pos, s, h, shown, set(), chosen, faded=left), h)
     for i, (add, focus, ch, calls) in enumerate(plan, 1):
         shown |= add
         chosen |= ch

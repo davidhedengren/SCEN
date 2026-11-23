@@ -35,7 +35,7 @@ Presentationen har **22 scener**: en per originalbild och ett tillagt facit till
 - **Scen 21 (tillagd):** facit till nodräkningen. Samma träd som övningen; den utforskade delen färgas och en räknare visar besökta noder. Svar: 6 av 22 noder, roten inräknad (5 utan roten). Den högra MAX-nodens första löv är 5 ≥ β 4, så hela resten av grenen, 16 noder, beskärs. Uträknat med alfa-beta i byggskriptet.
 - **Scen 19:** facit i *Resonemang med logg*. Raderna skrivs fram tecken för tecken (`rörelse: skrivmaskin`), som om algoritmen skriver.
 
-**Markering i träden.** Bara det som händer just nu lyser: noden som räknas eller lövet som undersöks. Värdet som en nod väljer pulserar i stället för att alla barn lyser. När ett löv undersöks syns först lövet, och nästa klick uppdaterar föräldern (≤8, β = 8). På uppgiften om rotnoden (scen 11) lyser först nivån vars tur det är, tomma, och nästa klick fyller i värdena.
+**Markering i träden.** Bara det som händer just nu lyser: noden som räknas eller lövet som undersöks. Värdet som en nod väljer blinkar till en gång i stället för att alla barn lyser. När ett löv undersöks syns först lövet, och nästa klick uppdaterar föräldern (≤8, β = 8). På uppgiften om rotnoden (scen 11) lyser först nivån vars tur det är, tomma, och nästa klick fyller i värdena.
 
 Förklaringstexterna under diagrammen är skrivna i ord (”väljer det största av 4, 3 och 2”), så att presentationen går att läsa i efterhand. Skrivsättet max(4, 3, 2) finns bara i själva träden. Lärarinstruktioner står i talaranteckningarna, aldrig på bilden.
 

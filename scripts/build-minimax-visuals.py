@@ -68,10 +68,10 @@ DEFS = ('<defs>'
         '<filter id="glow" x="-40%" y="-40%" width="180%" height="180%"><feGaussianBlur stdDeviation="9"/></filter>'
         '<filter id="soft" x="-20%" y="-20%" width="140%" height="140%"><feGaussianBlur stdDeviation="4"/></filter>'
         '</defs>'
-        # Puls: valt värde markeras med en ring som växer och tonar bort, i stället för att allt lyser.
-        '<style>.pulse{animation:pulse 1.7s ease-out infinite}'
-        '@keyframes pulse{0%{stroke-opacity:.95;stroke-width:3}70%{stroke-opacity:0;stroke-width:30}100%{stroke-opacity:0;stroke-width:30}}'
-        '@media (prefers-reduced-motion:reduce){.pulse{animation:none;stroke-opacity:.7;stroke-width:9}}</style>')
+        # Blink: valt värde markeras med en ring som växer och tonar bort en gång, i stället för att allt lyser.
+        '<style>.pulse{stroke-opacity:0;animation:pulse 1.2s ease-out .15s 1 both}'
+        '@keyframes pulse{0%{stroke-opacity:.95;stroke-width:3}100%{stroke-opacity:0;stroke-width:30}}'
+        '@media (prefers-reduced-motion:reduce){.pulse{animation:none}}</style>')
 
 
 def save(name, body, h):

@@ -336,7 +336,7 @@ rörelse: tona
 fokus: ingen
 - Spelutveckling | Minimax används för att skapa intelligenta motståndare i spel som schack, dam, tic-tac-toe och andra spel där miljön är fullt observerbar
 - Ekonomi | Ett företag kan använda minimax för att jämföra investeringar. Om målet är att begränsa förlusten väljer företaget den investering som klarar sig bäst om utvecklingen blir dålig.
-- Robotik | En robot kan använda minimax när något kan gå emot den, till exempel en motståndare i robotfotboll eller en vindby. Roboten väljer det drag som fungerar bäst även om det värsta händer.
+- Robotik | En lagerrobot kan använda minimax när något kan gå fel, till exempel att en gång blockeras. Roboten väljer den väg som fungerar bäst även om det värsta händer, så att varorna ändå kommer fram i tid.
 > Källa: originalbild 3. Presentation av David Hedengren.
 > Originaltext: Användningsområden
 > Originaltext: Spelutveckling

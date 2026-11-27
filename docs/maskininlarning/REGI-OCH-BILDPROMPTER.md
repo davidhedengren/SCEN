@@ -2,6 +2,14 @@
 
 Manuset bygger på David Hedengrens *Maskininlärning.pptx*. I klassrummet kan genomgången delas efter kattmodellen, efter regression och efter logistisk regression. De fyra aktiviteterna fungerar som arbetsstopp.
 
+## Klickregi i klassrummet
+
+- **Scen 6.** Visa det första kortet och låt klassen läsa etiketten. Högerpil skickar kortet längs banan in i kuben. De följande sex klicken matar in ett nytt märkt exempel vardera.
+- **Scen 7 och 11.** Under testet passerar fyra omärkta fotografier kuben i originalets ordning. Vänta in svaret efter varje klick. Stanna vid den lilla hunden och låt eleverna beskriva felet innan matrisen visas. På scen 11 får de pröva sin egen regel på nakenkatten före klicket.
+- **Scen 8 och 22.** Följ samma diagram medan loggen skriver ut ett beslut i taget. Vid kNN, be om en gissning innan den tredje grannens röst avgör.
+- **Scen 18.** Starta klippet med högerpil. Linjen rör sig genom lägena i originalets regressionsdiagram medan det lodräta felet för en utvald punkt förändras. Mellanlägena är en visuell interpolation. Nästa klick öppnar diskussionsfrågan.
+- **Scen 30.** Starta klippet och följ först en punkt, sedan ett kryss. Förbindelser visar tilldelningen, kryssen flyttar sig till medelvärdena och vita ringar fångar punkter som byter grupp. Vänta in det stabila slutläget innan nästa klick.
+
 ## Från PowerPoint till SCEN
 
 | Originalbild | SCEN | Vad eleverna arbetar med |
@@ -22,7 +30,7 @@ Manuset bygger på David Hedengrens *Maskininlärning.pptx*. I klassrummet kan g
 | 33–38 | 30–31 | Tilldelning, flyttning och ny tilldelning på ett fast punktfält. Sedan avståndsformeln. |
 | 39 | 32–33 | Iris-aktiviteten följs av en ny avslutningsfråga om när artetiketter behövs. |
 
-**Bildregi.** I kNN-fälten följer markeringarna avstånden i originalets punktfigur. Rött och blått skiljs även med cirklar och romber. I k-means återkommer originalets 30 datapunkter. Två valda startcentrum, nya klustertilldelningar och medelpunkter är beräknade för utkastet. En streckad linje visar en centroids förflyttning. En ring markerar en datapunkt som bytt kluster. I Orange-matrisen och kattmatrisen går facit längs raderna i båda fallen.
+**Bildregi.** I kNN-fälten följer markeringarna avstånden i originalets punktfigur. Rött och blått skiljs även med cirklar och romber. I k-means återkommer originalets 30 datapunkter. Två valda startcentrum, nya klustertilldelningar och medelpunkter är beräknade för utkastet. Ett spår visar hur varje centroid glider till gruppens medelpunkt. En ring markerar en datapunkt som bytt kluster. I Orange-matrisen och kattmatrisen går facit längs raderna i båda fallen.
 
 **Originalets övriga motiv.** Robotporträttet bakom definitionen, de horisontella banden med dataströmmar, personen framför en skärm, nätverket bakom algoritmerna och de böjda ljusbanorna bakom husen fungerar som kapitelmarkörer i PowerPointen. I det här utkastet får rubriken och temats bakgrund bära samma funktion. Kuben, djurfotografierna, Orange-symbolen, de två öppningsrobotarna och de figurer som bär data finns med. Pilar, etiketter, matrisrutor och flödesscheman har fått motsvarigheter i SCEN:s klicksteg, diagram och tabeller.
 

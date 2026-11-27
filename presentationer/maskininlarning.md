@@ -1,10 +1,13 @@
 ---
 titel: Maskininlärning
 kurs: Artificiell Intelligens 1
-tema: natt
+tema: signal
 ---
 
 [titel]
+bakgrund: nätverk
+övergång: svep
+rubrikrörelse: ord för ord
 etikett: Artificiell intelligens · David Hedengren
 rubrik: Maskininlärning
 text: Hur lär sig en modell att känna igen en katt?
@@ -16,6 +19,9 @@ alt: Originalets robot i ett laboratorium.
 ---
 
 [definition]
+bakgrund: fokusljus
+övergång: tona
+rubrikrörelse: mask
 rubrik: Vad lär sig en modell?
 text: Maskininlärning är en del av AI där en algoritm använder exempel för att hitta mönster i data.
 exempel: En bildmodell tränas på foton av katter och hundar. Sedan får den bestämma vilket djur som syns på ett nytt foto.
@@ -23,7 +29,10 @@ exempel: En bildmodell tränas på foton av katter och hundar. Sedan får den be
 
 ---
 
-[remsor]
+[omlopp]
+bakgrund: fokusljus
+övergång: båge
+rubrikrörelse: mask
 rubrik: Vad får modellen lära sig av?
 - Övervakad inlärning | Varje träningsexempel har ett känt svar, till exempel ”katt”.
 - Oövervakad inlärning | Algoritmen letar efter grupper i data som saknar etiketter.
@@ -33,6 +42,9 @@ rubrik: Vad får modellen lära sig av?
 ---
 
 [vägval]
+bakgrund: fokusljus
+övergång: båge
+rubrikrörelse: mask
 etikett: Övervakad inlärning
 rubrik: Vilken sorts svar vill vi ha?
 vänster: Klassificering
@@ -45,6 +57,9 @@ höger: Regression
 ---
 
 [etapper]
+bakgrund: fokusljus
+övergång: tona
+rubrikrörelse: mask
 rubrik: Från märkta bilder till en modell i bruk
 - Träna | Algoritmen får både bilderna och deras etiketter.
 - Testa | Modellen svarar på undanlagda bilder. Vi jämför svaren med facit.
@@ -53,32 +68,51 @@ rubrik: Från märkta bilder till en modell i bruk
 
 ---
 
-[text-bild]
-etikett: Träning
-rubrik: Vad får modellen se?
-bild: bilder/maskininlarning/traningsbilder.webp
-alt: Sju av originalets märkta träningsbilder, fyra katter och tre hundar.
-- Fotografiet är **indata**.
-- Ordet under fotografiet är **etiketten**.
-- Under träningen kopplar algoritmen mönster i bilderna till etiketterna.
+[egen: bildpassage]
+bakgrund: fokusljus
+övergång: svep
+rubrikrörelse: mask
+etikett: Övervakad inlärning · Träning
+rubrik: Både bilden och svaret följer med
+text: Lägg märke till hur olika två djur med samma etikett kan se ut.
+bild: bilder/maskininlarning/modell.webp
+alt: Originalets genomlysta modellkub.
+svar: Algoritm
+- Exempel 1 av 7 | bilder/maskininlarning/djur-5.webp |
+- Exempel 2 av 7 | bilder/maskininlarning/djur-6.webp |
+- Exempel 3 av 7 | bilder/maskininlarning/djur-7.webp |
+- Exempel 4 av 7 | bilder/maskininlarning/djur-8.webp |
+- Exempel 5 av 7 | bilder/maskininlarning/djur-9.webp |
+- Exempel 6 av 7 | bilder/maskininlarning/djur-10.webp |
+- Exempel 7 av 7 | bilder/maskininlarning/djur-12.webp |
 > Bildförslag: För en ny enhetlig fotoserie, se prompt C i regidokumentet.
 > Låt eleverna peka på två djur med samma etikett som ändå ser ganska olika ut. De sju korten visar exempel ur träningsmaterialet.
 
 ---
 
-[text-bild]
-etikett: Testning
-rubrik: Fyra bilder som modellen aldrig har sett
-bild: bilder/maskininlarning/testbilder.webp
-alt: Två katter och två hundar på fyra fotografier märkta A till D.
-- Modellen får bara se fotografierna.
-- Den svarar ”katt” på tre bilder och ”hund” på en.
-- I facit finns två katter och två hundar. Kan alla fyra svar vara rätt?
+[egen: bildpassage]
+bakgrund: fokusljus
+övergång: morph
+rubrikrörelse: mask
+etikett: Övervakad inlärning · Test
+rubrik: Vilken bild lurar modellen?
+text: Räkna modellens kattsvar. Hur många av dem stämmer med fotot?
+bild: bilder/maskininlarning/modell.webp
+alt: Originalets genomlysta modellkub.
+svar: Tränad modell
+- Testbild 1 | bilder/maskininlarning/djur-16.webp | Modellens svar · Hund
+- Testbild 2 | bilder/maskininlarning/djur-17.webp | Modellens svar · Katt
+- Testbild 3 | bilder/maskininlarning/djur-14.webp | Modellens svar · Katt
+- Testbild 4 | bilder/maskininlarning/djur-15.webp | Modellens svar · Katt
 > Stanna vid frågan. Även om båda katterna känns igen måste minst en hund ha fått svaret katt. Visa sedan den faktiska matrisen från exemplet.
 
 ---
 
-[egen: resonemang-i-bild]
+[egen: resonemang-med-logg]
+rörelse: skrivmaskin
+bakgrund: fokusljus
+övergång: tona
+rubrikrörelse: mask
 etikett: Klassificeringsmatris
 rubrik: Vilken sorts fel gjorde modellen?
 text: Katt är positiv klass. Läs från djuret i facit till modellens svar.
@@ -93,6 +127,9 @@ alt: Facit i rader och förutsägelser i kolumner. Två katter blev katter, en h
 ---
 
 [omröstning]
+bakgrund: fokusljus
+övergång: tona
+rubrikrörelse: ord för ord
 rubrik: Modellen svarade ”katt” tre gånger. Hur ofta hade den rätt då?
 svar: Två av de tre bilderna föreställde katter. Den tredje föreställde en hund.
 - En gång av tre
@@ -103,6 +140,9 @@ svar: Två av de tre bilderna föreställde katter. Den tredje föreställde en 
 ---
 
 [tabell]
+bakgrund: fokusljus
+övergång: tona
+rubrikrörelse: mask
 rubrik: Tre frågor om samma fyra bilder
 visa: facit
 | Mått | Vad räknar vi? | Resultat |
@@ -113,19 +153,25 @@ visa: facit
 
 ---
 
-[text-bild]
-etikett: Tillämpning
-rubrik: Katten som saknar päls
-bild: bilder/maskininlarning/nakenkatt.webp
-alt: Originalets ljusa nakenkatt med stora öron.
-- En ny bild skickas till modellen.
-- Modellen svarar **katt**.
-- Vilka av klassens regler från början av lektionen fungerar även här?
+[egen: bildpassage]
+bakgrund: fokusljus
+övergång: svep
+rubrikrörelse: ord för ord
+etikett: Övervakad inlärning · Tillämpning
+rubrik: Håller er regel för den här katten?
+text: Titta på öronen och huden. Vilken regel föreslog klassen från början?
+bild: bilder/maskininlarning/modell.webp
+alt: Originalets genomlysta modellkub.
+svar: Tränad modell
+- Ny bild · ? | bilder/maskininlarning/nakenkatt.webp | Modellens svar · Katt
 > Knyt tillbaka till den regel klassen föreslog. Ett rätt svar på den här bilden räcker inte för att avgöra vad modellen tittade på.
 
 ---
 
 [egen: bild-och-forklaring]
+bakgrund: nätverk
+övergång: morph
+rubrikrörelse: mask
 rubrik: Vad finns i lådan?
 bild: bilder/maskininlarning/modell.webp
 alt: En genomlyst kub med kretsar, originalets symbol för modellen.
@@ -138,6 +184,9 @@ alt: En genomlyst kub med kretsar, originalets symbol för modellen.
 ---
 
 [formel]
+bakgrund: vektorfält
+övergång: svep
+rubrikrörelse: mask
 etikett: Linjär regression
 rubrik: En rät linje kan ge en förutsägelse
 formel: ŷ = w · x + b
@@ -150,8 +199,12 @@ slutsats: Samma form som y = kx + m. Hatten på ŷ markerar ett förutsagt värd
 ---
 
 [tabell]
+bakgrund: fokusljus
+övergång: tona
+rubrikrörelse: mask
 etikett: Linjär regression · träningsdata
 rubrik: Vad vet vi om de fyra husen?
+visa: rader
 | Area i m² | Antal rum | Pool (1 = ja) | Slutpris i tkr |
 | 100 | 4 | 1 | 2 500 |
 | 80 | 3 | 0 | 1 800 |
@@ -163,6 +216,9 @@ rubrik: Vad vet vi om de fyra husen?
 ---
 
 [formel]
+bakgrund: fokusljus
+övergång: tona
+rubrikrörelse: mask
 rubrik: Varje egenskap får en vikt
 formel: ŷ = w₁x₁ + w₂x₂ + w₃x₃ + b
 slutsats: Med fler egenskaper får modellen fler vikter.
@@ -175,6 +231,9 @@ slutsats: Med fler egenskaper får modellen fler vikter.
 ---
 
 [omröstning]
+bakgrund: fokusljus
+övergång: tona
+rubrikrörelse: mask
 etikett: Hus 1 · 100 m², fyra rum och pool
 rubrik: Hur långt från slutpriset hamnar den första gissningen?
 text: Hus 1 såldes för 2 500 tkr. Modellen ger 10 · 100 + 50 · 4 + 500 · 1 + 100 = 1 800 tkr.
@@ -186,6 +245,9 @@ svar: Slutpris minus modellens pris blir 2 500 − 1 800 = 700 tkr. Modellen und
 ---
 
 [formel]
+bakgrund: fokusljus
+övergång: tona
+rubrikrörelse: mask
 etikett: Hus 2 · 80 m², tre rum och ingen pool
 rubrik: Vad händer när modellen får nya vikter?
 formel: ŷ = 12 · 80 + 80 · 3 + 600 · 0 + 150
@@ -198,19 +260,25 @@ slutsats: Huset såldes för 1 800 tkr. Modellen ligger 450 tkr för lågt.
 
 ---
 
-[text-bild]
-etikett: Gradientnedstigning · gradient descent
-rubrik: Hur hittar algoritmen en bättre linje?
-bild: bilder/maskininlarning/linjer.webp
-alt: Samma mätpunkter med linjer efter noll, två och fyra iterationer och en slutlig anpassning.
-- Börja med värden på vikterna och konstanttermen.
-- Beräkna felet och lutningen hos förlustfunktionen.
-- Ta ett litet steg i den riktning där förlusten minskar. Upprepa.
+[klipp]
+bakgrund: fokusljus
+övergång: svep
+rubrikrörelse: mask
+etikett: Linjär regression · gradientnedstigning
+rubrik: När linjen lär sig
+text: Följ det lodräta strecket från mätpunkten till linjen.
+slutsats: Varför kan en bra linje ändå missa en enskild punkt?
+bild: bilder/maskininlarning/linjens-rorelse.webp
+film: bilder/maskininlarning/linjens-rorelse.mp4
+alt: Mätpunkter, en startlinje och avståndet mellan en mätpunkt och linjen.
 > Följ en datapunkt från startlinjen till slutlinjen. Avståndet i höjdled är felet i just den förutsägelsen. Förlusten sammanfattar felen, till exempel medelvärdet av deras kvadrater. Steglängden påverkar hur långt parametrarna flyttas.
 
 ---
 
 [tabell]
+bakgrund: fokusljus
+övergång: tona
+rubrikrörelse: mask
 rubrik: Hur mycket ändras priset i modellen?
 visa: facit
 | Möjlig modell i tkr | Ändring, övrigt lika | Prisändring |
@@ -222,6 +290,9 @@ visa: facit
 ---
 
 [egen: bild-och-forklaring]
+bakgrund: fokusljus
+övergång: tona
+rubrikrörelse: mask
 etikett: Aktivitet i Orange
 rubrik: Bygg en regressionsmodell
 bild: bilder/maskininlarning/orange.webp
@@ -234,6 +305,9 @@ alt: Orange-symbolen från originalpresentationen.
 ---
 
 [egen: resonemang-i-bild]
+bakgrund: vektorfält
+övergång: båge
+rubrikrörelse: ord för ord
 etikett: Närmaste granne
 rubrik: Vilken klass får den nya punkten?
 text: Varje färgad punkt har redan en etikett. Leta upp den som ligger närmast frågetecknet.
@@ -244,7 +318,11 @@ alt: Rödmarkerade cirklar och blå romber med en ny vit punkt i det blå områd
 
 ---
 
-[egen: resonemang-i-bild]
+[egen: resonemang-med-logg]
+rörelse: skrivmaskin
+bakgrund: fokusljus
+övergång: morph
+rubrikrörelse: mask
 etikett: k närmaste grannar · kNN
 rubrik: Kan samma punkt få två olika svar?
 text: Frågetecknet har flyttat. Förutsäg resultatet först för en granne, sedan för tre.
@@ -257,6 +335,9 @@ alt: Samma träningspunkter, nu med den vita punkten nära gränsen mellan klass
 ---
 
 [etapper]
+bakgrund: fokusljus
+övergång: tona
+rubrikrörelse: mask
 etikett: Aktivitet i Orange · Breast Cancer Wisconsin
 rubrik: Pröva kNN på märkta tumördata
 - Läs in data | Välj Breast Cancer Wisconsin. Leta upp klassetiketten för varje prov.
@@ -267,6 +348,9 @@ rubrik: Pröva kNN på märkta tumördata
 ---
 
 [tabell]
+bakgrund: fokusljus
+övergång: tona
+rubrikrörelse: mask
 etikett: Orange · klassificeringsmatris
 rubrik: Hur många elakartade fall missade modellen?
 | Facit ↓ / Modellens svar → | Godartad | Elakartad | Totalt |
@@ -278,6 +362,9 @@ rubrik: Hur många elakartade fall missade modellen?
 ---
 
 [tabell]
+bakgrund: fokusljus
+övergång: tona
+rubrikrörelse: mask
 rubrik: Samma modell sedd från tre håll
 visa: facit
 | Fråga | Mått | Värde i exemplet |
@@ -289,6 +376,9 @@ visa: facit
 ---
 
 [reflektion]
+bakgrund: fokusljus
+övergång: svep
+rubrikrörelse: mask
 etikett: Aktivitet · rekommendationssystem med kNN
 rubrik: Vems filmsmak säger mest om din nästa favorit?
 tid: 2
@@ -300,6 +390,9 @@ tid: 2
 ---
 
 [egen: resonemang-i-bild]
+bakgrund: fokusljus
+övergång: tona
+rubrikrörelse: mask
 etikett: Logistisk regression
 rubrik: Hur blir en sannolikhet ett klassbeslut?
 text: Sigmoidfunktionen p = 1 / (1 + e^{−z}) omvandlar modellens poäng z till en sannolikhet.
@@ -311,6 +404,9 @@ alt: En stigande S-kurva tar modellens poäng till en sannolikhet mellan noll oc
 ---
 
 [text-bild]
+bakgrund: nätverk
+övergång: båge
+rubrikrörelse: mask
 etikett: Oövervakad inlärning
 rubrik: Vad kan vi hitta utan etiketter?
 bild: bilder/maskininlarning/klusterrobot.webp
@@ -323,6 +419,9 @@ alt: Originalets robot betraktar ett system av punkter och förbindelser.
 ---
 
 [text-bild]
+bakgrund: vektorfält
+övergång: tona
+rubrikrörelse: ord för ord
 rubrik: Hur många grupper ser du?
 bild: bilder/maskininlarning/punktmoln.webp
 alt: Originalets omärkta punktmoln på två axlar.
@@ -333,21 +432,26 @@ alt: Originalets omärkta punktmoln på två axlar.
 
 ---
 
-[egen: resonemang-i-bild]
-etikett: k-means · k = 2
-rubrik: Följ två centroider genom punktmolnet
-text: Varje kryss är en centroid. Vilket kryss ligger närmast varje punkt?
-bild: bilder/maskininlarning/kluster0.svg
-alt: Trettio datapunkter och två kryss. Kryssen är klustrens startcentrum.
-- Tilldela | bilder/maskininlarning/kluster1.svg | Varje punkt får färg och form efter den centroid som ligger närmast.
-- Flytta | bilder/maskininlarning/kluster2.svg | Varje kryss flyttas till medelvärdet av koordinaterna i sitt kluster.
-- Tilldela igen | bilder/maskininlarning/kluster3.svg | De inringade punkterna har fått närmare till den andra centroiden och byter kluster.
-- Upprepa | bilder/maskininlarning/kluster4.svg | Efter fler omgångar byter ingen punkt kluster. Då ligger också kryssen still.
+[klipp]
+bakgrund: fokusljus
+övergång: svep
+rubrikrörelse: mask
+etikett: K-means · två kluster
+rubrik: Vad flyttar sig i punktmolnet?
+text: Följ ett kryss. Titta sedan på punkterna som får en vit ring.
+slutsats: Vad måste vara oförändrat för att algoritmen ska stanna?
+bild: bilder/maskininlarning/centroidernas-rorelse.webp
+film: bilder/maskininlarning/centroidernas-rorelse.mp4
+alt: Två centroider i ett fält med trettio datapunkter.
 > Punkten står kvar när den byter kluster. Be någon följa en enda punkt med blicken genom hela serien.
+> De vita ringarna markerar byten av kluster. Kryssen glider till medelvärdena. När tilldelningen upprepas utan ändring ligger också kryssen kvar.
 
 ---
 
 [formel]
+bakgrund: fokusljus
+övergång: tona
+rubrikrörelse: mask
 rubrik: Hur avgör vi vilken centroid som ligger närmast?
 formel: d = √((x_{i} − x_{c})² + (y_{i} − y_{c})²)
 slutsats: Beräkna avståndet till båda centroiderna. Välj den som ger lägst d.
@@ -358,6 +462,9 @@ slutsats: Beräkna avståndet till båda centroiderna. Välj den som ger lägst 
 ---
 
 [etapper]
+bakgrund: fokusljus
+övergång: tona
+rubrikrörelse: mask
 etikett: Aktivitet i Orange · Iris
 rubrik: Vilka blommor hamnar i samma kluster?
 - Välj data | Öppna Iris. Låt bara blommornas mått ingå i klustringen.
@@ -369,6 +476,9 @@ rubrik: Vilka blommor hamnar i samma kluster?
 ---
 
 [fråga]
+bakgrund: banor
+övergång: båge
+rubrikrörelse: ord för ord
 etikett: Avslutning
 rubrik: Vilken uppgift kan du börja med innan du vet arten?
 svar: K-means kan använda måtten direkt. För övervakad artklassificering behövs märkta träningsexempel.
